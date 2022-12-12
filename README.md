@@ -23,6 +23,8 @@ Create the `PKHeX/plugins` folder if not already existing.
 
 Open PKHeX and you'll find the tools this Plugin offers under `Tools -> Tera Raid Plugin`.
 
+If you have any issues with the steps described above, feel free to ask for support in my [Discord server](https://discord.gg/F9nMfvw9sS).
+
 
 ## Credits and Thanks
 * [kwsch](https://github.com/kwsch) for [PKHeX](https://github.com/kwsch/PKHeX) and [pkNX](https://github.com/kwsch/pkNX)
