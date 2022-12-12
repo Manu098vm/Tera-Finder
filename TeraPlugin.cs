@@ -13,7 +13,7 @@ namespace TeraFinder
         public ISaveFileProvider SaveFileEditor { get; private set; } = null!;
         public IPKMView PKMEditor { get; private set; } = null!;
 
-        private ToolStripMenuItem Plugin = new("Tera Raid Plugin");
+        private ToolStripMenuItem Plugin = new("Tera Finder Plugin");
         private ToolStripMenuItem Editor = new("Tera Raid Editor");
         private ToolStripMenuItem Finder = new("Tera Raid Seed Finder");
         private ToolStripMenuItem Flags = new("Edit Game Flags");

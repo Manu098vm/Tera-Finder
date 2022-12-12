@@ -21,7 +21,7 @@ Once the Plugin has been compiled, copy-paste the `net6.0-windows` directory fro
 
 Create the `PKHeX/plugins` folder if not already existing.
 
-Open PKHeX and you'll find the tools this Plugin offers under `Tools -> Tera Raid Plugin`.
+Open PKHeX and you'll find the tools this Plugin offers under `Tools -> Tera Finder Plugin`.
 
 If you have any issues with the steps described above, feel free to ask for support in my [Discord server](https://discord.gg/F9nMfvw9sS).
 
