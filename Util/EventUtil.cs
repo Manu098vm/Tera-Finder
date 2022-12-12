@@ -1,6 +1,9 @@
 ﻿using System.Data;
 using pkNX.Structures.FlatBuffers;
 
+//Most of functions here are taken from pkNX
+//https://github.com/kwsch/pkNX/blob/master/pkNX.WinForms/Dumping/TeraRaidRipper.cs
+//GPL v3 Licence
 namespace TeraFinder
 {
     public static class EventUtil
@@ -43,8 +46,11 @@ namespace TeraFinder
                     isNot7Star = true;
                     AddToList(items, type2list, RaidSerializationFormat.Type2);
                 }
-                res = new byte[][] { type2list.SelectMany(z => z).ToArray(), type3list.SelectMany(z => z).ToArray() };
-                return res;
+                if (type2list.Count > 0 || type2list.Count > 0)
+                {
+                    res = new byte[][] { type2list.SelectMany(z => z).ToArray(), type3list.SelectMany(z => z).ToArray() };
+                    return res;
+                }
             }
 
             //Read from pkhex resources
