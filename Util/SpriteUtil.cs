@@ -2,7 +2,7 @@
 using PKHeX.Drawing;
 using PKHeX.Drawing.PokeSprite;
 
-namespace TeraRaidEditor
+namespace TeraFinder
 {
     public static class SpriteUtil
     {

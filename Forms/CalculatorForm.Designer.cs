@@ -1,4 +1,4 @@
-﻿namespace TeraRaidEditor
+﻿namespace TeraFinder
 {
     partial class CalculatorForm
     {

@@ -1,4 +1,4 @@
-﻿namespace TeraRaidEditor.Forms
+﻿namespace TeraFinder.Forms
 {
     partial class CheckerForm
     {

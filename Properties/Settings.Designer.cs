@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TeraRaidEditor.Properties {
+namespace TeraFinder.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

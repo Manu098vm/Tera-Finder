@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using pkNX.Structures.FlatBuffers;
 
-namespace TeraRaidEditor
+namespace TeraFinder
 {
     public static class EventUtil
     {

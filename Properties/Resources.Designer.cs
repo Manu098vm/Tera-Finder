@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TeraRaidEditor.Properties {
+namespace TeraFinder.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace TeraRaidEditor.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TeraRaidEditor.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TeraFinder.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -75,7 +75,7 @@ namespace TeraRaidEditor.Properties {
         /// </summary>
         internal static byte[] PKHeX_Core {
             get {
-                object obj = ResourceManager.GetObject("PKHeX_Core", resourceCulture);
+                object obj = ResourceManager.GetObject("PKHeX.Core", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -85,7 +85,7 @@ namespace TeraRaidEditor.Properties {
         /// </summary>
         internal static byte[] PKHeX_Drawing {
             get {
-                object obj = ResourceManager.GetObject("PKHeX_Drawing", resourceCulture);
+                object obj = ResourceManager.GetObject("PKHeX.Drawing", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -95,7 +95,7 @@ namespace TeraRaidEditor.Properties {
         /// </summary>
         internal static byte[] PKHeX_Drawing_Misc {
             get {
-                object obj = ResourceManager.GetObject("PKHeX_Drawing_Misc", resourceCulture);
+                object obj = ResourceManager.GetObject("PKHeX.Drawing.Misc", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -105,7 +105,7 @@ namespace TeraRaidEditor.Properties {
         /// </summary>
         internal static byte[] PKHeX_Drawing_PokeSprite {
             get {
-                object obj = ResourceManager.GetObject("PKHeX_Drawing_PokeSprite", resourceCulture);
+                object obj = ResourceManager.GetObject("PKHeX.Drawing.PokeSprite", resourceCulture);
                 return ((byte[])(obj));
             }
         }

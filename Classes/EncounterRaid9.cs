@@ -1,6 +1,6 @@
 ﻿using PKHeX.Core;
 
-namespace TeraRaidEditor
+namespace TeraFinder
 {
     public class EncounterRaid9 : ITeraRaid9
     {

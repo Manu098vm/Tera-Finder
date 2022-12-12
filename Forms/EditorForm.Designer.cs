@@ -1,4 +1,4 @@
-﻿namespace TeraRaidEditor
+﻿namespace TeraFinder
 {
     partial class EditorForm
     {
@@ -248,7 +248,7 @@
             // pictureBox
             // 
             this.pictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox.BackgroundImage = global::TeraRaidEditor.Properties.Resources._000;
+            this.pictureBox.BackgroundImage = global::TeraFinder.Properties.Resources._000;
             this.pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox.Location = new System.Drawing.Point(264, 95);
@@ -361,7 +361,7 @@
             // 
             // btnOpenCalculator
             // 
-            this.btnOpenCalculator.Location = new System.Drawing.Point(80, 425);
+            this.btnOpenCalculator.Location = new System.Drawing.Point(80, 424);
             this.btnOpenCalculator.Name = "btnOpenCalculator";
             this.btnOpenCalculator.Size = new System.Drawing.Size(205, 38);
             this.btnOpenCalculator.TabIndex = 4;
@@ -371,9 +371,9 @@
             // 
             // btnDx
             // 
-            this.btnDx.Location = new System.Drawing.Point(322, 11);
+            this.btnDx.Location = new System.Drawing.Point(322, 12);
             this.btnDx.Name = "btnDx";
-            this.btnDx.Size = new System.Drawing.Size(31, 29);
+            this.btnDx.Size = new System.Drawing.Size(31, 28);
             this.btnDx.TabIndex = 5;
             this.btnDx.Text = "ᐅ";
             this.btnDx.UseVisualStyleBackColor = true;

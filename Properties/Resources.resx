@@ -121,16 +121,16 @@
   <data name="000" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\000.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PKHeX_Core" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="PKHeX.Core" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PKHeX.Core.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="PKHeX_Drawing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="PKHeX.Drawing" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PKHeX.Drawing.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="PKHeX_Drawing_Misc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="PKHeX.Drawing.Misc" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PKHeX.Drawing.Misc.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="PKHeX_Drawing_PokeSprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="PKHeX.Drawing.PokeSprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PKHeX.Drawing.PokeSprite.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

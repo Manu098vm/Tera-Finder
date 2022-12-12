@@ -1,13 +1,13 @@
 ﻿using PKHeX.Core;
-using TeraRaidEditor.Forms;
+using TeraFinder.Forms;
 
-namespace TeraRaidEditor
+namespace TeraFinder
 {
     public class TeraPlugin : IPlugin
     {
         private const string Version = "1.0.0";
 
-        public string Name => nameof(TeraRaidEditor);
+        public string Name => nameof(TeraFinder);
         public int Priority => 1;
 
         public ISaveFileProvider SaveFileEditor { get; private set; } = null!;

@@ -1,7 +1,7 @@
 ﻿using PKHeX.Core;
 using System.IO.Compression;
 
-namespace TeraRaidEditor
+namespace TeraFinder
 {
     internal static class ImportUtil
     {

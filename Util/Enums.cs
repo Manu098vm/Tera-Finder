@@ -1,4 +1,4 @@
-﻿namespace TeraRaidEditor
+﻿namespace TeraFinder
 {
     public enum TeraShiny : int
     {

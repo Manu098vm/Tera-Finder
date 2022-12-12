@@ -1,7 +1,7 @@
 ﻿using PKHeX.Core;
 using System.Data;
 
-namespace TeraRaidEditor.Forms
+namespace TeraFinder.Forms
 {
     public partial class CheckerForm : Form
     {

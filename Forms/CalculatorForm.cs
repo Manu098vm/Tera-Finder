@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using PKHeX.Core;
 
-namespace TeraRaidEditor
+namespace TeraFinder
 {
     public partial class CalculatorForm : Form
     {
