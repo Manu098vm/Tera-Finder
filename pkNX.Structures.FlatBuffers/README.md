@@ -1,0 +1,1 @@
+Classes related to Raid data FlatBuffers taken from [pkNX](https://github.com/kwsch/pkNX) by [kwsch](https://github.com/kwsch), licensed under GPL v3 license.

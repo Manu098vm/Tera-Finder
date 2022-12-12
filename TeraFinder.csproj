@@ -1,0 +1,90 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Title>Tera Finder</Title>
+    <Authors>Manu098vm</Authors>
+    <Company>ProjectPokémon</Company>
+    <Copyright>Manu098vm</Copyright>
+    <BaseOutputPath>bin\</BaseOutputPath>
+    <RepositoryUrl>https://github.com/Manu098vm/Tera-Finder</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="pkNX.Structures.FlatBuffers\**" />
+    <EmbeddedResource Remove="pkNX.Structures.FlatBuffers\**" />
+    <None Remove="pkNX.Structures.FlatBuffers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+    <ItemGroup>
+		<Reference Include="PKHeX.Core">
+			<HintPath>Resources\PKHeX.Core.dll</HintPath>
+		</Reference>
+	    <Reference Include="PKHeX.Drawing">
+		    <HintPath>Resources\PKHeX.Drawing.dll</HintPath>
+	    </Reference>
+	    <Reference Include="PKHeX.Drawing.PokeSprite">
+		    <HintPath>Resources\PKHeX.Drawing.PokeSprite.dll</HintPath>
+	    </Reference>
+	    <Reference Include="PKHeX.Drawing.Misc">
+		    <HintPath>Resources\PKHeX.Drawing.Misc.dll</HintPath>
+	    </Reference>
+    </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="pkNX.Structures.FlatBuffers\pkNX.Structures.FlatBuffers.csproj">
+			<Private>True</Private>
+			<CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+		</ProjectReference>
+	</ItemGroup>
+
+</Project>
