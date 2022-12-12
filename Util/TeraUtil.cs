@@ -1,17 +1,4 @@
 ﻿using PKHeX.Core;
-using System;
-using static System.Buffers.Binary.BinaryPrimitives;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
-using TeraRaidEditor.Properties;
-using System.Collections;
-using Microsoft.VisualBasic.ApplicationServices;
-using System.Diagnostics.Metrics;
-using System.Diagnostics;
 
 namespace TeraRaidEditor
 {
