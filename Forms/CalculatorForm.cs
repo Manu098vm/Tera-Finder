@@ -261,7 +261,7 @@ namespace TeraFinder
                 CalculatedList = new();
                 FilteredList = new();
 
-                DialogResult d = MessageBox.Show("Do you want to apply filters during the search?", "Apply Filters", MessageBoxButtons.YesNo);
+                DialogResult d = MessageBox.Show("Do you want to apply filters during the search?", "Apply Filters", MessageBoxButtons.YesNoCancel);
                 if (d == DialogResult.Yes)
                     btnApply.PerformClick();
                 else IsFiltered = false;

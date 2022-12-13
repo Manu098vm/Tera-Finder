@@ -1,5 +1,6 @@
 ﻿using PKHeX.Core;
 using TeraFinder.Forms;
+using Octokit;
 
 namespace TeraFinder
 {
@@ -13,16 +14,20 @@ namespace TeraFinder
         public ISaveFileProvider SaveFileEditor { get; private set; } = null!;
         public IPKMView PKMEditor { get; private set; } = null!;
 
-        private ToolStripMenuItem Plugin = new("Tera Finder Plugin");
-        private ToolStripMenuItem Editor = new("Tera Raid Editor");
-        private ToolStripMenuItem Finder = new("Tera Raid Seed Finder");
-        private ToolStripMenuItem Flags = new("Edit Game Flags");
-        private ToolStripMenuItem Events = new("Import Poké Portal News");
+        private readonly ToolStripMenuItem Plugin = new("Tera Finder Plugin");
+        private readonly ToolStripMenuItem Editor = new("Tera Raid Editor");
+        private readonly ToolStripMenuItem Finder = new("Tera Raid Seed Finder");
+        private readonly ToolStripMenuItem Flags = new("Edit Game Flags");
+        private readonly ToolStripMenuItem Events = new("Import Poké Portal News");
         
         public void Initialize(params object[] args)
         {
             if (IsUpdateAvailable())
-                MessageBox.Show("Update available!");
+            {
+                var result = MessageBox.Show("A Tera Finder update is available. Do you want to update the application?", "Update available", MessageBoxButtons.YesNo);
+                if(result == DialogResult.Yes)
+                    System.Diagnostics.Process.Start("https://github.com/Manu098vm/Tera-Finder/Releases");
+            }
 
             SaveFileEditor = (ISaveFileProvider)Array.Find(args, z => z is ISaveFileProvider)!;
             PKMEditor = (IPKMView)Array.Find(args, z => z is IPKMView)!;
@@ -44,12 +49,36 @@ namespace TeraFinder
 
         public static string GetPluginVersion() => Version;
 
-        private static string GetLatestVersion() => "1.0.0"; //Dummy
+        public static async Task<string> GetLatestVersion()
+        {
+            try
+            {
+                GitHubClient client = new(new ProductHeaderValue("TeraFinder"));
+                IReadOnlyList<Release>? releases = await client.Repository.Release.GetAll("Manu098vm", "Tera-Finder");
+                if (releases is not null && releases.Count > 0)
+                    return releases[0].TagName;
+                else return "0.0.0";
+            }
+            catch (Exception)
+            {
+                return "0.0.0";
+            }
+        }
 
-        private bool IsUpdateAvailable()
+        public static void TryUpdate()
+        {
+            if (IsUpdateAvailable())
+            {
+                var result = MessageBox.Show("A Tera Finder update is available. Do you want to update the application?", "Update available", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                    System.Diagnostics.Process.Start("https://github.com/Manu098vm/Tera-Finder/Releases");
+            }
+        }
+
+        public static bool IsUpdateAvailable()
         {
             var currentVersion = ParseVersion(GetPluginVersion());
-            var latestVersion = ParseVersion(GetLatestVersion());
+            var latestVersion = ParseVersion(GetLatestVersion().Result);
 
             if (latestVersion[0] > currentVersion[0])
                 return true;
