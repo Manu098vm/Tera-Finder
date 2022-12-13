@@ -88,9 +88,9 @@ jobs:
     - name: Create the app package
       run: msbuild $env:Solution_Name /property:Configuration=Release
 
-    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
+    # Upload the artifact: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Build
-        path: ${{ env.Wap_Project_Directory }}
+        name: Tera-Finder
+        path: bin
