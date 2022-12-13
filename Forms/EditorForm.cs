@@ -1,4 +1,5 @@
-﻿using PKHeX.Core;
+﻿using Octokit;
+using PKHeX.Core;
 
 namespace TeraFinder
 {
@@ -129,48 +130,27 @@ namespace TeraFinder
 
                 if (encounter is not null)
                 {
-                    var param = new GenerateParam9
-                    {
-                        GenderRatio = TeraUtil.GetGender(encounter, raid.Content is TeraRaidContentType.Might7),
-                        FlawlessIVs = encounter.FlawlessIVCount,
-                        RollCount = 1,
-                        Height = 0,
-                        Weight = 0,
-                        Scale = encounter.Scale,
-                        Ability = encounter.Ability,
-                        Shiny = encounter.Shiny,
-                        Nature = encounter.Nature,
-                        IVs = encounter.IVs,
-                    };
-                    var pkm = new PK9
-                    {
-                        Species = encounter.Species,
-                        Form = encounter.Form,
-                        TrainerID7 = SAV.TrainerID7,
-                        TrainerSID7 = SAV.TrainerSID7,
-                        TeraTypeOriginal = (MoveType)Tera9RNG.GetTeraType(raid.Seed, encounter.TeraType, encounter.Species, encounter.Form),
-                    };
 
-                    Encounter9RNG.GenerateData(pkm, param, EncounterCriteria.Unrestricted, raid.Seed);
-                    var shiny = pkm.IsShiny ? (pkm.ShinyXor == 0 ? "Square" : "Star") : "No";
-                    lblSpecies.Text = $"Species: {(Species)pkm.Species}";
-                    lblTera.Text = $"TeraType: {(MoveType)pkm.TeraType}";
-                    lblNature.Text = $"Nature: {(Nature)pkm.Nature}";
-                    lblAbility.Text = $"Ability: {(Ability)pkm.Ability}";
-                    lblShiny.Text = $"Shiny: {shiny}";
-                    lblStars.Text = $"Stars: {encounter.Stars}";
-                    txtHP.Text = $"{pkm.IV_HP}";
-                    txtAtk.Text = $"{pkm.IV_ATK}";
-                    txtDef.Text = $"{pkm.IV_DEF}";
-                    txtSpA.Text = $"{pkm.IV_SPA}";
-                    txtSpD.Text = $"{pkm.IV_SPD}";
-                    txtSpe.Text = $"{pkm.IV_SPE}";
+                    var rngres = TeraUtil.CalcRNG(raid.Seed, SAV.TrainerID7, SAV.TrainerSID7, (RaidContent)raid.Content, encounter);
+
+                    lblSpecies.Text = $"Species: {rngres.Species}";
+                    lblTera.Text = $"TeraType: {rngres.TeraType}";
+                    lblNature.Text = $"Nature: {rngres.Nature}";
+                    lblAbility.Text = $"Ability: {rngres.Ability}";
+                    lblShiny.Text = $"Shiny: {rngres.Shiny}";
+                    lblGender.Text = $"Gender: {rngres.Gender}";
+                    txtHP.Text = $"{rngres.HP}";
+                    txtAtk.Text = $"{rngres.ATK}";
+                    txtDef.Text = $"{rngres.DEF}";
+                    txtSpA.Text = $"{rngres.SPA}";
+                    txtSpD.Text = $"{rngres.SPD}";
+                    txtSpe.Text = $"{rngres.SPE}";
 
                     pictureBox.BackgroundImage = null;
-                    pictureBox.Image = SpriteUtil.GetRaidResultSprite(pkm, raid.IsEnabled);
+                    pictureBox.Image = SpriteUtil.GetRaidResultSprite(rngres, raid.IsEnabled);
                     pictureBox.Size = pictureBox.Image.Size;
 
-                    SetStarSymbols(encounter.Stars);
+                    SetStarSymbols(rngres.Stars);
                     return;
                 }
             }
@@ -179,7 +159,7 @@ namespace TeraFinder
             lblNature.Text = $"Nature:";
             lblAbility.Text = $"Ability:";
             lblShiny.Text = $"Shiny:";
-            lblStars.Text = $"Stars:";
+            lblGender.Text = $"Gender:";
             txtHP.Text = $"";
             txtAtk.Text = $"";
             txtDef.Text = $"";

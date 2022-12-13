@@ -175,6 +175,59 @@ namespace TeraFinder
             return (byte)PersonalTable.SV.GetFormEntry(enc.Species, enc.Form).Gender;
         }
 
+        public static TeraDetails CalcRNG(uint seed, int tid, int sid, RaidContent content, EncounterRaid9 encounter)
+        {
+            var param = new GenerateParam9
+            {
+                GenderRatio = TeraUtil.GetGender(encounter, content is RaidContent.Event_Mighty),
+                FlawlessIVs = encounter.FlawlessIVCount,
+                RollCount = 1,
+                Height = 0,
+                Weight = 0,
+                Scale = encounter.Scale,
+                Ability = encounter.Ability,
+                Shiny = encounter.Shiny,
+                Nature = encounter.Nature,
+                IVs = encounter.IVs,
+            };
+            var pkm = new PK9
+            {
+                Species = encounter.Species,
+                Form = encounter.Form,
+                TrainerID7 = tid,
+                TrainerSID7 = sid,
+                TeraTypeOriginal = (MoveType)Tera9RNG.GetTeraType(seed, encounter.TeraType, encounter.Species, encounter.Form),
+            };
+
+            Encounter9RNG.GenerateData(pkm, param, EncounterCriteria.Unrestricted, seed);
+            var shiny = pkm.IsShiny ? (pkm.ShinyXor == 0 ? TeraShiny.Square : TeraShiny.Star) : TeraShiny.No;
+
+            var result = new TeraDetails
+            {
+                Seed = seed,
+                Stars = encounter.Stars,
+                Species = (Species)encounter.Species,
+                Form = encounter.Form,
+                TeraType = pkm.TeraTypeOriginal,
+                EC = pkm.EncryptionConstant,
+                PID = pkm.PID,
+                HP = pkm.IV_HP,
+                ATK = pkm.IV_ATK,
+                DEF = pkm.IV_DEF,
+                SPA = pkm.IV_SPA,
+                SPD = pkm.IV_SPD,
+                SPE = pkm.IV_SPE,
+                Ability = (Ability)pkm.Ability,
+                Nature = (Nature)pkm.Nature,
+                Gender = (Gender)pkm.Gender,
+                Shiny = shiny,
+                Height = pkm.HeightScalar,
+                Weight = pkm.WeightScalar,
+                Scale = pkm.Scale,
+            };
+            return result;
+        }
+
         //From https://github.com/LegoFigure11/RaidCrawler/blob/main/Structures/Areas.cs
         //GPL v3 License
         //Thanks LegoFigure11!

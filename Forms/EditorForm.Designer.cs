@@ -43,7 +43,7 @@
             this.lblShiny = new System.Windows.Forms.Label();
             this.lblAbility = new System.Windows.Forms.Label();
             this.lblNature = new System.Windows.Forms.Label();
-            this.lblStars = new System.Windows.Forms.Label();
+            this.lblGender = new System.Windows.Forms.Label();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -161,7 +161,7 @@
             this.grpPkmInfo.Controls.Add(this.lblShiny);
             this.grpPkmInfo.Controls.Add(this.lblAbility);
             this.grpPkmInfo.Controls.Add(this.lblNature);
-            this.grpPkmInfo.Controls.Add(this.lblStars);
+            this.grpPkmInfo.Controls.Add(this.lblGender);
             this.grpPkmInfo.Controls.Add(this.pictureBox);
             this.grpPkmInfo.Controls.Add(this.label7);
             this.grpPkmInfo.Controls.Add(this.label6);
@@ -236,14 +236,14 @@
             this.lblNature.TabIndex = 14;
             this.lblNature.Text = "Nature: ";
             // 
-            // lblStars
+            // lblGender
             // 
-            this.lblStars.AutoSize = true;
-            this.lblStars.Location = new System.Drawing.Point(108, 190);
-            this.lblStars.Name = "lblStars";
-            this.lblStars.Size = new System.Drawing.Size(44, 20);
-            this.lblStars.TabIndex = 13;
-            this.lblStars.Text = "Stars:";
+            this.lblGender.AutoSize = true;
+            this.lblGender.Location = new System.Drawing.Point(108, 190);
+            this.lblGender.Name = "lblGender";
+            this.lblGender.Size = new System.Drawing.Size(60, 20);
+            this.lblGender.TabIndex = 13;
+            this.lblGender.Text = "Gender:";
             // 
             // pictureBox
             // 
@@ -420,7 +420,7 @@
         private GroupBox GrpRaidInfo;
         private Label lblSeed;
         private GroupBox grpPkmInfo;
-        private Label lblStars;
+        private Label lblGender;
         private PictureBox pictureBox;
         private Label label7;
         private Label label6;

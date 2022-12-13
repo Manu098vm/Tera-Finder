@@ -86,34 +86,12 @@ namespace TeraFinder.Forms
                         }
 
                         var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress)) :
-                        TeraUtil.GetDistEncounter(seed, sav, progress, content is RaidContent.Event_Mighty, true);
+                            TeraUtil.GetDistEncounter(seed, sav, progress, content is RaidContent.Event_Mighty, true);
 
                         if (encounter is not null)
                         {
-                            var param = new GenerateParam9
-                            {
-                                GenderRatio = TeraUtil.GetGender(encounter, content is RaidContent.Event_Mighty),
-                                FlawlessIVs = encounter.FlawlessIVCount,
-                                RollCount = 1,
-                                Height = 0,
-                                Weight = 0,
-                                Scale = encounter.Scale,
-                                Ability = encounter.Ability,
-                                Shiny = encounter.Shiny,
-                                Nature = encounter.Nature,
-                                IVs = encounter.IVs,
-                            };
-                            var pkm = new PK9
-                            {
-                                Species = encounter.Species,
-                                Form = encounter.Form,
-                                TrainerID7 = PKM.TrainerID7,
-                                TrainerSID7 = PKM.TrainerSID7,
-                                TeraTypeOriginal = (MoveType)Tera9RNG.GetTeraType(seed, encounter.TeraType, encounter.Species, encounter.Form),
-                            };
-
-                            Encounter9RNG.GenerateData(pkm, param, EncounterCriteria.Unrestricted, seed);
-                            var success = ComparePKM(pk, pkm);
+                            var rngres = TeraUtil.CalcRNG(seed, pk.TrainerID7, pk.TrainerSID7, content, encounter);
+                            var success = ComparePKM(pk, rngres);
                             if (success)
                             {
                                 txtSeed.Text = $"{seed:X8} ({content})";
@@ -126,31 +104,31 @@ namespace TeraFinder.Forms
             txtSeed.Text = $"{seed:X8} (INVALID)";
         }
 
-        private static bool ComparePKM(PK9 pk, PK9 pkm)
+        private static bool ComparePKM(PK9 pk, TeraDetails pkm)
         {
-            if (pk.EncryptionConstant != pkm.EncryptionConstant)
+            if (pk.EncryptionConstant != pkm.EC)
                 return false;
             if (pk.PID != pkm.PID)
                 return false;
-            if (pk.IV_HP != pkm.IV_HP)
+            if (pk.IV_HP != pkm.HP)
                 return false;
-            if (pk.IV_ATK != pkm.IV_ATK)
+            if (pk.IV_ATK != pkm.ATK)
                 return false;
-            if (pk.IV_DEF != pkm.IV_DEF)
+            if (pk.IV_DEF != pkm.DEF)
                 return false;
-            if (pk.IV_SPA != pkm.IV_SPA)
+            if (pk.IV_SPA != pkm.SPA)
                 return false;
-            if (pk.IV_SPD != pkm.IV_SPD)
+            if (pk.IV_SPD != pkm.SPD)
                 return false;
-            if (pk.IV_SPE != pkm.IV_SPE)
+            if (pk.IV_SPE != pkm.SPE)
                 return false;
-            if (pk.Nature != pkm.Nature)
+            if (pk.Nature != (int)pkm.Nature)
                 return false;
-            if (pk.TeraTypeOriginal != pkm.TeraTypeOriginal)
+            if (pk.TeraTypeOriginal != pkm.TeraType)
                 return false;
-            if (pk.HeightScalar != pkm.HeightScalar)
+            if (pk.HeightScalar != pkm.Height)
                 return false;
-            if (pk.WeightScalar != pkm.WeightScalar)
+            if (pk.WeightScalar != pkm.Weight)
                 return false;
             if (pk.Scale != pkm.Scale)
                 return false;

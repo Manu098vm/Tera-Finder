@@ -92,7 +92,6 @@ namespace TeraFinder
                         return true;
                 }
             }
-
             return false;
         }
 
