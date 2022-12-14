@@ -1,7 +1,8 @@
 # Tera Finder
 ![immagine](https://user-images.githubusercontent.com/52102823/206939004-160166fd-f698-4039-b8ce-f18d8f39a6ae.png)
 
-This is a PKHeX Plugin that allows to view, edit and calculate seeds for SV Raids. This is the spiritual sequel of my [SVXoroCalc](https://github.com/Manu098vm/SVResearches).
+This is a PKHeX.Core based program that allows to view, edit and calculate seeds for SV Raids. This is the spiritual sequel of my [SVXoroCalc](https://github.com/Manu098vm/SVResearches).
+Both a standalone program and a PKHeX Plugin are available for use.
 
 ### Features:
 * Import Poké Portal News in Zip/Folder formats
@@ -12,18 +13,34 @@ This is a PKHeX Plugin that allows to view, edit and calculate seeds for SV Raid
 
 Powered by [PKHeX](https://github.com/kwsch/PKHeX) and [pkNX](https://github.com/kwsch/pkNX).
 
-## Building/How To Use
-Currently the plugin only works with a .NET 6 build of PKHeX.
+## How To
+### Building
+You can use any C# 10 & .NET 6.0 compatible IDE such as Visual Studio to compile this program.
 
-You can use any C# IDE such as Visual Studio to compile both the [PKHeX](https://github.com/kwsch/PKHeX) main program and this Plugin.
+Select either Debug or Release and click Build -> Build Solution.
 
-Once the Plugin has been compiled, copy-paste the `net6.0-windows` directory from `/bin/Release` to the `PKHeX/plugins` folder.
+The Standalone Launcher will be placed in `TeraFinder.Launcher/bin/`.
+
+The Plugin files will be placed in `bin/`.
+
+### Standalone Launcher Usage
+Open the `TeraFinder.Launcher.exe` program to open its GUI.
+
+In order to unlock all the functionalities, load a valid SV Save File by drag & drop or click the `Load Save File` button.
+
+The usage should be fairly intuitive.
+
+### PKHeX Plugin Usage
+Currently the plugin only works with a .NET 6 build of PKHeX. You'll need to compile PKHeX from its [source code](https://github.com/kwsch/PKHeX) in order to obtain that.
+
+Copy-paste the plugin directory to the `PKHeX/plugins` folder.
 
 Create the `PKHeX/plugins` folder if not already existing.
 
 Open PKHeX and you'll find the tools this Plugin offers under `Tools -> Tera Finder Plugin`.
 
-If you have any issues with the steps described above, feel free to ask for support in my [Discord server](https://discord.gg/F9nMfvw9sS).
+### Support
+If you have any issues, feel free to ask for support in my [Discord server](https://discord.gg/F9nMfvw9sS).
 
 
 ## Credits and Thanks
