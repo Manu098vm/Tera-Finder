@@ -5,30 +5,29 @@ namespace TeraFinder.Forms
 {
     public partial class CheckerForm : Form
     {
-        private IPKMView Editor = null!;
-        private SAV9SV SAV;
         private PK9 PKM = null!;
+        private SAV9SV SAV;
 
-        public CheckerForm(IPKMView editor, SAV9SV sav)
+        public CheckerForm(PKM pk, SAV9SV sav)
         {
             InitializeComponent();
-            Editor = editor;
             SAV = sav;
-            var pkm = (PK9)Editor.PreparePKM();
-            txtEC.Text = $"{pkm.EncryptionConstant:X8}";
-            txtPID.Text = $"{pkm.PID:X8}";
-            numHP.Value = pkm.IV_HP;
-            numAtk.Value = pkm.IV_ATK;
-            numDef.Value = pkm.IV_DEF;
-            numSpA.Value = pkm.IV_SPA;
-            numSpD.Value = pkm.IV_SPD;
-            numSpe.Value = pkm.IV_SPE;
-            cmbNature.SelectedIndex = pkm.Nature;
-            cmbTera.SelectedIndex = (int)pkm.TeraTypeOriginal;
-            numHeight.Value = pkm.HeightScalar;
-            numWeight.Value = pkm.WeightScalar;
-            numScale.Value = pkm.Scale;
-            PKM = pkm;
+            PKM = (PK9)pk;
+            txtTid.Text = $"{PKM.TrainerID7}";
+            txtSid.Text = $"{PKM.TrainerSID7}";
+            txtEC.Text = $"{PKM.EncryptionConstant:X8}";
+            txtPID.Text = $"{PKM.PID:X8}";
+            numHP.Value = PKM.IV_HP;
+            numAtk.Value = PKM.IV_ATK;
+            numDef.Value = PKM.IV_DEF;
+            numSpA.Value = PKM.IV_SPA;
+            numSpD.Value = PKM.IV_SPD;
+            numSpe.Value = PKM.IV_SPE;
+            cmbNature.SelectedIndex = PKM.Nature;
+            cmbTera.SelectedIndex = (int)PKM.TeraTypeOriginal;
+            numHeight.Value = PKM.HeightScalar;
+            numWeight.Value = PKM.WeightScalar;
+            numScale.Value = PKM.Scale;
         }
 
         private void txt_KeyPress(object sender, KeyPressEventArgs e)
@@ -38,8 +37,17 @@ namespace TeraFinder.Forms
                 e.Handled = true;
         }
 
+        private void txtID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            var c = e.KeyChar;
+            if (!char.IsControl(e.KeyChar) && !(c >= '0' && c <= '9'))
+                e.Handled = true;
+        }
+
         private void btnCalc_Click(object sender, EventArgs e)
         {
+            var tid = Convert.ToInt32(txtTid.Text);
+            var sid = Convert.ToInt32(txtSid.Text);
             var ec = Convert.ToUInt32(txtEC.Text, 16);
             var pid = Convert.ToUInt32(txtPID.Text, 16);
             var hp = (int)numHP.Value;
@@ -79,18 +87,14 @@ namespace TeraFinder.Forms
                     {
                         var sav = (SAV9SV)SAV.Clone();
                         sav.Game = (int)game;
-                        if(!SetProgress(sav, progress))
-                        {
-                            MessageBox.Show("Invalid save file.");
-                            return;
-                        }
+                        SetProgress(sav, progress);
 
                         var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress)) :
                             TeraUtil.GetDistEncounter(seed, sav, progress, content is RaidContent.Event_Mighty, true);
 
                         if (encounter is not null)
                         {
-                            var rngres = TeraUtil.CalcRNG(seed, pk.TrainerID7, pk.TrainerSID7, content, encounter);
+                            var rngres = TeraUtil.CalcRNG(seed, tid, sid, content, encounter);
                             var success = ComparePKM(pk, rngres);
                             if (success)
                             {

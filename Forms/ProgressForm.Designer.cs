@@ -50,16 +50,18 @@
             "Unlocked4Stars",
             "Unlocked5Stars",
             "Unlocked6Stars"});
-            this.cmbProgress.Location = new System.Drawing.Point(8, 32);
+            this.cmbProgress.Location = new System.Drawing.Point(7, 24);
+            this.cmbProgress.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbProgress.Name = "cmbProgress";
-            this.cmbProgress.Size = new System.Drawing.Size(203, 28);
+            this.cmbProgress.Size = new System.Drawing.Size(178, 23);
             this.cmbProgress.TabIndex = 1;
             // 
             // btnApplyProgress
             // 
-            this.btnApplyProgress.Location = new System.Drawing.Point(8, 65);
+            this.btnApplyProgress.Location = new System.Drawing.Point(6, 51);
+            this.btnApplyProgress.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnApplyProgress.Name = "btnApplyProgress";
-            this.btnApplyProgress.Size = new System.Drawing.Size(203, 29);
+            this.btnApplyProgress.Size = new System.Drawing.Size(178, 32);
             this.btnApplyProgress.TabIndex = 3;
             this.btnApplyProgress.Text = "Apply";
             this.btnApplyProgress.UseVisualStyleBackColor = true;
@@ -69,9 +71,11 @@
             // 
             this.grpGameProgress.Controls.Add(this.btnApplyProgress);
             this.grpGameProgress.Controls.Add(this.cmbProgress);
-            this.grpGameProgress.Location = new System.Drawing.Point(12, 12);
+            this.grpGameProgress.Location = new System.Drawing.Point(10, 1);
+            this.grpGameProgress.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grpGameProgress.Name = "grpGameProgress";
-            this.grpGameProgress.Size = new System.Drawing.Size(217, 110);
+            this.grpGameProgress.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpGameProgress.Size = new System.Drawing.Size(190, 92);
             this.grpGameProgress.TabIndex = 4;
             this.grpGameProgress.TabStop = false;
             this.grpGameProgress.Text = "Current Game Progress:";
@@ -82,18 +86,21 @@
             this.grpRaidMighty.Controls.Add(this.chkDefeated);
             this.grpRaidMighty.Controls.Add(this.chkCaptured);
             this.grpRaidMighty.Controls.Add(this.cmbMightyIndex);
-            this.grpRaidMighty.Location = new System.Drawing.Point(12, 128);
+            this.grpRaidMighty.Location = new System.Drawing.Point(10, 97);
+            this.grpRaidMighty.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grpRaidMighty.Name = "grpRaidMighty";
-            this.grpRaidMighty.Size = new System.Drawing.Size(217, 132);
+            this.grpRaidMighty.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpRaidMighty.Size = new System.Drawing.Size(190, 104);
             this.grpRaidMighty.TabIndex = 5;
             this.grpRaidMighty.TabStop = false;
             this.grpRaidMighty.Text = "Re-Catch Mighty Entity";
             // 
             // btnApplyRaid7
             // 
-            this.btnApplyRaid7.Location = new System.Drawing.Point(8, 90);
+            this.btnApplyRaid7.Location = new System.Drawing.Point(7, 68);
+            this.btnApplyRaid7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnApplyRaid7.Name = "btnApplyRaid7";
-            this.btnApplyRaid7.Size = new System.Drawing.Size(203, 29);
+            this.btnApplyRaid7.Size = new System.Drawing.Size(177, 32);
             this.btnApplyRaid7.TabIndex = 9;
             this.btnApplyRaid7.Text = "Apply";
             this.btnApplyRaid7.UseVisualStyleBackColor = true;
@@ -102,9 +109,10 @@
             // chkDefeated
             // 
             this.chkDefeated.AutoSize = true;
-            this.chkDefeated.Location = new System.Drawing.Point(118, 60);
+            this.chkDefeated.Location = new System.Drawing.Point(111, 47);
+            this.chkDefeated.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chkDefeated.Name = "chkDefeated";
-            this.chkDefeated.Size = new System.Drawing.Size(93, 24);
+            this.chkDefeated.Size = new System.Drawing.Size(73, 19);
             this.chkDefeated.TabIndex = 8;
             this.chkDefeated.Text = "Defeated";
             this.chkDefeated.UseVisualStyleBackColor = true;
@@ -112,9 +120,10 @@
             // chkCaptured
             // 
             this.chkCaptured.AutoSize = true;
-            this.chkCaptured.Location = new System.Drawing.Point(8, 60);
+            this.chkCaptured.Location = new System.Drawing.Point(13, 47);
+            this.chkCaptured.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chkCaptured.Name = "chkCaptured";
-            this.chkCaptured.Size = new System.Drawing.Size(92, 24);
+            this.chkCaptured.Size = new System.Drawing.Size(75, 19);
             this.chkCaptured.TabIndex = 7;
             this.chkCaptured.Text = "Captured";
             this.chkCaptured.UseVisualStyleBackColor = true;
@@ -122,18 +131,20 @@
             // cmbMightyIndex
             // 
             this.cmbMightyIndex.FormattingEnabled = true;
-            this.cmbMightyIndex.Location = new System.Drawing.Point(8, 26);
+            this.cmbMightyIndex.Location = new System.Drawing.Point(7, 20);
+            this.cmbMightyIndex.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbMightyIndex.Name = "cmbMightyIndex";
-            this.cmbMightyIndex.Size = new System.Drawing.Size(203, 28);
+            this.cmbMightyIndex.Size = new System.Drawing.Size(178, 23);
             this.cmbMightyIndex.TabIndex = 6;
             // 
             // ProgressForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(237, 266);
+            this.ClientSize = new System.Drawing.Size(206, 206);
             this.Controls.Add(this.grpRaidMighty);
             this.Controls.Add(this.grpGameProgress);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ProgressForm";

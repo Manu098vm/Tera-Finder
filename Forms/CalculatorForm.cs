@@ -44,7 +44,7 @@ namespace TeraFinder
 
         private bool IsBlankSAV()
         {
-            if(Editor.SAV.OT.Equals("PKHeX"))
+            if(Editor.Progress is GameProgress.Beginning or GameProgress.None)
                 return true;
             return false;
         }
@@ -264,7 +264,10 @@ namespace TeraFinder
                 DialogResult d = MessageBox.Show("Do you want to apply filters during the search?", "Apply Filters", MessageBoxButtons.YesNoCancel);
                 if (d == DialogResult.Yes)
                     btnApply.PerformClick();
-                else IsFiltered = false;
+                else if (d == DialogResult.No)
+                    IsFiltered = false;
+                else
+                    return;
 
                 btnSearch.Text = "Stop";
                 grpFilters.Enabled = false;

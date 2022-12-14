@@ -6,13 +6,13 @@ namespace TeraFinder
     public partial class EditorForm : Form
     {
         public SAV9SV SAV { get; set; } = null!;
-        public IPKMView PKMEditor { get; private set; } = null!;
+        public IPKMView? PKMEditor { get; private set; } = null!;
         public GameProgress Progress { get; set; } = GameProgress.None;
         private Image DefBackground = null!;
         private Size DefSize = new(0, 0);
         private bool Loaded = false;
 
-        public EditorForm(SAV9SV sav, IPKMView editor)
+        public EditorForm(SAV9SV sav, IPKMView? editor)
         {
             InitializeComponent();
             SAV = sav;

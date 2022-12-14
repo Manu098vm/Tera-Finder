@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="pkNX.Structures.FlatBuffers\**" />
+		<EmbeddedResource Remove="pkNX.Structures.FlatBuffers\**" />
+		<None Remove="pkNX.Structures.FlatBuffers\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="TeraFinder\**" />
+		<EmbeddedResource Remove="TeraFinder\**" />
+		<None Remove="TeraFinder\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="../TeraFinder.csproj">
+			<Private>True</Private>
+			<CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+		</ProjectReference>
+	</ItemGroup>
+
+</Project>

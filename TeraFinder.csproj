@@ -32,7 +32,13 @@
     <None Remove="pkNX.Structures.FlatBuffers\**" />
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<Compile Remove="TeraFinder.Launcher\**" />
+		<EmbeddedResource Remove="TeraFinder.Launcher\**" />
+		<None Remove="TeraFinder.Launcher\**" />
+	</ItemGroup>
+
+	<ItemGroup>
     <PackageReference Include="Octokit" Version="4.0.3" />
   </ItemGroup>
 
