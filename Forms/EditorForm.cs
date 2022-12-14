@@ -147,7 +147,7 @@ namespace TeraFinder
                     txtSpe.Text = $"{rngres.SPE}";
 
                     pictureBox.BackgroundImage = null;
-                    pictureBox.Image = SpriteUtil.GetRaidResultSprite(rngres, raid.IsEnabled);
+                    pictureBox.Image = SpritesUtil.GetRaidResultSprite(rngres, raid.IsEnabled);
                     pictureBox.Size = pictureBox.Image.Size;
 
                     SetStarSymbols(rngres.Stars);

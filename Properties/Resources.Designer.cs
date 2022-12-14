@@ -85,27 +85,7 @@ namespace TeraFinder.Properties {
         /// </summary>
         internal static byte[] PKHeX_Drawing {
             get {
-                object obj = ResourceManager.GetObject("PKHeX.Drawing", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] PKHeX_Drawing_Misc {
-            get {
-                object obj = ResourceManager.GetObject("PKHeX.Drawing.Misc", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] PKHeX_Drawing_PokeSprite {
-            get {
-                object obj = ResourceManager.GetObject("PKHeX.Drawing.PokeSprite", resourceCulture);
+                object obj = ResourceManager.GetObject("PKHeX_Drawing", resourceCulture);
                 return ((byte[])(obj));
             }
         }

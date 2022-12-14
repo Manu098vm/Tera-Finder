@@ -14,7 +14,6 @@ namespace TeraFinder
         public ISaveFileProvider SaveFileEditor { get; private set; } = null!;
         public IPKMView? PKMEditor { get; private set; } = null;
 
-        private bool Standalone = false;
         public SAV9SV SAV = null!;
 
         private readonly ToolStripMenuItem Plugin = new("Tera Finder Plugin");
@@ -36,7 +35,6 @@ namespace TeraFinder
         public void StandaloneInitialize(ReadOnlySpan<byte> data = default)
         {
             TryUpdate();
-            Standalone = true;
             if (data != default)
                 SAV = new SAV9SV(data.ToArray());
             else
