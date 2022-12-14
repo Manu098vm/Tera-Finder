@@ -81,7 +81,7 @@ namespace TeraFinder.Forms
 
             for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
             {
-                for (var progress = GameProgress.UnlockedTeraRaids; progress < GameProgress.None; progress++)
+                for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.None; progress++)
                 {
                     for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
                     {
@@ -98,7 +98,10 @@ namespace TeraFinder.Forms
                             var success = ComparePKM(pk, rngres);
                             if (success)
                             {
-                                txtSeed.Text = $"{seed:X8} ({content})";
+                                var type = $"{content}";
+                                if (progress is GameProgress.None)
+                                    type = $"{RaidContent.Black}";
+                                txtSeed.Text = $"{seed:X8} ({type})";
                                 return;
                             }
                         }

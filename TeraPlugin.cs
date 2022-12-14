@@ -64,7 +64,7 @@ namespace TeraFinder
 
         public void LaunchFinder()
         {
-            new CheckerForm(new PK9(), SAV).Show();
+            new CheckerForm(new PK9 { TrainerID7 = SAV.TrainerID7, TrainerSID7 = SAV.TrainerSID7 }, SAV).Show();
         }
 
         public void NotifySaveLoaded()
