@@ -56,7 +56,7 @@ jobs:
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
     env:
-      Solution_Name: TeraRaidEditor.sln
+      Solution_Name: TeraFinder.sln
 
     steps:
     - name: Checkout
@@ -93,4 +93,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Tera-Finder
-        path: bin
+        path: TeraFinder.Launcher/bin
