@@ -84,15 +84,6 @@
             this.nSpdMax = new System.Windows.Forms.NumericUpDown();
             this.nSpeMax = new System.Windows.Forms.NumericUpDown();
             this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.bgWorkerFilter = new System.ComponentModel.BackgroundWorker();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.grpGameInfo = new System.Windows.Forms.GroupBox();
-            this.txtSID = new System.Windows.Forms.TextBox();
-            this.lblSID = new System.Windows.Forms.Label();
-            this.txtTID = new System.Windows.Forms.TextBox();
-            this.lblTID = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cmbGame = new System.Windows.Forms.ComboBox();
             this.Seed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Shiny = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Stars = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -113,6 +104,17 @@
             this.PkmWeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PkmScale = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Calcs = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bgWorkerFilter = new System.ComponentModel.BackgroundWorker();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.grpGameInfo = new System.Windows.Forms.GroupBox();
+            this.txtSID = new System.Windows.Forms.TextBox();
+            this.lblSID = new System.Windows.Forms.Label();
+            this.txtTID = new System.Windows.Forms.TextBox();
+            this.lblTID = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cmbGame = new System.Windows.Forms.ComboBox();
+            this.lblEC = new System.Windows.Forms.Label();
+            this.cmbEC = new System.Windows.Forms.ComboBox();
             this.grpRaidDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFrames)).BeginInit();
             this.grpFilters.SuspendLayout();
@@ -264,6 +266,8 @@
             // 
             // grpFilters
             // 
+            this.grpFilters.Controls.Add(this.cmbEC);
+            this.grpFilters.Controls.Add(this.lblEC);
             this.grpFilters.Controls.Add(this.cmbNature);
             this.grpFilters.Controls.Add(this.btnReset);
             this.grpFilters.Controls.Add(this.cmbTeraType);
@@ -382,7 +386,7 @@
             "Dragon",
             "Dark",
             "Fairy"});
-            this.cmbTeraType.Location = new System.Drawing.Point(382, 145);
+            this.cmbTeraType.Location = new System.Drawing.Point(382, 113);
             this.cmbTeraType.Name = "cmbTeraType";
             this.cmbTeraType.Size = new System.Drawing.Size(194, 28);
             this.cmbTeraType.TabIndex = 30;
@@ -392,7 +396,7 @@
             this.cmbSpecies.FormattingEnabled = true;
             this.cmbSpecies.Items.AddRange(new object[] {
             "Any"});
-            this.cmbSpecies.Location = new System.Drawing.Point(382, 96);
+            this.cmbSpecies.Location = new System.Drawing.Point(382, 76);
             this.cmbSpecies.Name = "cmbSpecies";
             this.cmbSpecies.Size = new System.Drawing.Size(194, 28);
             this.cmbSpecies.TabIndex = 29;
@@ -410,7 +414,7 @@
             "5S ☆☆☆☆☆",
             "6S ☆☆☆☆☆☆",
             "7S ☆☆☆☆☆☆☆"});
-            this.cmbStars.Location = new System.Drawing.Point(382, 47);
+            this.cmbStars.Location = new System.Drawing.Point(382, 39);
             this.cmbStars.Name = "cmbStars";
             this.cmbStars.Size = new System.Drawing.Size(194, 28);
             this.cmbStars.TabIndex = 28;
@@ -492,7 +496,7 @@
             // lblTera
             // 
             this.lblTera.AutoSize = true;
-            this.lblTera.Location = new System.Drawing.Point(295, 148);
+            this.lblTera.Location = new System.Drawing.Point(295, 116);
             this.lblTera.Name = "lblTera";
             this.lblTera.Size = new System.Drawing.Size(75, 20);
             this.lblTera.TabIndex = 8;
@@ -550,7 +554,7 @@
             // lblSpecies
             // 
             this.lblSpecies.AutoSize = true;
-            this.lblSpecies.Location = new System.Drawing.Point(295, 99);
+            this.lblSpecies.Location = new System.Drawing.Point(295, 79);
             this.lblSpecies.Name = "lblSpecies";
             this.lblSpecies.Size = new System.Drawing.Size(62, 20);
             this.lblSpecies.TabIndex = 9;
@@ -586,7 +590,7 @@
             // lblStars
             // 
             this.lblStars.AutoSize = true;
-            this.lblStars.Location = new System.Drawing.Point(295, 51);
+            this.lblStars.Location = new System.Drawing.Point(295, 43);
             this.lblStars.Name = "lblStars";
             this.lblStars.Size = new System.Drawing.Size(44, 20);
             this.lblStars.TabIndex = 10;
@@ -840,87 +844,6 @@
             this.dataGrid.Size = new System.Drawing.Size(1578, 507);
             this.dataGrid.TabIndex = 5;
             // 
-            // bgWorkerFilter
-            // 
-            this.bgWorkerFilter.WorkerReportsProgress = true;
-            this.bgWorkerFilter.WorkerSupportsCancellation = true;
-            // 
-            // progressBar
-            // 
-            this.progressBar.Location = new System.Drawing.Point(11, 776);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(1578, 25);
-            this.progressBar.TabIndex = 6;
-            // 
-            // grpGameInfo
-            // 
-            this.grpGameInfo.Controls.Add(this.txtSID);
-            this.grpGameInfo.Controls.Add(this.lblSID);
-            this.grpGameInfo.Controls.Add(this.txtTID);
-            this.grpGameInfo.Controls.Add(this.lblTID);
-            this.grpGameInfo.Controls.Add(this.label2);
-            this.grpGameInfo.Controls.Add(this.cmbProgress);
-            this.grpGameInfo.Controls.Add(this.lblProgress);
-            this.grpGameInfo.Controls.Add(this.cmbGame);
-            this.grpGameInfo.Location = new System.Drawing.Point(353, 12);
-            this.grpGameInfo.Name = "grpGameInfo";
-            this.grpGameInfo.Size = new System.Drawing.Size(307, 245);
-            this.grpGameInfo.TabIndex = 7;
-            this.grpGameInfo.TabStop = false;
-            this.grpGameInfo.Text = "Game Info";
-            // 
-            // txtSID
-            // 
-            this.txtSID.Location = new System.Drawing.Point(101, 153);
-            this.txtSID.Name = "txtSID";
-            this.txtSID.Size = new System.Drawing.Size(174, 27);
-            this.txtSID.TabIndex = 11;
-            // 
-            // lblSID
-            // 
-            this.lblSID.AutoSize = true;
-            this.lblSID.Location = new System.Drawing.Point(21, 156);
-            this.lblSID.Name = "lblSID";
-            this.lblSID.Size = new System.Drawing.Size(35, 20);
-            this.lblSID.TabIndex = 10;
-            this.lblSID.Text = "SID:";
-            // 
-            // txtTID
-            // 
-            this.txtTID.Location = new System.Drawing.Point(101, 116);
-            this.txtTID.Name = "txtTID";
-            this.txtTID.Size = new System.Drawing.Size(174, 27);
-            this.txtTID.TabIndex = 9;
-            // 
-            // lblTID
-            // 
-            this.lblTID.AutoSize = true;
-            this.lblTID.Location = new System.Drawing.Point(21, 119);
-            this.lblTID.Name = "lblTID";
-            this.lblTID.Size = new System.Drawing.Size(35, 20);
-            this.lblTID.TabIndex = 8;
-            this.lblTID.Text = "TID:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 45);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(51, 20);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Game:";
-            // 
-            // cmbGame
-            // 
-            this.cmbGame.FormattingEnabled = true;
-            this.cmbGame.Items.AddRange(new object[] {
-            "Scarlet",
-            "Violet"});
-            this.cmbGame.Location = new System.Drawing.Point(101, 40);
-            this.cmbGame.Name = "cmbGame";
-            this.cmbGame.Size = new System.Drawing.Size(174, 28);
-            this.cmbGame.TabIndex = 0;
-            // 
             // Seed
             // 
             this.Seed.HeaderText = "Seed";
@@ -1090,6 +1013,107 @@
             this.Calcs.ReadOnly = true;
             this.Calcs.Width = 90;
             // 
+            // bgWorkerFilter
+            // 
+            this.bgWorkerFilter.WorkerReportsProgress = true;
+            this.bgWorkerFilter.WorkerSupportsCancellation = true;
+            // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(11, 776);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(1578, 25);
+            this.progressBar.TabIndex = 6;
+            // 
+            // grpGameInfo
+            // 
+            this.grpGameInfo.Controls.Add(this.txtSID);
+            this.grpGameInfo.Controls.Add(this.lblSID);
+            this.grpGameInfo.Controls.Add(this.txtTID);
+            this.grpGameInfo.Controls.Add(this.lblTID);
+            this.grpGameInfo.Controls.Add(this.label2);
+            this.grpGameInfo.Controls.Add(this.cmbProgress);
+            this.grpGameInfo.Controls.Add(this.lblProgress);
+            this.grpGameInfo.Controls.Add(this.cmbGame);
+            this.grpGameInfo.Location = new System.Drawing.Point(353, 12);
+            this.grpGameInfo.Name = "grpGameInfo";
+            this.grpGameInfo.Size = new System.Drawing.Size(307, 245);
+            this.grpGameInfo.TabIndex = 7;
+            this.grpGameInfo.TabStop = false;
+            this.grpGameInfo.Text = "Game Info";
+            // 
+            // txtSID
+            // 
+            this.txtSID.Location = new System.Drawing.Point(101, 153);
+            this.txtSID.Name = "txtSID";
+            this.txtSID.Size = new System.Drawing.Size(174, 27);
+            this.txtSID.TabIndex = 11;
+            // 
+            // lblSID
+            // 
+            this.lblSID.AutoSize = true;
+            this.lblSID.Location = new System.Drawing.Point(21, 156);
+            this.lblSID.Name = "lblSID";
+            this.lblSID.Size = new System.Drawing.Size(35, 20);
+            this.lblSID.TabIndex = 10;
+            this.lblSID.Text = "SID:";
+            // 
+            // txtTID
+            // 
+            this.txtTID.Location = new System.Drawing.Point(101, 116);
+            this.txtTID.Name = "txtTID";
+            this.txtTID.Size = new System.Drawing.Size(174, 27);
+            this.txtTID.TabIndex = 9;
+            // 
+            // lblTID
+            // 
+            this.lblTID.AutoSize = true;
+            this.lblTID.Location = new System.Drawing.Point(21, 119);
+            this.lblTID.Name = "lblTID";
+            this.lblTID.Size = new System.Drawing.Size(35, 20);
+            this.lblTID.TabIndex = 8;
+            this.lblTID.Text = "TID:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(21, 45);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(51, 20);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Game:";
+            // 
+            // cmbGame
+            // 
+            this.cmbGame.FormattingEnabled = true;
+            this.cmbGame.Items.AddRange(new object[] {
+            "Scarlet",
+            "Violet"});
+            this.cmbGame.Location = new System.Drawing.Point(101, 40);
+            this.cmbGame.Name = "cmbGame";
+            this.cmbGame.Size = new System.Drawing.Size(174, 28);
+            this.cmbGame.TabIndex = 0;
+            // 
+            // lblEC
+            // 
+            this.lblEC.AutoSize = true;
+            this.lblEC.Location = new System.Drawing.Point(295, 153);
+            this.lblEC.Name = "lblEC";
+            this.lblEC.Size = new System.Drawing.Size(33, 20);
+            this.lblEC.TabIndex = 33;
+            this.lblEC.Text = "EC: ";
+            // 
+            // cmbEC
+            // 
+            this.cmbEC.FormattingEnabled = true;
+            this.cmbEC.Items.AddRange(new object[] {
+            "Any",
+            "EC % 100 = 0"});
+            this.cmbEC.Location = new System.Drawing.Point(382, 149);
+            this.cmbEC.Name = "cmbEC";
+            this.cmbEC.Size = new System.Drawing.Size(194, 28);
+            this.cmbEC.TabIndex = 34;
+            // 
             // CalculatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -1215,5 +1239,7 @@
         private DataGridViewTextBoxColumn PkmWeight;
         private DataGridViewTextBoxColumn PkmScale;
         private DataGridViewTextBoxColumn Calcs;
+        private ComboBox cmbEC;
+        private Label lblEC;
     }
 }

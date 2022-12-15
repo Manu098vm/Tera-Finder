@@ -28,6 +28,7 @@ namespace TeraFinder
 
             cmbSpecies.SelectedIndex = 0;
             cmbTeraType.SelectedIndex = 0;
+            cmbEC.SelectedIndex = 0;
             cmbAbility.SelectedIndex = 0;
             cmbNature.SelectedIndex = 25;
             cmbGender.SelectedIndex = 0;
@@ -190,11 +191,12 @@ namespace TeraFinder
                 Stars = GetStars(),
                 Species = (Species)GetSpeciesAndForm()[0],
                 Form = GetSpeciesAndForm()[1],
-                TeraType = (MoveType)(cmbTeraType.SelectedIndex-1),
+                TeraType = (MoveType)(cmbTeraType.SelectedIndex - 1),
                 AbilityNumber = cmbAbility.SelectedIndex,
                 Nature = (Nature)cmbNature.SelectedIndex,
                 Gender = GetGender(),
                 Shiny = (TeraShiny)cmbShiny.SelectedIndex,
+                AltEC = cmbEC.SelectedIndex == 1,
             };
 
             IsFiltered = true;

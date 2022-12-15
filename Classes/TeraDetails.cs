@@ -100,6 +100,7 @@ namespace TeraFinder
         public Nature Nature { get; set; }
         public Gender Gender { get; set; }
         public TeraShiny Shiny { get; set; }
+        public bool AltEC { get; set; }
 
         public bool IsFilterMatch(TeraDetails res)
         {
@@ -138,6 +139,9 @@ namespace TeraFinder
             if (Shiny is TeraShiny.Yes && res.Shiny < TeraShiny.Yes)
                 return false;
             if (Shiny > TeraShiny.Yes && Shiny != res.Shiny)
+                return false;
+
+            if (AltEC && res.EC % 100 != 0)
                 return false;
 
             return true;
@@ -184,6 +188,8 @@ namespace TeraFinder
             if (!(Gender == res.Gender))
                 return false;
             if (!(Shiny == res.Shiny))
+                return false;
+            if (!(AltEC == res.AltEC))
                 return false;
 
             return true;
