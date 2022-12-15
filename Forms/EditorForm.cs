@@ -1,5 +1,4 @@
-﻿using Octokit;
-using PKHeX.Core;
+﻿using PKHeX.Core;
 
 namespace TeraFinder
 {

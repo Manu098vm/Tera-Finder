@@ -45,8 +45,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-    <PackageReference Include="Octokit" Version="4.0.3" />
-  </ItemGroup>
+	  <PackageReference Include="Octokit" Version="4.0.3" />
+	</ItemGroup>
 
   <ItemGroup>
     <None Update="LICENSE">

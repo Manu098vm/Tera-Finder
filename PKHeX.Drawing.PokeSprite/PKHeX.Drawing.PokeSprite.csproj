@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net6.0-windows</TargetFrameworks>
     <RootNamespace>PKHeX.Drawing.PokeSprite</RootNamespace>
+	  <Nullable>enable</Nullable>
     <Authors>kwsch</Authors>
   </PropertyGroup>
 
