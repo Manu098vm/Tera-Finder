@@ -73,6 +73,46 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] bcat_default_fixed_reward_item_array {
+            get {
+                object obj = ResourceManager.GetObject("bcat_default_fixed_reward_item_array", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] bcat_default_lottery_reward_item_array {
+            get {
+                object obj = ResourceManager.GetObject("bcat_default_lottery_reward_item_array", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] bcat_default_raid_enemy_array {
+            get {
+                object obj = ResourceManager.GetObject("bcat_default_raid_enemy_array", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] encounter_gem_paldea {
+            get {
+                object obj = ResourceManager.GetObject("encounter_gem_paldea", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] PKHeX_Core {
             get {
                 object obj = ResourceManager.GetObject("PKHeX.Core", resourceCulture);
@@ -86,6 +126,26 @@ namespace TeraFinder.Properties {
         internal static byte[] PKHeX_Drawing {
             get {
                 object obj = ResourceManager.GetObject("PKHeX_Drawing", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] raid_fixed_reward_item_array {
+            get {
+                object obj = ResourceManager.GetObject("raid_fixed_reward_item_array", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] raid_lottery_reward_item_array {
+            get {
+                object obj = ResourceManager.GetObject("raid_lottery_reward_item_array", resourceCulture);
                 return ((byte[])(obj));
             }
         }

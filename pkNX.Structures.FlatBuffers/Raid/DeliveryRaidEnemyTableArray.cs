@@ -79,6 +79,13 @@ public class RaidEnemyInfo
         bw.Write((byte)b.ScaleValue);
         bw.Write((byte)0);
     }
+
+    public void SerializeTeraFinder(BinaryWriter bw)
+    {
+        bw.Write((uint)No);
+        bw.Write(DropTableFix);
+        bw.Write(DropTableRandom);
+    }
 }
 
 [FlatBufferTable, TypeConverter(typeof(ExpandableObjectConverter))]

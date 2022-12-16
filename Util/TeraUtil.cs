@@ -96,9 +96,9 @@ namespace TeraFinder
             List<string> list = new();
             var game = (GameVersion)sav.Game;
 
-            var encounters = content is RaidContent.Event ? EncounterRaid9.GetEncounters(EncounterDist9.GetArray(EventUtil.GetEventData(sav)[0])) :
-                content is RaidContent.Event_Mighty ? EncounterRaid9.GetEncounters(EncounterMight9.GetArray(EventUtil.GetEventData(sav)[1])) :
-                EncounterRaid9.GetEncounters(EncounterTera9.GetArray(Util.GetBinaryResource("encounter_gem_paldea.pkl")));
+            var encounters = content is RaidContent.Event ? EncounterRaid9.GetEncounters(EncounterDist9.GetArray(EventUtil.GetEventEncounterDataFromSAV(sav)[0])) :
+                content is RaidContent.Event_Mighty ? EncounterRaid9.GetEncounters(EncounterMight9.GetArray(EventUtil.GetEventEncounterDataFromSAV(sav)[1])) :
+                EncounterRaid9.GetEncounters(EncounterTera9.GetArray(Properties.Resources.encounter_gem_paldea));
 
             foreach (var encounter in encounters)
             {
@@ -112,7 +112,6 @@ namespace TeraFinder
             }
             return list;
         }
-
         
         public static EncounterRaid9? GetTeraEncounter(uint seed, SAV9SV sav, int stars)
         {
@@ -121,7 +120,7 @@ namespace TeraFinder
             if (stars < 6) xoro.NextInt(100);
             var max = game is GameVersion.SL ? EncounterTera9.GetRateTotalBaseSL(stars) : EncounterTera9.GetRateTotalBaseVL(stars);
             var rateRand = (int)xoro.NextInt((uint)max);
-            foreach (var encounter in EncounterTera9.GetArray(Util.GetBinaryResource("encounter_gem_paldea.pkl")))
+            foreach (var encounter in EncounterTera9.GetArray(Properties.Resources.encounter_gem_paldea))
             {
                 if (encounter.Stars != stars)
                     continue;
@@ -143,8 +142,10 @@ namespace TeraFinder
                 _ => 0,
             };
 
-            foreach (var encounter in EncounterRaid9.GetEncounters(isMighty ? 
-                EncounterMight9.GetArray(EventUtil.GetEventData(sav, allEncount)[1]) : EncounterDist9.GetArray(EventUtil.GetEventData(sav, allEncount)[0])))
+            foreach (var encounter in EncounterRaid9.GetEncounters(allEncount ? (isMighty ? PKHeX.Core.EncounterMight9.GetArray(Util.GetBinaryResource("encounter_might_paldea.pkl")) :
+                PKHeX.Core.EncounterDist9.GetArray(Util.GetBinaryResource("encounter_dist_paldea.pkl"))) :
+                (isMighty ? EncounterMight9.GetArray(EventUtil.GetEventEncounterDataFromSAV(sav)[1]) : 
+                EncounterDist9.GetArray(EventUtil.GetEventEncounterDataFromSAV(sav)[0]))))
             {
                 var max = game is GameVersion.SL ? encounter.GetRandRateTotalScarlet(p) : encounter.GetRandRateTotalViolet(p);
                 var min = game is GameVersion.SL ? encounter.GetRandRateMinScarlet(p) : encounter.GetRandRateMinViolet(p);

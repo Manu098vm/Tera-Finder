@@ -25,6 +25,9 @@ namespace TeraFinder
         public byte Scale { get => GetScale(); }
         public IndividualValueSet IVs { get => GetIVs(); }
         public sbyte Gender { get => GetGender(); }
+        public uint Identifier { get => GetIdentifier(); }
+        public ulong FixedRewardHash { get => GetFixedRewardHash(); }
+        public ulong LotteryRewardHash { get => GetLotteryRewardHash(); }
 
         public static EncounterRaid9[] GetEncounters(ITeraRaid9[] encounters)
         {
@@ -42,6 +45,12 @@ namespace TeraFinder
                 return dist.GetRandRateTotalScarlet(stage);
             else if (Encounter is EncounterMight9 might)
                 return might.GetRandRateTotalScarlet(stage);
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.GetRandRateTotalScarlet(stage);
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.GetRandRateTotalScarlet(stage);
             else
                 return ((EncounterDist9)Encounter).GetRandRateTotalScarlet(stage);
         }
@@ -54,6 +63,12 @@ namespace TeraFinder
                 return dist.GetRandRateTotalViolet(stage);
             else if (Encounter is EncounterMight9 might)
                 return might.GetRandRateTotalViolet(stage);
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.GetRandRateTotalViolet(stage);
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.GetRandRateTotalViolet(stage);
             else
                 return ((EncounterDist9)Encounter).GetRandRateTotalViolet(stage);
         }
@@ -66,6 +81,12 @@ namespace TeraFinder
                 return dist.GetRandRateMinScarlet(stage);
             else if (Encounter is EncounterMight9 might)
                 return might.GetRandRateMinScarlet(stage);
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.GetRandRateMinScarlet(stage);
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.GetRandRateMinScarlet(stage);
             else
                 return ((EncounterDist9)Encounter).GetRandRateMinScarlet(stage);
         }
@@ -78,6 +99,12 @@ namespace TeraFinder
                 return dist.GetRandRateMinViolet(stage);
             else if (Encounter is EncounterMight9 might)
                 return might.GetRandRateMinViolet(stage);
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.GetRandRateMinViolet(stage);
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.GetRandRateMinViolet(stage);
             else
                 return ((EncounterDist9)Encounter).GetRandRateMinViolet(stage);
         }
@@ -92,6 +119,12 @@ namespace TeraFinder
                 return dist.Species;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.Species;
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return h_tera.Species;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.Species;
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.Species;
             else throw new ArgumentOutOfRangeException();
         }
 
@@ -105,6 +138,12 @@ namespace TeraFinder
                 return dist.Form;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.Form;
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return h_tera.Form;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.Form;
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.Form;
             else throw new ArgumentOutOfRangeException();
         }
 
@@ -118,6 +157,12 @@ namespace TeraFinder
                 return dist.Version;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.Version;
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return h_tera.Version;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.Version;
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.Version;
             else throw new ArgumentOutOfRangeException();
         }
 
@@ -131,6 +176,12 @@ namespace TeraFinder
                 return dist.FlawlessIVCount;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.FlawlessIVCount;
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return h_tera.FlawlessIVCount;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.FlawlessIVCount;
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.FlawlessIVCount;
             else throw new ArgumentOutOfRangeException();
         }
 
@@ -144,6 +195,12 @@ namespace TeraFinder
                 return dist.Ability;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.Ability;
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return h_tera.Ability;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.Ability;
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.Ability;
             else throw new ArgumentOutOfRangeException();
         }
 
@@ -157,6 +214,12 @@ namespace TeraFinder
                 return dist.Shiny;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.Shiny;
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return h_tera.Shiny;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.Shiny;
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.Shiny;
             else throw new ArgumentOutOfRangeException();
         }
 
@@ -170,6 +233,12 @@ namespace TeraFinder
                 return dist.Nature;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.Nature;
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return h_tera.Nature;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.Nature;
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.Nature;
             else throw new ArgumentOutOfRangeException();
         }
 
@@ -183,6 +252,12 @@ namespace TeraFinder
                 return 0;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.Scale;
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.Scale;
             else throw new ArgumentOutOfRangeException();
         }
 
@@ -196,6 +271,12 @@ namespace TeraFinder
                 return default;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.IVs;
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return default;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return default;
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.IVs;
             else throw new ArgumentOutOfRangeException();
         }
 
@@ -209,6 +290,69 @@ namespace TeraFinder
                 return dist.Gender;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.Gender;
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return h_tera.Gender;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.Gender;
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.Gender;
+            else throw new ArgumentOutOfRangeException();
+        }
+
+        private uint GetIdentifier()
+        {
+            if (Encounter is EncounterTera9 tera)
+                return tera.Identifier;
+            else if (Encounter is EncounterMight9 might)
+                return might.Identifier;
+            else if (Encounter is EncounterDist9 dist)
+                return dist.Identifier;
+            else if (Encounter is EncounterRaid9 raid)
+                return raid.Identifier;
+            else if (Encounter is PKHeX.Core.EncounterMight9)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterDist9)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterTera9)
+                return 0;
+            else throw new ArgumentOutOfRangeException();
+        }
+
+        private ulong GetFixedRewardHash()
+        {
+            if (Encounter is EncounterTera9 tera)
+                return tera.FixedRewardHash;
+            else if (Encounter is EncounterMight9 might)
+                return might.FixedRewardHash;
+            else if (Encounter is EncounterDist9 dist)
+                return dist.FixedRewardHash;
+            else if (Encounter is EncounterRaid9 raid)
+                return raid.FixedRewardHash;
+            else if (Encounter is PKHeX.Core.EncounterMight9)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterDist9)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterTera9)
+                return 0;
+            else throw new ArgumentOutOfRangeException();
+        }
+
+        private ulong GetLotteryRewardHash()
+        {
+            if (Encounter is EncounterTera9 tera)
+                return tera.LotteryRewardHash;
+            else if (Encounter is EncounterMight9 might)
+                return might.LotteryRewardHash;
+            else if (Encounter is EncounterDist9 dist)
+                return dist.LotteryRewardHash;
+            else if (Encounter is EncounterRaid9 raid)
+                return raid.LotteryRewardHash;
+            else if (Encounter is PKHeX.Core.EncounterMight9)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterDist9)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterTera9)
+                return 0;
             else throw new ArgumentOutOfRangeException();
         }
     }
