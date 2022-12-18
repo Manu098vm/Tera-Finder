@@ -28,6 +28,8 @@ namespace TeraFinder
         public uint Identifier { get => GetIdentifier(); }
         public ulong FixedRewardHash { get => GetFixedRewardHash(); }
         public ulong LotteryRewardHash { get => GetLotteryRewardHash(); }
+        public ushort RandRateMinScarlet { get => GetRandRateMinScarlet(); }
+        public ushort RandRateMinViolet { get => GetRandRateMinViolet(); }
 
         public static EncounterRaid9[] GetEncounters(ITeraRaid9[] encounters)
         {
@@ -73,16 +75,16 @@ namespace TeraFinder
                 return ((EncounterDist9)Encounter).GetRandRateTotalViolet(stage);
         }
 
-        public ushort GetRandRateMinScarlet(int stage)
+        public ushort GetRandRateMinScarlet(int stage = 0)
         {
             if (Encounter is EncounterTera9 tera)
-                return 0;
+                return (ushort)tera.RandRateMinScarlet;
             else if (Encounter is EncounterDist9 dist)
                 return dist.GetRandRateMinScarlet(stage);
             else if (Encounter is EncounterMight9 might)
                 return might.GetRandRateMinScarlet(stage);
             else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
-                return 0;
+                return (ushort)h_tera.RandRateMinScarlet;
             else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
                 return h_dist.GetRandRateMinScarlet(stage);
             else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
@@ -91,16 +93,16 @@ namespace TeraFinder
                 return ((EncounterDist9)Encounter).GetRandRateMinScarlet(stage);
         }
 
-        public ushort GetRandRateMinViolet(int stage)
+        public ushort GetRandRateMinViolet(int stage = 0)
         {
             if (Encounter is EncounterTera9 tera)
-                return 0;
+                return (ushort)tera.RandRateMinViolet;
             else if (Encounter is EncounterDist9 dist)
                 return dist.GetRandRateMinViolet(stage);
             else if (Encounter is EncounterMight9 might)
                 return might.GetRandRateMinViolet(stage);
             else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
-                return 0;
+                return (ushort)h_tera.RandRateMinViolet;
             else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
                 return h_dist.GetRandRateMinViolet(stage);
             else if (Encounter is PKHeX.Core.EncounterMight9 h_might)

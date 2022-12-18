@@ -11,11 +11,26 @@ namespace TeraFinder
         private Size DefSize = new(0, 0);
         private bool Loaded = false;
 
-        public EditorForm(SAV9SV sav, IPKMView? editor)
+        public EncounterRaid9[]? Tera = null;
+        public EncounterRaid9[]? Dist = null;
+        public EncounterRaid9[]? Mighty = null;
+
+        public EditorForm(SAV9SV sav, IPKMView? editor, EncounterRaid9[]? tera, EncounterRaid9[]? dist, EncounterRaid9[]? mighty)
         {
             InitializeComponent();
             SAV = sav;
             PKMEditor = editor;
+            if (dist is null)
+            {
+                var events = TeraUtil.GetSAVDistEncounters(SAV);
+                Dist = events[0];
+                Mighty = events[1];
+            }
+            else
+            {
+                Dist = dist;
+                Mighty = mighty;
+            }
             DefBackground = pictureBox.BackgroundImage;
             DefSize = pictureBox.Size;
             Progress = TeraUtil.GetProgress(SAV);
@@ -23,6 +38,7 @@ namespace TeraFinder
                 cmbDens.Items.Add(name);
             cmbDens.SelectedIndex = 0;
             btnSx.Enabled = false;
+            Tera = tera is null ? TeraUtil.GetAllTeraEncounters() : tera;
         }
 
         private void cmbDens_IndexChanged(object sender, EventArgs e)
@@ -124,8 +140,9 @@ namespace TeraFinder
             if (Progress is not GameProgress.Beginning && raid.Seed != 0)
             {
                 var progress = raid.Content is TeraRaidContentType.Black6 ? GameProgress.None : Progress;
-                var encounter = cmbContent.SelectedIndex < 2 ? TeraUtil.GetTeraEncounter(raid.Seed, SAV, TeraUtil.GetStars(raid.Seed, progress)) :
-                    TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, raid.Content is TeraRaidContentType.Might7);
+                var encounter = cmbContent.SelectedIndex < 2 ? TeraUtil.GetTeraEncounter(raid.Seed, SAV, TeraUtil.GetStars(raid.Seed, progress), Tera!) :
+                    raid.Content is TeraRaidContentType.Might7 ? TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Mighty!, true):
+                    TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Dist!, false);
 
                 if (encounter is not null)
                 {

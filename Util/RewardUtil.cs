@@ -40,6 +40,9 @@ namespace TeraFinder
             }
         }
 
+
+        //Port from https://github.com/SteveCookTU/sv_raid_reader/blob/master/src/item_list.rs
+        //Thanks SteveCookTU/EzPzStreamz!
         private static Dictionary<ulong, List<Reward>> GetFixedTable(List<RaidFixedRewardItemArray.Table> drops)
         {
             var table = new Dictionary<ulong, List<Reward>>();

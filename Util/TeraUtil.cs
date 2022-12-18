@@ -112,18 +112,34 @@ namespace TeraFinder
             }
             return list;
         }
-        
-        public static EncounterRaid9? GetTeraEncounter(uint seed, SAV9SV sav, int stars)
+
+        public static EncounterRaid9[] GetAllTeraEncounters() => EncounterRaid9.GetEncounters(EncounterTera9.GetArray(Properties.Resources.encounter_gem_paldea));
+
+        public static EncounterRaid9[][] GetAllDistEncounters()
+        {
+            var dist = EncounterRaid9.GetEncounters(PKHeX.Core.EncounterDist9.GetArray(Util.GetBinaryResource("encounter_dist_paldea.pkl")));
+            var mighty = EncounterRaid9.GetEncounters(PKHeX.Core.EncounterMight9.GetArray(Util.GetBinaryResource("encounter_might_paldea.pkl")));
+            return new EncounterRaid9[][] { dist, mighty };
+        }
+
+        public static EncounterRaid9[][] GetSAVDistEncounters(SAV9SV sav)
+        {
+            var events = EventUtil.GetEventEncounterDataFromSAV(sav);
+            var dist = EncounterRaid9.GetEncounters(EncounterDist9.GetArray(events[0]));
+            var mighty = EncounterRaid9.GetEncounters(EncounterMight9.GetArray(events[1]));
+            return new EncounterRaid9[][] { dist, mighty };
+        }
+
+        public static EncounterRaid9? GetTeraEncounter(uint seed, SAV9SV sav, int stars, EncounterRaid9[] encounters)
         {
             var game = (GameVersion)sav.Game;
             var xoro = new Xoroshiro128Plus(seed);
             if (stars < 6) xoro.NextInt(100);
             var max = game is GameVersion.SL ? EncounterTera9.GetRateTotalBaseSL(stars) : EncounterTera9.GetRateTotalBaseVL(stars);
             var rateRand = (int)xoro.NextInt((uint)max);
-            foreach (var encounter in EncounterTera9.GetArray(Properties.Resources.encounter_gem_paldea))
+            //foreach (var encounter in EncounterTera9.GetArray(Properties.Resources.encounter_gem_paldea))
+            foreach (var encounter in encounters)
             {
-                if (encounter.Stars != stars)
-                    continue;
                 var min = game is GameVersion.SL ? encounter.RandRateMinScarlet : encounter.RandRateMinViolet;
                 if (min >= 0 && (uint)(rateRand - min) < encounter.RandRate && encounter.Stars == stars)
                     return new EncounterRaid9(encounter);
@@ -131,7 +147,7 @@ namespace TeraFinder
             return null;
         }
 
-        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, bool isMighty, bool allEncount = false)
+        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, bool isMighty)
         {
             var game = (GameVersion)sav.Game;
             var p = isMighty ? progress is GameProgress.Unlocked6Stars ? 3 : 0 : progress switch
@@ -142,10 +158,11 @@ namespace TeraFinder
                 _ => 0,
             };
 
-            foreach (var encounter in EncounterRaid9.GetEncounters(allEncount ? (isMighty ? PKHeX.Core.EncounterMight9.GetArray(Util.GetBinaryResource("encounter_might_paldea.pkl")) :
-                PKHeX.Core.EncounterDist9.GetArray(Util.GetBinaryResource("encounter_dist_paldea.pkl"))) :
-                (isMighty ? EncounterMight9.GetArray(EventUtil.GetEventEncounterDataFromSAV(sav)[1]) : 
-                EncounterDist9.GetArray(EventUtil.GetEventEncounterDataFromSAV(sav)[0]))))
+            //foreach (var encounter in EncounterRaid9.GetEncounters(allEncount ? (isMighty ? PKHeX.Core.EncounterMight9.GetArray(Util.GetBinaryResource("encounter_might_paldea.pkl")) :
+                //PKHeX.Core.EncounterDist9.GetArray(Util.GetBinaryResource("encounter_dist_paldea.pkl"))) :
+                //(isMighty ? EncounterMight9.GetArray(EventUtil.GetEventEncounterDataFromSAV(sav)[1]) : 
+                //EncounterDist9.GetArray(EventUtil.GetEventEncounterDataFromSAV(sav)[0]))))
+            foreach (var encounter in encounters)
             {
                 var max = game is GameVersion.SL ? encounter.GetRandRateTotalScarlet(p) : encounter.GetRandRateTotalViolet(p);
                 var min = game is GameVersion.SL ? encounter.GetRandRateMinScarlet(p) : encounter.GetRandRateMinViolet(p);

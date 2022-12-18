@@ -8,6 +8,10 @@ namespace TeraFinder.Forms
         private PK9 PKM = null!;
         private SAV9SV SAV;
 
+        private EncounterRaid9[] Tera = null!;
+        private EncounterRaid9[] Dist = null!;
+        private EncounterRaid9[] Mighty = null!;
+
         public CheckerForm(PKM pk, SAV9SV sav)
         {
             InitializeComponent();
@@ -28,6 +32,10 @@ namespace TeraFinder.Forms
             numHeight.Value = PKM.HeightScalar;
             numWeight.Value = PKM.WeightScalar;
             numScale.Value = PKM.Scale;
+            var events = TeraUtil.GetAllDistEncounters();
+            Tera = TeraUtil.GetAllTeraEncounters();
+            Dist = events[0];
+            Mighty = events[1];
         }
 
         private void txt_KeyPress(object sender, KeyPressEventArgs e)
@@ -89,8 +97,9 @@ namespace TeraFinder.Forms
                         sav.Game = (int)game;
                         SetProgress(sav, progress);
 
-                        var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress)) :
-                            TeraUtil.GetDistEncounter(seed, sav, progress, content is RaidContent.Event_Mighty, true);
+                        var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Tera) :
+                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Mighty, true) :
+                            TeraUtil.GetDistEncounter(seed, sav, progress, Dist, false);
 
                         if (encounter is not null)
                         {

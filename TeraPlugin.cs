@@ -6,7 +6,7 @@ namespace TeraFinder
 {
     public class TeraPlugin : IPlugin
     {
-        public const string Version = "1.0.0";
+        public const string Version = "0.0.0";
 
         public string Name => nameof(TeraFinder);
         public int Priority => 1;
@@ -15,6 +15,9 @@ namespace TeraFinder
         public IPKMView? PKMEditor { get; private set; } = null;
 
         public SAV9SV SAV = null!;
+        public EncounterRaid9[]? Tera = null;
+        public EncounterRaid9[]? Dist = null;
+        public EncounterRaid9[]? Mighty = null;
 
         private readonly ToolStripMenuItem Plugin = new("Tera Finder Plugin");
         private readonly ToolStripMenuItem Editor = new("Tera Raid Viewer/Editor");
@@ -41,6 +44,10 @@ namespace TeraFinder
                 SAV = new SAV9SV(data.ToArray());
             else
                 SAV = new();
+            Tera = TeraUtil.GetAllTeraEncounters();
+            var events = TeraUtil.GetSAVDistEncounters(SAV);
+            Dist = events[0];
+            Mighty = events[1];
         }
 
         private void LoadMenuStrip(ToolStrip menuStrip)
@@ -57,7 +64,7 @@ namespace TeraFinder
             Plugin.DropDownItems.Add(Finder);
             Plugin.DropDownItems.Add(Flags);
             Plugin.DropDownItems.Add(Events);
-            Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor).Show();
+            Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty).Show();
             Events.Click += (s, e) => ImportUtil.ImportNews(SAV, plugin: true);
             Flags.Click += (s, e) => new ProgressForm(SAV).Show();
             Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV).Show();
@@ -66,12 +73,12 @@ namespace TeraFinder
 
         public void LaunchEditor()
         {
-            new EditorForm(SAV, PKMEditor).Show();
+            new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty).Show();
         }
 
         public void LaunchCalculator()
         {
-            var editor = new EditorForm(SAV, PKMEditor);
+            var editor = new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty);
             new CalculatorForm(editor).Show();
         }
 

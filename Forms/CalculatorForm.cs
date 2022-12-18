@@ -373,8 +373,8 @@ namespace TeraFinder
         private TeraDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content)
         {
             var seed = (uint)(Seed & 0xFFFFFFFF);
-            var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress)) :
-                TeraUtil.GetDistEncounter(seed, sav, progress, content is RaidContent.Event_Mighty);
+            var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Editor.Tera!) :
+                content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Mighty!, true) : TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Dist!, false);
 
             if (encounter is null)
                 return null;
