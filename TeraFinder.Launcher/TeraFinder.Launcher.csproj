@@ -33,6 +33,5 @@
 			<Private>True</Private>
 			<CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
 		</ProjectReference>
-	</ItemGroup>
-
+	</ItemGroup>	
 </Project>
