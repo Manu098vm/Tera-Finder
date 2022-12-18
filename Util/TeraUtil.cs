@@ -163,7 +163,7 @@ namespace TeraFinder
                 if (min >= 0 && max > 0)
                 {
                     var xoro = new Xoroshiro128Plus(seed);
-                    xoro.Next();
+                    xoro.NextInt(100);
                     var rateRand = xoro.NextInt(max);
                     if ((uint)(rateRand - min) < encounter.RandRate)
                         return new EncounterRaid9(encounter);

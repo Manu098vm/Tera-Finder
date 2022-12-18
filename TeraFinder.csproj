@@ -47,7 +47,6 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Octokit" Version="4.0.3" />
-	  <PackageReference Include="PKHeX.Core" Version="22.12.18" />
 	</ItemGroup>
 
   <ItemGroup>
@@ -66,6 +65,9 @@
   </ItemGroup>
 
     <ItemGroup>
+		<Reference Include="PKHeX.Core">
+			<HintPath>Resources\PKHeX.Core.dll</HintPath>
+		</Reference>
 	    <Reference Include="PKHeX.Drawing">
 		    <HintPath>Resources\PKHeX.Drawing.dll</HintPath>
 	    </Reference>

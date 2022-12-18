@@ -284,6 +284,7 @@ namespace TeraFinder
                 var progress = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black ? GameProgress.None : (GameProgress)cmbProgress.SelectedIndex;
                 var content = (RaidContent)cmbContent.SelectedIndex;
                 var args = new object[] { sav, progress, content };
+                Thread.Sleep(0001);
                 bgWorkerSearch.RunWorkerAsync(argument: args);
             }
             else

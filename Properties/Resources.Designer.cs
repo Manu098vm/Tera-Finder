@@ -113,6 +113,16 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] PKHeX_Core {
+            get {
+                object obj = ResourceManager.GetObject("PKHeX_Core", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] PKHeX_Drawing {
             get {
                 object obj = ResourceManager.GetObject("PKHeX_Drawing", resourceCulture);
