@@ -136,6 +136,7 @@
             this.cmbMightyIndex.Name = "cmbMightyIndex";
             this.cmbMightyIndex.Size = new System.Drawing.Size(178, 23);
             this.cmbMightyIndex.TabIndex = 6;
+            this.cmbMightyIndex.SelectedIndexChanged += new EventHandler(this.cmbMightyIndex_IndexChanged);
             // 
             // ProgressForm
             // 
