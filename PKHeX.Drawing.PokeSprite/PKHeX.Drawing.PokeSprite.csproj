@@ -16,14 +16,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="PKHeX.Core" Version="22.12.18" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     <PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
   </ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="PKHeX.Core">
-			<HintPath>..\Resources\PKHeX.Core.dll</HintPath>
-		</Reference>
 		<Reference Include="PKHeX.Drawing">
 			<HintPath>..\Resources\PKHeX.Drawing.dll</HintPath>
 		</Reference>

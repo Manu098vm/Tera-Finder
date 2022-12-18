@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using pkNX.Structures.FlatBuffers;
 using TeraFinder.Forms;
 
 namespace TeraFinder

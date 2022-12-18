@@ -137,7 +137,6 @@ namespace TeraFinder
             if (stars < 6) xoro.NextInt(100);
             var max = game is GameVersion.SL ? EncounterTera9.GetRateTotalBaseSL(stars) : EncounterTera9.GetRateTotalBaseVL(stars);
             var rateRand = (int)xoro.NextInt((uint)max);
-            //foreach (var encounter in EncounterTera9.GetArray(Properties.Resources.encounter_gem_paldea))
             foreach (var encounter in encounters)
             {
                 var min = game is GameVersion.SL ? encounter.RandRateMinScarlet : encounter.RandRateMinViolet;
@@ -157,11 +156,6 @@ namespace TeraFinder
                 GameProgress.Unlocked3Stars => 1,
                 _ => 0,
             };
-
-            //foreach (var encounter in EncounterRaid9.GetEncounters(allEncount ? (isMighty ? PKHeX.Core.EncounterMight9.GetArray(Util.GetBinaryResource("encounter_might_paldea.pkl")) :
-                //PKHeX.Core.EncounterDist9.GetArray(Util.GetBinaryResource("encounter_dist_paldea.pkl"))) :
-                //(isMighty ? EncounterMight9.GetArray(EventUtil.GetEventEncounterDataFromSAV(sav)[1]) : 
-                //EncounterDist9.GetArray(EventUtil.GetEventEncounterDataFromSAV(sav)[0]))))
             foreach (var encounter in encounters)
             {
                 var max = game is GameVersion.SL ? encounter.GetRandRateTotalScarlet(p) : encounter.GetRandRateTotalViolet(p);
