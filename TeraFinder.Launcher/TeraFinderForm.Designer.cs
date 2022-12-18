@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeraFinderForm));
             this.grpSAV = new System.Windows.Forms.GroupBox();
             this.txtSAV = new System.Windows.Forms.TextBox();
             this.btnLoad = new System.Windows.Forms.Button();
@@ -184,10 +185,10 @@
             this.ClientSize = new System.Drawing.Size(484, 437);
             this.Controls.Add(this.grpTools);
             this.Controls.Add(this.grpSAV);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TeraFinderForm";
-            this.ShowIcon = false;
             this.Text = "Tera Finder";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileDragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FileDragEnter);
