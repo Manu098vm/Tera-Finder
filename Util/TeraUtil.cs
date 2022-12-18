@@ -140,7 +140,7 @@ namespace TeraFinder
             foreach (var encounter in encounters)
             {
                 var min = game is GameVersion.SL ? encounter.RandRateMinScarlet : encounter.RandRateMinViolet;
-                if (min >= 0 && (uint)(rateRand - min) < encounter.RandRate && encounter.Stars == stars)
+                if (encounter.Stars == stars && min >= 0 && (uint)(rateRand - min) < encounter.RandRate)
                     return new EncounterRaid9(encounter);
             }
             return null;

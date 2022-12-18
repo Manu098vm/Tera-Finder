@@ -259,6 +259,15 @@ namespace TeraFinder
                     txtSID.Focus();
                     return;
                 }
+                try
+                {
+                    GetSpeciesAndForm();
+                }
+                catch (Exception)
+                {
+                    cmbSpecies.Focus();
+                    return;
+                }
 
                 CalculatedList = new();
                 FilteredList = new();
@@ -284,7 +293,7 @@ namespace TeraFinder
                 var progress = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black ? GameProgress.None : (GameProgress)cmbProgress.SelectedIndex;
                 var content = (RaidContent)cmbContent.SelectedIndex;
                 var args = new object[] { sav, progress, content };
-                Thread.Sleep(0001);
+                Thread.Sleep(10);
                 bgWorkerSearch.RunWorkerAsync(argument: args);
             }
             else
