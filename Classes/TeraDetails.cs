@@ -56,7 +56,7 @@ namespace TeraFinder
             list[12] = ($"{SPE}");
             list[13] = ($"{GetAbilityName()}");
             list[14] = ($"{Nature}");
-            list[15] = ($"{Gender}");
+            list[15] = ($"{GetGenderSymbol()}");
             list[16] = ($"{Height}");
             list[17] = ($"{Weight}");
             list[18] = ($"{Scale}");
@@ -75,6 +75,16 @@ namespace TeraFinder
             var abilites = GameInfo.Strings.abilitylist;
             var num = GetAbilityNumber();
             return $"{abilites[(int)Ability]} ({(num == 3 ? "H" : num)})";
+        }
+
+        private string GetGenderSymbol()
+        {
+            if (Gender is Gender.Male)
+                return "♂️";
+            else if (Gender is Gender.Female)
+                return "♀️";
+            else 
+                return Gender.ToString();
         }
     }
 
