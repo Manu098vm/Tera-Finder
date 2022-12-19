@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using PKHeX.Core;
 
 namespace TeraFinder
@@ -186,9 +185,8 @@ namespace TeraFinder
                     var list = new List<TeraDetails>();
                     GridList.Clear();
                     foreach (var c in CalculatedList)
-                        if (Filter!.IsFilterMatch(c))
+                        if (Filter is null || Filter.IsFilterMatch(c))
                             list.Add(c);
-                            //GridList.Add(new GridEntry(c));
                     GridList = GridEntry.GetGridEntriesFromList(list);
                     dataGrid.DataSource = GridList;
                 }
@@ -222,7 +220,7 @@ namespace TeraFinder
                 AltEC = cmbEC.SelectedIndex == 1,
             };
 
-            if (filter.IsFilterNull())
+            if (Filter is null && filter.IsFilterNull())
                 return;
 
             if (Filter is not null && Filter.CompareFilter(filter))
