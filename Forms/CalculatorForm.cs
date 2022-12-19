@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using PKHeX.Core;
 
 namespace TeraFinder
@@ -7,9 +8,8 @@ namespace TeraFinder
     {
         private EditorForm Editor = null!;
         private List<TeraDetails> CalculatedList = new();
-        private List<TeraDetails> FilteredList = new();
+        private BindingList<GridEntry> GridList = new();
         private TeraFilter Filter = new();
-        private bool IsFiltered = false;
 
         public CalculatorForm(EditorForm editor)
         {
@@ -40,7 +40,9 @@ namespace TeraFinder
             nSpdMax.Value = 31;
             nSpeMax.Value = 31;
 
-            dataGrid.Rows.Clear();
+            dataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
+            dataGrid.RowHeadersVisible = false;
+            dataGrid.DataSource = GridList;
         }
 
         private bool IsBlankSAV()
@@ -122,6 +124,7 @@ namespace TeraFinder
             cmbNature.SelectedIndex = 25;
             cmbGender.SelectedIndex = 0;
             cmbShiny.SelectedIndex = 0;
+            cmbEC.SelectedIndex = 0;
             nHpMin.Value = 0;
             nAtkMin.Value = 0;
             nDefMin.Value = 0;
@@ -166,13 +169,33 @@ namespace TeraFinder
         {
             return cmbGender.SelectedIndex switch
             {
-                1 => PKHeX.Core.Gender.Male,
-                2 => PKHeX.Core.Gender.Female,
-                _ => PKHeX.Core.Gender.Random,
+                1 => Gender.Male,
+                2 => Gender.Female,
+                _ => Gender.Random,
             };
         }
 
         private void btnApply_Click(object sender, EventArgs e)
+        {
+            CreateFilter();
+            if (GridList.Count > 0)
+            {
+                DialogResult d = MessageBox.Show("Do you want to apply filters in the existing search?", "Apply Filters" , MessageBoxButtons.YesNo);
+                if (d == DialogResult.Yes)
+                {
+                    var list = new List<TeraDetails>();
+                    GridList.Clear();
+                    foreach (var c in CalculatedList)
+                        if (Filter.IsFilterMatch(c))
+                            list.Add(c);
+                            //GridList.Add(new GridEntry(c));
+                    GridList = GridEntry.GetGridEntriesFromList(list);
+                    dataGrid.DataSource = GridList;
+                }
+            }
+        }
+
+        private void CreateFilter()
         {
             var filter = new TeraFilter
             {
@@ -199,45 +222,16 @@ namespace TeraFinder
                 AltEC = cmbEC.SelectedIndex == 1,
             };
 
-            IsFiltered = true;
-            if (!filter.CompareFilter(Filter))
-            {
-                Filter = filter;
-                FilteredList = new();
-                if (CalculatedList.Count > 0)
-                {
-                    DialogResult d = MessageBox.Show("Do you want to apply filters in the existing search?", "Apply Filters" , MessageBoxButtons.YesNo);
-                    if (d == DialogResult.Yes)
-                        foreach (var c in CalculatedList)
-                            if (Filter.IsFilterMatch(c))
-                                FilteredList.Add(c);
-                }
-            }
-            ReloadGrid();
+            if (Filter is not null && Filter.CompareFilter(filter))
+                return;
+
+            Filter = filter;
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
+        private void Form_FormClosing(Object sender, FormClosingEventArgs e)
         {
-            if (IsFiltered)
-            {
-                DialogResult d = MessageBox.Show("Do you want to remove filters from the existing search?", "Apply Filters", MessageBoxButtons.YesNo);
-                if (d == DialogResult.Yes)
-                {
-                    IsFiltered = false;
-                    ReloadGrid();
-                }
-            }
-        }
-
-        private void ReloadGrid()
-        {
-            dataGrid.Rows.Clear();
-            if (IsFiltered)
-                foreach (var c in FilteredList)
-                    dataGrid.Rows.Add(c.GetStrings());
-            else
-                foreach (var c in CalculatedList)
-                    dataGrid.Rows.Add(c.GetStrings());
+            if (bgWorkerSearch.IsBusy)
+                btnSearch.PerformClick();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -269,23 +263,14 @@ namespace TeraFinder
                     return;
                 }
 
-                CalculatedList = new();
-                FilteredList = new();
-
-                DialogResult d = MessageBox.Show("Do you want to apply filters during the search?", "Apply Filters", MessageBoxButtons.YesNoCancel);
-                if (d == DialogResult.Yes)
-                    btnApply.PerformClick();
-                else if (d == DialogResult.No)
-                    IsFiltered = false;
-                else
-                    return;
-
+                CreateFilter();
+                GridList.Clear();
+                CalculatedList.Clear();
                 btnSearch.Text = "Stop";
                 grpFilters.Enabled = false;
                 grpGameInfo.Enabled = false;
                 cmbContent.Enabled = false;
                 btnSearch.Focus();
-                dataGrid.Rows.Clear();
                 var sav = !IsBlankSAV() ? Editor.SAV : new SAV9SV 
                 { 
                     Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV, TrainerID7 = Int32.Parse(txtTID.Text), TrainerSID7 = Int32.Parse(txtSID.Text) 
@@ -293,16 +278,12 @@ namespace TeraFinder
                 var progress = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black ? GameProgress.None : (GameProgress)cmbProgress.SelectedIndex;
                 var content = (RaidContent)cmbContent.SelectedIndex;
                 var args = new object[] { sav, progress, content };
-                Thread.Sleep(10);
                 bgWorkerSearch.RunWorkerAsync(argument: args);
             }
             else
             {
                 if (bgWorkerSearch.IsBusy)
-                {
-                    if (bgWorkerSearch.IsBusy)
-                        bgWorkerSearch.CancelAsync();
-                }
+                    bgWorkerSearch.CancelAsync();
                 btnSearch.Text = "Search";
             }
         }
@@ -315,21 +296,11 @@ namespace TeraFinder
             var sav = (SAV9SV)(((object[])(e.Argument!))[0]);
             var progress = (GameProgress)(((object[])(e.Argument!))[1]);
             var content = (RaidContent)(((object[])(e.Argument!))[2]);
-            var first = CalcResult(seed, progress, sav, content);
+
+            var first = CalcResult(seed, progress, sav, content, 0);
             if (first != null)
-            {
-                first.Calcs = 0;
-                CalculatedList.Add(first);
-                if (IsFiltered)
-                {
-                    if (Filter.IsFilterMatch(first))
-                    {
-                        FilteredList.Add(first);
-                        (sender as BackgroundWorker)!.ReportProgress(0, first);
-                    }
-                }
-                else (sender as BackgroundWorker)!.ReportProgress(0, first);
-            }
+                (sender as BackgroundWorker)!.ReportProgress(0, first);
+            else (sender as BackgroundWorker)!.ReportProgress(0, first);
 
             var xoro = new Xoroshiro128Plus(seed);
             for (uint i = 1; i < (uint)numFrames.Value; i++)
@@ -339,30 +310,23 @@ namespace TeraFinder
                     (sender as BackgroundWorker)!.ReportProgress(100);
                     return;
                 }
-                var res = CalcResult(xoro.Next(), progress, sav, content);
+                var res = CalcResult(xoro.Next(), progress, sav, content, i);
                 if (res != null)
-                {
-                    res.Calcs = i;
-                    CalculatedList.Add(res);
-                    if (IsFiltered)
-                    {
-                        if (Filter.IsFilterMatch(res))
-                        {
-                            FilteredList.Add(res);
-                            (sender as BackgroundWorker)!.ReportProgress((int)((i * 100) / numFrames.Value), res);
-                        }
-                    }
-                    else (sender as BackgroundWorker)!.ReportProgress((int)((i * 100) / numFrames.Value), res);
-                }
-                (sender as BackgroundWorker)!.ReportProgress((int)((i * 100) / numFrames.Value));
+                    (sender as BackgroundWorker)!.ReportProgress((int)((i * 100) / numFrames.Value), res);
+                else 
+                    (sender as BackgroundWorker)!.ReportProgress((int)((i * 100) / numFrames.Value));
             }
         }
 
         private void bgWorkerSearch_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar.Value = e.ProgressPercentage;
-            if(e.UserState is not null && e.UserState is TeraDetails res)
-                dataGrid.Rows.Add(res.GetStrings());
+            if (e.UserState is not null && e.UserState is TeraDetails res)
+            {
+                CalculatedList.Add(res);
+                if (Filter.IsFilterMatch(res))
+                    GridList.Add(new GridEntry(res));
+            }
         }
 
         private void bgWorkerSearch_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -371,6 +335,16 @@ namespace TeraFinder
                 MessageBox.Show(e.Error.ToString());
             if (!e.Cancelled)
             {
+                var list = new List<TeraDetails>();
+
+                /*GridList.Clear();
+
+                /*foreach (var c in CalculatedList)
+                    if (Filter.IsFilterMatch(c))
+                        list.Add(c);
+                GridList = GridEntry.GetGridEntriesFromList(list);
+                dataGrid.DataSource = GridList;*/
+
                 if (IsBlankSAV())
                     grpGameInfo.Enabled = true;
                 grpFilters.Enabled = true;
@@ -380,7 +354,7 @@ namespace TeraFinder
             }
         }
 
-        private TeraDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content)
+        private TeraDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, uint calc)
         {
             var seed = (uint)(Seed & 0xFFFFFFFF);
             var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Editor.Tera!) :
@@ -389,7 +363,7 @@ namespace TeraFinder
             if (encounter is null)
                 return null;
 
-            return TeraUtil.CalcRNG(seed, sav.TrainerID7, sav.TrainerSID7, content, encounter);
+            return TeraUtil.CalcRNG(seed, sav.TrainerID7, sav.TrainerSID7, content, encounter, calc);
         }
 
         private readonly static string[] TeraStars = new string[] {
