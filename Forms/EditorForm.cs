@@ -31,6 +31,7 @@ namespace TeraFinder
                 Dist = dist;
                 Mighty = mighty;
             }
+            Tera = tera is null ? TeraUtil.GetAllTeraEncounters() : tera;
             DefBackground = pictureBox.BackgroundImage;
             DefSize = pictureBox.Size;
             Progress = TeraUtil.GetProgress(SAV);
@@ -38,7 +39,6 @@ namespace TeraFinder
                 cmbDens.Items.Add(name);
             cmbDens.SelectedIndex = 0;
             btnSx.Enabled = false;
-            Tera = tera is null ? TeraUtil.GetAllTeraEncounters() : tera;
         }
 
         private void cmbDens_IndexChanged(object sender, EventArgs e)
