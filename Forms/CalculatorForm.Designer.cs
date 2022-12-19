@@ -117,9 +117,7 @@
             // 
             this.bgWorkerSearch.WorkerReportsProgress = true;
             this.bgWorkerSearch.WorkerSupportsCancellation = true;
-            this.bgWorkerSearch.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorkerSearch_DoWork);
-            this.bgWorkerSearch.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgWorkerSearch_ProgressChanged);
-            this.bgWorkerSearch.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorkerSearch_RunWorkerCompleted);
+           
             // 
             // grpRaidDetails
             // 

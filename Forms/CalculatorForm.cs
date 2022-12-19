@@ -234,11 +234,13 @@ namespace TeraFinder
             if (bgWorkerSearch.IsBusy)
                 btnSearch.PerformClick();
         }
-
-        private void btnSearch_Click(object sender, EventArgs e)
+        CancellationTokenSource? token;
+        private async void btnSearch_Click(object sender, EventArgs e)
         {
+           
             if (btnSearch.Text.Equals("Search"))
             {
+                token = new();
                 if (cmbProgress.SelectedIndex is (int)GameProgress.Beginning or (int)GameProgress.None)
                 {
                     cmbProgress.Focus();
@@ -265,13 +267,15 @@ namespace TeraFinder
                 }
 
                 CreateFilter();
-                GridList.Clear();
-                CalculatedList.Clear();
+                if(GridList.Count> 0)
+                    GridList.Clear();
+                if(CalculatedList.Count> 0)
+                    CalculatedList.Clear();
                 btnSearch.Text = "Stop";
                 grpFilters.Enabled = false;
                 grpGameInfo.Enabled = false;
                 cmbContent.Enabled = false;
-                btnSearch.Focus();
+             
                 var sav = !IsBlankSAV() ? Editor.SAV : new SAV9SV 
                 { 
                     Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV, TrainerID7 = Int32.Parse(txtTID.Text), TrainerSID7 = Int32.Parse(txtSID.Text) 
@@ -279,63 +283,60 @@ namespace TeraFinder
                 var progress = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black ? GameProgress.None : (GameProgress)cmbProgress.SelectedIndex;
                 var content = (RaidContent)cmbContent.SelectedIndex;
                 var args = new object[] { sav, progress, content };
-                bgWorkerSearch.RunWorkerAsync(argument: args);
+                
+                await bgWorkerSearch_DoWork(sav, progress, content,token);
+                await bgWorkerSearch_RunWorkerCompleted();
             }
             else
             {
-                if (bgWorkerSearch.IsBusy)
-                    bgWorkerSearch.CancelAsync();
+               token.Cancel();
                 btnSearch.Text = "Search";
             }
         }
-
-        private void bgWorkerSearch_DoWork(object sender, DoWorkEventArgs e)
+        private static ulong GetNext(ulong seed) { return new Xoroshiro128Plus(seed).Next(); }
+        private async Task bgWorkerSearch_DoWork(SAV9SV sav, GameProgress progress, RaidContent content, CancellationTokenSource token)
         {
             ulong seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
             if (seed == 0) seed = Xoroshiro128Plus.XOROSHIRO_CONST;
-
-            var sav = (SAV9SV)(((object[])(e.Argument!))[0]);
-            var progress = (GameProgress)(((object[])(e.Argument!))[1]);
-            var content = (RaidContent)(((object[])(e.Argument!))[2]);
-
             var first = CalcResult(seed, progress, sav, content, 0);
-            if (first != null)
-                (sender as BackgroundWorker)!.ReportProgress(0, first);
-            else (sender as BackgroundWorker)!.ReportProgress(0, first);
-
-            var xoro = new Xoroshiro128Plus(seed);
-            for (uint i = 1; i < (uint)numFrames.Value; i++)
+            bgWorkerSearch_ProgressChanged(0, first);
+            while (!token.IsCancellationRequested)
             {
-                if ((sender as BackgroundWorker)!.CancellationPending)
+                //var xoro = new Xoroshiro128Plus(seed);
+                for (uint i = 1; i < (uint)numFrames.Value; i++)
                 {
-                    (sender as BackgroundWorker)!.ReportProgress(100);
-                    return;
-                }
-                var res = CalcResult(xoro.Next(), progress, sav, content, i);
-                if (res != null)
-                    (sender as BackgroundWorker)!.ReportProgress((int)((i * 100) / numFrames.Value), res);
-                else 
-                    (sender as BackgroundWorker)!.ReportProgress((int)((i * 100) / numFrames.Value));
-            }
-        }
 
-        private void bgWorkerSearch_ProgressChanged(object sender, ProgressChangedEventArgs e)
+                    seed = GetNext(seed);
+                    var res = CalcResult(seed, progress, sav, content, i);
+                    if (res != null)
+                        bgWorkerSearch_ProgressChanged((int)((i * 100) / numFrames.Value), res);
+                    else
+                        bgWorkerSearch_ProgressChanged((int)((i * 100) / numFrames.Value), null);
+                    if(token.IsCancellationRequested)
+                    { break; }
+                }
+                if(!token.IsCancellationRequested)
+                    token.Cancel();
+                
+            }
+            token = new();
+        }
+       
+        private void bgWorkerSearch_ProgressChanged(int ProgressPercentage, TeraDetails res)
         {
-            progressBar.Value = e.ProgressPercentage;
-            if (e.UserState is not null && e.UserState is TeraDetails res)
+            progressBar.Value = ProgressPercentage;
+            if (res is not null)
             {
                 CalculatedList.Add(res);
                 if (Filter is not null && Filter.IsFilterMatch(res))
                     GridList.Add(new GridEntry(res));
             }
         }
+     
 
-        private void bgWorkerSearch_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private async Task bgWorkerSearch_RunWorkerCompleted()
         {
-            if (e.Error != null)
-                MessageBox.Show(e.Error.ToString());
-            if (!e.Cancelled)
-            {
+         
                 if (Filter is null)
                 {
                     GridList.Clear();
@@ -349,7 +350,7 @@ namespace TeraFinder
                 cmbContent.Enabled = true;
                 btnSearch.Text = "Search";
                 progressBar.Value = 0;
-            }
+            
         }
 
         private TeraDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, uint calc)
