@@ -40,6 +40,8 @@ namespace TeraFinder
             nSpdMax.Value = 31;
             nSpeMax.Value = 31;
 
+            dataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
+            dataGrid.RowHeadersVisible = false;
             dataGrid.DataSource = GridList;
         }
 
@@ -122,6 +124,7 @@ namespace TeraFinder
             cmbNature.SelectedIndex = 25;
             cmbGender.SelectedIndex = 0;
             cmbShiny.SelectedIndex = 0;
+            cmbEC.SelectedIndex = 0;
             nHpMin.Value = 0;
             nAtkMin.Value = 0;
             nDefMin.Value = 0;
@@ -225,6 +228,12 @@ namespace TeraFinder
             Filter = filter;
         }
 
+        private void Form_FormClosing(Object sender, FormClosingEventArgs e)
+        {
+            if (bgWorkerSearch.IsBusy)
+                btnSearch.PerformClick();
+        }
+
         private void btnSearch_Click(object sender, EventArgs e)
         {
             if (btnSearch.Text.Equals("Search"))
@@ -256,9 +265,7 @@ namespace TeraFinder
 
                 CreateFilter();
                 GridList.Clear();
-
                 CalculatedList.Clear();
-                GridList.Clear();
                 btnSearch.Text = "Stop";
                 grpFilters.Enabled = false;
                 grpGameInfo.Enabled = false;
@@ -276,10 +283,7 @@ namespace TeraFinder
             else
             {
                 if (bgWorkerSearch.IsBusy)
-                {
-                    if (bgWorkerSearch.IsBusy)
-                        bgWorkerSearch.CancelAsync();
-                }
+                    bgWorkerSearch.CancelAsync();
                 btnSearch.Text = "Search";
             }
         }
@@ -331,6 +335,16 @@ namespace TeraFinder
                 MessageBox.Show(e.Error.ToString());
             if (!e.Cancelled)
             {
+                var list = new List<TeraDetails>();
+
+                /*GridList.Clear();
+
+                /*foreach (var c in CalculatedList)
+                    if (Filter.IsFilterMatch(c))
+                        list.Add(c);
+                GridList = GridEntry.GetGridEntriesFromList(list);
+                dataGrid.DataSource = GridList;*/
+
                 if (IsBlankSAV())
                     grpGameInfo.Enabled = true;
                 grpFilters.Enabled = true;

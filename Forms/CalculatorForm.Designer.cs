@@ -810,6 +810,8 @@
             this.dataGrid.RowTemplate.Height = 29;
             this.dataGrid.Size = new System.Drawing.Size(1580, 507);
             this.dataGrid.TabIndex = 5;
+            this.dataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
+            this.dataGrid.RowHeadersVisible = false;
             // 
             // bgWorkerFilter
             // 
@@ -927,7 +929,7 @@
             this.grpGameInfo.ResumeLayout(false);
             this.grpGameInfo.PerformLayout();
             this.ResumeLayout(false);
-
+            this.FormClosing += new FormClosingEventHandler(this.Form_FormClosing);
         }
 
         #endregion
