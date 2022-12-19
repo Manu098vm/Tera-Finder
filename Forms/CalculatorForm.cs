@@ -9,7 +9,7 @@ namespace TeraFinder
         private EditorForm Editor = null!;
         private List<TeraDetails> CalculatedList = new();
         private BindingList<GridEntry> GridList = new();
-        private TeraFilter Filter = new();
+        private TeraFilter? Filter = null;
 
         public CalculatorForm(EditorForm editor)
         {
@@ -186,7 +186,7 @@ namespace TeraFinder
                     var list = new List<TeraDetails>();
                     GridList.Clear();
                     foreach (var c in CalculatedList)
-                        if (Filter.IsFilterMatch(c))
+                        if (Filter!.IsFilterMatch(c))
                             list.Add(c);
                             //GridList.Add(new GridEntry(c));
                     GridList = GridEntry.GetGridEntriesFromList(list);
@@ -221,6 +221,9 @@ namespace TeraFinder
                 Shiny = (TeraShiny)cmbShiny.SelectedIndex,
                 AltEC = cmbEC.SelectedIndex == 1,
             };
+
+            if (filter.IsFilterNull())
+                return;
 
             if (Filter is not null && Filter.CompareFilter(filter))
                 return;
@@ -324,7 +327,7 @@ namespace TeraFinder
             if (e.UserState is not null && e.UserState is TeraDetails res)
             {
                 CalculatedList.Add(res);
-                if (Filter.IsFilterMatch(res))
+                if (Filter is not null && Filter.IsFilterMatch(res))
                     GridList.Add(new GridEntry(res));
             }
         }
@@ -335,15 +338,12 @@ namespace TeraFinder
                 MessageBox.Show(e.Error.ToString());
             if (!e.Cancelled)
             {
-                var list = new List<TeraDetails>();
-
-                /*GridList.Clear();
-
-                /*foreach (var c in CalculatedList)
-                    if (Filter.IsFilterMatch(c))
-                        list.Add(c);
-                GridList = GridEntry.GetGridEntriesFromList(list);
-                dataGrid.DataSource = GridList;*/
+                if (Filter is null)
+                {
+                    GridList.Clear();
+                    GridList = GridEntry.GetGridEntriesFromList(CalculatedList);
+                    dataGrid.DataSource = GridList;
+                }
 
                 if (IsBlankSAV())
                     grpGameInfo.Enabled = true;

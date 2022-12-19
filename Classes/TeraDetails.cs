@@ -215,6 +215,54 @@ namespace TeraFinder
             return true;
         }
 
+        public bool IsFilterNull()
+        {
+            if (!(MinHP == 0))
+                return false;
+            if (!(MinAtk == 0))
+                return false;
+            if (!(MinDef == 0))
+                return false;
+            if (!(MinSpa == 0))
+                return false;
+            if (!(MinSpd == 0))
+                return false;
+            if (!(MinSpe == 0))
+                return false;
+            if (!(MaxHP == 31))
+                return false;
+            if (!(MaxAtk == 31))
+                return false;
+            if (!(MaxDef == 31))
+                return false;
+            if (!(MaxSpa == 31))
+                return false;
+            if (!(MaxSpd == 31))
+                return false;
+            if (!(MaxSpe == 31))
+                return false;
+            if (!(Stars == 0))
+                return false;
+            if (!(Species == Species.None))
+                return false;
+            if (!(Form == 0))
+                return false;
+            if (!(TeraType == MoveType.Any))
+                return false;
+            if (!(AbilityNumber == 0))
+                return false;
+            if (!(Nature == (Nature)25))
+                return false;
+            if (!(Gender == Gender.Random))
+                return false;
+            if (!(Shiny == TeraShiny.Any))
+                return false;
+            if (!(AltEC == false))
+                return false;
+
+            return true;
+        }
+
         public bool CompareFilter(TeraFilter res)
         {
             if (!(MinHP == res.MinHP))
