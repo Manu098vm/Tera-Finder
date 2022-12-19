@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System.ComponentModel;
 
 namespace TeraFinder
 {
@@ -85,6 +86,63 @@ namespace TeraFinder
                 return "♀️";
             else 
                 return Gender.ToString();
+        }
+    }
+
+    public class GridEntry
+    {
+        public string? Seed { get; private set; }
+        public string? Shiny { get; private set; }
+        public string? Stars { get; private set; }
+        public string? Species { get; private set; }
+        public string? TeraType { get; private set; }
+        public string? EC { get; private set; }
+        public string? PID { get; private set; }
+        public string? HP { get; private set; }
+        public string? ATK { get; private set; }
+        public string? DEF { get; private set; }
+        public string? SPA { get; private set; }
+        public string? SPD { get; private set; }
+        public string? SPE { get; private set; }
+        public string? Ability { get; private set; }
+        public string? Nature { get; private set; }
+        public string? Gender { get; private set; }
+        public string? Height { get; private set; }
+        public string? Weight { get; private set; }
+        public string? Scale { get; private set; }
+        public string? Calcs { get; private set; }
+
+        public GridEntry(TeraDetails res)
+        {
+            var str = res.GetStrings();
+            Seed = str[0];
+            Shiny = str[1];
+            Stars = str[2];
+            Species = str[3];
+            TeraType = str[4];
+            EC = str[5];
+            PID = str[6];
+            HP = str[7];
+            ATK = str[8];
+            DEF = str[9];
+            SPA = str[10];
+            SPD = str[11];
+            SPE = str[12];
+            Ability = str[13];
+            Nature = str[14];
+            Gender = str[15];
+            Height = str[16];
+            Weight = str[17];
+            Scale = str[18];
+            Calcs = str[19];
+        }
+
+        public static BindingList<GridEntry> GetGridEntriesFromList(List<TeraDetails> reslist)
+        {
+            var list = new BindingList<GridEntry>();
+            foreach (var res in reslist)
+                list.Add(new GridEntry(res));
+            return list;
         }
     }
 
