@@ -231,15 +231,17 @@ namespace TeraFinder
 
         private void Form_FormClosing(Object sender, FormClosingEventArgs e)
         {
-            if (bgWorkerSearch.IsBusy)
-                btnSearch.PerformClick();
+            if (!token.IsCancellationRequested)
+                token.Cancel();
         }
         CancellationTokenSource? token;
-        private async void btnSearch_Click(object sender, EventArgs e)
+     
+        public async void btnSearch_Click(object sender, EventArgs e)
         {
            
             if (btnSearch.Text.Equals("Search"))
             {
+               
                 token = new();
                 if (cmbProgress.SelectedIndex is (int)GameProgress.Beginning or (int)GameProgress.None)
                 {
@@ -266,16 +268,17 @@ namespace TeraFinder
                     return;
                 }
 
-                CreateFilter();
+                
                 if(GridList.Count> 0)
                     GridList.Clear();
                 if(CalculatedList.Count> 0)
                     CalculatedList.Clear();
                 btnSearch.Text = "Stop";
-                grpFilters.Enabled = false;
-                grpGameInfo.Enabled = false;
-                cmbContent.Enabled = false;
-             
+                ActiveForm.Update();
+               //grpFilters.Enabled = false;
+                //grpGameInfo.Enabled = false;
+                //cmbContent.Enabled = false;
+                CreateFilter();
                 var sav = !IsBlankSAV() ? Editor.SAV : new SAV9SV 
                 { 
                     Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV, TrainerID7 = Int32.Parse(txtTID.Text), TrainerSID7 = Int32.Parse(txtSID.Text) 
@@ -283,43 +286,54 @@ namespace TeraFinder
                 var progress = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black ? GameProgress.None : (GameProgress)cmbProgress.SelectedIndex;
                 var content = (RaidContent)cmbContent.SelectedIndex;
                 var args = new object[] { sav, progress, content };
+                var button = (Button)sender;
+                try
+                {
+                    GridList.Add(await bgWorkerSearch_DoWork(sav, progress, content, token));
+                    await bgWorkerSearch_RunWorkerCompleted();
+                }
+                catch(OperationCanceledException)
+                {
+
+                }
                 
-                await bgWorkerSearch_DoWork(sav, progress, content,token);
-                await bgWorkerSearch_RunWorkerCompleted();
             }
             else
             {
-               token.Cancel();
+                token.Cancel();
                 btnSearch.Text = "Search";
+                return;
             }
         }
         private static ulong GetNext(ulong seed) { return new Xoroshiro128Plus(seed).Next(); }
-        private async Task bgWorkerSearch_DoWork(SAV9SV sav, GameProgress progress, RaidContent content, CancellationTokenSource token)
+        private async Task<GridEntry> bgWorkerSearch_DoWork(SAV9SV sav, GameProgress progress, RaidContent content, CancellationTokenSource token)
         {
+           
             ulong seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
             if (seed == 0) seed = Xoroshiro128Plus.XOROSHIRO_CONST;
             var first = CalcResult(seed, progress, sav, content, 0);
-            bgWorkerSearch_ProgressChanged(0, first);
-            while (!token.IsCancellationRequested)
+            if(Filter is not null && Filter.IsFilterMatch(first))
             {
-                //var xoro = new Xoroshiro128Plus(seed);
+                return new GridEntry(first);
+            }
+
+            //var xoro = new Xoroshiro128Plus(seed);
+            return await Task.Run(() =>
+            {
                 for (uint i = 1; i < (uint)numFrames.Value; i++)
                 {
 
                     seed = GetNext(seed);
                     var res = CalcResult(seed, progress, sav, content, i);
-                    if (res != null)
-                        bgWorkerSearch_ProgressChanged((int)((i * 100) / numFrames.Value), res);
+                    if (Filter is not null && Filter.IsFilterMatch(res))
+                        return new GridEntry(res);
                     else
                         bgWorkerSearch_ProgressChanged((int)((i * 100) / numFrames.Value), null);
-                    if(token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     { break; }
                 }
-                if(!token.IsCancellationRequested)
-                    token.Cancel();
-                
-            }
-            token = new();
+                return new GridEntry(new TeraDetails());
+            }, token.Token);
         }
        
         private void bgWorkerSearch_ProgressChanged(int ProgressPercentage, TeraDetails res)
@@ -344,10 +358,10 @@ namespace TeraFinder
                     dataGrid.DataSource = GridList;
                 }
 
-                if (IsBlankSAV())
-                    grpGameInfo.Enabled = true;
-                grpFilters.Enabled = true;
-                cmbContent.Enabled = true;
+               // if (IsBlankSAV())
+                 //   grpGameInfo.Enabled = true;
+               // grpFilters.Enabled = true;
+               // cmbContent.Enabled = true;
                 btnSearch.Text = "Search";
                 progressBar.Value = 0;
             
