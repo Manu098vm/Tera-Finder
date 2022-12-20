@@ -289,7 +289,9 @@ namespace TeraFinder
                 var button = (Button)sender;
                 try
                 {
-                    GridList.Add(await bgWorkerSearch_DoWork(sav, progress, content, token));
+                  
+                    await bgWorkerSearch_DoWork(sav, progress, content, token);
+                   
                     await bgWorkerSearch_RunWorkerCompleted();
                 }
                 catch(OperationCanceledException)
@@ -306,7 +308,7 @@ namespace TeraFinder
             }
         }
         private static ulong GetNext(ulong seed) { return new Xoroshiro128Plus(seed).Next(); }
-        private async Task<GridEntry> bgWorkerSearch_DoWork(SAV9SV sav, GameProgress progress, RaidContent content, CancellationTokenSource token)
+        private async Task bgWorkerSearch_DoWork(SAV9SV sav, GameProgress progress, RaidContent content, CancellationTokenSource token)
         {
            
             ulong seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
@@ -314,11 +316,11 @@ namespace TeraFinder
             var first = CalcResult(seed, progress, sav, content, 0);
             if(Filter is not null && Filter.IsFilterMatch(first))
             {
-                return new GridEntry(first);
+                GridList.Add(new GridEntry(first));
             }
 
             //var xoro = new Xoroshiro128Plus(seed);
-            return await Task.Run(() =>
+            await Task.Run(() =>
             {
                 for (uint i = 1; i < (uint)numFrames.Value; i++)
                 {
@@ -326,13 +328,13 @@ namespace TeraFinder
                     seed = GetNext(seed);
                     var res = CalcResult(seed, progress, sav, content, i);
                     if (Filter is not null && Filter.IsFilterMatch(res))
-                        return new GridEntry(res);
+                        GridList.Add(new GridEntry(res));
                     else
                         bgWorkerSearch_ProgressChanged((int)((i * 100) / numFrames.Value), null);
                     if (token.IsCancellationRequested)
-                    { break; }
+                    { return; }
                 }
-                return new GridEntry(new TeraDetails());
+                
             }, token.Token);
         }
        
