@@ -30,6 +30,7 @@
         {
             this.bgWorkerSearch = new System.ComponentModel.BackgroundWorker();
             this.grpRaidDetails = new System.Windows.Forms.GroupBox();
+            this.showresults = new System.Windows.Forms.CheckBox();
             this.numFrames = new System.Windows.Forms.NumericUpDown();
             this.btnSearch = new System.Windows.Forms.Button();
             this.lblFrames = new System.Windows.Forms.Label();
@@ -120,6 +121,7 @@
             // 
             // grpRaidDetails
             // 
+            this.grpRaidDetails.Controls.Add(this.showresults);
             this.grpRaidDetails.Controls.Add(this.numFrames);
             this.grpRaidDetails.Controls.Add(this.btnSearch);
             this.grpRaidDetails.Controls.Add(this.lblFrames);
@@ -135,6 +137,16 @@
             this.grpRaidDetails.TabIndex = 0;
             this.grpRaidDetails.TabStop = false;
             this.grpRaidDetails.Text = "Raid Details";
+            // 
+            // showresults
+            // 
+            this.showresults.AutoSize = true;
+            this.showresults.Location = new System.Drawing.Point(104, 116);
+            this.showresults.Name = "showresults";
+            this.showresults.Size = new System.Drawing.Size(112, 19);
+            this.showresults.TabIndex = 9;
+            this.showresults.Text = "Show All Results";
+            this.showresults.UseVisualStyleBackColor = true;
             // 
             // numFrames
             // 
@@ -1036,5 +1048,6 @@
         private Label lblTID;
         private ComboBox cmbEC;
         private Label lblEC;
+        public CheckBox showresults;
     }
 }

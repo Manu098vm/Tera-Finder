@@ -183,11 +183,11 @@ namespace TeraFinder
                 if (d == DialogResult.Yes)
                 {
                    
-                    dataGrid.Rows.Clear();
+                    var list = new List<GridEntry>();
                     foreach (var c in CalculatedList)
                         if (Filter is null || Filter.IsFilterMatch(c))
-                            dataGrid.Rows.Add(new GridEntry(c));
-                    
+                            list.Add(new GridEntry(c));
+                    dataGrid.DataSource = list;
                     
                 }
             }
@@ -330,9 +330,17 @@ namespace TeraFinder
                     seed = GetNext(seed);
                     var res = CalcResult(seed, progress, sav, content, i);
                     if (Filter is not null && Filter.IsFilterMatch(res))
+                    {
                         GridList.Add(new GridEntry(res));
+                        CalculatedList.Add(res);
+                        if (!showresults.Checked)
+                            return GridList;
+                    }
                     else if (Filter is null)
+                    {
                         GridList.Add(new GridEntry(res));
+                        CalculatedList.Add(res);
+                    }
                     if (token.IsCancellationRequested)
                     {  return GridList; }
                 }
@@ -340,16 +348,7 @@ namespace TeraFinder
             }, token.Token);
         }
        
-       // private void bgWorkerSearch_ProgressChanged(int ProgressPercentage, TeraDetails res)
-        //{
-         //   progressBar.Value = ProgressPercentage;
-         //   if (res is not null)
-         //   {
-          //      CalculatedList.Add(res);
-         //       if (Filter is not null && Filter.IsFilterMatch(res))
-           //         GridList.Add(new GridEntry(res));
-          //  }
-       // }
+   
      
 
 
