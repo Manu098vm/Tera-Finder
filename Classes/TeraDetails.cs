@@ -137,9 +137,9 @@ namespace TeraFinder
             Calcs = str[19];
         }
 
-        public static BindingList<GridEntry> GetGridEntriesFromList(List<TeraDetails> reslist)
+        public static List<GridEntry> GetGridEntriesFromList(List<TeraDetails> reslist)
         {
-            var list = new BindingList<GridEntry>();
+            var list = new List<GridEntry>();
             foreach (var res in reslist)
                 list.Add(new GridEntry(res));
             return list;
