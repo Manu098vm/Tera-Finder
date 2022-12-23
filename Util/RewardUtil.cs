@@ -9,7 +9,7 @@ namespace TeraFinder
         public int ItemID { get; set; }
         public int Amount { get; set; }
         public int Probability { get; set; }
-        public int Max { get; set; }
+        public int Aux { get; set; }
     }
 
     public static class RewardUtil
@@ -274,8 +274,8 @@ namespace TeraFinder
             {
                 foreach (var reward in fixedlist!)
                 {
-                    rewardlist.Add(reward.ItemID == ushort.MaxValue ? new Reward { ItemID = GetMaterial(pkm.Species), Amount = reward.Amount } :
-                        reward.ItemID == ushort.MaxValue - 1 ? new Reward { ItemID = GetTeraShard(pkm.TeraType), Amount = reward.Amount } : reward);
+                    rewardlist.Add(reward.ItemID == ushort.MaxValue ? new Reward { ItemID = GetMaterial(pkm.Species), Amount = reward.Amount, Aux = reward.Aux } :
+                        reward.ItemID == ushort.MaxValue - 1 ? new Reward { ItemID = GetTeraShard(pkm.TeraType), Amount = reward.Amount, Aux = reward.Aux } : reward);
                 }
             }
             if (lotteryexists)
@@ -284,7 +284,7 @@ namespace TeraFinder
                 var amount = GetRewardCount(xoro.NextInt(100), pkm.Stars) + boost;
                 for (var i = 0; i < amount; i++)
                 {
-                    var treshold = (int)xoro.NextInt((ulong)lotterylist!.ElementAt(0).Max);
+                    var treshold = (int)xoro.NextInt((ulong)lotterylist!.ElementAt(0).Aux);
                     foreach (var reward in lotterylist!)
                     {
                         if (reward.Probability > treshold)
@@ -319,7 +319,7 @@ namespace TeraFinder
                 var amount = GetRewardCount(xoro.NextInt(100), stars) + boost;
                 for (var i = 0; i < amount; i++)
                 {
-                    var tres = (int)xoro.NextInt((ulong)lotterylist!.ElementAt(0).Max);
+                    var tres = (int)xoro.NextInt((ulong)lotterylist!.ElementAt(0).Aux);
                     foreach (var reward in lotterylist!)
                     {
                         if (reward.Probability > tres)
@@ -379,6 +379,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem00.ItemID,
                         Amount = d.RewardItem00.Num,
                         Probability = 100,
+                        Aux = d.RewardItem00.SubjectType,
                     });
                 else if (d.RewardItem00.Category == (int)RewardCategory.Gem)
                 {
@@ -387,6 +388,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem00.Num,
                         Probability = 100,
+                        Aux = d.RewardItem00.SubjectType,
                     });
                 }
                 else if (d.RewardItem00.Category == (int)RewardCategory.Poke)
@@ -396,6 +398,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem00.Num,
                         Probability = 100,
+                        Aux = d.RewardItem00.SubjectType,
                     });
                 }
 
@@ -406,6 +409,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem01.ItemID,
                         Amount = d.RewardItem01.Num,
                         Probability = 100,
+                        Aux = d.RewardItem01.SubjectType,
                     });
                 else if (d.RewardItem01.Category == (int)RewardCategory.Gem)
                 {
@@ -414,6 +418,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem01.Num,
                         Probability = 100,
+                        Aux = d.RewardItem01.SubjectType,
                     });
                 }
                 else if (d.RewardItem01.Category == (int)RewardCategory.Poke)
@@ -423,6 +428,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem01.Num,
                         Probability = 100,
+                        Aux = d.RewardItem01.SubjectType,
                     });
                 }
 
@@ -433,6 +439,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem02.ItemID,
                         Amount = d.RewardItem02.Num,
                         Probability = 100,
+                        Aux = d.RewardItem02.SubjectType,
                     });
                 else if (d.RewardItem02.Category == (int)RewardCategory.Gem)
                 {
@@ -441,6 +448,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem02.Num,
                         Probability = 100,
+                        Aux = d.RewardItem02.SubjectType,
                     });
                 }
                 else if (d.RewardItem02.Category == (int)RewardCategory.Poke)
@@ -450,6 +458,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem02.Num,
                         Probability = 100,
+                        Aux = d.RewardItem02.SubjectType,
                     });
                 }
 
@@ -460,6 +469,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem03.ItemID,
                         Amount = d.RewardItem03.Num,
                         Probability = 100,
+                        Aux = d.RewardItem03.SubjectType,
                     });
                 else if (d.RewardItem03.Category == (int)RewardCategory.Gem)
                 {
@@ -468,6 +478,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem03.Num,
                         Probability = 100,
+                        Aux = d.RewardItem03.SubjectType,
                     });
                 }
                 else if (d.RewardItem03.Category == (int)RewardCategory.Poke)
@@ -477,6 +488,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem03.Num,
                         Probability = 100,
+                        Aux = d.RewardItem03.SubjectType,
                     });
                 }
 
@@ -487,6 +499,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem04.ItemID,
                         Amount = d.RewardItem04.Num,
                         Probability = 100,
+                        Aux = d.RewardItem04.SubjectType,
                     });
                 else if (d.RewardItem04.Category == (int)RewardCategory.Gem)
                 {
@@ -495,6 +508,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem04.Num,
                         Probability = 100,
+                        Aux = d.RewardItem04.SubjectType,
                     });
                 }
                 else if (d.RewardItem04.Category == (int)RewardCategory.Poke)
@@ -504,6 +518,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem04.Num,
                         Probability = 100,
+                        Aux = d.RewardItem04.SubjectType,
                     });
                 }
 
@@ -514,6 +529,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem05.ItemID,
                         Amount = d.RewardItem05.Num,
                         Probability = 100,
+                        Aux = d.RewardItem05.SubjectType,
                     });
                 else if (d.RewardItem05.Category == (int)RewardCategory.Gem)
                 {
@@ -522,6 +538,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem05.Num,
                         Probability = 100,
+                        Aux = d.RewardItem05.SubjectType,
                     });
                 }
                 else if (d.RewardItem05.Category == (int)RewardCategory.Poke)
@@ -531,6 +548,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem05.Num,
                         Probability = 100,
+                        Aux = d.RewardItem05.SubjectType,
                     });
                 }
 
@@ -541,6 +559,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem06.ItemID,
                         Amount = d.RewardItem06.Num,
                         Probability = 100,
+                        Aux = d.RewardItem06.SubjectType,
                     });
                 else if (d.RewardItem06.Category == (int)RewardCategory.Gem)
                 {
@@ -549,6 +568,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem06.Num,
                         Probability = 100,
+                        Aux = d.RewardItem06.SubjectType,
                     });
                 }
                 else if (d.RewardItem06.Category == (int)RewardCategory.Poke)
@@ -558,6 +578,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem06.Num,
                         Probability = 100,
+                        Aux = d.RewardItem06.SubjectType,
                     });
                 }
 
@@ -568,6 +589,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem07.ItemID,
                         Amount = d.RewardItem07.Num,
                         Probability = 100,
+                        Aux = d.RewardItem07.SubjectType,
                     });
                 else if (d.RewardItem07.Category == (int)RewardCategory.Gem)
                 {
@@ -576,6 +598,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem07.Num,
                         Probability = 100,
+                        Aux = d.RewardItem07.SubjectType,
                     });
                 }
                 else if (d.RewardItem07.Category == (int)RewardCategory.Poke)
@@ -585,6 +608,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem07.Num,
                         Probability = 100,
+                        Aux = d.RewardItem07.SubjectType,
                     });
                 }
 
@@ -595,6 +619,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem08.ItemID,
                         Amount = d.RewardItem08.Num,
                         Probability = 100,
+                        Aux = d.RewardItem08.SubjectType,
                     });
                 else if (d.RewardItem08.Category == (int)RewardCategory.Gem)
                 {
@@ -603,6 +628,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem08.Num,
                         Probability = 100,
+                        Aux = d.RewardItem08.SubjectType,
                     });
                 }
                 else if (d.RewardItem08.Category == (int)RewardCategory.Poke)
@@ -612,6 +638,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem08.Num,
                         Probability = 100,
+                        Aux = d.RewardItem08.SubjectType,
                     });
                 }
 
@@ -622,6 +649,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem09.ItemID,
                         Amount = d.RewardItem09.Num,
                         Probability = 100,
+                        Aux = d.RewardItem09.SubjectType,
                     });
                 else if (d.RewardItem09.Category == (int)RewardCategory.Gem)
                 {
@@ -630,6 +658,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem09.Num,
                         Probability = 100,
+                        Aux = d.RewardItem09.SubjectType,
                     });
                 }
                 else if (d.RewardItem09.Category == (int)RewardCategory.Poke)
@@ -639,6 +668,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem09.Num,
                         Probability = 100,
+                        Aux = d.RewardItem09.SubjectType,
                     });
                 }
 
@@ -649,6 +679,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem10.ItemID,
                         Amount = d.RewardItem10.Num,
                         Probability = 100,
+                        Aux = d.RewardItem10.SubjectType,
                     });
                 else if (d.RewardItem10.Category == (int)RewardCategory.Gem)
                 {
@@ -657,6 +688,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem10.Num,
                         Probability = 100,
+                        Aux = d.RewardItem10.SubjectType,
                     });
                 }
                 else if (d.RewardItem10.Category == (int)RewardCategory.Poke)
@@ -666,6 +698,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem10.Num,
                         Probability = 100,
+                        Aux = d.RewardItem10.SubjectType,
                     });
                 }
 
@@ -676,6 +709,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem11.ItemID,
                         Amount = d.RewardItem11.Num,
                         Probability = 100,
+                        Aux = d.RewardItem11.SubjectType,
                     });
                 else if (d.RewardItem11.Category == (int)RewardCategory.Gem)
                 {
@@ -684,6 +718,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem11.Num,
                         Probability = 100,
+                        Aux = d.RewardItem11.SubjectType,
                     });
                 }
                 else if (d.RewardItem11.Category == (int)RewardCategory.Poke)
@@ -693,6 +728,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem11.Num,
                         Probability = 100,
+                        Aux = d.RewardItem11.SubjectType,
                     });
                 }
 
@@ -703,6 +739,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem12.ItemID,
                         Amount = d.RewardItem12.Num,
                         Probability = 100,
+                        Aux = d.RewardItem12.SubjectType,
                     });
                 else if (d.RewardItem12.Category == (int)RewardCategory.Gem)
                 {
@@ -711,6 +748,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem12.Num,
                         Probability = 100,
+                        Aux = d.RewardItem12.SubjectType,
                     });
                 }
                 else if (d.RewardItem12.Category == (int)RewardCategory.Poke)
@@ -720,6 +758,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem12.Num,
                         Probability = 100,
+                        Aux = d.RewardItem12.SubjectType,
                     });
                 }
 
@@ -730,6 +769,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem13.ItemID,
                         Amount = d.RewardItem13.Num,
                         Probability = 100,
+                        Aux = d.RewardItem13.SubjectType,
                     });
                 else if (d.RewardItem13.Category == (int)RewardCategory.Gem)
                 {
@@ -738,6 +778,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem13.Num,
                         Probability = 100,
+                        Aux = d.RewardItem13.SubjectType,
                     });
                 }
                 else if (d.RewardItem13.Category == (int)RewardCategory.Poke)
@@ -747,6 +788,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem13.Num,
                         Probability = 100,
+                        Aux = d.RewardItem13.SubjectType,
                     });
                 }
 
@@ -757,6 +799,7 @@ namespace TeraFinder
                         ItemID = d.RewardItem14.ItemID,
                         Amount = d.RewardItem14.Num,
                         Probability = 100,
+                        Aux = d.RewardItem14.SubjectType,
                     });
                 else if (d.RewardItem14.Category == (int)RewardCategory.Gem)
                 {
@@ -765,6 +808,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem14.Num,
                         Probability = 100,
+                        Aux = d.RewardItem14.SubjectType,
                     });
                 }
                 else if (d.RewardItem14.Category == (int)RewardCategory.Poke)
@@ -774,6 +818,7 @@ namespace TeraFinder
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem14.Num,
                         Probability = 100,
+                        Aux = d.RewardItem14.SubjectType,
                     });
                 }
                 if (items.Count > 0)
@@ -1677,7 +1722,7 @@ namespace TeraFinder
                     {
                         ItemID = l.RewardItem29.ItemID,
                         Amount = l.RewardItem29.Num,
-                        Probability = l.RewardItem29.Rate
+                        Probability = l.RewardItem29.Rate,
                     });
                 }
                 else if (l.RewardItem29.Category == (int)RewardCategory.Gem)
@@ -1700,7 +1745,7 @@ namespace TeraFinder
                 }
                 if (items.Count > 0)
                 {
-                    items.ElementAt(0).Max = totalrate;
+                    items.ElementAt(0).Aux = totalrate;
                     table.Add(hash, items);
                 }
             }

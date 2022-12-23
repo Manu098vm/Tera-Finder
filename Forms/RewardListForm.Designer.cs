@@ -152,7 +152,7 @@
             this.Items.MinimumWidth = 6;
             this.Items.Name = "Items";
             this.Items.ReadOnly = true;
-            this.Items.Width = 150;
+            this.Items.Width = 170;
             // 
             // Qty
             // 
@@ -168,7 +168,7 @@
             this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 150;
+            this.dataGridViewTextBoxColumn1.Width = 170;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -184,7 +184,7 @@
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 150;
+            this.dataGridViewTextBoxColumn2.Width = 170;
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -200,7 +200,7 @@
             this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 150;
+            this.dataGridViewTextBoxColumn3.Width = 170;
             // 
             // dataGridViewTextBoxColumn6
             // 
