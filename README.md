@@ -44,9 +44,11 @@ If you have any issues, feel free to ask for support in my [Discord server](http
 
 
 ## Credits and Thanks
-* [kwsch](https://github.com/kwsch) for [PKHeX](https://github.com/kwsch/PKHeX) and [pkNX](https://github.com/kwsch/pkNX)
+* [kwsch](https://github.com/kwsch) for [PKHeX](https://github.com/kwsch/PKHeX) and [pkNX](https://github.com/kwsch/pkNX), on which this program relies on
+* [Archit Date](https://github.com/architdate), [LegoFigure11](https://github.com/LegoFigure11), [SteveCookTU](https://github.com/SteveCookTU) for their great researches on the item rewards structures/rng handling implemented in [RaidCrawler](https://github.com/LegoFigure11/RaidCrawler/blob/main/Structures/RaidRewards.cs) and [sv raid reader](https://github.com/SteveCookTU/sv_raid_reader/blob/master/src/item_list.rs)
 * [Leanny](https://github.com/Leanny) for his Sword/Shield [PKHeX Raid Plugin](https://github.com/Leanny/PKHeX_Raid_Plugin) which was of inspiration for my plugin
-* [Lusamine](https://github.com/Lusamine), [LegoFigure11](https://github.com/LegoFigure11), [Archit Date](https://github.com/architdate), [Lincoln-LM](https://github.com/Lincoln-LM), [SteveCookTU](https://github.com/SteveCookTU) for their awesome researches
+* [santacrab2](https://github.com/santacrab2) for his contributions to make the searches lot faster
+* [kwsch](https://github.com/kwsch), [Lusamine](https://github.com/Lusamine), [LegoFigure11](https://github.com/LegoFigure11), [Archit Date](https://github.com/architdate), [SteveCookTU](https://github.com/SteveCookTU), [Lincoln-LM](https://github.com/Lincoln-LM), and all the contributors to the mentioned programs for their awesome researches
 * GitHub API implementation provided by [Octokit](https://github.com/octokit/octokit.net), licensed under the MIT license
 
 ### Some related cool tools
