@@ -38,6 +38,7 @@ namespace TeraFinder
             nSpaMax.Value = 31;
             nSpdMax.Value = 31;
             nSpeMax.Value = 31;
+            numScaleMax.Value = 255;
 
             dataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
             dataGrid.RowHeadersVisible = false;
@@ -130,12 +131,14 @@ namespace TeraFinder
             nSpaMin.Value = 0;
             nSpdMin.Value = 0;
             nSpeMin.Value = 0;
+            numScaleMin.Value = 0;
             nHpMax.Value = 31;
             nAtkMax.Value = 31;
             nDefMax.Value = 31;
             nSpaMax.Value = 31;
             nSpdMax.Value = 31;
             nSpeMax.Value = 31;
+            numScaleMax.Value = 255;
         }
 
         private int GetStars()
@@ -209,6 +212,8 @@ namespace TeraFinder
                 MaxSpd = (int)nSpdMax.Value,
                 MinSpe = (int)nSpeMin.Value,
                 MaxSpe = (int)nSpeMax.Value,
+                MinScale = (int)numScaleMin.Value,
+                MaxScale = (int)numScaleMax.Value,
                 Stars = GetStars(),
                 Species = (Species)GetSpeciesAndForm()[0],
                 Form = GetSpeciesAndForm()[1],

@@ -160,6 +160,8 @@ namespace TeraFinder
         public int MaxSpd { get; set; }
         public int MinSpe { get; set; }
         public int MaxSpe { get; set; }
+        public int MinScale { get; set; }
+        public int MaxScale { get; set; }
         public int Stars { get; set; }
         public Species Species { get; set; }
         public int Form { get; set; }
@@ -183,6 +185,8 @@ namespace TeraFinder
             if (!(MinSpd <= res.SPD && res.SPD <= MaxSpd))
                 return false;
             if (!(MinSpe <= res.SPE && res.SPE <= MaxSpe))
+                return false;
+            if (!(MinScale <= res.Scale && res.Scale <= MaxScale))
                 return false;
 
             if (Stars != 0 && Stars != res.Stars)
@@ -259,6 +263,10 @@ namespace TeraFinder
                 return false;
             if (!(AltEC == false))
                 return false;
+            if (!(MinScale == 0))
+                return false;
+            if (!(MaxScale == 255))
+                return false;
 
             return true;
         }
@@ -288,6 +296,10 @@ namespace TeraFinder
             if (!(MaxSpd == res.MaxSpd))
                 return false;
             if (!(MaxSpe == res.MaxSpe))
+                return false;
+            if (!(MinScale == res.MinScale))
+                return false;
+            if (!(MaxScale == res.MaxScale))
                 return false;
             if (!(Stars == res.Stars))
                 return false;
