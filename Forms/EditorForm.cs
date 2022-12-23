@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using TeraFinder.Forms;
 
 namespace TeraFinder
 {
@@ -14,8 +15,23 @@ namespace TeraFinder
         public EncounterRaid9[]? Tera = null;
         public EncounterRaid9[]? Dist = null;
         public EncounterRaid9[]? Mighty = null;
+        public Dictionary<ulong, List<Reward>>? TeraFixedRewards = null;
+        public Dictionary<ulong, List<Reward>>? TeraLotteryRewards = null;
+        public Dictionary<ulong, List<Reward>>? DistFixedRewards = null;
+        public Dictionary<ulong, List<Reward>>? DistLotteryRewards = null;
 
-        public EditorForm(SAV9SV sav, IPKMView? editor, EncounterRaid9[]? tera, EncounterRaid9[]? dist, EncounterRaid9[]? mighty)
+        public EncounterRaid9? CurrEncount = null;
+        public TeraDetails? CurrTera = null;
+
+        public EditorForm(SAV9SV sav,
+            IPKMView? editor,
+            EncounterRaid9[]? tera,
+            EncounterRaid9[]? dist,
+            EncounterRaid9[]? mighty,
+            Dictionary<ulong, List<Reward>>? terafixed,
+            Dictionary<ulong, List<Reward>>? teralottery,
+            Dictionary<ulong, List<Reward>>? distfixed,
+            Dictionary<ulong, List<Reward>>? distlottery)
         {
             InitializeComponent();
             SAV = sav;
@@ -23,13 +39,29 @@ namespace TeraFinder
             if (dist is null)
             {
                 var events = TeraUtil.GetSAVDistEncounters(SAV);
+                var eventsrewards = RewardUtil.GetDistRewardsTables(SAV);
                 Dist = events[0];
                 Mighty = events[1];
+                DistFixedRewards = eventsrewards[0];
+                DistLotteryRewards = eventsrewards[1];
             }
             else
             {
                 Dist = dist;
                 Mighty = mighty;
+                DistFixedRewards = distfixed;
+                DistLotteryRewards = distlottery;
+            }
+            if (terafixed is null)
+            {
+                var terarewards = RewardUtil.GetTeraRewardsTables();
+                TeraFixedRewards = terarewards[0];
+                TeraLotteryRewards = terarewards[1];
+            }
+            else
+            {
+                TeraFixedRewards = terafixed;
+                TeraLotteryRewards = teralottery;
             }
             Tera = tera is null ? TeraUtil.GetAllTeraEncounters() : tera;
             DefBackground = pictureBox.BackgroundImage;
@@ -71,7 +103,8 @@ namespace TeraFinder
             else cmbContent.SelectedIndex = 0;
 
             txtSeed.Text = $"{raid.Seed:X8}";
-            UpdatePKMInfo(raid);
+            if (!Loaded)
+                UpdatePKMInfo(raid);
             Loaded = true;
         }
 
@@ -113,7 +146,7 @@ namespace TeraFinder
         private void txtSeed_KeyPress(object sender, KeyPressEventArgs e)
         {
             var c = e.KeyChar;
-            if(!char.IsControl(e.KeyChar) && !((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')))
+            if (!char.IsControl(e.KeyChar) && !((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')))
                 e.Handled = true;
         }
 
@@ -141,7 +174,7 @@ namespace TeraFinder
             {
                 var progress = raid.Content is TeraRaidContentType.Black6 ? GameProgress.None : Progress;
                 var encounter = cmbContent.SelectedIndex < 2 ? TeraUtil.GetTeraEncounter(raid.Seed, SAV, TeraUtil.GetStars(raid.Seed, progress), Tera!) :
-                    raid.Content is TeraRaidContentType.Might7 ? TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Mighty!, true):
+                    raid.Content is TeraRaidContentType.Might7 ? TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Mighty!, true) :
                     TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Dist!, false);
 
                 if (encounter is not null)
@@ -165,6 +198,11 @@ namespace TeraFinder
                     pictureBox.BackgroundImage = null;
                     pictureBox.Image = SpritesUtil.GetRaidResultSprite(rngres, raid.IsEnabled);
                     pictureBox.Size = pictureBox.Image.Size;
+                    btnRewards.Width = pictureBox.Image.Width;
+                    btnRewards.Visible = true;
+
+                    CurrEncount = encounter;
+                    CurrTera = rngres;
 
                     SetStarSymbols(rngres.Stars);
                     return;
@@ -186,6 +224,9 @@ namespace TeraFinder
             pictureBox.BackgroundImage = DefBackground;
             pictureBox.Size = DefSize;
             pictureBox.Image = null;
+            btnRewards.Visible = false;
+            CurrEncount = null;
+            CurrTera = null;
             SetStarSymbols(0);
         }
 
@@ -225,6 +266,33 @@ namespace TeraFinder
         {
             cmbDens.SelectedIndex--;
             cmbDens.Focus();
+        }
+
+        private void btnRewards_Click(object sender, EventArgs e)
+        {
+            if (CurrEncount is not null && CurrTera is not null)
+            {
+                var lvl0 = RewardUtil.GetRewardList(CurrTera, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
+                    CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 0);
+                var lvl1 = RewardUtil.GetRewardList(CurrTera, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
+                    CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 1);
+                var lvl2 = RewardUtil.GetRewardList(CurrTera, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
+                    CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 2);
+                var lvl3 = RewardUtil.GetRewardList(CurrTera, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
+                    CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 3);
+
+                /*var lvl0 = RewardUtil.GetRewardList(Convert.ToUInt32(txtSeed.Text, 16), CurrEncount.Stars, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
+                    CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 0);
+                var lvl1 = RewardUtil.GetRewardList(Convert.ToUInt32(txtSeed.Text, 16), CurrEncount.Stars, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
+                    CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 1);
+                var lvl2 = RewardUtil.GetRewardList(Convert.ToUInt32(txtSeed.Text, 16), CurrEncount.Stars, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
+                    CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 2);
+                var lvl3 = RewardUtil.GetRewardList(Convert.ToUInt32(txtSeed.Text, 16), CurrEncount.Stars, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
+                    CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 3);*/
+
+                var form = new RewardListForm(SAV.Language, lvl0, lvl1, lvl2, lvl3);
+                form.Show();
+            }
         }
     }
 }

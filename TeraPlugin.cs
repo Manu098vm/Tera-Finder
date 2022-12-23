@@ -17,13 +17,17 @@ namespace TeraFinder
         public EncounterRaid9[]? Tera = null;
         public EncounterRaid9[]? Dist = null;
         public EncounterRaid9[]? Mighty = null;
+        public Dictionary<ulong, List<Reward>>? TeraFixedRewards = null;
+        public Dictionary<ulong, List<Reward>>? TeraLotteryRewards = null;
+        public Dictionary<ulong, List<Reward>>? DistFixedRewards = null;
+        public Dictionary<ulong, List<Reward>>? DistLotteryRewards = null;
 
         private readonly ToolStripMenuItem Plugin = new("Tera Finder Plugin");
         private readonly ToolStripMenuItem Editor = new("Tera Raid Viewer/Editor");
         private readonly ToolStripMenuItem Finder = new("Tera Raid Seed Finder");
         private readonly ToolStripMenuItem Flags = new("Edit Game Flags");
         private readonly ToolStripMenuItem Events = new("Import Poké Portal News");
-        
+
         public void Initialize(params object[] args)
         {
             var task = Task.Run(async () => { await GitHubUtil.TryUpdate(); });
@@ -32,7 +36,7 @@ namespace TeraFinder
             PKMEditor = (IPKMView)Array.Find(args, z => z is IPKMView)!;
             var menu = (ToolStrip)Array.Find(args, z => z is ToolStrip)!;
             LoadMenuStrip(menu);
-            NotifySaveLoaded(); 
+            NotifySaveLoaded();
         }
 
         public void StandaloneInitialize(ReadOnlySpan<byte> data = default)
@@ -43,10 +47,16 @@ namespace TeraFinder
                 SAV = new SAV9SV(data.ToArray());
             else
                 SAV = new();
-            Tera = TeraUtil.GetAllTeraEncounters();
             var events = TeraUtil.GetSAVDistEncounters(SAV);
+            var terarewards = RewardUtil.GetTeraRewardsTables();
+            var eventsrewards = RewardUtil.GetDistRewardsTables(SAV);
+            Tera = TeraUtil.GetAllTeraEncounters();
             Dist = events[0];
             Mighty = events[1];
+            TeraFixedRewards = terarewards[0];
+            TeraLotteryRewards = terarewards[1];
+            DistFixedRewards = eventsrewards[0];
+            DistLotteryRewards = eventsrewards[1];
         }
 
         private void LoadMenuStrip(ToolStrip menuStrip)
@@ -63,7 +73,7 @@ namespace TeraFinder
             Plugin.DropDownItems.Add(Finder);
             Plugin.DropDownItems.Add(Flags);
             Plugin.DropDownItems.Add(Events);
-            Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty).Show();
+            Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards).Show();
             Events.Click += (s, e) => ImportUtil.ImportNews(SAV, plugin: true);
             Flags.Click += (s, e) => new ProgressForm(SAV).Show();
             Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV).Show();
@@ -72,12 +82,12 @@ namespace TeraFinder
 
         public void LaunchEditor()
         {
-            new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty).Show();
+            new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards).Show();
         }
 
         public void LaunchCalculator()
         {
-            var editor = new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty);
+            var editor = new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards);
             new CalculatorForm(editor).Show();
         }
 

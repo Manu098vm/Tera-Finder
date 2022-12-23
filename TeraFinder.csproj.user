@@ -14,5 +14,8 @@
     <Compile Update="Forms\ProgressForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\RewardListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

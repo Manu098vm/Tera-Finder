@@ -27,4 +27,11 @@
         Event = 2,
         Event_Mighty = 3,
     }
+
+    public enum RewardCategory : int
+    {
+        ItemNone = 0,
+        Poke = 1,
+        Gem = 2,
+    }
 }

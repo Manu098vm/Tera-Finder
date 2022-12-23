@@ -18,17 +18,11 @@ namespace TeraFinder
             {
                 var KBCATFixedRewardItemArray = sav.AllBlocks.Where(block => block.Key == 0x7D6C2B82).FirstOrDefault()!.Data;
                 var KBCATLotteryRewardItemArray = sav.AllBlocks.Where(block => block.Key == 0xA52B4811).FirstOrDefault()!.Data;
-                //var KBCATRaidPriorityArray = sav.AllBlocks.Where(block => block.Key == 0x095451E4).FirstOrDefault()!.Data;
                 var tableDrops = FlatBufferConverter.DeserializeFrom<DeliveryRaidFixedRewardItemArray>(KBCATFixedRewardItemArray);
                 var tableBonus = FlatBufferConverter.DeserializeFrom<DeliveryRaidLotteryRewardItemArray>(KBCATLotteryRewardItemArray);
-                //var tablePriority = FlatBufferConverter.DeserializeFrom<DeliveryRaidPriorityArray>(priority);
-                var drops = TableUtil.GetTable(tableDrops.Table);
-                var lottery = TableUtil.GetTable(tableBonus.Table);
-                //var priority = TableUtil.GetTable(tablePriority.Table);
                 var opt = new JsonSerializerOptions { WriteIndented = true };
-                drops = JsonSerializer.Serialize(drops, opt);
-                lottery = JsonSerializer.Serialize(lottery, opt);
-                //priority = System.Text.Json.JsonSerializer.Serialize(priority, opt);
+                var drops = JsonSerializer.Serialize(tableDrops, opt);
+                var lottery = JsonSerializer.Serialize(tableBonus, opt);
                 return new string[2] { drops, lottery };
             }
 
@@ -79,7 +73,7 @@ namespace TeraFinder
             res = new byte[][] { type2list.SelectMany(z => z).ToArray(), type3list.SelectMany(z => z).ToArray() };
             return res;
         }
-        
+
         private static void AddToList(IReadOnlyCollection<DeliveryRaidEnemyTable> table, List<byte[]> list, RaidSerializationFormat format)
         {
             // Get the total weight for each stage of star count
