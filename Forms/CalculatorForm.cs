@@ -234,7 +234,7 @@ namespace TeraFinder
             if (!token.IsCancellationRequested)
                 token.Cancel();
         }
-        CancellationTokenSource? token;
+        CancellationTokenSource token = new();
      
         public async void btnSearch_Click(object sender, EventArgs e)
         {

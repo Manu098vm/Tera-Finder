@@ -850,7 +850,7 @@
             this.dataGrid.RowHeadersVisible = false;
             this.dataGrid.RowHeadersWidth = 51;
             this.dataGrid.RowTemplate.Height = 29;
-            this.dataGrid.Size = new System.Drawing.Size(1342, 380);
+            this.dataGrid.Size = new System.Drawing.Size(1342, 354);
             this.dataGrid.TabIndex = 5;
             // 
             // bgWorkerFilter
