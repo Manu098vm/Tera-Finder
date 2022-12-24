@@ -105,11 +105,11 @@ namespace TeraFinder
                 Species.Houndour or Species.Houndoom => 1990,
                 Species.Phanpy or Species.Donphan => 1991,
                 Species.Stantler or Species.Wyrdeer => 1992,
-                Species.Larvesta or Species.Pupitar or Species.Tyranitar => 1994,
+                Species.Larvitar or Species.Pupitar or Species.Tyranitar => 1994,
                 Species.Wingull or Species.Pelipper => 1994,
                 Species.Ralts or Species.Kirlia or Species.Gardevoir or Species.Gallade => 1995,
                 Species.Surskit or Species.Masquerain => 1996,
-                Species.Shroodle or Species.Breloom => 1997,
+                Species.Shroomish or Species.Breloom => 1997,
                 Species.Slakoth or Species.Vigoroth or Species.Slaking => 1998,
                 Species.Makuhita or Species.Hariyama => 1999,
                 Species.Azurill or Species.Marill or Species.Azumarill => 2000,
@@ -251,7 +251,7 @@ namespace TeraFinder
                 Species.Tinkatink or Species.Tinkatuff or Species.Tinkaton => 2156,
                 Species.Charcadet or Species.Armarouge or Species.Ceruledge => 2157,
                 Species.Toedscool or Species.Toedscruel => 2158,
-                Species.Woobat or Species.Quagsire or Species.Clodsire => 2159,
+                Species.Wooper or Species.Quagsire or Species.Clodsire => 2159,
 
                 _ => ushort.MaxValue,
             };
