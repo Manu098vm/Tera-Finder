@@ -3,15 +3,6 @@ using PKHeX.Core;
 
 namespace TeraFinder
 {
-
-    public class Reward
-    {
-        public int ItemID { get; set; }
-        public int Amount { get; set; }
-        public int Probability { get; set; }
-        public int Aux { get; set; }
-    }
-
     public static class RewardUtil
     {
         public static readonly string[] TeraShard = new string[] { "Tera Shard", "テラピ", "Tera Shard", "Téra-Éclat", "Teralite", "Tera-Stück", "테라피스", "Teralito", "테라피스", "晶碎块", "晶碎塊" };

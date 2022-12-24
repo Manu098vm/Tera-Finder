@@ -42,6 +42,7 @@
             this.btnImportNews = new System.Windows.Forms.Button();
             this.btnStartEditor = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.btnStartRewardCalc = new System.Windows.Forms.Button();
             this.grpSAV.SuspendLayout();
             this.grpTools.SuspendLayout();
             this.grpStaticTools.SuspendLayout();
@@ -53,27 +54,31 @@
             this.grpSAV.Controls.Add(this.txtSAV);
             this.grpSAV.Controls.Add(this.btnLoad);
             this.grpSAV.Controls.Add(this.btnExport);
-            this.grpSAV.Location = new System.Drawing.Point(12, 12);
+            this.grpSAV.Location = new System.Drawing.Point(10, 9);
+            this.grpSAV.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grpSAV.Name = "grpSAV";
-            this.grpSAV.Size = new System.Drawing.Size(463, 122);
+            this.grpSAV.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpSAV.Size = new System.Drawing.Size(405, 92);
             this.grpSAV.TabIndex = 0;
             this.grpSAV.TabStop = false;
             this.grpSAV.Text = "Save File";
             // 
             // txtSAV
             // 
-            this.txtSAV.Location = new System.Drawing.Point(90, 73);
+            this.txtSAV.Location = new System.Drawing.Point(79, 55);
+            this.txtSAV.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSAV.Name = "txtSAV";
             this.txtSAV.ReadOnly = true;
-            this.txtSAV.Size = new System.Drawing.Size(280, 27);
+            this.txtSAV.Size = new System.Drawing.Size(246, 23);
             this.txtSAV.TabIndex = 4;
             this.txtSAV.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(90, 32);
+            this.btnLoad.Location = new System.Drawing.Point(79, 24);
+            this.btnLoad.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(137, 35);
+            this.btnLoad.Size = new System.Drawing.Size(120, 26);
             this.btnLoad.TabIndex = 2;
             this.btnLoad.Text = "Load Save File";
             this.btnLoad.UseVisualStyleBackColor = true;
@@ -81,9 +86,10 @@
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(233, 32);
+            this.btnExport.Location = new System.Drawing.Point(204, 24);
+            this.btnExport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(137, 35);
+            this.btnExport.Size = new System.Drawing.Size(120, 26);
             this.btnExport.TabIndex = 3;
             this.btnExport.Text = "Export Save File";
             this.btnExport.UseVisualStyleBackColor = true;
@@ -93,29 +99,35 @@
             // 
             this.grpTools.Controls.Add(this.grpStaticTools);
             this.grpTools.Controls.Add(this.grpSavTools);
-            this.grpTools.Location = new System.Drawing.Point(12, 140);
+            this.grpTools.Location = new System.Drawing.Point(10, 105);
+            this.grpTools.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grpTools.Name = "grpTools";
-            this.grpTools.Size = new System.Drawing.Size(463, 291);
+            this.grpTools.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpTools.Size = new System.Drawing.Size(405, 218);
             this.grpTools.TabIndex = 1;
             this.grpTools.TabStop = false;
             this.grpTools.Text = "Tools";
             // 
             // grpStaticTools
             // 
-            this.grpStaticTools.Controls.Add(this.btnStartFinder);
+            this.grpStaticTools.Controls.Add(this.btnStartRewardCalc);
             this.grpStaticTools.Controls.Add(this.btnStartCalculator);
-            this.grpStaticTools.Location = new System.Drawing.Point(6, 158);
+            this.grpStaticTools.Controls.Add(this.btnStartFinder);
+            this.grpStaticTools.Location = new System.Drawing.Point(5, 118);
+            this.grpStaticTools.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grpStaticTools.Name = "grpStaticTools";
-            this.grpStaticTools.Size = new System.Drawing.Size(451, 125);
+            this.grpStaticTools.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpStaticTools.Size = new System.Drawing.Size(395, 94);
             this.grpStaticTools.TabIndex = 3;
             this.grpStaticTools.TabStop = false;
             this.grpStaticTools.Text = "Standalone Tools";
             // 
             // btnStartFinder
             // 
-            this.btnStartFinder.Location = new System.Drawing.Point(227, 40);
+            this.btnStartFinder.Location = new System.Drawing.Point(14, 32);
+            this.btnStartFinder.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnStartFinder.Name = "btnStartFinder";
-            this.btnStartFinder.Size = new System.Drawing.Size(137, 54);
+            this.btnStartFinder.Size = new System.Drawing.Size(120, 40);
             this.btnStartFinder.TabIndex = 6;
             this.btnStartFinder.Text = "Seed Finder";
             this.btnStartFinder.UseVisualStyleBackColor = true;
@@ -123,9 +135,10 @@
             // 
             // btnStartCalculator
             // 
-            this.btnStartCalculator.Location = new System.Drawing.Point(84, 40);
+            this.btnStartCalculator.Location = new System.Drawing.Point(140, 32);
+            this.btnStartCalculator.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnStartCalculator.Name = "btnStartCalculator";
-            this.btnStartCalculator.Size = new System.Drawing.Size(137, 54);
+            this.btnStartCalculator.Size = new System.Drawing.Size(120, 40);
             this.btnStartCalculator.TabIndex = 2;
             this.btnStartCalculator.Text = "Raid Calculator";
             this.btnStartCalculator.UseVisualStyleBackColor = true;
@@ -136,18 +149,21 @@
             this.grpSavTools.Controls.Add(this.btnEditGame);
             this.grpSavTools.Controls.Add(this.btnImportNews);
             this.grpSavTools.Controls.Add(this.btnStartEditor);
-            this.grpSavTools.Location = new System.Drawing.Point(6, 26);
+            this.grpSavTools.Location = new System.Drawing.Point(5, 20);
+            this.grpSavTools.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grpSavTools.Name = "grpSavTools";
-            this.grpSavTools.Size = new System.Drawing.Size(451, 125);
+            this.grpSavTools.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpSavTools.Size = new System.Drawing.Size(395, 94);
             this.grpSavTools.TabIndex = 2;
             this.grpSavTools.TabStop = false;
             this.grpSavTools.Text = "SAV Tools";
             // 
             // btnEditGame
             // 
-            this.btnEditGame.Location = new System.Drawing.Point(16, 40);
+            this.btnEditGame.Location = new System.Drawing.Point(14, 30);
+            this.btnEditGame.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEditGame.Name = "btnEditGame";
-            this.btnEditGame.Size = new System.Drawing.Size(137, 54);
+            this.btnEditGame.Size = new System.Drawing.Size(120, 40);
             this.btnEditGame.TabIndex = 4;
             this.btnEditGame.Text = "Edit Game Flags";
             this.btnEditGame.UseVisualStyleBackColor = true;
@@ -155,9 +171,10 @@
             // 
             // btnImportNews
             // 
-            this.btnImportNews.Location = new System.Drawing.Point(159, 40);
+            this.btnImportNews.Location = new System.Drawing.Point(140, 30);
+            this.btnImportNews.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnImportNews.Name = "btnImportNews";
-            this.btnImportNews.Size = new System.Drawing.Size(137, 54);
+            this.btnImportNews.Size = new System.Drawing.Size(120, 40);
             this.btnImportNews.TabIndex = 3;
             this.btnImportNews.Text = "Import Poké Portal News";
             this.btnImportNews.UseVisualStyleBackColor = true;
@@ -165,9 +182,10 @@
             // 
             // btnStartEditor
             // 
-            this.btnStartEditor.Location = new System.Drawing.Point(302, 40);
+            this.btnStartEditor.Location = new System.Drawing.Point(266, 30);
+            this.btnStartEditor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnStartEditor.Name = "btnStartEditor";
-            this.btnStartEditor.Size = new System.Drawing.Size(137, 54);
+            this.btnStartEditor.Size = new System.Drawing.Size(120, 40);
             this.btnStartEditor.TabIndex = 5;
             this.btnStartEditor.Text = "Raid Viewer/Editor";
             this.btnStartEditor.UseVisualStyleBackColor = true;
@@ -177,15 +195,26 @@
             // 
             this.openFileDialog.FileName = "openFileDialog";
             // 
+            // btnStartRewardCalc
+            // 
+            this.btnStartRewardCalc.Location = new System.Drawing.Point(266, 32);
+            this.btnStartRewardCalc.Name = "btnStartRewardCalc";
+            this.btnStartRewardCalc.Size = new System.Drawing.Size(120, 40);
+            this.btnStartRewardCalc.TabIndex = 7;
+            this.btnStartRewardCalc.Text = "Reward Calculator";
+            this.btnStartRewardCalc.UseVisualStyleBackColor = true;
+            this.btnStartRewardCalc.Click += new System.EventHandler(this.btnStartRewardCalc_Click);
+            // 
             // TeraFinderForm
             // 
             this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 437);
+            this.ClientSize = new System.Drawing.Size(426, 328);
             this.Controls.Add(this.grpTools);
             this.Controls.Add(this.grpSAV);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TeraFinderForm";
@@ -216,5 +245,6 @@
         private Button btnLoad;
         private Button btnExport;
         private OpenFileDialog openFileDialog;
+        private Button btnStartRewardCalc;
     }
 }

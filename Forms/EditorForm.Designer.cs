@@ -61,6 +61,7 @@
             this.btnOpenCalculator = new System.Windows.Forms.Button();
             this.btnDx = new System.Windows.Forms.Button();
             this.btnSx = new System.Windows.Forms.Button();
+            this.btnOpenRewardCalculator = new System.Windows.Forms.Button();
             this.GrpRaidInfo.SuspendLayout();
             this.grpPkmInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -391,10 +392,10 @@
             // 
             // btnOpenCalculator
             // 
-            this.btnOpenCalculator.Location = new System.Drawing.Point(70, 318);
+            this.btnOpenCalculator.Location = new System.Drawing.Point(7, 310);
             this.btnOpenCalculator.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnOpenCalculator.Name = "btnOpenCalculator";
-            this.btnOpenCalculator.Size = new System.Drawing.Size(179, 28);
+            this.btnOpenCalculator.Size = new System.Drawing.Size(147, 35);
             this.btnOpenCalculator.TabIndex = 4;
             this.btnOpenCalculator.Text = "Seed Calculator";
             this.btnOpenCalculator.UseVisualStyleBackColor = true;
@@ -422,11 +423,22 @@
             this.btnSx.UseVisualStyleBackColor = true;
             this.btnSx.Click += new System.EventHandler(this.btnSx_Click);
             // 
+            // btnOpenRewardCalculator
+            // 
+            this.btnOpenRewardCalculator.Location = new System.Drawing.Point(160, 310);
+            this.btnOpenRewardCalculator.Name = "btnOpenRewardCalculator";
+            this.btnOpenRewardCalculator.Size = new System.Drawing.Size(149, 35);
+            this.btnOpenRewardCalculator.TabIndex = 21;
+            this.btnOpenRewardCalculator.Text = "Reward Calculator";
+            this.btnOpenRewardCalculator.UseVisualStyleBackColor = true;
+            this.btnOpenRewardCalculator.Click += new System.EventHandler(this.btnOpenRewardCalculator_Click);
+            // 
             // EditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(315, 356);
+            this.ClientSize = new System.Drawing.Size(315, 351);
+            this.Controls.Add(this.btnOpenRewardCalculator);
             this.Controls.Add(this.btnDx);
             this.Controls.Add(this.btnSx);
             this.Controls.Add(this.btnOpenCalculator);
@@ -483,5 +495,6 @@
         private Button btnDx;
         private Button btnSx;
         private Button btnRewards;
+        private Button btnOpenRewardCalculator;
     }
 }

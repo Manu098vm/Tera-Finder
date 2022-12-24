@@ -256,6 +256,12 @@ namespace TeraFinder
             calcform.Show();
         }
 
+        private void btnOpenRewardCalculator_Click(object sender, EventArgs e)
+        {
+            var calcform = new RewardCalcForm(this);
+            calcform.Show();
+        }
+
         private void btnDx_Click(object sender, EventArgs e)
         {
             cmbDens.SelectedIndex++;

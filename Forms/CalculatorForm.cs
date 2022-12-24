@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using PKHeX.Core;
+﻿using PKHeX.Core;
 
 namespace TeraFinder
 {
@@ -7,8 +6,8 @@ namespace TeraFinder
     {
         private EditorForm Editor = null!;
         private List<TeraDetails> CalculatedList = new();
-        
         private TeraFilter? Filter = null;
+        private CancellationTokenSource Token = new ();
 
         public CalculatorForm(EditorForm editor)
         {
@@ -42,7 +41,6 @@ namespace TeraFinder
 
             dataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
             dataGrid.RowHeadersVisible = false;
-            
         }
 
         private bool IsBlankSAV()
@@ -112,6 +110,13 @@ namespace TeraFinder
         {
             var c = e.KeyChar;
             if (!char.IsControl(e.KeyChar) && !((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')))
+                e.Handled = true;
+        }
+
+        private void txtID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            var c = e.KeyChar;
+            if (!char.IsControl(e.KeyChar) && !(c >= '0' && c <= '9'))
                 e.Handled = true;
         }
 
@@ -185,13 +190,11 @@ namespace TeraFinder
                 DialogResult d = MessageBox.Show("Do you want to apply filters in the existing search?", "Apply Filters" , MessageBoxButtons.YesNo);
                 if (d == DialogResult.Yes)
                 {
-                   
                     var list = new List<GridEntry>();
                     foreach (var c in CalculatedList)
                         if (Filter is null || Filter.IsFilterMatch(c))
                             list.Add(new GridEntry(c));
                     dataGrid.DataSource = list;
-                    
                 }
             }
         }
@@ -236,18 +239,15 @@ namespace TeraFinder
 
         private void Form_FormClosing(Object sender, FormClosingEventArgs e)
         {
-            if (!token.IsCancellationRequested)
-                token.Cancel();
+            if (!Token.IsCancellationRequested)
+                Token.Cancel();
         }
-        CancellationTokenSource token = new();
      
         public async void btnSearch_Click(object sender, EventArgs e)
         {
-           
             if (btnSearch.Text.Equals("Search"))
             {
-               
-                token = new();
+                Token = new();
                 if (cmbProgress.SelectedIndex is (int)GameProgress.Beginning or (int)GameProgress.None)
                 {
                     cmbProgress.Focus();
@@ -272,17 +272,16 @@ namespace TeraFinder
                     cmbSpecies.Focus();
                     return;
                 }
-
                 
-                //if(dataGrid.Rows.Count> 0)
-                    //dataGrid.Rows.Clear();
                 if(CalculatedList.Count> 0)
                     CalculatedList.Clear();
                 btnSearch.Text = "Stop";
                 ActiveForm.Update();
+
                //grpFilters.Enabled = false;
                 //grpGameInfo.Enabled = false;
                 //cmbContent.Enabled = false;
+
                 CreateFilter();
                 var sav = !IsBlankSAV() ? Editor.SAV : new SAV9SV 
                 { 
@@ -293,69 +292,60 @@ namespace TeraFinder
 
                 try
                 {
-                  
-                   var griddata= await bgWorkerSearch_DoWork(sav, progress, content, token);
-                 dataGrid.DataSource = griddata;
+                    var griddata= await bgWorkerSearch_DoWork(sav, progress, content, Token);
+                    dataGrid.DataSource = griddata;
                     btnSearch.Text = "Search";
                 }
                 catch(OperationCanceledException)
                 {
                     btnSearch.Text = "Search";
-
                 }
-                
             }
             else
             {
-                token.Cancel();
+                Token.Cancel();
                 btnSearch.Text = "Search";
                 return;
             }
         }
+
         private static ulong GetNext(ulong seed) { return new Xoroshiro128Plus(seed).Next(); }
+
         private async Task<List<GridEntry>> bgWorkerSearch_DoWork(SAV9SV sav, GameProgress progress, RaidContent content, CancellationTokenSource token)
         {
-            var GridList = new List<GridEntry>();
+            var gridList = new List<GridEntry>();
             ulong seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
             if (seed == 0) seed = Xoroshiro128Plus.XOROSHIRO_CONST;
             var first = CalcResult(seed, progress, sav, content, 0);
-            if(Filter is not null && Filter.IsFilterMatch(first))
-            {
-                GridList.Add(new GridEntry(first));
-            }
-            if (Filter is null)
-                GridList.Add(new GridEntry(first));
+            if(Filter is not null && first is not null && Filter.IsFilterMatch(first))
+                gridList.Add(new GridEntry(first));
+            else if (Filter is null && first is not null)
+                gridList.Add(new GridEntry(first));
 
-            //var xoro = new Xoroshiro128Plus(seed);
             return await Task.Run(() =>
             {
                 for (uint i = 1; i < (uint)numFrames.Value; i++)
                 {
-
                     seed = GetNext(seed);
                     var res = CalcResult(seed, progress, sav, content, i);
-                    if (Filter is not null && Filter.IsFilterMatch(res))
+                    if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
                     {
-                        GridList.Add(new GridEntry(res));
+                        gridList.Add(new GridEntry(res));
                         CalculatedList.Add(res);
                         if (!showresults.Checked)
-                            return GridList;
+                            return gridList;
                     }
-                    else if (Filter is null)
+                    else if (Filter is null && res is not null)
                     {
-                        GridList.Add(new GridEntry(res));
+                        gridList.Add(new GridEntry(res));
                         CalculatedList.Add(res);
                     }
                     if (token.IsCancellationRequested)
-                    {  return GridList; }
+                        return gridList;
                 }
-                return GridList;
+                return gridList;
             }, token.Token);
         }
-       
-   
-     
-
 
         private TeraDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, uint calc)
         {

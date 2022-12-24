@@ -104,6 +104,11 @@ namespace TeraFinder.Launcher
             Plugin.LaunchFinder();
         }
 
+        private void btnStartRewardCalc_Click(object sender, EventArgs e)
+        {
+            Plugin.LaunchRewardCalculator();
+        }
+
         private string GetGameString()
         {
             var str = Plugin.GetSavName();

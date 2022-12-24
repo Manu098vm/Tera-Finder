@@ -91,6 +91,12 @@ namespace TeraFinder
             new CalculatorForm(editor).Show();
         }
 
+        public void LaunchRewardCalculator()
+        {
+            var editor = new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards);
+            new RewardCalcForm(editor).Show();
+        }
+
         public void LaunchImporter()
         {
             ImportUtil.ImportNews(SAV, plugin: true);
