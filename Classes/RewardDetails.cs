@@ -32,6 +32,16 @@ namespace TeraFinder
 
             return true;
         }
+
+        public bool NeedAccurate()
+        {
+            return ItemID switch
+            {
+                >= 1862 and <= 1879 => true,
+                >= 1956 and <= 2159 => true,
+                _ => false,
+            };
+        }
     }
 
     public class RewardDetails
@@ -130,7 +140,7 @@ namespace TeraFinder
         {
             if (FilterRewards is null)
                 return true;
-            if(FilterRewards.Length == 0)
+            if(FilterRewards.Length <= 0)
                 return true;
 
             return false;
@@ -148,6 +158,15 @@ namespace TeraFinder
                     return false;
 
             return true;
+        }
+
+        public bool NeedAccurate()
+        {
+            if(!IsFilterNull())
+                foreach(var f in FilterRewards!)
+                    if(f.NeedAccurate())
+                        return true;
+            return false;
         }
     }
 }

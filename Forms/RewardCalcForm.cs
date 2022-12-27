@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using System.Collections.Generic;
 
 namespace TeraFinder.Forms
 {
@@ -71,6 +70,8 @@ namespace TeraFinder.Forms
         private void btnApply_Click(object sender, EventArgs e)
         {
             CreateFilter();
+            if (Filter is not null && Filter.NeedAccurate())
+                chkAccurateSearch.Checked = true;
             if (dataGrid.Rows.Count > 0)
             {
                 DialogResult d = MessageBox.Show("Do you want to apply filters in the existing search?", "Apply Filters", MessageBoxButtons.YesNo);
@@ -159,6 +160,9 @@ namespace TeraFinder.Forms
                 ActiveForm.Update();
 
                 CreateFilter();
+                if (Filter is not null && Filter.NeedAccurate())
+                    chkAccurateSearch.Checked = true;
+
                 var sav = (SAV9SV)Editor.SAV.Clone();
                 sav.TrainerID7 = Int32.Parse(txtTID.Text);
                 sav.TrainerSID7 = Int32.Parse(txtSID.Text);
