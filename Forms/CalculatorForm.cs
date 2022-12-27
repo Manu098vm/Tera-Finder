@@ -272,15 +272,15 @@ namespace TeraFinder
                     cmbSpecies.Focus();
                     return;
                 }
-                
-                if(CalculatedList.Count> 0)
-                    CalculatedList.Clear();
-                btnSearch.Text = "Stop";
-                ActiveForm.Update();
 
-               //grpFilters.Enabled = false;
-                //grpGameInfo.Enabled = false;
-                //cmbContent.Enabled = false;
+                if (CalculatedList.Count > 0)
+                {
+                    CalculatedList.Clear();
+                    dataGrid.DataSource = new List<GridEntry>();
+                }
+                btnSearch.Text = "Stop";
+                DisableControls();
+                ActiveForm.Update();
 
                 CreateFilter();
                 var sav = !IsBlankSAV() ? Editor.SAV : new SAV9SV 
@@ -295,18 +295,41 @@ namespace TeraFinder
                     var griddata= await bgWorkerSearch_DoWork(sav, progress, content, Token);
                     dataGrid.DataSource = griddata;
                     btnSearch.Text = "Search";
+                    EnableControls(IsBlankSAV());
                 }
                 catch(OperationCanceledException)
                 {
                     btnSearch.Text = "Search";
+                    EnableControls(IsBlankSAV());
                 }
             }
             else
             {
                 Token.Cancel();
                 btnSearch.Text = "Search";
+                EnableControls(IsBlankSAV());
                 return;
             }
+        }
+
+        private void DisableControls()
+        {
+            grpFilters.Enabled = false;
+            grpGameInfo.Enabled = false;
+            cmbContent.Enabled = false;
+            showresults.Enabled = false;
+            txtSeed.Enabled = false;
+            numFrames.Enabled = false;
+        }
+
+        private void EnableControls(bool enableProfile = false)
+        {
+            grpGameInfo.Enabled = enableProfile;
+            grpFilters.Enabled = true;
+            cmbContent.Enabled = true;
+            showresults.Enabled = true;
+            txtSeed.Enabled = true;
+            numFrames.Enabled = true;
         }
 
         private static ulong GetNext(ulong seed) { return new Xoroshiro128Plus(seed).Next(); }

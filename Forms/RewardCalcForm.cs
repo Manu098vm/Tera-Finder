@@ -150,14 +150,14 @@ namespace TeraFinder.Forms
                 }
 
                 if (CalculatedList.Count > 0)
+                {
                     CalculatedList.Clear();
+                    dataGrid.DataSource = new List<RewardGridEntry>();
+                }
                 btnSearch.Text = "Stop";
+                DisableControls();
                 ActiveForm.Update();
 
-                //grpFilters.Enabled = false;
-                //grpGameInfo.Enabled = false;
-                //cmbContent.Enabled = false;
-                
                 CreateFilter();
                 var sav = !IsBlankSAV() ? Editor.SAV : new SAV9SV
                 {
@@ -175,18 +175,41 @@ namespace TeraFinder.Forms
                     var griddata = await bgWorkerSearch_DoWork(sav, progress, content, boost, Token);
                     dataGrid.DataSource = griddata;
                     btnSearch.Text = "Search";
+                    EnableControls(IsBlankSAV());
                 }
                 catch (OperationCanceledException)
                 {
                     btnSearch.Text = "Search";
+                    EnableControls(IsBlankSAV());
                 }
             }
             else
             {
                 Token.Cancel();
                 btnSearch.Text = "Search";
+                EnableControls(IsBlankSAV());
                 return;
             }
+        }
+
+        private void DisableControls()
+        {
+            grpFilters.Enabled = false;
+            grpProfile.Enabled = false;
+            cmbContent.Enabled = false;
+            chkAllResults.Enabled = false;
+            txtSeed.Enabled = false;
+            numMaxCalc.Enabled = false;
+        }
+
+        private void EnableControls(bool enableProfile = false)
+        {
+            grpProfile.Enabled = enableProfile;
+            grpFilters.Enabled = true;
+            cmbContent.Enabled = true;
+            chkAllResults.Enabled = true;
+            txtSeed.Enabled = true;
+            numMaxCalc.Enabled = true;
         }
 
         private static ulong GetNext(ulong seed) => new Xoroshiro128Plus(seed).Next();
