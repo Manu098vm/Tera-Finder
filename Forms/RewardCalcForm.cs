@@ -106,9 +106,8 @@ namespace TeraFinder.Forms
                 if (cb.SelectedIndex > 0)
                 {
                     var numericName = $"numericUpDown{cb.Name[8..]}";
-                    foreach(var num in nums)
-                        if(num.Name.Equals(numericName))
-                            items.Add(new Reward { ItemID = cb.SelectedIndex, Amount = (int)num.Value });
+                    var num = nums.Where(num => num.Name.Equals(numericName)).FirstOrDefault()!;
+                    items.Add(new Reward { ItemID = cb.SelectedIndex, Amount = (int)num.Value });
                 }
             }
 
