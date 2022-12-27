@@ -283,10 +283,10 @@ namespace TeraFinder
                 ActiveForm.Update();
 
                 CreateFilter();
-                var sav = !IsBlankSAV() ? Editor.SAV : new SAV9SV 
-                { 
-                    Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV, TrainerID7 = Int32.Parse(txtTID.Text), TrainerSID7 = Int32.Parse(txtSID.Text) 
-                };
+                var sav = (SAV9SV)Editor.SAV.Clone();
+                sav.TrainerID7 = Int32.Parse(txtTID.Text);
+                sav.TrainerSID7 = Int32.Parse(txtSID.Text);
+                sav.Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV;
                 var progress = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black ? GameProgress.None : (GameProgress)cmbProgress.SelectedIndex;
                 var content = (RaidContent)cmbContent.SelectedIndex;
 
