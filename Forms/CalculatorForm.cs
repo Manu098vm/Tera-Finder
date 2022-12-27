@@ -340,10 +340,16 @@ namespace TeraFinder
             ulong seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
             if (seed == 0) seed = Xoroshiro128Plus.XOROSHIRO_CONST;
             var first = CalcResult(seed, progress, sav, content, 0);
-            if(Filter is not null && first is not null && Filter.IsFilterMatch(first))
+            if (Filter is not null && first is not null && Filter.IsFilterMatch(first))
+            {
                 gridList.Add(new GridEntry(first));
+                CalculatedList.Add(first);
+            }
             else if (Filter is null && first is not null)
+            {
                 gridList.Add(new GridEntry(first));
+                CalculatedList.Add(first);
+            }
 
             return await Task.Run(() =>
             {

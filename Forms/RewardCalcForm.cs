@@ -223,9 +223,15 @@ namespace TeraFinder.Forms
             if (seed == 0) seed = Xoroshiro128Plus.XOROSHIRO_CONST;
             var first = CalcResult(seed, progress, sav, content, 0, chkAccurateSearch.Checked, boost);
             if (Filter is not null && first is not null && Filter.IsFilterMatch(first))
+            {
                 gridList.Add(new RewardGridEntry(first, Items, lang));
+                CalculatedList.Add(first);
+            }
             else if (Filter is null && first is not null)
+            {
                 gridList.Add(new RewardGridEntry(first, Items, lang));
+                CalculatedList.Add(first);
+            }
 
             return await Task.Run(() =>
             {
