@@ -6,40 +6,32 @@ namespace TeraFinder
     {
         public static GameProgress GetProgress(SAV9SV sav)
         {
-            try
-            {
-                var Unlocked6Stars = sav.AllBlocks.Where(block => block.Key == 0x6E7F8220).Select(block => block.Type).ToArray()[0] is SCTypeCode.Bool2;
+            var Unlocked6Stars = sav.Accessor.FindOrDefault(GameProgressBlocks.KUnlockedRaidDifficulty6.Key).Type is SCTypeCode.Bool2;
                 
-                if (Unlocked6Stars)
-                    return GameProgress.Unlocked6Stars;
+            if (Unlocked6Stars)
+                return GameProgress.Unlocked6Stars;
 
-                var Unlocked5Stars = sav.AllBlocks.Where(block => block.Key == 0x9535F471).Select(block => block.Type).ToArray()[0] is SCTypeCode.Bool2;
+            var Unlocked5Stars = sav.Accessor.FindOrDefault(GameProgressBlocks.KUnlockedRaidDifficulty5.Key).Type is SCTypeCode.Bool2;
 
-                if (Unlocked5Stars)
-                    return GameProgress.Unlocked5Stars;
+            if (Unlocked5Stars)
+                return GameProgress.Unlocked5Stars;
 
-                var Unlocked4Stars = sav.AllBlocks.Where(block => block.Key == 0xA9428DFE).Select(block => block.Type).ToArray()[0] is SCTypeCode.Bool2;
+            var Unlocked4Stars = sav.Accessor.FindOrDefault(GameProgressBlocks.KUnlockedRaidDifficulty4.Key).Type is SCTypeCode.Bool2;
 
-                if (Unlocked4Stars)
-                    return GameProgress.Unlocked4Stars;
+            if (Unlocked4Stars)
+                return GameProgress.Unlocked4Stars;
 
-                var Unlocked3Stars = sav.AllBlocks.Where(block => block.Key == 0xEC95D8EF).Select(block => block.Type).ToArray()[0] is SCTypeCode.Bool2;
+            var Unlocked3Stars = sav.Accessor.FindOrDefault(GameProgressBlocks.KUnlockedRaidDifficulty3.Key).Type is SCTypeCode.Bool2;
 
-                if (Unlocked3Stars)
-                    return GameProgress.Unlocked3Stars;
+            if (Unlocked3Stars)
+                return GameProgress.Unlocked3Stars;
 
-                var UnlockedTeraRaids = sav.AllBlocks.Where(block => block.Key == 0x27025EBF).Select(block => block.Type).ToArray()[0] is SCTypeCode.Bool2;
+            var UnlockedTeraRaids = sav.Accessor.FindOrDefault(GameProgressBlocks.KUnlockedTeraRaidBattles.Key).Type is SCTypeCode.Bool2;
 
-                if (UnlockedTeraRaids)
-                    return GameProgress.UnlockedTeraRaids;
+            if (UnlockedTeraRaids)
+                return GameProgress.UnlockedTeraRaids;
 
-                return GameProgress.Beginning;
-            }
-            catch
-            {
-                //Blank save file
-                return GameProgress.Beginning;
-            }
+            return GameProgress.Beginning;
         }
 
         public static MoveType GetType(uint seed)

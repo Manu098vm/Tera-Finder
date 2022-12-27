@@ -74,7 +74,7 @@ namespace TeraFinder
             Plugin.DropDownItems.Add(Flags);
             Plugin.DropDownItems.Add(Events);
             Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards).Show();
-            Events.Click += (s, e) => ImportUtil.ImportNews(SAV, plugin: true);
+            Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, plugin: true);
             Flags.Click += (s, e) => new ProgressForm(SAV).Show();
             Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV).Show();
             tools.DropDownItems.Add(Plugin);
@@ -99,7 +99,7 @@ namespace TeraFinder
 
         public void LaunchImporter()
         {
-            ImportUtil.ImportNews(SAV, plugin: true);
+            ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, plugin: true);
         }
 
         public void LaunchGameEditor()
@@ -131,7 +131,7 @@ namespace TeraFinder
             return $"{game} - {ot} ({tid})";
         }
 
-        public bool TryLoadFile(string filePath) => ImportUtil.ImportNews(SAV, filePath);
+        public bool TryLoadFile(string filePath) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, filePath);
 
         private void EnablePlugins() => Plugin.Enabled = true;
 

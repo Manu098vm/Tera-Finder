@@ -95,7 +95,6 @@ namespace TeraFinder.Forms
                     {
                         var sav = (SAV9SV)SAV.Clone();
                         sav.Game = (int)game;
-                        SetProgress(sav, progress);
 
                         var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Tera) :
                             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Mighty, true) :
@@ -150,43 +149,6 @@ namespace TeraFinder.Forms
                 return false;
 
             return true;
-        }
-
-        private bool SetProgress(SAV9SV sav, GameProgress progress)
-        {
-            if (sav.AllBlocks.Where(block => block.Key == 0x27025EBF).FirstOrDefault() is not null)
-            {
-                if (progress >= GameProgress.UnlockedTeraRaids)
-                    sav.AllBlocks.Where(block => block.Key == 0x27025EBF).FirstOrDefault()!.ChangeBooleanType(SCTypeCode.Bool2);
-                else
-                    sav.AllBlocks.Where(block => block.Key == 0x27025EBF).FirstOrDefault()!.ChangeBooleanType(SCTypeCode.Bool1);
-
-                if (progress >= GameProgress.Unlocked3Stars)
-                    sav.AllBlocks.Where(block => block.Key == 0xEC95D8EF).FirstOrDefault()!.ChangeBooleanType(SCTypeCode.Bool2);
-                else
-                    sav.AllBlocks.Where(block => block.Key == 0xEC95D8EF).FirstOrDefault()!.ChangeBooleanType(SCTypeCode.Bool1);
-
-                if (progress >= GameProgress.Unlocked4Stars)
-                    sav.AllBlocks.Where(block => block.Key == 0xA9428DFE).FirstOrDefault()!.ChangeBooleanType(SCTypeCode.Bool2);
-                else
-                    sav.AllBlocks.Where(block => block.Key == 0xA9428DFE).FirstOrDefault()!.ChangeBooleanType(SCTypeCode.Bool1);
-
-                if (progress >= GameProgress.Unlocked5Stars)
-                    sav.AllBlocks.Where(block => block.Key == 0x9535F471).FirstOrDefault()!.ChangeBooleanType(SCTypeCode.Bool2);
-                else
-                    sav.AllBlocks.Where(block => block.Key == 0x9535F471).FirstOrDefault()!.ChangeBooleanType(SCTypeCode.Bool1);
-
-                if (progress >= GameProgress.Unlocked6Stars)
-                    sav.AllBlocks.Where(block => block.Key == 0x6E7F8220).FirstOrDefault()!.ChangeBooleanType(SCTypeCode.Bool2);
-                else
-                    sav.AllBlocks.Where(block => block.Key == 0x6E7F8220).FirstOrDefault()!.ChangeBooleanType(SCTypeCode.Bool1);
-
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }

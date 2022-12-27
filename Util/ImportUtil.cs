@@ -1,17 +1,21 @@
 ﻿using PKHeX.Core;
 using System.IO.Compression;
+using System.Runtime.InteropServices;
 
 namespace TeraFinder
 {
     internal static class ImportUtil
     {
-        public static bool ImportNews(SaveFile sav, string path = "", bool plugin = false)
+        public static bool ImportNews(SaveFile sav, 
+                                    ref EncounterRaid9[]? dist,
+                                    ref EncounterRaid9[]? mighty,
+                                    ref Dictionary<ulong, List<Reward>>? distFixedRewards,
+                                    ref Dictionary<ulong, List<Reward>>? distLotteryRewards,
+                                    string path = "",
+                                    bool plugin = false)
         {
             var valid = false;
             var zip = false;
-
-            if (sav is FakeSaveFile)
-                return false;
 
             if (sav is not SAV9SV)
                 return false;
@@ -51,7 +55,7 @@ namespace TeraFinder
                     valid = true;
 
             if (valid)
-                return FinalizeImport(path, sav, zip);
+                return FinalizeImport(path, sav, zip, ref dist, ref mighty, ref distFixedRewards, ref distLotteryRewards);
 
             if (plugin || zip)
             {
@@ -80,7 +84,13 @@ namespace TeraFinder
             return true;
         }
 
-        public static bool FinalizeImport(string path, SaveFile sv, bool zip)
+        public static bool FinalizeImport(string path, 
+                                          SaveFile sv, 
+                                          bool zip,
+                                          ref EncounterRaid9[]? dist,
+                                          ref EncounterRaid9[]? mighty,
+                                          ref Dictionary<ulong, List<Reward>>? distFixedRewards,
+                                          ref Dictionary<ulong, List<Reward>>? distLotteryRewards)
         {
             try
             {
@@ -95,24 +105,45 @@ namespace TeraFinder
 
                 var sav = (SAV9SV)sv;
 
-                var KBCATEventRaidIdentifier = sav.AllBlocks.Where(block => block.Key == 0x37B99B4D).FirstOrDefault();
-                var KBCATFixedRewardItemArray = sav.AllBlocks.Where(block => block.Key == 0x7D6C2B82).FirstOrDefault();
-                var KBCATLotteryRewardItemArray = sav.AllBlocks.Where(block => block.Key == 0xA52B4811).FirstOrDefault();
-                var KBCATRaidEnemyArray = sav.AllBlocks.Where(block => block.Key == 0x0520A1B0).FirstOrDefault();
-                var KBCATRaidPriorityArray = sav.AllBlocks.Where(block => block.Key == 0x095451E4).FirstOrDefault();
+                var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATEventRaidIdentifier.Key);
+                var KBCATFixedRewardItemArray = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATFixedRewardItemArray.Key);
+                var KBCATLotteryRewardItemArray = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATLotteryRewardItemArray.Key);
+                var KBCATRaidEnemyArray = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATRaidEnemyArray.Key);
+                var KBCATRaidPriorityArray = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATRaidPriorityArray.Key);
 
-                if (KBCATEventRaidIdentifier is not null)
+                if (KBCATEventRaidIdentifier.Type is not SCTypeCode.None)
                     KBCATEventRaidIdentifier.ChangeData(identifierBlock);
-                if (KBCATFixedRewardItemArray is not null)
-                    KBCATFixedRewardItemArray.ChangeData(rewardItemBlock);
-                if (KBCATLotteryRewardItemArray is not null)
-                    KBCATLotteryRewardItemArray.ChangeData(lotteryItemBlock);
-                if(KBCATRaidEnemyArray is not null)
-                    KBCATRaidEnemyArray.ChangeData(raidEnemyBlock);
-                if (KBCATRaidPriorityArray is not null)
-                    KBCATRaidPriorityArray.ChangeData(raidPriorityBlock);
+                else
+                    BlockUtil.EditBlock(KBCATEventRaidIdentifier, SCTypeCode.Object, identifierBlock);
 
-                if(KBCATRaidEnemyArray is not null)
+                if (KBCATFixedRewardItemArray.Type is not SCTypeCode.None)
+                    KBCATFixedRewardItemArray.ChangeData(rewardItemBlock);
+                else
+                    BlockUtil.EditBlock(KBCATFixedRewardItemArray, SCTypeCode.Object, rewardItemBlock);
+
+                if (KBCATLotteryRewardItemArray.Type is not SCTypeCode.None)
+                    KBCATLotteryRewardItemArray.ChangeData(lotteryItemBlock);
+                else
+                    BlockUtil.EditBlock(KBCATLotteryRewardItemArray, SCTypeCode.Object, lotteryItemBlock);
+
+                if (KBCATRaidEnemyArray.Type is not SCTypeCode.None)
+                    KBCATRaidEnemyArray.ChangeData(raidEnemyBlock);
+                else
+                    BlockUtil.EditBlock(KBCATRaidEnemyArray, SCTypeCode.Object, raidEnemyBlock);
+
+                if (KBCATRaidPriorityArray.Type is not SCTypeCode.None)
+                    KBCATRaidPriorityArray.ChangeData(raidPriorityBlock);
+                else
+                    BlockUtil.EditBlock(KBCATRaidPriorityArray, SCTypeCode.Object, raidPriorityBlock);
+
+                var events = TeraUtil.GetSAVDistEncounters(sav);
+                var eventsrewards = RewardUtil.GetDistRewardsTables(sav);
+                dist = events[0];
+                mighty = events[1];
+                distFixedRewards = eventsrewards[0];
+                distLotteryRewards = eventsrewards[1];
+
+                if (KBCATRaidEnemyArray is not null)
                     MessageBox.Show($"Succesfully imported Raid Event [{index}]!");
 
                 return true;

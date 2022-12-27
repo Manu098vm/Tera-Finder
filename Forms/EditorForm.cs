@@ -287,15 +287,6 @@ namespace TeraFinder
                 var lvl3 = RewardUtil.GetRewardList(CurrTera, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
                     CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 3);
 
-                /*var lvl0 = RewardUtil.GetRewardList(Convert.ToUInt32(txtSeed.Text, 16), CurrEncount.Stars, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
-                    CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 0);
-                var lvl1 = RewardUtil.GetRewardList(Convert.ToUInt32(txtSeed.Text, 16), CurrEncount.Stars, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
-                    CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 1);
-                var lvl2 = RewardUtil.GetRewardList(Convert.ToUInt32(txtSeed.Text, 16), CurrEncount.Stars, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
-                    CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 2);
-                var lvl3 = RewardUtil.GetRewardList(Convert.ToUInt32(txtSeed.Text, 16), CurrEncount.Stars, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
-                    CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 3);*/
-
                 var form = new RewardListForm(SAV.Language, lvl0, lvl1, lvl2, lvl3);
                 form.Show();
             }

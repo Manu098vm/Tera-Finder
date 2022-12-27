@@ -12,7 +12,7 @@ namespace TeraFinder.Launcher
             Plugin.StandaloneInitialize();
             txtSAV.Text = GetGameString();
             btnEditGame.Enabled = false;
-            btnImportNews.Enabled = false;
+            //btnImportNews.Enabled = false;
             btnStartEditor.Enabled = false;
             btnExport.Enabled = false;
         }
@@ -67,7 +67,7 @@ namespace TeraFinder.Launcher
                     Plugin.StandaloneInitialize();
                     txtSAV.Text = GetGameString();
                     btnEditGame.Enabled = false;
-                    btnImportNews.Enabled = false;
+                    //btnImportNews.Enabled = false;
                     btnStartEditor.Enabled = false;
                     btnExport.Enabled = false;
                 }

@@ -71,11 +71,11 @@ namespace TeraFinder
 
         private void cmbStars_IndexChanged(object sender, EventArgs e)
         {
-            var sav = !IsBlankSAV() ? Editor.SAV : new SAV9SV 
-            { 
-                Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV, TrainerID7 = Int32.Parse(txtTID.Text), TrainerSID7 = Int32.Parse(txtSID.Text) 
-            };
-            var species = TeraUtil.GetAvailableSpecies(sav, GetStars(), (RaidContent)cmbContent.SelectedIndex);
+            var sav = Editor.SAV.Clone();
+            sav.TrainerID7 = Int32.Parse(txtTID.Text);
+            sav.TrainerSID7 = Int32.Parse(txtSID.Text);
+            sav.Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV;
+            var species = TeraUtil.GetAvailableSpecies((SAV9SV)sav, GetStars(), (RaidContent)cmbContent.SelectedIndex);
             cmbSpecies.Items.Clear();
             cmbSpecies.Items.Add("Any");
             cmbSpecies.Items.AddRange(species.ToArray());

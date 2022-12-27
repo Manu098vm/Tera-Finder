@@ -120,7 +120,6 @@ namespace TeraFinder.Forms
                 return;
 
             Filter = filter;
-            var ciao = true;    
         }
 
         private void Form_FormClosing(Object sender, FormClosingEventArgs e)
