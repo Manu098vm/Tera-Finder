@@ -1,4 +1,8 @@
-﻿using PKHeX.Core;
+﻿using Octokit;
+using PKHeX.Core;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace TeraFinder.Forms
 {
@@ -128,6 +132,26 @@ namespace TeraFinder.Forms
                 Token.Cancel();
         }
 
+        private void DisableControls()
+        {
+            grpFilters.Enabled = false;
+            grpProfile.Enabled = false;
+            cmbContent.Enabled = false;
+            chkAllResults.Enabled = false;
+            txtSeed.Enabled = false;
+            numMaxCalc.Enabled = false;
+        }
+
+        private void EnableControls(bool enableProfile = false)
+        {
+            grpProfile.Enabled = enableProfile;
+            grpFilters.Enabled = true;
+            cmbContent.Enabled = true;
+            chkAllResults.Enabled = true;
+            txtSeed.Enabled = true;
+            numMaxCalc.Enabled = true;
+        }
+
         private async void btnSearch_Click(object sender, EventArgs e)
         {
             if (btnSearch.Text.Equals("Search"))
@@ -172,8 +196,10 @@ namespace TeraFinder.Forms
 
                 try
                 {
-
-                    var griddata = await bgWorkerSearch_DoWork(sav, progress, content, boost, Token);
+                    //var stopwatch = new Stopwatch();
+                    //stopwatch.Start();
+                    var griddata = await StartSearch(sav, progress, content, boost, Token);
+                    //MessageBox.Show($"Search completed in {stopwatch.ElapsedMilliseconds} ms");
                     dataGrid.DataSource = griddata;
                     btnSearch.Text = "Search";
                     EnableControls(IsBlankSAV());
@@ -193,29 +219,17 @@ namespace TeraFinder.Forms
             }
         }
 
-        private void DisableControls()
-        {
-            grpFilters.Enabled = false;
-            grpProfile.Enabled = false;
-            cmbContent.Enabled = false;
-            chkAllResults.Enabled = false;
-            txtSeed.Enabled = false;
-            numMaxCalc.Enabled = false;
-        }
-
-        private void EnableControls(bool enableProfile = false)
-        {
-            grpProfile.Enabled = enableProfile;
-            grpFilters.Enabled = true;
-            cmbContent.Enabled = true;
-            chkAllResults.Enabled = true;
-            txtSeed.Enabled = true;
-            numMaxCalc.Enabled = true;
-        }
-
         private static ulong GetNext(ulong seed) => new Xoroshiro128Plus(seed).Next();
 
-        private async Task<List<RewardGridEntry>> bgWorkerSearch_DoWork(SAV9SV sav, GameProgress progress, RaidContent content, int boost, CancellationTokenSource token)
+        private static ulong GetNext(ulong seed, uint advances)
+        {
+            var xoro = new Xoroshiro128Plus(seed);
+            for(uint i = 0; i < (advances > 0 ? advances - 1 : 0); i++)
+                xoro.Next();
+            return xoro.Next();
+        }
+
+        private async Task<List<RewardGridEntry>> StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, int boost, CancellationTokenSource token)
         {
             var gridList = new List<RewardGridEntry>();
             ulong seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
@@ -233,29 +247,81 @@ namespace TeraFinder.Forms
                 CalculatedList.Add(first);
             }
 
-            return await Task.Run(() =>
+            await Task.Run(() =>
             {
-                for (uint i = 1; i < (uint)numMaxCalc.Value; i++)
+                var nthreads = Environment.ProcessorCount - 1;
+                var gridresults = new List<RewardGridEntry>[nthreads];
+                var calcresults = new List<RewardDetails>[nthreads];
+                var resetEvent = new ManualResetEvent(false);
+                var toProcess = nthreads;
+                var maxcalcs = (uint)numMaxCalc.Value;
+                var calcsperthread = maxcalcs / (uint)nthreads;
+
+                for (uint j = 0; j < nthreads; j++)
                 {
-                    seed = GetNext(seed);
-                    var res = CalcResult(seed, progress, sav, content, i, chkAccurateSearch.Checked, boost);
-                    if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
+                    var n = j;
+
+                    new Thread(delegate ()
                     {
-                        gridList.Add(new RewardGridEntry(res, Items, lang));
-                        CalculatedList.Add(res);
-                        if (!chkAllResults.Checked)
-                            return gridList;
-                    }
-                    else if (Filter is null && res is not null)
-                    {
-                        gridList.Add(new RewardGridEntry(res, Items, lang));
-                        CalculatedList.Add(res);
-                    }
-                    if (token.IsCancellationRequested)
-                        return gridList;
+                        var tmpgridlist = new List<RewardGridEntry>();
+                        var tmpcalclist = new List<RewardDetails>();
+
+                        var initialFrame = calcsperthread * n;
+                        var maxframe = n < nthreads - 1 ? calcsperthread * (n + 1) : maxcalcs;
+                        seed = token.IsCancellationRequested ? 0 : GetNext(seed, initialFrame);
+
+                        /*if(n == 0 || n == nthreads - 1)
+                            MessageBox.Show($"Thread: {n}\n" +
+                            $"Initial Frame: {initialFrame}\n" +
+                            $"Ending Frame: {maxframe}\n" +
+                            $"Max Calcs: {maxcalcs}\n" +
+                            $"Calcs per Thread: {calcsperthread}");*/
+
+                        for (uint i = initialFrame; i < maxframe && !token.IsCancellationRequested; i++)
+                        {
+                            var res = CalcResult(seed, progress, sav, content, i + 1, chkAccurateSearch.Checked, boost);
+                            if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
+                            {
+                                tmpgridlist.Add(new RewardGridEntry(res, Items, lang));
+                                tmpcalclist.Add(res);
+                                if (!chkAllResults.Checked)
+                                {
+                                    token.Cancel();
+                                    break;
+                                }
+                            }
+                            else if (Filter is null && res is not null)
+                            {
+                                tmpgridlist.Add(new RewardGridEntry(res, Items, lang));
+                                tmpcalclist.Add(res);
+                            }
+
+                            if (token.IsCancellationRequested)
+                                break;
+
+                            seed = GetNext(seed);
+                        }
+
+                        gridresults[n] = tmpgridlist;
+                        calcresults[n] = tmpcalclist;
+
+                        if (Interlocked.Decrement(ref toProcess) == 0 || token.IsCancellationRequested)
+                            resetEvent.Set();
+                    }).Start();
                 }
-                return gridList;
+
+                resetEvent.WaitOne();
+
+                for (var i = 0; i < nthreads; i++)
+                {
+                    if (gridresults[i] is not null && gridresults[i].Count > 0)
+                        gridList.AddRange(gridresults[i]);
+                    if (calcresults[i] is not null && calcresults[i].Count > 0)
+                        CalculatedList.AddRange(calcresults[i]);
+                }
             }, token.Token);
+
+            return gridList;
         }
 
         private RewardDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, uint calc, bool accuratesearch, int boost)
