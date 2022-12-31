@@ -39,6 +39,9 @@ namespace TeraFinder
             nSpeMax.Value = 31;
             numScaleMax.Value = 255;
 
+            toolTip.SetToolTip(showresults, $"Disabled - Stop each thread search at the first result that matches the filters.\n" +
+                $"Enabled - Compute all possible results until Max Calcs number is reached.\nIgnored if no filter is set.");
+
             dataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
             dataGrid.RowHeadersVisible = false;
         }
@@ -242,7 +245,27 @@ namespace TeraFinder
             if (!Token.IsCancellationRequested)
                 Token.Cancel();
         }
-     
+
+        private void DisableControls()
+        {
+            grpFilters.Enabled = false;
+            grpGameInfo.Enabled = false;
+            cmbContent.Enabled = false;
+            showresults.Enabled = false;
+            txtSeed.Enabled = false;
+            numFrames.Enabled = false;
+        }
+
+        private void EnableControls(bool enableProfile = false)
+        {
+            grpGameInfo.Enabled = enableProfile;
+            grpFilters.Enabled = true;
+            cmbContent.Enabled = true;
+            showresults.Enabled = true;
+            txtSeed.Enabled = true;
+            numFrames.Enabled = true;
+        }
+
         public async void btnSearch_Click(object sender, EventArgs e)
         {
             if (btnSearch.Text.Equals("Search"))
@@ -292,7 +315,10 @@ namespace TeraFinder
 
                 try
                 {
-                    var griddata= await bgWorkerSearch_DoWork(sav, progress, content, Token);
+                    //var stopwatch = new Stopwatch();
+                    //stopwatch.Start();
+                    var griddata= await StartSearch(sav, progress, content, Token);
+                    //MessageBox.Show($"Search completed in {stopwatch.ElapsedMilliseconds} ms");
                     dataGrid.DataSource = griddata;
                     btnSearch.Text = "Search";
                     EnableControls(IsBlankSAV());
@@ -312,29 +338,17 @@ namespace TeraFinder
             }
         }
 
-        private void DisableControls()
+        private static ulong GetNext(ulong seed) => new Xoroshiro128Plus(seed).Next();
+
+        private static ulong GetNext(ulong seed, uint advances)
         {
-            grpFilters.Enabled = false;
-            grpGameInfo.Enabled = false;
-            cmbContent.Enabled = false;
-            showresults.Enabled = false;
-            txtSeed.Enabled = false;
-            numFrames.Enabled = false;
+            var xoro = new Xoroshiro128Plus(seed);
+            for (uint i = 0; i < (advances > 0 ? advances - 1 : 0); i++)
+                xoro.Next();
+            return xoro.Next();
         }
 
-        private void EnableControls(bool enableProfile = false)
-        {
-            grpGameInfo.Enabled = enableProfile;
-            grpFilters.Enabled = true;
-            cmbContent.Enabled = true;
-            showresults.Enabled = true;
-            txtSeed.Enabled = true;
-            numFrames.Enabled = true;
-        }
-
-        private static ulong GetNext(ulong seed) { return new Xoroshiro128Plus(seed).Next(); }
-
-        private async Task<List<GridEntry>> bgWorkerSearch_DoWork(SAV9SV sav, GameProgress progress, RaidContent content, CancellationTokenSource token)
+        private async Task<List<GridEntry>> StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, CancellationTokenSource token)
         {
             var gridList = new List<GridEntry>();
             ulong seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
@@ -351,29 +365,81 @@ namespace TeraFinder
                 CalculatedList.Add(first);
             }
 
-            return await Task.Run(() =>
+            await Task.Run(() =>
             {
-                for (uint i = 1; i < (uint)numFrames.Value; i++)
+                var nthreads = Environment.ProcessorCount;
+                var gridresults = new List<GridEntry>[nthreads];
+                var calcresults = new List<TeraDetails>[nthreads];
+                var resetEvent = new ManualResetEvent(false);
+                var toProcess = nthreads;
+                var maxcalcs = (uint)numFrames.Value;
+                var calcsperthread = maxcalcs / (uint)nthreads;
+
+                for (uint j = 0; j < nthreads; j++)
                 {
-                    seed = GetNext(seed);
-                    var res = CalcResult(seed, progress, sav, content, i);
-                    if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
+                    var n = j;
+
+                    new Thread(delegate ()
                     {
-                        gridList.Add(new GridEntry(res));
-                        CalculatedList.Add(res);
-                        if (!showresults.Checked)
-                            return gridList;
-                    }
-                    else if (Filter is null && res is not null)
-                    {
-                        gridList.Add(new GridEntry(res));
-                        CalculatedList.Add(res);
-                    }
-                    if (token.IsCancellationRequested)
-                        return gridList;
+                        var tmpgridlist = new List<GridEntry>();
+                        var tmpcalclist = new List<TeraDetails>();
+
+                        var initialFrame = calcsperthread * n;
+                        var maxframe = n < nthreads - 1 ? calcsperthread * (n + 1) : maxcalcs;
+                        seed = token.IsCancellationRequested ? 0 : GetNext(seed, initialFrame);
+
+                        /*if(n == 0 || n == nthreads - 1)
+                            MessageBox.Show($"Thread: {n}\n" +
+                            $"Initial Frame: {initialFrame}\n" +
+                            $"Ending Frame: {maxframe}\n" +
+                            $"Max Calcs: {maxcalcs}\n" +
+                            $"Calcs per Thread: {calcsperthread}");*/
+
+                        for (uint i = initialFrame; i < maxframe && !token.IsCancellationRequested; i++)
+                        {
+                            var res = CalcResult(seed, progress, sav, content, i + 1);
+                            if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
+                            {
+                                tmpgridlist.Add(new GridEntry(res));
+                                tmpcalclist.Add(res);
+                                if (!showresults.Checked)
+                                {
+                                    token.Cancel();
+                                    break;
+                                }
+                            }
+                            else if (Filter is null && res is not null)
+                            {
+                                tmpgridlist.Add(new GridEntry(res));
+                                tmpcalclist.Add(res);
+                            }
+
+                            if (token.IsCancellationRequested)
+                                break;
+
+                            seed = GetNext(seed);
+                        }
+
+                        gridresults[n] = tmpgridlist;
+                        calcresults[n] = tmpcalclist;
+
+                        if (Interlocked.Decrement(ref toProcess) == 0 || token.IsCancellationRequested)
+                            resetEvent.Set();
+                    }).Start();
                 }
-                return gridList;
+
+                resetEvent.WaitOne();
+
+                for (var i = 0; i < nthreads; i++)
+                {
+                    if (gridresults[i] is not null && gridresults[i].Count > 0)
+                        gridList.AddRange(gridresults[i]);
+                    if (calcresults[i] is not null && calcresults[i].Count > 0)
+                        CalculatedList.AddRange(calcresults[i]);
+                }
             }, token.Token);
+
+            return gridList;
         }
 
         private TeraDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, uint calc)
