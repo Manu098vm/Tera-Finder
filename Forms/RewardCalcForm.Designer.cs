@@ -117,6 +117,7 @@
             this.chkAllResults = new System.Windows.Forms.CheckBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.dataGrid = new System.Windows.Forms.DataGridView();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.grpFilters.SuspendLayout();
             this.grpItems.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).BeginInit();
@@ -899,7 +900,7 @@
             "Level 1",
             "Level 2",
             "Level 3"});
-            this.cmbBoost.Location = new System.Drawing.Point(882, 29);
+            this.cmbBoost.Location = new System.Drawing.Point(887, 30);
             this.cmbBoost.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmbBoost.Name = "cmbBoost";
             this.cmbBoost.Size = new System.Drawing.Size(138, 28);
@@ -908,7 +909,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(768, 33);
+            this.label28.Location = new System.Drawing.Point(764, 32);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(117, 20);
             this.label28.TabIndex = 25;
@@ -1004,12 +1005,12 @@
             // chkAllResults
             // 
             this.chkAllResults.AutoSize = true;
-            this.chkAllResults.Location = new System.Drawing.Point(378, 32);
+            this.chkAllResults.Location = new System.Drawing.Point(352, 31);
             this.chkAllResults.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.chkAllResults.Name = "chkAllResults";
-            this.chkAllResults.Size = new System.Drawing.Size(139, 24);
+            this.chkAllResults.Size = new System.Drawing.Size(160, 24);
             this.chkAllResults.TabIndex = 6;
-            this.chkAllResults.Text = "Show All Results";
+            this.chkAllResults.Text = "Show All Results (?)";
             this.chkAllResults.UseVisualStyleBackColor = true;
             // 
             // btnSearch
@@ -1033,6 +1034,14 @@
             this.dataGrid.RowTemplate.Height = 25;
             this.dataGrid.Size = new System.Drawing.Size(1106, 623);
             this.dataGrid.TabIndex = 23;
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.AutoPopDelay = 10000;
+            this.toolTip1.InitialDelay = 500;
+            this.toolTip1.IsBalloon = true;
+            this.toolTip1.ReshowDelay = 100;
+            this.toolTip1.ToolTipTitle = "Show All Results";
             // 
             // RewardCalcForm
             // 
@@ -1174,5 +1183,6 @@
         private ComboBox cmbContent;
         private Label label28;
         private ComboBox cmbBoost;
+        private ToolTip toolTip1;
     }
 }

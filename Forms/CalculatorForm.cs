@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using System.Diagnostics;
 
 namespace TeraFinder
 {
@@ -40,7 +39,8 @@ namespace TeraFinder
             nSpeMax.Value = 31;
             numScaleMax.Value = 255;
 
-            toolTip.SetToolTip(showresults, $"If disabled: stop each thread search at the first result that matches the filters. Ignored if no filter is set.");
+            toolTip.SetToolTip(showresults, $"Disabled - Stop each thread search at the first result that matches the filters.\n" +
+                $"Enabled - Compute all possible results until Max Calcs number is reached.\nIgnored if no filter is set.");
 
             dataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
             dataGrid.RowHeadersVisible = false;

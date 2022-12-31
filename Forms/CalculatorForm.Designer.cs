@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.bgWorkerSearch = new System.ComponentModel.BackgroundWorker();
             this.grpRaidDetails = new System.Windows.Forms.GroupBox();
             this.showresults = new System.Windows.Forms.CheckBox();
             this.numFrames = new System.Windows.Forms.NumericUpDown();
@@ -91,7 +90,6 @@
             this.nSpdMax = new System.Windows.Forms.NumericUpDown();
             this.nSpeMax = new System.Windows.Forms.NumericUpDown();
             this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.bgWorkerFilter = new System.ComponentModel.BackgroundWorker();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.grpGameInfo = new System.Windows.Forms.GroupBox();
             this.txtSID = new System.Windows.Forms.TextBox();
@@ -121,11 +119,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.grpGameInfo.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // bgWorkerSearch
-            // 
-            this.bgWorkerSearch.WorkerReportsProgress = true;
-            this.bgWorkerSearch.WorkerSupportsCancellation = true;
             // 
             // grpRaidDetails
             // 
@@ -881,11 +874,6 @@
             this.dataGrid.Size = new System.Drawing.Size(1534, 472);
             this.dataGrid.TabIndex = 5;
             // 
-            // bgWorkerFilter
-            // 
-            this.bgWorkerFilter.WorkerReportsProgress = true;
-            this.bgWorkerFilter.WorkerSupportsCancellation = true;
-            // 
             // progressBar
             // 
             this.progressBar.Location = new System.Drawing.Point(11, 776);
@@ -1015,8 +1003,6 @@
         }
 
         #endregion
-
-        private System.ComponentModel.BackgroundWorker bgWorkerSearch;
         private GroupBox grpRaidDetails;
         private TextBox txtSeed;
         private Label lblSeed;
@@ -1063,7 +1049,6 @@
         private ComboBox cmbAbility;
         private DataGridView dataGrid;
         private Button btnApply;
-        private System.ComponentModel.BackgroundWorker bgWorkerFilter;
         private ComboBox cmbTeraType;
         private ComboBox cmbSpecies;
         private ComboBox cmbStars;

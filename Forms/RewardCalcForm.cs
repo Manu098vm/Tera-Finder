@@ -1,8 +1,4 @@
-﻿using Octokit;
-using PKHeX.Core;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using PKHeX.Core;
 
 namespace TeraFinder.Forms
 {
@@ -45,6 +41,8 @@ namespace TeraFinder.Forms
 
             toolTip.SetToolTip(chkAccurateSearch, $"Force the calculator to determine Pokémon Species and Tera Type from a given seed, " +
                 $"in order to accurately determine Materials and Tera Shards types.\nMakes the searches a little slower.");
+            toolTip1.SetToolTip(chkAllResults, $"Disabled - Stop each thread search at the first result that matches the filters.\n" +
+                $"Enabled - Compute all possible results until Max Calcs number is reached.\nIgnored if no filter is set.");
 
             dataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
             dataGrid.RowHeadersVisible = false;
@@ -137,6 +135,7 @@ namespace TeraFinder.Forms
             grpFilters.Enabled = false;
             grpProfile.Enabled = false;
             cmbContent.Enabled = false;
+            cmbBoost.Enabled = false;
             chkAllResults.Enabled = false;
             txtSeed.Enabled = false;
             numMaxCalc.Enabled = false;
@@ -147,6 +146,7 @@ namespace TeraFinder.Forms
             grpProfile.Enabled = enableProfile;
             grpFilters.Enabled = true;
             cmbContent.Enabled = true;
+            cmbBoost.Enabled = true;
             chkAllResults.Enabled = true;
             txtSeed.Enabled = true;
             numMaxCalc.Enabled = true;
