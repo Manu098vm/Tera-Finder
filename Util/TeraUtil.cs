@@ -211,6 +211,7 @@ namespace TeraFinder
                 Seed = seed,
                 Stars = encounter.Stars,
                 Species = (Species)encounter.Species,
+                Level = encounter.Level,
                 Form = encounter.Form,
                 TeraType = pkm.TeraTypeOriginal,
                 EC = pkm.EncryptionConstant,
@@ -228,6 +229,10 @@ namespace TeraFinder
                 Height = pkm.HeightScalar,
                 Weight = pkm.WeightScalar,
                 Scale = pkm.Scale,
+                Move1 = (Move)encounter.Moves.Move1,
+                Move2 = (Move)encounter.Moves.Move2,
+                Move3 = (Move)encounter.Moves.Move3,
+                Move4 = (Move)encounter.Moves.Move4,
                 Calcs = calc,
             };
             return result;

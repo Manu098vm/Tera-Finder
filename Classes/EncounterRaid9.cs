@@ -30,6 +30,8 @@ namespace TeraFinder
         public ulong LotteryRewardHash { get => GetLotteryRewardHash(); }
         public ushort RandRateMinScarlet { get => GetRandRateMinScarlet(); }
         public ushort RandRateMinViolet { get => GetRandRateMinViolet(); }
+        public byte Level { get => GetLevel(); }
+        public Moveset Moves { get => GetMoves(); }
 
         public static EncounterRaid9[] GetEncounters(ITeraRaid9[] encounters)
         {
@@ -355,6 +357,44 @@ namespace TeraFinder
                 return 0;
             else if (Encounter is PKHeX.Core.EncounterTera9)
                 return 0;
+            else throw new ArgumentOutOfRangeException();
+        }
+
+        private byte GetLevel()
+        {
+            if (Encounter is EncounterTera9 tera)
+                return tera.Level;
+            else if (Encounter is EncounterMight9 might)
+                return might.Level;
+            else if (Encounter is EncounterDist9 dist)
+                return dist.Level;
+            else if (Encounter is EncounterRaid9 raid)
+                return raid.Level;
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return h_tera.Level;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.Level;
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.Level;
+            else throw new ArgumentOutOfRangeException();
+        }
+
+        private Moveset GetMoves()
+        {
+            if (Encounter is EncounterTera9 tera)
+                return tera.Moves;
+            else if (Encounter is EncounterMight9 might)
+                return might.Moves;
+            else if (Encounter is EncounterDist9 dist)
+                return dist.Moves;
+            else if (Encounter is EncounterRaid9 raid)
+                return raid.Moves;
+            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+                return h_tera.Moves;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.Moves;
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.Moves;
             else throw new ArgumentOutOfRangeException();
         }
     }

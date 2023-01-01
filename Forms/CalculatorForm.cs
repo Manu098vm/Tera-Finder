@@ -237,7 +237,10 @@ namespace TeraFinder
             if (Filter is not null && Filter.CompareFilter(filter))
                 return;
 
-            Filter = filter;
+            if (filter.IsFilterNull())
+                Filter = null;
+            else
+                Filter = filter;
         }
 
         private void Form_FormClosing(Object sender, FormClosingEventArgs e)
@@ -387,13 +390,6 @@ namespace TeraFinder
                         var initialFrame = calcsperthread * n;
                         var maxframe = n < nthreads - 1 ? calcsperthread * (n + 1) : maxcalcs;
                         seed = token.IsCancellationRequested ? 0 : GetNext(seed, initialFrame);
-
-                        /*if(n == 0 || n == nthreads - 1)
-                            MessageBox.Show($"Thread: {n}\n" +
-                            $"Initial Frame: {initialFrame}\n" +
-                            $"Ending Frame: {maxframe}\n" +
-                            $"Max Calcs: {maxcalcs}\n" +
-                            $"Calcs per Thread: {calcsperthread}");*/
 
                         for (uint i = initialFrame; i < maxframe && !token.IsCancellationRequested; i++)
                         {

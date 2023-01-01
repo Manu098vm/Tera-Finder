@@ -194,6 +194,10 @@ namespace TeraFinder
                     txtSpA.Text = $"{rngres.SPA}";
                     txtSpD.Text = $"{rngres.SPD}";
                     txtSpe.Text = $"{rngres.SPE}";
+                    txtMove1.Text = $"{rngres.Move1}";
+                    txtMove2.Text = $"{rngres.Move2}";
+                    txtMove3.Text = $"{rngres.Move3}";
+                    txtMove4.Text = $"{rngres.Move4}";
 
                     pictureBox.BackgroundImage = null;
                     pictureBox.Image = SpritesUtil.GetRaidResultSprite(rngres, raid.IsEnabled);
@@ -205,6 +209,7 @@ namespace TeraFinder
                     CurrTera = rngres;
 
                     SetStarSymbols(rngres.Stars);
+                    SetLevelLabel(rngres.Level);
                     return;
                 }
             }
@@ -220,6 +225,10 @@ namespace TeraFinder
             txtSpA.Text = $"";
             txtSpD.Text = $"";
             txtSpe.Text = $"";
+            txtMove1.Text = $"None";
+            txtMove2.Text = $"None";
+            txtMove3.Text = $"None";
+            txtMove4.Text = $"None";
 
             pictureBox.BackgroundImage = DefBackground;
             pictureBox.Size = DefSize;
@@ -227,10 +236,11 @@ namespace TeraFinder
             btnRewards.Visible = false;
             CurrEncount = null;
             CurrTera = null;
-            SetStarSymbols(0);
+            SetStarSymbols();
+            SetLevelLabel();
         }
 
-        private void SetStarSymbols(int stars)
+        private void SetStarSymbols(int stars = 0)
         {
             var str = "";
             for (var i = 0; i < stars; i++)
@@ -239,6 +249,14 @@ namespace TeraFinder
             var img = pictureBox.Image != null ? pictureBox.Image : pictureBox.BackgroundImage;
             lblStarSymbols.Text = str;
             lblStarSymbols.Location = new(pictureBox.Location.X + (pictureBox.Width - lblStarSymbols.Size.Width) / 2, pictureBox.Location.Y + img.Height);
+        }
+
+        private void SetLevelLabel(int level = 0)
+        {
+            var str = level == 0 ? "" : $"Lvl. {level}";
+            lblLevel.Text = str;
+            var img = pictureBox.Image != null ? pictureBox.Image : pictureBox.BackgroundImage;
+            lblLevel.Location = new(pictureBox.Location.X + (pictureBox.Width - lblLevel.Size.Width) / 2, pictureBox.Location.Y - lblLevel.Height);
         }
 
         private string[] GetRaidNameList()

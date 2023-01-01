@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using System.ComponentModel;
 
 namespace TeraFinder
 {
@@ -10,6 +9,7 @@ namespace TeraFinder
         public int Stars { get; set; }
         public Species Species { get; set; }
         public int Form { get; set; }
+        public int Level { get; set; }
         public MoveType TeraType { get; set; }
         public uint EC { get; set; }
         public uint PID { get; set; }
@@ -25,6 +25,10 @@ namespace TeraFinder
         public byte Height { get; set; }
         public byte Weight { get; set; }
         public byte Scale { get; set; }
+        public Move Move1 { get; set; }
+        public Move Move2 { get; set; }
+        public Move Move3 { get; set; }
+        public Move Move4 { get; set; }
         public uint Calcs { get; set; }
 
 
@@ -41,27 +45,32 @@ namespace TeraFinder
 
         public string[] GetStrings()
         {
-            var list = new string[20];
+            var list = new string[25];
             list[0] = ($"{Seed:X8}");
             list[1] = ($"{Shiny}");
             list[2] = ($"{Stars}");
             list[3] = ($"{GetName()}");
-            list[4] = ($"{TeraType}");
-            list[5] = ($"{EC:X8}");
-            list[6] = ($"{PID:X8}");
-            list[7] = ($"{HP}");
-            list[8] = ($"{ATK}");
-            list[9] = ($"{DEF}");
-            list[10] = ($"{SPA}");
-            list[11] = ($"{SPD}");
-            list[12] = ($"{SPE}");
-            list[13] = ($"{GetAbilityName()}");
-            list[14] = ($"{Nature}");
-            list[15] = ($"{GetGenderSymbol()}");
-            list[16] = ($"{Height}");
-            list[17] = ($"{Weight}");
-            list[18] = ($"{Scale}");
-            list[19] = ($"{Calcs}");
+            list[4] = ($"{Level}");
+            list[5] = ($"{TeraType}");
+            list[6] = ($"{EC:X8}");
+            list[7] = ($"{PID:X8}");
+            list[8] = ($"{HP}");
+            list[9] = ($"{ATK}");
+            list[10] = ($"{DEF}");
+            list[11] = ($"{SPA}");
+            list[12] = ($"{SPD}");
+            list[13] = ($"{SPE}");
+            list[14] = ($"{GetAbilityName()}");
+            list[15] = ($"{Nature}");
+            list[16] = ($"{GetGenderSymbol()}");
+            list[17] = ($"{Height}");
+            list[18] = ($"{Weight}");
+            list[19] = ($"{Scale}");
+            list[20] = ($"{Move1}");
+            list[21] = ($"{Move2}");
+            list[22] = ($"{Move3}");
+            list[23] = ($"{Move4}");
+            list[24] = ($"{Calcs}");
             return list;
         }
 
@@ -95,6 +104,7 @@ namespace TeraFinder
         public string? Shiny { get; private set; }
         public string? Stars { get; private set; }
         public string? Species { get; private set; }
+        public string? Level { get; private set; }
         public string? TeraType { get; private set; }
         public string? EC { get; private set; }
         public string? PID { get; private set; }
@@ -110,6 +120,10 @@ namespace TeraFinder
         public string? Height { get; private set; }
         public string? Weight { get; private set; }
         public string? Scale { get; private set; }
+        public string? Move1 { get; private set; }
+        public string? Move2 { get; private set; }
+        public string? Move3 { get; private set; }
+        public string? Move4 { get; private set; }
         public string? Calcs { get; private set; }
 
         public GridEntry(TeraDetails res)
@@ -119,22 +133,27 @@ namespace TeraFinder
             Shiny = str[1];
             Stars = str[2];
             Species = str[3];
-            TeraType = str[4];
-            EC = str[5];
-            PID = str[6];
-            HP = str[7];
-            ATK = str[8];
-            DEF = str[9];
-            SPA = str[10];
-            SPD = str[11];
-            SPE = str[12];
-            Ability = str[13];
-            Nature = str[14];
-            Gender = str[15];
-            Height = str[16];
-            Weight = str[17];
-            Scale = str[18];
-            Calcs = str[19];
+            Level = str[4];
+            TeraType = str[5];
+            EC = str[6];
+            PID = str[7];
+            HP = str[8];
+            ATK = str[9];
+            DEF = str[10];
+            SPA = str[11];
+            SPD = str[12];
+            SPE = str[13];
+            Ability = str[14];
+            Nature = str[15];
+            Gender = str[16];
+            Height = str[17];
+            Weight = str[18];
+            Scale = str[19];
+            Move1 = str[20];
+            Move2 = str[21];
+            Move3 = str[22];
+            Move4 = str[23];
+            Calcs = str[24];
         }
 
         public static List<GridEntry> GetGridEntriesFromList(List<TeraDetails> reslist)
