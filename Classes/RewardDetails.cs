@@ -127,8 +127,18 @@ namespace TeraFinder
 
         public bool IsFilterMatch(RewardDetails res)
         {
-            int match = 0;
-            foreach(var item in res.Rewards!)
+            var itemlist = new List<Reward>();
+            foreach (var item in res.Rewards!)
+            {
+                var index = itemlist.FindIndex(i => i.ItemID == item.ItemID);
+                if (index >= 0) 
+                    itemlist[index].Amount += item.Amount;
+                else 
+                    itemlist.Add(new Reward { ItemID = item.ItemID, Amount = item.Amount });
+            }
+
+            var match = 0;
+            foreach(var item in itemlist)
                 foreach(var filter in FilterRewards!)
                     if (item.CompareItem(filter, true))
                         match++;

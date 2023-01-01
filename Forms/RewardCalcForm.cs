@@ -114,7 +114,15 @@ namespace TeraFinder.Forms
                 }
             }
 
-            var filter = new RewardFilter { FilterRewards = items.ToArray() };
+            var itemlist = new List<Reward>();
+            foreach (var item in items)
+            {
+                var index = itemlist.FindIndex(i => i.ItemID == item.ItemID);
+                if (index >= 0) itemlist[index].Amount += item.Amount;
+                else itemlist.Add(new Reward { ItemID = item.ItemID, Amount = item.Amount });
+            }
+
+            var filter = new RewardFilter { FilterRewards = itemlist.ToArray() };
 
             if (Filter is null && filter.IsFilterNull())
                 return;
