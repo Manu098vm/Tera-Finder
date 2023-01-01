@@ -18,7 +18,7 @@ namespace TeraFinder
 
             itemnames ??= GameInfo.Strings.itemlist;
 
-            return $"{itemnames[ItemID]}{(quantity ? $" x{Amount}" : "")}";
+            return $"{itemnames[ItemID]}{(Aux == 0 ? "" : Aux == 1 ? " (H)" : Aux == 2 ? " (C)" : Aux == 3 ? " (Once)" : "")}{(quantity ? $" x{Amount}" : "")}";
         }
 
         public bool CompareItem(Reward item, bool greaterthan = false)

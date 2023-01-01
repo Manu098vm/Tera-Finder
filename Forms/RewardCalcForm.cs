@@ -40,7 +40,8 @@ namespace TeraFinder.Forms
             cmbBoost.SelectedIndex = 0;
 
             toolTip.SetToolTip(chkAccurateSearch, $"Force the calculator to determine Pokémon Species and Tera Type from a given seed, " +
-                $"in order to accurately determine Materials and Tera Shards types.\nMakes the searches a little slower.");
+                $"in order to accurately determine Materials and Tera Shards types.\nAlso determines if a given reward is Host or Client exclusive.\n" +
+                $"Makes the searches a little slower.");
             toolTip1.SetToolTip(chkAllResults, $"Disabled - Stop each thread search at the first result that matches the filters.\n" +
                 $"Enabled - Compute all possible results until Max Calcs number is reached.\nIgnored if no filter is set.");
 
