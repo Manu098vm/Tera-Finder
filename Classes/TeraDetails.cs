@@ -238,7 +238,7 @@ namespace TeraFinder
             return true;
         }
 
-        public bool IsFilterNull()
+        public bool IsFilterNull(bool isblack)
         {
             if (!(MinHP == 0))
                 return false;
@@ -264,7 +264,7 @@ namespace TeraFinder
                 return false;
             if (!(MaxSpe == 31))
                 return false;
-            if (!(Stars == 0))
+            if (Stars != 0 && !isblack)
                 return false;
             if (!(Species == Species.None))
                 return false;

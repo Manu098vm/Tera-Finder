@@ -231,13 +231,15 @@ namespace TeraFinder
                 AltEC = cmbEC.SelectedIndex == 1,
             };
 
-            if (Filter is null && filter.IsFilterNull())
+            var isblack = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black or RaidContent.Event_Mighty;
+
+            if (Filter is null && filter.IsFilterNull(isblack))
                 return;
 
             if (Filter is not null && Filter.CompareFilter(filter))
                 return;
 
-            if (filter.IsFilterNull())
+            if (filter.IsFilterNull(isblack))
                 Filter = null;
             else
                 Filter = filter;
