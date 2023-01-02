@@ -186,22 +186,22 @@ namespace TeraFinder
 
                     var rngres = TeraUtil.CalcRNG(raid.Seed, SAV.TrainerID7, SAV.TrainerSID7, (RaidContent)raid.Content, encounter);
 
-                    lblSpecies.Text = $"Species: {rngres.Species}";
-                    lblTera.Text = $"TeraType: {rngres.TeraType}";
-                    lblNature.Text = $"Nature: {rngres.Nature}";
-                    lblAbility.Text = $"Ability: {rngres.Ability}";
+                    lblSpecies.Text = $"Species: {GameInfo.Strings.specieslist[rngres.Species]}";
+                    lblTera.Text = $"TeraType: {GameInfo.Strings.types[rngres.TeraType]}";
+                    lblNature.Text = $"Nature: {GameInfo.Strings.natures[rngres.Nature]}";
+                    lblAbility.Text = $"Ability: {GameInfo.Strings.abilitylist[rngres.Ability]}";
                     lblShiny.Text = $"Shiny: {rngres.Shiny}";
-                    lblGender.Text = $"Gender: {rngres.Gender}";
+                    lblGender.Text = $"Gender: {GetGenderSymbol(GameInfo.GenderSymbolASCII.ToArray(), rngres.Gender)}";
                     txtHP.Text = $"{rngres.HP}";
                     txtAtk.Text = $"{rngres.ATK}";
                     txtDef.Text = $"{rngres.DEF}";
                     txtSpA.Text = $"{rngres.SPA}";
                     txtSpD.Text = $"{rngres.SPD}";
                     txtSpe.Text = $"{rngres.SPE}";
-                    txtMove1.Text = $"{rngres.Move1}";
-                    txtMove2.Text = $"{rngres.Move2}";
-                    txtMove3.Text = $"{rngres.Move3}";
-                    txtMove4.Text = $"{rngres.Move4}";
+                    txtMove1.Text = $"{GameInfo.Strings.movelist[rngres.Move1]}";
+                    txtMove2.Text = $"{GameInfo.Strings.movelist[rngres.Move2]}";
+                    txtMove3.Text = $"{GameInfo.Strings.movelist[rngres.Move3]}";
+                    txtMove4.Text = $"{GameInfo.Strings.movelist[rngres.Move4]}";
 
                     pictureBox.BackgroundImage = null;
                     pictureBox.Image = GetRaidResultSprite(rngres, raid.IsEnabled);
@@ -276,6 +276,16 @@ namespace TeraFinder
             for (var i = 0; i < 69; i++)
                 names[i] = $"Raid {i + 1} - {TeraUtil.Area[raids[i].AreaID]} [{raids[i].SpawnPointID}]";
             return names;
+        }
+
+        private string GetGenderSymbol(string[] genderlist, Gender gender)
+        {
+            if (gender is Gender.Male)
+                return "♂️";
+            else if (gender is Gender.Female)
+                return "♀️";
+            else
+                return genderlist[2];
         }
 
         private void btnOpenCalculator_Click(object sender, EventArgs e)

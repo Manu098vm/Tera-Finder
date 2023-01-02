@@ -9,10 +9,26 @@ namespace TeraFinder
         private TeraFilter? Filter = null;
         private CancellationTokenSource Token = new ();
 
+        private string[] NameList = null!;
+        private string[] FormList = null!;
+        private string[] AbilityList = null!;
+        private string[] NatureList = null!;
+        private string[] MoveList = null!;
+        private string[] TypeList = null!;
+        private string[] GenderList = null!;
+
         public CalculatorForm(EditorForm editor)
         {
             InitializeComponent();
             Editor = editor;
+
+            NameList = GameInfo.Strings.specieslist;
+            FormList = GameInfo.Strings.forms;
+            AbilityList = GameInfo.Strings.abilitylist;
+            NatureList = GameInfo.Strings.natures;
+            MoveList = GameInfo.Strings.movelist;
+            TypeList = GameInfo.Strings.types;
+            GenderList = GameInfo.GenderSymbolASCII.ToArray();
 
             var progress = (int)(Editor.Progress == GameProgress.None ? 0 : Editor.Progress);
             cmbProgress.SelectedIndex = progress;
@@ -23,6 +39,13 @@ namespace TeraFinder
 
             txtSeed.Text = Editor.txtSeed.Text;
             cmbContent.SelectedIndex = Editor.cmbContent.SelectedIndex;
+
+            cmbTeraType.Items.Clear();
+            cmbTeraType.Items.Add("Any");
+            cmbTeraType.Items.AddRange(TypeList);
+            cmbNature.Items.Clear();
+            cmbNature.Items.AddRange(NatureList);
+            cmbNature.Items.Add("Any");
 
             cmbSpecies.SelectedIndex = 0;
             cmbTeraType.SelectedIndex = 0;
@@ -91,12 +114,11 @@ namespace TeraFinder
             {
                 var entity = GetSpeciesAndForm();
                 var entry = PersonalTable.SV.GetFormEntry(entity[0], (byte)entity[1]);
-                var abilites = GameInfo.Strings.abilitylist;
                 cmbAbility.Items.Clear();
                 cmbAbility.Items.Add("Any");
-                cmbAbility.Items.Add($"{abilites[entry.Ability1]} (1)");
-                cmbAbility.Items.Add($"{abilites[entry.Ability2]} (2)");
-                cmbAbility.Items.Add($"{abilites[entry.AbilityH]} (H)");
+                cmbAbility.Items.Add($"{AbilityList[entry.Ability1]} (1)");
+                cmbAbility.Items.Add($"{AbilityList[entry.Ability2]} (2)");
+                cmbAbility.Items.Add($"{AbilityList[entry.AbilityH]} (H)");
             }
             else
             {
@@ -196,7 +218,7 @@ namespace TeraFinder
                     var list = new List<GridEntry>();
                     foreach (var c in CalculatedList)
                         if (Filter is null || Filter.IsFilterMatch(c))
-                            list.Add(new GridEntry(c));
+                            list.Add(new GridEntry(c, NameList, AbilityList, NatureList, MoveList, TypeList, FormList, GenderList));
                     dataGrid.DataSource = list;
                 }
             }
@@ -221,11 +243,11 @@ namespace TeraFinder
                 MinScale = (int)numScaleMin.Value,
                 MaxScale = (int)numScaleMax.Value,
                 Stars = GetStars(),
-                Species = (Species)GetSpeciesAndForm()[0],
+                Species = GetSpeciesAndForm()[0],
                 Form = GetSpeciesAndForm()[1],
-                TeraType = (MoveType)(cmbTeraType.SelectedIndex - 1),
+                TeraType = (sbyte)(cmbTeraType.SelectedIndex - 1),
                 AbilityNumber = cmbAbility.SelectedIndex,
-                Nature = (Nature)cmbNature.SelectedIndex,
+                Nature = (byte)cmbNature.SelectedIndex,
                 Gender = GetGender(),
                 Shiny = (TeraShiny)cmbShiny.SelectedIndex,
                 AltEC = cmbEC.SelectedIndex == 1,
@@ -378,7 +400,7 @@ namespace TeraFinder
                             var res = CalcResult(tseed, progress, sav, content, i);
                             if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
                             {
-                                tmpgridlist.Add(new GridEntry(res));
+                                tmpgridlist.Add(new GridEntry(res, NameList, AbilityList, NatureList, MoveList, TypeList, FormList, GenderList));
                                 tmpcalclist.Add(res);
                                 if (!showresults.Checked)
                                 {
@@ -388,7 +410,7 @@ namespace TeraFinder
                             }
                             else if (Filter is null && res is not null)
                             {
-                                tmpgridlist.Add(new GridEntry(res));
+                                tmpgridlist.Add(new GridEntry(res, NameList, AbilityList, NatureList, MoveList, TypeList, FormList, GenderList));
                                 tmpcalclist.Add(res);
                             }
 

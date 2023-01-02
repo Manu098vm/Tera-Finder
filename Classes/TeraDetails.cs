@@ -7,10 +7,10 @@ namespace TeraFinder
         public uint Seed { get; set; }
         public TeraShiny Shiny { get; set; }
         public int Stars { get; set; }
-        public Species Species { get; set; }
-        public int Form { get; set; }
+        public ushort Species { get; set; }
+        public byte Form { get; set; }
         public int Level { get; set; }
-        public MoveType TeraType { get; set; }
+        public sbyte TeraType { get; set; }
         public uint EC { get; set; }
         public uint PID { get; set; }
         public int HP { get; set; }
@@ -19,39 +19,39 @@ namespace TeraFinder
         public int SPA { get; set; }
         public int SPD { get; set; }
         public int SPE { get; set; }
-        public Ability Ability { get; set; }
-        public Nature Nature { get; set; }
+        public int Ability { get; set; }
+        public byte Nature { get; set; }
         public Gender Gender { get; set; }
         public byte Height { get; set; }
         public byte Weight { get; set; }
         public byte Scale { get; set; }
-        public Move Move1 { get; set; }
-        public Move Move2 { get; set; }
-        public Move Move3 { get; set; }
-        public Move Move4 { get; set; }
+        public ushort Move1 { get; set; }
+        public ushort Move2 { get; set; }
+        public ushort Move3 { get; set; }
+        public ushort Move4 { get; set; }
         public uint Calcs { get; set; }
 
 
         public int GetAbilityNumber()
         {
-            var entry = PersonalTable.SV.GetFormEntry((ushort)Species, (byte)Form);
-            if (Ability == (Ability)entry.Ability1)
+            var entry = PersonalTable.SV.GetFormEntry(Species, Form);
+            if (Ability == entry.Ability1)
                 return 1;
-            else if (Ability == (Ability)entry.Ability2)
+            else if (Ability == entry.Ability2)
                 return 2;
-            //else if (Ability == (Ability)entry.AbilityH)
+            //else if (Ability == entry.AbilityH)
                 return 3;
         }
 
-        public string[] GetStrings()
+        public string[] GetStrings(string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlist)
         {
             var list = new string[25];
             list[0] = ($"{Seed:X8}");
             list[1] = ($"{Shiny}");
             list[2] = ($"{Stars}");
-            list[3] = ($"{GetName()}");
+            list[3] = ($"{GetName(namelist, typelist, formlist, genderlist)}");
             list[4] = ($"{Level}");
-            list[5] = ($"{TeraType}");
+            list[5] = ($"{typelist[TeraType]}");
             list[6] = ($"{EC:X8}");
             list[7] = ($"{PID:X8}");
             list[8] = ($"{HP}");
@@ -60,41 +60,40 @@ namespace TeraFinder
             list[11] = ($"{SPA}");
             list[12] = ($"{SPD}");
             list[13] = ($"{SPE}");
-            list[14] = ($"{GetAbilityName()}");
-            list[15] = ($"{Nature}");
-            list[16] = ($"{GetGenderSymbol()}");
+            list[14] = ($"{GetAbilityName(abilitylist)}");
+            list[15] = ($"{naturelist[Nature]}");
+            list[16] = ($"{GetGenderSymbol(genderlist)}");
             list[17] = ($"{Height}");
             list[18] = ($"{Weight}");
             list[19] = ($"{Scale}");
-            list[20] = ($"{Move1}");
-            list[21] = ($"{Move2}");
-            list[22] = ($"{Move3}");
-            list[23] = ($"{Move4}");
+            list[20] = ($"{movelist[Move1]}");
+            list[21] = ($"{movelist[Move2]}");
+            list[22] = ($"{movelist[Move3]}");
+            list[23] = ($"{movelist[Move4]}");
             list[24] = ($"{Calcs}");
             return list;
         }
 
-        private string GetName()
+        private string GetName(string[] namelist, string[] typelist ,string[] formlist, string[] genderlist)
         {
-            var forms = FormConverter.GetFormList((ushort)Species, GameInfo.Strings.Types, GameInfo.Strings.forms, GameInfo.GenderSymbolASCII, EntityContext.Gen9);
-            return $"{Species}{(forms.Length > 1 ? $"-{forms[Form]}" : "")}";
+            var forms = FormConverter.GetFormList(Species, typelist, formlist, genderlist, EntityContext.Gen9);
+            return $"{namelist[Species]}{(forms.Length > 1 ? $"-{forms[Form]}" : "")}";
         }
 
-        private string GetAbilityName()
+        private string GetAbilityName(string[] abilitylist)
         {
-            var abilites = GameInfo.Strings.abilitylist;
             var num = GetAbilityNumber();
-            return $"{abilites[(int)Ability]} ({(num == 3 ? "H" : num)})";
+            return $"{abilitylist[Ability]} ({(num == 3 ? "H" : num)})";
         }
 
-        private string GetGenderSymbol()
+        private string GetGenderSymbol(string[] genderlist)
         {
             if (Gender is Gender.Male)
                 return "♂️";
             else if (Gender is Gender.Female)
                 return "♀️";
             else 
-                return Gender.ToString();
+                return genderlist[2];
         }
     }
 
@@ -126,9 +125,9 @@ namespace TeraFinder
         public string? Move4 { get; private set; }
         public string? Calcs { get; private set; }
 
-        public GridEntry(TeraDetails res)
+        public GridEntry(TeraDetails res, string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlist)
         {
-            var str = res.GetStrings();
+            var str = res.GetStrings(namelist, abilitylist, naturelist, movelist, typelist, formlist, genderlist);
             Seed = str[0];
             Shiny = str[1];
             Stars = str[2];
@@ -155,14 +154,6 @@ namespace TeraFinder
             Move4 = str[23];
             Calcs = str[24];
         }
-
-        public static List<GridEntry> GetGridEntriesFromList(List<TeraDetails> reslist)
-        {
-            var list = new List<GridEntry>();
-            foreach (var res in reslist)
-                list.Add(new GridEntry(res));
-            return list;
-        }
     }
 
     public class TeraFilter
@@ -182,11 +173,11 @@ namespace TeraFinder
         public int MinScale { get; set; }
         public int MaxScale { get; set; }
         public int Stars { get; set; }
-        public Species Species { get; set; }
+        public ushort Species { get; set; }
         public int Form { get; set; }
-        public MoveType TeraType { get; set; }
+        public sbyte TeraType { get; set; }
         public int AbilityNumber { get; set; }
-        public Nature Nature { get; set; }
+        public byte Nature { get; set; }
         public Gender Gender { get; set; }
         public TeraShiny Shiny { get; set; }
         public bool AltEC { get; set; }
@@ -216,11 +207,11 @@ namespace TeraFinder
             if (Form != 0 && Form != res.Form)
                 return false;
 
-            if (TeraType != MoveType.Any && TeraType != res.TeraType)
+            if (TeraType != -1 && TeraType != res.TeraType)
                 return false;
             if (AbilityNumber != 0 && AbilityNumber != res.GetAbilityNumber())
                 return false;
-            if(Nature != Nature.Random && Nature != res.Nature)
+            if(Nature != 25 && Nature != res.Nature)
                 return false;
             if (Gender != Gender.Random && Gender != res.Gender)
                 return false;
@@ -266,15 +257,15 @@ namespace TeraFinder
                 return false;
             if (Stars != 0 && !isblack)
                 return false;
-            if (!(Species == Species.None))
+            if (!(Species == 0))
                 return false;
             if (!(Form == 0))
                 return false;
-            if (!(TeraType == MoveType.Any))
+            if (!(TeraType == -1))
                 return false;
             if (!(AbilityNumber == 0))
                 return false;
-            if (!(Nature == (Nature)25))
+            if (!(Nature == 25))
                 return false;
             if (!(Gender == Gender.Random))
                 return false;

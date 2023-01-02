@@ -111,14 +111,6 @@ namespace TeraFinder
             Item20 = str[19];
             Calcs = $"{res.Calcs}";
         }
-
-        public static List<GridEntry> GetGridEntriesFromList(List<TeraDetails> reslist)
-        {
-            var list = new List<GridEntry>();
-            foreach (var res in reslist)
-                list.Add(new GridEntry(res));
-            return list;
-        }
     }
 
     public class RewardFilter

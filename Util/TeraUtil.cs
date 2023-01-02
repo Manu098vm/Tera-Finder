@@ -97,7 +97,8 @@ namespace TeraFinder
                 if ((encounter.Version is GameVersion.SV || encounter.Version == game) && (stars == 0 || encounter.Stars == stars))
                 {
                     var forms = FormConverter.GetFormList(encounter.Species, GameInfo.Strings.Types, GameInfo.Strings.forms, GameInfo.GenderSymbolASCII, EntityContext.Gen9);
-                    var str = $"{(Species)encounter.Species}{(forms.Length > 1 ? $"-{forms[encounter.Form]}" : "")}";
+                    var names = GameInfo.Strings.Species;
+                    var str = $"{names[encounter.Species]}{(forms.Length > 1 ? $"-{forms[encounter.Form]}" : "")}";
                     if (!list.Contains(str))
                         list.Add(str);
                 }
@@ -210,10 +211,10 @@ namespace TeraFinder
             {
                 Seed = seed,
                 Stars = encounter.Stars,
-                Species = (Species)encounter.Species,
+                Species = encounter.Species,
                 Level = encounter.Level,
                 Form = encounter.Form,
-                TeraType = pkm.TeraTypeOriginal,
+                TeraType = (sbyte)pkm.TeraTypeOriginal,
                 EC = pkm.EncryptionConstant,
                 PID = pkm.PID,
                 HP = pkm.IV_HP,
@@ -222,17 +223,17 @@ namespace TeraFinder
                 SPA = pkm.IV_SPA,
                 SPD = pkm.IV_SPD,
                 SPE = pkm.IV_SPE,
-                Ability = (Ability)pkm.Ability,
-                Nature = (Nature)pkm.Nature,
+                Ability = pkm.Ability,
+                Nature = (byte)pkm.Nature,
                 Gender = (Gender)pkm.Gender,
                 Shiny = shiny,
                 Height = pkm.HeightScalar,
                 Weight = pkm.WeightScalar,
                 Scale = pkm.Scale,
-                Move1 = (Move)encounter.Moves.Move1,
-                Move2 = (Move)encounter.Moves.Move2,
-                Move3 = (Move)encounter.Moves.Move3,
-                Move4 = (Move)encounter.Moves.Move4,
+                Move1 = encounter.Moves.Move1,
+                Move2 = encounter.Moves.Move2,
+                Move3 = encounter.Moves.Move3,
+                Move4 = encounter.Moves.Move4,
                 Calcs = calc,
             };
             return result;

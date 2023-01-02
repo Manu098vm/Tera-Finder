@@ -139,7 +139,7 @@ namespace TeraFinder.Forms
                 return false;
             if (pk.Nature != (int)pkm.Nature)
                 return false;
-            if (pk.TeraTypeOriginal != pkm.TeraType)
+            if ((sbyte)pk.TeraTypeOriginal != pkm.TeraType)
                 return false;
             if (pk.HeightScalar != pkm.Height)
                 return false;

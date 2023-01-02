@@ -265,8 +265,8 @@ namespace TeraFinder
             {
                 foreach (var reward in fixedlist!)
                 {
-                    rewardlist.Add(reward.ItemID == ushort.MaxValue ? new Reward { ItemID = GetMaterial(pkm.Species), Amount = reward.Amount, Aux = reward.Aux } :
-                        reward.ItemID == ushort.MaxValue - 1 ? new Reward { ItemID = GetTeraShard(pkm.TeraType), Amount = reward.Amount, Aux = reward.Aux } : reward);
+                    rewardlist.Add(reward.ItemID == ushort.MaxValue ? new Reward { ItemID = GetMaterial((Species)pkm.Species), Amount = reward.Amount, Aux = reward.Aux } :
+                        reward.ItemID == ushort.MaxValue - 1 ? new Reward { ItemID = GetTeraShard((MoveType)pkm.TeraType), Amount = reward.Amount, Aux = reward.Aux } : reward);
                 }
             }
             if (lotteryexists)
@@ -280,8 +280,8 @@ namespace TeraFinder
                     {
                         if (reward.Probability > treshold)
                         {
-                            rewardlist.Add(reward.ItemID == ushort.MaxValue ? new Reward { ItemID = GetMaterial(pkm.Species), Amount = reward.Amount } :
-                                reward.ItemID == ushort.MaxValue - 1 ? new Reward { ItemID = GetTeraShard(pkm.TeraType), Amount = reward.Amount } : reward);
+                            rewardlist.Add(reward.ItemID == ushort.MaxValue ? new Reward { ItemID = GetMaterial((Species)pkm.Species), Amount = reward.Amount } :
+                                reward.ItemID == ushort.MaxValue - 1 ? new Reward { ItemID = GetTeraShard((MoveType)pkm.TeraType), Amount = reward.Amount } : reward);
                             break;
                         }
                         treshold -= reward.Probability;
