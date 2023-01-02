@@ -1,5 +1,7 @@
-﻿using PKHeX.Core;
+﻿using System.Text.Json;
+using PKHeX.Core;
 using TeraFinder.Forms;
+using static TeraFinder.ImagesUtil;
 
 namespace TeraFinder
 {
@@ -7,6 +9,7 @@ namespace TeraFinder
     {
         public SAV9SV SAV { get; set; } = null!;
         public IPKMView? PKMEditor { get; private set; } = null!;
+        private Dictionary<string, float[]> DenLocations = null!;
         public GameProgress Progress { get; set; } = GameProgress.None;
         private Image DefBackground = null!;
         private Size DefSize = new(0, 0);
@@ -64,6 +67,7 @@ namespace TeraFinder
                 TeraLotteryRewards = teralottery;
             }
             Tera = tera is null ? TeraUtil.GetAllTeraEncounters() : tera;
+            DenLocations = JsonSerializer.Deserialize<Dictionary<string, float[]>>(Properties.Resources.den_locations)!;
             DefBackground = pictureBox.BackgroundImage;
             DefSize = pictureBox.Size;
             Progress = TeraUtil.GetProgress(SAV);
@@ -200,8 +204,12 @@ namespace TeraFinder
                     txtMove4.Text = $"{rngres.Move4}";
 
                     pictureBox.BackgroundImage = null;
-                    pictureBox.Image = SpritesUtil.GetRaidResultSprite(rngres, raid.IsEnabled);
+                    pictureBox.Image = GetRaidResultSprite(rngres, raid.IsEnabled);
                     pictureBox.Size = pictureBox.Image.Size;
+
+
+                    imgMap.SetMapPoint((int)rngres.TeraType, (int)raid.AreaID, (int)raid.SpawnPointID, DenLocations);
+
                     btnRewards.Width = pictureBox.Image.Width;
                     btnRewards.Visible = true;
 
@@ -233,6 +241,8 @@ namespace TeraFinder
             pictureBox.BackgroundImage = DefBackground;
             pictureBox.Size = DefSize;
             pictureBox.Image = null;
+            imgMap.ResetMap();
+
             btnRewards.Visible = false;
             CurrEncount = null;
             CurrTera = null;

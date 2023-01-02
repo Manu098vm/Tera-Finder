@@ -133,7 +133,7 @@ namespace TeraFinder
             {
                 var min = game is GameVersion.SL ? encounter.RandRateMinScarlet : encounter.RandRateMinViolet;
                 if (encounter.Stars == stars && min >= 0 && (uint)(rateRand - min) < encounter.RandRate)
-                    return new EncounterRaid9(encounter);
+                    return encounter;
             }
             return null;
         }
@@ -158,7 +158,7 @@ namespace TeraFinder
                     xoro.NextInt(100);
                     var rateRand = xoro.NextInt(max);
                     if ((uint)(rateRand - min) < encounter.RandRate)
-                        return new EncounterRaid9(encounter);
+                        return encounter;
                 }
             }
             return null;

@@ -68,10 +68,12 @@
             this.btnDx = new System.Windows.Forms.Button();
             this.btnSx = new System.Windows.Forms.Button();
             this.btnOpenRewardCalculator = new System.Windows.Forms.Button();
+            this.imgMap = new System.Windows.Forms.PictureBox();
             this.GrpRaidInfo.SuspendLayout();
             this.grpPkmInfo.SuspendLayout();
             this.grpMoves.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgMap)).BeginInit();
             this.SuspendLayout();
             // 
             // cmbDens
@@ -250,7 +252,7 @@
             // lblLevel
             // 
             this.lblLevel.AutoSize = true;
-            this.lblLevel.Location = new System.Drawing.Point(279, 88);
+            this.lblLevel.Location = new System.Drawing.Point(279, 86);
             this.lblLevel.Name = "lblLevel";
             this.lblLevel.Size = new System.Drawing.Size(29, 20);
             this.lblLevel.TabIndex = 21;
@@ -485,11 +487,23 @@
             this.btnOpenRewardCalculator.UseVisualStyleBackColor = true;
             this.btnOpenRewardCalculator.Click += new System.EventHandler(this.btnOpenRewardCalculator_Click);
             // 
+            // imgMap
+            // 
+            this.imgMap.BackgroundImage = global::TeraFinder.Properties.Resources.world;
+            this.imgMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.imgMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.imgMap.Location = new System.Drawing.Point(364, 12);
+            this.imgMap.Name = "imgMap";
+            this.imgMap.Size = new System.Drawing.Size(570, 570);
+            this.imgMap.TabIndex = 22;
+            this.imgMap.TabStop = false;
+            // 
             // EditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(360, 595);
+            this.ClientSize = new System.Drawing.Size(939, 589);
+            this.Controls.Add(this.imgMap);
             this.Controls.Add(this.btnOpenRewardCalculator);
             this.Controls.Add(this.btnDx);
             this.Controls.Add(this.btnSx);
@@ -510,6 +524,7 @@
             this.grpMoves.ResumeLayout(false);
             this.grpMoves.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgMap)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -555,5 +570,6 @@
         private TextBox txtMove3;
         private TextBox txtMove1;
         private Label lblLevel;
+        private PictureBox imgMap;
     }
 }

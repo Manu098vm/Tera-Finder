@@ -130,8 +130,65 @@
   <data name="bcat_default_raid_enemy_array" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bcat_default_raid_enemy_array;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="den_locations" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\den_locations.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="encounter_gem_paldea" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\encounter_gem_paldea.pkl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="item_1862" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1862.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1863" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1863.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1864" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1864.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1865" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1865.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1866" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1866.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1867" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1867.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1868" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1868.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1869" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1869.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1870" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1870.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1871" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1871.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1872" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1872.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1873" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1873.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1874" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1874.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1875" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1875.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1876" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1876.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1877" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1877.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1878" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1878.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_1879" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\item_1879.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PKHeX_Core" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PKHeX.Core.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -144,5 +201,8 @@
   </data>
   <data name="raid_lottery_reward_item_array" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\raid_lottery_reward_item_array.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="world" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\world.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -90,7 +90,6 @@
             this.nSpdMax = new System.Windows.Forms.NumericUpDown();
             this.nSpeMax = new System.Windows.Forms.NumericUpDown();
             this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.grpGameInfo = new System.Windows.Forms.GroupBox();
             this.txtSID = new System.Windows.Forms.TextBox();
             this.lblSID = new System.Windows.Forms.Label();
@@ -874,13 +873,6 @@
             this.dataGrid.Size = new System.Drawing.Size(1534, 472);
             this.dataGrid.TabIndex = 5;
             // 
-            // progressBar
-            // 
-            this.progressBar.Location = new System.Drawing.Point(11, 776);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(1578, 25);
-            this.progressBar.TabIndex = 6;
-            // 
             // grpGameInfo
             // 
             this.grpGameInfo.Controls.Add(this.txtSID);
@@ -965,9 +957,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1559, 749);
+            this.ClientSize = new System.Drawing.Size(1559, 743);
             this.Controls.Add(this.grpGameInfo);
-            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.grpFilters);
             this.Controls.Add(this.grpRaidDetails);
@@ -1057,7 +1048,6 @@
         private Label lblProgress;
         private NumericUpDown numFrames;
         private ComboBox cmbNature;
-        private ProgressBar progressBar;
         private GroupBox grpGameInfo;
         private Label label2;
         private ComboBox cmbGame;
