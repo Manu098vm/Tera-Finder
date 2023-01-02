@@ -5,8 +5,8 @@ namespace TeraFinder
 {
     public static class RewardUtil
     {
-        public static readonly string[] TeraShard = new string[] { "Tera Shard", "テラピ", "Tera Shard", "Téra-Éclat", "Teralite", "Tera-Stück", "테라피스", "Teralito", "테라피스", "晶碎块", "晶碎塊" };
-        public static readonly string[] Material = new string[] { "Material", "おとしもの", "Material", "Échantillons", "Materiali", "Materialentasche", "掉落物", "Materiales", "掉落物", "掉落物", "掉落物" };
+        public static readonly string[] TeraShard = new string[] { "テラピ", "Tera Shard", "Téra-Éclat", "Teralite", "Tera-Stück", "Teralito", "테라피스", "晶碎块", "晶碎塊" };
+        public static readonly string[] Material = new string[] { "おとしもの", "Material", "Échantillons", "Materiali", "Materialentasche", "Materiales", "掉落物", "掉落物", "掉落物" };
 
         public static Dictionary<ulong, List<Reward>>[] GetTeraRewardsTables()
         {

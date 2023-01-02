@@ -9,14 +9,14 @@ namespace TeraFinder
         public int Probability { get; set; }
         public int Aux { get; set; }
 
-        public string GetItemName(string[]? itemnames = null, LanguageID lang = LanguageID.English, bool quantity = false)
+        public string GetItemName(string[]? itemnames = null, string language = "en", bool quantity = false)
         {
             if (ItemID == ushort.MaxValue)
-                return RewardUtil.Material[(int)lang];
+                return RewardUtil.Material[GameLanguage.GetLanguageIndex(language)];
             else if(ItemID == ushort.MaxValue-1)
-                return RewardUtil.TeraShard[(int)lang];
+                return RewardUtil.TeraShard[GameLanguage.GetLanguageIndex(language)];
 
-            itemnames ??= GameInfo.Strings.itemlist;
+            itemnames ??= GameInfo.GetStrings(language).itemlist;
 
             return $"{itemnames[ItemID]}{(Aux == 0 ? "" : Aux == 1 ? " (H)" : Aux == 2 ? " (C)" : Aux == 3 ? " (Once)" : "")}{(quantity ? $" x{Amount}" : "")}";
         }
@@ -50,12 +50,12 @@ namespace TeraFinder
         public List<Reward>? Rewards {get; set;}
         public uint Calcs { get; set; }
 
-        public string[] GetStrings(string[] itemnames, LanguageID lang = LanguageID.English)
+        public string[] GetStrings(string[] itemnames, string language)
         {
             var list = new string[20];
             if(Rewards is not null)
                 for(var i = 0; i < Rewards.Count; i++)
-                    list[i] = Rewards[i].GetItemName(itemnames, lang, true);
+                    list[i] = Rewards[i].GetItemName(itemnames, language, true);
             return list;
         }
     }
@@ -85,9 +85,9 @@ namespace TeraFinder
         public string? Item20 { get; private set; }
         public string? Calcs { get; private set; }
 
-        public RewardGridEntry(RewardDetails res, string[] itemnames, LanguageID lang = LanguageID.English)
+        public RewardGridEntry(RewardDetails res, string[] itemnames, string language)
         {
-            var str = res.GetStrings(itemnames, lang);
+            var str = res.GetStrings(itemnames, language);
             Seed = $"{res.Seed:X8}";
             Item1 = str[0];
             Item2 = str[1];

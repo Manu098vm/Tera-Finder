@@ -870,7 +870,7 @@
             this.dataGrid.RowHeadersVisible = false;
             this.dataGrid.RowHeadersWidth = 51;
             this.dataGrid.RowTemplate.Height = 29;
-            this.dataGrid.Size = new System.Drawing.Size(1534, 472);
+            this.dataGrid.Size = new System.Drawing.Size(1534, 541);
             this.dataGrid.TabIndex = 5;
             // 
             // grpGameInfo
@@ -957,7 +957,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1559, 743);
+            this.ClientSize = new System.Drawing.Size(1559, 816);
             this.Controls.Add(this.grpGameInfo);
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.grpFilters);

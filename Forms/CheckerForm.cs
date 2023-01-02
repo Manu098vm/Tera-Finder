@@ -137,7 +137,7 @@ namespace TeraFinder.Forms
                 return false;
             if (pk.IV_SPE != pkm.SPE)
                 return false;
-            if (pk.Nature != (int)pkm.Nature)
+            if (pk.Nature != pkm.Nature)
                 return false;
             if ((sbyte)pk.TeraTypeOriginal != pkm.TeraType)
                 return false;

@@ -15,6 +15,7 @@ namespace TeraFinder
         private Size DefSize = new(0, 0);
         private bool Loaded = false;
 
+        public string Language = null!;
         public EncounterRaid9[]? Tera = null;
         public EncounterRaid9[]? Dist = null;
         public EncounterRaid9[]? Mighty = null;
@@ -28,6 +29,7 @@ namespace TeraFinder
 
         public EditorForm(SAV9SV sav,
             IPKMView? editor,
+            string language,
             EncounterRaid9[]? tera,
             EncounterRaid9[]? dist,
             EncounterRaid9[]? mighty,
@@ -39,6 +41,7 @@ namespace TeraFinder
             InitializeComponent();
             SAV = sav;
             PKMEditor = editor;
+            Language = language;
             if (dist is null)
             {
                 var events = TeraUtil.GetSAVDistEncounters(SAV);
@@ -183,32 +186,31 @@ namespace TeraFinder
 
                 if (encounter is not null)
                 {
-
                     var rngres = TeraUtil.CalcRNG(raid.Seed, SAV.TrainerID7, SAV.TrainerSID7, (RaidContent)raid.Content, encounter);
 
-                    lblSpecies.Text = $"Species: {GameInfo.Strings.specieslist[rngres.Species]}";
-                    lblTera.Text = $"TeraType: {GameInfo.Strings.types[rngres.TeraType]}";
-                    lblNature.Text = $"Nature: {GameInfo.Strings.natures[rngres.Nature]}";
-                    lblAbility.Text = $"Ability: {GameInfo.Strings.abilitylist[rngres.Ability]}";
+                    lblSpecies.Text = $"Species: {GameInfo.GetStrings(Language).specieslist[rngres.Species]}";
+                    lblTera.Text = $"TeraType: {GameInfo.GetStrings(Language).types[rngres.TeraType]}";
+                    lblNature.Text = $"Nature: {GameInfo.GetStrings(Language).natures[rngres.Nature]}";
+                    lblAbility.Text = $"Ability: {GameInfo.GetStrings(Language).abilitylist[rngres.Ability]}";
                     lblShiny.Text = $"Shiny: {rngres.Shiny}";
-                    lblGender.Text = $"Gender: {GetGenderSymbol(GameInfo.GenderSymbolASCII.ToArray(), rngres.Gender)}";
+                    lblGender.Text = $"Gender: {GameInfo.GenderSymbolUnicode[(int)rngres.Gender]}";
                     txtHP.Text = $"{rngres.HP}";
                     txtAtk.Text = $"{rngres.ATK}";
                     txtDef.Text = $"{rngres.DEF}";
                     txtSpA.Text = $"{rngres.SPA}";
                     txtSpD.Text = $"{rngres.SPD}";
                     txtSpe.Text = $"{rngres.SPE}";
-                    txtMove1.Text = $"{GameInfo.Strings.movelist[rngres.Move1]}";
-                    txtMove2.Text = $"{GameInfo.Strings.movelist[rngres.Move2]}";
-                    txtMove3.Text = $"{GameInfo.Strings.movelist[rngres.Move3]}";
-                    txtMove4.Text = $"{GameInfo.Strings.movelist[rngres.Move4]}";
+                    txtMove1.Text = $"{GameInfo.GetStrings(Language).movelist[rngres.Move1]}";
+                    txtMove2.Text = $"{GameInfo.GetStrings(Language).movelist[rngres.Move2]}";
+                    txtMove3.Text = $"{GameInfo.GetStrings(Language).movelist[rngres.Move3]}";
+                    txtMove4.Text = $"{GameInfo.GetStrings(Language).movelist[rngres.Move4]}";
 
                     pictureBox.BackgroundImage = null;
                     pictureBox.Image = GetRaidResultSprite(rngres, raid.IsEnabled);
                     pictureBox.Size = pictureBox.Image.Size;
 
 
-                    imgMap.SetMapPoint((int)rngres.TeraType, (int)raid.AreaID, (int)raid.SpawnPointID, DenLocations);
+                    imgMap.SetMapPoint(rngres.TeraType, (int)raid.AreaID, (int)raid.SpawnPointID, DenLocations);
 
                     btnRewards.Width = pictureBox.Image.Width;
                     btnRewards.Visible = true;
@@ -278,16 +280,6 @@ namespace TeraFinder
             return names;
         }
 
-        private string GetGenderSymbol(string[] genderlist, Gender gender)
-        {
-            if (gender is Gender.Male)
-                return "♂️";
-            else if (gender is Gender.Female)
-                return "♀️";
-            else
-                return genderlist[2];
-        }
-
         private void btnOpenCalculator_Click(object sender, EventArgs e)
         {
             var calcform = new CalculatorForm(this);
@@ -325,7 +317,7 @@ namespace TeraFinder
                 var lvl3 = RewardUtil.GetRewardList(CurrTera, CurrEncount.FixedRewardHash, CurrEncount.LotteryRewardHash,
                     CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 3);
 
-                var form = new RewardListForm(SAV.Language, lvl0, lvl1, lvl2, lvl3);
+                var form = new RewardListForm(Language, lvl0, lvl1, lvl2, lvl3);
                 form.Show();
             }
         }

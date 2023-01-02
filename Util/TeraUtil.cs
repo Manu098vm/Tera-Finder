@@ -83,7 +83,7 @@ namespace TeraFinder
                 throw new ArgumentOutOfRangeException();
         }
 
-        public static List<string> GetAvailableSpecies(SAV9SV sav, int stars, RaidContent content)
+        public static List<string> GetAvailableSpecies(SAV9SV sav, string language, int stars, RaidContent content)
         {
             List<string> list = new();
             var game = (GameVersion)sav.Game;
@@ -96,8 +96,8 @@ namespace TeraFinder
             {
                 if ((encounter.Version is GameVersion.SV || encounter.Version == game) && (stars == 0 || encounter.Stars == stars))
                 {
-                    var forms = FormConverter.GetFormList(encounter.Species, GameInfo.Strings.Types, GameInfo.Strings.forms, GameInfo.GenderSymbolASCII, EntityContext.Gen9);
-                    var names = GameInfo.Strings.Species;
+                    var forms = FormConverter.GetFormList(encounter.Species, GameInfo.GetStrings(language).Types, GameInfo.GetStrings(language).forms, GameInfo.GenderSymbolASCII, EntityContext.Gen9);
+                    var names = GameInfo.GetStrings(language).Species;
                     var str = $"{names[encounter.Species]}{(forms.Length > 1 ? $"-{forms[encounter.Form]}" : "")}";
                     if (!list.Contains(str))
                         list.Add(str);

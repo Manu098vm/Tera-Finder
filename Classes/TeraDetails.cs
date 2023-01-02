@@ -43,13 +43,13 @@ namespace TeraFinder
                 return 3;
         }
 
-        public string[] GetStrings(string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlist)
+        public string[] GetStrings(string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlistascii, string[] genderlistunicode)
         {
             var list = new string[25];
             list[0] = ($"{Seed:X8}");
             list[1] = ($"{Shiny}");
             list[2] = ($"{Stars}");
-            list[3] = ($"{GetName(namelist, typelist, formlist, genderlist)}");
+            list[3] = ($"{GetName(namelist, typelist, formlist, genderlistascii)}");
             list[4] = ($"{Level}");
             list[5] = ($"{typelist[TeraType]}");
             list[6] = ($"{EC:X8}");
@@ -62,7 +62,7 @@ namespace TeraFinder
             list[13] = ($"{SPE}");
             list[14] = ($"{GetAbilityName(abilitylist)}");
             list[15] = ($"{naturelist[Nature]}");
-            list[16] = ($"{GetGenderSymbol(genderlist)}");
+            list[16] = ($"{genderlistunicode[(int)Gender]}");
             list[17] = ($"{Height}");
             list[18] = ($"{Weight}");
             list[19] = ($"{Scale}");
@@ -84,16 +84,6 @@ namespace TeraFinder
         {
             var num = GetAbilityNumber();
             return $"{abilitylist[Ability]} ({(num == 3 ? "H" : num)})";
-        }
-
-        private string GetGenderSymbol(string[] genderlist)
-        {
-            if (Gender is Gender.Male)
-                return "♂️";
-            else if (Gender is Gender.Female)
-                return "♀️";
-            else 
-                return genderlist[2];
         }
     }
 
@@ -125,9 +115,9 @@ namespace TeraFinder
         public string? Move4 { get; private set; }
         public string? Calcs { get; private set; }
 
-        public GridEntry(TeraDetails res, string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlist)
+        public GridEntry(TeraDetails res, string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlistascii, string[] genderlistunicode)
         {
-            var str = res.GetStrings(namelist, abilitylist, naturelist, movelist, typelist, formlist, genderlist);
+            var str = res.GetStrings(namelist, abilitylist, naturelist, movelist, typelist, formlist, genderlistascii, genderlistunicode);
             Seed = str[0];
             Shiny = str[1];
             Stars = str[2];

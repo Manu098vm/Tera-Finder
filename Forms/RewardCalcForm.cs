@@ -14,7 +14,7 @@ namespace TeraFinder.Forms
         {
             InitializeComponent();
             Editor = editor;
-            Items = GameInfo.Strings.itemlist;
+            Items = GameInfo.GetStrings(editor.Language).itemlist;
             Items[0] = "(Any)";
 
             foreach(var cb in grpItems.Controls.OfType<ComboBox>())
@@ -83,7 +83,7 @@ namespace TeraFinder.Forms
                     var list = new List<RewardGridEntry>();
                     foreach (var c in CalculatedList)
                         if (Filter is null || Filter.IsFilterMatch(c))
-                            list.Add(new RewardGridEntry(c, Items, (LanguageID)Editor.SAV.Language));
+                            list.Add(new RewardGridEntry(c, Items, Editor.Language));
                     dataGrid.DataSource = list;
                 }
             }
@@ -237,7 +237,6 @@ namespace TeraFinder.Forms
             var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
             var lang = (LanguageID)Editor.SAV.Language;
             if (seed == 0) seed = 1;
-            var first = CalcResult(seed, progress, sav, content, 0, chkAccurateSearch.Checked, boost);
 
             await Task.Run(() =>
             {
@@ -268,7 +267,7 @@ namespace TeraFinder.Forms
                             var res = CalcResult(tseed, progress, sav, content, i, chkAccurateSearch.Checked, boost);
                             if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
                             {
-                                tmpgridlist.Add(new RewardGridEntry(res, Items, lang));
+                                tmpgridlist.Add(new RewardGridEntry(res, Items, Editor.Language));
                                 tmpcalclist.Add(res);
                                 if (!chkAllResults.Checked)
                                 {
@@ -278,7 +277,7 @@ namespace TeraFinder.Forms
                             }
                             else if (Filter is null && res is not null)
                             {
-                                tmpgridlist.Add(new RewardGridEntry(res, Items, lang));
+                                tmpgridlist.Add(new RewardGridEntry(res, Items, Editor.Language));
                                 tmpcalclist.Add(res);
                             }
 

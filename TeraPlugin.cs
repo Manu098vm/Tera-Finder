@@ -14,6 +14,7 @@ namespace TeraFinder
         public IPKMView? PKMEditor { get; private set; } = null;
 
         public SAV9SV SAV = null!;
+        public string Language = GameLanguage.DefaultLanguage;
         public EncounterRaid9[]? Tera = null;
         public EncounterRaid9[]? Dist = null;
         public EncounterRaid9[]? Mighty = null;
@@ -46,7 +47,8 @@ namespace TeraFinder
             if (data != default)
                 SAV = new SAV9SV(data.ToArray());
             else
-                SAV = new();
+                SAV = new SAV9SV();
+
             var events = TeraUtil.GetSAVDistEncounters(SAV);
             var terarewards = RewardUtil.GetTeraRewardsTables();
             var eventsrewards = RewardUtil.GetDistRewardsTables(SAV);
@@ -57,6 +59,24 @@ namespace TeraFinder
             TeraLotteryRewards = terarewards[1];
             DistFixedRewards = eventsrewards[0];
             DistLotteryRewards = eventsrewards[1];
+            Language = GetStringLanguage((LanguageID)SAV.Language);
+        }
+
+        public static string GetStringLanguage(LanguageID lang)
+        {
+            return lang switch
+            {
+                LanguageID.Japanese => GameLanguage.Language2Char(0),
+                LanguageID.English => GameLanguage.Language2Char(1),
+                LanguageID.French => GameLanguage.Language2Char(2),
+                LanguageID.Italian => GameLanguage.Language2Char(3),
+                LanguageID.German => GameLanguage.Language2Char(4),
+                LanguageID.Spanish => GameLanguage.Language2Char(5),
+                LanguageID.Korean => GameLanguage.Language2Char(6),
+                LanguageID.ChineseS => GameLanguage.Language2Char(7),
+                LanguageID.ChineseT => GameLanguage.Language2Char(8),
+                _ => GameLanguage.Language2Char(1),
+            };
         }
 
         private void LoadMenuStrip(ToolStrip menuStrip)
@@ -73,7 +93,7 @@ namespace TeraFinder
             Plugin.DropDownItems.Add(Finder);
             Plugin.DropDownItems.Add(Flags);
             Plugin.DropDownItems.Add(Events);
-            Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards).Show();
+            Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards).Show();
             Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, plugin: true);
             Flags.Click += (s, e) => new ProgressForm(SAV).Show();
             Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV).Show();
@@ -82,18 +102,18 @@ namespace TeraFinder
 
         public void LaunchEditor()
         {
-            new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards).Show();
+            new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards).Show();
         }
 
         public void LaunchCalculator()
         {
-            var editor = new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards);
+            var editor = new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards);
             new CalculatorForm(editor).Show();
         }
 
         public void LaunchRewardCalculator()
         {
-            var editor = new EditorForm(SAV, PKMEditor, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards);
+            var editor = new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards);
             new RewardCalcForm(editor).Show();
         }
 
@@ -116,6 +136,7 @@ namespace TeraFinder
         {
             if (SaveFileEditor.SAV is SAV9SV)
             {
+                Language = GameInfo.CurrentLanguage;
                 SAV = (SAV9SV)SaveFileEditor.SAV;
                 EnablePlugins();
             }
