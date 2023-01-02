@@ -341,32 +341,11 @@ namespace TeraFinder
             }
         }
 
-        private static ulong GetNext(ulong seed) => new Xoroshiro128Plus(seed).Next();
-
-        private static ulong GetNext(ulong seed, uint advances)
-        {
-            var xoro = new Xoroshiro128Plus(seed);
-            for (uint i = 0; i < (advances > 0 ? advances - 1 : 0); i++)
-                xoro.Next();
-            return xoro.Next();
-        }
-
         private async Task<List<GridEntry>> StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, CancellationTokenSource token)
         {
             var gridList = new List<GridEntry>();
-            ulong seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
-            if (seed == 0) seed = Xoroshiro128Plus.XOROSHIRO_CONST;
-            var first = CalcResult(seed, progress, sav, content, 0);
-            if (Filter is not null && first is not null && Filter.IsFilterMatch(first))
-            {
-                gridList.Add(new GridEntry(first));
-                CalculatedList.Add(first);
-            }
-            else if (Filter is null && first is not null)
-            {
-                gridList.Add(new GridEntry(first));
-                CalculatedList.Add(first);
-            }
+            var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
+            if (seed == 0) seed = 1;
 
             await Task.Run(() =>
             {
@@ -381,6 +360,7 @@ namespace TeraFinder
                 for (uint j = 0; j < nthreads; j++)
                 {
                     var n = j;
+                    var tseed = seed;
 
                     new Thread(delegate ()
                     {
@@ -389,11 +369,11 @@ namespace TeraFinder
 
                         var initialFrame = calcsperthread * n;
                         var maxframe = n < nthreads - 1 ? calcsperthread * (n + 1) : maxcalcs;
-                        seed = token.IsCancellationRequested ? 0 : GetNext(seed, initialFrame);
+                        tseed += initialFrame;
 
-                        for (uint i = initialFrame; i < maxframe && !token.IsCancellationRequested; i++)
+                        for (uint i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
                         {
-                            var res = CalcResult(seed, progress, sav, content, i + 1);
+                            var res = CalcResult(tseed, progress, sav, content, i);
                             if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
                             {
                                 tmpgridlist.Add(new GridEntry(res));
@@ -413,7 +393,7 @@ namespace TeraFinder
                             if (token.IsCancellationRequested)
                                 break;
 
-                            seed = GetNext(seed);
+                            tseed++;
                         }
 
                         gridresults[n] = tmpgridlist;

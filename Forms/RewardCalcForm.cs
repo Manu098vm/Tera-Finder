@@ -231,33 +231,13 @@ namespace TeraFinder.Forms
             }
         }
 
-        private static ulong GetNext(ulong seed) => new Xoroshiro128Plus(seed).Next();
-
-        private static ulong GetNext(ulong seed, uint advances)
-        {
-            var xoro = new Xoroshiro128Plus(seed);
-            for(uint i = 0; i < (advances > 0 ? advances - 1 : 0); i++)
-                xoro.Next();
-            return xoro.Next();
-        }
-
         private async Task<List<RewardGridEntry>> StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, int boost, CancellationTokenSource token)
         {
             var gridList = new List<RewardGridEntry>();
-            ulong seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
+            var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
             var lang = (LanguageID)Editor.SAV.Language;
-            if (seed == 0) seed = Xoroshiro128Plus.XOROSHIRO_CONST;
+            if (seed == 0) seed = 1;
             var first = CalcResult(seed, progress, sav, content, 0, chkAccurateSearch.Checked, boost);
-            if (Filter is not null && first is not null && Filter.IsFilterMatch(first))
-            {
-                gridList.Add(new RewardGridEntry(first, Items, lang));
-                CalculatedList.Add(first);
-            }
-            else if (Filter is null && first is not null)
-            {
-                gridList.Add(new RewardGridEntry(first, Items, lang));
-                CalculatedList.Add(first);
-            }
 
             await Task.Run(() =>
             {
@@ -272,6 +252,7 @@ namespace TeraFinder.Forms
                 for (uint j = 0; j < nthreads; j++)
                 {
                     var n = j;
+                    var tseed = seed;
 
                     new Thread(delegate ()
                     {
@@ -280,11 +261,11 @@ namespace TeraFinder.Forms
 
                         var initialFrame = calcsperthread * n;
                         var maxframe = n < nthreads - 1 ? calcsperthread * (n + 1) : maxcalcs;
-                        seed = token.IsCancellationRequested ? 0 : GetNext(seed, initialFrame);
+                        tseed += initialFrame;
 
-                        for (uint i = initialFrame; i < maxframe && !token.IsCancellationRequested; i++)
+                        for (uint i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
                         {
-                            var res = CalcResult(seed, progress, sav, content, i + 1, chkAccurateSearch.Checked, boost);
+                            var res = CalcResult(tseed, progress, sav, content, i, chkAccurateSearch.Checked, boost);
                             if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
                             {
                                 tmpgridlist.Add(new RewardGridEntry(res, Items, lang));
@@ -304,7 +285,7 @@ namespace TeraFinder.Forms
                             if (token.IsCancellationRequested)
                                 break;
 
-                            seed = GetNext(seed);
+                            tseed++;
                         }
 
                         gridresults[n] = tmpgridlist;
