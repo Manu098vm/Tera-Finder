@@ -1,5 +1,5 @@
 # Tera Finder
-![immagine](https://user-images.githubusercontent.com/52102823/206939004-160166fd-f698-4039-b8ce-f18d8f39a6ae.png)
+![immagine](https://user-images.githubusercontent.com/52102823/210241170-0f8109df-622b-4a7b-bbe3-c127917eb0e8.png)
 
 This is a PKHeX.Core based program that allows to view, edit and calculate seeds for SV Raids. This is the spiritual sequel of my [SVXoroCalc](https://github.com/Manu098vm/SVResearches).
 Both a standalone program and a PKHeX Plugin are available for use.
@@ -46,6 +46,7 @@ If you have any issues, feel free to ask for support in my [Discord server](http
 ## Credits and Thanks
 * [kwsch](https://github.com/kwsch) for [PKHeX](https://github.com/kwsch/PKHeX) and [pkNX](https://github.com/kwsch/pkNX), on which this program relies on
 * [Archit Date](https://github.com/architdate), [LegoFigure11](https://github.com/LegoFigure11), [SteveCookTU](https://github.com/SteveCookTU) for their great researches on the item rewards structures/rng handling implemented in [RaidCrawler](https://github.com/LegoFigure11/RaidCrawler/blob/main/Structures/RaidRewards.cs) and [sv raid reader](https://github.com/SteveCookTU/sv_raid_reader/blob/master/src/item_list.rs)
+* [Lincoln-LM](https://github.com/Lincoln-LM) for the raid map coordinates in [sv-live-map](https://github.com/Lincoln-LM/sv-live-map)
 * [Leanny](https://github.com/Leanny) for his Sword/Shield [PKHeX Raid Plugin](https://github.com/Leanny/PKHeX_Raid_Plugin) which was of inspiration for my plugin
 * [santacrab2](https://github.com/santacrab2) for his contributions to make the searches lot faster
 * [kwsch](https://github.com/kwsch), [Lusamine](https://github.com/Lusamine), [LegoFigure11](https://github.com/LegoFigure11), [Archit Date](https://github.com/architdate), [SteveCookTU](https://github.com/SteveCookTU), [Lincoln-LM](https://github.com/Lincoln-LM), and all the contributors to the mentioned programs for their awesome researches
