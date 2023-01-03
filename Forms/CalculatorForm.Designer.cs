@@ -99,6 +99,7 @@
             this.cmbGame = new System.Windows.Forms.ComboBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnViewRewards = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSaveAll = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSave = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSavePk9 = new System.Windows.Forms.ToolStripMenuItem();
@@ -171,7 +172,7 @@
             this.numFrames.Size = new System.Drawing.Size(174, 27);
             this.numFrames.TabIndex = 8;
             this.numFrames.Value = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
@@ -965,13 +966,21 @@
             // 
             this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnViewRewards,
             this.btnSaveAll,
             this.btnSave,
             this.btnSavePk9,
             this.btnToPkmEditor,
             this.btnSendToEditor});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(313, 124);
+            this.contextMenuStrip.Size = new System.Drawing.Size(313, 148);
+            // 
+            // btnViewRewards
+            // 
+            this.btnViewRewards.Name = "btnViewRewards";
+            this.btnViewRewards.Size = new System.Drawing.Size(312, 24);
+            this.btnViewRewards.Text = "View Rewards";
+            this.btnViewRewards.Click += new System.EventHandler(this.btnViewRewards_Click);
             // 
             // btnSaveAll
             // 
@@ -1125,5 +1134,6 @@
         public ComboBox cmbContent;
         public ComboBox cmbProgress;
         public ComboBox cmbGame;
+        private ToolStripMenuItem btnViewRewards;
     }
 }

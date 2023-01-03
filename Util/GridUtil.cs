@@ -243,6 +243,58 @@ namespace TeraFinder
             }
         }
 
+        public static void ViewRewards(this DataGridView dataGrid, CalculatorForm f)
+        {
+            if (dataGrid.SelectedCells.Count > 0)
+            {
+                var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
+                var count = selectedRows.Count();
+                if (count == 1)
+                {
+                    try
+                    {
+                        var template = new PK9(Properties.Resources.template);
+                        var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
+                        var content = GetContent(seed, selectedRows.ElementAt(0), f);
+                        var progress = GetProgress(seed, selectedRows.ElementAt(0), f);
+
+                        var sav = (SAV9SV)f.Editor.SAV.Clone();
+                        sav.Game = (int)GetGameVersion(seed, selectedRows.ElementAt(0), f);
+
+                        var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
+                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, true) :
+                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, false);
+
+                        var rngres = TeraUtil.CalcRNG(seed, Int32.Parse(f.txtTID.Text), Int32.Parse(f.txtSID.Text), content, encounter!);
+
+                        var lvl0 = RewardUtil.GetRewardList(rngres, encounter!.FixedRewardHash, encounter!.LotteryRewardHash,
+                            encounter!.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards, encounter!.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards, 0);
+                        var lvl1 = RewardUtil.GetRewardList(rngres, encounter!.FixedRewardHash, encounter!.LotteryRewardHash,
+                            encounter!.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards, encounter!.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards, 1);
+                        var lvl2 = RewardUtil.GetRewardList(rngres, encounter!.FixedRewardHash, encounter!.LotteryRewardHash,
+                            encounter!.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards, encounter!.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards, 2);
+                        var lvl3 = RewardUtil.GetRewardList(rngres, encounter!.FixedRewardHash, encounter!.LotteryRewardHash,
+                            encounter!.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards, encounter!.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards, 3);
+
+                        var form = new RewardListForm(f.Editor.Language, lvl0, lvl1, lvl2, lvl3);
+                        form.Show();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Rows selection exceeded the maximum allowed [1].");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No data available.");
+            }
+        }
+
         public static void SendSelectedRaidEditor(this DataGridView dataGrid, CalculatorForm f)
         {
             if (dataGrid.SelectedCells.Count > 0)

@@ -509,5 +509,7 @@ namespace TeraFinder
         private void btnSendToEditor_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this);
 
         private void btnSavePk9_Click(object sender, EventArgs e) => dataGrid.SaveSelectedPk9(this);
+
+        private void btnViewRewards_Click(object sender, EventArgs e) => dataGrid.ViewRewards(this);
     }
 }

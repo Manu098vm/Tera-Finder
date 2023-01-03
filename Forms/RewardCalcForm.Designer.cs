@@ -979,7 +979,7 @@
             this.numMaxCalc.Size = new System.Drawing.Size(138, 27);
             this.numMaxCalc.TabIndex = 5;
             this.numMaxCalc.Value = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
