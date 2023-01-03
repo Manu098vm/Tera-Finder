@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System.ComponentModel;
 
 namespace TeraFinder
 {
@@ -143,6 +144,66 @@ namespace TeraFinder
             Move3 = str[22];
             Move4 = str[23];
             Calcs = str[24];
+        }
+
+        public GridEntry(string[] str)
+        {
+            Seed = str[0];
+            Shiny = str[1];
+            Stars = str[2];
+            Species = str[3];
+            Level = str[4];
+            TeraType = str[5];
+            EC = str[6];
+            PID = str[7];
+            HP = str[8];
+            ATK = str[9];
+            DEF = str[10];
+            SPA = str[11];
+            SPD = str[12];
+            SPE = str[13];
+            Ability = str[14];
+            Nature = str[15];
+            Gender = str[16];
+            Height = str[17];
+            Weight = str[18];
+            Scale = str[19];
+            Move1 = str[20];
+            Move2 = str[21];
+            Move3 = str[22];
+            Move4 = str[23];
+            Calcs = str[24];
+        }
+
+        public string[] GetStrings()
+        {
+            var list = new string[25];
+            list[0] = ($"{Seed}");
+            list[1] = ($"{Shiny}");
+            list[2] = ($"{Stars}");
+            list[3] = ($"{Species}");
+            list[4] = ($"{Level}");
+            list[5] = ($"{TeraType}");
+            list[6] = ($"{EC:X8}");
+            list[7] = ($"{PID:X8}");
+            list[8] = ($"{HP}");
+            list[9] = ($"{ATK}");
+            list[10] = ($"{DEF}");
+            list[11] = ($"{SPA}");
+            list[12] = ($"{SPD}");
+            list[13] = ($"{SPE}");
+            list[14] = ($"{Ability}");
+            list[15] = ($"{Nature}");
+            list[16] = ($"{Gender}");
+            list[17] = ($"{Height}");
+            list[18] = ($"{Weight}");
+            list[19] = ($"{Scale}");
+            list[20] = ($"{Move1}");
+            list[21] = ($"{Move2}");
+            list[22] = ($"{Move3}");
+            list[23] = ($"{Move4}");
+            list[24] = ($"{Calcs}");
+            return list;
         }
     }
 

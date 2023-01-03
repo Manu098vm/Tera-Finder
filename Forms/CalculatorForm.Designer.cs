@@ -98,6 +98,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cmbGame = new System.Windows.Forms.ComboBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnSaveAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSavePk9 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnToPkmEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSendToEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.grpRaidDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFrames)).BeginInit();
             this.grpFilters.SuspendLayout();
@@ -117,6 +123,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nSpeMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.grpGameInfo.SuspendLayout();
+            this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpRaidDetails
@@ -872,6 +879,7 @@
             this.dataGrid.RowTemplate.Height = 29;
             this.dataGrid.Size = new System.Drawing.Size(1534, 541);
             this.dataGrid.TabIndex = 5;
+            this.dataGrid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGrid_MouseUp);
             // 
             // grpGameInfo
             // 
@@ -953,11 +961,58 @@
             this.toolTip.ShowAlways = true;
             this.toolTip.ToolTipTitle = "Show All Results";
             // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnSaveAll,
+            this.btnSave,
+            this.btnSavePk9,
+            this.btnToPkmEditor,
+            this.btnSendToEditor});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(313, 124);
+            // 
+            // btnSaveAll
+            // 
+            this.btnSaveAll.Name = "btnSaveAll";
+            this.btnSaveAll.Size = new System.Drawing.Size(312, 24);
+            this.btnSaveAll.Text = "Save All Results as TXT";
+            this.btnSaveAll.Click += new System.EventHandler(this.btnSaveAll_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(312, 24);
+            this.btnSave.Text = "Save Selected Results as TXT";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnSavePk9
+            // 
+            this.btnSavePk9.Name = "btnSavePk9";
+            this.btnSavePk9.Size = new System.Drawing.Size(312, 24);
+            this.btnSavePk9.Text = "Save Selected Results as PK9";
+            this.btnSavePk9.Click += new System.EventHandler(this.btnSavePk9_Click);
+            // 
+            // btnToPkmEditor
+            // 
+            this.btnToPkmEditor.Name = "btnToPkmEditor";
+            this.btnToPkmEditor.Size = new System.Drawing.Size(312, 24);
+            this.btnToPkmEditor.Text = "Send Selected Result to PKM Editor";
+            this.btnToPkmEditor.Click += new System.EventHandler(this.btnToPkmEditor_Click);
+            // 
+            // btnSendToEditor
+            // 
+            this.btnSendToEditor.Name = "btnSendToEditor";
+            this.btnSendToEditor.Size = new System.Drawing.Size(312, 24);
+            this.btnSendToEditor.Text = "Send Selected Result to Raid Editor";
+            this.btnSendToEditor.Click += new System.EventHandler(this.btnSendToEditor_Click);
+            // 
             // CalculatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1559, 816);
+            this.ClientSize = new System.Drawing.Size(1559, 811);
             this.Controls.Add(this.grpGameInfo);
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.grpFilters);
@@ -989,6 +1044,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             this.grpGameInfo.ResumeLayout(false);
             this.grpGameInfo.PerformLayout();
+            this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -997,7 +1053,6 @@
         private GroupBox grpRaidDetails;
         private TextBox txtSeed;
         private Label lblSeed;
-        private ComboBox cmbContent;
         private Label lblContent;
         private Label lblFrames;
         private GroupBox grpFilters;
@@ -1044,16 +1099,12 @@
         private ComboBox cmbSpecies;
         private ComboBox cmbStars;
         private Button btnReset;
-        private ComboBox cmbProgress;
         private Label lblProgress;
         private NumericUpDown numFrames;
         private ComboBox cmbNature;
         private GroupBox grpGameInfo;
         private Label label2;
-        private ComboBox cmbGame;
-        private TextBox txtSID;
         private Label lblSID;
-        private TextBox txtTID;
         private Label lblTID;
         private ComboBox cmbEC;
         private Label lblEC;
@@ -1063,5 +1114,16 @@
         private NumericUpDown numScaleMin;
         private Label lblScale;
         private ToolTip toolTip;
+        private ContextMenuStrip contextMenuStrip;
+        private ToolStripMenuItem btnSaveAll;
+        private ToolStripMenuItem btnSave;
+        private ToolStripMenuItem btnToPkmEditor;
+        private ToolStripMenuItem btnSendToEditor;
+        private ToolStripMenuItem btnSavePk9;
+        public TextBox txtSID;
+        public TextBox txtTID;
+        public ComboBox cmbContent;
+        public ComboBox cmbProgress;
+        public ComboBox cmbGame;
     }
 }

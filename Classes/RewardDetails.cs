@@ -111,6 +111,62 @@ namespace TeraFinder
             Item20 = str[19];
             Calcs = $"{res.Calcs}";
         }
+
+        public RewardGridEntry(string[] str)
+        {
+            Seed = str[0];
+            Item1 = str[1];
+            Item2 = str[2];
+            Item3 = str[3];
+            Item4 = str[4];
+            Item5 = str[5];
+            Item6 = str[6];
+            Item7 = str[7];
+            Item8 = str[8];
+            Item9 = str[9];
+            Item10 = str[10];
+            Item11 = str[11];
+            Item12 = str[12];
+            Item13 = str[13];
+            Item14 = str[14];
+            Item15 = str[15];
+            Item16 = str[16];
+            Item17 = str[17];
+            Item18 = str[18];
+            Item19 = str[19];
+            Item20 = str[20];
+            Calcs = str[21];
+        }
+
+        public string[] GetStrings()
+        {
+            var list = new List<string>
+            {
+                Seed!,
+                Item1!,
+                Item2!,
+                Item3!,
+                Item4!,
+                Item5!,
+                Item6!,
+                Item7!,
+                Item8!,
+                Item9!,
+                Item10!,
+                Item11!,
+                Item12!,
+                Item13!,
+                Item14!,
+                Item15!,
+                Item16!,
+                Item17!,
+                Item18!,
+                Item19!,
+                Item20!,
+                Calcs!,
+            };
+            return list.ToArray();
+        }
     }
 
     public class RewardFilter

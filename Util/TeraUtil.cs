@@ -139,16 +139,20 @@ namespace TeraFinder
             return null;
         }
 
-        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, bool isMighty)
+        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, bool mighty, int mightyindex = -1)
         {
             var game = (GameVersion)sav.Game;
-            var p = isMighty ? progress is GameProgress.Unlocked6Stars ? 3 : 0 : progress switch
+            var p = mighty ? progress is GameProgress.Unlocked6Stars ? 3 : 0 : progress switch
             {
                 GameProgress.Unlocked6Stars or GameProgress.Unlocked5Stars => 3,
                 GameProgress.Unlocked4Stars => 2,
                 GameProgress.Unlocked3Stars => 1,
                 _ => 0,
             };
+
+            if(mightyindex >= 0)
+                encounters = new EncounterRaid9[] { encounters[mightyindex] };
+
             foreach (var encounter in encounters)
             {
                 var max = game is GameVersion.SL ? encounter.GetRandRateTotalScarlet(p) : encounter.GetRandRateTotalViolet(p);

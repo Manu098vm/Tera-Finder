@@ -1,19 +1,24 @@
 ﻿using PKHeX.Core;
+using static TeraFinder.GridUtil;
 
 namespace TeraFinder.Forms
 {
     public partial class RewardCalcForm : Form
     {
-        private EditorForm Editor = null!;
+        public EditorForm Editor = null!;
         private List<RewardDetails> CalculatedList = new();
         private RewardFilter? Filter = null;
-        private string[] Items = null!;
+        public string[] Items = null!;
         private CancellationTokenSource Token = new();
 
         public RewardCalcForm(EditorForm editor)
         {
             InitializeComponent();
             Editor = editor;
+
+            if (Application.OpenForms.OfType<EditorForm>().FirstOrDefault() is null)
+                contextMenuStrip.Items.Remove(btnSendSelectedRaid);
+
             Items = GameInfo.GetStrings(editor.Language).itemlist;
             Items[0] = "(Any)";
 
@@ -240,7 +245,7 @@ namespace TeraFinder.Forms
 
             await Task.Run(() =>
             {
-                var nthreads = Environment.ProcessorCount - 1;
+                var nthreads = Environment.ProcessorCount;
                 var gridresults = new List<RewardGridEntry>[nthreads];
                 var calcresults = new List<RewardDetails>[nthreads];
                 var resetEvent = new ManualResetEvent(false);
@@ -327,5 +332,23 @@ namespace TeraFinder.Forms
 
             return new RewardDetails{ Seed = seed, Rewards = list, Calcs = calc };
         }
+
+        private void dataGrid_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int index = dataGrid.HitTest(e.X, e.Y).RowIndex;
+                if (index >= 0)
+                {
+                    contextMenuStrip.Show(Cursor.Position);
+                }
+            }
+        }
+
+        private void btnSaveAllTxt_Click(object sender, EventArgs e) => dataGrid.SaveAllTxt();
+
+        private void btnSaveSelectedTxt_Click(object sender, EventArgs e) => dataGrid.SaveSelectedTxt();
+
+        private void btnSendSelectedRaid_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this);
     }
 }

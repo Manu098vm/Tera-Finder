@@ -118,6 +118,10 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.dataGrid = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnSaveAllTxt = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSaveSelectedTxt = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSendSelectedRaid = new System.Windows.Forms.ToolStripMenuItem();
             this.grpFilters.SuspendLayout();
             this.grpItems.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).BeginInit();
@@ -145,6 +149,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numMaxCalc)).BeginInit();
             this.grpSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
+            this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -1034,6 +1039,7 @@
             this.dataGrid.RowTemplate.Height = 25;
             this.dataGrid.Size = new System.Drawing.Size(1106, 623);
             this.dataGrid.TabIndex = 23;
+            this.dataGrid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGrid_MouseUp);
             // 
             // toolTip1
             // 
@@ -1042,6 +1048,37 @@
             this.toolTip1.IsBalloon = true;
             this.toolTip1.ReshowDelay = 100;
             this.toolTip1.ToolTipTitle = "Show All Results";
+            // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnSaveAllTxt,
+            this.btnSaveSelectedTxt,
+            this.btnSendSelectedRaid});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(313, 76);
+            // 
+            // btnSaveAllTxt
+            // 
+            this.btnSaveAllTxt.Name = "btnSaveAllTxt";
+            this.btnSaveAllTxt.Size = new System.Drawing.Size(312, 24);
+            this.btnSaveAllTxt.Text = "Save All Results as TXT";
+            this.btnSaveAllTxt.Click += new System.EventHandler(this.btnSaveAllTxt_Click);
+            // 
+            // btnSaveSelectedTxt
+            // 
+            this.btnSaveSelectedTxt.Name = "btnSaveSelectedTxt";
+            this.btnSaveSelectedTxt.Size = new System.Drawing.Size(312, 24);
+            this.btnSaveSelectedTxt.Text = "Save Selected Results as TXT";
+            this.btnSaveSelectedTxt.Click += new System.EventHandler(this.btnSaveSelectedTxt_Click);
+            // 
+            // btnSendSelectedRaid
+            // 
+            this.btnSendSelectedRaid.Name = "btnSendSelectedRaid";
+            this.btnSendSelectedRaid.Size = new System.Drawing.Size(312, 24);
+            this.btnSendSelectedRaid.Text = "Send Selected Result to Raid Editor";
+            this.btnSendSelectedRaid.Click += new System.EventHandler(this.btnSendSelectedRaid_Click);
             // 
             // RewardCalcForm
             // 
@@ -1089,6 +1126,7 @@
             this.grpSearch.ResumeLayout(false);
             this.grpSearch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
+            this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1117,7 +1155,6 @@
         private ComboBox comboBox20;
         private GroupBox grpFilters;
         private GroupBox grpItems;
-        private CheckBox chkAccurateSearch;
         private ToolTip toolTip;
         private Label label1;
         private Label label2;
@@ -1160,9 +1197,7 @@
         private NumericUpDown numericUpDown2;
         private NumericUpDown numericUpDown1;
         private GroupBox grpProfile;
-        private TextBox txtSID;
         private Label label24;
-        private TextBox txtTID;
         private ComboBox cmbProgress;
         private Label label23;
         private Label label22;
@@ -1180,9 +1215,16 @@
         private Button btnApply;
         private Button btnReset;
         private DataGridView dataGrid;
-        private ComboBox cmbContent;
         private Label label28;
         private ComboBox cmbBoost;
         private ToolTip toolTip1;
+        private ContextMenuStrip contextMenuStrip;
+        private ToolStripMenuItem btnSaveAllTxt;
+        private ToolStripMenuItem btnSaveSelectedTxt;
+        private ToolStripMenuItem btnSendSelectedRaid;
+        public TextBox txtSID;
+        public TextBox txtTID;
+        public CheckBox chkAccurateSearch;
+        public ComboBox cmbContent;
     }
 }

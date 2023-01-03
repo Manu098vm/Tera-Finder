@@ -47,7 +47,12 @@ namespace TeraFinder
             if (data != default)
                 SAV = new SAV9SV(data.ToArray());
             else
-                SAV = new SAV9SV();
+                SAV = new SAV9SV
+                {
+                    Game = (int)GameVersion.SL,
+                    OT = "TeraFinder",
+                    Language = (int)LanguageID.English,
+                };
 
             var events = TeraUtil.GetSAVDistEncounters(SAV);
             var terarewards = RewardUtil.GetTeraRewardsTables();
@@ -149,7 +154,7 @@ namespace TeraFinder
             var ot = SAV.OT;
             var game = (GameVersion)SAV.Game;
             var tid = SAV.TrainerID7;
-            return $"{game} - {ot} ({tid})";
+            return $"{game} - {ot} ({tid}) - {Language.ToUpper()}";
         }
 
         public bool TryLoadFile(string filePath) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, filePath);

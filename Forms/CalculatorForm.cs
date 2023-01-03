@@ -1,27 +1,33 @@
 ﻿using PKHeX.Core;
+using static TeraFinder.GridUtil;
 
 namespace TeraFinder
 {
     public partial class CalculatorForm : Form
     {
-        private EditorForm Editor = null!;
+        public EditorForm Editor = null!;
         private List<TeraDetails> CalculatedList = new();
         private TeraFilter? Filter = null;
         private CancellationTokenSource Token = new ();
 
-        private string[] NameList = null!;
-        private string[] FormList = null!;
-        private string[] AbilityList = null!;
-        private string[] NatureList = null!;
-        private string[] MoveList = null!;
-        private string[] TypeList = null!;
-        private string[] GenderListAscii = null!;
-        private string[] GenderListUnicode = null!;
+        public string[] NameList = null!;
+        public string[] FormList = null!;
+        public string[] AbilityList = null!;
+        public string[] NatureList = null!;
+        public string[] MoveList = null!;
+        public string[] TypeList = null!;
+        public string[] GenderListAscii = null!;
+        public string[] GenderListUnicode = null!;
 
         public CalculatorForm(EditorForm editor)
         {
             InitializeComponent();
             Editor = editor;
+
+            if (Editor.PKMEditor is null)
+                contextMenuStrip.Items.Remove(btnToPkmEditor);
+            if (Application.OpenForms.OfType<EditorForm>().FirstOrDefault() is null)
+                contextMenuStrip.Items.Remove(btnSendToEditor);
 
             NameList = GameInfo.GetStrings(Editor.Language).specieslist;
             FormList = GameInfo.GetStrings(Editor.Language).forms;
@@ -195,6 +201,21 @@ namespace TeraFinder
                     res[0] = (ushort)Enum.Parse(typeof(Species), cmbSpecies.Text[..charLocation]);
                     res[1] = ShowdownParsing.GetFormFromString(cmbSpecies.Text[(charLocation + 1)..], GameInfo.GetStrings(Editor.Language), res[0], EntityContext.Gen9);
                 }
+            }
+            return res;
+        }
+
+        private ushort[] GetSpeciesAndForm(string str)
+        {
+            var res = new ushort[2];
+            int charLocation = cmbSpecies.Text.IndexOf("-", StringComparison.Ordinal);
+
+            if (charLocation == -1)
+                res[0] = (ushort)Enum.Parse(typeof(Species), cmbSpecies.Text);
+            else
+            {
+                res[0] = (ushort)Enum.Parse(typeof(Species), cmbSpecies.Text[..charLocation]);
+                res[1] = ShowdownParsing.GetFormFromString(cmbSpecies.Text[(charLocation + 1)..], GameInfo.GetStrings(Editor.Language), res[0], EntityContext.Gen9);
             }
             return res;
         }
@@ -456,6 +477,18 @@ namespace TeraFinder
             return TeraUtil.CalcRNG(seed, sav.TrainerID7, sav.TrainerSID7, content, encounter, calc);
         }
 
+        private void dataGrid_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int index = dataGrid.HitTest(e.X, e.Y).RowIndex;
+                if (index >= 0)
+                {
+                    contextMenuStrip.Show(Cursor.Position);
+                }
+            }
+        }
+
         private readonly static string[] TeraStars = new string[] {
             "Any",
             "1S ☆",
@@ -466,5 +499,15 @@ namespace TeraFinder
             "6S ☆☆☆☆☆☆",
             "7S ☆☆☆☆☆☆☆",
         };
+
+        private void btnSaveAll_Click(object sender, EventArgs e) => dataGrid.SaveAllTxt();
+
+        private void btnSave_Click(object sender, EventArgs e) => dataGrid.SaveSelectedTxt();
+
+        private void btnToPkmEditor_Click(object sender, EventArgs e) => dataGrid.SendSelectedPk9Editor(this);
+
+        private void btnSendToEditor_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this);
+
+        private void btnSavePk9_Click(object sender, EventArgs e) => dataGrid.SaveSelectedPk9(this);
     }
 }
