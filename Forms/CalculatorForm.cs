@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using static TeraFinder.GridUtil;
 
 namespace TeraFinder
 {
@@ -265,6 +264,7 @@ namespace TeraFinder
                 Gender = GetGender(),
                 Shiny = (TeraShiny)cmbShiny.SelectedIndex,
                 AltEC = cmbEC.SelectedIndex == 1,
+                CheckForm = cmbSpecies.SelectedIndex > 0,
             };
 
             var isblack = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black or RaidContent.Event_Mighty;

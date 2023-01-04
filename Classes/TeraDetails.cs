@@ -232,6 +232,7 @@ namespace TeraFinder
         public Gender Gender { get; set; }
         public TeraShiny Shiny { get; set; }
         public bool AltEC { get; set; }
+        public bool CheckForm { get; set; }
 
         public bool IsFilterMatch(TeraDetails res)
         {
@@ -255,7 +256,7 @@ namespace TeraFinder
 
             if (Species != 0 && Species != res.Species)
                 return false;
-            if (Form != res.Form)
+            if (CheckForm && Form != res.Form)
                 return false;
 
             if (TeraType != -1 && TeraType != res.TeraType)
