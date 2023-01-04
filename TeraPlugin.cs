@@ -25,7 +25,7 @@ namespace TeraFinder
 
         private readonly ToolStripMenuItem Plugin = new("Tera Finder Plugin");
         private readonly ToolStripMenuItem Editor = new("Tera Raid Viewer/Editor");
-        private readonly ToolStripMenuItem Finder = new("Tera Raid Seed Finder");
+        private readonly ToolStripMenuItem Finder = new("Tera Raid Seed Checker");
         private readonly ToolStripMenuItem Flags = new("Edit Game Flags");
         private readonly ToolStripMenuItem Events = new("Import Poké Portal News");
 
