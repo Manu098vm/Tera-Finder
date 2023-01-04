@@ -26,8 +26,8 @@ namespace TeraFinder
                 return new string[2] { drops, lottery };
             }
 
-            var drops_def = Encoding.UTF8.GetString(Properties.Resources.bcat_default_fixed_reward_item_array);
-            var lottery_def = Encoding.UTF8.GetString(Properties.Resources.bcat_default_lottery_reward_item_array);
+            var drops_def = Encoding.UTF8.GetString(Properties.Resources.raid_fixed_reward_item_array);
+            var lottery_def = Encoding.UTF8.GetString(Properties.Resources.raid_lottery_reward_item_array);
             return new string[2] { drops_def, lottery_def };
         }
 
@@ -37,9 +37,7 @@ namespace TeraFinder
             var type2list = new List<byte[]>();
             var type3list = new List<byte[]>();
 
-            var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATEventRaidIdentifier.Key);
-            var KBCATRaidEnemyArray = KBCATEventRaidIdentifier.Type is not PKHeX.Core.SCTypeCode.None && BitConverter.ToUInt32(KBCATEventRaidIdentifier.Data) > 0 ?
-                sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATRaidEnemyArray.Key).Data : Properties.Resources.bcat_default_raid_enemy_array;
+            var KBCATRaidEnemyArray = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATRaidEnemyArray.Key).Data;
 
             var tableEncounters = FlatBufferConverter.DeserializeFrom<DeliveryRaidEnemyTableArray>(KBCATRaidEnemyArray);
 

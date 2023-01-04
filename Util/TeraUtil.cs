@@ -88,8 +88,7 @@ namespace TeraFinder
             List<string> list = new();
             var game = (GameVersion)sav.Game;
 
-            var encounters = content is RaidContent.Event ? EncounterRaid9.GetEncounters(EncounterDist9.GetArray(EventUtil.GetEventEncounterDataFromSAV(sav)[0])) :
-                content is RaidContent.Event_Mighty ? EncounterRaid9.GetEncounters(EncounterMight9.GetArray(EventUtil.GetEventEncounterDataFromSAV(sav)[1])) :
+            var encounters = content is RaidContent.Event ? GetSAVDistEncounters(sav)[0] : content is RaidContent.Event_Mighty ? GetSAVDistEncounters(sav)[1] :
                 EncounterRaid9.GetEncounters(EncounterTera9.GetArray(Properties.Resources.encounter_gem_paldea));
 
             foreach (var encounter in encounters)
@@ -117,10 +116,20 @@ namespace TeraFinder
 
         public static EncounterRaid9[][] GetSAVDistEncounters(SAV9SV sav)
         {
-            var events = EventUtil.GetEventEncounterDataFromSAV(sav);
-            var dist = EncounterRaid9.GetEncounters(EncounterDist9.GetArray(events[0]));
-            var mighty = EncounterRaid9.GetEncounters(EncounterMight9.GetArray(events[1]));
-            return new EncounterRaid9[][] { dist, mighty };
+            var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATEventRaidIdentifier.Key);
+            if (KBCATEventRaidIdentifier.Type is not SCTypeCode.None && BitConverter.ToUInt32(KBCATEventRaidIdentifier.Data) > 0)
+            {
+                var events = EventUtil.GetEventEncounterDataFromSAV(sav);
+                var dist = EncounterRaid9.GetEncounters(EncounterDist9.GetArray(events[0]));
+                var mighty = EncounterRaid9.GetEncounters(EncounterMight9.GetArray(events[1]));
+                return new EncounterRaid9[][] { dist, mighty };
+            }
+            else
+            {
+                //The game uses standard tables if there are no valid events
+                var encounters = GetAllTeraEncounters();
+                return new EncounterRaid9[][] { encounters, encounters };
+            }
         }
 
         public static EncounterRaid9? GetTeraEncounter(uint seed, SAV9SV sav, int stars, EncounterRaid9[] encounters)

@@ -121,15 +121,6 @@
   <data name="000" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\000.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bcat_default_fixed_reward_item_array" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bcat_default_fixed_reward_item_array.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="bcat_default_lottery_reward_item_array" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bcat_default_lottery_reward_item_array.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="bcat_default_raid_enemy_array" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bcat_default_raid_enemy_array;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="den_locations" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\den_locations.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

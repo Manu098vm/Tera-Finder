@@ -73,36 +73,6 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] bcat_default_fixed_reward_item_array {
-            get {
-                object obj = ResourceManager.GetObject("bcat_default_fixed_reward_item_array", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] bcat_default_lottery_reward_item_array {
-            get {
-                object obj = ResourceManager.GetObject("bcat_default_lottery_reward_item_array", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] bcat_default_raid_enemy_array {
-            get {
-                object obj = ResourceManager.GetObject("bcat_default_raid_enemy_array", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] den_locations {
             get {
                 object obj = ResourceManager.GetObject("den_locations", resourceCulture);
