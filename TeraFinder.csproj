@@ -34,12 +34,6 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<Compile Remove="PKHeX.Drawing.PokeSprite\**" />
-		<EmbeddedResource Remove="PKHeX.Drawing.PokeSprite\**" />
-		<None Remove="PKHeX.Drawing.PokeSprite\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Compile Remove="TeraFinder.Launcher\**" />
 		<EmbeddedResource Remove="TeraFinder.Launcher\**" />
 		<None Remove="TeraFinder.Launcher\**" />
@@ -71,14 +65,13 @@
 	    <Reference Include="PKHeX.Drawing">
 		    <HintPath>Resources\PKHeX.Drawing.dll</HintPath>
 	    </Reference>
+		<Reference Include="PKHeX.Drawing.PokeSprite">
+			<HintPath>Resources\PKHeX.Drawing.PokeSprite.dll</HintPath>
+		</Reference>
     </ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="pkNX.Structures.FlatBuffers\pkNX.Structures.FlatBuffers.csproj">
-			<Private>True</Private>
-			<CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
-		</ProjectReference>
-		<ProjectReference Include="PKHeX.Drawing.PokeSprite\PKHeX.Drawing.PokeSprite.csproj">
 			<Private>True</Private>
 			<CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
 		</ProjectReference>

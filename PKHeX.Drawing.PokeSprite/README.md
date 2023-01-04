@@ -1,1 +1,0 @@
-Classes related to Pokémon Sprites taken from [PKHeX](https://github.com/kwsch/PKHeX) by [kwsch](https://github.com/kwsch), licensed under GPL v3 license.

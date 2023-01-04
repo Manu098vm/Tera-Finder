@@ -196,6 +196,9 @@
   <data name="PKHeX_Drawing" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PKHeX.Drawing.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="PKHeX_Drawing_PokeSprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PKHeX.Drawing.PokeSprite.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="raid_fixed_reward_item_array" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\raid_fixed_reward_item_array.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

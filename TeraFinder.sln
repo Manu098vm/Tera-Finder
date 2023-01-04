@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeraFinder.Launcher", "Tera
 		{4E369721-CF2E-4C16-B409-F95272E7468D} = {4E369721-CF2E-4C16-B409-F95272E7468D}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PKHeX.Drawing.PokeSprite", "PKHeX.Drawing.PokeSprite\PKHeX.Drawing.PokeSprite.csproj", "{E129798F-59AD-4A9E-8C20-BF02F274DA3C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{E3234482-506B-4A94-9446-13247EE0A7A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3234482-506B-4A94-9446-13247EE0A7A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3234482-506B-4A94-9446-13247EE0A7A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E129798F-59AD-4A9E-8C20-BF02F274DA3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E129798F-59AD-4A9E-8C20-BF02F274DA3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E129798F-59AD-4A9E-8C20-BF02F274DA3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E129798F-59AD-4A9E-8C20-BF02F274DA3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

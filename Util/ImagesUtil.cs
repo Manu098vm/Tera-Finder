@@ -8,11 +8,30 @@ namespace TeraFinder
     {
         public static Image GetRaidResultSprite(TeraDetails pkm, bool active = true)
         {
-            var sprite = SpriteUtil.GetSprite((ushort)pkm.Species, (byte)pkm.Form, (int)pkm.Gender, 0, 0, false, (Shiny)pkm.Shiny, EntityContext.Gen9, SpriteBuilderTweak.None);
-#pragma warning disable CA1416
+            SpriteName.AllowShinySprite = true;
+            var file = pkm.Shiny > TeraShiny.No && pkm.Species <= (ushort)Species.Sprigatito ?
+                'b' + SpriteName.GetResourceStringSprite(pkm.Species, pkm.Form, (int)pkm.Gender, (uint)(pkm.Species == (ushort)Species.Gholdengo ? 999 : 0), EntityContext.Gen9, true) :
+                'a' + SpriteName.GetResourceStringSprite(pkm.Species, pkm.Form, (int)pkm.Gender, (uint)(pkm.Species == (ushort)Species.Gholdengo ? 999 : 0), EntityContext.Gen9, false);
+
+            var sprite = (Image?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file);
+
+            if (sprite is null)
+            {
+                file = 'a' + SpriteName.GetResourceStringSprite(pkm.Species, pkm.Form, (int)pkm.Gender, (uint)(pkm.Species == (ushort)Species.Gholdengo ? 999 : 0), EntityContext.Gen9, false);
+                sprite = (Image)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file)!;
+            }
+
+            if (pkm.Shiny > TeraShiny.No)
+                sprite = LayerOverImageShiny(sprite, pkm.Shiny is TeraShiny.Square ? Shiny.AlwaysSquare : Shiny.AlwaysStar);
+
             if (!active) sprite = ImageUtil.ToGrayscale(sprite);
             return ImageUtil.BlendTransparentTo(sprite, TypeColor.GetTypeSpriteColor((byte)pkm.TeraType), 0xAF, 0x3740);
-#pragma warning restore CA1416
+        }
+
+        private static Image LayerOverImageShiny(Image image, Shiny shiny)
+        {
+            var icon = shiny is Shiny.AlwaysSquare ? PKHeX.Drawing.PokeSprite.Properties.Resources.rare_icon_2 : PKHeX.Drawing.PokeSprite.Properties.Resources.rare_icon;
+            return ImageUtil.LayerImage(image, icon, 0, 0, 0.7);
         }
 
         public static void SetMapPoint(this PictureBox pic, int teratype, int area, int spawnpoint, Dictionary<string, float[]> locations)

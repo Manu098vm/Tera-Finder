@@ -323,6 +323,16 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] PKHeX_Drawing_PokeSprite {
+            get {
+                object obj = ResourceManager.GetObject("PKHeX_Drawing_PokeSprite", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] raid_fixed_reward_item_array {
             get {
                 object obj = ResourceManager.GetObject("raid_fixed_reward_item_array", resourceCulture);
