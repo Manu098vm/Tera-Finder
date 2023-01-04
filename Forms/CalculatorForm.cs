@@ -195,27 +195,18 @@ namespace TeraFinder
                 int charLocation = cmbSpecies.Text.IndexOf("-", StringComparison.Ordinal);
 
                 if (charLocation == -1)
-                    res[0] = (ushort)Enum.Parse(typeof(Species), cmbSpecies.Text);
+                {
+                    var species = Editor.Language.ToLower().Equals("en") ? cmbSpecies.Text :
+                        GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, cmbSpecies.Text)];
+                    res[0] = (ushort)Enum.Parse(typeof(Species), species);
+                }
                 else
                 {
-                    res[0] = (ushort)Enum.Parse(typeof(Species), cmbSpecies.Text[..charLocation]);
+                    var species = Editor.Language.ToLower().Equals("en") ? cmbSpecies.Text[..charLocation] :
+                        GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, cmbSpecies.Text[..charLocation])];
+                    res[0] = (ushort)Enum.Parse(typeof(Species), species);
                     res[1] = ShowdownParsing.GetFormFromString(cmbSpecies.Text[(charLocation + 1)..], GameInfo.GetStrings(Editor.Language), res[0], EntityContext.Gen9);
                 }
-            }
-            return res;
-        }
-
-        private ushort[] GetSpeciesAndForm(string str)
-        {
-            var res = new ushort[2];
-            int charLocation = cmbSpecies.Text.IndexOf("-", StringComparison.Ordinal);
-
-            if (charLocation == -1)
-                res[0] = (ushort)Enum.Parse(typeof(Species), cmbSpecies.Text);
-            else
-            {
-                res[0] = (ushort)Enum.Parse(typeof(Species), cmbSpecies.Text[..charLocation]);
-                res[1] = ShowdownParsing.GetFormFromString(cmbSpecies.Text[(charLocation + 1)..], GameInfo.GetStrings(Editor.Language), res[0], EntityContext.Gen9);
             }
             return res;
         }

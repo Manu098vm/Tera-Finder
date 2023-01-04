@@ -253,7 +253,6 @@ namespace TeraFinder
                 {
                     try
                     {
-                        var template = new PK9(Properties.Resources.template);
                         var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
                         var content = GetContent(seed, selectedRows.ElementAt(0), f);
                         var progress = GetProgress(seed, selectedRows.ElementAt(0), f);

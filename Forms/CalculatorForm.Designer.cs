@@ -973,7 +973,7 @@
             this.btnToPkmEditor,
             this.btnSendToEditor});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(313, 148);
+            this.contextMenuStrip.Size = new System.Drawing.Size(313, 176);
             // 
             // btnViewRewards
             // 
@@ -1000,7 +1000,7 @@
             // 
             this.btnSavePk9.Name = "btnSavePk9";
             this.btnSavePk9.Size = new System.Drawing.Size(312, 24);
-            this.btnSavePk9.Text = "Save Selected Results as PK9";
+            this.btnSavePk9.Text = "Save Selected Result as PK9";
             this.btnSavePk9.Click += new System.EventHandler(this.btnSavePk9_Click);
             // 
             // btnToPkmEditor

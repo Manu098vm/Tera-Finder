@@ -255,7 +255,7 @@ namespace TeraFinder
 
             if (Species != 0 && Species != res.Species)
                 return false;
-            if (Form != 0 && Form != res.Form)
+            if (Form != res.Form)
                 return false;
 
             if (TeraType != -1 && TeraType != res.TeraType)
