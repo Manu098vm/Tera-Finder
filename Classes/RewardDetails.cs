@@ -48,7 +48,7 @@ namespace TeraFinder
     {
         public uint Seed { get; set; }
         public List<Reward>? Rewards {get; set;}
-        public uint Calcs { get; set; }
+        public ulong Calcs { get; set; }
 
         public string[] GetStrings(string[] itemnames, string language)
         {

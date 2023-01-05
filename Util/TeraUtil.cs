@@ -193,7 +193,7 @@ namespace TeraFinder
             return (byte)PersonalTable.SV.GetFormEntry(enc.Species, enc.Form).Gender;
         }
 
-        public static TeraDetails CalcRNG(uint seed, int tid, int sid, RaidContent content, EncounterRaid9 encounter, uint calc = 0)
+        public static TeraDetails CalcRNG(uint seed, int tid, int sid, RaidContent content, EncounterRaid9 encounter, ulong calc = 0)
         {
             var param = new GenerateParam9
             {

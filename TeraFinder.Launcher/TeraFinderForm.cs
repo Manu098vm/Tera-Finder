@@ -10,6 +10,7 @@ namespace TeraFinder.Launcher
         {
             InitializeComponent();
             Plugin.StandaloneInitialize();
+            this.Text += TeraPlugin.Version;
             txtSAV.Text = GetGameString();
             btnEditGame.Enabled = false;
             //btnImportNews.Enabled = false;

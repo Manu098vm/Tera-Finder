@@ -356,10 +356,10 @@ namespace TeraFinder
 
                 try
                 {
-                    //var stopwatch = new Stopwatch();
+                    //var stopwatch = new System.Diagnostics.Stopwatch();
                     //stopwatch.Start();
                     var griddata= await StartSearch(sav, progress, content, Token);
-                    //MessageBox.Show($"Search completed in {stopwatch.ElapsedMilliseconds} ms");
+                    //MessageBox.Show($"Search completed in {stopwatch.Elapsed.TotalSeconds} seconds.");
                     dataGrid.DataSource = griddata;
                     btnSearch.Text = "Search";
                     EnableControls(IsBlankSAV());
@@ -387,7 +387,7 @@ namespace TeraFinder
 
             await Task.Run(() =>
             {
-                var nthreads = Environment.ProcessorCount;
+                var nthreads = (uint)numFrames.Value < 1000 ? 1 : Environment.ProcessorCount;
                 var gridresults = new List<GridEntry>[nthreads];
                 var calcresults = new List<TeraDetails>[nthreads];
                 var resetEvent = new ManualResetEvent(false);
@@ -409,7 +409,7 @@ namespace TeraFinder
                         var maxframe = n < nthreads - 1 ? calcsperthread * (n + 1) : maxcalcs;
                         tseed += initialFrame;
 
-                        for (uint i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
+                        for (ulong i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
                         {
                             var res = CalcResult(tseed, progress, sav, content, i);
                             if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
@@ -456,7 +456,7 @@ namespace TeraFinder
             return gridList;
         }
 
-        private TeraDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, uint calc)
+        private TeraDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, ulong calc)
         {
             var seed = (uint)(Seed & 0xFFFFFFFF);
             var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Editor.Tera!) :

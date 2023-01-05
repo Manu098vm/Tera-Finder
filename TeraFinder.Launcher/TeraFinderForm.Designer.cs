@@ -202,7 +202,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TeraFinderForm";
-            this.Text = "Tera Finder";
+            this.Text = "Tera Finder ";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileDragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FileDragEnter);
             this.grpSAV.ResumeLayout(false);

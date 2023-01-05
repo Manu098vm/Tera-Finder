@@ -30,7 +30,7 @@ namespace TeraFinder
         public ushort Move2 { get; set; }
         public ushort Move3 { get; set; }
         public ushort Move4 { get; set; }
-        public uint Calcs { get; set; }
+        public ulong Calcs { get; set; }
 
 
         public int GetAbilityNumber()

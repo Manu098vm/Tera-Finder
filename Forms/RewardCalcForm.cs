@@ -245,7 +245,7 @@ namespace TeraFinder.Forms
 
             await Task.Run(() =>
             {
-                var nthreads = Environment.ProcessorCount;
+                var nthreads = (uint)numMaxCalc.Value < 1000 ? 1 : Environment.ProcessorCount;
                 var gridresults = new List<RewardGridEntry>[nthreads];
                 var calcresults = new List<RewardDetails>[nthreads];
                 var resetEvent = new ManualResetEvent(false);
@@ -267,7 +267,7 @@ namespace TeraFinder.Forms
                         var maxframe = n < nthreads - 1 ? calcsperthread * (n + 1) : maxcalcs;
                         tseed += initialFrame;
 
-                        for (uint i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
+                        for (ulong i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
                         {
                             var res = CalcResult(tseed, progress, sav, content, i, chkAccurateSearch.Checked, boost);
                             if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
@@ -314,7 +314,7 @@ namespace TeraFinder.Forms
             return gridList;
         }
 
-        private RewardDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, uint calc, bool accuratesearch, int boost)
+        private RewardDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, ulong calc, bool accuratesearch, int boost)
         {
             var seed = (uint)(Seed & 0xFFFFFFFF);
             var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Editor.Tera!) :

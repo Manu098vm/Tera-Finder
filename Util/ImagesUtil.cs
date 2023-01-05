@@ -68,7 +68,8 @@ namespace TeraFinder
 
             var pointer = new Bitmap(crystal, new Size(crystal.Width / 4, crystal.Height / 4));
             var map = new Bitmap(pic.BackgroundImage, new Size(pic.Width, pic.Height));
-            Graphics.FromImage(map).DrawImage(pointer, coordinates);
+            if(coordinates.X != 0 && coordinates.Y != 0)
+                Graphics.FromImage(map).DrawImage(pointer, coordinates);
             pic.Image = map;
         }
 
