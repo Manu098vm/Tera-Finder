@@ -1,5 +1,5 @@
 # Tera Finder
-![immagine](https://user-images.githubusercontent.com/52102823/210241170-0f8109df-622b-4a7b-bbe3-c127917eb0e8.png)
+![immagine](https://user-images.githubusercontent.com/52102823/210862408-8ea8f49f-cb73-4d9e-9ca5-c86a5dce8cb4.png)
 
 This is a PKHeX.Core based program that allows to view, edit and calculate seeds for SV Raids. This is the spiritual sequel of my [SVXoroCalc](https://github.com/Manu098vm/SVResearches).
 Both a standalone program and a PKHeX Plugin are available for use.
@@ -9,11 +9,16 @@ Both a standalone program and a PKHeX Plugin are available for use.
 * Check & Edit Raids from a Save File
 * Reverse a Pokémon into its origin Seed to check legality
 * Calculate an RNG seeds that results in a Pokémon with given details
+* Calculate an RNG seeds that results in wanted rewards
 * Edit Tera Raid related Game Progress/Caught Flags
+* Supports localized languages
 
 Powered by [PKHeX](https://github.com/kwsch/PKHeX) and [pkNX](https://github.com/kwsch/pkNX).
 
 ## How To
+### Download
+Check the [Release page](https://github.com/Manu098vm/Tera-Finder/releases) for the latest stable build, or [Git Actions](https://github.com/Manu098vm/Tera-Finder/actions) for the latest dev build. 
+
 ### Building
 You can use any C# 10 & .NET 6.0 compatible IDE such as Visual Studio to compile this program.
 
