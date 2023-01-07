@@ -23,6 +23,15 @@ namespace TeraFinder
 
         public bool CompareItem(Reward item, bool greaterthan = false)
         {
+            if (greaterthan && item.ItemID == ushort.MaxValue - 2)
+            {
+                if (ItemID >= 1904 && ItemID <= 1908)
+                    if (Amount >= item.Amount)
+                        return true;
+
+                return false;
+            }
+
             if (item.ItemID != ItemID)
                 return false;
             if (!greaterthan && item.Amount != Amount) 

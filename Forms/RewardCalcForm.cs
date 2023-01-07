@@ -20,11 +20,16 @@ namespace TeraFinder.Forms
                 contextMenuStrip.Items.Remove(btnSendSelectedRaid);
 
             Items = GameInfo.GetStrings(editor.Language).itemlist;
-            Items[0] = "(Any)";
+            var cbitems = new List<string>
+            {
+                "Any",
+                "Any Herba Mystica",
+            };
+            cbitems.AddRange(Items[1..]);
 
             foreach(var cb in grpItems.Controls.OfType<ComboBox>())
             {
-                cb.Items.AddRange(Items);
+                cb.Items.AddRange(cbitems.ToArray());
                 cb.SelectedIndex = 0;
             }
 
@@ -115,7 +120,7 @@ namespace TeraFinder.Forms
                 {
                     var numericName = $"numericUpDown{cb.Name[8..]}";
                     var num = nums.Where(num => num.Name.Equals(numericName)).FirstOrDefault()!;
-                    items.Add(new Reward { ItemID = cb.SelectedIndex, Amount = (int)num.Value });
+                    items.Add(new Reward { ItemID = cb.SelectedIndex == 1 ? ushort.MaxValue-2 : cb.SelectedIndex-1, Amount = (int)num.Value });
                 }
             }
 
