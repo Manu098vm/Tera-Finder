@@ -10,6 +10,7 @@ Both a standalone program and a PKHeX Plugin are available for use.
 * Reverse a Pokémon into its origin Seed to check legality
 * Calculate an RNG seeds that results in a Pokémon with given details
 * Calculate an RNG seeds that results in wanted rewards
+* Generate Legal PK9 files from Raid searches
 * Edit Tera Raid related Game Progress/Caught Flags
 * Supports localized languages
 
