@@ -96,7 +96,7 @@ namespace TeraFinder
                 Species.Houndour or Species.Houndoom => 1990,
                 Species.Phanpy or Species.Donphan => 1991,
                 Species.Stantler or Species.Wyrdeer => 1992,
-                Species.Larvitar or Species.Pupitar or Species.Tyranitar => 1994,
+                Species.Larvitar or Species.Pupitar or Species.Tyranitar => 1993,
                 Species.Wingull or Species.Pelipper => 1994,
                 Species.Ralts or Species.Kirlia or Species.Gardevoir or Species.Gallade => 1995,
                 Species.Surskit or Species.Masquerain => 1996,
@@ -291,7 +291,7 @@ namespace TeraFinder
             return rewardlist;
         }
 
-        public static List<Reward> GetRewardList(uint seed, int stars, ulong fixedhash, ulong lotteryhash, Dictionary<ulong, List<Reward>>? fixedic = null, Dictionary<ulong, List<Reward>>? lotterydic = null, int boost = 0)
+        public static List<Reward> GetRewardList(uint seed, ushort species, int stars, ulong fixedhash, ulong lotteryhash, Dictionary<ulong, List<Reward>>? fixedic = null, Dictionary<ulong, List<Reward>>? lotterydic = null, int boost = 0)
         {
             var rewardlist = new List<Reward>();
             var fixedlist = new List<Reward>();
@@ -301,9 +301,9 @@ namespace TeraFinder
             var lotteryexists = lotterydic is not null && lotterydic.TryGetValue(lotteryhash, out lotterylist);
 
             if (fixedexists)
-            {
-                rewardlist.AddRange(fixedlist!);
-            }
+                foreach (var reward in fixedlist!)
+                    rewardlist.Add(reward.ItemID == ushort.MaxValue ? new Reward { ItemID = GetMaterial((Species)species), Amount = reward.Amount, Aux = reward.Aux } : reward);
+
             if (lotteryexists)
             {
                 var xoro = new Xoroshiro128Plus(seed);
@@ -315,7 +315,7 @@ namespace TeraFinder
                     {
                         if (reward.Probability > tres)
                         {
-                            rewardlist.Add(reward);
+                            rewardlist.Add(reward.ItemID == ushort.MaxValue ? new Reward { ItemID = GetMaterial((Species)species), Amount = reward.Amount } : reward);
                             break;
                         }
                         tres -= reward.Probability;

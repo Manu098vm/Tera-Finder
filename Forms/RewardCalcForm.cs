@@ -8,6 +8,7 @@ namespace TeraFinder.Forms
         public EditorForm Editor = null!;
         private List<RewardDetails> CalculatedList = new();
         private RewardFilter? Filter = null;
+        public string[] SpeciesNames = null!;
         public string[] Items = null!;
         private CancellationTokenSource Token = new();
 
@@ -18,6 +19,11 @@ namespace TeraFinder.Forms
 
             if (Application.OpenForms.OfType<EditorForm>().FirstOrDefault() is null)
                 contextMenuStrip.Items.Remove(btnSendSelectedRaid);
+
+            SpeciesNames = GameInfo.GetStrings(editor.Language).specieslist;
+            cmbSpecies.Items.AddRange(SpeciesNames[1..]);
+            cmbSpecies.SelectedIndex = 0;
+            cmbStars.SelectedIndex = 0;
 
             Items = GameInfo.GetStrings(editor.Language).itemlist;
             var cbitems = new List<string>
@@ -49,9 +55,8 @@ namespace TeraFinder.Forms
             cmbContent.SelectedIndex = Editor.cmbContent.SelectedIndex;
             cmbBoost.SelectedIndex = 0;
 
-            toolTip.SetToolTip(chkAccurateSearch, $"Force the calculator to determine Pokémon Species and Tera Type from a given seed, " +
-                $"in order to accurately determine Materials and Tera Shards types.\nAlso determines if a given reward is Host or Client exclusive.\n" +
-                $"Makes the searches a little slower.");
+            toolTip.SetToolTip(chkAccurateSearch, $"Force the calculator to determine Pokémon Tera Type and Shinyness from a given seed, " +
+                $"in order to accurately determine Tera Shards types and Extra Infos.\nMakes the searches a little slower.");
             toolTip1.SetToolTip(chkAllResults, $"Disabled - Stop each thread search at the first result that matches the filters.\n" +
                 $"Enabled - Compute all possible results until Max Calcs number is reached.\nIgnored if no filter is set.");
 
@@ -93,7 +98,7 @@ namespace TeraFinder.Forms
                     var list = new List<RewardGridEntry>();
                     foreach (var c in CalculatedList)
                         if (Filter is null || Filter.IsFilterMatch(c))
-                            list.Add(new RewardGridEntry(c, Items, Editor.Language));
+                            list.Add(new RewardGridEntry(c, Items, SpeciesNames, Editor.Language));
                     dataGrid.DataSource = list;
                 }
             }
@@ -102,6 +107,9 @@ namespace TeraFinder.Forms
         private void btnReset_Click(object sender, EventArgs e)
         {
             chkAccurateSearch.Checked = false;
+            chkShiny.Checked = false;
+            cmbSpecies.SelectedIndex = 0;
+            cmbStars.SelectedIndex = 0;
             foreach (var cb in grpItems.Controls.OfType<ComboBox>())
                 cb.SelectedIndex = 0;
             foreach (var num in grpItems.Controls.OfType<NumericUpDown>())
@@ -132,7 +140,13 @@ namespace TeraFinder.Forms
                 else itemlist.Add(new Reward { ItemID = item.ItemID, Amount = item.Amount });
             }
 
-            var filter = new RewardFilter { FilterRewards = itemlist.ToArray() };
+            var filter = new RewardFilter
+            {
+                FilterRewards = itemlist.ToArray(),
+                Species = (ushort)cmbSpecies.SelectedIndex,
+                Stars = cmbStars.SelectedIndex,
+                Shiny = chkShiny.Checked ? TeraShiny.Yes : TeraShiny.Any,
+            };
 
             if (Filter is null && filter.IsFilterNull())
                 return;
@@ -277,7 +291,7 @@ namespace TeraFinder.Forms
                             var res = CalcResult(tseed, progress, sav, content, i, chkAccurateSearch.Checked, boost);
                             if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
                             {
-                                tmpgridlist.Add(new RewardGridEntry(res, Items, Editor.Language));
+                                tmpgridlist.Add(new RewardGridEntry(res, Items, SpeciesNames, Editor.Language));
                                 tmpcalclist.Add(res);
                                 if (!chkAllResults.Checked)
                                 {
@@ -287,7 +301,7 @@ namespace TeraFinder.Forms
                             }
                             else if (Filter is null && res is not null)
                             {
-                                tmpgridlist.Add(new RewardGridEntry(res, Items, Editor.Language));
+                                tmpgridlist.Add(new RewardGridEntry(res, Items, SpeciesNames, Editor.Language));
                                 tmpcalclist.Add(res);
                             }
 
@@ -331,11 +345,21 @@ namespace TeraFinder.Forms
             var fixedlist = encounter.IsDistribution ? Editor.DistFixedRewards : Editor.TeraFixedRewards;
             var lotterylist = encounter.IsDistribution ? Editor.DistLotteryRewards : Editor.TeraLotteryRewards;
 
-            var list = accuratesearch ? RewardUtil.GetRewardList(TeraUtil.CalcRNG(seed, sav.TrainerID7, sav.TrainerSID7, content, encounter, calc), 
-                encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist, boost) :
-                RewardUtil.GetRewardList(seed, encounter.Stars, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist, boost);
+            List<Reward> list;
+            TeraShiny shiny = TeraShiny.No;
 
-            return new RewardDetails{ Seed = seed, Rewards = list, Calcs = calc };
+            if (accuratesearch)
+            {
+                var det = TeraUtil.CalcRNG(seed, sav.TrainerID7, sav.TrainerSID7, content, encounter, calc);
+                list = RewardUtil.GetRewardList(det, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist, boost);
+                shiny = det.Shiny;
+            }
+            else
+            {
+                list = RewardUtil.GetRewardList(seed, encounter.Species, encounter.Stars, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist, boost);
+            }
+
+            return new RewardDetails{ Seed = seed, Rewards = list, Species = encounter.Species, Stars = encounter.Stars, Shiny = shiny, Calcs = calc };
         }
 
         private void dataGrid_MouseUp(object sender, MouseEventArgs e)

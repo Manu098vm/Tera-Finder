@@ -12,13 +12,18 @@ namespace TeraFinder
         public string GetItemName(string[]? itemnames = null, string language = "en", bool quantity = false)
         {
             if (ItemID == ushort.MaxValue)
-                return RewardUtil.Material[GameLanguage.GetLanguageIndex(language)];
+                return $"{RewardUtil.Material[GameLanguage.GetLanguageIndex(language)]} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
             else if(ItemID == ushort.MaxValue-1)
-                return RewardUtil.TeraShard[GameLanguage.GetLanguageIndex(language)];
+                return $"{RewardUtil.TeraShard[GameLanguage.GetLanguageIndex(language)]} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
 
             itemnames ??= GameInfo.GetStrings(language).itemlist;
 
-            return $"{itemnames[ItemID]}{(Aux == 0 ? "" : Aux == 1 ? " (H)" : Aux == 2 ? " (C)" : Aux == 3 ? " (Once)" : "")}{(quantity ? $" x{Amount}" : "")}";
+            return $"{itemnames[ItemID]} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
+        }
+
+        private string GetClientOrHostString()
+        {
+            return $"{(Aux == 0 ? "" : Aux == 1 ? "(H)" : Aux == 2 ? "(C)" : Aux == 3 ? "(Once)" : "")}";
         }
 
         public bool CompareItem(Reward item, bool greaterthan = false)
@@ -57,11 +62,14 @@ namespace TeraFinder
     {
         public uint Seed { get; set; }
         public List<Reward>? Rewards {get; set;}
+        public uint Species { get; set; }
+        public int Stars { get; set; }
+        public TeraShiny Shiny { get; set; }
         public ulong Calcs { get; set; }
 
         public string[] GetStrings(string[] itemnames, string language)
         {
-            var list = new string[20];
+            var list = new string[21];
             if(Rewards is not null)
                 for(var i = 0; i < Rewards.Count; i++)
                     list[i] = Rewards[i].GetItemName(itemnames, language, true);
@@ -92,9 +100,11 @@ namespace TeraFinder
         public string? Item18 { get; private set; }
         public string? Item19 { get; private set; }
         public string? Item20 { get; private set; }
+        public string? Item21 { get; private set; }
+        public string? ExtraInfo { get; private set; }
         public string? Calcs { get; private set; }
 
-        public RewardGridEntry(RewardDetails res, string[] itemnames, string language)
+        public RewardGridEntry(RewardDetails res, string[] itemnames, string[]speciesnames, string language)
         {
             var str = res.GetStrings(itemnames, language);
             Seed = $"{res.Seed:X8}";
@@ -118,6 +128,8 @@ namespace TeraFinder
             Item18 = str[17];
             Item19 = str[18];
             Item20 = str[19];
+            Item21 = str[20];
+            ExtraInfo = $"{speciesnames[res.Species]} ({res.Stars}☆) {(res.Shiny > TeraShiny.No ? $"({res.Shiny})" : "")}";
             Calcs = $"{res.Calcs}";
         }
 
@@ -144,7 +156,9 @@ namespace TeraFinder
             Item18 = str[18];
             Item19 = str[19];
             Item20 = str[20];
-            Calcs = str[21];
+            Item21 = str[21];
+            ExtraInfo = str[22];
+            Calcs = str[23];
         }
 
         public string[] GetStrings()
@@ -172,6 +186,8 @@ namespace TeraFinder
                 Item18!,
                 Item19!,
                 Item20!,
+                Item21!,
+                ExtraInfo!,
                 Calcs!,
             };
             return list.ToArray();
@@ -181,33 +197,50 @@ namespace TeraFinder
     public class RewardFilter
     {
         public Reward[]? FilterRewards { get; set; }
+        public ushort Species { get; set; }
+        public int Stars { get; set; }
+        public TeraShiny Shiny { get; set; }
 
         public bool IsFilterMatch(RewardDetails res)
         {
-            var itemlist = new List<Reward>();
-            foreach (var item in res.Rewards!)
+            if (Stars > 0 && Stars != res.Stars)
+                return false;
+
+            if (Species > 0 && Species != res.Species)
+                return false;
+
+            if (Shiny > TeraShiny.No && res.Shiny < TeraShiny.Yes)
+                return false;
+
+            if (FilterRewards is not null && FilterRewards.Length > 0)
             {
-                var index = itemlist.FindIndex(i => i.ItemID == item.ItemID);
-                if (index >= 0) 
-                    itemlist[index].Amount += item.Amount;
-                else 
-                    itemlist.Add(new Reward { ItemID = item.ItemID, Amount = item.Amount });
+                var itemlist = new List<Reward>();
+                foreach (var item in res.Rewards!)
+                {
+                    var index = itemlist.FindIndex(i => i.ItemID == item.ItemID);
+                    if (index >= 0)
+                        itemlist[index].Amount += item.Amount;
+                    else
+                        itemlist.Add(new Reward { ItemID = item.ItemID, Amount = item.Amount });
+                }
+
+                var match = 0;
+                foreach (var item in itemlist)
+                    foreach (var filter in FilterRewards!)
+                        if (item.CompareItem(filter, true))
+                            match++;
+
+                return match >= FilterRewards!.Length;
             }
 
-            var match = 0;
-            foreach(var item in itemlist)
-                foreach(var filter in FilterRewards!)
-                    if (item.CompareItem(filter, true))
-                        match++;
-
-            return match >= FilterRewards!.Length;
+            return true;
         }
 
         public bool IsFilterNull()
         {
-            if (FilterRewards is null)
+            if (FilterRewards is null && Species == 0 && Stars == 0 && Shiny is TeraShiny.Any)
                 return true;
-            if(FilterRewards.Length <= 0)
+            if(FilterRewards is not null && FilterRewards.Length <= 0 && Species == 0 && Stars == 0 && Shiny is TeraShiny.Any)
                 return true;
 
             return false;
@@ -215,24 +248,39 @@ namespace TeraFinder
 
         public bool CompareFilter(RewardFilter res)
         {
-            if(res.FilterRewards is null || FilterRewards is null)
-                return false;
-            if (res.FilterRewards.Length != FilterRewards.Length)
+            if (res.FilterRewards is not null && FilterRewards is not null)
+            {
+                if (res.FilterRewards.Length != FilterRewards.Length)
+                    return false;
+
+                for (var i = 0; i < FilterRewards.Length; i++)
+                    if (!res.FilterRewards[i].CompareItem(FilterRewards[i]))
+                        return false;
+            }
+
+            if (res.Species != Species)
                 return false;
 
-            for(var i = 0; i < FilterRewards.Length; i++)
-                if (!res.FilterRewards[i].CompareItem(FilterRewards[i]))
-                    return false;
+            if (res.Stars != Stars)
+                return false;
+
+            if (res.Shiny != Shiny)
+                return false;
 
             return true;
         }
 
         public bool NeedAccurate()
         {
-            if(!IsFilterNull())
-                foreach(var f in FilterRewards!)
-                    if(f.NeedAccurate())
+            if (!IsFilterNull())
+            {
+                if (Shiny > TeraShiny.No)
+                    return true;
+
+                foreach (var f in FilterRewards!)
+                    if (f.NeedAccurate())
                         return true;
+            }
             return false;
         }
     }

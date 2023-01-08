@@ -566,7 +566,7 @@ namespace TeraFinder
 
                             var rngres = accuratesearch ? RewardUtil.GetRewardList(TeraUtil.CalcRNG(seed, sav.TrainerID7, sav.TrainerSID7, content, encounter),
                                 encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist) :
-                                RewardUtil.GetRewardList(seed, encounter.Stars, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
+                                RewardUtil.GetRewardList(seed, encounter.Species, encounter.Stars, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
                             var success = true;
 
                             if (rngres != null)
