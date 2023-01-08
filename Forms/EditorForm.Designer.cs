@@ -84,6 +84,7 @@
             this.cmbDens.Size = new System.Drawing.Size(271, 28);
             this.cmbDens.TabIndex = 1;
             this.cmbDens.SelectedIndexChanged += new System.EventHandler(this.cmbDens_IndexChanged);
+            this.cmbDens.KeyPress += new KeyPressEventHandler(this.cmbDens_KeyPress);
             // 
             // GrpRaidInfo
             // 

@@ -304,6 +304,11 @@ namespace TeraFinder
             cmbDens.Focus();
         }
 
+        private void cmbDens_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
         private void btnRewards_Click(object sender, EventArgs e)
         {
             if (CurrEncount is not null && CurrTera is not null)
