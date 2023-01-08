@@ -1,6 +1,5 @@
 ﻿using PKHeX.Core;
 using System.IO.Compression;
-using System.Runtime.InteropServices;
 
 namespace TeraFinder
 {
@@ -66,7 +65,7 @@ namespace TeraFinder
             return false;
         }
 
-        public static bool IsValidFolder(string path)
+        private static bool IsValidFolder(string path)
         {
             if (!File.Exists($"{path}\\Identifier.txt"))
                 return false;
@@ -84,7 +83,24 @@ namespace TeraFinder
             return true;
         }
 
-        public static bool FinalizeImport(string path, 
+        private static void DeleteFilesAndDirectory(string targetDir)
+        {
+            string[] files = Directory.GetFiles(targetDir);
+            string[] dirs = Directory.GetDirectories(targetDir);
+
+            foreach (string file in files)
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+
+            foreach (string dir in dirs)
+                DeleteFilesAndDirectory(dir);
+
+            Directory.Delete(targetDir, false);
+        }
+
+        private static bool FinalizeImport(string path, 
                                           SaveFile sv, 
                                           bool zip,
                                           ref EncounterRaid9[]? dist,
@@ -153,23 +169,6 @@ namespace TeraFinder
                 MessageBox.Show($"Import error! Is the provided file valid?\n{ex}");
                 return false;
             }
-        }
-
-        private static void DeleteFilesAndDirectory(string targetDir)
-        {
-            string[] files = Directory.GetFiles(targetDir);
-            string[] dirs = Directory.GetDirectories(targetDir);
-
-            foreach (string file in files)
-            {
-                File.SetAttributes(file, FileAttributes.Normal);
-                File.Delete(file);
-            }
-
-            foreach (string dir in dirs)
-                DeleteFilesAndDirectory(dir);
-
-            Directory.Delete(targetDir, false);
         }
     }
 }
