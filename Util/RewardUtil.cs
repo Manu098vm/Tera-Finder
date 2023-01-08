@@ -10,20 +10,20 @@ namespace TeraFinder
 
         public static Dictionary<ulong, List<Reward>>[] GetTeraRewardsTables()
         {
-            var drops = new RaidFixedRewardItemArray { Array = JsonSerializer.Deserialize<RaidFixedRewardItemArray.Root>(Properties.Resources.raid_fixed_reward_item_array)! };
-            var lottery = new RaidLotteryRewardItemArray { Array = JsonSerializer.Deserialize<RaidLotteryRewardItemArray.Root>(Properties.Resources.raid_lottery_reward_item_array)! };
-            var fixedTable = GetFixedTable(drops.Array.Table);
-            var lotteryTable = GetLotteryTable(lottery.Array.Table);
+            var drops = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.DeliveryRaidFixedRewardItemArray>(Properties.Resources.raid_fixed_reward_item_array)!;
+            var lottery = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.DeliveryRaidLotteryRewardItemArray>(Properties.Resources.raid_lottery_reward_item_array)!;
+            var fixedTable = GetFixedTable(drops.Table);
+            var lotteryTable = GetLotteryTable(lottery.Table);
             return new Dictionary<ulong, List<Reward>>[] { fixedTable, lotteryTable };
         }
 
         public static Dictionary<ulong, List<Reward>>[] GetDistRewardsTables(SAV9SV sav)
         {
             var rewards = EventUtil.GetEventItemDataFromSAV(sav);
-            var drops = new RaidFixedRewardItemArray { Array = JsonSerializer.Deserialize<RaidFixedRewardItemArray.Root>(rewards[0])! };
-            var lottery = new RaidLotteryRewardItemArray { Array = JsonSerializer.Deserialize<RaidLotteryRewardItemArray.Root>(rewards[1])! };
-            var fixedTable = GetFixedTable(drops.Array.Table);
-            var lotteryTable = GetLotteryTable(lottery.Array.Table);
+            var drops = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.DeliveryRaidFixedRewardItemArray>(rewards[0])!;
+            var lottery = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.DeliveryRaidLotteryRewardItemArray>(rewards[1])!;
+            var fixedTable = GetFixedTable(drops.Table);
+            var lotteryTable = GetLotteryTable(lottery.Table);
             return new Dictionary<ulong, List<Reward>>[] { fixedTable, lotteryTable };
         }
 
@@ -351,7 +351,7 @@ namespace TeraFinder
 
         //Port from https://github.com/SteveCookTU/sv_raid_reader/blob/master/src/item_list.rs
         //Thanks SteveCookTU/EzPzStreamz!
-        private static Dictionary<ulong, List<Reward>> GetFixedTable(List<RaidFixedRewardItemArray.Table> drops)
+        private static Dictionary<ulong, List<Reward>> GetFixedTable(pkNX.Structures.FlatBuffers.DeliveryRaidFixedRewardItem[] drops)
         {
             var table = new Dictionary<ulong, List<Reward>>();
             foreach (var d in drops)
@@ -367,29 +367,29 @@ namespace TeraFinder
                 if (d.RewardItem00.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem00.ItemID,
+                        ItemID = (int)d.RewardItem00.ItemID,
                         Amount = d.RewardItem00.Num,
                         Probability = 100,
-                        Aux = d.RewardItem00.SubjectType,
+                        Aux = (int)d.RewardItem00.SubjectType,
                     });
-                else if (d.RewardItem00.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem00.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem00.Num,
                         Probability = 100,
-                        Aux = d.RewardItem00.SubjectType,
+                        Aux = (int)d.RewardItem00.SubjectType,
                     });
                 }
-                else if (d.RewardItem00.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem00.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem00.Num,
                         Probability = 100,
-                        Aux = d.RewardItem00.SubjectType,
+                        Aux = (int)d.RewardItem00.SubjectType,
                     });
                 }
 
@@ -397,29 +397,29 @@ namespace TeraFinder
                 if (d.RewardItem01.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem01.ItemID,
+                        ItemID = (int)d.RewardItem01.ItemID,
                         Amount = d.RewardItem01.Num,
                         Probability = 100,
-                        Aux = d.RewardItem01.SubjectType,
+                        Aux = (int)d.RewardItem01.SubjectType,
                     });
-                else if (d.RewardItem01.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem01.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem01.Num,
                         Probability = 100,
-                        Aux = d.RewardItem01.SubjectType,
+                        Aux = (int)d.RewardItem01.SubjectType,
                     });
                 }
-                else if (d.RewardItem01.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem01.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem01.Num,
                         Probability = 100,
-                        Aux = d.RewardItem01.SubjectType,
+                        Aux = (int)d.RewardItem01.SubjectType,
                     });
                 }
 
@@ -427,29 +427,29 @@ namespace TeraFinder
                 if (d.RewardItem02.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem02.ItemID,
+                        ItemID = (int)d.RewardItem02.ItemID,
                         Amount = d.RewardItem02.Num,
                         Probability = 100,
-                        Aux = d.RewardItem02.SubjectType,
+                        Aux = (int)d.RewardItem02.SubjectType,
                     });
-                else if (d.RewardItem02.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem02.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem02.Num,
                         Probability = 100,
-                        Aux = d.RewardItem02.SubjectType,
+                        Aux = (int)d.RewardItem02.SubjectType,
                     });
                 }
-                else if (d.RewardItem02.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem02.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem02.Num,
                         Probability = 100,
-                        Aux = d.RewardItem02.SubjectType,
+                        Aux = (int)d.RewardItem02.SubjectType,
                     });
                 }
 
@@ -457,29 +457,29 @@ namespace TeraFinder
                 if (d.RewardItem03.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem03.ItemID,
+                        ItemID = (int)d.RewardItem03.ItemID,
                         Amount = d.RewardItem03.Num,
                         Probability = 100,
-                        Aux = d.RewardItem03.SubjectType,
+                        Aux = (int)d.RewardItem03.SubjectType,
                     });
-                else if (d.RewardItem03.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem03.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem03.Num,
                         Probability = 100,
-                        Aux = d.RewardItem03.SubjectType,
+                        Aux = (int)d.RewardItem03.SubjectType,
                     });
                 }
-                else if (d.RewardItem03.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem03.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem03.Num,
                         Probability = 100,
-                        Aux = d.RewardItem03.SubjectType,
+                        Aux = (int)d.RewardItem03.SubjectType,
                     });
                 }
 
@@ -487,29 +487,29 @@ namespace TeraFinder
                 if (d.RewardItem04.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem04.ItemID,
+                        ItemID = (int)d.RewardItem04.ItemID,
                         Amount = d.RewardItem04.Num,
                         Probability = 100,
-                        Aux = d.RewardItem04.SubjectType,
+                        Aux = (int)d.RewardItem04.SubjectType,
                     });
-                else if (d.RewardItem04.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem04.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem04.Num,
                         Probability = 100,
-                        Aux = d.RewardItem04.SubjectType,
+                        Aux = (int)d.RewardItem04.SubjectType,
                     });
                 }
-                else if (d.RewardItem04.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem04.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem04.Num,
                         Probability = 100,
-                        Aux = d.RewardItem04.SubjectType,
+                        Aux = (int)d.RewardItem04.SubjectType,
                     });
                 }
 
@@ -517,29 +517,29 @@ namespace TeraFinder
                 if (d.RewardItem05.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem05.ItemID,
+                        ItemID = (int)d.RewardItem05.ItemID,
                         Amount = d.RewardItem05.Num,
                         Probability = 100,
-                        Aux = d.RewardItem05.SubjectType,
+                        Aux = (int)d.RewardItem05.SubjectType,
                     });
-                else if (d.RewardItem05.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem05.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem05.Num,
                         Probability = 100,
-                        Aux = d.RewardItem05.SubjectType,
+                        Aux = (int)d.RewardItem05.SubjectType,
                     });
                 }
-                else if (d.RewardItem05.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem05.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem05.Num,
                         Probability = 100,
-                        Aux = d.RewardItem05.SubjectType,
+                        Aux = (int)d.RewardItem05.SubjectType,
                     });
                 }
 
@@ -547,29 +547,29 @@ namespace TeraFinder
                 if (d.RewardItem06.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem06.ItemID,
+                        ItemID = (int)d.RewardItem06.ItemID,
                         Amount = d.RewardItem06.Num,
                         Probability = 100,
-                        Aux = d.RewardItem06.SubjectType,
+                        Aux = (int)d.RewardItem06.SubjectType,
                     });
-                else if (d.RewardItem06.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem06.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem06.Num,
                         Probability = 100,
-                        Aux = d.RewardItem06.SubjectType,
+                        Aux = (int)d.RewardItem06.SubjectType,
                     });
                 }
-                else if (d.RewardItem06.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem06.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem06.Num,
                         Probability = 100,
-                        Aux = d.RewardItem06.SubjectType,
+                        Aux = (int)d.RewardItem06.SubjectType,
                     });
                 }
 
@@ -577,29 +577,29 @@ namespace TeraFinder
                 if (d.RewardItem07.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem07.ItemID,
+                        ItemID = (int)d.RewardItem07.ItemID,
                         Amount = d.RewardItem07.Num,
                         Probability = 100,
-                        Aux = d.RewardItem07.SubjectType,
+                        Aux = (int)d.RewardItem07.SubjectType,
                     });
-                else if (d.RewardItem07.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem07.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem07.Num,
                         Probability = 100,
-                        Aux = d.RewardItem07.SubjectType,
+                        Aux = (int)d.RewardItem07.SubjectType,
                     });
                 }
-                else if (d.RewardItem07.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem07.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem07.Num,
                         Probability = 100,
-                        Aux = d.RewardItem07.SubjectType,
+                        Aux = (int)d.RewardItem07.SubjectType,
                     });
                 }
 
@@ -607,29 +607,29 @@ namespace TeraFinder
                 if (d.RewardItem08.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem08.ItemID,
+                        ItemID = (int)d.RewardItem08.ItemID,
                         Amount = d.RewardItem08.Num,
                         Probability = 100,
-                        Aux = d.RewardItem08.SubjectType,
+                        Aux = (int)d.RewardItem08.SubjectType,
                     });
-                else if (d.RewardItem08.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem08.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem08.Num,
                         Probability = 100,
-                        Aux = d.RewardItem08.SubjectType,
+                        Aux = (int)d.RewardItem08.SubjectType,
                     });
                 }
-                else if (d.RewardItem08.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem08.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem08.Num,
                         Probability = 100,
-                        Aux = d.RewardItem08.SubjectType,
+                        Aux = (int)d.RewardItem08.SubjectType,
                     });
                 }
 
@@ -637,29 +637,29 @@ namespace TeraFinder
                 if (d.RewardItem09.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem09.ItemID,
+                        ItemID = (int)d.RewardItem09.ItemID,
                         Amount = d.RewardItem09.Num,
                         Probability = 100,
-                        Aux = d.RewardItem09.SubjectType,
+                        Aux = (int)d.RewardItem09.SubjectType,
                     });
-                else if (d.RewardItem09.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem09.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem09.Num,
                         Probability = 100,
-                        Aux = d.RewardItem09.SubjectType,
+                        Aux = (int)d.RewardItem09.SubjectType,
                     });
                 }
-                else if (d.RewardItem09.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem09.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem09.Num,
                         Probability = 100,
-                        Aux = d.RewardItem09.SubjectType,
+                        Aux = (int)d.RewardItem09.SubjectType,
                     });
                 }
 
@@ -667,29 +667,29 @@ namespace TeraFinder
                 if (d.RewardItem10.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem10.ItemID,
+                        ItemID = (int)d.RewardItem10.ItemID,
                         Amount = d.RewardItem10.Num,
                         Probability = 100,
-                        Aux = d.RewardItem10.SubjectType,
+                        Aux = (int)d.RewardItem10.SubjectType,
                     });
-                else if (d.RewardItem10.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem10.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem10.Num,
                         Probability = 100,
-                        Aux = d.RewardItem10.SubjectType,
+                        Aux = (int)d.RewardItem10.SubjectType,
                     });
                 }
-                else if (d.RewardItem10.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem10.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem10.Num,
                         Probability = 100,
-                        Aux = d.RewardItem10.SubjectType,
+                        Aux = (int)d.RewardItem10.SubjectType,
                     });
                 }
 
@@ -697,29 +697,29 @@ namespace TeraFinder
                 if (d.RewardItem11.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem11.ItemID,
+                        ItemID = (int)d.RewardItem11.ItemID,
                         Amount = d.RewardItem11.Num,
                         Probability = 100,
-                        Aux = d.RewardItem11.SubjectType,
+                        Aux = (int)d.RewardItem11.SubjectType,
                     });
-                else if (d.RewardItem11.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem11.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem11.Num,
                         Probability = 100,
-                        Aux = d.RewardItem11.SubjectType,
+                        Aux = (int)d.RewardItem11.SubjectType,
                     });
                 }
-                else if (d.RewardItem11.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem11.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem11.Num,
                         Probability = 100,
-                        Aux = d.RewardItem11.SubjectType,
+                        Aux = (int)d.RewardItem11.SubjectType,
                     });
                 }
 
@@ -727,29 +727,29 @@ namespace TeraFinder
                 if (d.RewardItem12.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem12.ItemID,
+                        ItemID = (int)d.RewardItem12.ItemID,
                         Amount = d.RewardItem12.Num,
                         Probability = 100,
-                        Aux = d.RewardItem12.SubjectType,
+                        Aux = (int)d.RewardItem12.SubjectType,
                     });
-                else if (d.RewardItem12.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem12.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem12.Num,
                         Probability = 100,
-                        Aux = d.RewardItem12.SubjectType,
+                        Aux = (int)d.RewardItem12.SubjectType,
                     });
                 }
-                else if (d.RewardItem12.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem12.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem12.Num,
                         Probability = 100,
-                        Aux = d.RewardItem12.SubjectType,
+                        Aux = (int)d.RewardItem12.SubjectType,
                     });
                 }
 
@@ -757,29 +757,29 @@ namespace TeraFinder
                 if (d.RewardItem13.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem13.ItemID,
+                        ItemID = (int)d.RewardItem13.ItemID,
                         Amount = d.RewardItem13.Num,
                         Probability = 100,
-                        Aux = d.RewardItem13.SubjectType,
+                        Aux = (int)d.RewardItem13.SubjectType,
                     });
-                else if (d.RewardItem13.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem13.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem13.Num,
                         Probability = 100,
-                        Aux = d.RewardItem13.SubjectType,
+                        Aux = (int)d.RewardItem13.SubjectType,
                     });
                 }
-                else if (d.RewardItem13.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem13.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem13.Num,
                         Probability = 100,
-                        Aux = d.RewardItem13.SubjectType,
+                        Aux = (int)d.RewardItem13.SubjectType,
                     });
                 }
 
@@ -787,29 +787,29 @@ namespace TeraFinder
                 if (d.RewardItem14.ItemID != (int)RewardCategory.ItemNone)
                     items.Add(new Reward
                     {
-                        ItemID = d.RewardItem14.ItemID,
+                        ItemID = (int)d.RewardItem14.ItemID,
                         Amount = d.RewardItem14.Num,
                         Probability = 100,
-                        Aux = d.RewardItem14.SubjectType,
+                        Aux = (int)d.RewardItem14.SubjectType,
                     });
-                else if (d.RewardItem14.Category == (int)RewardCategory.Gem)
+                else if ((int)d.RewardItem14.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue - 1,
                         Amount = d.RewardItem14.Num,
                         Probability = 100,
-                        Aux = d.RewardItem14.SubjectType,
+                        Aux = (int)d.RewardItem14.SubjectType,
                     });
                 }
-                else if (d.RewardItem14.Category == (int)RewardCategory.Poke)
+                else if ((int)d.RewardItem14.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
                         ItemID = ushort.MaxValue,
                         Amount = d.RewardItem14.Num,
                         Probability = 100,
-                        Aux = d.RewardItem14.SubjectType,
+                        Aux = (int)d.RewardItem14.SubjectType,
                     });
                 }
                 if (items.Count > 0)
@@ -818,7 +818,7 @@ namespace TeraFinder
             return table;
         }
 
-        private static Dictionary<ulong, List<Reward>> GetLotteryTable(List<RaidLotteryRewardItemArray.Table> lottery)
+        private static Dictionary<ulong, List<Reward>> GetLotteryTable(pkNX.Structures.FlatBuffers.DeliveryRaidLotteryRewardItem[] lottery)
         {
             var table = new Dictionary<ulong, List<Reward>>();
 
@@ -870,12 +870,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem00.ItemID,
+                        ItemID = (int)l.RewardItem00.ItemID,
                         Amount = l.RewardItem00.Num,
                         Probability = l.RewardItem00.Rate,
                     });
                 }
-                else if (l.RewardItem00.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem00.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -884,7 +884,7 @@ namespace TeraFinder
                         Probability = l.RewardItem00.Rate
                     });
                 }
-                else if (l.RewardItem00.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem00.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -899,12 +899,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem01.ItemID,
+                        ItemID = (int)l.RewardItem01.ItemID,
                         Amount = l.RewardItem01.Num,
                         Probability = l.RewardItem01.Rate
                     });
                 }
-                else if (l.RewardItem01.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem01.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -913,7 +913,7 @@ namespace TeraFinder
                         Probability = l.RewardItem01.Rate
                     });
                 }
-                else if (l.RewardItem01.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem01.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -928,12 +928,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem02.ItemID,
+                        ItemID = (int)l.RewardItem02.ItemID,
                         Amount = l.RewardItem02.Num,
                         Probability = l.RewardItem02.Rate
                     });
                 }
-                else if (l.RewardItem02.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem02.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -942,7 +942,7 @@ namespace TeraFinder
                         Probability = l.RewardItem02.Rate
                     });
                 }
-                else if (l.RewardItem02.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem02.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -957,12 +957,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem03.ItemID,
+                        ItemID = (int)l.RewardItem03.ItemID,
                         Amount = l.RewardItem03.Num,
                         Probability = l.RewardItem03.Rate
                     });
                 }
-                else if (l.RewardItem03.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem03.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -971,7 +971,7 @@ namespace TeraFinder
                         Probability = l.RewardItem03.Rate
                     });
                 }
-                else if (l.RewardItem03.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem03.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -986,12 +986,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem04.ItemID,
+                        ItemID = (int)l.RewardItem04.ItemID,
                         Amount = l.RewardItem04.Num,
                         Probability = l.RewardItem04.Rate
                     });
                 }
-                else if (l.RewardItem04.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem04.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1000,7 +1000,7 @@ namespace TeraFinder
                         Probability = l.RewardItem04.Rate
                     });
                 }
-                else if (l.RewardItem04.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem04.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1015,12 +1015,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem05.ItemID,
+                        ItemID = (int)l.RewardItem05.ItemID,
                         Amount = l.RewardItem05.Num,
                         Probability = l.RewardItem05.Rate
                     });
                 }
-                else if (l.RewardItem05.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem05.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1029,7 +1029,7 @@ namespace TeraFinder
                         Probability = l.RewardItem05.Rate
                     });
                 }
-                else if (l.RewardItem05.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem05.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1044,12 +1044,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem06.ItemID,
+                        ItemID = (int)l.RewardItem06.ItemID,
                         Amount = l.RewardItem06.Num,
                         Probability = l.RewardItem06.Rate
                     });
                 }
-                else if (l.RewardItem06.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem06.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1058,7 +1058,7 @@ namespace TeraFinder
                         Probability = l.RewardItem06.Rate
                     });
                 }
-                else if (l.RewardItem06.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem06.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1073,12 +1073,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem07.ItemID,
+                        ItemID = (int)l.RewardItem07.ItemID,
                         Amount = l.RewardItem07.Num,
                         Probability = l.RewardItem07.Rate
                     });
                 }
-                else if (l.RewardItem07.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem07.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1087,7 +1087,7 @@ namespace TeraFinder
                         Probability = l.RewardItem07.Rate
                     });
                 }
-                else if (l.RewardItem07.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem07.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1102,12 +1102,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem08.ItemID,
+                        ItemID = (int)l.RewardItem08.ItemID,
                         Amount = l.RewardItem08.Num,
                         Probability = l.RewardItem08.Rate
                     });
                 }
-                else if (l.RewardItem08.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem08.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1116,7 +1116,7 @@ namespace TeraFinder
                         Probability = l.RewardItem08.Rate
                     });
                 }
-                else if (l.RewardItem08.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem08.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1131,12 +1131,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem09.ItemID,
+                        ItemID = (int)l.RewardItem09.ItemID,
                         Amount = l.RewardItem09.Num,
                         Probability = l.RewardItem09.Rate
                     });
                 }
-                else if (l.RewardItem09.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem09.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1145,7 +1145,7 @@ namespace TeraFinder
                         Probability = l.RewardItem09.Rate
                     });
                 }
-                else if (l.RewardItem09.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem09.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1160,12 +1160,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem10.ItemID,
+                        ItemID = (int)l.RewardItem10.ItemID,
                         Amount = l.RewardItem10.Num,
                         Probability = l.RewardItem10.Rate
                     });
                 }
-                else if (l.RewardItem10.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem10.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1174,7 +1174,7 @@ namespace TeraFinder
                         Probability = l.RewardItem10.Rate
                     });
                 }
-                else if (l.RewardItem10.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem10.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1189,12 +1189,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem11.ItemID,
+                        ItemID = (int)l.RewardItem11.ItemID,
                         Amount = l.RewardItem11.Num,
                         Probability = l.RewardItem11.Rate
                     });
                 }
-                else if (l.RewardItem11.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem11.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1203,7 +1203,7 @@ namespace TeraFinder
                         Probability = l.RewardItem11.Rate
                     });
                 }
-                else if (l.RewardItem11.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem11.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1218,12 +1218,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem12.ItemID,
+                        ItemID = (int)l.RewardItem12.ItemID,
                         Amount = l.RewardItem12.Num,
                         Probability = l.RewardItem12.Rate
                     });
                 }
-                else if (l.RewardItem12.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem12.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1232,7 +1232,7 @@ namespace TeraFinder
                         Probability = l.RewardItem12.Rate
                     });
                 }
-                else if (l.RewardItem12.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem12.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1247,12 +1247,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem13.ItemID,
+                        ItemID = (int)l.RewardItem13.ItemID,
                         Amount = l.RewardItem13.Num,
                         Probability = l.RewardItem13.Rate
                     });
                 }
-                else if (l.RewardItem13.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem13.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1261,7 +1261,7 @@ namespace TeraFinder
                         Probability = l.RewardItem13.Rate
                     });
                 }
-                else if (l.RewardItem13.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem13.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1276,12 +1276,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem14.ItemID,
+                        ItemID = (int)l.RewardItem14.ItemID,
                         Amount = l.RewardItem14.Num,
                         Probability = l.RewardItem14.Rate
                     });
                 }
-                else if (l.RewardItem14.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem14.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1290,7 +1290,7 @@ namespace TeraFinder
                         Probability = l.RewardItem14.Rate
                     });
                 }
-                else if (l.RewardItem14.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem14.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1305,12 +1305,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem15.ItemID,
+                        ItemID = (int)l.RewardItem15.ItemID,
                         Amount = l.RewardItem15.Num,
                         Probability = l.RewardItem15.Rate
                     });
                 }
-                else if (l.RewardItem15.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem15.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1319,7 +1319,7 @@ namespace TeraFinder
                         Probability = l.RewardItem15.Rate
                     });
                 }
-                else if (l.RewardItem15.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem15.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1334,12 +1334,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem16.ItemID,
+                        ItemID = (int)l.RewardItem16.ItemID,
                         Amount = l.RewardItem16.Num,
                         Probability = l.RewardItem16.Rate
                     });
                 }
-                else if (l.RewardItem16.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem16.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1348,7 +1348,7 @@ namespace TeraFinder
                         Probability = l.RewardItem16.Rate
                     });
                 }
-                else if (l.RewardItem16.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem16.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1363,12 +1363,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem17.ItemID,
+                        ItemID = (int)l.RewardItem17.ItemID,
                         Amount = l.RewardItem17.Num,
                         Probability = l.RewardItem17.Rate
                     });
                 }
-                else if (l.RewardItem17.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem17.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1377,7 +1377,7 @@ namespace TeraFinder
                         Probability = l.RewardItem17.Rate
                     });
                 }
-                else if (l.RewardItem17.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem17.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1392,12 +1392,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem18.ItemID,
+                        ItemID = (int)l.RewardItem18.ItemID,
                         Amount = l.RewardItem18.Num,
                         Probability = l.RewardItem18.Rate
                     });
                 }
-                else if (l.RewardItem18.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem18.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1406,7 +1406,7 @@ namespace TeraFinder
                         Probability = l.RewardItem18.Rate
                     });
                 }
-                else if (l.RewardItem18.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem18.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1421,12 +1421,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem19.ItemID,
+                        ItemID = (int)l.RewardItem19.ItemID,
                         Amount = l.RewardItem19.Num,
                         Probability = l.RewardItem19.Rate
                     });
                 }
-                else if (l.RewardItem19.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem19.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1435,7 +1435,7 @@ namespace TeraFinder
                         Probability = l.RewardItem19.Rate
                     });
                 }
-                else if (l.RewardItem19.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem19.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1450,12 +1450,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem20.ItemID,
+                        ItemID = (int)l.RewardItem20.ItemID,
                         Amount = l.RewardItem20.Num,
                         Probability = l.RewardItem20.Rate
                     });
                 }
-                else if (l.RewardItem20.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem20.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1464,7 +1464,7 @@ namespace TeraFinder
                         Probability = l.RewardItem20.Rate
                     });
                 }
-                else if (l.RewardItem20.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem20.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1479,12 +1479,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem21.ItemID,
+                        ItemID = (int)l.RewardItem21.ItemID,
                         Amount = l.RewardItem21.Num,
                         Probability = l.RewardItem21.Rate
                     });
                 }
-                else if (l.RewardItem21.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem21.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1493,7 +1493,7 @@ namespace TeraFinder
                         Probability = l.RewardItem21.Rate
                     });
                 }
-                else if (l.RewardItem21.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem21.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1508,12 +1508,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem22.ItemID,
+                        ItemID = (int)l.RewardItem22.ItemID,
                         Amount = l.RewardItem22.Num,
                         Probability = l.RewardItem22.Rate
                     });
                 }
-                else if (l.RewardItem22.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem22.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1522,7 +1522,7 @@ namespace TeraFinder
                         Probability = l.RewardItem22.Rate
                     });
                 }
-                else if (l.RewardItem22.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem22.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1537,12 +1537,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem23.ItemID,
+                        ItemID = (int)l.RewardItem23.ItemID,
                         Amount = l.RewardItem23.Num,
                         Probability = l.RewardItem23.Rate
                     });
                 }
-                else if (l.RewardItem23.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem23.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1551,7 +1551,7 @@ namespace TeraFinder
                         Probability = l.RewardItem23.Rate
                     });
                 }
-                else if (l.RewardItem23.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem23.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1566,12 +1566,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem24.ItemID,
+                        ItemID = (int)l.RewardItem24.ItemID,
                         Amount = l.RewardItem24.Num,
                         Probability = l.RewardItem24.Rate
                     });
                 }
-                else if (l.RewardItem24.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem24.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1580,7 +1580,7 @@ namespace TeraFinder
                         Probability = l.RewardItem24.Rate
                     });
                 }
-                else if (l.RewardItem24.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem24.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1595,12 +1595,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem25.ItemID,
+                        ItemID = (int)l.RewardItem25.ItemID,
                         Amount = l.RewardItem25.Num,
                         Probability = l.RewardItem25.Rate
                     });
                 }
-                else if (l.RewardItem25.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem25.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1609,7 +1609,7 @@ namespace TeraFinder
                         Probability = l.RewardItem25.Rate
                     });
                 }
-                else if (l.RewardItem25.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem25.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1624,12 +1624,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem26.ItemID,
+                        ItemID = (int)l.RewardItem26.ItemID,
                         Amount = l.RewardItem26.Num,
                         Probability = l.RewardItem26.Rate
                     });
                 }
-                else if (l.RewardItem26.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem26.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1638,7 +1638,7 @@ namespace TeraFinder
                         Probability = l.RewardItem26.Rate
                     });
                 }
-                else if (l.RewardItem26.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem26.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1653,12 +1653,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem27.ItemID,
+                        ItemID = (int)l.RewardItem27.ItemID,
                         Amount = l.RewardItem27.Num,
                         Probability = l.RewardItem27.Rate
                     });
                 }
-                else if (l.RewardItem27.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem27.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1667,7 +1667,7 @@ namespace TeraFinder
                         Probability = l.RewardItem27.Rate
                     });
                 }
-                else if (l.RewardItem27.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem27.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1682,12 +1682,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem28.ItemID,
+                        ItemID = (int)l.RewardItem28.ItemID,
                         Amount = l.RewardItem28.Num,
                         Probability = l.RewardItem28.Rate
                     });
                 }
-                else if (l.RewardItem28.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem28.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1696,7 +1696,7 @@ namespace TeraFinder
                         Probability = l.RewardItem28.Rate
                     });
                 }
-                else if (l.RewardItem28.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem28.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
@@ -1711,12 +1711,12 @@ namespace TeraFinder
                 {
                     items.Add(new Reward
                     {
-                        ItemID = l.RewardItem29.ItemID,
+                        ItemID = (int)l.RewardItem29.ItemID,
                         Amount = l.RewardItem29.Num,
                         Probability = l.RewardItem29.Rate,
                     });
                 }
-                else if (l.RewardItem29.Category == (int)RewardCategory.Gem)
+                else if ((int)l.RewardItem29.Category == (int)RewardCategory.Gem)
                 {
                     items.Add(new Reward
                     {
@@ -1725,7 +1725,7 @@ namespace TeraFinder
                         Probability = l.RewardItem29.Rate
                     });
                 }
-                else if (l.RewardItem29.Category == (int)RewardCategory.Poke)
+                else if ((int)l.RewardItem29.Category == (int)RewardCategory.Poke)
                 {
                     items.Add(new Reward
                     {
