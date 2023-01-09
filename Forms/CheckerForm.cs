@@ -93,26 +93,29 @@ namespace TeraFinder.Forms
                 {
                     for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
                     {
-                        for (var i = 0; i < Mighty.Length; i++) 
+                        for (var i = 0; i < Mighty.Length; i++)
                         {
-                            var sav = (SAV9SV)SAV.Clone();
-                            sav.Game = (int)game;
-
-                            var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Tera) :
-                                content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Mighty, true, i) :
-                                TeraUtil.GetDistEncounter(seed, sav, progress, Dist, false);
-
-                            if (encounter is not null)
+                            for (var j = 0; j < Dist.Length; j++)
                             {
-                                var rngres = TeraUtil.CalcRNG(seed, tid, sid, content, encounter);
-                                var success = ComparePKM(pk, rngres);
-                                if (success)
+                                var sav = (SAV9SV)SAV.Clone();
+                                sav.Game = (int)game;
+
+                                var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Tera) :
+                                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Mighty, true, i) :
+                                    TeraUtil.GetDistEncounter(seed, sav, progress, Dist, false, j);
+
+                                if (encounter is not null)
                                 {
-                                    var type = $"{content}";
-                                    if (progress is GameProgress.None)
-                                        type = $"{RaidContent.Black}";
-                                    txtSeed.Text = $"{seed:X8} ({type})";
-                                    return;
+                                    var rngres = TeraUtil.CalcRNG(seed, tid, sid, content, encounter);
+                                    var success = ComparePKM(pk, rngres);
+                                    if (success)
+                                    {
+                                        var type = $"{content}";
+                                        if (progress is GameProgress.None)
+                                            type = $"{RaidContent.Black}";
+                                        txtSeed.Text = $"{seed:X8} ({type})";
+                                        return;
+                                    }
                                 }
                             }
                         }

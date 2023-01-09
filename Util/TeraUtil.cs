@@ -148,7 +148,7 @@ namespace TeraFinder
             return null;
         }
 
-        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, bool mighty, int mightyindex = -1)
+        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, bool mighty, int index = -1)
         {
             var game = (GameVersion)sav.Game;
             var p = mighty ? progress is GameProgress.Unlocked6Stars ? 3 : 0 : progress switch
@@ -159,8 +159,8 @@ namespace TeraFinder
                 _ => 0,
             };
 
-            if(mightyindex >= 0)
-                encounters = new EncounterRaid9[] { encounters[mightyindex] };
+            if(index >= 0)
+                encounters = new EncounterRaid9[] { encounters[index] };
 
             foreach (var encounter in encounters)
             {
