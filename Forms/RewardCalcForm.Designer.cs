@@ -51,6 +51,7 @@
             this.comboBox20 = new System.Windows.Forms.ComboBox();
             this.grpFilters = new System.Windows.Forms.GroupBox();
             this.grpEncounter = new System.Windows.Forms.GroupBox();
+            this.chkShiny = new System.Windows.Forms.CheckBox();
             this.cmbStars = new System.Windows.Forms.ComboBox();
             this.label31 = new System.Windows.Forms.Label();
             this.cmbSpecies = new System.Windows.Forms.ComboBox();
@@ -130,7 +131,6 @@
             this.btnSaveAllTxt = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSaveSelectedTxt = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSendSelectedRaid = new System.Windows.Forms.ToolStripMenuItem();
-            this.chkShiny = new System.Windows.Forms.CheckBox();
             this.grpFilters.SuspendLayout();
             this.grpEncounter.SuspendLayout();
             this.grpItems.SuspendLayout();
@@ -335,7 +335,7 @@
             this.grpFilters.Size = new System.Drawing.Size(343, 989);
             this.grpFilters.TabIndex = 20;
             this.grpFilters.TabStop = false;
-            this.grpFilters.Text = "Filter";
+            this.grpFilters.Text = "Filters";
             // 
             // grpEncounter
             // 
@@ -350,6 +350,16 @@
             this.grpEncounter.TabIndex = 25;
             this.grpEncounter.TabStop = false;
             this.grpEncounter.Text = "Encounter";
+            // 
+            // chkShiny
+            // 
+            this.chkShiny.AutoSize = true;
+            this.chkShiny.Location = new System.Drawing.Point(191, 63);
+            this.chkShiny.Name = "chkShiny";
+            this.chkShiny.Size = new System.Drawing.Size(100, 24);
+            this.chkShiny.TabIndex = 24;
+            this.chkShiny.Text = "Only Shiny";
+            this.chkShiny.UseVisualStyleBackColor = true;
             // 
             // cmbStars
             // 
@@ -1177,16 +1187,6 @@
             this.btnSendSelectedRaid.Size = new System.Drawing.Size(312, 24);
             this.btnSendSelectedRaid.Text = "Send Selected Result to Raid Editor";
             this.btnSendSelectedRaid.Click += new System.EventHandler(this.btnSendSelectedRaid_Click);
-            // 
-            // chkShiny
-            // 
-            this.chkShiny.AutoSize = true;
-            this.chkShiny.Location = new System.Drawing.Point(191, 63);
-            this.chkShiny.Name = "chkShiny";
-            this.chkShiny.Size = new System.Drawing.Size(100, 24);
-            this.chkShiny.TabIndex = 24;
-            this.chkShiny.Text = "Only Shiny";
-            this.chkShiny.UseVisualStyleBackColor = true;
             // 
             // RewardCalcForm
             // 
