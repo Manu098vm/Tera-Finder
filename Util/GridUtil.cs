@@ -555,18 +555,31 @@ namespace TeraFinder
                             var lotterylist = encounter.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards;
                             var accuratesearch = true;
 
-                            foreach(var str in ConvertToString(row))
+                            foreach (var str in ConvertToString(row))
                             {
-                                if(RewardUtil.TeraShard.Contains(str) || RewardUtil.Material.Contains(str))
+                                var sub = str.Length > 10 ? str[0..10] : str;
+                                if(RewardUtil.TeraShard.Contains(sub))
                                 {
                                     accuratesearch = false;
                                     break;
                                 }
                             }
 
-                            var rngres = accuratesearch ? RewardUtil.GetRewardList(TeraUtil.CalcRNG(seed, sav.TrainerID7, sav.TrainerSID7, content, encounter),
-                                encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist) :
-                                RewardUtil.GetRewardList(seed, encounter.Species, encounter.Stars, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
+                            List<Reward> list;
+                            TeraShiny shiny = TeraShiny.No;
+
+                            if (accuratesearch)
+                            {
+                                var det = TeraUtil.CalcRNG(seed, sav.TrainerID7, sav.TrainerSID7, content, encounter);
+                                list = RewardUtil.GetRewardList(det, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
+                                shiny = det.Shiny;
+                            }
+                            else
+                            {
+                                list = RewardUtil.GetRewardList(seed, encounter.Species, encounter.Stars, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
+                            }
+
+                            var rngres = new RewardDetails { Seed = seed, Rewards = list, Species = encounter.Species, Stars = encounter.Stars, Shiny = shiny, Calcs = 0 };
                             var success = true;
 
                             if (rngres != null)
@@ -574,9 +587,13 @@ namespace TeraFinder
                                 var strlist = new List<string>();
 
                                 strlist.Add($"{seed:X8}");
-                                foreach(var item in rngres)
+                                foreach(var item in rngres.Rewards)
                                     strlist.Add(item.GetItemName(f.Items, f.Editor.Language, true));
 
+                                if(content is RaidContent.Event && progress is GameProgress.Unlocked6Stars)
+                                {
+                                    var ciao = true;
+                                }
 
                                 var entry = strlist.ToArray();
                                 var grid = new RewardGridEntry(ConvertToRewardString(row)).GetStrings();
@@ -648,9 +665,9 @@ namespace TeraFinder
         private static string[] ConvertToRewardString(this DataGridViewRow row)
         {
             var cellcount = row.Cells.Count;
-            var output = new string[22];
-            for (var i = 0; i < 22; i++)
-                output[i] = cellcount > i ? Convert.ToString(row.Cells[i].Value)! : "";
+            var output = new string[cellcount];
+            for (var i = 0; i < cellcount; i++)
+                output[i] = Convert.ToString(row.Cells[i].Value)!;
             return output;
         }
 
