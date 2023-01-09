@@ -5,20 +5,21 @@ This is a PKHeX.Core based program that allows to view, edit and calculate seeds
 Both a standalone program and a PKHeX Plugin are available for use.
 
 ### Features:
-* Import Poké Portal News in Zip/Folder formats
-* Check & Edit Raids from a Save File
-* Reverse a Pokémon into its origin Seed to check legality
-* Calculate an RNG seeds that results in a Pokémon with given details
-* Calculate an RNG seeds that results in wanted rewards
-* Generate Legal PK9 files from Raid searches
-* Edit Tera Raid related Game Progress/Caught Flags
-* Supports localized languages
+* [Import Poké Portal News in Zip/Folder formats](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Event---Pok%C3%A9-Portal-News-Importer)
+* [View & Edit Raids from a Save File](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Viewer-&-Editor)
+* [Reverse a Pokémon into its origin Seed to check legality](https://github.com/Manu098vm/Tera-Finder/wiki/Seed-Checker)
+* [Calculate RNG seeds that results in a Pokémon with given details](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Calculator)
+* [Calculate RNG seeds that results in a Raid with wanted rewards](https://github.com/Manu098vm/Tera-Finder/wiki/Reward-Calculator)
+* [Generate Legal PK9 files from Raid searches](https://github.com/Manu098vm/Tera-Finder/wiki/How-to-generate-Legal-PK9-Pok%C3%A9mon-from-Tera-Raids)
+* [Edit Tera Raid related Game Progress/Caught Flags](https://github.com/Manu098vm/Tera-Finder/wiki/Game-Flags-Editor)
+* [Supports localized languages](https://github.com/Manu098vm/Tera-Finder/wiki/General-Guide#about-the-localizations)
 
 Powered by [PKHeX](https://github.com/kwsch/PKHeX) and [pkNX](https://github.com/kwsch/pkNX).
 
 ## How To
-### Download
-Check the [Release page](https://github.com/Manu098vm/Tera-Finder/releases) for the latest stable build, or [Git Actions](https://github.com/Manu098vm/Tera-Finder/actions) for the latest dev build. 
+### Download And Usage
+* See the [Initial Setup Page](https://github.com/Manu098vm/Tera-Finder/wiki/General-Guide) to begin with the program. 
+* Check out the [Wiki](https://github.com/Manu098vm/Tera-Finder/wiki) for guides and details.
 
 ### Building
 You can use any C# 10 & .NET 6.0 compatible IDE such as Visual Studio to compile this program.
@@ -29,30 +30,15 @@ The Standalone Launcher will be placed in `TeraFinder.Launcher/bin/`.
 
 The Plugin files will be placed in `bin/`.
 
-### Standalone Launcher Usage
-Open the `TeraFinder.Launcher.exe` program to open its GUI.
-
-In order to unlock all the functionalities, load a valid SV Save File by drag & drop or click the `Load Save File` button.
-
-The usage should be fairly intuitive.
-
-### PKHeX Plugin Usage
-Currently the plugin only works with a .NET 6 build of PKHeX. You'll need to compile PKHeX from its [source code](https://github.com/kwsch/PKHeX) in order to obtain that.
-
-Copy-paste the plugin directory to the `PKHeX/plugins` folder.
-
-Create the `PKHeX/plugins` folder if not already existing.
-
-Open PKHeX and you'll find the tools this Plugin offers under `Tools -> Tera Finder Plugin`.
-
 ### Support
-If you have any issues, feel free to ask for support in my [Discord server](https://discord.gg/F9nMfvw9sS).
+If you find any bug or you need support, please write a thread in the [Project Pokémon forums](https://projectpokemon.org/home/forums/).
+Alternatively, feel free to contact me on my [Discord Server](https://discord.gg/F9nMfvw9sS).
 
 
 ## Credits and Thanks
 * [kwsch](https://github.com/kwsch) for [PKHeX](https://github.com/kwsch/PKHeX) and [pkNX](https://github.com/kwsch/pkNX), on which this program relies on
 * [Archit Date](https://github.com/architdate), [LegoFigure11](https://github.com/LegoFigure11), [SteveCookTU](https://github.com/SteveCookTU) for their great researches on the item rewards structures/rng handling implemented in [RaidCrawler](https://github.com/LegoFigure11/RaidCrawler/blob/main/Structures/RaidRewards.cs) and [sv raid reader](https://github.com/SteveCookTU/sv_raid_reader/blob/master/src/item_list.rs)
-* [Lincoln-LM](https://github.com/Lincoln-LM) for the raid map coordinates in [sv-live-map](https://github.com/Lincoln-LM/sv-live-map)
+* [Lincoln-LM](https://github.com/Lincoln-LM) for the raid map coordinates and the save RAM pointer in [sv-live-map](https://github.com/Lincoln-LM/sv-live-map)
 * [Leanny](https://github.com/Leanny) for his Sword/Shield [PKHeX Raid Plugin](https://github.com/Leanny/PKHeX_Raid_Plugin) which was of inspiration for my plugin
 * [santacrab2](https://github.com/santacrab2) for his contributions to make the searches lot faster
 * [kwsch](https://github.com/kwsch), [Lusamine](https://github.com/Lusamine), [LegoFigure11](https://github.com/LegoFigure11), [Archit Date](https://github.com/architdate), [SteveCookTU](https://github.com/SteveCookTU), [Lincoln-LM](https://github.com/Lincoln-LM), and all the contributors to the mentioned programs for their awesome researches
@@ -64,6 +50,8 @@ If you have any issues, feel free to ask for support in my [Discord server](http
 [RaidCrawler](https://github.com/LegoFigure11/RaidCrawler) by [LegoFigure11](https://github.com/LegoFigure11) and [Archit Date](https://github.com/architdate)
 
 [sv_raid_lookup](https://stevecooktu.github.io/sv_raid_lookup/) ([repo](https://github.com/SteveCookTU/sv_raid_lookup)) by [SteveCookTU](https://github.com/SteveCookTU)
+
+[Raid Calc](https://github.com/MewTracker/sv-research) by [https://github.com/MewTracker](https://github.com/MewTracker)
 
 
 ## License
