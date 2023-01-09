@@ -1,5 +1,6 @@
 ﻿using PKHeX.Core;
 using System.Data;
+using System.Reflection.Metadata.Ecma335;
 
 namespace TeraFinder.Forms
 {
@@ -95,7 +96,7 @@ namespace TeraFinder.Forms
                     {
                         for (var i = 0; i < Mighty.Length; i++)
                         {
-                            for (var j = 0; j < Dist.Length; j++)
+                            for (var j = -1; (j < Dist.Length && content is RaidContent.Event) || j == -1 ; j++)
                             {
                                 var sav = (SAV9SV)SAV.Clone();
                                 sav.Game = (int)game;
