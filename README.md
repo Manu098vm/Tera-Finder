@@ -51,7 +51,7 @@ Alternatively, feel free to contact me on my [Discord Server](https://discord.gg
 
 [sv_raid_lookup](https://stevecooktu.github.io/sv_raid_lookup/) ([repo](https://github.com/SteveCookTU/sv_raid_lookup)) by [SteveCookTU](https://github.com/SteveCookTU)
 
-[Raid Calc](https://github.com/MewTracker/sv-research) by [https://github.com/MewTracker](https://github.com/MewTracker)
+[Raid Calc](https://github.com/MewTracker/sv-research) by [MewTracker](https://github.com/MewTracker)
 
 
 ## License
