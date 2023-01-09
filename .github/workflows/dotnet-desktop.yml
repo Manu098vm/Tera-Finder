@@ -89,19 +89,19 @@ jobs:
       run: msbuild $env:Solution_Name /property:Configuration=Release
 
     # Upload the artifact: https://github.com/marketplace/actions/upload-a-build-artifact
-    - name: Upload build artifacts
+    - name: Upload Launcher artifacts
       uses: actions/upload-artifact@v3
       with:
         name: TeraFinder.Launcher
         path: TeraFinder.Launcher/bin
 
     # Upload the artifact: https://github.com/marketplace/actions/upload-a-build-artifact
-    - name: Upload build artifacts
+    - name: Upload Plugin artifacts
       uses: actions/upload-artifact@v3
       with:
         name: TeraFinder.Plugin
         path: |
-          /bin
-          /bin/Release/net6.0-windows/PKHeX.Core.dll
-          /bin/Release/net6.0-windows/PKHeX.Drawing.dll
-          /bin/Release/net6.0-windows/PKHeX.Drawing.PokeSprite.dll
+          bin
+          !bin/Release/net6.0-windows/PKHeX.Core.dll
+          !bin/Release/net6.0-windows/PKHeX.Drawing.dll
+          !bin/Release/net6.0-windows/PKHeX.Drawing.PokeSprite.dll

@@ -590,11 +590,6 @@ namespace TeraFinder
                                 foreach(var item in rngres.Rewards)
                                     strlist.Add(item.GetItemName(f.Items, f.Editor.Language, true));
 
-                                if(content is RaidContent.Event && progress is GameProgress.Unlocked6Stars)
-                                {
-                                    var ciao = true;
-                                }
-
                                 var entry = strlist.ToArray();
                                 var grid = new RewardGridEntry(ConvertToRewardString(row)).GetStrings();
                                 for (var i = 0; i < entry.Length - 1; i++)
