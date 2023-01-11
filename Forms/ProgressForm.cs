@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System;
 
 namespace TeraFinder.Forms
 {
@@ -34,128 +35,131 @@ namespace TeraFinder.Forms
             if (SAV.Accessor is not null)
             {
                 var progress = (GameProgress)cmbProgress.SelectedIndex;
-
-                if (progress >= GameProgress.UnlockedTeraRaids)
-                {
-                    var dummy = GameProgressBlocks.KUnlockedTeraRaidBattles;
-                    var block = SAV.Accessor.FindOrDefault(dummy.Key);
-                    if (block.Type is SCTypeCode.None)
-                    {
-                        block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
-                        BlockUtil.AddBlockToFakeSAV(SAV, block);
-                    }
-                    block.ChangeBooleanType(SCTypeCode.Bool2);
-                }
-                else
-                {
-                    var dummy = GameProgressBlocks.KUnlockedTeraRaidBattles;
-                    var block = SAV.Accessor.FindOrDefault(dummy.Key);
-                    if (block.Type is SCTypeCode.None)
-                    {
-                        block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
-                        BlockUtil.AddBlockToFakeSAV(SAV, block);
-                    }
-                    block.ChangeBooleanType(SCTypeCode.Bool1);
-                }
-
-                if (progress >= GameProgress.Unlocked3Stars)
-                {
-                    var dummy = GameProgressBlocks.KUnlockedRaidDifficulty3;
-                    var block = SAV.Accessor.FindOrDefault(dummy.Key);
-                    if (block.Type is SCTypeCode.None)
-                    {
-                        block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
-                        BlockUtil.AddBlockToFakeSAV(SAV, block);
-                    }
-                    block.ChangeBooleanType(SCTypeCode.Bool2);
-                }
-                else
-                {
-                    var dummy = GameProgressBlocks.KUnlockedRaidDifficulty3;
-                    var block = SAV.Accessor.FindOrDefault(dummy.Key);
-                    if (block.Type is SCTypeCode.None)
-                    {
-                        block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
-                        BlockUtil.AddBlockToFakeSAV(SAV, block);
-                    }
-                    block.ChangeBooleanType(SCTypeCode.Bool1);
-                }
-
-                if (progress >= GameProgress.Unlocked4Stars)
-                {
-                    var dummy = GameProgressBlocks.KUnlockedRaidDifficulty4;
-                    var block = SAV.Accessor.FindOrDefault(dummy.Key);
-                    if (block.Type is SCTypeCode.None)
-                    {
-                        block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
-                        BlockUtil.AddBlockToFakeSAV(SAV, block);
-                    }
-                    block.ChangeBooleanType(SCTypeCode.Bool2);
-                }
-                else
-                {
-                    var dummy = GameProgressBlocks.KUnlockedRaidDifficulty4;
-                    var block = SAV.Accessor.FindOrDefault(dummy.Key);
-                    if (block.Type is SCTypeCode.None)
-                    {
-                        block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
-                        BlockUtil.AddBlockToFakeSAV(SAV, block);
-                    }
-                    block.ChangeBooleanType(SCTypeCode.Bool1);
-                }
-
-                if (progress >= GameProgress.Unlocked5Stars)
-                {
-                    var dummy = GameProgressBlocks.KUnlockedRaidDifficulty5;
-                    var block = SAV.Accessor.FindOrDefault(dummy.Key);
-                    if (block.Type is SCTypeCode.None)
-                    {
-                        block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
-                        BlockUtil.AddBlockToFakeSAV(SAV, block);
-                    }
-                    block.ChangeBooleanType(SCTypeCode.Bool2);
-                }
-                else
-                {
-                    var dummy = GameProgressBlocks.KUnlockedRaidDifficulty5;
-                    var block = SAV.Accessor.FindOrDefault(dummy.Key);
-                    if (block.Type is SCTypeCode.None)
-                    {
-                        block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
-                        BlockUtil.AddBlockToFakeSAV(SAV, block);
-                    }
-                    block.ChangeBooleanType(SCTypeCode.Bool1);
-                }
-
-                if (progress >= GameProgress.Unlocked6Stars)
-                {
-                    var dummy = GameProgressBlocks.KUnlockedRaidDifficulty6;
-                    var block = SAV.Accessor.FindOrDefault(dummy.Key);
-                    if (block.Type is SCTypeCode.None)
-                    {
-                        block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
-                        BlockUtil.AddBlockToFakeSAV(SAV, block);
-                    }
-                    block.ChangeBooleanType(SCTypeCode.Bool2);
-                }
-                else
-                {
-                    var dummy = GameProgressBlocks.KUnlockedRaidDifficulty6;
-                    var block = SAV.Accessor.FindOrDefault(dummy.Key);
-                    if (block.Type is SCTypeCode.None)
-                    {
-                        block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
-                        BlockUtil.AddBlockToFakeSAV(SAV, block);
-                    }
-                    block.ChangeBooleanType(SCTypeCode.Bool1);
-                }
-
+                EditProgress(SAV, progress);
                 MessageBox.Show("Done.");
             }
             else
             {
                 MessageBox.Show("Not a valid save file");
                 this.Close();
+            }
+        }
+
+        public static void EditProgress(SAV9SV sav, GameProgress progress)
+        {
+            if (progress >= GameProgress.UnlockedTeraRaids)
+            {
+                var dummy = Blocks.KUnlockedTeraRaidBattles;
+                var block = sav.Accessor.FindOrDefault(dummy.Key);
+                if (block.Type is SCTypeCode.None)
+                {
+                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    BlockUtil.AddBlockToFakeSAV(sav, block);
+                }
+                block.ChangeBooleanType(SCTypeCode.Bool2);
+            }
+            else
+            {
+                var dummy = Blocks.KUnlockedTeraRaidBattles;
+                var block = sav.Accessor.FindOrDefault(dummy.Key);
+                if (block.Type is SCTypeCode.None)
+                {
+                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    BlockUtil.AddBlockToFakeSAV(sav, block);
+                }
+                block.ChangeBooleanType(SCTypeCode.Bool1);
+            }
+
+            if (progress >= GameProgress.Unlocked3Stars)
+            {
+                var dummy = Blocks.KUnlockedRaidDifficulty3;
+                var block = sav.Accessor.FindOrDefault(dummy.Key);
+                if (block.Type is SCTypeCode.None)
+                {
+                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    BlockUtil.AddBlockToFakeSAV(sav, block);
+                }
+                block.ChangeBooleanType(SCTypeCode.Bool2);
+            }
+            else
+            {
+                var dummy = Blocks.KUnlockedRaidDifficulty3;
+                var block = sav.Accessor.FindOrDefault(dummy.Key);
+                if (block.Type is SCTypeCode.None)
+                {
+                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    BlockUtil.AddBlockToFakeSAV(sav, block);
+                }
+                block.ChangeBooleanType(SCTypeCode.Bool1);
+            }
+
+            if (progress >= GameProgress.Unlocked4Stars)
+            {
+                var dummy = Blocks.KUnlockedRaidDifficulty4;
+                var block = sav.Accessor.FindOrDefault(dummy.Key);
+                if (block.Type is SCTypeCode.None)
+                {
+                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    BlockUtil.AddBlockToFakeSAV(sav, block);
+                }
+                block.ChangeBooleanType(SCTypeCode.Bool2);
+            }
+            else
+            {
+                var dummy = Blocks.KUnlockedRaidDifficulty4;
+                var block = sav.Accessor.FindOrDefault(dummy.Key);
+                if (block.Type is SCTypeCode.None)
+                {
+                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    BlockUtil.AddBlockToFakeSAV(sav, block);
+                }
+                block.ChangeBooleanType(SCTypeCode.Bool1);
+            }
+
+            if (progress >= GameProgress.Unlocked5Stars)
+            {
+                var dummy = Blocks.KUnlockedRaidDifficulty5;
+                var block = sav.Accessor.FindOrDefault(dummy.Key);
+                if (block.Type is SCTypeCode.None)
+                {
+                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    BlockUtil.AddBlockToFakeSAV(sav, block);
+                }
+                block.ChangeBooleanType(SCTypeCode.Bool2);
+            }
+            else
+            {
+                var dummy = Blocks.KUnlockedRaidDifficulty5;
+                var block = sav.Accessor.FindOrDefault(dummy.Key);
+                if (block.Type is SCTypeCode.None)
+                {
+                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    BlockUtil.AddBlockToFakeSAV(sav, block);
+                }
+                block.ChangeBooleanType(SCTypeCode.Bool1);
+            }
+
+            if (progress >= GameProgress.Unlocked6Stars)
+            {
+                var dummy = Blocks.KUnlockedRaidDifficulty6;
+                var block = sav.Accessor.FindOrDefault(dummy.Key);
+                if (block.Type is SCTypeCode.None)
+                {
+                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    BlockUtil.AddBlockToFakeSAV(sav, block);
+                }
+                block.ChangeBooleanType(SCTypeCode.Bool2);
+            }
+            else
+            {
+                var dummy = Blocks.KUnlockedRaidDifficulty6;
+                var block = sav.Accessor.FindOrDefault(dummy.Key);
+                if (block.Type is SCTypeCode.None)
+                {
+                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    BlockUtil.AddBlockToFakeSAV(sav, block);
+                }
+                block.ChangeBooleanType(SCTypeCode.Bool1);
             }
         }
 

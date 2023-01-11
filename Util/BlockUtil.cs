@@ -56,5 +56,13 @@ namespace TeraFinder
             var res = blocks.Where(block => block.Key == key).FirstOrDefault();
             return res is not null ? res : CreateBoolBlock(key, SCTypeCode.None);
         }
+
+        public static byte[] DecryptBlock(uint key, byte[] block)
+        {
+            var rng = new SCXorShift32(key);
+            for (int i = 0; i < block.Length; i++)
+                block[i] = (byte)(block[i] ^ rng.Next());
+            return block;
+        }
     }
 }

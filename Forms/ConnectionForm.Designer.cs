@@ -1,0 +1,189 @@
+﻿namespace TeraFinder.Forms
+{
+    partial class ConnectionForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.grpDevice = new System.Windows.Forms.GroupBox();
+            this.numPort = new System.Windows.Forms.NumericUpDown();
+            this.lblPort = new System.Windows.Forms.Label();
+            this.radioUSB = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.radioWiFi = new System.Windows.Forms.RadioButton();
+            this.txtAddress = new System.Windows.Forms.TextBox();
+            this.btnConnect = new System.Windows.Forms.Button();
+            this.chkEventData = new System.Windows.Forms.CheckBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.grpDevice.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // grpDevice
+            // 
+            this.grpDevice.Controls.Add(this.numPort);
+            this.grpDevice.Controls.Add(this.lblPort);
+            this.grpDevice.Controls.Add(this.radioUSB);
+            this.grpDevice.Controls.Add(this.label1);
+            this.grpDevice.Controls.Add(this.radioWiFi);
+            this.grpDevice.Controls.Add(this.txtAddress);
+            this.grpDevice.Location = new System.Drawing.Point(12, 12);
+            this.grpDevice.Name = "grpDevice";
+            this.grpDevice.Size = new System.Drawing.Size(356, 109);
+            this.grpDevice.TabIndex = 0;
+            this.grpDevice.TabStop = false;
+            this.grpDevice.Text = "Connection";
+            // 
+            // numPort
+            // 
+            this.numPort.Location = new System.Drawing.Point(263, 67);
+            this.numPort.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.numPort.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numPort.Name = "numPort";
+            this.numPort.Size = new System.Drawing.Size(64, 27);
+            this.numPort.TabIndex = 5;
+            this.numPort.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // lblPort
+            // 
+            this.lblPort.AutoSize = true;
+            this.lblPort.Location = new System.Drawing.Point(219, 70);
+            this.lblPort.Name = "lblPort";
+            this.lblPort.Size = new System.Drawing.Size(38, 20);
+            this.lblPort.TabIndex = 4;
+            this.lblPort.Text = "Port:";
+            // 
+            // radioUSB
+            // 
+            this.radioUSB.AutoSize = true;
+            this.radioUSB.Location = new System.Drawing.Point(214, 26);
+            this.radioUSB.Name = "radioUSB";
+            this.radioUSB.Size = new System.Drawing.Size(57, 24);
+            this.radioUSB.TabIndex = 1;
+            this.radioUSB.TabStop = true;
+            this.radioUSB.Text = "USB";
+            this.radioUSB.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(21, 70);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 20);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Address:";
+            // 
+            // radioWiFi
+            // 
+            this.radioWiFi.AutoSize = true;
+            this.radioWiFi.Checked = true;
+            this.radioWiFi.Location = new System.Drawing.Point(103, 26);
+            this.radioWiFi.Name = "radioWiFi";
+            this.radioWiFi.Size = new System.Drawing.Size(65, 24);
+            this.radioWiFi.TabIndex = 0;
+            this.radioWiFi.TabStop = true;
+            this.radioWiFi.Text = "Wi-Fi";
+            this.radioWiFi.UseVisualStyleBackColor = true;
+            // 
+            // txtAddress
+            // 
+            this.txtAddress.Location = new System.Drawing.Point(92, 67);
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(125, 27);
+            this.txtAddress.TabIndex = 1;
+            // 
+            // btnConnect
+            // 
+            this.btnConnect.Location = new System.Drawing.Point(10, 157);
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(356, 52);
+            this.btnConnect.TabIndex = 1;
+            this.btnConnect.Text = "Connect";
+            this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            // 
+            // chkEventData
+            // 
+            this.chkEventData.AutoSize = true;
+            this.chkEventData.Location = new System.Drawing.Point(50, 127);
+            this.chkEventData.Name = "chkEventData";
+            this.chkEventData.Size = new System.Drawing.Size(289, 24);
+            this.chkEventData.TabIndex = 2;
+            this.chkEventData.Text = "Download Event Data from Remote (?)";
+            this.chkEventData.UseVisualStyleBackColor = true;
+            // 
+            // toolTip
+            // 
+            this.toolTip.ToolTipTitle = "Event Data";
+            // 
+            // ConnectionForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(378, 215);
+            this.Controls.Add(this.chkEventData);
+            this.Controls.Add(this.btnConnect);
+            this.Controls.Add(this.grpDevice);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "ConnectionForm";
+            this.ShowIcon = false;
+            this.Text = "Remote Connection";
+            this.grpDevice.ResumeLayout(false);
+            this.grpDevice.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numPort)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private GroupBox grpDevice;
+        private RadioButton radioUSB;
+        private RadioButton radioWiFi;
+        private Label lblPort;
+        private Label label1;
+        private TextBox txtAddress;
+        private Button btnConnect;
+        private NumericUpDown numPort;
+        private CheckBox chkEventData;
+        private ToolTip toolTip;
+    }
+}

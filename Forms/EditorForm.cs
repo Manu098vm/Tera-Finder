@@ -14,6 +14,7 @@ namespace TeraFinder
         private Image DefBackground = null!;
         private Size DefSize = new(0, 0);
         private bool Loaded = false;
+        private ConnectionForm? Connection = null;
 
         public string Language = null!;
         public EncounterRaid9[]? Tera = null;
@@ -36,7 +37,8 @@ namespace TeraFinder
             Dictionary<ulong, List<Reward>>? terafixed,
             Dictionary<ulong, List<Reward>>? teralottery,
             Dictionary<ulong, List<Reward>>? distfixed,
-            Dictionary<ulong, List<Reward>>? distlottery)
+            Dictionary<ulong, List<Reward>>? distlottery,
+            ConnectionForm? connection)
         {
             InitializeComponent();
             SAV = sav;
@@ -78,6 +80,7 @@ namespace TeraFinder
                 cmbDens.Items.Add(name);
             cmbDens.SelectedIndex = 0;
             btnSx.Enabled = false;
+            Connection = connection;
         }
 
         private void cmbDens_IndexChanged(object sender, EventArgs e)
@@ -121,9 +124,15 @@ namespace TeraFinder
             {
                 var raid = SAV.Raid.GetRaid(cmbDens.SelectedIndex);
                 if (chkActive.Checked)
+                {
                     raid.IsEnabled = true;
+                    Task.Run(async () => { await UpdateRemote(); }).Wait();
+                }
                 else
+                {
                     raid.IsEnabled = false;
+                    Task.Run(async () => { await UpdateRemote(); }).Wait();
+                }
                 UpdatePKMInfo(raid);
             }
         }
@@ -134,9 +143,15 @@ namespace TeraFinder
             {
                 var raid = SAV.Raid.GetRaid(cmbDens.SelectedIndex);
                 if (chkLP.Checked)
+                {
                     raid.IsClaimedLeaguePoints = false;
+                    Task.Run(async () => { await UpdateRemote(); }).Wait();
+                }
                 else
+                {
                     raid.IsEnabled = true;
+                    Task.Run(async () => { await UpdateRemote(); }).Wait();
+                }
             }
         }
 
@@ -146,6 +161,7 @@ namespace TeraFinder
             {
                 var raid = SAV.Raid.GetRaid(cmbDens.SelectedIndex);
                 raid.Content = (TeraRaidContentType)cmbContent.SelectedIndex;
+                Task.Run(async () => { await UpdateRemote(); }).Wait();
                 UpdatePKMInfo(raid);
             }
         }
@@ -170,7 +186,29 @@ namespace TeraFinder
                         raid.Seed = seed;
                     }
                     catch { }
+                    Task.Run(async () => { await UpdateRemote(); }).Wait();
                     UpdatePKMInfo(raid);
+                }
+            }
+        }
+
+        private async Task UpdateRemote()
+        {
+            try
+            {
+                if (Connection is not null && Connection.IsConnected())
+                {
+                    var block = SAV.Accessor.FindOrDefault(Blocks.KTeraRaids.Key)!;
+                    await Connection.Executor.WriteDecryptedBlock(block.Data, Blocks.KTeraRaids, block.Data.Length, CancellationToken.None).ConfigureAwait(false);
+                }
+            }
+            catch (Exception)
+            {
+                if (Connection is not null)
+                {
+                    Connection.Disconnect();
+                    MessageBox.Show("The remote device has been disconnected.");
+                    Connection = null;
                 }
             }
         }

@@ -13,11 +13,11 @@ namespace TeraFinder
         public static string[] GetEventItemDataFromSAV(PKHeX.Core.SAV9SV sav)
         {
             //Read from save file block flatbuffer
-            var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATEventRaidIdentifier.Key);
+            var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
             if (KBCATEventRaidIdentifier.Type is not PKHeX.Core.SCTypeCode.None && BitConverter.ToUInt32(KBCATEventRaidIdentifier.Data) > 0)
             {
-                var KBCATFixedRewardItemArray = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATFixedRewardItemArray.Key).Data;
-                var KBCATLotteryRewardItemArray = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATLotteryRewardItemArray.Key).Data;
+                var KBCATFixedRewardItemArray = sav.Accessor.FindOrDefault(Blocks.KBCATFixedRewardItemArray.Key).Data;
+                var KBCATLotteryRewardItemArray = sav.Accessor.FindOrDefault(Blocks.KBCATLotteryRewardItemArray.Key).Data;
                 var tableDrops = FlatBufferConverter.DeserializeFrom<DeliveryRaidFixedRewardItemArray>(KBCATFixedRewardItemArray);
                 var tableBonus = FlatBufferConverter.DeserializeFrom<DeliveryRaidLotteryRewardItemArray>(KBCATLotteryRewardItemArray);
                 var opt = new JsonSerializerOptions { WriteIndented = true };
@@ -37,7 +37,7 @@ namespace TeraFinder
             var type2list = new List<byte[]>();
             var type3list = new List<byte[]>();
 
-            var KBCATRaidEnemyArray = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATRaidEnemyArray.Key).Data;
+            var KBCATRaidEnemyArray = sav.Accessor.FindOrDefault(Blocks.KBCATRaidEnemyArray.Key).Data;
 
             var tableEncounters = FlatBufferConverter.DeserializeFrom<DeliveryRaidEnemyTableArray>(KBCATRaidEnemyArray);
 

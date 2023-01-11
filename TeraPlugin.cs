@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System.Security.Cryptography;
 using TeraFinder.Forms;
 
 namespace TeraFinder
@@ -14,7 +15,9 @@ namespace TeraFinder
         public IPKMView? PKMEditor { get; private set; } = null;
 
         public SAV9SV SAV = null!;
+        public ConnectionForm? Connection = null;
         public string Language = GameLanguage.DefaultLanguage;
+
         public EncounterRaid9[]? Tera = null;
         public EncounterRaid9[]? Dist = null;
         public EncounterRaid9[]? Mighty = null;
@@ -24,6 +27,7 @@ namespace TeraFinder
         public Dictionary<ulong, List<Reward>>? DistLotteryRewards = null;
 
         private readonly ToolStripMenuItem Plugin = new("Tera Finder Plugin");
+        private readonly ToolStripMenuItem Connect = new("Connect to Remote Device");
         private readonly ToolStripMenuItem Editor = new("Tera Raid Viewer/Editor");
         private readonly ToolStripMenuItem Finder = new("Tera Raid Seed Checker");
         private readonly ToolStripMenuItem Flags = new("Edit Game Flags");
@@ -94,11 +98,13 @@ namespace TeraFinder
 
         private void AddPluginControl(ToolStripDropDownItem tools)
         {
+            Plugin.DropDownItems.Add(Connect);
             Plugin.DropDownItems.Add(Editor);
             Plugin.DropDownItems.Add(Finder);
             Plugin.DropDownItems.Add(Flags);
             Plugin.DropDownItems.Add(Events);
-            Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards).Show();
+            Connect.Click += (s, e) => LaunchConnector();
+            Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
             Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, plugin: true);
             Flags.Click += (s, e) => new ProgressForm(SAV).Show();
             Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV).Show();
@@ -107,18 +113,18 @@ namespace TeraFinder
 
         public void LaunchEditor()
         {
-            new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards).Show();
+            new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
         }
 
         public void LaunchCalculator()
         {
-            var editor = new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards);
+            var editor = new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
             new CalculatorForm(editor).Show();
         }
 
         public void LaunchRewardCalculator()
         {
-            var editor = new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards);
+            var editor = new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
             new RewardCalcForm(editor).Show();
         }
 
@@ -135,6 +141,33 @@ namespace TeraFinder
         public void LaunchFinder()
         {
             new CheckerForm(new PK9 { TrainerID7 = SAV.TrainerID7, TrainerSID7 = SAV.TrainerSID7 }, SAV).Show();
+        }
+
+        public ConnectionForm LaunchConnector(Form? parent = null)
+        {
+            if (parent is not null)
+                parent.Enabled = false;
+
+            var con = Connection is null ? new ConnectionForm(SAV) : Connection;
+            con.FormClosing += (s, e) =>
+            {
+                if (parent is not null)
+                    parent.Enabled = true;
+
+                var events = TeraUtil.GetSAVDistEncounters(SAV);
+                var eventsrewards = RewardUtil.GetDistRewardsTables(SAV);
+                Dist = events[0];
+                Mighty = events[1];
+                DistFixedRewards = eventsrewards[0];
+                DistLotteryRewards = eventsrewards[1];
+
+                con.Hide();
+                e.Cancel = true;
+            };
+
+            con.Show();
+            Connection = con;
+            return con;
         }
 
         public void NotifySaveLoaded()

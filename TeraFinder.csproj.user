@@ -8,6 +8,9 @@
     <Compile Update="Forms\CheckerForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\ConnectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\EditorForm.cs">
       <SubType>Form</SubType>
     </Compile>

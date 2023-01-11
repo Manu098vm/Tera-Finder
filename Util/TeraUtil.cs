@@ -6,27 +6,27 @@ namespace TeraFinder
     {
         public static GameProgress GetProgress(SAV9SV sav)
         {
-            var Unlocked6Stars = sav.Accessor.FindOrDefault(GameProgressBlocks.KUnlockedRaidDifficulty6.Key).Type is SCTypeCode.Bool2;
+            var Unlocked6Stars = sav.Accessor.FindOrDefault(Blocks.KUnlockedRaidDifficulty6.Key).Type is SCTypeCode.Bool2;
                 
             if (Unlocked6Stars)
                 return GameProgress.Unlocked6Stars;
 
-            var Unlocked5Stars = sav.Accessor.FindOrDefault(GameProgressBlocks.KUnlockedRaidDifficulty5.Key).Type is SCTypeCode.Bool2;
+            var Unlocked5Stars = sav.Accessor.FindOrDefault(Blocks.KUnlockedRaidDifficulty5.Key).Type is SCTypeCode.Bool2;
 
             if (Unlocked5Stars)
                 return GameProgress.Unlocked5Stars;
 
-            var Unlocked4Stars = sav.Accessor.FindOrDefault(GameProgressBlocks.KUnlockedRaidDifficulty4.Key).Type is SCTypeCode.Bool2;
+            var Unlocked4Stars = sav.Accessor.FindOrDefault(Blocks.KUnlockedRaidDifficulty4.Key).Type is SCTypeCode.Bool2;
 
             if (Unlocked4Stars)
                 return GameProgress.Unlocked4Stars;
 
-            var Unlocked3Stars = sav.Accessor.FindOrDefault(GameProgressBlocks.KUnlockedRaidDifficulty3.Key).Type is SCTypeCode.Bool2;
+            var Unlocked3Stars = sav.Accessor.FindOrDefault(Blocks.KUnlockedRaidDifficulty3.Key).Type is SCTypeCode.Bool2;
 
             if (Unlocked3Stars)
                 return GameProgress.Unlocked3Stars;
 
-            var UnlockedTeraRaids = sav.Accessor.FindOrDefault(GameProgressBlocks.KUnlockedTeraRaidBattles.Key).Type is SCTypeCode.Bool2;
+            var UnlockedTeraRaids = sav.Accessor.FindOrDefault(Blocks.KUnlockedTeraRaidBattles.Key).Type is SCTypeCode.Bool2;
 
             if (UnlockedTeraRaids)
                 return GameProgress.UnlockedTeraRaids;
@@ -116,17 +116,24 @@ namespace TeraFinder
 
         public static EncounterRaid9[][] GetSAVDistEncounters(SAV9SV sav)
         {
-            var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATEventRaidIdentifier.Key);
+            var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
             if (KBCATEventRaidIdentifier.Type is not SCTypeCode.None && BitConverter.ToUInt32(KBCATEventRaidIdentifier.Data) > 0)
             {
-                var events = EventUtil.GetEventEncounterDataFromSAV(sav);
-                var dist = EncounterRaid9.GetEncounters(EncounterDist9.GetArray(events[0]));
-                var mighty = EncounterRaid9.GetEncounters(EncounterMight9.GetArray(events[1]));
-                return new EncounterRaid9[][] { dist, mighty };
+                try
+                {
+                    var events = EventUtil.GetEventEncounterDataFromSAV(sav);
+                    var dist = EncounterRaid9.GetEncounters(EncounterDist9.GetArray(events[0]));
+                    var mighty = EncounterRaid9.GetEncounters(EncounterMight9.GetArray(events[1]));
+                    return new EncounterRaid9[][] { dist, mighty };
+                }
+                catch
+                {
+                    var encounters = GetAllTeraEncounters();
+                    return new EncounterRaid9[][] { encounters, encounters };
+                }
             }
             else
             {
-                //The game uses standard tables if there are no valid events
                 var encounters = GetAllTeraEncounters();
                 return new EncounterRaid9[][] { encounters, encounters };
             }
@@ -148,7 +155,7 @@ namespace TeraFinder
             return null;
         }
 
-        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, bool mighty, int index = -1)
+        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, bool mighty)
         {
             var game = (GameVersion)sav.Game;
             var p = mighty ? progress is GameProgress.Unlocked6Stars ? 3 : 0 : progress switch
@@ -158,9 +165,6 @@ namespace TeraFinder
                 GameProgress.Unlocked3Stars => 1,
                 _ => 0,
             };
-
-            if(index >= 0)
-                encounters = new EncounterRaid9[] { encounters[index] };
 
             foreach (var encounter in encounters)
             {
@@ -176,6 +180,15 @@ namespace TeraFinder
                 }
             }
             return null;
+        }
+
+        public static EncounterRaid9? GetDistEncounterWithIndex(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, bool mighty, int index)
+        {
+            if (index < 0)
+                return null;
+
+            var encounter = new EncounterRaid9[] { encounters[index] };
+            return GetDistEncounter(seed, sav, progress, encounter, mighty);
         }
 
         public static byte GetGender(EncounterRaid9 enc, bool isMighty)

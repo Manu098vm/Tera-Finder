@@ -121,11 +121,11 @@ namespace TeraFinder
 
                 var sav = (SAV9SV)sv;
 
-                var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATEventRaidIdentifier.Key);
-                var KBCATFixedRewardItemArray = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATFixedRewardItemArray.Key);
-                var KBCATLotteryRewardItemArray = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATLotteryRewardItemArray.Key);
-                var KBCATRaidEnemyArray = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATRaidEnemyArray.Key);
-                var KBCATRaidPriorityArray = sav.Accessor.FindOrDefault(EventRaidBlocks.KBCATRaidPriorityArray.Key);
+                var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
+                var KBCATFixedRewardItemArray = sav.Accessor.FindOrDefault(Blocks.KBCATFixedRewardItemArray.Key);
+                var KBCATLotteryRewardItemArray = sav.Accessor.FindOrDefault(Blocks.KBCATLotteryRewardItemArray.Key);
+                var KBCATRaidEnemyArray = sav.Accessor.FindOrDefault(Blocks.KBCATRaidEnemyArray.Key);
+                var KBCATRaidPriorityArray = sav.Accessor.FindOrDefault(Blocks.KBCATRaidPriorityArray.Key);
 
                 if (KBCATEventRaidIdentifier.Type is not SCTypeCode.None)
                     KBCATEventRaidIdentifier.ChangeData(identifierBlock);

@@ -43,10 +43,14 @@
             this.btnImportNews = new System.Windows.Forms.Button();
             this.btnStartEditor = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.remoteConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnRemoteConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.grpSAV.SuspendLayout();
             this.grpTools.SuspendLayout();
             this.grpStaticTools.SuspendLayout();
             this.grpSavTools.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpSAV
@@ -54,7 +58,7 @@
             this.grpSAV.Controls.Add(this.txtSAV);
             this.grpSAV.Controls.Add(this.btnLoad);
             this.grpSAV.Controls.Add(this.btnExport);
-            this.grpSAV.Location = new System.Drawing.Point(11, 12);
+            this.grpSAV.Location = new System.Drawing.Point(12, 43);
             this.grpSAV.Name = "grpSAV";
             this.grpSAV.Size = new System.Drawing.Size(463, 123);
             this.grpSAV.TabIndex = 0;
@@ -94,7 +98,7 @@
             // 
             this.grpTools.Controls.Add(this.grpStaticTools);
             this.grpTools.Controls.Add(this.grpSavTools);
-            this.grpTools.Location = new System.Drawing.Point(11, 140);
+            this.grpTools.Location = new System.Drawing.Point(12, 171);
             this.grpTools.Name = "grpTools";
             this.grpTools.Size = new System.Drawing.Size(463, 291);
             this.grpTools.TabIndex = 1;
@@ -190,19 +194,49 @@
             // 
             this.openFileDialog.FileName = "openFileDialog";
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.remoteConnectToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(487, 28);
+            this.menuStrip1.TabIndex = 2;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // remoteConnectToolStripMenuItem
+            // 
+            this.remoteConnectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnRemoteConnect});
+            this.remoteConnectToolStripMenuItem.Name = "remoteConnectToolStripMenuItem";
+            this.remoteConnectToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
+            this.remoteConnectToolStripMenuItem.Text = "Tools";
+            // 
+            // btnRemoteConnect
+            // 
+            this.btnRemoteConnect.Name = "btnRemoteConnect";
+            this.btnRemoteConnect.Size = new System.Drawing.Size(271, 26);
+            this.btnRemoteConnect.Text = "Connect To Remote Device";
+            this.btnRemoteConnect.Click += new System.EventHandler(this.btnRemoteConnect_Click);
+            // 
             // TeraFinderForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(487, 437);
+            this.ClientSize = new System.Drawing.Size(487, 471);
             this.Controls.Add(this.grpTools);
             this.Controls.Add(this.grpSAV);
+            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TeraFinderForm";
             this.Text = "Tera Finder ";
+            this.EnabledChanged += new System.EventHandler(this.FormEnabledChanged);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileDragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FileDragEnter);
             this.grpSAV.ResumeLayout(false);
@@ -210,7 +244,10 @@
             this.grpTools.ResumeLayout(false);
             this.grpStaticTools.ResumeLayout(false);
             this.grpSavTools.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -230,5 +267,8 @@
         private Button btnExport;
         private OpenFileDialog openFileDialog;
         private Button btnStartRewardCalc;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem remoteConnectToolStripMenuItem;
+        private ToolStripMenuItem btnRemoteConnect;
     }
 }

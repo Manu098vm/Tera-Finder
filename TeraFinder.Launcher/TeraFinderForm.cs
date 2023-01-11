@@ -1,10 +1,12 @@
 using TeraFinder;
+using TeraFinder.Forms;
 
 namespace TeraFinder.Launcher
 {
     public partial class TeraFinderForm : Form
     {
         private readonly TeraPlugin Plugin = new();
+        private ConnectionForm? Connection = null;
 
         public TeraFinderForm()
         {
@@ -18,8 +20,30 @@ namespace TeraFinder.Launcher
             btnExport.Enabled = false;
         }
 
+        private void FormEnabledChanged(object sender, EventArgs e)
+        {
+            if(Connection is not null)
+            {
+                if (Connection.IsConnected())
+                {
+                    btnEditGame.Enabled = true;
+                    btnStartEditor.Enabled = true;
+                    txtSAV.Text = GetGameString();
+                }
+                else if(Plugin.GetSavName().Equals("TeraFinder"))
+                {
+                    btnEditGame.Enabled = false;
+                    btnStartEditor.Enabled = false;
+                }
+            }
+        }
+
         private void btnLoad_Click(object sender, EventArgs e)
         {
+            if(Connection is not null && Connection.IsConnected())
+            {
+                //Chiedere se va bene disconnettersi e disconnettersi prima di far selezionare un save file
+            }
             if (openFileDialog.ShowDialog() == DialogResult.OK)
                 LoadSAV(openFileDialog.FileName);
         }
@@ -118,6 +142,11 @@ namespace TeraFinder.Launcher
             str = str.Replace("VL", "Violet");
             str = str.Replace("(0)", "(Blank)");
             return str;
+        }
+
+        private void btnRemoteConnect_Click(object sender, EventArgs e)
+        {
+            Connection = Plugin.LaunchConnector(this);
         }
     }
 }

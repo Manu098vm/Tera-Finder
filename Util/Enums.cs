@@ -34,4 +34,10 @@
         Poke = 1,
         Gem = 2,
     }
+
+    public enum RoutineType
+    {
+        None,
+        ReadWrite,
+    }
 }

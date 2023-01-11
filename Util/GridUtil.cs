@@ -173,6 +173,7 @@ namespace TeraFinder
                         template.Ability = rngres.Ability;
                         template.AbilityNumber = rngres.GetAbilityNumber() == 3 ? 4 : rngres.GetAbilityNumber();
                         template.Nature = rngres.Nature;
+                        template.StatNature = rngres.Nature;
                         template.Gender = (int)rngres.Gender;
                         template.HeightScalar = rngres.Height;
                         template.WeightScalar = rngres.Weight;
@@ -405,6 +406,7 @@ namespace TeraFinder
                         template.Ability = rngres.Ability;
                         template.AbilityNumber = rngres.GetAbilityNumber() == 3 ? 4 : rngres.GetAbilityNumber();
                         template.Nature = rngres.Nature;
+                        template.StatNature = rngres.Nature;
                         template.Gender = (int)rngres.Gender;
                         template.HeightScalar = rngres.Height;
                         template.WeightScalar = rngres.Weight;

@@ -1,6 +1,4 @@
 ﻿using PKHeX.Core;
-using System.Data;
-using System.Reflection.Metadata.Ecma335;
 
 namespace TeraFinder.Forms
 {
@@ -102,8 +100,8 @@ namespace TeraFinder.Forms
                                 sav.Game = (int)game;
 
                                 var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Tera) :
-                                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Mighty, true, i) :
-                                    TeraUtil.GetDistEncounter(seed, sav, progress, Dist, false, j);
+                                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounterWithIndex(seed, sav, progress, Mighty, true, i) :
+                                    TeraUtil.GetDistEncounterWithIndex(seed, sav, progress, Dist, false, j);
 
                                 if (encounter is not null)
                                 {
