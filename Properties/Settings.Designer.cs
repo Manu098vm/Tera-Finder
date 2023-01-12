@@ -58,17 +58,5 @@ namespace TeraFinder.Properties {
                 this["protocol"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int threads {
-            get {
-                return ((int)(this["threads"]));
-            }
-            set {
-                this["threads"] = value;
-            }
-        }
     }
 }

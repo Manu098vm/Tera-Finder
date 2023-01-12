@@ -144,12 +144,12 @@ namespace TeraFinder
                 var raid = SAV.Raid.GetRaid(cmbDens.SelectedIndex);
                 if (chkLP.Checked)
                 {
-                    raid.IsClaimedLeaguePoints = false;
+                    raid.IsClaimedLeaguePoints = true;
                     Task.Run(async () => { await UpdateRemote(); }).Wait();
                 }
                 else
                 {
-                    raid.IsEnabled = true;
+                    raid.IsClaimedLeaguePoints = false;
                     Task.Run(async () => { await UpdateRemote(); }).Wait();
                 }
             }

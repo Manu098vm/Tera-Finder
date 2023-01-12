@@ -43,18 +43,18 @@ namespace TeraFinder.Forms
 
             try
             {
-                var cfg = new DeviceState
+                var config = GetProtocol() switch
                 {
-                    Connection = new SwitchConnectionConfig
-                    {
-                        IP = txtAddress.Text,
-                        Port = (int)numPort.Value,
-                        Protocol = GetProtocol(),
-                    },
+                    SwitchProtocol.USB => new SwitchConnectionConfig { Port = (int)numPort.Value, Protocol = SwitchProtocol.USB },
+                    SwitchProtocol.WiFi => new SwitchConnectionConfig { IP = txtAddress.Text, Port = (int)numPort.Value, Protocol = SwitchProtocol.WiFi },
+                    _ => throw new ArgumentOutOfRangeException("No valid protocol"),
+                };
+                var state = new DeviceState
+                {
+                    Connection = config,
                     InitialRoutine = RoutineType.ReadWrite,
                 };
-
-                Executor = new DeviceExecutor(cfg);
+                Executor = new DeviceExecutor(state);
                 await Executor.RunAsync(token).ConfigureAwait(false);
             }
             catch (Exception ex)

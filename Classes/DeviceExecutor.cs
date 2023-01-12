@@ -33,7 +33,6 @@ namespace TeraFinder
 
         public override async Task MainLoop(CancellationToken token)
         {
-            //Drops exception if invalid title id
             var version = await ReadGameVersion(token).ConfigureAwait(false);
             Log($"Valid Title ID ({(version is GameVersion.SL ? $"{ScarletID}" : $"{VioletID}")})");
             Log("Connection Test OK");
@@ -64,6 +63,9 @@ namespace TeraFinder
 
         public async Task<GameProgress> ReadGameProgress(CancellationToken token)
         {
+            if (!Connection.Connected)
+                throw new InvalidOperationException("No remote connection");
+
             var Unlocked6Stars = (await ReadEncryptedBlock(Blocks.KUnlockedRaidDifficulty6, 1, token).ConfigureAwait(false))[0] == 2;
 
             if (Unlocked6Stars)
