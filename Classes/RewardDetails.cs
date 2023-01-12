@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using pkNX.Structures.FlatBuffers;
 
 namespace TeraFinder
 {
@@ -30,7 +31,7 @@ namespace TeraFinder
         {
             if (greaterthan && item.ItemID == ushort.MaxValue - 2)
             {
-                if (ItemID >= 1904 && ItemID <= 1908)
+                if (ItemID == ushort.MaxValue-2 || (ItemID >= 1904 && ItemID <= 1908))
                     if (Amount >= item.Amount)
                         return true;
 
@@ -56,6 +57,8 @@ namespace TeraFinder
                 _ => false,
             };
         }
+
+        public bool IsHerba() => ItemID >= 1904 && ItemID <= 1908;
     }
 
     public class RewardDetails
@@ -200,6 +203,7 @@ namespace TeraFinder
         public ushort Species { get; set; }
         public int Stars { get; set; }
         public TeraShiny Shiny { get; set; }
+        public bool AnyHerba { get; set; }
 
         public bool IsFilterMatch(RewardDetails res)
         {
@@ -217,11 +221,11 @@ namespace TeraFinder
                 var itemlist = new List<Reward>();
                 foreach (var item in res.Rewards!)
                 {
-                    var index = itemlist.FindIndex(i => i.ItemID == item.ItemID);
+                    var index = AnyHerba && item.IsHerba() ? itemlist.FindIndex(i => i.ItemID == ushort.MaxValue-2) : itemlist.FindIndex(i => i.ItemID == item.ItemID);
                     if (index >= 0)
                         itemlist[index].Amount += item.Amount;
                     else
-                        itemlist.Add(new Reward { ItemID = item.ItemID, Amount = item.Amount });
+                        itemlist.Add(new Reward { ItemID = AnyHerba && item.IsHerba() ? ushort.MaxValue-2 : item.ItemID, Amount = item.Amount });
                 }
 
                 var match = 0;

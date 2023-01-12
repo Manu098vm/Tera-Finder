@@ -121,6 +121,7 @@ namespace TeraFinder.Forms
             var items = new List<Reward>();
             items.Clear();
 
+            var anyherba = false;
             var nums = grpItems.Controls.OfType<NumericUpDown>();
             foreach (var cb in grpItems.Controls.OfType<ComboBox>())
             {
@@ -128,6 +129,8 @@ namespace TeraFinder.Forms
                 {
                     var numericName = $"numericUpDown{cb.Name[8..]}";
                     var num = nums.Where(num => num.Name.Equals(numericName)).FirstOrDefault()!;
+                    if(!anyherba)
+                        anyherba = cb.SelectedIndex == 1;
                     items.Add(new Reward { ItemID = cb.SelectedIndex == 1 ? ushort.MaxValue-2 : cb.SelectedIndex-1, Amount = (int)num.Value });
                 }
             }
@@ -146,6 +149,7 @@ namespace TeraFinder.Forms
                 Species = (ushort)cmbSpecies.SelectedIndex,
                 Stars = cmbStars.SelectedIndex,
                 Shiny = chkShiny.Checked ? TeraShiny.Yes : TeraShiny.Any,
+                AnyHerba = anyherba,
             };
 
             if (Filter is null && filter.IsFilterNull())
