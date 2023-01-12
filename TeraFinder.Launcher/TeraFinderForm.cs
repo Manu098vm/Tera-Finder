@@ -28,22 +28,26 @@ namespace TeraFinder.Launcher
                 {
                     btnEditGame.Enabled = true;
                     btnStartEditor.Enabled = true;
+                    btnExport.Enabled = false;
+                    btnLoad.Enabled = false;
                     txtSAV.Text = GetGameString();
                 }
                 else if(Plugin.GetSavName().Equals("TeraFinder"))
                 {
                     btnEditGame.Enabled = false;
                     btnStartEditor.Enabled = false;
+                    btnLoad.Enabled = true;
+                    txtSAV.Text = GetGameString();
                 }
+            }
+            else
+            {
+                btnLoad.Enabled = true;
             }
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            if(Connection is not null && Connection.IsConnected())
-            {
-                //Chiedere se va bene disconnettersi e disconnettersi prima di far selezionare un save file
-            }
             if (openFileDialog.ShowDialog() == DialogResult.OK)
                 LoadSAV(openFileDialog.FileName);
         }

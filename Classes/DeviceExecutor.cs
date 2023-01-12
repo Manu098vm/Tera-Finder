@@ -1,8 +1,5 @@
 ﻿using PKHeX.Core;
 using SysBot.Base;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using static System.Buffers.Binary.BinaryPrimitives;
 
 namespace TeraFinder
@@ -34,10 +31,13 @@ namespace TeraFinder
         public override void SoftStop() => Config.Pause();
         public override Task HardStop() => Task.CompletedTask;
 
-        public override Task MainLoop(CancellationToken token)
+        public override async Task MainLoop(CancellationToken token)
         {
+            //Drops exception if invalid title id
+            var version = await ReadGameVersion(token).ConfigureAwait(false);
+            Log($"Valid Title ID ({(version is GameVersion.SL ? $"{ScarletID}" : $"{VioletID}")})");
+            Log("Connection Test OK");
             Config.IterateNextRoutine();
-            return Task.CompletedTask;
         }
 
         public async Task Connect(CancellationToken token)
@@ -52,14 +52,14 @@ namespace TeraFinder
         public async Task<GameVersion> ReadGameVersion(CancellationToken token)
         {
             if (!Connection.Connected)
-                throw new InvalidOperationException("No remote connection.");
+                throw new InvalidOperationException("No remote connection");
 
             var title = await SwitchConnection.GetTitleID(token).ConfigureAwait(false);
             if (title.Equals(VioletID))
                 return GameVersion.VL;
             else if (title.Equals(ScarletID))
                 return GameVersion.SL;
-            else throw new ArgumentOutOfRangeException("Invalid Title ID.");
+            else throw new ArgumentOutOfRangeException($"Invalid Title ID ({title})");
         }
 
         public async Task<GameProgress> ReadGameProgress(CancellationToken token)
@@ -90,18 +90,22 @@ namespace TeraFinder
         public async Task<byte[]> ReadDecryptedBlock(DataBlock block, int size, CancellationToken token)
         {
             if (!Connection.Connected)
-                throw new InvalidOperationException("No remote connection.");
+                throw new InvalidOperationException("No remote connection");
 
+            Log($"Reading decrypted block {block.Key:X8}...");
             var data = await SwitchConnection.PointerPeek(size, block.Pointer!, token).ConfigureAwait(false);
+            Log("Done");
             return data;
         }
 
-        public async Task WriteDecryptedBlock(byte[] data, DataBlock block, int size, CancellationToken token)
+        public async Task WriteDecryptedBlock(byte[] data, DataBlock block, CancellationToken token)
         {
             if (!Connection.Connected)
-                throw new InvalidOperationException("No remote connection.");
+                throw new InvalidOperationException("No remote connection");
 
+            Log($"Writing decrypted block {block.Key:X8}...");
             await SwitchConnection.PointerPoke(data, block.Pointer!, token).ConfigureAwait(false);
+            Log("Done");
         }
 
         //Thanks to Lincoln-LM (original scblock code) and Architdate (ported C# reference code)!!
@@ -111,24 +115,30 @@ namespace TeraFinder
         public async Task<byte[]?> ReadEncryptedBlock(DataBlock block, CancellationToken token)
         {
             if (!Connection.Connected)
-                throw new InvalidOperationException("No remote connection.");
+                throw new InvalidOperationException("No remote connection");
 
+            Log($"Reading encrypted block {block.Key:X8}...");
             var address = await GetBlockAddress(block, token).ConfigureAwait(false);
             var header = await SwitchConnection.ReadBytesAbsoluteAsync(address, 5, token).ConfigureAwait(false);
             header = BlockUtil.DecryptBlock(block.Key, header);
             var size = ReadUInt32LittleEndian(header.AsSpan()[1..]);
             var data = await SwitchConnection.ReadBytesAbsoluteAsync(address, 5 + (int)size, token);
-            return BlockUtil.DecryptBlock(block.Key, data)[5..];
+            var res = BlockUtil.DecryptBlock(block.Key, data)[5..];
+            Log("Done");
+            return res;
         }
 
         public async Task<byte[]> ReadEncryptedBlock(DataBlock block, int size, CancellationToken token)
         {
             if (!Connection.Connected)
-                throw new InvalidOperationException("No remote connection.");
+                throw new InvalidOperationException("No remote connection");
 
+            Log($"Reading encrypted block {block.Key:X8}[L:{size:X8}]...");
             var address = await GetBlockAddress(block, token).ConfigureAwait(false);
             var data = await SwitchConnection.ReadBytesAbsoluteAsync(address, size, token).ConfigureAwait(false);
-            return BlockUtil.DecryptBlock(block.Key, data);
+            var res = BlockUtil.DecryptBlock(block.Key, data);
+            Log("Done");
+            return res;
         }
 
         private async Task<ulong> GetBlockAddress(DataBlock block, CancellationToken token)

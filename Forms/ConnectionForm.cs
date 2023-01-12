@@ -179,5 +179,11 @@ namespace TeraFinder.Forms
                 Close();
             }
         }
+
+        private void Log(string message)
+        {
+            if(Connected)
+                Executor.Log(message);
+        }
     }
 }

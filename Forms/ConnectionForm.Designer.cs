@@ -150,6 +150,10 @@
             // 
             // toolTip
             // 
+            this.toolTip.AutoPopDelay = 10000;
+            this.toolTip.InitialDelay = 500;
+            this.toolTip.IsBalloon = true;
+            this.toolTip.ReshowDelay = 100;
             this.toolTip.ToolTipTitle = "Event Data";
             // 
             // ConnectionForm

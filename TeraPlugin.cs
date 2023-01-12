@@ -148,11 +148,23 @@ namespace TeraFinder
             if (parent is not null)
                 parent.Enabled = false;
 
+            var formlist = new List<Form>();
+            formlist.AddRange(Application.OpenForms.OfType<EditorForm>());
+            formlist.AddRange(Application.OpenForms.OfType<CalculatorForm>());
+            formlist.AddRange(Application.OpenForms.OfType<RewardCalcForm>());
+            formlist.AddRange(Application.OpenForms.OfType<ProgressForm>());
+            formlist.AddRange(Application.OpenForms.OfType<CheckerForm>());
+            foreach (var form in formlist)
+                form?.Close();
+
             var con = Connection is null ? new ConnectionForm(SAV) : Connection;
             con.FormClosing += (s, e) =>
             {
                 if (parent is not null)
+                {
+                    Language = GetStringLanguage((LanguageID)SAV.Language);
                     parent.Enabled = true;
+                }
 
                 var events = TeraUtil.GetSAVDistEncounters(SAV);
                 var eventsrewards = RewardUtil.GetDistRewardsTables(SAV);
