@@ -13,6 +13,7 @@ Both a standalone program and a PKHeX Plugin are available for use.
 * [Generate Legal PK9 files from Raid searches](https://github.com/Manu098vm/Tera-Finder/wiki/How-to-generate-Legal-PK9-Pok%C3%A9mon-from-Tera-Raids)
 * [Edit Tera Raid related Game Progress/Caught Flags](https://github.com/Manu098vm/Tera-Finder/wiki/Game-Flags-Editor)
 * [Supports localized languages](https://github.com/Manu098vm/Tera-Finder/wiki/General-Guide#about-the-localizations)
+* [Supports Connections to Remote Devices (WiFi or USB)](https://github.com/Manu098vm/Tera-Finder/wiki/Connect-To-Remote-Device)
 
 Powered by [PKHeX](https://github.com/kwsch/PKHeX), [pkNX](https://github.com/kwsch/pkNX) and [SysBot.NET](https://github.com/kwsch/SysBot.NET).
 
@@ -41,6 +42,8 @@ Alternatively, feel free to contact me on my [Discord Server](https://discord.gg
 * [Lincoln-LM](https://github.com/Lincoln-LM) for the raid map coordinates and the save RAM pointer/logic in [sv-live-map](https://github.com/Lincoln-LM/sv-live-map)
 * [Leanny](https://github.com/Leanny) for his Sword/Shield [PKHeX Raid Plugin](https://github.com/Leanny/PKHeX_Raid_Plugin) which was of inspiration for my plugin
 * [santacrab2](https://github.com/santacrab2) for his contributions to make the searches lot faster
+* [olliz0r](https://github.com/olliz0r) and [berichan](https://github.com/berichan) for [sys-botbase](https://github.com/olliz0r/sys-botbase)
+* [fishguy6564](https://github.com/fishguy6564) and [Koi-3088](https://github.com/Koi-3088) for [usb-botbase](https://github.com/Koi-3088/USB-Botbase)
 * [kwsch](https://github.com/kwsch), [Lusamine](https://github.com/Lusamine), [LegoFigure11](https://github.com/LegoFigure11), [Archit Date](https://github.com/architdate), [SteveCookTU](https://github.com/SteveCookTU), [Lincoln-LM](https://github.com/Lincoln-LM), and all the contributors to the mentioned programs for their awesome researches
 * GitHub API implementation provided by [Octokit](https://github.com/octokit/octokit.net), licensed under the MIT license
 
