@@ -222,6 +222,7 @@ namespace TeraFinder
 
         private void btnApply_Click(object sender, EventArgs e)
         {
+            lblFound.Visible = false;
             CreateFilter();
             if (dataGrid.Rows.Count > 0)
             {
@@ -289,6 +290,7 @@ namespace TeraFinder
 
         private void DisableControls()
         {
+            lblFound.Visible= false;
             grpFilters.Enabled = false;
             grpGameInfo.Enabled = false;
             cmbContent.Enabled = false;
@@ -305,6 +307,28 @@ namespace TeraFinder
             showresults.Enabled = true;
             txtSeed.Enabled = true;
             numFrames.Enabled = true;
+        }
+
+        private void UpdateLabel()
+        {
+            var isblack = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black or RaidContent.Event_Mighty;
+            if (Filter is not null && !Filter.IsFilterNull(isblack))
+            {
+                if (showresults.Checked)
+                    try
+                    {
+                        lblFound.Text = $"Found: {CalculatedList.Count}";
+                    }
+                    catch (Exception)
+                    {
+                        lblFound.Text = $"Found: {CalculatedList.LongCount()}";
+                    }
+                else
+                    lblFound.Text = $"Found: {(CalculatedList.Count > 0 ? "True" : "False")}";
+                lblFound.Visible = true;
+            }
+            else
+                lblFound.Visible = false;
         }
 
         public async void btnSearch_Click(object sender, EventArgs e)
@@ -363,11 +387,13 @@ namespace TeraFinder
                     dataGrid.DataSource = griddata;
                     btnSearch.Text = "Search";
                     EnableControls(IsBlankSAV());
+                    UpdateLabel();
                 }
                 catch(OperationCanceledException)
                 {
                     btnSearch.Text = "Search";
                     EnableControls(IsBlankSAV());
+                    UpdateLabel();
                 }
             }
             else
@@ -375,6 +401,7 @@ namespace TeraFinder
                 Token.Cancel();
                 btnSearch.Text = "Search";
                 EnableControls(IsBlankSAV());
+                UpdateLabel();
                 return;
             }
         }

@@ -87,6 +87,7 @@ namespace TeraFinder.Forms
 
         private void btnApply_Click(object sender, EventArgs e)
         {
+            lblFound.Visible = false;
             CreateFilter();
             if (Filter is not null && Filter.NeedAccurate())
                 chkAccurateSearch.Checked = true;
@@ -172,6 +173,7 @@ namespace TeraFinder.Forms
 
         private void DisableControls()
         {
+            lblFound.Visible = false;
             grpFilters.Enabled = false;
             grpProfile.Enabled = false;
             cmbContent.Enabled = false;
@@ -190,6 +192,26 @@ namespace TeraFinder.Forms
             chkAllResults.Enabled = true;
             txtSeed.Enabled = true;
             numMaxCalc.Enabled = true;
+        }
+
+        private void UpdateLabel()
+        {
+            if (Filter is not null && !Filter.IsFilterNull()) {
+                if (chkAllResults.Checked)
+                    try
+                    {
+                        lblFound.Text = $"Found: {CalculatedList.Count}";
+                    }
+                    catch (Exception)
+                    {
+                        lblFound.Text = $"Found: {CalculatedList.LongCount()}";
+                    }
+                else
+                    lblFound.Text = $"Found: {(CalculatedList.Count > 0 ? "True" : "False")}";
+                lblFound.Visible = true;
+            }
+            else
+                lblFound.Visible = false;
         }
 
         private async void btnSearch_Click(object sender, EventArgs e)
@@ -243,11 +265,13 @@ namespace TeraFinder.Forms
                     dataGrid.DataSource = griddata;
                     btnSearch.Text = "Search";
                     EnableControls(IsBlankSAV());
+                    UpdateLabel();
                 }
                 catch (OperationCanceledException)
                 {
                     btnSearch.Text = "Search";
                     EnableControls(IsBlankSAV());
+                    UpdateLabel();
                 }
             }
             else
@@ -255,6 +279,7 @@ namespace TeraFinder.Forms
                 Token.Cancel();
                 btnSearch.Text = "Search";
                 EnableControls(IsBlankSAV());
+                UpdateLabel();
                 return;
             }
         }

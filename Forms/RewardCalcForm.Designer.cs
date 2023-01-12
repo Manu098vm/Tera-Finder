@@ -131,6 +131,7 @@
             this.btnSaveAllTxt = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSaveSelectedTxt = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSendSelectedRaid = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblFound = new System.Windows.Forms.Label();
             this.grpFilters.SuspendLayout();
             this.grpEncounter.SuspendLayout();
             this.grpItems.SuspendLayout();
@@ -1104,6 +1105,7 @@
             // 
             // grpSearch
             // 
+            this.grpSearch.Controls.Add(this.lblFound);
             this.grpSearch.Controls.Add(this.chkAllResults);
             this.grpSearch.Controls.Add(this.btnSearch);
             this.grpSearch.Location = new System.Drawing.Point(363, 168);
@@ -1187,6 +1189,16 @@
             this.btnSendSelectedRaid.Size = new System.Drawing.Size(312, 24);
             this.btnSendSelectedRaid.Text = "Send Selected Result to Raid Editor";
             this.btnSendSelectedRaid.Click += new System.EventHandler(this.btnSendSelectedRaid_Click);
+            // 
+            // lblFound
+            // 
+            this.lblFound.AutoSize = true;
+            this.lblFound.Location = new System.Drawing.Point(19, 35);
+            this.lblFound.Name = "lblFound";
+            this.lblFound.Size = new System.Drawing.Size(53, 20);
+            this.lblFound.TabIndex = 24;
+            this.lblFound.Text = "Found:";
+            this.lblFound.Visible = false;
             // 
             // RewardCalcForm
             // 
@@ -1346,5 +1358,6 @@
         private ComboBox cmbSpecies;
         private Label label30;
         private CheckBox chkShiny;
+        private Label lblFound;
     }
 }
