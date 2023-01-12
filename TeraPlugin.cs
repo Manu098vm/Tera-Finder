@@ -35,8 +35,8 @@ namespace TeraFinder
 
         public void Initialize(params object[] args)
         {
-            var task = Task.Run(async () => { await GitHubUtil.TryUpdate(); });
-            task.Wait();
+            Plugin.Image = Properties.Resources.icon.ToBitmap();
+            Task.Run(async () => { await GitHubUtil.TryUpdate(); }).Wait();
             SaveFileEditor = (ISaveFileProvider)Array.Find(args, z => z is ISaveFileProvider)!;
             PKMEditor = (IPKMView)Array.Find(args, z => z is IPKMView)!;
             var menu = (ToolStrip)Array.Find(args, z => z is ToolStrip)!;

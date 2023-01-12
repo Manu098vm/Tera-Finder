@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditorForm));
             this.cmbDens = new System.Windows.Forms.ComboBox();
             this.GrpRaidInfo = new System.Windows.Forms.GroupBox();
             this.lblContent = new System.Windows.Forms.Label();
@@ -512,10 +513,10 @@
             this.Controls.Add(this.grpPkmInfo);
             this.Controls.Add(this.GrpRaidInfo);
             this.Controls.Add(this.cmbDens);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EditorForm";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Tera Raid Editor";
             this.GrpRaidInfo.ResumeLayout(false);

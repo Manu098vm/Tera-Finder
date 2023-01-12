@@ -29,7 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalculatorForm));
             this.grpRaidDetails = new System.Windows.Forms.GroupBox();
+            this.lblFound = new System.Windows.Forms.Label();
             this.showresults = new System.Windows.Forms.CheckBox();
             this.numFrames = new System.Windows.Forms.NumericUpDown();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -105,7 +107,6 @@
             this.btnSavePk9 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnToPkmEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSendToEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblFound = new System.Windows.Forms.Label();
             this.grpRaidDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFrames)).BeginInit();
             this.grpFilters.SuspendLayout();
@@ -145,6 +146,16 @@
             this.grpRaidDetails.TabIndex = 0;
             this.grpRaidDetails.TabStop = false;
             this.grpRaidDetails.Text = "Raid Settings";
+            // 
+            // lblFound
+            // 
+            this.lblFound.AutoSize = true;
+            this.lblFound.Location = new System.Drawing.Point(6, 222);
+            this.lblFound.Name = "lblFound";
+            this.lblFound.Size = new System.Drawing.Size(53, 20);
+            this.lblFound.TabIndex = 12;
+            this.lblFound.Text = "Found:";
+            this.lblFound.Visible = false;
             // 
             // showresults
             // 
@@ -1019,16 +1030,6 @@
             this.btnSendToEditor.Text = "Send Selected Result to Raid Editor";
             this.btnSendToEditor.Click += new System.EventHandler(this.btnSendToEditor_Click);
             // 
-            // lblFound
-            // 
-            this.lblFound.AutoSize = true;
-            this.lblFound.Location = new System.Drawing.Point(6, 222);
-            this.lblFound.Name = "lblFound";
-            this.lblFound.Size = new System.Drawing.Size(53, 20);
-            this.lblFound.TabIndex = 12;
-            this.lblFound.Text = "Found:";
-            this.lblFound.Visible = false;
-            // 
             // CalculatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -1038,8 +1039,8 @@
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.grpFilters);
             this.Controls.Add(this.grpRaidDetails);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CalculatorForm";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = " Raid Calculator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
