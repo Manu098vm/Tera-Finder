@@ -85,6 +85,7 @@ namespace TeraFinder
 
         private void cmbDens_IndexChanged(object sender, EventArgs e)
         {
+            Loaded = false;
             if (cmbDens.SelectedIndex == 0)
                 btnSx.Enabled = false;
             else
@@ -113,8 +114,7 @@ namespace TeraFinder
             else cmbContent.SelectedIndex = 0;
 
             txtSeed.Text = $"{raid.Seed:X8}";
-            if (!Loaded)
-                UpdatePKMInfo(raid);
+            UpdatePKMInfo(raid);
             Loaded = true;
         }
 
