@@ -46,7 +46,11 @@ namespace TeraFinder
             await InitialStartup(token).ConfigureAwait(false);
         }
 
-        public void Disconnect() => Connection.Disconnect();
+        public void Disconnect()
+        {
+            HardStop();
+            Connection.Disconnect();
+        }
 
         public async Task<GameVersion> ReadGameVersion(CancellationToken token)
         {

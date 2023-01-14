@@ -668,7 +668,7 @@
             // 
             // nHpMax
             // 
-            this.nHpMax.Location = new System.Drawing.Point(184, 41);
+            this.nHpMax.Location = new System.Drawing.Point(183, 42);
             this.nHpMax.Maximum = new decimal(new int[] {
             31,
             0,
@@ -681,7 +681,7 @@
             // lblMaxIv
             // 
             this.lblMaxIv.AutoSize = true;
-            this.lblMaxIv.Location = new System.Drawing.Point(184, 16);
+            this.lblMaxIv.Location = new System.Drawing.Point(183, 19);
             this.lblMaxIv.Name = "lblMaxIv";
             this.lblMaxIv.Size = new System.Drawing.Size(54, 20);
             this.lblMaxIv.TabIndex = 5;
@@ -689,7 +689,7 @@
             // 
             // nHpMin
             // 
-            this.nHpMin.Location = new System.Drawing.Point(102, 41);
+            this.nHpMin.Location = new System.Drawing.Point(102, 42);
             this.nHpMin.Maximum = new decimal(new int[] {
             31,
             0,
@@ -722,7 +722,7 @@
             // 
             // nAtkMax
             // 
-            this.nAtkMax.Location = new System.Drawing.Point(184, 75);
+            this.nAtkMax.Location = new System.Drawing.Point(183, 75);
             this.nAtkMax.Maximum = new decimal(new int[] {
             31,
             0,
@@ -759,7 +759,7 @@
             // lblSpe
             // 
             this.lblSpe.AutoSize = true;
-            this.lblSpe.Location = new System.Drawing.Point(57, 208);
+            this.lblSpe.Location = new System.Drawing.Point(60, 208);
             this.lblSpe.Name = "lblSpe";
             this.lblSpe.Size = new System.Drawing.Size(37, 20);
             this.lblSpe.TabIndex = 11;
@@ -824,7 +824,7 @@
             // 
             // nSpeMin
             // 
-            this.nSpeMin.Location = new System.Drawing.Point(102, 205);
+            this.nSpeMin.Location = new System.Drawing.Point(102, 206);
             this.nSpeMin.Maximum = new decimal(new int[] {
             31,
             0,
@@ -836,7 +836,7 @@
             // 
             // nDefMax
             // 
-            this.nDefMax.Location = new System.Drawing.Point(184, 107);
+            this.nDefMax.Location = new System.Drawing.Point(183, 107);
             this.nDefMax.Maximum = new decimal(new int[] {
             31,
             0,
@@ -848,7 +848,7 @@
             // 
             // nSpaMax
             // 
-            this.nSpaMax.Location = new System.Drawing.Point(184, 140);
+            this.nSpaMax.Location = new System.Drawing.Point(183, 140);
             this.nSpaMax.Maximum = new decimal(new int[] {
             31,
             0,
@@ -860,7 +860,7 @@
             // 
             // nSpdMax
             // 
-            this.nSpdMax.Location = new System.Drawing.Point(184, 169);
+            this.nSpdMax.Location = new System.Drawing.Point(183, 173);
             this.nSpdMax.Maximum = new decimal(new int[] {
             31,
             0,
@@ -872,7 +872,7 @@
             // 
             // nSpeMax
             // 
-            this.nSpeMax.Location = new System.Drawing.Point(184, 201);
+            this.nSpeMax.Location = new System.Drawing.Point(183, 206);
             this.nSpeMax.Maximum = new decimal(new int[] {
             31,
             0,
