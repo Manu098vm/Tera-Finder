@@ -129,8 +129,8 @@ namespace TeraFinder
                 ushort mV = minV[stage];
                 bw.Write(noTotal ? (ushort)0 : mS);
                 bw.Write(noTotal ? (ushort)0 : mV);
-                bw.Write(noTotal ? (ushort)0 : totalS[stage]);
-                bw.Write(noTotal ? (ushort)0 : totalV[stage]);
+                bw.Write(noTotal || enc.RomVer is RaidRomType.TYPE_B ? (ushort)0 : totalS[stage]);
+                bw.Write(noTotal || enc.RomVer is RaidRomType.TYPE_A ? (ushort)0 : totalV[stage]);
             }
 
             if (format == RaidSerializationFormat.Type3)
