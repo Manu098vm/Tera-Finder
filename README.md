@@ -31,7 +31,8 @@ The Standalone Launcher will be placed in `TeraFinder.Launcher/bin/`.
 
 The Plugin files will be placed in `bin/`.
 
-### Support
+### Support/Troubleshooting
+For common troubleshooting, please the check the [appropriate section in the wiki](https://github.com/Manu098vm/Tera-Finder/wiki#troubleshooting).
 If you find any bug or you need support, please write a thread in the [Project Pokémon forums](https://projectpokemon.org/home/forums/forum/23-saves-editing-help/).
 Alternatively, feel free to contact me on my [Discord Server](https://discord.gg/F9nMfvw9sS).
 
