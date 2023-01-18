@@ -160,9 +160,9 @@ namespace TeraFinder
             var game = (GameVersion)sav.Game;
             var p = mighty ? progress is GameProgress.Unlocked6Stars ? 3 : 0 : progress switch
             {
-                GameProgress.Unlocked6Stars or GameProgress.Unlocked5Stars => 3,
-                GameProgress.Unlocked4Stars => 2,
-                GameProgress.Unlocked3Stars => 1,
+                GameProgress.Unlocked6Stars or GameProgress.Unlocked5Stars or GameProgress.Unlocked4Stars => 3,
+                GameProgress.Unlocked3Stars => 2,
+                GameProgress.UnlockedTeraRaids => 1,
                 _ => 0,
             };
 
