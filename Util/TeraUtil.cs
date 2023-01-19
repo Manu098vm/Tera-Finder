@@ -161,14 +161,14 @@ namespace TeraFinder
             return null;
         }
 
-        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, bool mighty)
+        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters)
         {
             var game = (GameVersion)sav.Game;
-            var p = mighty ? progress is GameProgress.Unlocked6Stars ? 3 : 0 : progress switch
+            var p = progress switch
             {
-                GameProgress.Unlocked6Stars or GameProgress.Unlocked5Stars or GameProgress.Unlocked4Stars => 3,
-                GameProgress.Unlocked3Stars => 2,
-                GameProgress.UnlockedTeraRaids => 1,
+                GameProgress.Unlocked6Stars or GameProgress.Unlocked5Stars => 3,
+                GameProgress.Unlocked4Stars => 2,
+                GameProgress.Unlocked3Stars => 1,
                 _ => 0,
             };
 
@@ -188,13 +188,13 @@ namespace TeraFinder
             return null;
         }
 
-        public static EncounterRaid9? GetDistEncounterWithIndex(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, bool mighty, int index)
+        public static EncounterRaid9? GetDistEncounterWithIndex(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, int index)
         {
             if (index < 0)
                 return null;
 
             var encounter = new EncounterRaid9[] { encounters[index] };
-            return GetDistEncounter(seed, sav, progress, encounter, mighty);
+            return GetDistEncounter(seed, sav, progress, encounter);
         }
 
         public static byte GetGender(EncounterRaid9 enc, bool isMighty)

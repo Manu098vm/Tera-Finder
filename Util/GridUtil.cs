@@ -143,8 +143,8 @@ namespace TeraFinder
                         sav.Game = (int)GetGameVersion(seed, selectedRows.ElementAt(0), f);
 
                         var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
-                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, true) :
-                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, false);
+                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
+                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
                         var rngres = TeraUtil.CalcRNG(seed, Int32.Parse(f.txtTID.Text), Int32.Parse(f.txtSID.Text), content, encounter!);
 
@@ -262,8 +262,8 @@ namespace TeraFinder
                         sav.Game = (int)GetGameVersion(seed, selectedRows.ElementAt(0), f);
 
                         var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
-                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, true) :
-                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, false);
+                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
+                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
                         var rngres = TeraUtil.CalcRNG(seed, Int32.Parse(f.txtTID.Text), Int32.Parse(f.txtSID.Text), content, encounter!);
 
@@ -376,8 +376,8 @@ namespace TeraFinder
                         sav.Game = (int)GetGameVersion(seed, selectedRows.ElementAt(0), f);
 
                         var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
-                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, true) :
-                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, false);
+                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
+                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
                         var rngres = TeraUtil.CalcRNG(seed, Int32.Parse(f.txtTID.Text), Int32.Parse(f.txtSID.Text), content, encounter!);
 
@@ -467,8 +467,8 @@ namespace TeraFinder
                         var sav = (SAV9SV)f.Editor.SAV.Clone();
                         sav.Game = (int)game;
                         var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
-                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, true) :
-                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, false);
+                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
+                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
                         if (encounter is not null)
                         {
@@ -505,8 +505,8 @@ namespace TeraFinder
                         sav.Game = (int)game;
 
                         var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
-                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, true) :
-                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, false);
+                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
+                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
                         if (encounter is not null)
                         {
@@ -548,8 +548,8 @@ namespace TeraFinder
                         sav.Game = (int)game;
 
                         var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
-                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, true) :
-                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, false);
+                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
+                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
                         if (encounter is not null)
                         {
@@ -624,8 +624,8 @@ namespace TeraFinder
                         var sav = (SAV9SV)f.Editor.SAV.Clone();
                         sav.Game = (int)game;
                         var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
-                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, true) :
-                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, false);
+                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
+                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
                         if (encounter is not null)
                         {

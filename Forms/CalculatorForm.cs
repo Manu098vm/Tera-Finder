@@ -410,7 +410,6 @@ namespace TeraFinder
         {
             var gridList = new List<GridEntry>();
             var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
-            if (seed == 0) seed = 1;
 
             await Task.Run(() =>
             {
@@ -487,7 +486,7 @@ namespace TeraFinder
         {
             var seed = (uint)(Seed & 0xFFFFFFFF);
             var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Editor.Tera!) :
-                content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Mighty!, true) : TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Dist!, false);
+                content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Mighty!) : TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Dist!);
 
             if (encounter is null)
                 return null;

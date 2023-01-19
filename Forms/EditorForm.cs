@@ -215,12 +215,12 @@ namespace TeraFinder
 
         private void UpdatePKMInfo(TeraRaidDetail raid)
         {
-            if (Progress is not GameProgress.Beginning && raid.Seed != 0)
+            if (Progress is not GameProgress.Beginning)
             {
                 var progress = raid.Content is TeraRaidContentType.Black6 ? GameProgress.None : Progress;
                 var encounter = cmbContent.SelectedIndex < 2 ? TeraUtil.GetTeraEncounter(raid.Seed, SAV, TeraUtil.GetStars(raid.Seed, progress), Tera!) :
-                    raid.Content is TeraRaidContentType.Might7 ? TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Mighty!, true) :
-                    TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Dist!, false);
+                    raid.Content is TeraRaidContentType.Might7 ? TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Mighty!) :
+                    TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Dist!);
 
                 if (encounter is not null)
                 {

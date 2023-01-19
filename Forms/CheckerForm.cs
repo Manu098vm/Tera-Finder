@@ -100,8 +100,8 @@ namespace TeraFinder.Forms
                                 sav.Game = (int)game;
 
                                 var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Tera) :
-                                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounterWithIndex(seed, sav, progress, Mighty, true, i) :
-                                    TeraUtil.GetDistEncounterWithIndex(seed, sav, progress, Dist, false, j);
+                                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounterWithIndex(seed, sav, progress, Mighty, i) :
+                                    TeraUtil.GetDistEncounterWithIndex(seed, sav, progress, Dist, j);
 
                                 if (encounter is not null)
                                 {
