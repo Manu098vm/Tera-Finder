@@ -1,6 +1,7 @@
 ﻿using PKHeX.Core;
 using SysBot.Base;
 using TeraFinder.Properties;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TeraFinder.Forms
 {
@@ -26,19 +27,22 @@ namespace TeraFinder.Forms
 
         public void Disconnect()
         {
-            try
-            {
-                Executor.Disconnect();
-            }
+            try { Executor.Disconnect(); }
             catch { }
             Connected = false;
-            EnableButton("Connect");
+            EnableConnectButton("Connect");
+            DisableDisconnectButton();
+            EnableGrpDevice();
+            EnableCheckEvent();
         }
 
         private async void btnConnect_Click(object sender, EventArgs e)
         {
             Connected = false;
-            DisableButton();
+            DisableConnectButton();
+            DisableDisconnectButton();
+            DisableCheckEvent();
+            DisableGrpDevice();
             var token = new CancellationToken();
 
             try
@@ -77,7 +81,8 @@ namespace TeraFinder.Forms
             try
             {
                 await Executor.Connect(token).ConfigureAwait(false);
-                SAV.Game = (int)await Executor.ReadGameVersion(token).ConfigureAwait(false);
+                var version = await Executor.ReadGameVersion(token).ConfigureAwait(false);
+                SAV.Game = (int)version;
                 var mystatusblock = SAV.Accessor.FindOrDefault(Blocks.KMyStatus.Key);
                 mystatusblock.ChangeData(await Executor.ReadEncryptedBlock(Blocks.KMyStatus, token).ConfigureAwait(false));
                 var raidblock = SAV.Accessor.FindOrDefault(Blocks.KTeraRaids.Key);
@@ -88,8 +93,12 @@ namespace TeraFinder.Forms
                 if (chkEventData.Checked)
                     await DownloadEventData().ConfigureAwait(false);
 
-                EnableButton();
                 MessageBox.Show("Successfully connected.");
+                Log($"Executor succesfully connected: {version} - {SAV.OT} ({SAV.TrainerID7}) [{progress}]");
+                EnableConnectButton();
+                EnableDisconnectButton();
+                EnableGrpDevice();
+                EnableCheckEvent();
                 SafeClose();
             }
             catch (Exception ex)
@@ -140,7 +149,7 @@ namespace TeraFinder.Forms
             return SwitchProtocol.WiFi;
         }
 
-        private void DisableButton()
+        private void DisableConnectButton()
         {
             if (btnConnect.InvokeRequired)
             {
@@ -154,7 +163,7 @@ namespace TeraFinder.Forms
             }
         }
 
-        private void EnableButton(string text = "Connected")
+        private void EnableConnectButton(string text = "Connected")
         {
             if (btnConnect.InvokeRequired)
             {
@@ -165,6 +174,78 @@ namespace TeraFinder.Forms
             {
                 btnConnect.Text = text;
                 btnConnect.Enabled = true;
+            }
+        }
+
+        private void EnableDisconnectButton()
+        {
+            if (btnDisconnect.InvokeRequired)
+            {
+                btnDisconnect.Invoke(() => { btnDisconnect.Enabled = true; });
+            }
+            else
+            {
+                btnDisconnect.Enabled = true;
+            }
+        }
+
+        private void DisableDisconnectButton()
+        {
+            if (btnDisconnect.InvokeRequired)
+            {
+                btnDisconnect.Invoke(() => { btnDisconnect.Enabled = false; });
+            }
+            else
+            {
+                btnDisconnect.Enabled = false;
+            }
+        }
+
+        private void EnableGrpDevice()
+        {
+            if (grpDevice.InvokeRequired)
+            {
+                grpDevice.Invoke(() => { grpDevice.Enabled = true; });
+            }
+            else
+            {
+                grpDevice.Enabled = true;
+            }
+        }
+
+        private void DisableGrpDevice()
+        {
+            if(grpDevice.InvokeRequired)
+            {
+                grpDevice.Invoke(() => { grpDevice.Enabled = false; });
+            }
+            else
+            {
+                grpDevice.Enabled = false;
+            }
+        }
+
+        private void EnableCheckEvent()
+        {
+            if(chkEventData.InvokeRequired)
+            {
+                chkEventData.Invoke(() => { chkEventData.Enabled = true; });
+            }
+            else
+            {
+                chkEventData.Enabled = true;
+            }
+        }
+
+        private void DisableCheckEvent()
+        {
+            if (chkEventData.InvokeRequired)
+            {
+                chkEventData.Invoke(() => { chkEventData.Enabled = false; });
+            }
+            else
+            {
+                chkEventData.Enabled = false;
             }
         }
 
@@ -180,10 +261,32 @@ namespace TeraFinder.Forms
             }
         }
 
+        private void radioWiFi_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioWiFi.Checked)
+                txtAddress.Enabled = true;
+        }
+
+        private void radioUSB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioUSB.Checked)
+                txtAddress.Enabled = false;
+        }
+
         private void Log(string message)
         {
-            if(Connected)
+            if (Connected)
                 Executor.Log(message);
+        }
+
+        private void btnDisconnect_Click(object sender, EventArgs e)
+        {
+            DisableConnectButton();
+            DisableDisconnectButton();
+            DisableGrpDevice();
+            DisableCheckEvent();
+            Disconnect();
+            MessageBox.Show("Device disconnected.");
         }
     }
 }

@@ -39,6 +39,7 @@
             this.btnConnect = new System.Windows.Forms.Button();
             this.chkEventData = new System.Windows.Forms.CheckBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnDisconnect = new System.Windows.Forms.Button();
             this.grpDevice.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
             this.SuspendLayout();
@@ -99,6 +100,7 @@
             this.radioUSB.TabStop = true;
             this.radioUSB.Text = "USB";
             this.radioUSB.UseVisualStyleBackColor = true;
+            this.radioUSB.CheckedChanged += new System.EventHandler(this.radioUSB_CheckedChanged);
             // 
             // label1
             // 
@@ -120,6 +122,7 @@
             this.radioWiFi.TabStop = true;
             this.radioWiFi.Text = "Wi-Fi";
             this.radioWiFi.UseVisualStyleBackColor = true;
+            this.radioWiFi.CheckedChanged += new System.EventHandler(this.radioWiFi_CheckedChanged);
             // 
             // txtAddress
             // 
@@ -156,11 +159,23 @@
             this.toolTip.ReshowDelay = 100;
             this.toolTip.ToolTipTitle = "Event Data";
             // 
+            // btnDisconnect
+            // 
+            this.btnDisconnect.Enabled = false;
+            this.btnDisconnect.Location = new System.Drawing.Point(12, 215);
+            this.btnDisconnect.Name = "btnDisconnect";
+            this.btnDisconnect.Size = new System.Drawing.Size(354, 52);
+            this.btnDisconnect.TabIndex = 3;
+            this.btnDisconnect.Text = "Disconnect";
+            this.btnDisconnect.UseVisualStyleBackColor = true;
+            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
+            // 
             // ConnectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(378, 215);
+            this.ClientSize = new System.Drawing.Size(375, 275);
+            this.Controls.Add(this.btnDisconnect);
             this.Controls.Add(this.chkEventData);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.grpDevice);
@@ -189,5 +204,6 @@
         private NumericUpDown numPort;
         private CheckBox chkEventData;
         private ToolTip toolTip;
+        private Button btnDisconnect;
     }
 }
