@@ -54,33 +54,39 @@ namespace TeraFinder
         {
             var rand = xoro.NextInt(100);
 
-            if (progress is GameProgress.UnlockedTeraRaids && rand <= 80 ||
-                progress is GameProgress.Unlocked3Stars && rand <= 30 ||
-                progress is GameProgress.Unlocked4Stars && rand <= 20)
-                return 1;
-
-            else if (progress is GameProgress.UnlockedTeraRaids && rand > 80 ||
-                     progress is GameProgress.Unlocked3Stars && rand <= 70 ||
-                     progress is GameProgress.Unlocked4Stars && rand <= 40)
-                return 2;
-
-            else if (progress is GameProgress.Unlocked3Stars && rand > 70 ||
-                     progress is GameProgress.Unlocked4Stars && rand <= 70 ||
-                     progress is GameProgress.Unlocked5Stars && rand <= 40 ||
-                     progress is GameProgress.Unlocked6Stars && rand <= 30)
-                return 3;
-
-            else if (progress is GameProgress.Unlocked4Stars && rand > 70 ||
-                     progress is GameProgress.Unlocked5Stars && rand <= 75 ||
-                     progress is GameProgress.Unlocked6Stars && rand <= 70)
-                return 4;
-
-            else if (progress is GameProgress.Unlocked5Stars && rand > 75 ||
-                     progress is GameProgress.Unlocked6Stars && rand > 70)
-                return 5;
-
-            else
-                throw new ArgumentOutOfRangeException();
+            return progress switch
+            {
+                GameProgress.Unlocked6Stars => rand switch
+                {
+                    > 70 => 5,
+                    > 30 => 4,
+                    _ => 3,
+                },
+                GameProgress.Unlocked5Stars => rand switch
+                {
+                    > 75 => 5,
+                    > 40 => 4,
+                    _ => 3,
+                },
+                GameProgress.Unlocked4Stars => rand switch
+                {
+                    > 70 => 4,
+                    > 40 => 3,
+                    > 20 => 2,
+                    _ => 1,
+                },
+                GameProgress.Unlocked3Stars => rand switch
+                {
+                    > 70 => 3,
+                    > 30 => 2,
+                    _ => 1,
+                },
+                _ => rand switch
+                {
+                    > 80 => 2,
+                    _ => 1,
+                },
+            };
         }
 
         public static List<string> GetAvailableSpecies(SAV9SV sav, string language, int stars, RaidContent content)
