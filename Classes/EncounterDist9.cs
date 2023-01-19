@@ -1,4 +1,3 @@
-using Microsoft.VisualBasic;
 using PKHeX.Core;
 using static System.Buffers.Binary.BinaryPrimitives;
 

@@ -1,7 +1,6 @@
 ﻿using PKHeX.Core;
 using SysBot.Base;
 using TeraFinder.Properties;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TeraFinder.Forms
 {

@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using static TeraFinder.GridUtil;
 
 namespace TeraFinder.Forms
 {
