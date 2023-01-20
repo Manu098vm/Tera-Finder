@@ -89,7 +89,7 @@ public sealed record EncounterTera9 : EncounterStatic, ITeraRaid9
         RandRate = data[0x13],
         RandRateMinScarlet = BinaryPrimitives.ReadInt16LittleEndian(data[0x14..]),
         RandRateMinViolet = BinaryPrimitives.ReadInt16LittleEndian(data[0x16..]),
-        Identifier = BinaryPrimitives.ReadUInt16LittleEndian(data[0x18..]),
+        Identifier = BinaryPrimitives.ReadUInt32LittleEndian(data[0x18..]),
         FixedRewardHash = BinaryPrimitives.ReadUInt64LittleEndian(data[0x1C..]),
         LotteryRewardHash = BinaryPrimitives.ReadUInt64LittleEndian(data[0x24..]),
     };

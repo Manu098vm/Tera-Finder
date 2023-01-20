@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Authors>kwsch</Authors>
@@ -15,21 +15,7 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
-	<ItemGroup>
-		<Reference Include="FlatSharp">
-			<HintPath>deps\FlatSharp.dll</HintPath>
-		</Reference>
-		<Reference Include="FlatSharp.Runtime">
-			<HintPath>deps\FlatSharp.Runtime.dll</HintPath>
-		</Reference>
-		<Reference Include="Microsoft.CodeAnalysis">
-			<HintPath>deps\Microsoft.CodeAnalysis.dll</HintPath>
-		</Reference>
-		<Reference Include="Microsoft.CodeAnalysis.CSharp">
-			<HintPath>deps\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
-		</Reference>
-		<Reference Include="Microsoft.CodeAnalysis.Workspaces">
-			<HintPath>deps\Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
-		</Reference>
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FlatSharp" Version="6.3.5" />
+  </ItemGroup>
 </Project>

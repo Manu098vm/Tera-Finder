@@ -146,7 +146,7 @@ namespace TeraFinder
                             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
                             TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
-                        var rngres = TeraUtil.CalcRNG(seed, Int32.Parse(f.txtTID.Text), Int32.Parse(f.txtSID.Text), content, encounter!);
+                        var rngres = TeraUtil.CalcRNG(seed, (uint)Int32.Parse(f.txtTID.Text), (uint)Int32.Parse(f.txtSID.Text), content, encounter!);
 
                         template.Species = rngres.Species;
                         template.Form = rngres.Form;
@@ -156,8 +156,8 @@ namespace TeraFinder
                         template.Obedience_Level = (byte)rngres.Level;
                         template.TeraTypeOriginal = (MoveType)rngres.TeraType;
                         template.EncryptionConstant = rngres.EC;
-                        template.TrainerID7 = Int32.Parse(f.txtTID.Text);
-                        template.TrainerSID7 = Int32.Parse(f.txtSID.Text);
+                        template.TrainerTID7 = (uint)Int32.Parse(f.txtTID.Text);
+                        template.TrainerSID7 = (uint)Int32.Parse(f.txtSID.Text);
                         template.Version = f.cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.VL;
                         template.Language = (byte)sav.Language;
                         template.HT_Name = sav.OT;
@@ -200,7 +200,10 @@ namespace TeraFinder
 
                         if (!la.Valid)
                         {
-                            MessageBox.Show($"Error while parsing the template. Please report this error to the plugin author.\n{la.Report()}");
+                            if (la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault() is not null && content is RaidContent.Event or RaidContent.Event_Mighty)
+                                MessageBox.Show($"Error while parsing the template.\nPKHeX Core does not contain event data [{encounter!.Identifier}].\nPlease check the Tara Finder wiki to find out how to update the PKHeX.Core dependency.");
+                            else
+                                MessageBox.Show($"Error while parsing the template. Please report this error to the Tera Finder author.\n{la.Report()}");
                             return;
                         }
 
@@ -265,7 +268,7 @@ namespace TeraFinder
                             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
                             TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
-                        var rngres = TeraUtil.CalcRNG(seed, Int32.Parse(f.txtTID.Text), Int32.Parse(f.txtSID.Text), content, encounter!);
+                        var rngres = TeraUtil.CalcRNG(seed, (uint)Int32.Parse(f.txtTID.Text), (uint)Int32.Parse(f.txtSID.Text), content, encounter!);
 
                         var lvl0 = RewardUtil.GetRewardList(rngres, encounter!.FixedRewardHash, encounter!.LotteryRewardHash,
                             encounter!.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards, encounter!.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards, 0);
@@ -379,7 +382,7 @@ namespace TeraFinder
                             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
                             TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
-                        var rngres = TeraUtil.CalcRNG(seed, Int32.Parse(f.txtTID.Text), Int32.Parse(f.txtSID.Text), content, encounter!);
+                        var rngres = TeraUtil.CalcRNG(seed, (uint)Int32.Parse(f.txtTID.Text), (uint)Int32.Parse(f.txtSID.Text), content, encounter!);
 
                         template.Species = rngres.Species;
                         template.Form = rngres.Form;
@@ -389,8 +392,8 @@ namespace TeraFinder
                         template.Obedience_Level = (byte)rngres.Level;
                         template.TeraTypeOriginal = (MoveType)rngres.TeraType;
                         template.EncryptionConstant = rngres.EC;
-                        template.TrainerID7 = Int32.Parse(f.txtTID.Text);
-                        template.TrainerSID7 = Int32.Parse(f.txtSID.Text);
+                        template.TrainerTID7 = (uint)Int32.Parse(f.txtTID.Text);
+                        template.TrainerSID7 = (uint)Int32.Parse(f.txtSID.Text);
                         template.Version = f.cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.VL;
                         template.Language = (byte)sav.Language;
                         template.HT_Name = sav.OT;
@@ -433,8 +436,14 @@ namespace TeraFinder
 
                         if (!la.Valid)
                         {
-                            MessageBox.Show($"Error while parsing the template. Please report this error to the plugin author.\n{la.Report()}");
-                            return;
+                            if (!la.Valid)
+                            {
+                                if (la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault() is not null && content is RaidContent.Event or RaidContent.Event_Mighty)
+                                    MessageBox.Show($"Error while parsing the template.\nPKHeX Core does not contain event data [{encounter!.Identifier}].\nPlease check the Tera Finder wiki to find out how to update the PKHeX.Core dependency.");
+                                else
+                                    MessageBox.Show($"Error while parsing the template. Please report this error to the Tera Finder author.\n{la.Report()}");
+                                return;
+                            }
                         }
 
                         f.Editor.PKMEditor!.PopulateFields(template, true);
@@ -472,7 +481,7 @@ namespace TeraFinder
 
                         if (encounter is not null)
                         {
-                            var rngres = TeraUtil.CalcRNG(seed, Int32.Parse(f.txtTID.Text), Int32.Parse(f.txtSID.Text), content, encounter);
+                            var rngres = TeraUtil.CalcRNG(seed, (uint)Int32.Parse(f.txtTID.Text), (uint)Int32.Parse(f.txtSID.Text), content, encounter);
                             var success = true;
 
                             if (rngres != null)
@@ -510,7 +519,7 @@ namespace TeraFinder
 
                         if (encounter is not null)
                         {
-                            var rngres = TeraUtil.CalcRNG(seed, Int32.Parse(f.txtTID.Text), Int32.Parse(f.txtSID.Text), content, encounter);
+                            var rngres = TeraUtil.CalcRNG(seed, (uint)Int32.Parse(f.txtTID.Text), (uint)Int32.Parse(f.txtSID.Text), content, encounter);
                             var success = true;
 
                             if (rngres != null)
@@ -572,7 +581,7 @@ namespace TeraFinder
 
                             if (accuratesearch)
                             {
-                                var det = TeraUtil.CalcRNG(seed, sav.TrainerID7, sav.TrainerSID7, content, encounter);
+                                var det = TeraUtil.CalcRNG(seed, sav.TrainerTID7, sav.TrainerSID7, content, encounter);
                                 list = RewardUtil.GetRewardList(det, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
                                 shiny = det.Shiny;
                             }
@@ -629,7 +638,7 @@ namespace TeraFinder
 
                         if (encounter is not null)
                         {
-                            var rngres = TeraUtil.CalcRNG(seed, Int32.Parse(f.txtTID.Text), Int32.Parse(f.txtSID.Text), content, encounter);
+                            var rngres = TeraUtil.CalcRNG(seed, (uint)Int32.Parse(f.txtTID.Text), (uint)Int32.Parse(f.txtSID.Text), content, encounter);
                             var success = true;
 
                             if (rngres != null)

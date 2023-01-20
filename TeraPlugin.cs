@@ -139,7 +139,7 @@ namespace TeraFinder
 
         public void LaunchFinder()
         {
-            new CheckerForm(new PK9 { TrainerID7 = SAV.TrainerID7, TrainerSID7 = SAV.TrainerSID7 }, SAV).Show();
+            new CheckerForm(new PK9 { TrainerTID7 = SAV.TrainerTID7, TrainerSID7 = SAV.TrainerSID7 }, SAV).Show();
         }
 
         public ConnectionForm LaunchConnector(Form? parent = null)
@@ -197,7 +197,7 @@ namespace TeraFinder
         {
             var ot = SAV.OT;
             var game = (GameVersion)SAV.Game;
-            var tid = SAV.TrainerID7;
+            var tid = (int)SAV.TrainerTID7;
             return $"{game} - {ot} ({tid}) - {Language.ToUpper()}";
         }
 

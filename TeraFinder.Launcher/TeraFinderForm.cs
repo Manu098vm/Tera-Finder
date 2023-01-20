@@ -62,7 +62,7 @@ namespace TeraFinder.Launcher
         {
             if (e.Data is not null)
             {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop)!;
                 LoadLocalFiles(files[0]);
             }
         }
