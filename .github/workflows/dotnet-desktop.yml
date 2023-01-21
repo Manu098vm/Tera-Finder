@@ -102,6 +102,6 @@ jobs:
         name: TeraFinder.Plugin
         path: |
           bin
-          !bin/Release/net6.0-windows/PKHeX.Core.dll
-          !bin/Release/net6.0-windows/PKHeX.Drawing.dll
-          !bin/Release/net6.0-windows/PKHeX.Drawing.PokeSprite.dll
+          !bin/Release/net7.0-windows/PKHeX.Core.dll
+          !bin/Release/net7.0-windows/PKHeX.Drawing.dll
+          !bin/Release/net7.0-windows/PKHeX.Drawing.PokeSprite.dll
