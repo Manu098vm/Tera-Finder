@@ -1152,10 +1152,17 @@
             // 
             // dataGrid
             // 
+            this.dataGrid.AllowUserToAddRows = false;
+            this.dataGrid.AllowUserToDeleteRows = false;
+            this.dataGrid.AllowUserToResizeRows = false;
+            this.dataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGrid.Location = new System.Drawing.Point(363, 245);
             this.dataGrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dataGrid.Name = "dataGrid";
+            this.dataGrid.ReadOnly = true;
             this.dataGrid.RowHeadersWidth = 51;
             this.dataGrid.RowTemplate.Height = 25;
             this.dataGrid.Size = new System.Drawing.Size(1106, 755);
