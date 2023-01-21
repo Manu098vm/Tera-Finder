@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using TeraFinder.Forms;
 
 namespace TeraFinder.Launcher
@@ -17,6 +18,7 @@ namespace TeraFinder.Launcher
             //btnImportNews.Enabled = false;
             btnStartEditor.Enabled = false;
             btnExport.Enabled = false;
+            UpdateEventLabel();
         }
 
         private void FormEnabledChanged(object sender, EventArgs e)
@@ -30,6 +32,7 @@ namespace TeraFinder.Launcher
                     btnExport.Enabled = false;
                     btnLoad.Enabled = false;
                     txtSAV.Text = GetGameString();
+                    UpdateEventLabel();
                 }
                 else if(Plugin.GetSavName().Equals("TeraFinder"))
                 {
@@ -37,12 +40,24 @@ namespace TeraFinder.Launcher
                     btnStartEditor.Enabled = false;
                     btnLoad.Enabled = true;
                     txtSAV.Text = GetGameString();
+                    UpdateEventLabel();
                 }
             }
             else
             {
                 btnLoad.Enabled = true;
             }
+        }
+
+        private void UpdateEventLabel()
+        {
+            var str = "Poké Portal News Event: ";
+            var id = Plugin.GetEventIdentifier();
+            if (id > 0)
+                str += $"[{id}]";
+            else
+                str += "None";
+            lblEvent.Text = str;
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
@@ -88,6 +103,7 @@ namespace TeraFinder.Launcher
                     btnImportNews.Enabled = true;
                     btnStartEditor.Enabled = true;
                     btnExport.Enabled = true;
+                    UpdateEventLabel();
                 }
                 catch (Exception)
                 {
@@ -115,6 +131,7 @@ namespace TeraFinder.Launcher
         private void btnImportNews_Click(object sender, EventArgs e)
         {
             Plugin.LaunchImporter();
+            UpdateEventLabel();
         }
 
         private void btnStartEditor_Click(object sender, EventArgs e)
