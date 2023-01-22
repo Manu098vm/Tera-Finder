@@ -487,7 +487,7 @@ namespace TeraFinder
                             if (rngres != null)
                             {
                                 var entry = rngres.GetStrings(f.NameList, f.AbilityList, f.NatureList, f.MoveList, f.TypeList, f.FormList, f.GenderListAscii, f.GenderListUnicode);
-                                var grid = new GridEntry(ConvertToString(row)).GetStrings();
+                                var grid = new GridEntry(row.ConvertToString()).GetStrings();
                                 for (var i = 0; i < entry.Length - 1; i++)
                                     if (!entry[i].Equals(grid[i]))
                                         success = false;
@@ -525,7 +525,7 @@ namespace TeraFinder
                             if (rngres != null)
                             {
                                 var entry = rngres.GetStrings(f.NameList, f.AbilityList, f.NatureList, f.MoveList, f.TypeList, f.FormList, f.GenderListAscii, f.GenderListUnicode);
-                                var grid = new GridEntry(ConvertToString(row)).GetStrings();
+                                var grid = new GridEntry(row.ConvertToString()).GetStrings();
                                 for (var i = 0; i < entry.Length - 1; i++)
                                     if (!entry[i].Equals(grid[i]))
                                         success = false;
@@ -566,7 +566,7 @@ namespace TeraFinder
                             var lotterylist = encounter.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards;
                             var accuratesearch = true;
 
-                            foreach (var str in ConvertToString(row))
+                            foreach (var str in row.ConvertToString())
                             {
                                 var sub = str.Length > 10 ? str[0..10] : str;
                                 if(RewardUtil.TeraShard.Contains(sub))
@@ -602,7 +602,7 @@ namespace TeraFinder
                                     strlist.Add(item.GetItemName(f.Items, f.Editor.Language, true));
 
                                 var entry = strlist.ToArray();
-                                var grid = new RewardGridEntry(ConvertToRewardString(row)).GetStrings();
+                                var grid = new RewardGridEntry(row.ConvertToString()).GetStrings();
                                 for (var i = 0; i < entry.Length - 1; i++)
                                     if (!entry[i].Equals(grid[i]))
                                         success = false;
@@ -644,7 +644,7 @@ namespace TeraFinder
                             if (rngres != null)
                             {
                                 var entry = rngres.GetStrings(f.NameList, f.AbilityList, f.NatureList, f.MoveList, f.TypeList, f.FormList, f.GenderListAscii, f.GenderListUnicode);
-                                var grid = new GridEntry(ConvertToString(row)).GetStrings();
+                                var grid = new GridEntry(row.ConvertToString()).GetStrings();
                                 for (var i = 0; i < entry.Length - 1; i++)
                                     if (!entry[i].Equals(grid[i]))
                                         success = false;
@@ -661,21 +661,11 @@ namespace TeraFinder
 
         private static string[] ConvertToString(this DataGridViewRow row)
         {
-            var columnCount = row.Cells.Count;
-            var output = new string[columnCount];
-            for (var i = 0; i < columnCount; i++)
-                output[i] = Convert.ToString(row.Cells[i].Value)!;
-            return output;
-        }
-
-        private static string[] ConvertToRewardString(this DataGridViewRow row)
-        {
             var cellcount = row.Cells.Count;
             var output = new string[cellcount];
             for (var i = 0; i < cellcount; i++)
                 output[i] = Convert.ToString(row.Cells[i].Value)!;
             return output;
         }
-
     }
 }
