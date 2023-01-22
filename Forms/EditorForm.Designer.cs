@@ -262,6 +262,7 @@
             // 
             // btnRewards
             // 
+            this.btnRewards.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnRewards.Location = new System.Drawing.Point(265, 21);
             this.btnRewards.Name = "btnRewards";
             this.btnRewards.Size = new System.Drawing.Size(75, 31);

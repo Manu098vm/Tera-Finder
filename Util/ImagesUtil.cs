@@ -36,6 +36,10 @@ namespace TeraFinder
 
         public static void SetMapPoint(this PictureBox pic, int teratype, int area, int spawnpoint, Dictionary<string, float[]> locations)
         {
+            const int def_size = 570;
+            const int def_width = 52;
+            const int def_height = 5178;
+
             var crystal = (MoveType)teratype switch
             {
                 MoveType.Normal => Properties.Resources.item_1862,
@@ -59,11 +63,16 @@ namespace TeraFinder
                 _ => Properties.Resources.item_1862,
             };
 
+            var width_scale = (float)pic.Width / def_size;
+            var height_scale = (float)pic.Height * 100 / def_size;
+            width_scale = pic.Width == def_size ? def_width : pic.Width < def_width ? def_width - width_scale : def_width + width_scale;
+            height_scale = pic.Height == def_size ? def_height : pic.Height < def_height ? def_height - height_scale : def_height + height_scale; 
+
             var loc_available = locations.TryGetValue($"{area}-{spawnpoint}", out var location);
             var coordinates = new Point
             {
-                X = loc_available ? (int)((location![0] - 52) * pic.Width / 5000) : 0,
-                Y = loc_available ? (int)((location![2] + 5178) * pic.Height / 5000) : 0,
+                X = loc_available ? (int)((location![0] - width_scale) * pic.Width / 5000) : 0,
+                Y = loc_available ? (int)((location![2] + height_scale) * pic.Height / 5000) : 0,
             };
 
             var pointer = new Bitmap(crystal, new Size(crystal.Width / 4, crystal.Height / 4));
