@@ -46,6 +46,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.remoteConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnRemoteConnect = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblEvent = new System.Windows.Forms.Label();
             this.grpSAV.SuspendLayout();
             this.grpTools.SuspendLayout();
             this.grpStaticTools.SuspendLayout();
@@ -221,12 +222,25 @@
             this.btnRemoteConnect.Text = "Connect To Remote Device";
             this.btnRemoteConnect.Click += new System.EventHandler(this.btnRemoteConnect_Click);
             // 
+            // lblEvent
+            // 
+            this.lblEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblEvent.AutoSize = true;
+            this.lblEvent.Location = new System.Drawing.Point(232, 20);
+            this.lblEvent.Name = "lblEvent";
+            this.lblEvent.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lblEvent.Size = new System.Drawing.Size(243, 20);
+            this.lblEvent.TabIndex = 3;
+            this.lblEvent.Text = "Poké Portal News Event: [00000000]";
+            this.lblEvent.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // TeraFinderForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(487, 471);
+            this.Controls.Add(this.lblEvent);
             this.Controls.Add(this.grpTools);
             this.Controls.Add(this.grpSAV);
             this.Controls.Add(this.menuStrip1);
@@ -235,6 +249,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TeraFinderForm";
+            this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "Tera Finder ";
             this.EnabledChanged += new System.EventHandler(this.FormEnabledChanged);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileDragDrop);
@@ -270,5 +285,6 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem remoteConnectToolStripMenuItem;
         private ToolStripMenuItem btnRemoteConnect;
+        private Label lblEvent;
     }
 }

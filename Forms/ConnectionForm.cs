@@ -93,7 +93,7 @@ namespace TeraFinder.Forms
                     await DownloadEventData().ConfigureAwait(false);
 
                 MessageBox.Show("Successfully connected.");
-                Log($"Executor succesfully connected: {version} - {SAV.OT} ({SAV.TrainerID7}) [{progress}]");
+                Log($"Executor succesfully connected: {version} - {SAV.OT} ({SAV.TrainerTID7}) [{progress}]");
                 EnableConnectButton();
                 EnableDisconnectButton();
                 EnableGrpDevice();

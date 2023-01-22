@@ -40,7 +40,7 @@ namespace TeraFinder
             var progress = (int)(Editor.Progress == GameProgress.None ? 0 : Editor.Progress);
             cmbProgress.SelectedIndex = progress;
             cmbGame.SelectedIndex = Editor.SAV.Game == (int)GameVersion.VL ? 1 : 0;
-            txtTID.Text = $"{Editor.SAV.TrainerID7}";
+            txtTID.Text = $"{Editor.SAV.TrainerTID7}";
             txtSID.Text = $"{Editor.SAV.TrainerSID7}";
             if (!IsBlankSAV()) grpGameInfo.Enabled = false;
 
@@ -105,8 +105,8 @@ namespace TeraFinder
         private void cmbStars_IndexChanged(object sender, EventArgs e)
         {
             var sav = Editor.SAV.Clone();
-            sav.TrainerID7 = Int32.Parse(txtTID.Text);
-            sav.TrainerSID7 = Int32.Parse(txtSID.Text);
+            sav.TrainerTID7 = (uint)Int32.Parse(txtTID.Text);
+            sav.TrainerSID7 = (uint)Int32.Parse(txtSID.Text);
             sav.Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV;
             var species = TeraUtil.GetAvailableSpecies((SAV9SV)sav, Editor.Language, GetStars(), (RaidContent)cmbContent.SelectedIndex);
             cmbSpecies.Items.Clear();
@@ -368,22 +368,19 @@ namespace TeraFinder
                 }
                 btnSearch.Text = "Stop";
                 DisableControls();
-                ActiveForm.Update();
+                ActiveForm!.Update();
 
                 CreateFilter();
                 var sav = (SAV9SV)Editor.SAV.Clone();
-                sav.TrainerID7 = Int32.Parse(txtTID.Text);
-                sav.TrainerSID7 = Int32.Parse(txtSID.Text);
+                sav.TrainerTID7 = (uint)Int32.Parse(txtTID.Text);
+                sav.TrainerSID7 = (uint)Int32.Parse(txtSID.Text);
                 sav.Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV;
                 var progress = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black ? GameProgress.None : (GameProgress)cmbProgress.SelectedIndex;
                 var content = (RaidContent)cmbContent.SelectedIndex;
 
                 try
                 {
-                    //var stopwatch = new System.Diagnostics.Stopwatch();
-                    //stopwatch.Start();
                     var griddata= await StartSearch(sav, progress, content, Token);
-                    //MessageBox.Show($"Search completed in {stopwatch.Elapsed.TotalSeconds} seconds.");
                     dataGrid.DataSource = griddata;
                     btnSearch.Text = "Search";
                     EnableControls(IsBlankSAV());
@@ -491,7 +488,7 @@ namespace TeraFinder
             if (encounter is null)
                 return null;
 
-            return TeraUtil.CalcRNG(seed, sav.TrainerID7, sav.TrainerSID7, content, encounter, calc);
+            return TeraUtil.CalcRNG(seed, sav.TrainerTID7, sav.TrainerSID7, content, encounter, calc);
         }
 
         private void dataGrid_MouseUp(object sender, MouseEventArgs e)

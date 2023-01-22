@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.IO;
 using FlatSharp.Attributes;
 
 // ReSharper disable UnusedMember.Global

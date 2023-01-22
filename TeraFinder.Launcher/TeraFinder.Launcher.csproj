@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -61,5 +61,10 @@
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
 	  </None>
-	</ItemGroup>	
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' == 'Windows_NT'">
+		<RemoveDir Directories="$(OUTDIR)\cs; $(OUTDIR)\de; $(OUTDIR)\es; $(OUTDIR)\fr; $(OUTDIR)\it; $(OUTDIR)\ja; $(OUTDIR)\ko; $(OUTDIR)\pl; $(OUTDIR)\pt-BR; $(OUTDIR)\ru; $(OUTDIR)\tr; $(OUTDIR)\zh-Hans; $(OUTDIR)\zh-Hant" />
+		<Delete Files="$(OUTDIR)\TeraFinder.Launcher.deps.json; $(OUTDIR)\TeraFinder.dll.config; $(OUTDIR)\Humanizer.dll; $(OUTDIR)\Microsoft.Bcl.AsyncInterfaces.dll; $(OUTDIR)\Microsoft.CodeAnalysis.CSharp.Workspaces.dll; $(OUTDIR)\System.Composition.AttributedModel.dll; $(OUTDIR)\System.Composition.Convention.dll; $(OUTDIR)\System.Composition.Hosting.dll; $(OUTDIR)\System.Composition.Runtime.dll; $(OUTDIR)\System.Composition.TypedParts.dll" />
+	</Target>
 </Project>

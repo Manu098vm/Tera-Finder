@@ -16,7 +16,7 @@ namespace TeraFinder.Forms
             InitializeComponent();
             SAV = sav;
             PKM = (PK9)pk;
-            txtTid.Text = $"{PKM.TrainerID7}";
+            txtTid.Text = $"{PKM.TrainerTID7}";
             txtSid.Text = $"{PKM.TrainerSID7}";
             txtEC.Text = $"{PKM.EncryptionConstant:X8}";
             txtPID.Text = $"{PKM.PID:X8}";
@@ -53,8 +53,8 @@ namespace TeraFinder.Forms
 
         private void btnCalc_Click(object sender, EventArgs e)
         {
-            var tid = Convert.ToInt32(txtTid.Text);
-            var sid = Convert.ToInt32(txtSid.Text);
+            var tid = (uint)Convert.ToInt32(txtTid.Text);
+            var sid = (uint)Convert.ToInt32(txtSid.Text);
             var ec = Convert.ToUInt32(txtEC.Text, 16);
             var pid = Convert.ToUInt32(txtPID.Text, 16);
             var hp = (int)numHP.Value;

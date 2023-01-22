@@ -35,7 +35,7 @@ namespace TeraFinder
         public void Initialize(params object[] args)
         {
             Plugin.Image = Properties.Resources.icon.ToBitmap();
-            Task.Run(async () => { await GitHubUtil.TryUpdate(); }).Wait();
+            Task.Run(GitHubUtil.TryUpdate).Wait();
             SaveFileEditor = (ISaveFileProvider)Array.Find(args, z => z is ISaveFileProvider)!;
             PKMEditor = (IPKMView)Array.Find(args, z => z is IPKMView)!;
             var menu = (ToolStrip)Array.Find(args, z => z is ToolStrip)!;
@@ -139,7 +139,7 @@ namespace TeraFinder
 
         public void LaunchFinder()
         {
-            new CheckerForm(new PK9 { TrainerID7 = SAV.TrainerID7, TrainerSID7 = SAV.TrainerSID7 }, SAV).Show();
+            new CheckerForm(new PK9 { TrainerTID7 = SAV.TrainerTID7, TrainerSID7 = SAV.TrainerSID7 }, SAV).Show();
         }
 
         public ConnectionForm LaunchConnector(Form? parent = null)
@@ -159,18 +159,18 @@ namespace TeraFinder
             var con = Connection is null ? new ConnectionForm(SAV) : Connection;
             con.FormClosing += (s, e) =>
             {
-                if (parent is not null)
-                {
-                    Language = GetStringLanguage((LanguageID)SAV.Language);
-                    parent.Enabled = true;
-                }
-
                 var events = TeraUtil.GetSAVDistEncounters(SAV);
                 var eventsrewards = RewardUtil.GetDistRewardsTables(SAV);
                 Dist = events[0];
                 Mighty = events[1];
                 DistFixedRewards = eventsrewards[0];
                 DistLotteryRewards = eventsrewards[1];
+
+                if (parent is not null)
+                {
+                    Language = GetStringLanguage((LanguageID)SAV.Language);
+                    parent.Enabled = true;
+                }
 
                 con.Hide();
                 e.Cancel = true;
@@ -197,8 +197,19 @@ namespace TeraFinder
         {
             var ot = SAV.OT;
             var game = (GameVersion)SAV.Game;
-            var tid = SAV.TrainerID7;
+            var tid = (int)SAV.TrainerTID7;
             return $"{game} - {ot} ({tid}) - {Language.ToUpper()}";
+        }
+
+        public uint GetEventIdentifier()
+        {
+            if (Dist is not null && Dist.Length > 0)
+                return Dist[0].Identifier;
+
+            if(Mighty is not null && Mighty.Length > 0)
+                return Mighty[0].Identifier;
+
+            return 0;
         }
 
         public bool TryLoadFile(string filePath) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, filePath);

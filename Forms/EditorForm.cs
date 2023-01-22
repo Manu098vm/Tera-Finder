@@ -73,7 +73,7 @@ namespace TeraFinder
             }
             Tera = tera is null ? TeraUtil.GetAllTeraEncounters() : tera;
             DenLocations = JsonSerializer.Deserialize<Dictionary<string, float[]>>(Properties.Resources.den_locations)!;
-            DefBackground = pictureBox.BackgroundImage;
+            DefBackground = pictureBox.BackgroundImage!;
             DefSize = pictureBox.Size;
             Progress = TeraUtil.GetProgress(SAV);
             foreach (var name in GetRaidNameList())
@@ -224,7 +224,7 @@ namespace TeraFinder
 
                 if (encounter is not null)
                 {
-                    var rngres = TeraUtil.CalcRNG(raid.Seed, SAV.TrainerID7, SAV.TrainerSID7, (RaidContent)raid.Content, encounter);
+                    var rngres = TeraUtil.CalcRNG(raid.Seed, SAV.TrainerTID7, SAV.TrainerSID7, (RaidContent)raid.Content, encounter);
 
                     lblSpecies.Text = $"Species: {GameInfo.GetStrings(Language).specieslist[rngres.Species]}";
                     lblTera.Text = $"TeraType: {GameInfo.GetStrings(Language).types[rngres.TeraType]}";
@@ -296,7 +296,7 @@ namespace TeraFinder
             for (var i = 0; i < stars; i++)
                 str += "☆";
 
-            var img = pictureBox.Image != null ? pictureBox.Image : pictureBox.BackgroundImage;
+            var img = pictureBox.Image ?? pictureBox.BackgroundImage!;
             lblStarSymbols.Text = str;
             lblStarSymbols.Location = new(pictureBox.Location.X + (pictureBox.Width - lblStarSymbols.Size.Width) / 2, pictureBox.Location.Y + img.Height);
         }

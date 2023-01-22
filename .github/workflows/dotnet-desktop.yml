@@ -68,7 +68,7 @@ jobs:
     - name: Install .NET Core
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.x
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
@@ -102,6 +102,6 @@ jobs:
         name: TeraFinder.Plugin
         path: |
           bin
-          !bin/Release/net6.0-windows/PKHeX.Core.dll
-          !bin/Release/net6.0-windows/PKHeX.Drawing.dll
-          !bin/Release/net6.0-windows/PKHeX.Drawing.PokeSprite.dll
+          !bin/Release/net7.0-windows/PKHeX.Core.dll
+          !bin/Release/net7.0-windows/PKHeX.Drawing.dll
+          !bin/Release/net7.0-windows/PKHeX.Drawing.PokeSprite.dll

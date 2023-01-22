@@ -47,7 +47,7 @@ namespace TeraFinder.Forms
             var progress = (int)(Editor.Progress == GameProgress.None ? 0 : Editor.Progress);
             cmbProgress.SelectedIndex = progress;
             cmbGame.SelectedIndex = Editor.SAV.Game == (int)GameVersion.VL ? 1 : 0;
-            txtTID.Text = $"{Editor.SAV.TrainerID7}";
+            txtTID.Text = $"{Editor.SAV.TrainerTID7}";
             txtSID.Text = $"{Editor.SAV.TrainerSID7}";
             if (!IsBlankSAV()) grpProfile.Enabled = false;
             txtSeed.Text = Editor.txtSeed.Text;
@@ -241,15 +241,15 @@ namespace TeraFinder.Forms
                 }
                 btnSearch.Text = "Stop";
                 DisableControls();
-                ActiveForm.Update();
+                ActiveForm!.Update();
 
                 CreateFilter();
                 if (Filter is not null && Filter.NeedAccurate())
                     chkAccurateSearch.Checked = true;
 
                 var sav = (SAV9SV)Editor.SAV.Clone();
-                sav.TrainerID7 = Int32.Parse(txtTID.Text);
-                sav.TrainerSID7 = Int32.Parse(txtSID.Text);
+                sav.TrainerTID7 = (uint)Int32.Parse(txtTID.Text);
+                sav.TrainerSID7 = (uint)Int32.Parse(txtSID.Text);
                 sav.Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV;
                 var progress = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black ? GameProgress.None : (GameProgress)cmbProgress.SelectedIndex;
                 var content = (RaidContent)cmbContent.SelectedIndex;
@@ -257,10 +257,7 @@ namespace TeraFinder.Forms
 
                 try
                 {
-                    //var stopwatch = new Stopwatch();
-                    //stopwatch.Start();
                     var griddata = await StartSearch(sav, progress, content, boost, Token);
-                    //MessageBox.Show($"Search completed in {stopwatch.ElapsedMilliseconds} ms");
                     dataGrid.DataSource = griddata;
                     btnSearch.Text = "Search";
                     EnableControls(IsBlankSAV());
@@ -377,7 +374,7 @@ namespace TeraFinder.Forms
 
             if (accuratesearch)
             {
-                var det = TeraUtil.CalcRNG(seed, sav.TrainerID7, sav.TrainerSID7, content, encounter, calc);
+                var det = TeraUtil.CalcRNG(seed, sav.TrainerTID7, sav.TrainerSID7, content, encounter, calc);
                 list = RewardUtil.GetRewardList(det, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist, boost);
                 shiny = det.Shiny;
             }

@@ -1,6 +1,4 @@
-using System;
 using System.ComponentModel;
-using System.IO;
 using FlatSharp.Attributes;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable ClassNeverInstantiated.Global
@@ -47,7 +45,7 @@ public class PokeDataBattle
         if (BallId != BallType.NONE)
             throw new ArgumentOutOfRangeException(nameof(BallId), BallId, $"No {nameof(BallId)} allowed!");
 
-        bw.Write((ushort)DevId);
+        bw.Write(SpeciesConverterSV.GetNational9((ushort)DevId));
         bw.Write((byte)FormId);
         bw.Write((byte)Sex);
 
