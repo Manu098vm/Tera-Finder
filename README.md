@@ -1,5 +1,5 @@
 # Tera Finder
-![immagine](https://user-images.githubusercontent.com/52102823/210862408-8ea8f49f-cb73-4d9e-9ca5-c86a5dce8cb4.png)
+![immagine](https://user-images.githubusercontent.com/52102823/215150829-64a5fc71-0fba-4f20-938b-25988168f8c9.png)
 
 This is a PKHeX.Core based program that allows to view, edit and calculate Raids for Scarlet & Violet. This is the spiritual sequel of my [SVXoroCalc](https://github.com/Manu098vm/SVResearches).
 Both a standalone program and a PKHeX Plugin are available for use.
@@ -23,7 +23,7 @@ Powered by [PKHeX](https://github.com/kwsch/PKHeX), [pkNX](https://github.com/kw
 * Check out the [Wiki](https://github.com/Manu098vm/Tera-Finder/wiki) for guides and details.
 
 ### Building
-You can use any C# 10 & .NET 6.0 compatible IDE such as Visual Studio to compile this program.
+You can use any C# 11 & .NET 7.0 compatible IDE such as Visual Studio to compile this program.
 
 Select either Debug or Release and click Build -> Build Solution.
 
@@ -61,7 +61,7 @@ Alternatively, feel free to contact me on my [Discord Server](https://discord.gg
 ## License
 ![gplv3-with-text-136x68](https://user-images.githubusercontent.com/52102823/199572700-4e02ed70-74ef-4d67-991e-3168d93aac0d.png)
 
-Copyright © 2022 Manu098vm
+Copyright © 2023 Manu098vm
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
