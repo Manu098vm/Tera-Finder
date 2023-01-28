@@ -2,11 +2,11 @@
 ![immagine](https://user-images.githubusercontent.com/52102823/215150829-64a5fc71-0fba-4f20-938b-25988168f8c9.png)
 
 This is a PKHeX.Core based program that allows to view, edit and calculate Raids for Scarlet & Violet. This is the spiritual sequel of my [SVXoroCalc](https://github.com/Manu098vm/SVResearches).
-Both a standalone program and a PKHeX Plugin are available for use.
+Both a standalone program and a PKHeX plugin are available for use.
 
 ### Features:
 * [Import Poké Portal News in Zip/Folder formats](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Event---Pok%C3%A9-Portal-News-Importer)
-* [View & Edit Raids from a Save File](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Viewer-&-Editor)
+* [View & Edit Raids](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Viewer-&-Editor)
 * [Reverse a Pokémon into its origin Seed to check legality](https://github.com/Manu098vm/Tera-Finder/wiki/Seed-Checker)
 * [Calculate RNG seeds that results in a Pokémon with given details](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Calculator)
 * [Calculate RNG seeds that results in a Raid with wanted rewards](https://github.com/Manu098vm/Tera-Finder/wiki/Reward-Calculator)
@@ -33,9 +33,8 @@ The Plugin files will be placed in `bin/`.
 
 ### Support/Troubleshooting
 For common troubleshooting, please the check the [appropriate section in the wiki](https://github.com/Manu098vm/Tera-Finder/wiki#troubleshooting).
-If you find any bug or you need support, please write a thread in the [Project Pokémon forums](https://projectpokemon.org/home/forums/forum/23-saves-editing-help/).
+If you find any bug or you need support, please write a comment in the [Project Pokémon thread](https://projectpokemon.org/home/forums/topic/62964-scvi-tera-finder-saveram-tera-raid-viewer-editor-calculator-and-more/).
 Alternatively, feel free to contact me on my [Discord Server](https://discord.gg/F9nMfvw9sS).
-
 
 ## Credits and Thanks
 * [kwsch](https://github.com/kwsch) for [PKHeX](https://github.com/kwsch/PKHeX), [pkNX](https://github.com/kwsch/pkNX) and [SysBot.NET](https://github.com/kwsch/SysBot.NET), on which this program relies on
