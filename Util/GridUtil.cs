@@ -163,6 +163,7 @@ namespace TeraFinder
                         template.HT_Name = sav.OT;
                         template.HT_Language = (byte)sav.Language;
                         template.OT_Name = sav.OT;
+                        template.OT_Gender = sav.Gender;
                         template.PID = rngres.PID;
                         template.IV_HP = rngres.HP;
                         template.IV_ATK = rngres.ATK;
@@ -399,6 +400,7 @@ namespace TeraFinder
                         template.HT_Name = sav.OT;
                         template.HT_Language = (byte)sav.Language;
                         template.OT_Name = sav.OT;
+                        template.OT_Gender = sav.Gender;
                         template.PID = rngres.PID;
                         template.IV_HP = rngres.HP;
                         template.IV_ATK = rngres.ATK;

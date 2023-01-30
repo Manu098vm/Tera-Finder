@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using TeraFinder.Forms;
 
 namespace TeraFinder.Launcher
