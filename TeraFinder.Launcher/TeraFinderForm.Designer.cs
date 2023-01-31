@@ -46,6 +46,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.remoteConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnRemoteConnect = new System.Windows.Forms.ToolStripMenuItem();
+            this.languageToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmbLanguage = new System.Windows.Forms.ToolStripComboBox();
             this.lblEvent = new System.Windows.Forms.Label();
             this.grpSAV.SuspendLayout();
             this.grpTools.SuspendLayout();
@@ -210,7 +212,8 @@
             // remoteConnectToolStripMenuItem
             // 
             this.remoteConnectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnRemoteConnect});
+            this.btnRemoteConnect,
+            this.languageToolStrip});
             this.remoteConnectToolStripMenuItem.Name = "remoteConnectToolStripMenuItem";
             this.remoteConnectToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
             this.remoteConnectToolStripMenuItem.Text = "Tools";
@@ -221,6 +224,30 @@
             this.btnRemoteConnect.Size = new System.Drawing.Size(271, 26);
             this.btnRemoteConnect.Text = "Connect To Remote Device";
             this.btnRemoteConnect.Click += new System.EventHandler(this.btnRemoteConnect_Click);
+            // 
+            // languageToolStrip
+            // 
+            this.languageToolStrip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmbLanguage});
+            this.languageToolStrip.Name = "languageToolStrip";
+            this.languageToolStrip.Size = new System.Drawing.Size(271, 26);
+            this.languageToolStrip.Text = "Default Language";
+            // 
+            // cmbLanguage
+            // 
+            this.cmbLanguage.Items.AddRange(new object[] {
+            "日本語",
+            "English",
+            "Français",
+            "Italiano",
+            "Deutsch",
+            "Español",
+            "한국어",
+            "简体中文",
+            "繁體中文"});
+            this.cmbLanguage.Name = "cmbLanguage";
+            this.cmbLanguage.Size = new System.Drawing.Size(121, 28);
+            this.cmbLanguage.SelectedIndexChanged += new EventHandler(this.LanguageChanged);
             // 
             // lblEvent
             // 
@@ -286,5 +313,7 @@
         private ToolStripMenuItem remoteConnectToolStripMenuItem;
         private ToolStripMenuItem btnRemoteConnect;
         private Label lblEvent;
+        private ToolStripMenuItem languageToolStrip;
+        private ToolStripComboBox cmbLanguage;
     }
 }

@@ -1,4 +1,6 @@
-﻿using PKHeX.Core;
+﻿using Microsoft.CodeAnalysis.Differencing;
+using Microsoft.VisualBasic;
+using PKHeX.Core;
 
 namespace TeraFinder.Forms
 {
@@ -6,10 +8,16 @@ namespace TeraFinder.Forms
     {
         SAV9SV SAV = null!;
         List<SevenStarRaidDetail> Raids = null!;
+        private Dictionary<string, string> Strings = null!;
 
-        public ProgressForm(SAV9SV sav)
+        public ProgressForm(SAV9SV sav, string language)
         {
             InitializeComponent();
+            GenerateDictionary();
+            TranslateDictionary(language);
+            TranslateCmbProgress();
+            this.TranslateInterface(language);
+
             SAV = sav;
             Raids = new();
 
@@ -29,17 +37,44 @@ namespace TeraFinder.Forms
                 cmbMightyIndex.SelectedIndex = 0;
         }
 
+        private void GenerateDictionary()
+        {
+            Strings = new Dictionary<string, string>
+            {
+                { "GameProgress.Beginning", "Beginning" },
+                { "GameProgress.UnlockedTeraRaids", "Unlocked Tera Raids" },
+                { "GameProgress.Unlocked3Stars", "Unlocked 3 Stars" },
+                { "GameProgress.Unlocked4Stars", "Unlocked 4 Stars" },
+                { "GameProgress.Unlocked5Stars", "Unlocked 5 Stars" },
+                { "GameProgress.Unlocked6Stars", "Unlocked 6 Stars" },
+                { "SAVInvalid", "Not a valid save file." },
+                { "MsgSuccess", "Done." }
+            };
+        }
+
+        private void TranslateDictionary(string language) => Strings = Strings.TranslateInnerStrings(language);
+
+        private void TranslateCmbProgress()
+        {
+            cmbProgress.Items[0] = Strings["GameProgress.Beginning"];
+            cmbProgress.Items[1] = Strings["GameProgress.UnlockedTeraRaids"];
+            cmbProgress.Items[2] = Strings["GameProgress.Unlocked3Stars"];
+            cmbProgress.Items[3] = Strings["GameProgress.Unlocked4Stars"];
+            cmbProgress.Items[4] = Strings["GameProgress.Unlocked5Stars"];
+            cmbProgress.Items[5] = Strings["GameProgress.Unlocked6Stars"];
+        }
+
         private void btnApplyProgress_Click(object sender, EventArgs e)
         {
             if (SAV.Accessor is not null)
             {
                 var progress = (GameProgress)cmbProgress.SelectedIndex;
                 EditProgress(SAV, progress);
-                MessageBox.Show("Done.");
+                MessageBox.Show(Strings["MsgSuccess"]);
             }
             else
             {
-                MessageBox.Show("Not a valid save file");
+                MessageBox.Show(Strings["SAVInvalid"]);
                 this.Close();
             }
         }
@@ -174,7 +209,7 @@ namespace TeraFinder.Forms
             else
                 raid.Defeated = false;
 
-            MessageBox.Show("Done.");
+            MessageBox.Show(Strings["MsgSuccess"]);
         }
 
         private void cmbMightyIndex_IndexChanged(object sender, EventArgs e)

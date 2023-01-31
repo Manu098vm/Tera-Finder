@@ -7,6 +7,7 @@ namespace TeraFinder.Forms
         public RewardListForm(string language, List<Reward>? lvl0 = null, List<Reward>? lvl1 = null, List<Reward>? lvl2 = null, List<Reward>? lvl3 = null)
         {
             InitializeComponent();
+            this.TranslateInterface(language);
             var items = GameInfo.GetStrings(language).itemlist;
             var lang = GameLanguage.GetLanguageIndex(language);
 

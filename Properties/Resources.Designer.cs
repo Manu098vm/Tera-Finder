@@ -281,6 +281,185 @@ namespace TeraFinder.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
+        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
+        ///TeraFinderForm.grpSAV=Save File
+        ///TeraFinderForm.grpSavTools=SAV Tools
+        ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.btnLoad=Load Save File
+        ///TeraFinderForm.btnExport=Export Save File
+        ///TeraFinderForm.btnEditGame=Edit Game Flags
+        ///TeraFinderForm.btnImportNews=Import Poke Portal News
+        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
+        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lang_de {
+            get {
+                return ResourceManager.GetString("lang_de", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
+        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
+        ///TeraFinderForm.grpSAV=Save File
+        ///TeraFinderForm.grpSavTools=SAV Tools
+        ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.btnLoad=Load Save File
+        ///TeraFinderForm.btnExport=Export Save File
+        ///TeraFinderForm.btnEditGame=Edit Game Flags
+        ///TeraFinderForm.btnImportNews=Import Poke Portal News
+        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
+        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lang_en {
+            get {
+                return ResourceManager.GetString("lang_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
+        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
+        ///TeraFinderForm.grpSAV=Save File
+        ///TeraFinderForm.grpSavTools=SAV Tools
+        ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.btnLoad=Load Save File
+        ///TeraFinderForm.btnExport=Export Save File
+        ///TeraFinderForm.btnEditGame=Edit Game Flags
+        ///TeraFinderForm.btnImportNews=Import Poke Portal News
+        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
+        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lang_es {
+            get {
+                return ResourceManager.GetString("lang_es", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
+        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
+        ///TeraFinderForm.grpSAV=Save File
+        ///TeraFinderForm.grpSavTools=SAV Tools
+        ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.btnLoad=Load Save File
+        ///TeraFinderForm.btnExport=Export Save File
+        ///TeraFinderForm.btnEditGame=Edit Game Flags
+        ///TeraFinderForm.btnImportNews=Import Poke Portal News
+        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
+        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lang_fr {
+            get {
+                return ResourceManager.GetString("lang_fr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=Strumenti
+        ///TeraFinderForm.btnRemoteConnect=Connetti a Dispositivo Remoto
+        ///TeraFinderForm.grpSAV=Salvataggio
+        ///TeraFinderForm.grpSavTools=Strumenti SAV
+        ///TeraFinderForm.grpStaticTools=Strumenti Indipendenti
+        ///TeraFinderForm.btnLoad=Carica SAV
+        ///TeraFinderForm.btnExport=Esporta SAV
+        ///TeraFinderForm.btnEditGame=Modifica Flags di Gioco
+        ///TeraFinderForm.btnImportNews=Importa Raid Evento
+        ///TeraFinderForm.btnStartEditor=Visualizza e Modifica Raid        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lang_it {
+            get {
+                return ResourceManager.GetString("lang_it", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
+        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
+        ///TeraFinderForm.grpSAV=Save File
+        ///TeraFinderForm.grpSavTools=SAV Tools
+        ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.btnLoad=Load Save File
+        ///TeraFinderForm.btnExport=Export Save File
+        ///TeraFinderForm.btnEditGame=Edit Game Flags
+        ///TeraFinderForm.btnImportNews=Import Poke Portal News
+        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
+        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lang_ja {
+            get {
+                return ResourceManager.GetString("lang_ja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
+        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
+        ///TeraFinderForm.grpSAV=Save File
+        ///TeraFinderForm.grpSavTools=SAV Tools
+        ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.btnLoad=Load Save File
+        ///TeraFinderForm.btnExport=Export Save File
+        ///TeraFinderForm.btnEditGame=Edit Game Flags
+        ///TeraFinderForm.btnImportNews=Import Poke Portal News
+        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
+        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lang_ko {
+            get {
+                return ResourceManager.GetString("lang_ko", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
+        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
+        ///TeraFinderForm.grpSAV=Save File
+        ///TeraFinderForm.grpSavTools=SAV Tools
+        ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.btnLoad=Load Save File
+        ///TeraFinderForm.btnExport=Export Save File
+        ///TeraFinderForm.btnEditGame=Edit Game Flags
+        ///TeraFinderForm.btnImportNews=Import Poke Portal News
+        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
+        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lang_zh {
+            get {
+                return ResourceManager.GetString("lang_zh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
+        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
+        ///TeraFinderForm.grpSAV=Save File
+        ///TeraFinderForm.grpSavTools=SAV Tools
+        ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.btnLoad=Load Save File
+        ///TeraFinderForm.btnExport=Export Save File
+        ///TeraFinderForm.btnEditGame=Edit Game Flags
+        ///TeraFinderForm.btnImportNews=Import Poke Portal News
+        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
+        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string lang_zh2 {
+            get {
+                return ResourceManager.GetString("lang_zh2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] raid_fixed_reward_item_array {

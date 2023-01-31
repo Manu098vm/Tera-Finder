@@ -1,4 +1,5 @@
-﻿using PKHeX.Core;
+﻿using Microsoft.VisualBasic;
+using PKHeX.Core;
 using System.IO.Compression;
 
 namespace TeraFinder
@@ -10,6 +11,7 @@ namespace TeraFinder
                                     ref EncounterRaid9[]? mighty,
                                     ref Dictionary<ulong, List<Reward>>? distFixedRewards,
                                     ref Dictionary<ulong, List<Reward>>? distLotteryRewards,
+                                    string language,
                                     string path = "",
                                     bool plugin = false)
         {
@@ -19,13 +21,15 @@ namespace TeraFinder
             if (sav is not SAV9SV)
                 return false;
 
+            var strings = GenerateDictionary().TranslateInnerStrings(language);
+
             if (path.Equals(""))
             {
                 var dialog = new OpenFileDialog
                 {
-                    Title = "Open Poké Portal News Zip file or Folder",
-                    Filter = "All files (*.*)|*.*",
-                    FileName = "Folder Selection",
+                    Title = strings["ImportNews.Title"],
+                    Filter = $"{strings["ImportNews.Filter"]} (*.*)|*.*",
+                    FileName = strings["ImportNews.FolderSelection"],
                     ValidateNames = false,
                     CheckFileExists = false,
                     CheckPathExists = true,
@@ -54,12 +58,12 @@ namespace TeraFinder
                     valid = true;
 
             if (valid)
-                return FinalizeImport(path, sav, zip, ref dist, ref mighty, ref distFixedRewards, ref distLotteryRewards);
+                return FinalizeImport(path, sav, zip, ref dist, ref mighty, ref distFixedRewards, ref distLotteryRewards, strings);
 
             if (plugin || zip)
             {
                 if (zip) DeleteFilesAndDirectory(path);
-                MessageBox.Show("Invalid file(s). Aborted.");
+                MessageBox.Show(strings["ImportNews.InvalidSelection"]);
             }
 
             return false;
@@ -106,7 +110,8 @@ namespace TeraFinder
                                           ref EncounterRaid9[]? dist,
                                           ref EncounterRaid9[]? mighty,
                                           ref Dictionary<ulong, List<Reward>>? distFixedRewards,
-                                          ref Dictionary<ulong, List<Reward>>? distLotteryRewards)
+                                          ref Dictionary<ulong, List<Reward>>? distLotteryRewards,
+                                          Dictionary<string, string> strings)
         {
             try
             {
@@ -160,15 +165,29 @@ namespace TeraFinder
                 distLotteryRewards = eventsrewards[1];
 
                 if (KBCATRaidEnemyArray is not null)
-                    MessageBox.Show($"Succesfully imported Raid Event [{index}]!");
+                    MessageBox.Show($"{strings["ImportNews.Success"]} [{index}]!");
 
                 return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Import error! Is the provided file valid?\n{ex}");
+                MessageBox.Show($"{strings["ImportNews.Error"]}\n{ex}");
                 return false;
             }
+        }
+
+        private static Dictionary<string, string> GenerateDictionary()
+        {
+            var strings = new Dictionary<string, string>
+            {
+                { "ImportNews.Title", "Open Poké Portal News Zip file or Folder" },
+                { "ImportNews.Filter", "All files" },
+                { "ImportNews.FolderSelection", "Folder Selection" },
+                { "ImportNews.InvalidSelection", "Invalid file(s). Aborted." },
+                { "ImportNews.Success", "Succesfully imported Raid Event" },
+                { "ImportNews.Error", "Import error! Is the provided file valid?" },
+            };
+            return strings;
         }
     }
 }

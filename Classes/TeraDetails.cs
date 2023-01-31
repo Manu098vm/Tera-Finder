@@ -43,11 +43,11 @@ namespace TeraFinder
                 return 3;
         }
 
-        public string[] GetStrings(string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlistascii, string[] genderlistunicode)
+        public string[] GetStrings(string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlistascii, string[] genderlistunicode, string[] shinies)
         {
             var list = new string[25];
             list[0] = ($"{Seed:X8}");
-            list[1] = ($"{Shiny}");
+            list[1] = ($"{GetShiny(shinies)}");
             list[2] = ($"{Stars}");
             list[3] = ($"{GetName(namelist, typelist, formlist, genderlistascii)}");
             list[4] = ($"{Level}");
@@ -72,6 +72,11 @@ namespace TeraFinder
             list[23] = ($"{movelist[Move4]}");
             list[24] = ($"{Calcs}");
             return list;
+        }
+
+        private string GetShiny(string[] shinies)
+        {
+            return shinies[(int)Shiny];
         }
 
         private string GetName(string[] namelist, string[] typelist ,string[] formlist, string[] genderlist)
@@ -115,9 +120,9 @@ namespace TeraFinder
         public string? Move4 { get; private set; }
         public string? Calcs { get; private set; }
 
-        public GridEntry(TeraDetails res, string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlistascii, string[] genderlistunicode)
+        public GridEntry(TeraDetails res, string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlistascii, string[] genderlistunicode, string[] shinylist)
         {
-            var str = res.GetStrings(namelist, abilitylist, naturelist, movelist, typelist, formlist, genderlistascii, genderlistunicode);
+            var str = res.GetStrings(namelist, abilitylist, naturelist, movelist, typelist, formlist, genderlistascii, genderlistunicode, shinylist);
             Seed = str[0];
             Shiny = str[1];
             Stars = str[2];

@@ -15,7 +15,7 @@ namespace TeraFinder
 
         public SAV9SV SAV = null!;
         public ConnectionForm? Connection = null;
-        public string Language = GameLanguage.DefaultLanguage;
+        public string Language = Properties.Settings.Default.def_language;
 
         public EncounterRaid9[]? Tera = null;
         public EncounterRaid9[]? Dist = null;
@@ -39,22 +39,21 @@ namespace TeraFinder
             SaveFileEditor = (ISaveFileProvider)Array.Find(args, z => z is ISaveFileProvider)!;
             PKMEditor = (IPKMView)Array.Find(args, z => z is IPKMView)!;
             var menu = (ToolStrip)Array.Find(args, z => z is ToolStrip)!;
-            LoadMenuStrip(menu);
             NotifySaveLoaded();
+            LoadMenuStrip(menu);
         }
 
-        public void StandaloneInitialize(ReadOnlySpan<byte> data = default)
+        public void StandaloneInitialize(string defaultOT, ReadOnlySpan<byte> data = default, string? language = null)
         {
-            var task = Task.Run(async () => { await GitHubUtil.TryUpdate(); });
-            task.Wait();
+            Task.Run(GitHubUtil.TryUpdate).Wait();
             if (data != default)
                 SAV = new SAV9SV(data.ToArray());
             else
                 SAV = new SAV9SV
                 {
                     Game = (int)GameVersion.SL,
-                    OT = "TeraFinder",
-                    Language = (int)LanguageID.English,
+                    OT = defaultOT,
+                    Language = (int)GetLanguageID(language is not null ? language : Language),
                 };
 
             var events = TeraUtil.GetSAVDistEncounters(SAV);
@@ -87,10 +86,41 @@ namespace TeraFinder
             };
         }
 
+        public static LanguageID GetLanguageID(string language) => GetLanguageID(GameLanguage.GetLanguageIndex(language));
+
+        public static LanguageID GetLanguageID(int programLanguage)
+        {
+            return programLanguage switch
+            {
+                0 => LanguageID.Japanese,
+                1 => LanguageID.English,
+                2 => LanguageID.French,
+                3 => LanguageID.Italian,
+                4 => LanguageID.German,
+                5 => LanguageID.Spanish,
+                6 => LanguageID.Korean,
+                7 => LanguageID.ChineseS,
+                8 => LanguageID.ChineseT,
+                _ => LanguageID.English,
+            };
+        }
+
+        public static string GetStringLanguage(int programLanguage) => GameLanguage.Language2Char(programLanguage);
+
+        public static int GetDefaultLanguage() => GameLanguage.GetLanguageIndex(GetDefaultLanguageString());
+
+        public static string GetDefaultLanguageString() => Properties.Settings.Default.def_language;
+
+        public static void SetDefaultLanguage(int programLanguage)
+        {
+            Properties.Settings.Default.def_language = GetStringLanguage(programLanguage);
+            Properties.Settings.Default.Save();
+        }
+
         private void LoadMenuStrip(ToolStrip menuStrip)
         {
             var items = menuStrip.Items;
-            if (!(items.Find("Menu_Tools", false)[0] is ToolStripDropDownItem tools))
+            if (items.Find("Menu_Tools", false)[0] is not ToolStripDropDownItem tools)
                 throw new ArgumentException(nameof(menuStrip));
             AddPluginControl(tools);
         }
@@ -104,10 +134,30 @@ namespace TeraFinder
             Plugin.DropDownItems.Add(Events);
             Connect.Click += (s, e) => LaunchConnector();
             Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
-            Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, plugin: true);
-            Flags.Click += (s, e) => new ProgressForm(SAV).Show();
-            Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV).Show();
+            Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
+            Flags.Click += (s, e) => new ProgressForm(SAV, Language).Show();
+            Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV, Language).Show();
             tools.DropDownItems.Add(Plugin);
+        }
+
+        private void TranslatePlugins()
+        {
+            var dic = new Dictionary<string, string>
+            {
+                { "Plugin.TeraFinderPlugin", "Tera Finder Plugin" },
+                { "Plugin.ConnectRemote", "Connect to Remote Device" },
+                { "Plugin.TeraViewer", "Tera Raid Viewer/Editor" },
+                { "Plugin.SeedChecker", "Tera Raid Seed Checker" },
+                { "Plugin.FlagEditor", "Edit Game Flags" },
+                { "Plugin.NewsImporter", "Import Poké Portal News" }
+            }.TranslateInnerStrings(Language);
+
+            Plugin.Text = dic["Plugin.TeraFinderPlugin"];
+            Connect.Text = dic["Plugin.ConnectRemote"];
+            Editor.Text = dic["Plugin.TeraViewer"];
+            Finder.Text = dic["Plugin.SeedChecker"];
+            Flags.Text = dic["Plugin.FlagEditor"];
+            Events.Text = dic["Plugin.NewsImporter"];
         }
 
         public void LaunchEditor()
@@ -129,17 +179,17 @@ namespace TeraFinder
 
         public void LaunchImporter()
         {
-            ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, plugin: true);
+            ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
         }
 
         public void LaunchGameEditor()
         {
-            new ProgressForm(SAV).Show();
+            new ProgressForm(SAV, Language).Show();
         }
 
         public void LaunchFinder()
         {
-            new CheckerForm(new PK9 { TrainerTID7 = SAV.TrainerTID7, TrainerSID7 = SAV.TrainerSID7 }, SAV).Show();
+            new CheckerForm(new PK9 { TrainerTID7 = SAV.TrainerTID7, TrainerSID7 = SAV.TrainerSID7 }, SAV, Language).Show();
         }
 
         public ConnectionForm LaunchConnector(Form? parent = null)
@@ -156,7 +206,8 @@ namespace TeraFinder
             foreach (var form in formlist)
                 form?.Close();
 
-            var con = Connection is null ? new ConnectionForm(SAV) : Connection;
+            var con = Connection is null ? new ConnectionForm(SAV, Language) : Connection;
+            con.TranslateInterface(Language);
             con.FormClosing += (s, e) =>
             {
                 var events = TeraUtil.GetSAVDistEncounters(SAV);
@@ -183,11 +234,12 @@ namespace TeraFinder
 
         public void NotifySaveLoaded()
         {
-            if (SaveFileEditor.SAV is SAV9SV)
+            if (SaveFileEditor.SAV is SAV9SV sav)
             {
                 Language = GameInfo.CurrentLanguage;
-                SAV = (SAV9SV)SaveFileEditor.SAV;
+                SAV = sav;
                 EnablePlugins();
+                TranslatePlugins();
             }
             else
                 DisablePlugins();
@@ -212,7 +264,7 @@ namespace TeraFinder
             return 0;
         }
 
-        public bool TryLoadFile(string filePath) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, filePath);
+        public bool TryLoadFile(string filePath) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, path:filePath);
 
         private void EnablePlugins() => Plugin.Enabled = true;
 

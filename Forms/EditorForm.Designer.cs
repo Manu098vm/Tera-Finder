@@ -53,12 +53,12 @@
             this.lblNature = new System.Windows.Forms.Label();
             this.lblGender = new System.Windows.Forms.Label();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblSpe = new System.Windows.Forms.Label();
+            this.lblSpD = new System.Windows.Forms.Label();
+            this.lblSpA = new System.Windows.Forms.Label();
+            this.lblDef = new System.Windows.Forms.Label();
+            this.lblAtk = new System.Windows.Forms.Label();
+            this.lblHP = new System.Windows.Forms.Label();
             this.txtSpe = new System.Windows.Forms.TextBox();
             this.txtSpD = new System.Windows.Forms.TextBox();
             this.txtSpA = new System.Windows.Forms.TextBox();
@@ -80,9 +80,9 @@
             // cmbDens
             // 
             this.cmbDens.FormattingEnabled = true;
-            this.cmbDens.Location = new System.Drawing.Point(45, 12);
+            this.cmbDens.Location = new System.Drawing.Point(45, 14);
             this.cmbDens.Name = "cmbDens";
-            this.cmbDens.Size = new System.Drawing.Size(271, 28);
+            this.cmbDens.Size = new System.Drawing.Size(316, 28);
             this.cmbDens.TabIndex = 1;
             this.cmbDens.SelectedIndexChanged += new System.EventHandler(this.cmbDens_IndexChanged);
             this.cmbDens.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbDens_KeyPress);
@@ -97,7 +97,7 @@
             this.GrpRaidInfo.Controls.Add(this.chkLP);
             this.GrpRaidInfo.Location = new System.Drawing.Point(8, 56);
             this.GrpRaidInfo.Name = "GrpRaidInfo";
-            this.GrpRaidInfo.Size = new System.Drawing.Size(345, 123);
+            this.GrpRaidInfo.Size = new System.Drawing.Size(390, 123);
             this.GrpRaidInfo.TabIndex = 2;
             this.GrpRaidInfo.TabStop = false;
             this.GrpRaidInfo.Text = "Raid Info";
@@ -105,7 +105,7 @@
             // lblContent
             // 
             this.lblContent.AutoSize = true;
-            this.lblContent.Location = new System.Drawing.Point(6, 83);
+            this.lblContent.Location = new System.Drawing.Point(7, 80);
             this.lblContent.Name = "lblContent";
             this.lblContent.Size = new System.Drawing.Size(64, 20);
             this.lblContent.TabIndex = 7;
@@ -119,7 +119,7 @@
             "Black",
             "Event",
             "Event-Mighty"});
-            this.cmbContent.Location = new System.Drawing.Point(72, 77);
+            this.cmbContent.Location = new System.Drawing.Point(91, 77);
             this.cmbContent.Name = "cmbContent";
             this.cmbContent.Size = new System.Drawing.Size(131, 28);
             this.cmbContent.TabIndex = 6;
@@ -128,7 +128,7 @@
             // chkActive
             // 
             this.chkActive.AutoSize = true;
-            this.chkActive.Location = new System.Drawing.Point(222, 36);
+            this.chkActive.Location = new System.Drawing.Point(250, 35);
             this.chkActive.Name = "chkActive";
             this.chkActive.Size = new System.Drawing.Size(103, 24);
             this.chkActive.TabIndex = 3;
@@ -138,7 +138,7 @@
             // 
             // txtSeed
             // 
-            this.txtSeed.Location = new System.Drawing.Point(72, 35);
+            this.txtSeed.Location = new System.Drawing.Point(91, 35);
             this.txtSeed.MaxLength = 8;
             this.txtSeed.Name = "txtSeed";
             this.txtSeed.Size = new System.Drawing.Size(131, 27);
@@ -149,7 +149,7 @@
             // lblSeed
             // 
             this.lblSeed.AutoSize = true;
-            this.lblSeed.Location = new System.Drawing.Point(6, 37);
+            this.lblSeed.Location = new System.Drawing.Point(11, 38);
             this.lblSeed.Name = "lblSeed";
             this.lblSeed.Size = new System.Drawing.Size(45, 20);
             this.lblSeed.TabIndex = 4;
@@ -158,7 +158,7 @@
             // chkLP
             // 
             this.chkLP.AutoSize = true;
-            this.chkLP.Location = new System.Drawing.Point(222, 80);
+            this.chkLP.Location = new System.Drawing.Point(250, 79);
             this.chkLP.Name = "chkLP";
             this.chkLP.Size = new System.Drawing.Size(117, 24);
             this.chkLP.TabIndex = 5;
@@ -179,12 +179,12 @@
             this.grpPkmInfo.Controls.Add(this.lblNature);
             this.grpPkmInfo.Controls.Add(this.lblGender);
             this.grpPkmInfo.Controls.Add(this.pictureBox);
-            this.grpPkmInfo.Controls.Add(this.label7);
-            this.grpPkmInfo.Controls.Add(this.label6);
-            this.grpPkmInfo.Controls.Add(this.label5);
-            this.grpPkmInfo.Controls.Add(this.label4);
-            this.grpPkmInfo.Controls.Add(this.label3);
-            this.grpPkmInfo.Controls.Add(this.label2);
+            this.grpPkmInfo.Controls.Add(this.lblSpe);
+            this.grpPkmInfo.Controls.Add(this.lblSpD);
+            this.grpPkmInfo.Controls.Add(this.lblSpA);
+            this.grpPkmInfo.Controls.Add(this.lblDef);
+            this.grpPkmInfo.Controls.Add(this.lblAtk);
+            this.grpPkmInfo.Controls.Add(this.lblHP);
             this.grpPkmInfo.Controls.Add(this.txtSpe);
             this.grpPkmInfo.Controls.Add(this.txtSpD);
             this.grpPkmInfo.Controls.Add(this.txtSpA);
@@ -193,7 +193,7 @@
             this.grpPkmInfo.Controls.Add(this.txtHP);
             this.grpPkmInfo.Location = new System.Drawing.Point(8, 185);
             this.grpPkmInfo.Name = "grpPkmInfo";
-            this.grpPkmInfo.Size = new System.Drawing.Size(345, 344);
+            this.grpPkmInfo.Size = new System.Drawing.Size(390, 344);
             this.grpPkmInfo.TabIndex = 3;
             this.grpPkmInfo.TabStop = false;
             this.grpPkmInfo.Text = "Pokémon Info";
@@ -206,7 +206,7 @@
             this.grpMoves.Controls.Add(this.txtMove1);
             this.grpMoves.Location = new System.Drawing.Point(4, 220);
             this.grpMoves.Name = "grpMoves";
-            this.grpMoves.Size = new System.Drawing.Size(335, 118);
+            this.grpMoves.Size = new System.Drawing.Size(380, 118);
             this.grpMoves.TabIndex = 22;
             this.grpMoves.TabStop = false;
             this.grpMoves.Text = "Moves";
@@ -214,7 +214,7 @@
             // txtMove4
             // 
             this.txtMove4.Enabled = false;
-            this.txtMove4.Location = new System.Drawing.Point(178, 77);
+            this.txtMove4.Location = new System.Drawing.Point(206, 77);
             this.txtMove4.Name = "txtMove4";
             this.txtMove4.Size = new System.Drawing.Size(143, 27);
             this.txtMove4.TabIndex = 22;
@@ -224,7 +224,7 @@
             // txtMove2
             // 
             this.txtMove2.Enabled = false;
-            this.txtMove2.Location = new System.Drawing.Point(178, 35);
+            this.txtMove2.Location = new System.Drawing.Point(206, 35);
             this.txtMove2.Name = "txtMove2";
             this.txtMove2.Size = new System.Drawing.Size(143, 27);
             this.txtMove2.TabIndex = 23;
@@ -234,7 +234,7 @@
             // txtMove3
             // 
             this.txtMove3.Enabled = false;
-            this.txtMove3.Location = new System.Drawing.Point(11, 77);
+            this.txtMove3.Location = new System.Drawing.Point(31, 77);
             this.txtMove3.Name = "txtMove3";
             this.txtMove3.Size = new System.Drawing.Size(143, 27);
             this.txtMove3.TabIndex = 24;
@@ -244,7 +244,7 @@
             // txtMove1
             // 
             this.txtMove1.Enabled = false;
-            this.txtMove1.Location = new System.Drawing.Point(11, 35);
+            this.txtMove1.Location = new System.Drawing.Point(33, 35);
             this.txtMove1.Name = "txtMove1";
             this.txtMove1.Size = new System.Drawing.Size(143, 27);
             this.txtMove1.TabIndex = 25;
@@ -254,7 +254,7 @@
             // lblLevel
             // 
             this.lblLevel.AutoSize = true;
-            this.lblLevel.Location = new System.Drawing.Point(279, 86);
+            this.lblLevel.Location = new System.Drawing.Point(306, 84);
             this.lblLevel.Name = "lblLevel";
             this.lblLevel.Size = new System.Drawing.Size(29, 20);
             this.lblLevel.TabIndex = 21;
@@ -263,7 +263,7 @@
             // btnRewards
             // 
             this.btnRewards.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnRewards.Location = new System.Drawing.Point(265, 21);
+            this.btnRewards.Location = new System.Drawing.Point(292, 19);
             this.btnRewards.Name = "btnRewards";
             this.btnRewards.Size = new System.Drawing.Size(75, 31);
             this.btnRewards.TabIndex = 20;
@@ -275,7 +275,7 @@
             // lblStarSymbols
             // 
             this.lblStarSymbols.AutoSize = true;
-            this.lblStarSymbols.Location = new System.Drawing.Point(266, 187);
+            this.lblStarSymbols.Location = new System.Drawing.Point(293, 185);
             this.lblStarSymbols.Name = "lblStarSymbols";
             this.lblStarSymbols.Size = new System.Drawing.Size(74, 20);
             this.lblStarSymbols.TabIndex = 19;
@@ -341,65 +341,65 @@
             this.pictureBox.BackgroundImage = global::TeraFinder.Properties.Resources._000;
             this.pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox.Location = new System.Drawing.Point(265, 109);
+            this.pictureBox.Location = new System.Drawing.Point(292, 107);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(75, 75);
             this.pictureBox.TabIndex = 12;
             this.pictureBox.TabStop = false;
             // 
-            // label7
+            // lblSpe
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(9, 189);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(37, 20);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Spe:";
+            this.lblSpe.AutoSize = true;
+            this.lblSpe.Location = new System.Drawing.Point(9, 189);
+            this.lblSpe.Name = "lblSpe";
+            this.lblSpe.Size = new System.Drawing.Size(37, 20);
+            this.lblSpe.TabIndex = 11;
+            this.lblSpe.Text = "Spe:";
             // 
-            // label6
+            // lblSpD
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 157);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(40, 20);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "SpD:";
+            this.lblSpD.AutoSize = true;
+            this.lblSpD.Location = new System.Drawing.Point(6, 157);
+            this.lblSpD.Name = "lblSpD";
+            this.lblSpD.Size = new System.Drawing.Size(40, 20);
+            this.lblSpD.TabIndex = 10;
+            this.lblSpD.Text = "SpD:";
             // 
-            // label5
+            // lblSpA
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 124);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(39, 20);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "SpA:";
+            this.lblSpA.AutoSize = true;
+            this.lblSpA.Location = new System.Drawing.Point(7, 124);
+            this.lblSpA.Name = "lblSpA";
+            this.lblSpA.Size = new System.Drawing.Size(39, 20);
+            this.lblSpA.TabIndex = 9;
+            this.lblSpA.Text = "SpA:";
             // 
-            // label4
+            // lblDef
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 91);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(36, 20);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Def:";
+            this.lblDef.AutoSize = true;
+            this.lblDef.Location = new System.Drawing.Point(10, 91);
+            this.lblDef.Name = "lblDef";
+            this.lblDef.Size = new System.Drawing.Size(36, 20);
+            this.lblDef.TabIndex = 8;
+            this.lblDef.Text = "Def:";
             // 
-            // label3
+            // lblAtk
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 59);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 20);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Atk:";
+            this.lblAtk.AutoSize = true;
+            this.lblAtk.Location = new System.Drawing.Point(11, 59);
+            this.lblAtk.Name = "lblAtk";
+            this.lblAtk.Size = new System.Drawing.Size(34, 20);
+            this.lblAtk.TabIndex = 7;
+            this.lblAtk.Text = "Atk:";
             // 
-            // label2
+            // lblHP
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 29);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(31, 20);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "HP:";
+            this.lblHP.AutoSize = true;
+            this.lblHP.Location = new System.Drawing.Point(15, 29);
+            this.lblHP.Name = "lblHP";
+            this.lblHP.Size = new System.Drawing.Size(31, 20);
+            this.lblHP.TabIndex = 6;
+            this.lblHP.Text = "HP:";
             // 
             // txtSpe
             // 
@@ -453,7 +453,7 @@
             // 
             this.btnOpenCalculator.Location = new System.Drawing.Point(8, 535);
             this.btnOpenCalculator.Name = "btnOpenCalculator";
-            this.btnOpenCalculator.Size = new System.Drawing.Size(168, 47);
+            this.btnOpenCalculator.Size = new System.Drawing.Size(192, 47);
             this.btnOpenCalculator.TabIndex = 4;
             this.btnOpenCalculator.Text = "Raid Calculator";
             this.btnOpenCalculator.UseVisualStyleBackColor = true;
@@ -461,7 +461,7 @@
             // 
             // btnDx
             // 
-            this.btnDx.Location = new System.Drawing.Point(322, 12);
+            this.btnDx.Location = new System.Drawing.Point(367, 12);
             this.btnDx.Name = "btnDx";
             this.btnDx.Size = new System.Drawing.Size(31, 31);
             this.btnDx.TabIndex = 5;
@@ -481,10 +481,10 @@
             // 
             // btnOpenRewardCalculator
             // 
-            this.btnOpenRewardCalculator.Location = new System.Drawing.Point(183, 535);
+            this.btnOpenRewardCalculator.Location = new System.Drawing.Point(206, 536);
             this.btnOpenRewardCalculator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnOpenRewardCalculator.Name = "btnOpenRewardCalculator";
-            this.btnOpenRewardCalculator.Size = new System.Drawing.Size(170, 47);
+            this.btnOpenRewardCalculator.Size = new System.Drawing.Size(192, 47);
             this.btnOpenRewardCalculator.TabIndex = 21;
             this.btnOpenRewardCalculator.Text = "Reward Calculator";
             this.btnOpenRewardCalculator.UseVisualStyleBackColor = true;
@@ -495,7 +495,7 @@
             this.imgMap.BackgroundImage = global::TeraFinder.Properties.Resources.world;
             this.imgMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.imgMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.imgMap.Location = new System.Drawing.Point(364, 12);
+            this.imgMap.Location = new System.Drawing.Point(404, 12);
             this.imgMap.Name = "imgMap";
             this.imgMap.Size = new System.Drawing.Size(570, 570);
             this.imgMap.TabIndex = 22;
@@ -505,7 +505,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(939, 589);
+            this.ClientSize = new System.Drawing.Size(986, 589);
             this.Controls.Add(this.imgMap);
             this.Controls.Add(this.btnOpenRewardCalculator);
             this.Controls.Add(this.btnDx);
@@ -539,12 +539,12 @@
         private GroupBox grpPkmInfo;
         private Label lblGender;
         private PictureBox pictureBox;
-        private Label label7;
-        private Label label6;
-        private Label label5;
-        private Label label4;
-        private Label label3;
-        private Label label2;
+        private Label lblSpe;
+        private Label lblSpD;
+        private Label lblSpA;
+        private Label lblDef;
+        private Label lblAtk;
+        private Label lblHP;
         private TextBox txtSpe;
         private TextBox txtSpD;
         private TextBox txtSpA;

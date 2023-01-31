@@ -54,9 +54,9 @@
             this.grpEncounter = new System.Windows.Forms.GroupBox();
             this.chkShiny = new System.Windows.Forms.CheckBox();
             this.cmbStars = new System.Windows.Forms.ComboBox();
-            this.label31 = new System.Windows.Forms.Label();
+            this.lblStars = new System.Windows.Forms.Label();
             this.cmbSpecies = new System.Windows.Forms.ComboBox();
-            this.label30 = new System.Windows.Forms.Label();
+            this.lblSpecies = new System.Windows.Forms.Label();
             this.btnApply = new System.Windows.Forms.Button();
             this.chkAccurateSearch = new System.Windows.Forms.CheckBox();
             this.grpItems = new System.Windows.Forms.GroupBox();
@@ -107,20 +107,20 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.grpProfile = new System.Windows.Forms.GroupBox();
             this.txtSID = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
+            this.lblSID = new System.Windows.Forms.Label();
             this.txtTID = new System.Windows.Forms.TextBox();
             this.cmbProgress = new System.Windows.Forms.ComboBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
+            this.lblTID = new System.Windows.Forms.Label();
+            this.lblProgress = new System.Windows.Forms.Label();
             this.cmbGame = new System.Windows.Forms.ComboBox();
-            this.label21 = new System.Windows.Forms.Label();
+            this.lblGame = new System.Windows.Forms.Label();
             this.grpSettings = new System.Windows.Forms.GroupBox();
             this.cmbBoost = new System.Windows.Forms.ComboBox();
-            this.label28 = new System.Windows.Forms.Label();
+            this.lblSandwich = new System.Windows.Forms.Label();
             this.cmbContent = new System.Windows.Forms.ComboBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
+            this.lblContent = new System.Windows.Forms.Label();
+            this.lblSeed = new System.Windows.Forms.Label();
+            this.lblCalcs = new System.Windows.Forms.Label();
             this.numMaxCalc = new System.Windows.Forms.NumericUpDown();
             this.txtSeed = new System.Windows.Forms.TextBox();
             this.grpSearch = new System.Windows.Forms.GroupBox();
@@ -343,9 +343,9 @@
             // 
             this.grpEncounter.Controls.Add(this.chkShiny);
             this.grpEncounter.Controls.Add(this.cmbStars);
-            this.grpEncounter.Controls.Add(this.label31);
+            this.grpEncounter.Controls.Add(this.lblStars);
             this.grpEncounter.Controls.Add(this.cmbSpecies);
-            this.grpEncounter.Controls.Add(this.label30);
+            this.grpEncounter.Controls.Add(this.lblSpecies);
             this.grpEncounter.Location = new System.Drawing.Point(7, 60);
             this.grpEncounter.Name = "grpEncounter";
             this.grpEncounter.Size = new System.Drawing.Size(330, 97);
@@ -380,14 +380,14 @@
             this.cmbStars.Size = new System.Drawing.Size(65, 28);
             this.cmbStars.TabIndex = 3;
             // 
-            // label31
+            // lblStars
             // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(54, 63);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(44, 20);
-            this.label31.TabIndex = 2;
-            this.label31.Text = "Stars:";
+            this.lblStars.AutoSize = true;
+            this.lblStars.Location = new System.Drawing.Point(54, 63);
+            this.lblStars.Name = "lblStars";
+            this.lblStars.Size = new System.Drawing.Size(44, 20);
+            this.lblStars.TabIndex = 2;
+            this.lblStars.Text = "Stars:";
             // 
             // cmbSpecies
             // 
@@ -399,14 +399,14 @@
             this.cmbSpecies.Size = new System.Drawing.Size(187, 28);
             this.cmbSpecies.TabIndex = 1;
             // 
-            // label30
+            // lblSpecies
             // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(36, 29);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(62, 20);
-            this.label30.TabIndex = 0;
-            this.label30.Text = "Species:";
+            this.lblSpecies.AutoSize = true;
+            this.lblSpecies.Location = new System.Drawing.Point(36, 29);
+            this.lblSpecies.Name = "lblSpecies";
+            this.lblSpecies.Size = new System.Drawing.Size(62, 20);
+            this.lblSpecies.TabIndex = 0;
+            this.lblSpecies.Text = "Species:";
             // 
             // btnApply
             // 
@@ -888,13 +888,13 @@
             // grpProfile
             // 
             this.grpProfile.Controls.Add(this.txtSID);
-            this.grpProfile.Controls.Add(this.label24);
+            this.grpProfile.Controls.Add(this.lblSID);
             this.grpProfile.Controls.Add(this.txtTID);
             this.grpProfile.Controls.Add(this.cmbProgress);
-            this.grpProfile.Controls.Add(this.label23);
-            this.grpProfile.Controls.Add(this.label22);
+            this.grpProfile.Controls.Add(this.lblTID);
+            this.grpProfile.Controls.Add(this.lblProgress);
             this.grpProfile.Controls.Add(this.cmbGame);
-            this.grpProfile.Controls.Add(this.label21);
+            this.grpProfile.Controls.Add(this.lblGame);
             this.grpProfile.Location = new System.Drawing.Point(363, 12);
             this.grpProfile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpProfile.Name = "grpProfile";
@@ -914,14 +914,14 @@
             this.txtSID.TabIndex = 23;
             this.txtSID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtID_KeyPress);
             // 
-            // label24
+            // lblSID
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(777, 32);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(35, 20);
-            this.label24.TabIndex = 23;
-            this.label24.Text = "SID:";
+            this.lblSID.AutoSize = true;
+            this.lblSID.Location = new System.Drawing.Point(777, 32);
+            this.lblSID.Name = "lblSID";
+            this.lblSID.Size = new System.Drawing.Size(35, 20);
+            this.lblSID.TabIndex = 23;
+            this.lblSID.Text = "SID:";
             // 
             // txtTID
             // 
@@ -943,29 +943,29 @@
             "Unlocked4Stars",
             "Unlocked5Stars",
             "Unlocked6Stars"});
-            this.cmbProgress.Location = new System.Drawing.Point(422, 28);
+            this.cmbProgress.Location = new System.Drawing.Point(415, 28);
             this.cmbProgress.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmbProgress.Name = "cmbProgress";
             this.cmbProgress.Size = new System.Drawing.Size(138, 28);
             this.cmbProgress.TabIndex = 22;
             // 
-            // label23
+            // lblTID
             // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(578, 32);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(35, 20);
-            this.label23.TabIndex = 22;
-            this.label23.Text = "TID:";
+            this.lblTID.AutoSize = true;
+            this.lblTID.Location = new System.Drawing.Point(578, 32);
+            this.lblTID.Name = "lblTID";
+            this.lblTID.Size = new System.Drawing.Size(35, 20);
+            this.lblTID.TabIndex = 22;
+            this.lblTID.Text = "TID:";
             // 
-            // label22
+            // lblProgress
             // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(352, 32);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(68, 20);
-            this.label22.TabIndex = 22;
-            this.label22.Text = "Progress:";
+            this.lblProgress.AutoSize = true;
+            this.lblProgress.Location = new System.Drawing.Point(332, 32);
+            this.lblProgress.Name = "lblProgress";
+            this.lblProgress.Size = new System.Drawing.Size(68, 20);
+            this.lblProgress.TabIndex = 22;
+            this.lblProgress.Text = "Progress:";
             // 
             // cmbGame
             // 
@@ -973,29 +973,29 @@
             this.cmbGame.Items.AddRange(new object[] {
             "Scarlet",
             "Violet"});
-            this.cmbGame.Location = new System.Drawing.Point(197, 28);
+            this.cmbGame.Location = new System.Drawing.Point(176, 27);
             this.cmbGame.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmbGame.Name = "cmbGame";
             this.cmbGame.Size = new System.Drawing.Size(138, 28);
             this.cmbGame.TabIndex = 22;
             // 
-            // label21
+            // lblGame
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(143, 32);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(51, 20);
-            this.label21.TabIndex = 22;
-            this.label21.Text = "Game:";
+            this.lblGame.AutoSize = true;
+            this.lblGame.Location = new System.Drawing.Point(122, 31);
+            this.lblGame.Name = "lblGame";
+            this.lblGame.Size = new System.Drawing.Size(51, 20);
+            this.lblGame.TabIndex = 22;
+            this.lblGame.Text = "Game:";
             // 
             // grpSettings
             // 
             this.grpSettings.Controls.Add(this.cmbBoost);
-            this.grpSettings.Controls.Add(this.label28);
+            this.grpSettings.Controls.Add(this.lblSandwich);
             this.grpSettings.Controls.Add(this.cmbContent);
-            this.grpSettings.Controls.Add(this.label25);
-            this.grpSettings.Controls.Add(this.label26);
-            this.grpSettings.Controls.Add(this.label27);
+            this.grpSettings.Controls.Add(this.lblContent);
+            this.grpSettings.Controls.Add(this.lblSeed);
+            this.grpSettings.Controls.Add(this.lblCalcs);
             this.grpSettings.Controls.Add(this.numMaxCalc);
             this.grpSettings.Controls.Add(this.txtSeed);
             this.grpSettings.Location = new System.Drawing.Point(363, 89);
@@ -1021,14 +1021,14 @@
             this.cmbBoost.Size = new System.Drawing.Size(138, 28);
             this.cmbBoost.TabIndex = 26;
             // 
-            // label28
+            // lblSandwich
             // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(764, 32);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(117, 20);
-            this.label28.TabIndex = 25;
-            this.label28.Text = "Sandwich Boost:";
+            this.lblSandwich.AutoSize = true;
+            this.lblSandwich.Location = new System.Drawing.Point(764, 32);
+            this.lblSandwich.Name = "lblSandwich";
+            this.lblSandwich.Size = new System.Drawing.Size(117, 20);
+            this.lblSandwich.TabIndex = 25;
+            this.lblSandwich.Text = "Sandwich Boost:";
             // 
             // cmbContent
             // 
@@ -1044,36 +1044,36 @@
             this.cmbContent.Size = new System.Drawing.Size(138, 28);
             this.cmbContent.TabIndex = 24;
             // 
-            // label25
+            // lblContent
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(529, 33);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(64, 20);
-            this.label25.TabIndex = 0;
-            this.label25.Text = "Content:";
+            this.lblContent.AutoSize = true;
+            this.lblContent.Location = new System.Drawing.Point(513, 33);
+            this.lblContent.Name = "lblContent";
+            this.lblContent.Size = new System.Drawing.Size(64, 20);
+            this.lblContent.TabIndex = 0;
+            this.lblContent.Text = "Content:";
             // 
-            // label26
+            // lblSeed
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(64, 33);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(45, 20);
-            this.label26.TabIndex = 1;
-            this.label26.Text = "Seed:";
+            this.lblSeed.AutoSize = true;
+            this.lblSeed.Location = new System.Drawing.Point(68, 33);
+            this.lblSeed.Name = "lblSeed";
+            this.lblSeed.Size = new System.Drawing.Size(45, 20);
+            this.lblSeed.TabIndex = 1;
+            this.lblSeed.Text = "Seed:";
             // 
-            // label27
+            // lblCalcs
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(285, 33);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(78, 20);
-            this.label27.TabIndex = 2;
-            this.label27.Text = "Max Calcs:";
+            this.lblCalcs.AutoSize = true;
+            this.lblCalcs.Location = new System.Drawing.Point(289, 33);
+            this.lblCalcs.Name = "lblCalcs";
+            this.lblCalcs.Size = new System.Drawing.Size(78, 20);
+            this.lblCalcs.TabIndex = 2;
+            this.lblCalcs.Text = "Max Calcs:";
             // 
             // numMaxCalc
             // 
-            this.numMaxCalc.Location = new System.Drawing.Point(365, 29);
+            this.numMaxCalc.Location = new System.Drawing.Point(369, 29);
             this.numMaxCalc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.numMaxCalc.Maximum = new decimal(new int[] {
             -1,
@@ -1096,7 +1096,7 @@
             // 
             // txtSeed
             // 
-            this.txtSeed.Location = new System.Drawing.Point(125, 29);
+            this.txtSeed.Location = new System.Drawing.Point(129, 29);
             this.txtSeed.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSeed.MaxLength = 8;
             this.txtSeed.Name = "txtSeed";
@@ -1131,7 +1131,7 @@
             // chkAllResults
             // 
             this.chkAllResults.AutoSize = true;
-            this.chkAllResults.Location = new System.Drawing.Point(352, 31);
+            this.chkAllResults.Location = new System.Drawing.Point(328, 31);
             this.chkAllResults.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.chkAllResults.Name = "chkAllResults";
             this.chkAllResults.Size = new System.Drawing.Size(160, 24);
@@ -1141,7 +1141,7 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(529, 20);
+            this.btnSearch.Location = new System.Drawing.Point(550, 20);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(185, 45);
@@ -1185,7 +1185,7 @@
             this.btnSaveSelectedTxt,
             this.btnSendSelectedRaid});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(313, 76);
+            this.contextMenuStrip.Size = new System.Drawing.Size(313, 104);
             // 
             // btnSaveAllTxt
             // 
@@ -1328,16 +1328,16 @@
         private NumericUpDown numericUpDown2;
         private NumericUpDown numericUpDown1;
         private GroupBox grpProfile;
-        private Label label24;
+        private Label lblSID;
         private ComboBox cmbProgress;
-        private Label label23;
-        private Label label22;
+        private Label lblTID;
+        private Label lblProgress;
         private ComboBox cmbGame;
-        private Label label21;
+        private Label lblGame;
         private GroupBox grpSettings;
-        private Label label25;
-        private Label label26;
-        private Label label27;
+        private Label lblContent;
+        private Label lblSeed;
+        private Label lblCalcs;
         private TextBox txtSeed;
         private NumericUpDown numMaxCalc;
         private CheckBox chkAllResults;
@@ -1346,7 +1346,7 @@
         private Button btnApply;
         private Button btnReset;
         private DataGridView dataGrid;
-        private Label label28;
+        private Label lblSandwich;
         private ComboBox cmbBoost;
         private ToolTip toolTip1;
         private ContextMenuStrip contextMenuStrip;
@@ -1362,9 +1362,9 @@
         private ComboBox comboBox21;
         private GroupBox grpEncounter;
         private ComboBox cmbStars;
-        private Label label31;
+        private Label lblStars;
         private ComboBox cmbSpecies;
-        private Label label30;
+        private Label lblSpecies;
         private CheckBox chkShiny;
         private Label lblFound;
     }

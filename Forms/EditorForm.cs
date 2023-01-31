@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Microsoft.CodeAnalysis.Differencing;
 using PKHeX.Core;
 using TeraFinder.Forms;
 using static TeraFinder.ImagesUtil;
@@ -14,6 +15,8 @@ namespace TeraFinder
         private Image DefBackground = null!;
         private Size DefSize = new(0, 0);
         private bool Loaded = false;
+        private Dictionary<string, string> Strings = null!;
+        private string[] Locations = null!;
         private ConnectionForm? Connection = null;
 
         public string Language = null!;
@@ -44,6 +47,13 @@ namespace TeraFinder
             SAV = sav;
             PKMEditor = editor;
             Language = language;
+
+            GenerateDictionary();
+            TranslateDictionary(Language);
+            TranslateCmbContent();
+            this.TranslateInterface(Language);
+            InitLocations();
+
             if (dist is null)
             {
                 var events = TeraUtil.GetSAVDistEncounters(SAV);
@@ -81,6 +91,89 @@ namespace TeraFinder
             cmbDens.SelectedIndex = 0;
             btnSx.Enabled = false;
             Connection = connection;
+        }
+
+        private void GenerateDictionary()
+        {
+            Strings = new Dictionary<string, string>
+            {
+                { "DisconnectionSuccess", "Device disconnected." },
+                { "EditorForm.lblSpecies", "Species:" },
+                { "EditorForm.lblTera", "TeraType:" },
+                { "EditorForm.lblAbility", "Ability:" },
+                { "EditorForm.lblNature", "Nature:" },
+                { "EditorForm.lblShiny", "Shiny:" },
+                { "EditorForm.lblGender", "Gender:" },
+                { "EditorForm.txtMove1", "None" },
+                { "EditorForm.txtMove2", "None" },
+                { "EditorForm.txtMove3", "None" },
+                { "EditorForm.txtMove4", "None" },
+                { "TeraShiny.No", "No" },
+                { "TeraShiny.Yes", "Yes" },
+                { "TeraShiny.Star", "Star" },
+                { "TeraShiny.Square", "Square" },
+                { "EditorForm.LblLvl", "Lvl." },
+                { "EditorForm.CmbRaid", "Raid" },
+                { "RaidContent.Standard", "Standard" },
+                { "RaidContent.Black", "Black" },
+                { "RaidContent.Event", "Event" },
+                { "RaidContent.Event_Mighty", "Event-Mighty" },
+                { "AREASPA1", "South Province (Area 1)" },
+                { "AREASPA2", "South Province (Area 2)" },
+                { "AREASPA4", "South Province (Area 4)" },
+                { "AREASPA6", "South Province (Area 6)" },
+                { "AREASPA5", "South Province (Area 5)" },
+                { "AREASPA3", "South Province (Area 3)" },
+                { "AREAWPA1", "West Province (Area 1)" },
+                { "AREAASAD", "Asado Desert" },
+                { "AREAWPA2", "West Province (Area 2)" },
+                { "AREAWPA3", "West Province (Area 3)" },
+                { "AREATAGT", "Tagtree Thicket" },
+                { "AREAEPA3", "East Province (Area 3)" },
+                { "AREAEPA1", "East Province (Area 1)" },
+                { "AREAEPA2", "East Province (Area 2)" },
+                { "AREADALI", "Dalizapa Passage" },
+                { "AREACASS", "Casseroya Lake" },
+                { "AREAGLAS", "Glaseado Mountain" },
+                { "AREANPA3", "North Province (Area 3)" },
+                { "AREANPA1", "North Province (Area 1)" },
+                { "AREANPA2", "North Province (Area 2)" },
+            };
+        }
+
+        private void TranslateDictionary(string language) => Strings = Strings.TranslateInnerStrings(language);
+
+        private void TranslateCmbContent()
+        {
+            cmbContent.Items[0] = Strings["RaidContent.Standard"];
+            cmbContent.Items[1] = Strings["RaidContent.Black"];
+            cmbContent.Items[2] = Strings["RaidContent.Event"];
+            cmbContent.Items[3] = Strings["RaidContent.Event_Mighty"];
+        }
+
+        private void InitLocations()
+        {
+            Locations = TeraUtil.Area;
+            Locations[1] = Strings["AREASPA1"];
+            Locations[4] = Strings["AREASPA2"];
+            Locations[5] = Strings["AREASPA4"];
+            Locations[6] = Strings["AREASPA6"];
+            Locations[7] = Strings["AREASPA5"];
+            Locations[8] = Strings["AREASPA3"];
+            Locations[9] = Strings["AREAWPA1"];
+            Locations[10] = Strings["AREAASAD"];
+            Locations[11] = Strings["AREAWPA2"];
+            Locations[12] = Strings["AREAWPA3"];
+            Locations[13] = Strings["AREATAGT"];
+            Locations[14] = Strings["AREAEPA3"];
+            Locations[15] = Strings["AREAEPA1"];
+            Locations[16] = Strings["AREAEPA2"];
+            Locations[17] = Strings["AREADALI"];
+            Locations[18] = Strings["AREACASS"];
+            Locations[19] = Strings["AREAGLAS"];
+            Locations[20] = Strings["AREANPA3"];
+            Locations[21] = Strings["AREANPA1"];
+            Locations[22] = Strings["AREANPA2"];
         }
 
         private void cmbDens_IndexChanged(object sender, EventArgs e)
@@ -126,12 +219,12 @@ namespace TeraFinder
                 if (chkActive.Checked)
                 {
                     raid.IsEnabled = true;
-                    Task.Run(async () => { await UpdateRemote(); }).Wait();
+                    Task.Run(UpdateRemote).Wait();
                 }
                 else
                 {
                     raid.IsEnabled = false;
-                    Task.Run(async () => { await UpdateRemote(); }).Wait();
+                    Task.Run(UpdateRemote).Wait();
                 }
                 UpdatePKMInfo(raid);
             }
@@ -145,12 +238,12 @@ namespace TeraFinder
                 if (chkLP.Checked)
                 {
                     raid.IsClaimedLeaguePoints = true;
-                    Task.Run(async () => { await UpdateRemote(); }).Wait();
+                    Task.Run(UpdateRemote).Wait();
                 }
                 else
                 {
                     raid.IsClaimedLeaguePoints = false;
-                    Task.Run(async () => { await UpdateRemote(); }).Wait();
+                    Task.Run(UpdateRemote).Wait();
                 }
             }
         }
@@ -161,7 +254,7 @@ namespace TeraFinder
             {
                 var raid = SAV.Raid.GetRaid(cmbDens.SelectedIndex);
                 raid.Content = (TeraRaidContentType)cmbContent.SelectedIndex;
-                Task.Run(async () => { await UpdateRemote(); }).Wait();
+                Task.Run(UpdateRemote).Wait();
                 UpdatePKMInfo(raid);
             }
         }
@@ -186,7 +279,7 @@ namespace TeraFinder
                         raid.Seed = seed;
                     }
                     catch { }
-                    Task.Run(async () => { await UpdateRemote(); }).Wait();
+                    Task.Run(UpdateRemote).Wait();
                     UpdatePKMInfo(raid);
                 }
             }
@@ -207,7 +300,7 @@ namespace TeraFinder
                 if (Connection is not null)
                 {
                     Connection.Disconnect();
-                    MessageBox.Show("The remote device has been disconnected.");
+                    MessageBox.Show(Strings["DisconnectionSuccess"]);
                     Connection = null;
                 }
             }
@@ -226,12 +319,12 @@ namespace TeraFinder
                 {
                     var rngres = TeraUtil.CalcRNG(raid.Seed, SAV.TrainerTID7, SAV.TrainerSID7, (RaidContent)raid.Content, encounter);
 
-                    lblSpecies.Text = $"Species: {GameInfo.GetStrings(Language).specieslist[rngres.Species]}";
-                    lblTera.Text = $"TeraType: {GameInfo.GetStrings(Language).types[rngres.TeraType]}";
-                    lblNature.Text = $"Nature: {GameInfo.GetStrings(Language).natures[rngres.Nature]}";
-                    lblAbility.Text = $"Ability: {GameInfo.GetStrings(Language).abilitylist[rngres.Ability]}";
-                    lblShiny.Text = $"Shiny: {rngres.Shiny}";
-                    lblGender.Text = $"Gender: {GameInfo.GenderSymbolUnicode[(int)rngres.Gender]}";
+                    lblSpecies.Text = $"{Strings["EditorForm.lblSpecies"]} {GameInfo.GetStrings(Language).specieslist[rngres.Species]}";
+                    lblTera.Text = $"{Strings["EditorForm.lblTera"]} {GameInfo.GetStrings(Language).types[rngres.TeraType]}";
+                    lblNature.Text = $"{Strings["EditorForm.lblNature"]} {GameInfo.GetStrings(Language).natures[rngres.Nature]}";
+                    lblAbility.Text = $"{Strings["EditorForm.lblAbility"]} {GameInfo.GetStrings(Language).abilitylist[rngres.Ability]}";
+                    lblShiny.Text = $"{Strings["EditorForm.lblShiny"]} {rngres.Shiny}";
+                    lblGender.Text = $"{Strings["EditorForm.lblGender"]} {GameInfo.GenderSymbolUnicode[(int)rngres.Gender]}";
                     txtHP.Text = $"{rngres.HP}";
                     txtAtk.Text = $"{rngres.ATK}";
                     txtDef.Text = $"{rngres.DEF}";
@@ -261,22 +354,22 @@ namespace TeraFinder
                     return;
                 }
             }
-            lblSpecies.Text = $"Species:";
-            lblTera.Text = $"TeraType:";
-            lblNature.Text = $"Nature:";
-            lblAbility.Text = $"Ability:";
-            lblShiny.Text = $"Shiny:";
-            lblGender.Text = $"Gender:";
+            lblSpecies.Text = $"{Strings["EditorForm.lblSpecies"]}";
+            lblTera.Text = $"{Strings["EditorForm.lblTera"]}";
+            lblNature.Text = $"{Strings["EditorForm.lblNature"]}";
+            lblAbility.Text = $"{Strings["EditorForm.lblAbility"]}";
+            lblShiny.Text = $"{Strings["EditorForm.lblShiny"]}";
+            lblGender.Text = $"{Strings["EditorForm.lblGender"]}";
             txtHP.Text = $"";
             txtAtk.Text = $"";
             txtDef.Text = $"";
             txtSpA.Text = $"";
             txtSpD.Text = $"";
             txtSpe.Text = $"";
-            txtMove1.Text = $"None";
-            txtMove2.Text = $"None";
-            txtMove3.Text = $"None";
-            txtMove4.Text = $"None";
+            txtMove1.Text = $"{Strings["EditorForm.txtMove1"]}";
+            txtMove2.Text = $"{Strings["EditorForm.txtMove2"]}";
+            txtMove3.Text = $"{Strings["EditorForm.txtMove3"]}";
+            txtMove4.Text = $"{Strings["EditorForm.txtMove4"]}";
 
             pictureBox.BackgroundImage = DefBackground;
             pictureBox.Size = DefSize;
@@ -303,7 +396,7 @@ namespace TeraFinder
 
         private void SetLevelLabel(int level = 0)
         {
-            var str = level == 0 ? "" : $"Lvl. {level}";
+            var str = level == 0 ? "" : $"{Strings["EditorForm.LblLvl"]} {level}";
             lblLevel.Text = str;
             var img = pictureBox.Image != null ? pictureBox.Image : pictureBox.BackgroundImage;
             lblLevel.Location = new(pictureBox.Location.X + (pictureBox.Width - lblLevel.Size.Width) / 2, pictureBox.Location.Y - lblLevel.Height);
@@ -314,7 +407,7 @@ namespace TeraFinder
             var names = new string[69];
             var raids = SAV.Raid.GetAllRaids();
             for (var i = 0; i < 69; i++)
-                names[i] = $"Raid {i + 1} - {TeraUtil.Area[raids[i].AreaID]} [{raids[i].SpawnPointID}]";
+                names[i] = $"{Strings["EditorForm.CmbRaid"]} {i + 1} - {TeraUtil.Area[raids[i].AreaID]} [{raids[i].SpawnPointID}]";
             return names;
         }
 

@@ -488,7 +488,7 @@ namespace TeraFinder
 
                             if (rngres != null)
                             {
-                                var entry = rngres.GetStrings(f.NameList, f.AbilityList, f.NatureList, f.MoveList, f.TypeList, f.FormList, f.GenderListAscii, f.GenderListUnicode);
+                                var entry = rngres.GetStrings(f.NameList, f.AbilityList, f.NatureList, f.MoveList, f.TypeList, f.FormList, f.GenderListAscii, f.GenderListUnicode, f.ShinyList);
                                 var grid = new GridEntry(row.ConvertToString()).GetStrings();
                                 for (var i = 0; i < entry.Length - 1; i++)
                                     if (!entry[i].Equals(grid[i]))
@@ -526,7 +526,7 @@ namespace TeraFinder
 
                             if (rngres != null)
                             {
-                                var entry = rngres.GetStrings(f.NameList, f.AbilityList, f.NatureList, f.MoveList, f.TypeList, f.FormList, f.GenderListAscii, f.GenderListUnicode);
+                                var entry = rngres.GetStrings(f.NameList, f.AbilityList, f.NatureList, f.MoveList, f.TypeList, f.FormList, f.GenderListAscii, f.GenderListUnicode, f.ShinyList);
                                 var grid = new GridEntry(row.ConvertToString()).GetStrings();
                                 for (var i = 0; i < entry.Length - 1; i++)
                                     if (!entry[i].Equals(grid[i]))
@@ -645,7 +645,7 @@ namespace TeraFinder
 
                             if (rngres != null)
                             {
-                                var entry = rngres.GetStrings(f.NameList, f.AbilityList, f.NatureList, f.MoveList, f.TypeList, f.FormList, f.GenderListAscii, f.GenderListUnicode);
+                                var entry = rngres.GetStrings(f.NameList, f.AbilityList, f.NatureList, f.MoveList, f.TypeList, f.FormList, f.GenderListAscii, f.GenderListUnicode, f.ShinyList);
                                 var grid = new GridEntry(row.ConvertToString()).GetStrings();
                                 for (var i = 0; i < entry.Length - 1; i++)
                                     if (!entry[i].Equals(grid[i]))

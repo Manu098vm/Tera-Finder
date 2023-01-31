@@ -1,5 +1,7 @@
-﻿using PKHeX.Core;
+﻿using Microsoft.VisualBasic;
+using PKHeX.Core;
 using SysBot.Base;
+using System.Runtime.CompilerServices;
 using TeraFinder.Properties;
 
 namespace TeraFinder.Forms
@@ -11,16 +13,38 @@ namespace TeraFinder.Forms
         private SAV9SV SAV = null!;
         private bool Connected = false;
 
-        public ConnectionForm(SAV9SV sav)
+        private Dictionary<string, string> Strings = null!;
+
+        public ConnectionForm(SAV9SV sav, string language)
         {
             InitializeComponent();
+            GenerateDictionary();
+            TranslateDictionary(language);
             SAV = sav;
             txtAddress.Text = Settings.Default.address;
             numPort.Value = Settings.Default.port;
             if (Settings.Default.protocol)
                 radioUSB.Checked = true;
-            toolTip.SetToolTip(chkEventData, $"Syncronize event data from the remote device. Might require a sgnificant amount of time.");
+            toolTip.SetToolTip(chkEventData, Strings["ToolTipSyncEvent"]);
         }
+
+        private void GenerateDictionary()
+        {
+            Strings = new Dictionary<string, string>
+            {
+                { "ActionConnect", "Connect" },
+                { "ActionConnecting", "Connecting..." },
+                { "ActionConnected", "Connected" },
+                { "NoProtocol", "No valid protocol" },
+                { "ConnectionSuccess", "Successfully connected." },
+                { "ConnectionFailed", "Could not connect." },
+                { "ExecutorConnected", "Executor succesfully connected:" },
+                { "DisconnectionSuccess", "Device disconnected." },
+                { "ToolTipSyncEvent", "Syncronize event data from the remote device. Might require a sgnificant amount of time." }
+            };
+        }
+
+        private void TranslateDictionary(string language) => Strings = Strings.TranslateInnerStrings(language);
 
         public bool IsConnected() => Connected;
 
@@ -29,7 +53,7 @@ namespace TeraFinder.Forms
             try { Executor.Disconnect(); }
             catch { }
             Connected = false;
-            EnableConnectButton("Connect");
+            EnableConnectButton(Strings["ActionConnect"]);
             DisableDisconnectButton();
             EnableGrpDevice();
             EnableCheckEvent();
@@ -50,7 +74,7 @@ namespace TeraFinder.Forms
                 {
                     SwitchProtocol.USB => new SwitchConnectionConfig { Port = (int)numPort.Value, Protocol = SwitchProtocol.USB },
                     SwitchProtocol.WiFi => new SwitchConnectionConfig { IP = txtAddress.Text, Port = (int)numPort.Value, Protocol = SwitchProtocol.WiFi },
-                    _ => throw new ArgumentOutOfRangeException("No valid protocol"),
+                    _ => throw new ArgumentOutOfRangeException(Strings["NoProtocol"]),
                 };
                 var state = new DeviceState
                 {
@@ -92,9 +116,9 @@ namespace TeraFinder.Forms
                 if (chkEventData.Checked)
                     await DownloadEventData().ConfigureAwait(false);
 
-                MessageBox.Show("Successfully connected.");
-                Log($"Executor succesfully connected: {version} - {SAV.OT} ({SAV.TrainerTID7}) [{progress}]");
-                EnableConnectButton();
+                MessageBox.Show(Strings["ConnectionSuccess"]);
+                Log($"{Strings["ExecutorConnected"]} {version} - {SAV.OT} ({SAV.TrainerTID7}) [{progress}]");
+                EnableConnectButton(Strings["ActionConnected"]);
                 EnableDisconnectButton();
                 EnableGrpDevice();
                 EnableCheckEvent();
@@ -103,7 +127,7 @@ namespace TeraFinder.Forms
             catch (Exception ex)
             {
                 Disconnect();
-                MessageBox.Show($"Could not connect.\n{ex.Message}");
+                MessageBox.Show($"{Strings["ConnectionFailed"]}\n{ex.Message}");
                 return;
             }
         }
@@ -152,17 +176,17 @@ namespace TeraFinder.Forms
         {
             if (btnConnect.InvokeRequired)
             {
-                btnConnect.Invoke(() => { btnConnect.Text = "Connecting..."; });
+                btnConnect.Invoke(() => { btnConnect.Text = Strings["ActionConnecting"]; });
                 btnConnect.Invoke(() => { btnConnect.Enabled = false; });
             }
             else
             {
-                btnConnect.Text = "Connecting...";
+                btnConnect.Text = Strings["ActionConnecting"];
                 btnConnect.Enabled = false;
             }
         }
 
-        private void EnableConnectButton(string text = "Connected")
+        private void EnableConnectButton(string text)
         {
             if (btnConnect.InvokeRequired)
             {
@@ -252,7 +276,7 @@ namespace TeraFinder.Forms
         {
             if (InvokeRequired)
             {
-                Invoke(() => { Close(); });
+                Invoke(Close);
             }
             else
             {
@@ -285,7 +309,7 @@ namespace TeraFinder.Forms
             DisableGrpDevice();
             DisableCheckEvent();
             Disconnect();
-            MessageBox.Show("Device disconnected.");
+            MessageBox.Show(Strings["DisconnectionSuccess"]);
         }
     }
 }

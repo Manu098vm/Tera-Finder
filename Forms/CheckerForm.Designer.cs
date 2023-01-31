@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.lblEC = new System.Windows.Forms.Label();
+            this.lblScale = new System.Windows.Forms.Label();
+            this.lblPID = new System.Windows.Forms.Label();
+            this.lblHP = new System.Windows.Forms.Label();
+            this.lblWeight = new System.Windows.Forms.Label();
+            this.lblHeight = new System.Windows.Forms.Label();
+            this.lblSpe = new System.Windows.Forms.Label();
+            this.lblSPA = new System.Windows.Forms.Label();
+            this.lblSPD = new System.Windows.Forms.Label();
+            this.lblDef = new System.Windows.Forms.Label();
+            this.lblAtk = new System.Windows.Forms.Label();
             this.btnCalc = new System.Windows.Forms.Button();
             this.txtEC = new System.Windows.Forms.TextBox();
             this.txtPID = new System.Windows.Forms.TextBox();
@@ -53,12 +53,12 @@
             this.numDef = new System.Windows.Forms.NumericUpDown();
             this.grpSeed = new System.Windows.Forms.GroupBox();
             this.txtSeed = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
+            this.lblTera = new System.Windows.Forms.Label();
             this.cmbTera = new System.Windows.Forms.ComboBox();
-            this.label14 = new System.Windows.Forms.Label();
+            this.lblNature = new System.Windows.Forms.Label();
             this.cmbNature = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.lblTID = new System.Windows.Forms.Label();
+            this.lblSID = new System.Windows.Forms.Label();
             this.txtTid = new System.Windows.Forms.TextBox();
             this.txtSid = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numScale)).BeginInit();
@@ -73,104 +73,104 @@
             this.grpSeed.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // lblEC
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 81);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "EC:";
+            this.lblEC.AutoSize = true;
+            this.lblEC.Location = new System.Drawing.Point(7, 81);
+            this.lblEC.Name = "lblEC";
+            this.lblEC.Size = new System.Drawing.Size(29, 20);
+            this.lblEC.TabIndex = 0;
+            this.lblEC.Text = "EC:";
             // 
-            // label2
+            // lblScale
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 479);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 20);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Scale:";
+            this.lblScale.AutoSize = true;
+            this.lblScale.Location = new System.Drawing.Point(7, 479);
+            this.lblScale.Name = "lblScale";
+            this.lblScale.Size = new System.Drawing.Size(47, 20);
+            this.lblScale.TabIndex = 1;
+            this.lblScale.Text = "Scale:";
             // 
-            // label3
+            // lblPID
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 115);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 20);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "PID:";
+            this.lblPID.AutoSize = true;
+            this.lblPID.Location = new System.Drawing.Point(7, 115);
+            this.lblPID.Name = "lblPID";
+            this.lblPID.Size = new System.Drawing.Size(35, 20);
+            this.lblPID.TabIndex = 2;
+            this.lblPID.Text = "PID:";
             // 
-            // label4
+            // lblHP
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 147);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(31, 20);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "HP:";
+            this.lblHP.AutoSize = true;
+            this.lblHP.Location = new System.Drawing.Point(7, 147);
+            this.lblHP.Name = "lblHP";
+            this.lblHP.Size = new System.Drawing.Size(31, 20);
+            this.lblHP.TabIndex = 3;
+            this.lblHP.Text = "HP:";
             // 
-            // label5
+            // lblWeight
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 445);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 20);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Weight:";
+            this.lblWeight.AutoSize = true;
+            this.lblWeight.Location = new System.Drawing.Point(7, 445);
+            this.lblWeight.Name = "lblWeight";
+            this.lblWeight.Size = new System.Drawing.Size(59, 20);
+            this.lblWeight.TabIndex = 4;
+            this.lblWeight.Text = "Weight:";
             // 
-            // label6
+            // lblHeight
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(7, 413);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(57, 20);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Height:";
+            this.lblHeight.AutoSize = true;
+            this.lblHeight.Location = new System.Drawing.Point(7, 413);
+            this.lblHeight.Name = "lblHeight";
+            this.lblHeight.Size = new System.Drawing.Size(57, 20);
+            this.lblHeight.TabIndex = 5;
+            this.lblHeight.Text = "Height:";
             // 
-            // label7
+            // lblSpe
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 316);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(37, 20);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "Spe:";
+            this.lblSpe.AutoSize = true;
+            this.lblSpe.Location = new System.Drawing.Point(7, 311);
+            this.lblSpe.Name = "lblSpe";
+            this.lblSpe.Size = new System.Drawing.Size(37, 20);
+            this.lblSpe.TabIndex = 6;
+            this.lblSpe.Text = "Spe:";
             // 
-            // label8
+            // lblSPA
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 245);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(39, 20);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "SpA:";
+            this.lblSPA.AutoSize = true;
+            this.lblSPA.Location = new System.Drawing.Point(7, 245);
+            this.lblSPA.Name = "lblSPA";
+            this.lblSPA.Size = new System.Drawing.Size(39, 20);
+            this.lblSPA.TabIndex = 7;
+            this.lblSPA.Text = "SpA:";
             // 
-            // label9
+            // lblSPD
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(7, 277);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(40, 20);
-            this.label9.TabIndex = 8;
-            this.label9.Text = "SpD:";
+            this.lblSPD.AutoSize = true;
+            this.lblSPD.Location = new System.Drawing.Point(7, 277);
+            this.lblSPD.Name = "lblSPD";
+            this.lblSPD.Size = new System.Drawing.Size(40, 20);
+            this.lblSPD.TabIndex = 8;
+            this.lblSPD.Text = "SpD:";
             // 
-            // label10
+            // lblDef
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(7, 212);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(36, 20);
-            this.label10.TabIndex = 9;
-            this.label10.Text = "Def:";
+            this.lblDef.AutoSize = true;
+            this.lblDef.Location = new System.Drawing.Point(7, 212);
+            this.lblDef.Name = "lblDef";
+            this.lblDef.Size = new System.Drawing.Size(36, 20);
+            this.lblDef.TabIndex = 9;
+            this.lblDef.Text = "Def:";
             // 
-            // label11
+            // lblAtk
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(7, 179);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(34, 20);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "Atk:";
+            this.lblAtk.AutoSize = true;
+            this.lblAtk.Location = new System.Drawing.Point(7, 179);
+            this.lblAtk.Name = "lblAtk";
+            this.lblAtk.Size = new System.Drawing.Size(34, 20);
+            this.lblAtk.TabIndex = 10;
+            this.lblAtk.Text = "Atk:";
             // 
             // btnCalc
             // 
@@ -327,14 +327,14 @@
             this.txtSeed.Size = new System.Drawing.Size(175, 27);
             this.txtSeed.TabIndex = 34;
             // 
-            // label13
+            // lblTera
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(7, 380);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(40, 20);
-            this.label13.TabIndex = 36;
-            this.label13.Text = "Tera:";
+            this.lblTera.AutoSize = true;
+            this.lblTera.Location = new System.Drawing.Point(7, 380);
+            this.lblTera.Name = "lblTera";
+            this.lblTera.Size = new System.Drawing.Size(40, 20);
+            this.lblTera.TabIndex = 36;
+            this.lblTera.Text = "Tera:";
             // 
             // cmbTera
             // 
@@ -363,14 +363,14 @@
             this.cmbTera.Size = new System.Drawing.Size(125, 28);
             this.cmbTera.TabIndex = 37;
             // 
-            // label14
+            // lblNature
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(7, 347);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(57, 20);
-            this.label14.TabIndex = 38;
-            this.label14.Text = "Nature:";
+            this.lblNature.AutoSize = true;
+            this.lblNature.Location = new System.Drawing.Point(7, 347);
+            this.lblNature.Name = "lblNature";
+            this.lblNature.Size = new System.Drawing.Size(57, 20);
+            this.lblNature.TabIndex = 38;
+            this.lblNature.Text = "Nature:";
             // 
             // cmbNature
             // 
@@ -406,23 +406,23 @@
             this.cmbNature.Size = new System.Drawing.Size(125, 28);
             this.cmbNature.TabIndex = 39;
             // 
-            // label12
+            // lblTID
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(7, 19);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(35, 20);
-            this.label12.TabIndex = 40;
-            this.label12.Text = "TID:";
+            this.lblTID.AutoSize = true;
+            this.lblTID.Location = new System.Drawing.Point(7, 19);
+            this.lblTID.Name = "lblTID";
+            this.lblTID.Size = new System.Drawing.Size(35, 20);
+            this.lblTID.TabIndex = 40;
+            this.lblTID.Text = "TID:";
             // 
-            // label15
+            // lblSID
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(7, 48);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(35, 20);
-            this.label15.TabIndex = 41;
-            this.label15.Text = "SID:";
+            this.lblSID.AutoSize = true;
+            this.lblSID.Location = new System.Drawing.Point(7, 48);
+            this.lblSID.Name = "lblSID";
+            this.lblSID.Size = new System.Drawing.Size(35, 20);
+            this.lblSID.TabIndex = 41;
+            this.lblSID.Text = "SID:";
             // 
             // txtTid
             // 
@@ -449,12 +449,12 @@
             this.ClientSize = new System.Drawing.Size(203, 668);
             this.Controls.Add(this.txtSid);
             this.Controls.Add(this.txtTid);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.label12);
+            this.Controls.Add(this.lblSID);
+            this.Controls.Add(this.lblTID);
             this.Controls.Add(this.cmbNature);
-            this.Controls.Add(this.label14);
+            this.Controls.Add(this.lblNature);
             this.Controls.Add(this.cmbTera);
-            this.Controls.Add(this.label13);
+            this.Controls.Add(this.lblTera);
             this.Controls.Add(this.grpSeed);
             this.Controls.Add(this.numDef);
             this.Controls.Add(this.numAtk);
@@ -468,17 +468,17 @@
             this.Controls.Add(this.txtPID);
             this.Controls.Add(this.txtEC);
             this.Controls.Add(this.btnCalc);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblAtk);
+            this.Controls.Add(this.lblDef);
+            this.Controls.Add(this.lblSPD);
+            this.Controls.Add(this.lblSPA);
+            this.Controls.Add(this.lblSpe);
+            this.Controls.Add(this.lblHeight);
+            this.Controls.Add(this.lblWeight);
+            this.Controls.Add(this.lblHP);
+            this.Controls.Add(this.lblPID);
+            this.Controls.Add(this.lblScale);
+            this.Controls.Add(this.lblEC);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CheckerForm";
@@ -503,17 +503,17 @@
 
         #endregion
 
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private Label label4;
-        private Label label5;
-        private Label label6;
-        private Label label7;
-        private Label label8;
-        private Label label9;
-        private Label label10;
-        private Label label11;
+        private Label lblEC;
+        private Label lblScale;
+        private Label lblPID;
+        private Label lblHP;
+        private Label lblWeight;
+        private Label lblHeight;
+        private Label lblSpe;
+        private Label lblSPA;
+        private Label lblSPD;
+        private Label lblDef;
+        private Label lblAtk;
         private Button btnCalc;
         private TextBox txtEC;
         private TextBox txtPID;
@@ -528,12 +528,12 @@
         private NumericUpDown numDef;
         private GroupBox grpSeed;
         private TextBox txtSeed;
-        private Label label13;
+        private Label lblTera;
         private ComboBox cmbTera;
-        private Label label14;
+        private Label lblNature;
         private ComboBox cmbNature;
-        private Label label12;
-        private Label label15;
+        private Label lblTID;
+        private Label lblSID;
         private TextBox txtTid;
         private TextBox txtSid;
     }

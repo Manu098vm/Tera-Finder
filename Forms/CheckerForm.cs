@@ -1,4 +1,6 @@
-﻿using PKHeX.Core;
+﻿using Microsoft.CodeAnalysis.Differencing;
+using Microsoft.VisualBasic;
+using PKHeX.Core;
 
 namespace TeraFinder.Forms
 {
@@ -11,9 +13,24 @@ namespace TeraFinder.Forms
         private EncounterRaid9[] Dist = null!;
         private EncounterRaid9[] Mighty = null!;
 
-        public CheckerForm(PKM pk, SAV9SV sav)
+        private Dictionary<string, string> Strings = null!;
+        private string[] Contents = null!;
+
+        public CheckerForm(PKM pk, SAV9SV sav, string language)
         {
             InitializeComponent();
+            GenerateDictionary();
+            TranslateDictionary(language);
+            this.TranslateInterface(language);
+            Contents = new string[] { Strings["RaidContent.Standard"], Strings["RaidContent.Black"], Strings["RaidContent.Event"], Strings["RaidContent.Event_Mighty"] };
+
+            var natures = GameInfo.GetStrings(language).natures;
+            var types = GameInfo.GetStrings(language).types;
+            cmbNature.Items.Clear();
+            cmbNature.Items.AddRange(natures);
+            cmbTera.Items.Clear();
+            cmbTera.Items.AddRange(types);
+
             SAV = sav;
             PKM = (PK9)pk;
             txtTid.Text = $"{PKM.TrainerTID7}";
@@ -36,6 +53,20 @@ namespace TeraFinder.Forms
             Dist = events[0];
             Mighty = events[1];
         }
+
+        private void GenerateDictionary()
+        {
+            Strings = new Dictionary<string, string>
+            {
+                { "RaidContent.Invalid", "INVALID" },
+                { "RaidContent.Standard", "Standard" },
+                { "RaidContent.Black", "Black" },
+                { "RaidContent.Event", "Event" },
+                { "RaidContent.Event_Mighty", "Event-Mighty" },
+            };
+        }
+
+        private void TranslateDictionary(string language) => Strings = Strings.TranslateInnerStrings(language);
 
         private void txt_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -109,9 +140,9 @@ namespace TeraFinder.Forms
                                     var success = ComparePKM(pk, rngres);
                                     if (success)
                                     {
-                                        var type = $"{content}";
+                                        var type = $"{Contents[(byte)content]}";
                                         if (progress is GameProgress.None)
-                                            type = $"{RaidContent.Black}";
+                                            type = $"{Strings["RaidContent.Black"]}";
                                         txtSeed.Text = $"{seed:X8} ({type})";
                                         return;
                                     }
@@ -121,7 +152,7 @@ namespace TeraFinder.Forms
                     }
                 }
             }
-            txtSeed.Text = $"{seed:X8} (INVALID)";
+            txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Invalid"]})";
         }
 
         private static bool ComparePKM(PK9 pk, TeraDetails pkm)

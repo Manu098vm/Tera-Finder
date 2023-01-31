@@ -97,7 +97,7 @@
             this.lblSID = new System.Windows.Forms.Label();
             this.txtTID = new System.Windows.Forms.TextBox();
             this.lblTID = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblGame = new System.Windows.Forms.Label();
             this.cmbGame = new System.Windows.Forms.ComboBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -907,7 +907,7 @@
             this.grpGameInfo.Controls.Add(this.lblSID);
             this.grpGameInfo.Controls.Add(this.txtTID);
             this.grpGameInfo.Controls.Add(this.lblTID);
-            this.grpGameInfo.Controls.Add(this.label2);
+            this.grpGameInfo.Controls.Add(this.lblGame);
             this.grpGameInfo.Controls.Add(this.cmbProgress);
             this.grpGameInfo.Controls.Add(this.lblProgress);
             this.grpGameInfo.Controls.Add(this.cmbGame);
@@ -952,14 +952,14 @@
             this.lblTID.TabIndex = 8;
             this.lblTID.Text = "TID:";
             // 
-            // label2
+            // lblGame
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 45);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(51, 20);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Game:";
+            this.lblGame.AutoSize = true;
+            this.lblGame.Location = new System.Drawing.Point(21, 45);
+            this.lblGame.Name = "lblGame";
+            this.lblGame.Size = new System.Drawing.Size(51, 20);
+            this.lblGame.TabIndex = 1;
+            this.lblGame.Text = "Game:";
             // 
             // cmbGame
             // 
@@ -1131,7 +1131,7 @@
         private NumericUpDown numFrames;
         private ComboBox cmbNature;
         private GroupBox grpGameInfo;
-        private Label label2;
+        private Label lblGame;
         private Label lblSID;
         private Label lblTID;
         private ComboBox cmbEC;

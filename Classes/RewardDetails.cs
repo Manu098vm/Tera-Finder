@@ -106,7 +106,7 @@ namespace TeraFinder
         public string? ExtraInfo { get; private set; }
         public string? Calcs { get; private set; }
 
-        public RewardGridEntry(RewardDetails res, string[] itemnames, string[]speciesnames, string language)
+        public RewardGridEntry(RewardDetails res, string[] itemnames, string[]speciesnames, string[] shinynames, string language)
         {
             var str = res.GetStrings(itemnames, language);
             Seed = $"{res.Seed:X8}";
@@ -131,7 +131,7 @@ namespace TeraFinder
             Item19 = str[18];
             Item20 = str[19];
             Item21 = str[20];
-            ExtraInfo = $"{speciesnames[res.Species]} ({res.Stars}☆) {(res.Shiny > TeraShiny.No ? $"({res.Shiny})" : "")}";
+            ExtraInfo = $"{speciesnames[res.Species]} ({res.Stars}☆) {(res.Shiny > TeraShiny.No ? $"({shinynames[(int)res.Shiny]})" : "")}";
             Calcs = $"{res.Calcs}";
         }
 

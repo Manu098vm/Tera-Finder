@@ -8,33 +8,44 @@ namespace TeraFinder.Forms
         private List<RewardDetails> CalculatedList = new();
         private RewardFilter? Filter = null;
         public string[] SpeciesNames = null!;
+        public string[] ShinyNames = null!;
         public string[] Items = null!;
         private CancellationTokenSource Token = new();
+
+        private Dictionary<string, string> Strings = null!;
 
         public RewardCalcForm(EditorForm editor)
         {
             InitializeComponent();
             Editor = editor;
+            GenerateDictionary();
+            TranslateDictionary(Editor.Language);
+            this.TranslateInterface(Editor.Language);
+            TranslateContextMenu();
 
             if (Application.OpenForms.OfType<EditorForm>().FirstOrDefault() is null)
                 contextMenuStrip.Items.Remove(btnSendSelectedRaid);
 
+            ShinyNames = new string[] { Strings["TeraShiny.Any"], Strings["TeraShiny.No"], Strings["TeraShiny.Yes"], Strings["TeraShiny.Star"], Strings["TeraShiny.Square"] };
             SpeciesNames = GameInfo.GetStrings(editor.Language).specieslist;
+            cmbSpecies.Items[0] = Strings["Any"];
             cmbSpecies.Items.AddRange(SpeciesNames[1..]);
             cmbSpecies.SelectedIndex = 0;
+            cmbStars.Items[0] = Strings["Any"];
             cmbStars.SelectedIndex = 0;
 
             Items = GameInfo.GetStrings(editor.Language).itemlist;
             var cbitems = new List<string>
             {
-                "Any",
-                "Any Herba Mystica",
+                Strings["Any"],
+                Strings["AnyHerba"],
             };
             cbitems.AddRange(Items[1..]);
 
+            var items = cbitems.ToArray();
             foreach(var cb in grpItems.Controls.OfType<ComboBox>())
             {
-                cb.Items.AddRange(cbitems.ToArray());
+                cb.Items.AddRange(items);
                 cb.SelectedIndex = 0;
             }
 
@@ -54,13 +65,88 @@ namespace TeraFinder.Forms
             cmbContent.SelectedIndex = Editor.cmbContent.SelectedIndex;
             cmbBoost.SelectedIndex = 0;
 
-            toolTip.SetToolTip(chkAccurateSearch, $"Force the calculator to determine Pokémon Tera Type and Shinyness from a given seed, " +
-                $"in order to accurately determine Tera Shards types and Extra Infos.\nMakes the searches a little slower.");
-            toolTip1.SetToolTip(chkAllResults, $"Disabled - Stop each thread search at the first result that matches the filters.\n" +
-                $"Enabled - Compute all possible results until Max Calcs number is reached.\nIgnored if no filter is set.");
+            toolTip.SetToolTip(chkAccurateSearch, Strings["ToolTipAccurate"]);
+            toolTip1.SetToolTip(chkAllResults, Strings["ToolTipAllResults"]);
+
+            TranslateCmbProgress();
+            TranslateCmbGame();
+            TranslateCmbContent();
 
             dataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
             dataGrid.RowHeadersVisible = false;
+        }
+
+        private void GenerateDictionary()
+        {
+            Strings = new Dictionary<string, string>
+            {
+                { "Any", "Any" },
+                { "AnyHerba", "Any Herba Mystica" },
+                { "Found", "Found" },
+                { "True", "True" },
+                { "False", "False" },
+                { "FiltersPopup", "Do you want to apply filters in the existing search?" },
+                { "FiltersApply", "Apply Filters" },
+                { "ActionSearch", "Search" },
+                { "ActionStop", "Stop" },
+                { "ToolTipAccurate", "Force the calculator to determine Pokémon Tera Type and Shinyness from a given seed, " +
+                "in order to accurately determine Tera Shards types and Extra Infos.\nMakes the searches a little slower." },
+                { "ToolTipAllResults", "Disabled - Stop each thread search at the first result that matches the filters.\n" +
+                "Enabled - Compute all possible results until Max Calcs number is reached.\nIgnored if no filter is set." },
+                { "GameProgress.Beginning", "Beginning" },
+                { "GameProgress.UnlockedTeraRaids", "Unlocked Tera Raids" },
+                { "GameProgress.Unlocked3Stars", "Unlocked 3 Stars" },
+                { "GameProgress.Unlocked4Stars", "Unlocked 4 Stars" },
+                { "GameProgress.Unlocked5Stars", "Unlocked 5 Stars" },
+                { "GameProgress.Unlocked6Stars", "Unlocked 6 Stars" },
+                { "RaidContent.Standard", "Standard" },
+                { "RaidContent.Black", "Black" },
+                { "RaidContent.Event", "Event" },
+                { "RaidContent.Event_Mighty", "Event-Mighty" },
+                { "GameVersionSL", "Scarlet" },
+                { "GameVersionVL", "Violet" },
+                { "TeraShiny.Any", "Any" },
+                { "TeraShiny.No", "No" },
+                { "TeraShiny.Yes", "Yes" },
+                { "TeraShiny.Star", "Star" },
+                { "TeraShiny.Square", "Square" },
+                { "RewardCalcForm.btnSaveAllTxt", "Save All Results as TXT" },
+                { "RewardCalcForm.btnSaveSelectedTxt", "Save Selected Results as TXT" },
+                { "RewardCalcForm.btnSendSelectedRaid", "Send Selected Result to Raid Editor" },
+            };
+        }
+
+        private void TranslateDictionary(string language) => Strings = Strings.TranslateInnerStrings(language);
+
+        private void TranslateCmbProgress()
+        {
+            cmbProgress.Items[0] = Strings["GameProgress.Beginning"];
+            cmbProgress.Items[1] = Strings["GameProgress.UnlockedTeraRaids"];
+            cmbProgress.Items[2] = Strings["GameProgress.Unlocked3Stars"];
+            cmbProgress.Items[3] = Strings["GameProgress.Unlocked4Stars"];
+            cmbProgress.Items[4] = Strings["GameProgress.Unlocked5Stars"];
+            cmbProgress.Items[5] = Strings["GameProgress.Unlocked6Stars"];
+        }
+
+        private void TranslateCmbContent()
+        {
+            cmbContent.Items[0] = Strings["RaidContent.Standard"];
+            cmbContent.Items[1] = Strings["RaidContent.Black"];
+            cmbContent.Items[2] = Strings["RaidContent.Event"];
+            cmbContent.Items[3] = Strings["RaidContent.Event_Mighty"];
+        }
+
+        private void TranslateContextMenu()
+        {
+            btnSaveAllTxt.Text = Strings["RewardCalcForm.btnSaveAllTxt"];
+            btnSaveSelectedTxt.Text = Strings["RewardCalcForm.btnSaveSelectedTxt"];
+            btnSendSelectedRaid.Text = Strings["RewardCalcForm.btnSendSelectedRaid"];
+        }
+
+        private void TranslateCmbGame()
+        {
+            cmbGame.Items[0] = Strings["GameVersionSL"];
+            cmbGame.Items[1] = Strings["GameVersionVL"];
         }
 
         private void TxtSeed_KeyPress(object sender, KeyPressEventArgs e)
@@ -92,13 +178,13 @@ namespace TeraFinder.Forms
                 chkAccurateSearch.Checked = true;
             if (dataGrid.Rows.Count > 0)
             {
-                DialogResult d = MessageBox.Show("Do you want to apply filters in the existing search?", "Apply Filters", MessageBoxButtons.YesNo);
+                DialogResult d = MessageBox.Show(Strings["FiltersPopup"], Strings["FiltersApply"], MessageBoxButtons.YesNo);
                 if (d == DialogResult.Yes)
                 {
                     var list = new List<RewardGridEntry>();
                     foreach (var c in CalculatedList)
                         if (Filter is null || Filter.IsFilterMatch(c))
-                            list.Add(new RewardGridEntry(c, Items, SpeciesNames, Editor.Language));
+                            list.Add(new RewardGridEntry(c, Items, SpeciesNames, ShinyNames, Editor.Language));
                     dataGrid.DataSource = list;
                 }
             }
@@ -199,14 +285,14 @@ namespace TeraFinder.Forms
                 if (chkAllResults.Checked)
                     try
                     {
-                        lblFound.Text = $"Found: {CalculatedList.Count}";
+                        lblFound.Text = $"{Strings["Found"]}: {CalculatedList.Count}";
                     }
                     catch (Exception)
                     {
-                        lblFound.Text = $"Found: {CalculatedList.LongCount()}";
+                        lblFound.Text = $"{Strings["Found"]}: {CalculatedList.LongCount()}";
                     }
                 else
-                    lblFound.Text = $"Found: {(CalculatedList.Count > 0 ? "True" : "False")}";
+                    lblFound.Text = $"{Strings["Found"]} : {(CalculatedList.Count > 0 ? Strings["True"] : Strings["False"])}";
                 lblFound.Visible = true;
             }
             else
@@ -215,7 +301,7 @@ namespace TeraFinder.Forms
 
         private async void btnSearch_Click(object sender, EventArgs e)
         {
-            if (btnSearch.Text.Equals("Search"))
+            if (btnSearch.Text.Equals(Strings["ActionSearch"]))
             {
                 Token = new();
                 if (cmbProgress.SelectedIndex is (int)GameProgress.Beginning or (int)GameProgress.None)
@@ -239,7 +325,7 @@ namespace TeraFinder.Forms
                     CalculatedList.Clear();
                     dataGrid.DataSource = new List<RewardGridEntry>();
                 }
-                btnSearch.Text = "Stop";
+                btnSearch.Text = Strings["ActionStop"];
                 DisableControls();
                 ActiveForm!.Update();
 
@@ -259,13 +345,13 @@ namespace TeraFinder.Forms
                 {
                     var griddata = await StartSearch(sav, progress, content, boost, Token);
                     dataGrid.DataSource = griddata;
-                    btnSearch.Text = "Search";
+                    btnSearch.Text = Strings["ActionSearch"];
                     EnableControls(IsBlankSAV());
                     UpdateLabel();
                 }
                 catch (OperationCanceledException)
                 {
-                    btnSearch.Text = "Search";
+                    btnSearch.Text = Strings["ActionSearch"];
                     EnableControls(IsBlankSAV());
                     UpdateLabel();
                 }
@@ -273,7 +359,7 @@ namespace TeraFinder.Forms
             else
             {
                 Token.Cancel();
-                btnSearch.Text = "Search";
+                btnSearch.Text = Strings["ActionSearch"];
                 EnableControls(IsBlankSAV());
                 UpdateLabel();
                 return;
@@ -315,7 +401,7 @@ namespace TeraFinder.Forms
                             var res = CalcResult(tseed, progress, sav, content, i, chkAccurateSearch.Checked, boost);
                             if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
                             {
-                                tmpgridlist.Add(new RewardGridEntry(res, Items, SpeciesNames, Editor.Language));
+                                tmpgridlist.Add(new RewardGridEntry(res, Items, SpeciesNames, ShinyNames, Editor.Language));
                                 tmpcalclist.Add(res);
                                 if (!chkAllResults.Checked)
                                 {
@@ -325,7 +411,7 @@ namespace TeraFinder.Forms
                             }
                             else if (Filter is null && res is not null)
                             {
-                                tmpgridlist.Add(new RewardGridEntry(res, Items, SpeciesNames, Editor.Language));
+                                tmpgridlist.Add(new RewardGridEntry(res, Items, SpeciesNames, ShinyNames, Editor.Language));
                                 tmpcalclist.Add(res);
                             }
 

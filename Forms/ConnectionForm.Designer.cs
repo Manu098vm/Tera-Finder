@@ -33,7 +33,7 @@
             this.numPort = new System.Windows.Forms.NumericUpDown();
             this.lblPort = new System.Windows.Forms.Label();
             this.radioUSB = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblAddress = new System.Windows.Forms.Label();
             this.radioWiFi = new System.Windows.Forms.RadioButton();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.btnConnect = new System.Windows.Forms.Button();
@@ -49,7 +49,7 @@
             this.grpDevice.Controls.Add(this.numPort);
             this.grpDevice.Controls.Add(this.lblPort);
             this.grpDevice.Controls.Add(this.radioUSB);
-            this.grpDevice.Controls.Add(this.label1);
+            this.grpDevice.Controls.Add(this.lblAddress);
             this.grpDevice.Controls.Add(this.radioWiFi);
             this.grpDevice.Controls.Add(this.txtAddress);
             this.grpDevice.Location = new System.Drawing.Point(12, 12);
@@ -102,14 +102,14 @@
             this.radioUSB.UseVisualStyleBackColor = true;
             this.radioUSB.CheckedChanged += new System.EventHandler(this.radioUSB_CheckedChanged);
             // 
-            // label1
+            // lblAddress
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 70);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 20);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Address:";
+            this.lblAddress.AutoSize = true;
+            this.lblAddress.Location = new System.Drawing.Point(21, 70);
+            this.lblAddress.Name = "lblAddress";
+            this.lblAddress.Size = new System.Drawing.Size(65, 20);
+            this.lblAddress.TabIndex = 3;
+            this.lblAddress.Text = "Address:";
             // 
             // radioWiFi
             // 
@@ -144,7 +144,7 @@
             // chkEventData
             // 
             this.chkEventData.AutoSize = true;
-            this.chkEventData.Location = new System.Drawing.Point(50, 127);
+            this.chkEventData.Location = new System.Drawing.Point(21, 127);
             this.chkEventData.Name = "chkEventData";
             this.chkEventData.Size = new System.Drawing.Size(289, 24);
             this.chkEventData.TabIndex = 2;
@@ -198,7 +198,7 @@
         private RadioButton radioUSB;
         private RadioButton radioWiFi;
         private Label lblPort;
-        private Label label1;
+        private Label lblAddress;
         private TextBox txtAddress;
         private Button btnConnect;
         private NumericUpDown numPort;
