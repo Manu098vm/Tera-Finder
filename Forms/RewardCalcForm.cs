@@ -71,6 +71,7 @@ namespace TeraFinder.Forms
             TranslateCmbProgress();
             TranslateCmbGame();
             TranslateCmbContent();
+            TranslateCmbBoost();
 
             dataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
             dataGrid.RowHeadersVisible = false;
@@ -103,6 +104,10 @@ namespace TeraFinder.Forms
                 { "RaidContent.Black", "Black" },
                 { "RaidContent.Event", "Event" },
                 { "RaidContent.Event_Mighty", "Event-Mighty" },
+                { "SandwichBoost.No Boost", "No Boost"},
+                { "SandwichBoost.Level 1", "Level 1"},
+                { "SandwichBoost.Level 2", "Level 2"},
+                { "SandwichBoost.Level 3", "Level 3"},
                 { "GameVersionSL", "Scarlet" },
                 { "GameVersionVL", "Violet" },
                 { "TeraShiny.Any", "Any" },
@@ -134,6 +139,14 @@ namespace TeraFinder.Forms
             cmbContent.Items[1] = Strings["RaidContent.Black"];
             cmbContent.Items[2] = Strings["RaidContent.Event"];
             cmbContent.Items[3] = Strings["RaidContent.Event_Mighty"];
+        }
+
+        private void TranslateCmbBoost()
+        {
+            cmbBoost.Items[0] = Strings["SandwichBoost.No Boost"];
+            cmbBoost.Items[1] = Strings["SandwichBoost.Level 1"];
+            cmbBoost.Items[2] = Strings["SandwichBoost.Level 2"];
+            cmbBoost.Items[3] = Strings["SandwichBoost.Level 3"];
         }
 
         private void TranslateContextMenu()
