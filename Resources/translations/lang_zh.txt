@@ -18,7 +18,7 @@ TeraFinderForm.btnExport=导出存档文件
 TeraFinderForm.btnEditGame=太晶洞窟解锁进度编辑
 TeraFinderForm.btnImportNews=导入宝可梦入口站新闻
 TeraFinderForm.btnStartEditor=太晶洞窟查看/编辑
-TeraFinderForm.btnStartFinder=Seed检索
+TeraFinderForm.btnStartFinder=Seed检索器
 TeraFinderForm.btnStartCalculator=太晶洞窟计算器
 TeraFinderForm.btnStartRewardCalc=奖励计算器
 

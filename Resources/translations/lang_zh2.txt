@@ -1,4 +1,4 @@
-Plugin.TeraFinderPlugin=太晶洞窟搜索插件
+﻿Plugin.TeraFinderPlugin=太晶洞窟搜索插件
 Plugin.ConnectRemote=遠程連接
 Plugin.TeraViewer=太晶洞窟查看/編輯
 Plugin.SeedChecker=太晶洞窟Seed檢索
@@ -9,16 +9,16 @@ TeraFinderForm=太晶洞窟搜索
 TeraFinderForm.remoteConnectToolStripMenuItem=工具
 TeraFinderForm.btnRemoteConnect=遠程連接
 TeraFinderForm.languageToolStrip=語言設置
-TeraFinderForm.grpSAV=存储文件
-TeraFinderForm.grpSavTools=存储工具
+TeraFinderForm.grpSAV=储存资料文件
+TeraFinderForm.grpSavTools=储存资料工具
 TeraFinderForm.grpStaticTools=獨立工具
 TeraFinderForm.grpTools=工具
-TeraFinderForm.btnLoad=讀取存储文件
-TeraFinderForm.btnExport=導出存储文件
+TeraFinderForm.btnLoad=讀取储存资料文件
+TeraFinderForm.btnExport=導出储存资料文件
 TeraFinderForm.btnEditGame=太晶洞窟解鎖進度編輯
 TeraFinderForm.btnImportNews=導入寶可夢入口站新聞
 TeraFinderForm.btnStartEditor=太晶洞窟查看/編輯
-TeraFinderForm.btnStartFinder=Seed檢索
+TeraFinderForm.btnStartFinder=Seed檢索器
 TeraFinderForm.btnStartCalculator=太晶洞窟計算器
 TeraFinderForm.btnStartRewardCalc=獎勵計算器
 
@@ -176,7 +176,7 @@ GameVersionVL=紫
 TrainerBlank=訓練家
 NewsEvent=寶可夢入口站活動新聞: 
 None=無
-SAVInvalid=不是有效的存储文件。
+SAVInvalid=不是有效的储存资料文件。
 MsgSuccess=完成.
 
 Any=任意
