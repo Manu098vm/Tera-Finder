@@ -279,7 +279,7 @@ namespace TeraFinder.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
@@ -287,6 +287,7 @@ namespace TeraFinder.Properties {
         ///TeraFinderForm.grpSAV=Save File
         ///TeraFinderForm.grpSavTools=SAV Tools
         ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.grpTools=Tools
         ///TeraFinderForm.btnLoad=Load Save File
         ///TeraFinderForm.btnExport=Export Save File
         ///TeraFinderForm.btnEditGame=Edit Game Flags
@@ -299,7 +300,7 @@ namespace TeraFinder.Properties {
                 return ResourceManager.GetString("lang_de", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
@@ -307,6 +308,7 @@ namespace TeraFinder.Properties {
         ///TeraFinderForm.grpSAV=Save File
         ///TeraFinderForm.grpSavTools=SAV Tools
         ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.grpTools=Tools
         ///TeraFinderForm.btnLoad=Load Save File
         ///TeraFinderForm.btnExport=Export Save File
         ///TeraFinderForm.btnEditGame=Edit Game Flags
@@ -319,7 +321,7 @@ namespace TeraFinder.Properties {
                 return ResourceManager.GetString("lang_en", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
@@ -327,6 +329,7 @@ namespace TeraFinder.Properties {
         ///TeraFinderForm.grpSAV=Save File
         ///TeraFinderForm.grpSavTools=SAV Tools
         ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.grpTools=Tools
         ///TeraFinderForm.btnLoad=Load Save File
         ///TeraFinderForm.btnExport=Export Save File
         ///TeraFinderForm.btnEditGame=Edit Game Flags
@@ -339,7 +342,7 @@ namespace TeraFinder.Properties {
                 return ResourceManager.GetString("lang_es", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
@@ -347,6 +350,7 @@ namespace TeraFinder.Properties {
         ///TeraFinderForm.grpSAV=Save File
         ///TeraFinderForm.grpSavTools=SAV Tools
         ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.grpTools=Tools
         ///TeraFinderForm.btnLoad=Load Save File
         ///TeraFinderForm.btnExport=Export Save File
         ///TeraFinderForm.btnEditGame=Edit Game Flags
@@ -359,7 +363,7 @@ namespace TeraFinder.Properties {
                 return ResourceManager.GetString("lang_fr", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Strumenti
@@ -367,6 +371,7 @@ namespace TeraFinder.Properties {
         ///TeraFinderForm.grpSAV=Salvataggio
         ///TeraFinderForm.grpSavTools=Strumenti SAV
         ///TeraFinderForm.grpStaticTools=Strumenti Indipendenti
+        ///TeraFinderForm.grpTools=Tools
         ///TeraFinderForm.btnLoad=Carica SAV
         ///TeraFinderForm.btnExport=Esporta SAV
         ///TeraFinderForm.btnEditGame=Modifica Flags di Gioco
@@ -378,7 +383,7 @@ namespace TeraFinder.Properties {
                 return ResourceManager.GetString("lang_it", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
@@ -386,6 +391,7 @@ namespace TeraFinder.Properties {
         ///TeraFinderForm.grpSAV=Save File
         ///TeraFinderForm.grpSavTools=SAV Tools
         ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.grpTools=Tools
         ///TeraFinderForm.btnLoad=Load Save File
         ///TeraFinderForm.btnExport=Export Save File
         ///TeraFinderForm.btnEditGame=Edit Game Flags
@@ -398,7 +404,7 @@ namespace TeraFinder.Properties {
                 return ResourceManager.GetString("lang_ja", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
@@ -406,6 +412,7 @@ namespace TeraFinder.Properties {
         ///TeraFinderForm.grpSAV=Save File
         ///TeraFinderForm.grpSavTools=SAV Tools
         ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.grpTools=Tools
         ///TeraFinderForm.btnLoad=Load Save File
         ///TeraFinderForm.btnExport=Export Save File
         ///TeraFinderForm.btnEditGame=Edit Game Flags
@@ -418,7 +425,7 @@ namespace TeraFinder.Properties {
                 return ResourceManager.GetString("lang_ko", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
@@ -426,6 +433,7 @@ namespace TeraFinder.Properties {
         ///TeraFinderForm.grpSAV=Save File
         ///TeraFinderForm.grpSavTools=SAV Tools
         ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.grpTools=Tools
         ///TeraFinderForm.btnLoad=Load Save File
         ///TeraFinderForm.btnExport=Export Save File
         ///TeraFinderForm.btnEditGame=Edit Game Flags
@@ -438,7 +446,7 @@ namespace TeraFinder.Properties {
                 return ResourceManager.GetString("lang_zh", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
@@ -446,6 +454,7 @@ namespace TeraFinder.Properties {
         ///TeraFinderForm.grpSAV=Save File
         ///TeraFinderForm.grpSavTools=SAV Tools
         ///TeraFinderForm.grpStaticTools=Standalone Tools
+        ///TeraFinderForm.grpTools=Tools
         ///TeraFinderForm.btnLoad=Load Save File
         ///TeraFinderForm.btnExport=Export Save File
         ///TeraFinderForm.btnEditGame=Edit Game Flags
