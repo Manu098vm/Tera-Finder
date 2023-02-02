@@ -12,6 +12,7 @@ TeraFinderForm.languageToolStrip=语言设置
 TeraFinderForm.grpSAV=存档文件
 TeraFinderForm.grpSavTools=存档工具
 TeraFinderForm.grpStaticTools=独立工具
+TeraFinderForm.grpTools=工具
 TeraFinderForm.btnLoad=读取存档文件
 TeraFinderForm.btnExport=导出存档文件
 TeraFinderForm.btnEditGame=太晶洞窟解锁进度编辑
@@ -249,6 +250,3 @@ AREAGLAS=霜抹山
 AREANPA3=东3区
 AREANPA1=东1区
 AREANPA2=东2区
-
-RewardDetails.Item1=项目1
-TeraDeatails.HP=生命
