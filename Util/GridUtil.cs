@@ -6,7 +6,7 @@ namespace TeraFinder
 {
     public static class GridUtil
     {
-        private static Dictionary<string, string> GenerateDictionary()
+        private static Dictionary<string, string> GenerateDictionary(string language)
         {
             return new Dictionary<string, string>
             {
@@ -17,12 +17,12 @@ namespace TeraFinder
                 { "GridUtil.CheckWiki", "" },
                 { "GridUtil.Report", "" },
                 { "GridUtil.RowsExceeded", "" },
-            };
+            }.TranslateInnerStrings(language);
         }
 
-        public static void SaveAllTxt(this DataGridView dataGrid)
+        public static void SaveAllTxt(this DataGridView dataGrid, string language)
         {
-            var strings = GenerateDictionary();
+            var strings = GenerateDictionary(language);
             if (dataGrid.Rows.Count > 0)
             {
                 var sfd = new SaveFileDialog
@@ -74,9 +74,9 @@ namespace TeraFinder
                 MessageBox.Show(strings["GridUtil.NoData"]);
         }
 
-        public static void SaveSelectedTxt(this DataGridView dataGrid)
+        public static void SaveSelectedTxt(this DataGridView dataGrid, string language)
         {
-            var strings = GenerateDictionary();
+            var strings = GenerateDictionary(language);
             if (dataGrid.SelectedCells.Count > 0)
             {
                 var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
@@ -140,9 +140,9 @@ namespace TeraFinder
                 MessageBox.Show(strings["GridUtil.NoData"]);
         }
 
-        public static void SaveSelectedPk9(this DataGridView dataGrid, CalculatorForm f)
+        public static void SaveSelectedPk9(this DataGridView dataGrid, CalculatorForm f, string language)
         {
-            var strings = GenerateDictionary();
+            var strings = GenerateDictionary(language);
             if (dataGrid.SelectedCells.Count > 0)
             {
                 var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
@@ -265,9 +265,9 @@ namespace TeraFinder
             }
         }
 
-        public static void ViewRewards(this DataGridView dataGrid, CalculatorForm f)
+        public static void ViewRewards(this DataGridView dataGrid, CalculatorForm f, string language)
         {
-            var strings = GenerateDictionary();
+            var strings = GenerateDictionary(language);
             if (dataGrid.SelectedCells.Count > 0)
             {
                 var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
@@ -317,9 +317,9 @@ namespace TeraFinder
             }
         }
 
-        public static void SendSelectedRaidEditor(this DataGridView dataGrid, CalculatorForm f)
+        public static void SendSelectedRaidEditor(this DataGridView dataGrid, CalculatorForm f, string language)
         {
-            var strings = GenerateDictionary();
+            var strings = GenerateDictionary(language);
             if (dataGrid.SelectedCells.Count > 0)
             {
                 var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
@@ -349,9 +349,9 @@ namespace TeraFinder
             }
         }
 
-        public static void SendSelectedRaidEditor(this DataGridView dataGrid, RewardCalcForm f)
+        public static void SendSelectedRaidEditor(this DataGridView dataGrid, RewardCalcForm f, string language)
         {
-            var strings = GenerateDictionary();
+            var strings = GenerateDictionary(language);
             if (dataGrid.SelectedCells.Count > 0)
             {
                 var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
@@ -381,9 +381,9 @@ namespace TeraFinder
             }
         }
 
-        public static void SendSelectedPk9Editor(this DataGridView dataGrid, CalculatorForm f)
+        public static void SendSelectedPk9Editor(this DataGridView dataGrid, CalculatorForm f, string language)
         {
-            var strings = GenerateDictionary();
+            var strings = GenerateDictionary(language);
             if (dataGrid.SelectedCells.Count > 0)
             {
                 var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
