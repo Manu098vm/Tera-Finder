@@ -6,8 +6,23 @@ namespace TeraFinder
 {
     public static class GridUtil
     {
+        private static Dictionary<string, string> GenerateDictionary()
+        {
+            return new Dictionary<string, string>
+            {
+                { "GridUtil.Exported", "" },
+                { "GridUtil.NoData", "" },
+                { "GridUtil.ErrorParsing", "" },
+                { "GridUtil.MissingData", "" },
+                { "GridUtil.CheckWiki", "" },
+                { "GridUtil.Report", "" },
+                { "GridUtil.RowsExceeded", "" },
+            };
+        }
+
         public static void SaveAllTxt(this DataGridView dataGrid)
         {
+            var strings = GenerateDictionary();
             if (dataGrid.Rows.Count > 0)
             {
                 var sfd = new SaveFileDialog
@@ -46,7 +61,7 @@ namespace TeraFinder
                                     outputTxt[i] += Convert.ToString(dataGrid.Rows[i - 1].Cells[j].Value) + "\t";
 
                             File.WriteAllLines(sfd.FileName, outputTxt, Encoding.UTF8);
-                            MessageBox.Show($"Exported to {sfd.FileName}");
+                            MessageBox.Show($"{strings["GridUtil.Exported"]} {sfd.FileName}");
                         }
                         catch (Exception ex)
                         {
@@ -56,11 +71,12 @@ namespace TeraFinder
                 }
             }
             else
-                MessageBox.Show("No data available.");
+                MessageBox.Show(strings["GridUtil.NoData"]);
         }
 
         public static void SaveSelectedTxt(this DataGridView dataGrid)
         {
+            var strings = GenerateDictionary();
             if (dataGrid.SelectedCells.Count > 0)
             {
                 var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
@@ -106,7 +122,7 @@ namespace TeraFinder
                                             outputTxt[i + 1] += Convert.ToString(selectedRows.ElementAt(i).Cells[j].Value) + "\t";
 
                                 File.WriteAllLines(sfd.FileName, outputTxt, Encoding.UTF8);
-                                MessageBox.Show($"Exported to {sfd.FileName}");
+                                MessageBox.Show($"{strings["GridUtil.Exported"]} {sfd.FileName}");
                             }
                             catch (Exception ex)
                             {
@@ -117,15 +133,16 @@ namespace TeraFinder
                 }
                 else
                 {
-                    MessageBox.Show("No data available.");
+                    MessageBox.Show(strings["GridUtil.NoData"]);
                 }
             }
             else
-                MessageBox.Show("No data available.");
+                MessageBox.Show(strings["GridUtil.NoData"]);
         }
 
         public static void SaveSelectedPk9(this DataGridView dataGrid, CalculatorForm f)
         {
+            var strings = GenerateDictionary();
             if (dataGrid.SelectedCells.Count > 0)
             {
                 var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
@@ -202,9 +219,9 @@ namespace TeraFinder
                         if (!la.Valid)
                         {
                             if (la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault() is not null && content is RaidContent.Event or RaidContent.Event_Mighty)
-                                MessageBox.Show($"Error while parsing the template.\nPKHeX Core does not contain event data [{encounter!.Identifier}].\nPlease check the Tara Finder wiki to find out how to update the PKHeX.Core dependency.");
+                                MessageBox.Show($"{strings["GridUtil.ErrorParsing"]}\n{strings["GridUtil.MissingData"]} [{encounter!.Identifier}].\n{strings["GridUtil.CheckWiki"]}");
                             else
-                                MessageBox.Show($"Error while parsing the template. Please report this error to the Tera Finder author.\n{la.Report()}");
+                                MessageBox.Show($"{strings["GridUtil.ErrorParsing"]} {strings["GridUtil.Report"]}\n{la.Report()}");
                             return;
                         }
 
@@ -228,7 +245,7 @@ namespace TeraFinder
                                 }
                             }
                             File.WriteAllBytes(sfd.FileName, template.Data);
-                            MessageBox.Show($"Exported to {sfd.FileName}");
+                            MessageBox.Show($"{strings["GridUtil.Exported"]} {sfd.FileName}");
                         }
                     }
                     catch (Exception ex)
@@ -239,17 +256,18 @@ namespace TeraFinder
                 }
                 else
                 {
-                    MessageBox.Show("Rows selection exceeded the maximum allowed [1].");
+                    MessageBox.Show(strings["GridUtil.RowsExceeded"]);
                 }
             }
             else
             {
-                MessageBox.Show("No data available.");
+                MessageBox.Show(strings["GridUtil.NoData"]);
             }
         }
 
         public static void ViewRewards(this DataGridView dataGrid, CalculatorForm f)
         {
+            var strings = GenerateDictionary();
             if (dataGrid.SelectedCells.Count > 0)
             {
                 var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
@@ -290,17 +308,18 @@ namespace TeraFinder
                 }
                 else
                 {
-                    MessageBox.Show("Rows selection exceeded the maximum allowed [1].");
+                    MessageBox.Show(strings["GridUtil.RowsExceeded"]);
                 }
             }
             else
             {
-                MessageBox.Show("No data available.");
+                MessageBox.Show(strings["GridUtil.NoData"]);
             }
         }
 
         public static void SendSelectedRaidEditor(this DataGridView dataGrid, CalculatorForm f)
         {
+            var strings = GenerateDictionary();
             if (dataGrid.SelectedCells.Count > 0)
             {
                 var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
@@ -321,17 +340,18 @@ namespace TeraFinder
                 }
                 else
                 {
-                    MessageBox.Show("Rows selection exceeded the maximum allowed [1].");
+                    MessageBox.Show(strings["GridUtil.RowsExceeded"]);
                 }
             }
             else
             {
-                MessageBox.Show("No data available.");
+                MessageBox.Show(strings["GridUtil.NoData"]);
             }
         }
 
         public static void SendSelectedRaidEditor(this DataGridView dataGrid, RewardCalcForm f)
         {
+            var strings = GenerateDictionary();
             if (dataGrid.SelectedCells.Count > 0)
             {
                 var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
@@ -352,17 +372,18 @@ namespace TeraFinder
                 }
                 else
                 {
-                    MessageBox.Show("Rows selection exceeded the maximum allowed [1].");
+                    MessageBox.Show(strings["GridUtil.RowsExceeded"]);
                 }
             }
             else
             {
-                MessageBox.Show("No data available.");
+                MessageBox.Show(strings["GridUtil.NoData"]);
             }
         }
 
         public static void SendSelectedPk9Editor(this DataGridView dataGrid, CalculatorForm f)
         {
+            var strings = GenerateDictionary();
             if (dataGrid.SelectedCells.Count > 0)
             {
                 var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
@@ -441,9 +462,9 @@ namespace TeraFinder
                             if (!la.Valid)
                             {
                                 if (la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault() is not null && content is RaidContent.Event or RaidContent.Event_Mighty)
-                                    MessageBox.Show($"Error while parsing the template.\nPKHeX Core does not contain event data [{encounter!.Identifier}].\nPlease check the Tera Finder wiki to find out how to update the PKHeX.Core dependency.");
+                                    MessageBox.Show($"{strings["GridUtil.ErrorParsing"]}\n{strings["GridUtil.MissingData"]} [{encounter!.Identifier}].\n{strings["GridUtil.CheckWiki"]}");
                                 else
-                                    MessageBox.Show($"Error while parsing the template. Please report this error to the Tera Finder author.\n{la.Report()}");
+                                    MessageBox.Show($"{strings["GridUtil.ErrorParsing"]} {strings["GridUtil.Report"]}\n{la.Report()}");
                                 return;
                             }
                         }
@@ -458,12 +479,12 @@ namespace TeraFinder
                 }
                 else
                 {
-                    MessageBox.Show("Rows selection exceeded the maximum allowed [1].");
+                    MessageBox.Show(strings["GridUtil.RowsExceeded"]);
                 }
             }
             else
             {
-                MessageBox.Show("No data available.");
+                MessageBox.Show(strings["GridUtil.NoData"]);
             }
         }
 

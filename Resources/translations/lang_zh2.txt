@@ -251,3 +251,14 @@ AREAGLAS=霜抹山
 AREANPA3=東3區
 AREANPA1=東1區
 AREANPA2=東2區
+
+Update.Popup=Update available
+Update.Message=A Tera Finder update is available. Do you want to download the latest release?
+
+GridUtil.Exported=Exported to
+GridUtil.NoData=No data available.
+GridUtil.ErrorParsing=Error while parsing the template.
+GridUtil.MissingData=PKHeX Core does not contain event data
+GridUtil.CheckWiki=Please check the Tara Finder wiki to find out how to update the PKHeX.Core dependency.
+GridUtil.Report=Please report this error to the Tera Finder author.
+GridUtil.RowsExceeded=Rows selection exceeded the maximum allowed [1].

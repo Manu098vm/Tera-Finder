@@ -251,3 +251,14 @@ AREAGLAS=Sierra Nepada
 AREANPA3=Area 3 Nord
 AREANPA1=Area 1 Nord
 AREANPA2=Area 2 Nord
+
+Update.Popup=Aggiornamento disponibile
+Update.Message=Un aggiornamento per Tera Finder è disponibile. Vuoi scaricare l'ultima release?
+
+GridUtil.Exported=Esportato in
+GridUtil.NoData=Nessun dato disponibile.
+GridUtil.ErrorParsing=Errore durante il parsing del template.
+GridUtil.MissingData=PKHeX Core non cotiene dati per l'evento
+GridUtil.CheckWiki=Per favore controlla la wiki nella repository per sapere come aggiornare PKHeX Core.
+GridUtil.Report=Per favore riporta questo errore all'autore di Tera Finder.
+GridUtil.RowsExceeded=Le righe selezionate vanno oltre il massimo consentito [1].
