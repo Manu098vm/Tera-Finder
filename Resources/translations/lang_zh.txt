@@ -223,6 +223,7 @@ RaidContent.Black=黑色
 RaidContent.Event=活动
 RaidContent.Event_Mighty=最强活动
 RaidContent.Invalid=无效
+
 AltEC=加密常数100%=0
 
 SandwichBoost.No Boost=团战力无

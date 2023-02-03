@@ -12,6 +12,7 @@ TeraFinderForm.languageToolStrip=Lingua Predefinita
 TeraFinderForm.grpSAV=Salvataggio
 TeraFinderForm.grpSavTools=Strumenti SAV
 TeraFinderForm.grpStaticTools=Strumenti Indipendenti
+TeraFinderForm.grpTools=Strumenti Tera Finder
 TeraFinderForm.btnLoad=Importa SAV
 TeraFinderForm.btnExport=Esporta SAV
 TeraFinderForm.btnEditGame=Modifica Flags di Gioco
@@ -224,6 +225,11 @@ RaidContent.Event_Mighty=Event-Mighty
 RaidContent.Invalid=INVALIDO
 
 AltEC=EC % 100 = 0
+
+SandwichBoost.No Boost=Nessun Potere
+SandwichBoost.Level 1=Potere Livello 1
+SandwichBoost.Level 2=Potere Livello 2
+SandwichBoost.Level 3=Potere Livello 3
 
 AREASPA1=Area 1 Sud
 AREASPA2=Area 2 Sud

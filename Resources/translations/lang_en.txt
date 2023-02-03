@@ -12,6 +12,7 @@ TeraFinderForm.languageToolStrip=Default Language
 TeraFinderForm.grpSAV=Save File
 TeraFinderForm.grpSavTools=SAV Tools
 TeraFinderForm.grpStaticTools=Standalone Tools
+TeraFinderForm.grpTools=Tera Finder Tools
 TeraFinderForm.btnLoad=Load Save File
 TeraFinderForm.btnExport=Export Save File
 TeraFinderForm.btnEditGame=Edit Game Flags
@@ -224,6 +225,11 @@ RaidContent.Event_Mighty=Event-Mighty
 RaidContent.Invalid=INVALID
 
 AltEC=EC % 100 = 0
+
+SandwichBoost.No Boost=No Boost
+SandwichBoost.Level 1=Level 1
+SandwichBoost.Level 2=Level 2
+SandwichBoost.Level 3=Level 3
 
 AREASPA1=South Province (Area 1)
 AREASPA2=South Province (Area 2)
