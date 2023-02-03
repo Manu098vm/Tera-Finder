@@ -224,6 +224,7 @@ namespace TeraFinder.Launcher
                 TranslateInnerStrings(lang);
                 this.TranslateInterface(lang);
                 Plugin.StandaloneInitialize(TrainerBlank, language: lang);
+                UpdateEventLabel();
                 txtSAV.Text = GetGameString();
                 btnEditGame.Enabled = false;
                 btnStartEditor.Enabled = false;
