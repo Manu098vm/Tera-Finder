@@ -252,13 +252,13 @@ AREANPA3=东3区
 AREANPA1=东1区
 AREANPA2=东2区
 
-Update.Popup=Update available
-Update.Message=A Tera Finder update is available. Do you want to download the latest release?
+Update.Popup=有可用更新
+Update.Message=Tera Finder更新可用。是否要下载最新版本？
 
-GridUtil.Exported=Exported to
-GridUtil.NoData=No data available.
-GridUtil.ErrorParsing=Error while parsing the template.
-GridUtil.MissingData=PKHeX Core does not contain event data
-GridUtil.CheckWiki=Please check the Tara Finder wiki to find out how to update the PKHeX.Core dependency.
-GridUtil.Report=Please report this error to the Tera Finder author.
-GridUtil.RowsExceeded=Rows selection exceeded the maximum allowed [1].
+GridUtil.Exported=导出到
+GridUtil.NoData=没有可用数据。
+GridUtil.ErrorParsing=分析出错。
+GridUtil.MissingData=PKHeX.Core无活动数据
+GridUtil.CheckWiki=请检查Tara Finder wiki以了解如何更新PKHeX.Core依赖项。
+GridUtil.Report=请将此错误报告给Tera Finder作者。
+GridUtil.RowsExceeded=选择超出了允许的最大值[1]。
