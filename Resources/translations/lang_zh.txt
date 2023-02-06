@@ -259,6 +259,6 @@ GridUtil.Exported=导出到
 GridUtil.NoData=没有可用数据。
 GridUtil.ErrorParsing=分析出错。
 GridUtil.MissingData=PKHeX.Core无活动数据
-GridUtil.CheckWiki=请检查Tara Finder wiki以了解如何更新PKHeX.Core依赖项。
+GridUtil.CheckWiki=请检查Tera Finder wiki以了解如何更新PKHeX.Core依赖项。
 GridUtil.Report=请将此错误报告给Tera Finder作者。
 GridUtil.RowsExceeded=选择超出了允许的最大值[1]。

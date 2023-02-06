@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System.Security.Cryptography;
 
 namespace TeraFinder.Forms
 {
@@ -115,22 +116,30 @@ namespace TeraFinder.Forms
 
             var seed = Tera9RNG.GetOriginalSeed(pk);
 
-            for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
+            if (!CalculateStandard(seed, tid, sid, pk) && !CalculateEvent(seed, tid, sid, pk))
+                txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Invalid"]})";
+        }
+
+        private bool CalculateStandard(uint seed, uint tid, uint sid, PK9 pk)
+        {
+            for (var content = RaidContent.Standard; content <= RaidContent.Black; content++)
             {
-                for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.None; progress++)
+                for (var progress = GameProgress.UnlockedTeraRaids; progress < GameProgress.Unlocked6Stars; progress++)
                 {
                     for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
                     {
                         for (var i = 0; i < Mighty.Length; i++)
                         {
-                            for (var j = -1; (j < Dist.Length && content is RaidContent.Event) || j == -1 ; j++)
+                            for (var j = -1; (j < Dist.Length && content is RaidContent.Event) || j == -1; j++)
                             {
                                 var sav = (SAV9SV)SAV.Clone();
                                 sav.Game = (int)game;
 
-                                var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Tera) :
-                                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounterWithIndex(seed, sav, progress, Mighty, i) :
-                                    TeraUtil.GetDistEncounterWithIndex(seed, sav, progress, Dist, j);
+                                var curr = progress;
+                                if (content is RaidContent.Black)
+                                    curr = GameProgress.None;
+
+                                var encounter = TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, curr), Tera);
 
                                 if (encounter is not null)
                                 {
@@ -139,10 +148,8 @@ namespace TeraFinder.Forms
                                     if (success)
                                     {
                                         var type = $"{Contents[(byte)content]}";
-                                        if (progress is GameProgress.None)
-                                            type = $"{Strings["RaidContent.Black"]}";
                                         txtSeed.Text = $"{seed:X8} ({type})";
-                                        return;
+                                        return true;
                                     }
                                 }
                             }
@@ -150,7 +157,41 @@ namespace TeraFinder.Forms
                     }
                 }
             }
-            txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Invalid"]})";
+            return false;
+        }
+
+        private bool CalculateEvent(uint seed, uint tid, uint sid, PK9 pk)
+        {
+            for (var content = RaidContent.Event; content <= RaidContent.Event_Mighty; content++)
+            {
+                for (var progress = GameProgress.UnlockedTeraRaids; progress < GameProgress.Unlocked6Stars; progress++)
+                {
+                    for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
+                    {
+                        for (var index = 0; index < (content is RaidContent.Event ? Dist.Length : Mighty.Length); index++)
+                        {
+                            var sav = (SAV9SV)SAV.Clone();
+                            sav.Game = (int)game;
+
+                            var encounter = content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounterWithIndex(seed, sav, progress, Mighty, index) :
+                                TeraUtil.GetDistEncounterWithIndex(seed, sav, progress, Dist, index);
+
+                            if (encounter is not null)
+                            {
+                                var rngres = TeraUtil.CalcRNG(seed, tid, sid, content, encounter);
+                                var success = ComparePKM(pk, rngres);
+                                if (success)
+                                {
+                                    var type = $"{Contents[(byte)content]}";
+                                    txtSeed.Text = $"{seed:X8} ({type})";
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         private static bool ComparePKM(PK9 pk, TeraDetails pkm)
