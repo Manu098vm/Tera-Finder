@@ -70,18 +70,20 @@ namespace TeraFinder.Launcher
                     btnStartEditor.Enabled = true;
                     btnExport.Enabled = false;
                     btnLoad.Enabled = false;
-                    txtSAV.Text = GetGameString();
-                    UpdateEventLabel();
                     this.TranslateInterface(Plugin.Language);
+                    TranslateInnerStrings(Plugin.Language);
+                    UpdateEventLabel();
+                    txtSAV.Text = GetGameString();
                 }
                 else if(Plugin.GetSavName().Equals(TrainerBlank))
                 {
                     btnEditGame.Enabled = false;
                     btnStartEditor.Enabled = false;
                     btnLoad.Enabled = true;
-                    txtSAV.Text = GetGameString();
-                    UpdateEventLabel();
                     this.TranslateInterface(Plugin.Language);
+                    TranslateInnerStrings(Plugin.Language);
+                    UpdateEventLabel();
+                    txtSAV.Text = GetGameString();
                 }
             }
             else
@@ -139,25 +141,26 @@ namespace TeraFinder.Launcher
                 {
                     var sav = File.ReadAllBytes(file);
                     Plugin.StandaloneInitialize(TrainerBlank, sav);
-                    txtSAV.Text = GetGameString();
                     btnEditGame.Enabled = true;
                     btnImportNews.Enabled = true;
                     btnStartEditor.Enabled = true;
                     btnExport.Enabled = true;
-                    UpdateEventLabel();
-                    TranslateInnerStrings(Plugin.Language);
                     this.TranslateInterface(Plugin.Language);
+                    TranslateInnerStrings(Plugin.Language);
+                    UpdateEventLabel();
+                    txtSAV.Text = GetGameString();
                 }
                 catch (Exception)
                 {
                     MessageBox.Show(SAVInvalid);
                     Plugin.StandaloneInitialize(TrainerBlank);
-                    txtSAV.Text = GetGameString();
                     btnEditGame.Enabled = false;
                     btnStartEditor.Enabled = false;
                     btnExport.Enabled = false;
-                    TranslateInnerStrings(Plugin.Language);
                     this.TranslateInterface(Plugin.Language);
+                    TranslateInnerStrings(Plugin.Language);
+                    UpdateEventLabel();
+                    txtSAV.Text = GetGameString();
                 }
             }
         }
