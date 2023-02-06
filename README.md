@@ -48,14 +48,10 @@ Alternatively, feel free to contact me on my [Discord Server](https://discord.gg
 * GitHub API implementation provided by [Octokit](https://github.com/octokit/octokit.net), licensed under the MIT license
 
 ### Some related cool tools
-[sv-live-map](https://github.com/Lincoln-LM/sv-live-map) by [Lincoln-LM](https://github.com/Lincoln-LM)
-
-[RaidCrawler](https://github.com/LegoFigure11/RaidCrawler) by [LegoFigure11](https://github.com/LegoFigure11) and [Archit Date](https://github.com/architdate)
-
-[sv_raid_lookup](https://stevecooktu.github.io/sv_raid_lookup/) ([repo](https://github.com/SteveCookTU/sv_raid_lookup)) by [SteveCookTU](https://github.com/SteveCookTU)
-
-[Raid Calc](https://github.com/MewTracker/sv-research) by [MewTracker](https://github.com/MewTracker)
-
+* [RaidCalc](https://github.com/MewTracker/sv-research) by [MewTracker](https://github.com/MewTracker)
+* [RaidCrawler](https://github.com/LegoFigure11/RaidCrawler) by [LegoFigure11](https://github.com/LegoFigure11) and [Archit Date](https://github.com/architdate)
+* [sv-live-map](https://github.com/Lincoln-LM/sv-live-map) by [Lincoln-LM](https://github.com/Lincoln-LM)
+* [sv_raid_lookup](https://stevecooktu.github.io/sv_raid_lookup/) ([repo](https://github.com/SteveCookTU/sv_raid_lookup)) by [SteveCookTU](https://github.com/SteveCookTU)
 
 ## License
 ![gplv3-with-text-136x68](https://user-images.githubusercontent.com/52102823/199572700-4e02ed70-74ef-4d67-991e-3168d93aac0d.png)
