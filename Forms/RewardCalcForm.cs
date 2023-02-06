@@ -497,10 +497,10 @@ namespace TeraFinder.Forms
             }
         }
 
-        private void btnSaveAllTxt_Click(object sender, EventArgs e) => dataGrid.SaveAllTxt();
+        private void btnSaveAllTxt_Click(object sender, EventArgs e) => dataGrid.SaveAllTxt(Editor.Language);
 
-        private void btnSaveSelectedTxt_Click(object sender, EventArgs e) => dataGrid.SaveSelectedTxt();
+        private void btnSaveSelectedTxt_Click(object sender, EventArgs e) => dataGrid.SaveSelectedTxt(Editor.Language);
 
-        private void btnSendSelectedRaid_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this);
+        private void btnSendSelectedRaid_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this, Editor.Language);
     }
 }

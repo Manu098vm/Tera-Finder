@@ -1,4 +1,3 @@
-using FlatSharp.CodeGen;
 using PKHeX.Core;
 
 //Most of functions are taken from pkhex

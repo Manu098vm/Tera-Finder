@@ -6,6 +6,7 @@ namespace TeraFinder
     public class TeraPlugin : IPlugin
     {
         public const string Version = "1.2.0";
+        private bool UpdatePrompted = false;
 
         public string Name => nameof(TeraFinder);
         public int Priority => 1;
@@ -35,17 +36,41 @@ namespace TeraFinder
         public void Initialize(params object[] args)
         {
             Plugin.Image = Properties.Resources.icon.ToBitmap();
-            Task.Run(GitHubUtil.TryUpdate).Wait();
             SaveFileEditor = (ISaveFileProvider)Array.Find(args, z => z is ISaveFileProvider)!;
             PKMEditor = (IPKMView)Array.Find(args, z => z is IPKMView)!;
             var menu = (ToolStrip)Array.Find(args, z => z is ToolStrip)!;
             NotifySaveLoaded();
             LoadMenuStrip(menu);
+            AddCheckerToList();
+
+            if (!UpdatePrompted)
+            {
+                Task.Run(async () => { await GitHubUtil.TryUpdate(Language); }).Wait();
+                UpdatePrompted = true;
+            }
+        }
+
+        private void AddCheckerToList()
+        { 
+            var menuVSD = (ContextMenuStrip)((dynamic)SaveFileEditor).menu.mnuVSD;            
+            menuVSD.Opening += (s, e) => {
+                var sender = s!;
+                var info = GetSenderInfo(ref sender);
+                var pk = info.Slot.Read(SAV);
+                if (pk is PK9 pk9 && pk9.Met_Location == 30024)
+                {
+                    var dic = new Dictionary<string, string> { { "CheckerForm", "" } }.TranslateInnerStrings(Language);
+                    var calcSeed = new ToolStripMenuItem(dic["CheckerForm"]);
+                    calcSeed.Image = Properties.Resources.icon.ToBitmap();
+                    menuVSD.Items.Insert(menuVSD.Items.Count, calcSeed);
+                    calcSeed.Click += (s, e) => new CheckerForm(pk, SAV, Language).ShowDialog();
+                    menuVSD.Closing += (s, e) => menuVSD.Items.Remove(calcSeed);
+                }
+            };
         }
 
         public void StandaloneInitialize(string defaultOT, ReadOnlySpan<byte> data = default, string? language = null)
         {
-            Task.Run(GitHubUtil.TryUpdate).Wait();
             if (data != default)
                 SAV = new SAV9SV(data.ToArray());
             else
@@ -67,6 +92,12 @@ namespace TeraFinder
             DistFixedRewards = eventsrewards[0];
             DistLotteryRewards = eventsrewards[1];
             Language = GetStringLanguage((LanguageID)SAV.Language);
+
+            if (!UpdatePrompted)
+            {
+                Task.Run(async () => { await GitHubUtil.TryUpdate(Language); }).Wait();
+                UpdatePrompted = true;
+            }
         }
 
         public static string GetStringLanguage(LanguageID lang)
@@ -274,6 +305,53 @@ namespace TeraFinder
         //From PKHeX
         //https://github.com/kwsch/PKHeX/blob/master/PKHeX.WinForms/Util/WinFormsUtil.cs
         //GPL V3 license
+        private static SlotViewInfo<PictureBox> GetSenderInfo(ref object sender)
+        {
+            var pb = GetUnderlyingControl<PictureBox>(sender);
+            if (pb == null)
+                throw new InvalidCastException("Unable to find PictureBox");
+            var view = FindFirstControlOfType<ISlotViewer<PictureBox>>(pb);
+            if (view == null)
+                throw new InvalidCastException("Unable to find View Parent");
+            var loc = view.GetSlotData(pb);
+            sender = pb;
+            return new SlotViewInfo<PictureBox>(loc, view);
+        }
+
+        public static T? GetUnderlyingControl<T>(object sender) where T : class
+        {
+            while (true)
+            {
+                switch (sender)
+                {
+                    case T p:
+                        return p;
+                    case ToolStripItem { Owner: { } o }:
+                        sender = o;
+                        continue;
+                    case ContextMenuStrip { SourceControl: { } s }:
+                        sender = s;
+                        continue;
+                    default:
+                        return default;
+                }
+            }
+        }
+
+        public static T? FindFirstControlOfType<T>(Control aParent) where T : class
+        {
+            while (true)
+            {
+                if (aParent is T t)
+                    return t;
+
+                if (aParent.Parent != null)
+                    aParent = aParent.Parent;
+                else
+                    return null;
+            }
+        }
+
         public bool ExportSAVDialog(int currentBox = 0)
         {
 

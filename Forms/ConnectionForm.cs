@@ -1,7 +1,5 @@
-﻿using Microsoft.VisualBasic;
-using PKHeX.Core;
+﻿using PKHeX.Core;
 using SysBot.Base;
-using System.Runtime.CompilerServices;
 using TeraFinder.Properties;
 
 namespace TeraFinder.Forms

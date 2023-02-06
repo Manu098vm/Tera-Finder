@@ -1,6 +1,4 @@
-﻿using Microsoft.CodeAnalysis.Differencing;
-using Microsoft.VisualBasic;
-using PKHeX.Core;
+﻿using PKHeX.Core;
 
 namespace TeraFinder.Forms
 {

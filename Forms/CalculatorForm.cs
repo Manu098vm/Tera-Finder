@@ -627,16 +627,16 @@ namespace TeraFinder
             "7S ☆☆☆☆☆☆☆",
         };
 
-        private void btnSaveAll_Click(object sender, EventArgs e) => dataGrid.SaveAllTxt();
+        private void btnSaveAll_Click(object sender, EventArgs e) => dataGrid.SaveAllTxt(Editor.Language);
 
-        private void btnSave_Click(object sender, EventArgs e) => dataGrid.SaveSelectedTxt();
+        private void btnSave_Click(object sender, EventArgs e) => dataGrid.SaveSelectedTxt(Editor.Language);
 
-        private void btnToPkmEditor_Click(object sender, EventArgs e) => dataGrid.SendSelectedPk9Editor(this);
+        private void btnToPkmEditor_Click(object sender, EventArgs e) => dataGrid.SendSelectedPk9Editor(this, Editor.Language);
 
-        private void btnSendToEditor_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this);
+        private void btnSendToEditor_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this, Editor.Language);
 
-        private void btnSavePk9_Click(object sender, EventArgs e) => dataGrid.SaveSelectedPk9(this);
+        private void btnSavePk9_Click(object sender, EventArgs e) => dataGrid.SaveSelectedPk9(this, Editor.Language);
 
-        private void btnViewRewards_Click(object sender, EventArgs e) => dataGrid.ViewRewards(this);
+        private void btnViewRewards_Click(object sender, EventArgs e) => dataGrid.ViewRewards(this, Editor.Language);
     }
 }

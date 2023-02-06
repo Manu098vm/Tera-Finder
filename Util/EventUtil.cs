@@ -45,10 +45,13 @@ namespace TeraFinder
                 .Where(z => z.RaidEnemyInfo.Rate != 0)
                 .GroupBy(z => z.RaidEnemyInfo.DeliveryGroupID);
 
-            bool isNot7Star = false;
+            var seven = DistroGroupSet.None;
+            var other = DistroGroupSet.None;
             foreach (var group in byGroupID)
             {
                 var items = group.ToArray();
+                var groupSet = Evaluate(items);
+
                 if (items.Any(z => z.RaidEnemyInfo.Difficulty > 7))
                     throw new Exception($"Undocumented difficulty {items.First(z => z.RaidEnemyInfo.Difficulty > 7).RaidEnemyInfo.Difficulty}");
 
@@ -56,20 +59,52 @@ namespace TeraFinder
                 {
                     if (items.Any(z => z.RaidEnemyInfo.CaptureRate != 2))
                         throw new Exception($"Undocumented 7 star capture rate {items.First(z => z.RaidEnemyInfo.CaptureRate != 2).RaidEnemyInfo.CaptureRate}");
+
+                    if (!TryAdd(ref seven, groupSet))
+                        throw new Exception("Already saw a 7-star group. How do we differentiate this slot determination from prior?");
+
                     AddToList(items, type3list, RaidSerializationFormat.Type3);
                     continue;
                 }
 
                 if (items.Any(z => z.RaidEnemyInfo.Difficulty == 7))
-                    throw new Exception($"Mixed difficulty {items.First(z => z.RaidEnemyInfo.Difficulty > 7).RaidEnemyInfo.Difficulty}");
-                if (isNot7Star)
+                    throw new Exception($"Mixed difficulty {items.First(z => z.RaidEnemyInfo.Difficulty >= 7).RaidEnemyInfo.Difficulty}");
+
+                if (!TryAdd(ref other, groupSet))
                     throw new Exception("Already saw a not-7-star group. How do we differentiate this slot determination from prior?");
-                isNot7Star = true;
+
                 AddToList(items, type2list, RaidSerializationFormat.Type2);
             }
 
             res = new byte[][] { type2list.SelectMany(z => z).ToArray(), type3list.SelectMany(z => z).ToArray() };
             return res;
+        }
+
+        private static bool TryAdd(ref DistroGroupSet exist, DistroGroupSet add)
+        {
+            if ((exist & add) != 0)
+                return false;
+            exist |= add;
+            return true;
+        }
+
+        [Flags]
+        private enum DistroGroupSet
+        {
+            None = 0,
+            SL = 1,
+            VL = 2,
+            Both = SL | VL,
+        }
+
+        private static DistroGroupSet Evaluate(DeliveryRaidEnemyTable[] items)
+        {
+            var versions = items.Select(z => z.RaidEnemyInfo.RomVer).Distinct().ToArray();
+            if (versions.Length == 2 && versions.Contains(RaidRomType.TYPE_A) && versions.Contains(RaidRomType.TYPE_B))
+                return DistroGroupSet.Both;
+            if (versions.Length == 1)
+                return versions[0] == RaidRomType.TYPE_A ? DistroGroupSet.SL : DistroGroupSet.VL;
+            throw new Exception("Unknown version");
         }
 
         private static void AddToList(IReadOnlyCollection<DeliveryRaidEnemyTable> table, List<byte[]> list, RaidSerializationFormat format)

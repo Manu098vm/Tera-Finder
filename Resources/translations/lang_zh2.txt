@@ -223,6 +223,7 @@ RaidContent.Black=黑色
 RaidContent.Event=活動
 RaidContent.Event_Mighty=最強活動
 RaidContent.Invalid=無效
+
 AltEC=加密常數100%=0
 
 SandwichBoost.No Boost=團戰力無
@@ -250,3 +251,14 @@ AREAGLAS=霜抹山
 AREANPA3=東3區
 AREANPA1=東1區
 AREANPA2=東2區
+
+Update.Popup=有可用更新
+Update.Message=Tera Finder更新可用。是否要下載最新版本？
+
+GridUtil.Exported=轉儲到
+GridUtil.NoData=沒有可用數據。
+GridUtil.ErrorParsing=分析出錯。
+GridUtil.MissingData=PKHeX.Core無活動數據
+GridUtil.CheckWiki=請檢查Tera Finder wiki以了解如何更新PKHeX.Core依賴項。
+GridUtil.Report=請將此錯誤報告給Tera Finder作者。
+GridUtil.RowsExceeded=選擇超出了允許的最大值[1]。

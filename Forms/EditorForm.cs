@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using Microsoft.CodeAnalysis.Differencing;
 using PKHeX.Core;
 using TeraFinder.Forms;
 using static TeraFinder.ImagesUtil;

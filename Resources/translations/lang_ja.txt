@@ -12,6 +12,7 @@ TeraFinderForm.languageToolStrip=Default Language
 TeraFinderForm.grpSAV=Save File
 TeraFinderForm.grpSavTools=SAV Tools
 TeraFinderForm.grpStaticTools=Standalone Tools
+TeraFinderForm.grpTools=Tera Finder Tools
 TeraFinderForm.btnLoad=Load Save File
 TeraFinderForm.btnExport=Export Save File
 TeraFinderForm.btnEditGame=Edit Game Flags
@@ -225,6 +226,11 @@ RaidContent.Invalid=INVALID
 
 AltEC=EC % 100 = 0
 
+SandwichBoost.No Boost=No Boost
+SandwichBoost.Level 1=Level 1
+SandwichBoost.Level 2=Level 2
+SandwichBoost.Level 3=Level 3
+
 AREASPA1=South Province (Area 1)
 AREASPA2=South Province (Area 2)
 AREASPA4=South Province (Area 4)
@@ -245,3 +251,14 @@ AREAGLAS=Glaseado Mountain
 AREANPA3=North Province (Area 3)
 AREANPA1=North Province (Area 1)
 AREANPA2=North Province (Area 2)
+
+Update.Popup=Update available
+Update.Message=A Tera Finder update is available. Do you want to download the latest release?
+
+GridUtil.Exported=Exported to
+GridUtil.NoData=No data available.
+GridUtil.ErrorParsing=Error while parsing the template.
+GridUtil.MissingData=PKHeX Core does not contain event data
+GridUtil.CheckWiki=Please check the Tera Finder wiki to find out how to update the PKHeX.Core dependency.
+GridUtil.Report=Please report this error to the Tera Finder author.
+GridUtil.RowsExceeded=Rows selection exceeded the maximum allowed [1].

@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using PKHeX.Core;
+﻿using PKHeX.Core;
 using System.IO.Compression;
 
 namespace TeraFinder
