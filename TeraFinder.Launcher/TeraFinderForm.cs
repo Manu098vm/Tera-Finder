@@ -127,8 +127,11 @@ namespace TeraFinder.Launcher
 
         public void LoadLocalFiles(string file)
         {
-            if(File.Exists(file) && Path.GetExtension(file).Equals(".zip"))
+            if (File.Exists(file) && Path.GetExtension(file).Equals(".zip"))
+            {
                 Plugin.TryLoadFile(file);
+                UpdateEventLabel();
+            }
             else
                 LoadSAV(file);
         }
