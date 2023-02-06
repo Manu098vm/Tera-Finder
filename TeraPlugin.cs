@@ -51,20 +51,21 @@ namespace TeraFinder
         }
 
         private void AddCheckerToList()
-        { 
+        {
             var menuVSD = (ContextMenuStrip)((dynamic)SaveFileEditor).menu.mnuVSD;            
             menuVSD.Opening += (s, e) => {
-                var sender = s!;
-                var info = GetSenderInfo(ref sender);
-                var pk = info.Slot.Read(SAV);
-                if (pk is PK9 pk9 && pk9.Met_Location == 30024)
-                {
-                    var dic = new Dictionary<string, string> { { "CheckerForm", "" } }.TranslateInnerStrings(Language);
-                    var calcSeed = new ToolStripMenuItem(dic["CheckerForm"]);
-                    calcSeed.Image = Properties.Resources.icon.ToBitmap();
-                    menuVSD.Items.Insert(menuVSD.Items.Count, calcSeed);
-                    calcSeed.Click += (s, e) => new CheckerForm(pk, SAV, Language).ShowDialog();
-                    menuVSD.Closing += (s, e) => menuVSD.Items.Remove(calcSeed);
+                if (SaveFileEditor.SAV is SAV9SV sav) {
+                    var info = GetSenderInfo(ref s!);
+                    var pk = info.Slot.Read(sav);
+                    if (pk is PK9 pk9 && pk9.Met_Location == 30024)
+                    {
+                        var dic = new Dictionary<string, string> { { "CheckerForm", "" } }.TranslateInnerStrings(Language);
+                        var calcSeed = new ToolStripMenuItem(dic["CheckerForm"]);
+                        calcSeed.Image = Properties.Resources.icon.ToBitmap();
+                        menuVSD.Items.Insert(menuVSD.Items.Count, calcSeed);
+                        calcSeed.Click += (s, e) => new CheckerForm(pk, sav, Language).ShowDialog();
+                        menuVSD.Closing += (s, e) => menuVSD.Items.Remove(calcSeed);
+                    }
                 }
             };
         }
