@@ -124,34 +124,27 @@ namespace TeraFinder.Forms
         {
             for (var content = RaidContent.Standard; content <= RaidContent.Black; content++)
             {
-                for (var progress = GameProgress.UnlockedTeraRaids; progress < GameProgress.Unlocked6Stars; progress++)
+                for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.Unlocked6Stars; progress++)
                 {
                     for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
                     {
-                        for (var i = 0; i < Mighty.Length; i++)
+                        var sav = (SAV9SV)SAV.Clone();
+                        sav.Game = (int)game;
+
+                        var curr = progress;
+                        if (content is RaidContent.Black)
+                            curr = GameProgress.None;
+
+                        var encounter = TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, curr), Tera);
+                        if (encounter is not null)
                         {
-                            for (var j = -1; (j < Dist.Length && content is RaidContent.Event) || j == -1; j++)
+                            var rngres = TeraUtil.CalcRNG(seed, tid, sid, content, encounter);
+                            var success = ComparePKM(pk, rngres);
+                            if (success)
                             {
-                                var sav = (SAV9SV)SAV.Clone();
-                                sav.Game = (int)game;
-
-                                var curr = progress;
-                                if (content is RaidContent.Black)
-                                    curr = GameProgress.None;
-
-                                var encounter = TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, curr), Tera);
-
-                                if (encounter is not null)
-                                {
-                                    var rngres = TeraUtil.CalcRNG(seed, tid, sid, content, encounter);
-                                    var success = ComparePKM(pk, rngres);
-                                    if (success)
-                                    {
-                                        var type = $"{Contents[(byte)content]}";
-                                        txtSeed.Text = $"{seed:X8} ({type})";
-                                        return true;
-                                    }
-                                }
+                                var type = $"{Contents[(byte)content]}";
+                                txtSeed.Text = $"{seed:X8} ({type})";
+                                return true;
                             }
                         }
                     }
