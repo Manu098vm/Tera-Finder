@@ -9,7 +9,7 @@
     <Authors>Manu098vm</Authors>
     <Company>ProjectPokémon</Company>
     <Copyright>Manu098vm</Copyright>
-    <BaseOutputPath>bin\</BaseOutputPath>
+    <BaseOutputPath>D:\Projects\pkhex\PKHeX.WinForms\bin\Debug\net7.0-windows\win-x64\plugins</BaseOutputPath>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/Manu098vm/Tera-Finder</RepositoryUrl>
