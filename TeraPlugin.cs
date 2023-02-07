@@ -5,7 +5,7 @@ namespace TeraFinder
 {
     public class TeraPlugin : IPlugin
     {
-        public const string Version = "0.3.0";
+        public const string Version = "1.3.0";
         private bool UpdatePrompted = false;
 
         public string Name => nameof(TeraFinder);
