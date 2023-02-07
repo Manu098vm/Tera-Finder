@@ -193,7 +193,7 @@
             this.grpPkmInfo.Controls.Add(this.txtHP);
             this.grpPkmInfo.Location = new System.Drawing.Point(8, 185);
             this.grpPkmInfo.Name = "grpPkmInfo";
-            this.grpPkmInfo.Size = new System.Drawing.Size(390, 344);
+            this.grpPkmInfo.Size = new System.Drawing.Size(390, 339);
             this.grpPkmInfo.TabIndex = 3;
             this.grpPkmInfo.TabStop = false;
             this.grpPkmInfo.Text = "Pokémon Info";
@@ -206,7 +206,7 @@
             this.grpMoves.Controls.Add(this.txtMove1);
             this.grpMoves.Location = new System.Drawing.Point(4, 220);
             this.grpMoves.Name = "grpMoves";
-            this.grpMoves.Size = new System.Drawing.Size(380, 118);
+            this.grpMoves.Size = new System.Drawing.Size(380, 110);
             this.grpMoves.TabIndex = 22;
             this.grpMoves.TabStop = false;
             this.grpMoves.Text = "Moves";
@@ -214,7 +214,7 @@
             // txtMove4
             // 
             this.txtMove4.Enabled = false;
-            this.txtMove4.Location = new System.Drawing.Point(206, 77);
+            this.txtMove4.Location = new System.Drawing.Point(206, 70);
             this.txtMove4.Name = "txtMove4";
             this.txtMove4.Size = new System.Drawing.Size(143, 27);
             this.txtMove4.TabIndex = 22;
@@ -224,7 +224,7 @@
             // txtMove2
             // 
             this.txtMove2.Enabled = false;
-            this.txtMove2.Location = new System.Drawing.Point(206, 35);
+            this.txtMove2.Location = new System.Drawing.Point(206, 28);
             this.txtMove2.Name = "txtMove2";
             this.txtMove2.Size = new System.Drawing.Size(143, 27);
             this.txtMove2.TabIndex = 23;
@@ -234,7 +234,7 @@
             // txtMove3
             // 
             this.txtMove3.Enabled = false;
-            this.txtMove3.Location = new System.Drawing.Point(31, 77);
+            this.txtMove3.Location = new System.Drawing.Point(31, 70);
             this.txtMove3.Name = "txtMove3";
             this.txtMove3.Size = new System.Drawing.Size(143, 27);
             this.txtMove3.TabIndex = 24;
@@ -244,7 +244,7 @@
             // txtMove1
             // 
             this.txtMove1.Enabled = false;
-            this.txtMove1.Location = new System.Drawing.Point(33, 35);
+            this.txtMove1.Location = new System.Drawing.Point(33, 28);
             this.txtMove1.Name = "txtMove1";
             this.txtMove1.Size = new System.Drawing.Size(143, 27);
             this.txtMove1.TabIndex = 25;
@@ -451,9 +451,9 @@
             // 
             // btnOpenCalculator
             // 
-            this.btnOpenCalculator.Location = new System.Drawing.Point(8, 535);
+            this.btnOpenCalculator.Location = new System.Drawing.Point(8, 530);
             this.btnOpenCalculator.Name = "btnOpenCalculator";
-            this.btnOpenCalculator.Size = new System.Drawing.Size(192, 47);
+            this.btnOpenCalculator.Size = new System.Drawing.Size(192, 52);
             this.btnOpenCalculator.TabIndex = 4;
             this.btnOpenCalculator.Text = "Raid Calculator";
             this.btnOpenCalculator.UseVisualStyleBackColor = true;
@@ -481,10 +481,10 @@
             // 
             // btnOpenRewardCalculator
             // 
-            this.btnOpenRewardCalculator.Location = new System.Drawing.Point(206, 536);
+            this.btnOpenRewardCalculator.Location = new System.Drawing.Point(206, 530);
             this.btnOpenRewardCalculator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnOpenRewardCalculator.Name = "btnOpenRewardCalculator";
-            this.btnOpenRewardCalculator.Size = new System.Drawing.Size(192, 47);
+            this.btnOpenRewardCalculator.Size = new System.Drawing.Size(192, 52);
             this.btnOpenRewardCalculator.TabIndex = 21;
             this.btnOpenRewardCalculator.Text = "Reward Calculator";
             this.btnOpenRewardCalculator.UseVisualStyleBackColor = true;
