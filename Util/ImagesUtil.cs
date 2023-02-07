@@ -9,7 +9,7 @@ namespace TeraFinder
         public static Image GetRaidResultSprite(TeraDetails pkm, bool active = true)
         {
             SpriteName.AllowShinySprite = true;
-            var file = pkm.Shiny > TeraShiny.No && pkm.Species <= (ushort)Species.Sprigatito ?
+            var file = pkm.Shiny > TeraShiny.No && pkm.Species < (ushort)Species.Sprigatito ?
                 'b' + SpriteName.GetResourceStringSprite(pkm.Species, pkm.Form, (int)pkm.Gender, (uint)(pkm.Species == (ushort)Species.Gholdengo ? 999 : 0), EntityContext.Gen9, true) :
                 'a' + SpriteName.GetResourceStringSprite(pkm.Species, pkm.Form, (int)pkm.Gender, (uint)(pkm.Species == (ushort)Species.Gholdengo ? 999 : 0), EntityContext.Gen9, false);
 
