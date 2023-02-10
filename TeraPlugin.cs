@@ -266,12 +266,12 @@ namespace TeraFinder
 
         public void NotifySaveLoaded()
         {
+            Language = GameInfo.CurrentLanguage;
+            TranslatePlugins();
             if (SaveFileEditor.SAV is SAV9SV sav)
             {
-                Language = GameInfo.CurrentLanguage;
                 SAV = sav;
                 EnablePlugins();
-                TranslatePlugins();
             }
             else
                 DisablePlugins();

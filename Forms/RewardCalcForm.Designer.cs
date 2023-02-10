@@ -409,7 +409,8 @@
             // lblStars
             // 
             this.lblStars.AutoSize = true;
-            this.lblStars.Location = new System.Drawing.Point(54, 64);
+            this.lblStars.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblStars.Location = new System.Drawing.Point(19, 63);
             this.lblStars.Name = "lblStars";
             this.lblStars.Size = new System.Drawing.Size(44, 20);
             this.lblStars.TabIndex = 2;
@@ -429,7 +430,7 @@
             // lblSpecies
             // 
             this.lblSpecies.AutoSize = true;
-            this.lblSpecies.Location = new System.Drawing.Point(37, 29);
+            this.lblSpecies.Location = new System.Drawing.Point(19, 29);
             this.lblSpecies.Name = "lblSpecies";
             this.lblSpecies.Size = new System.Drawing.Size(62, 20);
             this.lblSpecies.TabIndex = 0;
@@ -1162,7 +1163,7 @@
             // chkAllResults
             // 
             this.chkAllResults.AutoSize = true;
-            this.chkAllResults.Location = new System.Drawing.Point(328, 31);
+            this.chkAllResults.Location = new System.Drawing.Point(287, 31);
             this.chkAllResults.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.chkAllResults.Name = "chkAllResults";
             this.chkAllResults.Size = new System.Drawing.Size(160, 24);
