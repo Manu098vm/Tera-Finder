@@ -71,7 +71,7 @@ namespace TeraFinder
 
         public string[] GetStrings(string[] itemnames, string language)
         {
-            var list = new string[21];
+            var list = new string[25];
             if(Rewards is not null)
                 for(var i = 0; i < Rewards.Count; i++)
                     list[i] = Rewards[i].GetItemName(itemnames, language, true);
@@ -103,6 +103,10 @@ namespace TeraFinder
         public string? Item19 { get; private set; }
         public string? Item20 { get; private set; }
         public string? Item21 { get; private set; }
+        public string? Item22 { get; private set; }
+        public string? Item23 { get; private set; }
+        public string? Item24 { get; private set; }
+        public string? Item25 { get; private set; }
         public string? ExtraInfo { get; private set; }
         public string? Calcs { get; private set; }
 
@@ -131,6 +135,10 @@ namespace TeraFinder
             Item19 = str[18];
             Item20 = str[19];
             Item21 = str[20];
+            Item22 = str[21];
+            Item23 = str[22];
+            Item24 = str[23];
+            Item25 = str[24];
             ExtraInfo = $"{speciesnames[res.Species]} ({res.Stars}☆) {(res.Shiny > TeraShiny.No ? $"({shinynames[(int)res.Shiny]})" : "")}";
             Calcs = $"{res.Calcs}";
         }
@@ -159,6 +167,10 @@ namespace TeraFinder
             Item19 = str[19];
             Item20 = str[20];
             Item21 = str[21];
+            Item22 = str[22];
+            Item23 = str[23];
+            Item24 = str[24];
+            Item25 = str[25];
             ExtraInfo = str[22];
             Calcs = str[23];
         }
@@ -189,6 +201,10 @@ namespace TeraFinder
                 Item19!,
                 Item20!,
                 Item21!,
+                Item22!,
+                Item23!,
+                Item24!,
+                Item25!,
                 ExtraInfo!,
                 Calcs!,
             };
