@@ -570,73 +570,65 @@ namespace TeraFinder
 
         private static RaidContent GetContent(uint seed, DataGridViewRow row, RewardCalcForm f)
         {
-            for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
+            foreach (var accuratesearch in new[] { true, false })
             {
-                for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.None; progress++)
+                for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
                 {
-                    for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
+                    for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.None; progress++)
                     {
-                        var sav = (SAV9SV)f.Editor.SAV.Clone();
-                        sav.Game = (int)game;
-
-                        var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
-                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
-                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
-
-                        if (encounter is not null)
+                        for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
                         {
-                            var fixedlist = encounter.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards;
-                            var lotterylist = encounter.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards;
-                            var accuratesearch = true;
+                            var sav = (SAV9SV)f.Editor.SAV.Clone();
+                            sav.Game = (int)game;
 
-                            foreach (var str in row.ConvertToString())
+                            var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
+                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
+                                TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
+
+                            if (encounter is not null)
                             {
-                                var sub = str.Length > 10 ? str[0..10] : str;
-                                if(RewardUtil.TeraShard.Contains(sub))
+                                var fixedlist = encounter.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards;
+                                var lotterylist = encounter.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards;
+
+                                List<Reward> list;
+                                TeraShiny shiny = TeraShiny.No;
+
+                                if (accuratesearch)
                                 {
-                                    accuratesearch = false;
-                                    break;
+                                    var det = TeraUtil.CalcRNG(seed, sav.TrainerTID7, sav.TrainerSID7, content, encounter);
+                                    list = RewardUtil.GetRewardList(det, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
+                                    shiny = det.Shiny;
                                 }
-                            }
+                                else
+                                {
+                                    list = RewardUtil.GetRewardList(seed, encounter.Species, encounter.Stars, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
+                                }
 
-                            List<Reward> list;
-                            TeraShiny shiny = TeraShiny.No;
+                                var rngres = new RewardDetails { Seed = seed, Rewards = list, Species = encounter.Species, Stars = encounter.Stars, Shiny = shiny, Calcs = 0 };
+                                var success = true;
 
-                            if (accuratesearch)
-                            {
-                                var det = TeraUtil.CalcRNG(seed, sav.TrainerTID7, sav.TrainerSID7, content, encounter);
-                                list = RewardUtil.GetRewardList(det, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
-                                shiny = det.Shiny;
-                            }
-                            else
-                            {
-                                list = RewardUtil.GetRewardList(seed, encounter.Species, encounter.Stars, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
-                            }
+                                if (rngres != null)
+                                {
+                                    var strlist = new List<string>();
 
-                            var rngres = new RewardDetails { Seed = seed, Rewards = list, Species = encounter.Species, Stars = encounter.Stars, Shiny = shiny, Calcs = 0 };
-                            var success = true;
+                                    strlist.Add($"{seed:X8}");
+                                    foreach (var item in rngres.Rewards)
+                                        strlist.Add(item.GetItemName(f.Items, f.Editor.Language, true));
 
-                            if (rngres != null)
-                            {
-                                var strlist = new List<string>();
+                                    var entry = strlist.ToArray();
+                                    var grid = new RewardGridEntry(row.ConvertToString()).GetStrings();
+                                    for (var i = 0; i < entry.Length - 1; i++)
+                                        if (!entry[i].Equals(grid[i]))
+                                            success = false;
+                                }
 
-                                strlist.Add($"{seed:X8}");
-                                foreach(var item in rngres.Rewards)
-                                    strlist.Add(item.GetItemName(f.Items, f.Editor.Language, true));
-
-                                var entry = strlist.ToArray();
-                                var grid = new RewardGridEntry(row.ConvertToString()).GetStrings();
-                                for (var i = 0; i < entry.Length - 1; i++)
-                                    if (!entry[i].Equals(grid[i]))
-                                        success = false;
-                            }
-
-                            if (success)
-                            {
-                                var type = content;
-                                if (progress is GameProgress.None)
-                                    type = RaidContent.Black;
-                                return type;
+                                if (success)
+                                {
+                                    var type = content;
+                                    if (progress is GameProgress.None)
+                                        type = RaidContent.Black;
+                                    return type;
+                                }
                             }
                         }
                     }
