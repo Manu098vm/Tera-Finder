@@ -80,6 +80,14 @@ namespace TeraFinder
             return res;
         }
 
+        public static DeliveryRaidPriority? GetDeliveryPriority(PKHeX.Core.SAV9SV sav)
+        {
+            var KBCATRaidPriorityArray = sav.Accessor.FindOrDefault(Blocks.KBCATRaidPriorityArray.Key);
+            if(KBCATRaidPriorityArray.Type is not PKHeX.Core.SCTypeCode.None && KBCATRaidPriorityArray.Data.Length > 0)
+                return FlatBufferConverter.DeserializeFrom<DeliveryRaidPriorityArray>(KBCATRaidPriorityArray.Data).Table.First();
+            return null;
+        }
+
         private static bool TryAdd(ref DistroGroupSet exist, DistroGroupSet add)
         {
             if ((exist & add) != 0)

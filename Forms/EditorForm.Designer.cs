@@ -533,7 +533,6 @@
         }
 
         #endregion
-        private ComboBox cmbDens;
         private GroupBox GrpRaidInfo;
         private Label lblSeed;
         private GroupBox grpPkmInfo;
@@ -574,5 +573,6 @@
         private TextBox txtMove1;
         private Label lblLevel;
         private PictureBox imgMap;
+        public ComboBox cmbDens;
     }
 }

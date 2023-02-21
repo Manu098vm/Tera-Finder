@@ -161,6 +161,14 @@ namespace TeraFinder.Forms
                 KBCATRaidEnemyArray.ChangeData(raidEnemyBlock);
             else
                 BlockUtil.EditBlock(KBCATRaidEnemyArray, SCTypeCode.Object, raidEnemyBlock);
+
+            var KBCATRaidPriorityArray = SAV.Accessor.FindOrDefault(Blocks.KBCATRaidPriorityArray.Key);
+            var raidPriorityBlock = await Executor.ReadEncryptedBlock(Blocks.KBCATRaidPriorityArray, token).ConfigureAwait(false);
+
+            if (KBCATRaidPriorityArray.Type is not SCTypeCode.None)
+                KBCATRaidPriorityArray.ChangeData(raidPriorityBlock);
+            else
+                BlockUtil.EditBlock(KBCATRaidPriorityArray, SCTypeCode.Object, raidPriorityBlock);
         }
 
         private SwitchProtocol GetProtocol()

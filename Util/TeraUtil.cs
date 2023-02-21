@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System;
 
 namespace TeraFinder
 {
@@ -161,7 +162,7 @@ namespace TeraFinder
             return null;
         }
 
-        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters)
+        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, int groupid = -1)
         {
             var game = (GameVersion)sav.Game;
             var p = progress switch
@@ -174,6 +175,8 @@ namespace TeraFinder
 
             foreach (var encounter in encounters)
             {
+                if (groupid != -1 && encounter.Index != groupid)
+                    continue;
                 var max = game is GameVersion.SL ? encounter.GetRandRateTotalScarlet(p) : encounter.GetRandRateTotalViolet(p);
                 var min = game is GameVersion.SL ? encounter.GetRandRateMinScarlet(p) : encounter.GetRandRateMinViolet(p);
                 if (min >= 0 && max > 0)
@@ -269,6 +272,63 @@ namespace TeraFinder
                 Calcs = calc,
             };
             return result;
+        }
+
+        public static int GetEventCount(RaidSpawnList9 raids, int raidIndex)
+        {
+            var count = -1;
+            for (var i = 0; i <= raidIndex; i++)
+                if ((int)raids.GetRaid(i).Content >= (int)TeraRaidContentType.Distribution)
+                    count++;
+            return count;
+        }
+
+        public static int GetDeliveryGroupID(SAV9SV sav, GameProgress progress, RaidContent content, EncounterRaid9[]? Dist, int currRaid = -1, int eventCount = -1)
+        {
+            var p = progress switch
+            {
+                GameProgress.Unlocked6Stars or GameProgress.Unlocked5Stars => 3,
+                GameProgress.Unlocked4Stars => 2,
+                GameProgress.Unlocked3Stars => 1,
+                _ => 0,
+            };
+
+            var possibleGroups = new HashSet<int>();
+            if (content is RaidContent.Event or RaidContent.Event_Mighty && Dist is not null)
+                foreach (var enc in Dist)
+                    if (((GameVersion)sav.Game is GameVersion.SL && enc.GetRandRateTotalScarlet(p) > 0) ||
+                        ((GameVersion)sav.Game is GameVersion.VL && enc.GetRandRateTotalViolet(p) > 0))
+                        possibleGroups.Add(enc.Index);
+
+            if(eventCount == -1 && currRaid > -1)
+                eventCount = (int)content >= 2 ? GetEventCount(sav.Raid, currRaid) : -1;
+
+            var priority = EventUtil.GetDeliveryPriority(sav);
+            var groupid = priority is not null ? GetDeliveryGroupID(eventCount, priority.DeliveryGroupID, possibleGroups) : -1;
+
+            return groupid;
+        }
+
+        //From https://github.com/LegoFigure11/RaidCrawler/blob/7e764a9a5c0aa74270b3679083c813471abc55d6/Structures/TeraDistribution.cs#L145
+        //GPL v3 License
+        //Thanks LegoFigure11 & architade!
+        private static int GetDeliveryGroupID(int eventct, pkNX.Structures.FlatBuffers.DeliveryGroupID ids, HashSet<int> possible_groups)
+        {
+            if (eventct > -1 && possible_groups.Count > 0)
+            {
+                int[] cts = new int[10] { ids.GroupID01, ids.GroupID02, ids.GroupID03, ids.GroupID04, ids.GroupID05,
+                                      ids.GroupID06, ids.GroupID07, ids.GroupID08, ids.GroupID09, ids.GroupID10 };
+                for (int i = 0; i < cts.Length; i++)
+                {
+                    var ct = cts[i];
+                    if (!possible_groups.Contains(i + 1))
+                        continue;
+                    if (eventct < ct)
+                        return i + 1;
+                    eventct -= ct;
+                }
+            }
+            return -1;
         }
 
         //From https://github.com/LegoFigure11/RaidCrawler/blob/main/Structures/Areas.cs
