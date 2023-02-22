@@ -54,6 +54,7 @@ namespace TeraFinder
 
             txtSeed.Text = Editor.txtSeed.Text;
             cmbContent.SelectedIndex = Editor.cmbContent.SelectedIndex;
+            numEventCt.Value = cmbContent.SelectedIndex >= 2 ? TeraUtil.GetEventCount(Editor.SAV.Raid, Editor.cmbDens.SelectedIndex) : -1;
 
             cmbTeraType.Items.Clear();
             cmbTeraType.Items.Add(Strings["Any"]);
@@ -512,6 +513,8 @@ namespace TeraFinder
             var gridList = new List<GridEntry>();
             var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
 
+            var groupid = TeraUtil.GetDeliveryGroupID(Editor.SAV, progress, content, content is RaidContent.Event_Mighty ? Editor.Mighty : Editor.Dist, -1, (int)numEventCt.Value);
+
             await Task.Run(() =>
             {
                 var nthreads = (uint)numFrames.Value < 1000 ? 1 : Environment.ProcessorCount;
@@ -538,7 +541,7 @@ namespace TeraFinder
 
                         for (ulong i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
                         {
-                            var res = CalcResult(tseed, progress, sav, content, i);
+                            var res = CalcResult(tseed, progress, sav, content, i, groupid);
                             if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
                             {
                                 tmpgridlist.Add(new GridEntry(res, NameList, AbilityList, NatureList, MoveList, TypeList, FormList, GenderListAscii, GenderListUnicode, ShinyList));
@@ -583,11 +586,11 @@ namespace TeraFinder
             return gridList;
         }
 
-        private TeraDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, ulong calc)
+        private TeraDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, ulong calc, int groupid)
         {
             var seed = (uint)(Seed & 0xFFFFFFFF);
             var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Editor.Tera!) :
-                content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Mighty!) : TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Dist!);
+                content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Dist!, groupid);
 
             if (encounter is null)
                 return null;

@@ -309,10 +309,13 @@ namespace TeraFinder
         {
             if (Progress is not GameProgress.Beginning)
             {
+                var content = (RaidContent)cmbContent.SelectedIndex;
+                var groupid = TeraUtil.GetDeliveryGroupID(SAV, Progress, content, content is RaidContent.Event_Mighty ? Mighty : Dist, cmbDens.SelectedIndex);
                 var progress = raid.Content is TeraRaidContentType.Black6 ? GameProgress.None : Progress;
+
                 var encounter = cmbContent.SelectedIndex < 2 ? TeraUtil.GetTeraEncounter(raid.Seed, SAV, TeraUtil.GetStars(raid.Seed, progress), Tera!) :
-                    raid.Content is TeraRaidContentType.Might7 ? TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Mighty!) :
-                    TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Dist!);
+                    raid.Content is TeraRaidContentType.Might7 ? TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Mighty!, groupid) :
+                    TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Dist!, groupid);
 
                 if (encounter is not null)
                 {

@@ -21,13 +21,13 @@ namespace TeraFinder.Launcher
             this.TranslateInterface(TeraPlugin.GetDefaultLanguageString());
             TranslateInnerStrings(TeraPlugin.GetDefaultLanguageString());
             Plugin.StandaloneInitialize(TrainerBlank);
-            this.Text += TeraPlugin.Version;
             txtSAV.Text = GetGameString();
             btnEditGame.Enabled = false;
             btnStartEditor.Enabled = false;
             btnExport.Enabled = false;
             UpdateEventLabel();
             cmbLanguage.SelectedIndex = TeraPlugin.GetDefaultLanguage();
+            this.Text += TeraPlugin.Version;
         }
 
         private void TranslateInnerStrings(string language)

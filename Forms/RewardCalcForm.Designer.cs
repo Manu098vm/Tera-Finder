@@ -115,7 +115,9 @@
             this.cmbGame = new System.Windows.Forms.ComboBox();
             this.lblGame = new System.Windows.Forms.Label();
             this.grpSettings = new System.Windows.Forms.GroupBox();
+            this.numEventCt = new System.Windows.Forms.NumericUpDown();
             this.cmbBoost = new System.Windows.Forms.ComboBox();
+            this.lblEventCt = new System.Windows.Forms.Label();
             this.lblSandwich = new System.Windows.Forms.Label();
             this.cmbContent = new System.Windows.Forms.ComboBox();
             this.lblContent = new System.Windows.Forms.Label();
@@ -159,6 +161,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.grpProfile.SuspendLayout();
             this.grpSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numEventCt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxCalc)).BeginInit();
             this.grpSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
@@ -931,7 +934,7 @@
             this.grpProfile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpProfile.Name = "grpProfile";
             this.grpProfile.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpProfile.Size = new System.Drawing.Size(1106, 73);
+            this.grpProfile.Size = new System.Drawing.Size(1235, 73);
             this.grpProfile.TabIndex = 21;
             this.grpProfile.TabStop = false;
             this.grpProfile.Text = "Game Info";
@@ -1022,7 +1025,9 @@
             // 
             // grpSettings
             // 
+            this.grpSettings.Controls.Add(this.numEventCt);
             this.grpSettings.Controls.Add(this.cmbBoost);
+            this.grpSettings.Controls.Add(this.lblEventCt);
             this.grpSettings.Controls.Add(this.lblSandwich);
             this.grpSettings.Controls.Add(this.cmbContent);
             this.grpSettings.Controls.Add(this.lblContent);
@@ -1034,10 +1039,27 @@
             this.grpSettings.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpSettings.Name = "grpSettings";
             this.grpSettings.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpSettings.Size = new System.Drawing.Size(1106, 73);
+            this.grpSettings.Size = new System.Drawing.Size(1235, 73);
             this.grpSettings.TabIndex = 22;
             this.grpSettings.TabStop = false;
             this.grpSettings.Text = "Raid Settings";
+            // 
+            // numEventCt
+            // 
+            this.numEventCt.Location = new System.Drawing.Point(805, 28);
+            this.numEventCt.Maximum = new decimal(new int[] {
+            69,
+            0,
+            0,
+            0});
+            this.numEventCt.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numEventCt.Name = "numEventCt";
+            this.numEventCt.Size = new System.Drawing.Size(138, 27);
+            this.numEventCt.TabIndex = 28;
             // 
             // cmbBoost
             // 
@@ -1047,16 +1069,25 @@
             "Level 1",
             "Level 2",
             "Level 3"});
-            this.cmbBoost.Location = new System.Drawing.Point(888, 27);
+            this.cmbBoost.Location = new System.Drawing.Point(1087, 27);
             this.cmbBoost.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmbBoost.Name = "cmbBoost";
             this.cmbBoost.Size = new System.Drawing.Size(138, 28);
             this.cmbBoost.TabIndex = 26;
             // 
+            // lblEventCt
+            // 
+            this.lblEventCt.AutoSize = true;
+            this.lblEventCt.Location = new System.Drawing.Point(708, 32);
+            this.lblEventCt.Name = "lblEventCt";
+            this.lblEventCt.Size = new System.Drawing.Size(91, 20);
+            this.lblEventCt.TabIndex = 27;
+            this.lblEventCt.Text = "Event Count:";
+            // 
             // lblSandwich
             // 
             this.lblSandwich.AutoSize = true;
-            this.lblSandwich.Location = new System.Drawing.Point(763, 32);
+            this.lblSandwich.Location = new System.Drawing.Point(962, 32);
             this.lblSandwich.Name = "lblSandwich";
             this.lblSandwich.Size = new System.Drawing.Size(117, 20);
             this.lblSandwich.TabIndex = 25;
@@ -1070,7 +1101,7 @@
             "Black",
             "Event",
             "Event-Mighty"});
-            this.cmbContent.Location = new System.Drawing.Point(597, 29);
+            this.cmbContent.Location = new System.Drawing.Point(550, 29);
             this.cmbContent.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmbContent.Name = "cmbContent";
             this.cmbContent.Size = new System.Drawing.Size(138, 28);
@@ -1079,7 +1110,7 @@
             // lblContent
             // 
             this.lblContent.AutoSize = true;
-            this.lblContent.Location = new System.Drawing.Point(514, 33);
+            this.lblContent.Location = new System.Drawing.Point(467, 33);
             this.lblContent.Name = "lblContent";
             this.lblContent.Size = new System.Drawing.Size(64, 20);
             this.lblContent.TabIndex = 0;
@@ -1088,7 +1119,7 @@
             // lblSeed
             // 
             this.lblSeed.AutoSize = true;
-            this.lblSeed.Location = new System.Drawing.Point(58, 33);
+            this.lblSeed.Location = new System.Drawing.Point(11, 33);
             this.lblSeed.Name = "lblSeed";
             this.lblSeed.Size = new System.Drawing.Size(45, 20);
             this.lblSeed.TabIndex = 1;
@@ -1097,7 +1128,7 @@
             // lblCalcs
             // 
             this.lblCalcs.AutoSize = true;
-            this.lblCalcs.Location = new System.Drawing.Point(263, 33);
+            this.lblCalcs.Location = new System.Drawing.Point(216, 33);
             this.lblCalcs.Name = "lblCalcs";
             this.lblCalcs.Size = new System.Drawing.Size(78, 20);
             this.lblCalcs.TabIndex = 2;
@@ -1105,7 +1136,7 @@
             // 
             // numMaxCalc
             // 
-            this.numMaxCalc.Location = new System.Drawing.Point(350, 30);
+            this.numMaxCalc.Location = new System.Drawing.Point(303, 30);
             this.numMaxCalc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.numMaxCalc.Maximum = new decimal(new int[] {
             -1,
@@ -1128,7 +1159,7 @@
             // 
             // txtSeed
             // 
-            this.txtSeed.Location = new System.Drawing.Point(110, 30);
+            this.txtSeed.Location = new System.Drawing.Point(63, 30);
             this.txtSeed.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSeed.MaxLength = 8;
             this.txtSeed.Name = "txtSeed";
@@ -1145,7 +1176,7 @@
             this.grpSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpSearch.Name = "grpSearch";
             this.grpSearch.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpSearch.Size = new System.Drawing.Size(1106, 73);
+            this.grpSearch.Size = new System.Drawing.Size(1235, 73);
             this.grpSearch.TabIndex = 24;
             this.grpSearch.TabStop = false;
             this.grpSearch.Text = "Search";
@@ -1197,7 +1228,7 @@
             this.dataGrid.ReadOnly = true;
             this.dataGrid.RowHeadersWidth = 51;
             this.dataGrid.RowTemplate.Height = 25;
-            this.dataGrid.Size = new System.Drawing.Size(1106, 755);
+            this.dataGrid.Size = new System.Drawing.Size(1235, 755);
             this.dataGrid.TabIndex = 23;
             this.dataGrid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGrid_MouseUp);
             // 
@@ -1244,7 +1275,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1477, 1007);
+            this.ClientSize = new System.Drawing.Size(1606, 1007);
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.grpSearch);
             this.Controls.Add(this.grpSettings);
@@ -1286,6 +1317,7 @@
             this.grpProfile.PerformLayout();
             this.grpSettings.ResumeLayout(false);
             this.grpSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numEventCt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numMaxCalc)).EndInit();
             this.grpSearch.ResumeLayout(false);
             this.grpSearch.PerformLayout();
@@ -1400,5 +1432,7 @@
         private Label lblSpecies;
         private CheckBox chkShiny;
         private Label lblFound;
+        private NumericUpDown numEventCt;
+        private Label lblEventCt;
     }
 }

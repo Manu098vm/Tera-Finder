@@ -63,6 +63,7 @@ namespace TeraFinder.Forms
             if (!IsBlankSAV()) grpProfile.Enabled = false;
             txtSeed.Text = Editor.txtSeed.Text;
             cmbContent.SelectedIndex = Editor.cmbContent.SelectedIndex;
+            numEventCt.Value = cmbContent.SelectedIndex >= 2 ? TeraUtil.GetEventCount(Editor.SAV.Raid, Editor.cmbDens.SelectedIndex) : -1;
             cmbBoost.SelectedIndex = 0;
 
             toolTip.SetToolTip(chkAccurateSearch, Strings["ToolTipAccurate"]);
@@ -385,6 +386,8 @@ namespace TeraFinder.Forms
             var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
             var lang = (LanguageID)Editor.SAV.Language;
 
+            var groupid = TeraUtil.GetDeliveryGroupID(Editor.SAV, progress, content, content is RaidContent.Event_Mighty ? Editor.Mighty : Editor.Dist, -1, (int)numEventCt.Value);
+
             await Task.Run(() =>
             {
                 var nthreads = (uint)numMaxCalc.Value < 1000 ? 1 : Environment.ProcessorCount;
@@ -411,7 +414,7 @@ namespace TeraFinder.Forms
 
                         for (ulong i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
                         {
-                            var res = CalcResult(tseed, progress, sav, content, i, chkAccurateSearch.Checked, boost);
+                            var res = CalcResult(tseed, progress, sav, content, i, chkAccurateSearch.Checked, boost, groupid);
                             if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
                             {
                                 tmpgridlist.Add(new RewardGridEntry(res, Items, SpeciesNames, ShinyNames, Editor.Language));
@@ -456,11 +459,11 @@ namespace TeraFinder.Forms
             return gridList;
         }
 
-        private RewardDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, ulong calc, bool accuratesearch, int boost)
+        private RewardDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, ulong calc, bool accuratesearch, int boost, int groupid)
         {
             var seed = (uint)(Seed & 0xFFFFFFFF);
             var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Editor.Tera!) :
-                content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Mighty!) : TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Dist!);
+                content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Dist!, groupid);
 
             if (encounter is null)
                 return null;

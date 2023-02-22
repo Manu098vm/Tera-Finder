@@ -61,7 +61,7 @@ namespace TeraFinder
                         throw new Exception($"Undocumented 7 star capture rate {items.First(z => z.RaidEnemyInfo.CaptureRate != 2).RaidEnemyInfo.CaptureRate}");
 
                     if (!TryAdd(ref seven, groupSet))
-                        throw new Exception("Already saw a 7-star group. How do we differentiate this slot determination from prior?");
+                        Console.WriteLine("Already saw a 7-star group. How do we differentiate this slot determination from prior?");
 
                     AddToList(items, type3list, RaidSerializationFormat.Type3);
                     continue;
@@ -71,13 +71,21 @@ namespace TeraFinder
                     throw new Exception($"Mixed difficulty {items.First(z => z.RaidEnemyInfo.Difficulty >= 7).RaidEnemyInfo.Difficulty}");
 
                 if (!TryAdd(ref other, groupSet))
-                    throw new Exception("Already saw a not-7-star group. How do we differentiate this slot determination from prior?");
+                    Console.WriteLine("Already saw a not-7-star group. How do we differentiate this slot determination from prior?");
 
                 AddToList(items, type2list, RaidSerializationFormat.Type2);
             }
 
             res = new byte[][] { type2list.SelectMany(z => z).ToArray(), type3list.SelectMany(z => z).ToArray() };
             return res;
+        }
+
+        public static DeliveryRaidPriority? GetDeliveryPriority(PKHeX.Core.SAV9SV sav)
+        {
+            var KBCATRaidPriorityArray = sav.Accessor.FindOrDefault(Blocks.KBCATRaidPriorityArray.Key);
+            if(KBCATRaidPriorityArray.Type is not PKHeX.Core.SCTypeCode.None && KBCATRaidPriorityArray.Data.Length > 0)
+                return FlatBufferConverter.DeserializeFrom<DeliveryRaidPriorityArray>(KBCATRaidPriorityArray.Data).Table.First();
+            return null;
         }
 
         private static bool TryAdd(ref DistroGroupSet exist, DistroGroupSet add)
@@ -103,7 +111,15 @@ namespace TeraFinder
             if (versions.Length == 2 && versions.Contains(RaidRomType.TYPE_A) && versions.Contains(RaidRomType.TYPE_B))
                 return DistroGroupSet.Both;
             if (versions.Length == 1)
-                return versions[0] == RaidRomType.TYPE_A ? DistroGroupSet.SL : DistroGroupSet.VL;
+            {
+                return versions[0] switch
+                {
+                    RaidRomType.BOTH => DistroGroupSet.Both,
+                    RaidRomType.TYPE_A => DistroGroupSet.SL,
+                    RaidRomType.TYPE_B => DistroGroupSet.VL,
+                    _ => throw new Exception("Unknown type."),
+                };
+            }
             throw new Exception("Unknown version");
         }
 
