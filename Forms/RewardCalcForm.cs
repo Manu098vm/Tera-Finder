@@ -280,6 +280,7 @@ namespace TeraFinder.Forms
             chkAllResults.Enabled = false;
             txtSeed.Enabled = false;
             numMaxCalc.Enabled = false;
+            numEventCt.Enabled = false;
         }
 
         private void EnableControls(bool enableProfile = false)
@@ -291,6 +292,7 @@ namespace TeraFinder.Forms
             chkAllResults.Enabled = true;
             txtSeed.Enabled = true;
             numMaxCalc.Enabled = true;
+            numEventCt.Enabled = true;
         }
 
         private void UpdateLabel()
