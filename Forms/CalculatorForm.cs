@@ -402,6 +402,7 @@ namespace TeraFinder
             showresults.Enabled = false;
             txtSeed.Enabled = false;
             numFrames.Enabled = false;
+            numEventCt.Enabled = false;
         }
 
         private void EnableControls(bool enableProfile = false)
@@ -412,6 +413,7 @@ namespace TeraFinder
             showresults.Enabled = true;
             txtSeed.Enabled = true;
             numFrames.Enabled = true;
+            numEventCt.Enabled = true;  
         }
 
         private void UpdateLabel()

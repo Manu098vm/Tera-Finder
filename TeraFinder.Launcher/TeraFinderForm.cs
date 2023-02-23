@@ -27,7 +27,6 @@ namespace TeraFinder.Launcher
             btnExport.Enabled = false;
             UpdateEventLabel();
             cmbLanguage.SelectedIndex = TeraPlugin.GetDefaultLanguage();
-            this.Text += TeraPlugin.Version;
         }
 
         private void TranslateInnerStrings(string language)
@@ -73,6 +72,7 @@ namespace TeraFinder.Launcher
                     this.TranslateInterface(Plugin.Language);
                     TranslateInnerStrings(Plugin.Language);
                     UpdateEventLabel();
+                    this.Text += TeraPlugin.Version;
                     txtSAV.Text = GetGameString();
                 }
                 else if(Plugin.GetSavName().Equals(TrainerBlank))
@@ -83,6 +83,7 @@ namespace TeraFinder.Launcher
                     this.TranslateInterface(Plugin.Language);
                     TranslateInnerStrings(Plugin.Language);
                     UpdateEventLabel();
+                    this.Text += TeraPlugin.Version;
                     txtSAV.Text = GetGameString();
                 }
             }
@@ -151,6 +152,7 @@ namespace TeraFinder.Launcher
                     this.TranslateInterface(Plugin.Language);
                     TranslateInnerStrings(Plugin.Language);
                     UpdateEventLabel();
+                    this.Text += TeraPlugin.Version;
                     txtSAV.Text = GetGameString();
                 }
                 catch (Exception)
@@ -163,6 +165,7 @@ namespace TeraFinder.Launcher
                     this.TranslateInterface(Plugin.Language);
                     TranslateInnerStrings(Plugin.Language);
                     UpdateEventLabel();
+                    this.Text += TeraPlugin.Version;
                     txtSAV.Text = GetGameString();
                 }
             }
@@ -236,6 +239,7 @@ namespace TeraFinder.Launcher
                 btnStartEditor.Enabled = false;
                 btnExport.Enabled = false;
                 cmbLanguage.PerformClick();
+                this.Text += TeraPlugin.Version;
                 this.ResumeLayout();
             }
         }
