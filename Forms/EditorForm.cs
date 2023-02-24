@@ -342,7 +342,6 @@ namespace TeraFinder
                     pictureBox.Image = GetRaidResultSprite(rngres, raid.IsEnabled, encounter.Item);
                     pictureBox.Size = pictureBox.Image.Size;
 
-
                     imgMap.SetMapPoint(rngres.TeraType, (int)raid.AreaID, (int)raid.SpawnPointID, DenLocations);
 
                     btnRewards.Width = pictureBox.Image.Width;
