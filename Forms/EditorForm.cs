@@ -307,7 +307,7 @@ namespace TeraFinder
 
         private void UpdatePKMInfo(TeraRaidDetail raid)
         {
-            if (Progress is not GameProgress.Beginning)
+            if (Progress is not GameProgress.Beginning && ((raid.Seed == 0 && raid.IsEnabled) || raid.Seed > 0))
             {
                 var content = (RaidContent)cmbContent.SelectedIndex;
                 var groupid = TeraUtil.GetDeliveryGroupID(SAV, Progress, content, content is RaidContent.Event_Mighty ? Mighty : Dist, cmbDens.SelectedIndex);
