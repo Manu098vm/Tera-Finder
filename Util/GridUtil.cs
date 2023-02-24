@@ -200,6 +200,10 @@ namespace TeraFinder
                         template.Move2 = rngres.Move2;
                         template.Move3 = rngres.Move3;
                         template.Move4 = rngres.Move4;
+
+                        if (encounter is not null && encounter.Item > 0)
+                            template.HeldItem = encounter.Item;
+
                         template.HealPP();
                         template.ClearNickname();
 
@@ -441,6 +445,10 @@ namespace TeraFinder
                         template.Move2 = rngres.Move2;
                         template.Move3 = rngres.Move3;
                         template.Move4 = rngres.Move4;
+
+                        if (encounter is not null && encounter.Item > 0)
+                            template.HeldItem = encounter.Item;
+
                         template.HealPP();
                         template.ClearNickname();
 

@@ -32,6 +32,7 @@ namespace TeraFinder
         public ushort RandRateMinViolet { get => GetRandRateMinViolet(); }
         public byte Level { get => GetLevel(); }
         public Moveset Moves { get => GetMoves(); }
+        public int Item { get => GetItem(); }
 
         public static EncounterRaid9[] GetEncounters(ITeraRaid9[] encounters)
         {
@@ -395,6 +396,25 @@ namespace TeraFinder
                 return h_dist.Moves;
             else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
                 return h_might.Moves;
+            else throw new ArgumentOutOfRangeException();
+        }
+
+        private int GetItem()
+        {
+            if (Encounter is EncounterTera9)
+                return 0;
+            else if (Encounter is EncounterMight9 might)
+                return (int)might.Item;
+            else if (Encounter is EncounterDist9 dist)
+                return (int)dist.Item;
+            else if (Encounter is EncounterRaid9)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterTera9)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterDist9)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterMight9)
+                return 0;
             else throw new ArgumentOutOfRangeException();
         }
     }

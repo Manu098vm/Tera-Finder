@@ -339,7 +339,7 @@ namespace TeraFinder
                     txtMove4.Text = $"{GameInfo.GetStrings(Language).movelist[rngres.Move4]}";
 
                     pictureBox.BackgroundImage = null;
-                    pictureBox.Image = GetRaidResultSprite(rngres, raid.IsEnabled);
+                    pictureBox.Image = GetRaidResultSprite(rngres, raid.IsEnabled, encounter.Item);
                     pictureBox.Size = pictureBox.Image.Size;
 
 

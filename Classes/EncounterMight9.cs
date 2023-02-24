@@ -19,6 +19,7 @@ public sealed record EncounterMight9 : EncounterStatic, ITeraRaid9
     public uint Identifier { get; private init; }
     public ulong FixedRewardHash { get; private init; }
     public ulong LotteryRewardHash { get; private init; }
+    public uint Item { get; private init; }
 
     public ushort RandRate0MinScarlet { get; private init; }
     public ushort RandRate0MinViolet { get; private init; }
@@ -155,7 +156,7 @@ public sealed record EncounterMight9 : EncounterStatic, ITeraRaid9
 
     private EncounterMight9() : base(GameVersion.SV) { }
 
-    private const int SerializedSize = WeightStart + (sizeof(ushort) * 2 * 2 * 4) + 10 + (sizeof(uint)) + (sizeof(ulong) * 2);
+    private const int SerializedSize = WeightStart + (sizeof(ushort) * 2 * 2 * 4) + 10 + (sizeof(uint) * 2) + (sizeof(ulong) * 2);
     private const int WeightStart = 0x14;
     private static EncounterMight9 ReadEncounter(ReadOnlySpan<byte> data) => new()
     {
@@ -203,6 +204,7 @@ public sealed record EncounterMight9 : EncounterStatic, ITeraRaid9
         Identifier = (uint)Math.Truncate((double)(ReadUInt32LittleEndian(data[0x3E..]) / 100)),
         FixedRewardHash = ReadUInt64LittleEndian(data[0x42..]),
         LotteryRewardHash = ReadUInt64LittleEndian(data[0x4A..]),
+        Item = ReadUInt32LittleEndian(data[0x52..]),
     };
 
     private static AbilityPermission GetAbility(byte b) => b switch
