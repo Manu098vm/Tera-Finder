@@ -84,6 +84,7 @@ public class RaidEnemyInfo
         bw.Write((uint)No);
         bw.Write(DropTableFix);
         bw.Write(DropTableRandom);
+        bw.Write((uint)BossPokePara.Item);
     }
 }
 

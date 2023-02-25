@@ -155,13 +155,14 @@ namespace TeraFinder
                         var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
                         var content = GetContent(seed, selectedRows.ElementAt(0), f);
                         var progress = GetProgress(seed, selectedRows.ElementAt(0), f);
+                        var groupid = TeraUtil.GetDeliveryGroupID(f.Editor.SAV, progress, content, content is RaidContent.Event_Mighty ? f.Editor.Mighty : f.Editor.Dist, -1, (int)f.numEventCt.Value);
 
                         var sav = (SAV9SV)f.Editor.SAV.Clone();
                         sav.Game = (int)GetGameVersion(seed, selectedRows.ElementAt(0), f);
 
                         var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
-                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
-                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
+                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, groupid) :
+                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, groupid);
 
                         var rngres = TeraUtil.CalcRNG(seed, (uint)Int32.Parse(f.txtTID.Text), (uint)Int32.Parse(f.txtSID.Text), content, encounter!);
 
@@ -200,6 +201,10 @@ namespace TeraFinder
                         template.Move2 = rngres.Move2;
                         template.Move3 = rngres.Move3;
                         template.Move4 = rngres.Move4;
+
+                        if (encounter is not null && encounter.Item > 0)
+                            template.HeldItem = encounter.Item;
+
                         template.HealPP();
                         template.ClearNickname();
 
@@ -396,13 +401,14 @@ namespace TeraFinder
                         var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
                         var content = GetContent(seed, selectedRows.ElementAt(0), f);
                         var progress = GetProgress(seed, selectedRows.ElementAt(0), f);
+                        var groupid = TeraUtil.GetDeliveryGroupID(f.Editor.SAV, progress, content, content is RaidContent.Event_Mighty ? f.Editor.Mighty : f.Editor.Dist, -1, (int)f.numEventCt.Value);
 
                         var sav = (SAV9SV)f.Editor.SAV.Clone();
                         sav.Game = (int)GetGameVersion(seed, selectedRows.ElementAt(0), f);
 
                         var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
-                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
-                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
+                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, groupid) :
+                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, groupid);
 
                         var rngres = TeraUtil.CalcRNG(seed, (uint)Int32.Parse(f.txtTID.Text), (uint)Int32.Parse(f.txtSID.Text), content, encounter!);
 
@@ -441,6 +447,10 @@ namespace TeraFinder
                         template.Move2 = rngres.Move2;
                         template.Move3 = rngres.Move3;
                         template.Move4 = rngres.Move4;
+
+                        if (encounter is not null && encounter.Item > 0)
+                            template.HeldItem = encounter.Item;
+
                         template.HealPP();
                         template.ClearNickname();
 

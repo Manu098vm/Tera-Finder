@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalculatorForm));
             this.grpRaidDetails = new System.Windows.Forms.GroupBox();
-            this.lblFound = new System.Windows.Forms.Label();
             this.numEventCt = new System.Windows.Forms.NumericUpDown();
             this.lblEventct = new System.Windows.Forms.Label();
             this.showresults = new System.Windows.Forms.CheckBox();
@@ -42,6 +41,7 @@
             this.txtSeed = new System.Windows.Forms.TextBox();
             this.cmbContent = new System.Windows.Forms.ComboBox();
             this.lblSeed = new System.Windows.Forms.Label();
+            this.lblFound = new System.Windows.Forms.Label();
             this.cmbProgress = new System.Windows.Forms.ComboBox();
             this.lblProgress = new System.Windows.Forms.Label();
             this.grpFilters = new System.Windows.Forms.GroupBox();
@@ -152,16 +152,6 @@
             this.grpRaidDetails.TabIndex = 0;
             this.grpRaidDetails.TabStop = false;
             this.grpRaidDetails.Text = "Raid Settings";
-            // 
-            // lblFound
-            // 
-            this.lblFound.AutoSize = true;
-            this.lblFound.Location = new System.Drawing.Point(21, 213);
-            this.lblFound.Name = "lblFound";
-            this.lblFound.Size = new System.Drawing.Size(53, 20);
-            this.lblFound.TabIndex = 12;
-            this.lblFound.Text = "Found:";
-            this.lblFound.Visible = false;
             // 
             // numEventCt
             // 
@@ -285,6 +275,16 @@
             this.lblSeed.Size = new System.Drawing.Size(45, 20);
             this.lblSeed.TabIndex = 1;
             this.lblSeed.Text = "Seed:";
+            // 
+            // lblFound
+            // 
+            this.lblFound.AutoSize = true;
+            this.lblFound.Location = new System.Drawing.Point(21, 213);
+            this.lblFound.Name = "lblFound";
+            this.lblFound.Size = new System.Drawing.Size(53, 20);
+            this.lblFound.TabIndex = 12;
+            this.lblFound.Text = "Found:";
+            this.lblFound.Visible = false;
             // 
             // cmbProgress
             // 
@@ -1227,7 +1227,7 @@
         public ComboBox cmbGame;
         private ToolStripMenuItem btnViewRewards;
         private Label lblFound;
-        private NumericUpDown numEventCt;
         private Label lblEventct;
+        public NumericUpDown numEventCt;
     }
 }

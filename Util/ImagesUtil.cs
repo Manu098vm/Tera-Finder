@@ -6,7 +6,7 @@ namespace TeraFinder
 {
     public static class ImagesUtil
     {
-        public static Image GetRaidResultSprite(TeraDetails pkm, bool active = true)
+        public static Image GetRaidResultSprite(TeraDetails pkm, bool active = true, int item = 0)
         {
             SpriteName.AllowShinySprite = true;
             var file = pkm.Shiny > TeraShiny.No && pkm.Species < (ushort)Species.Sprigatito ?
@@ -21,11 +21,29 @@ namespace TeraFinder
                 sprite = (Image)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file)!;
             }
 
+            if (item > 0)
+                sprite = LayerOverImageItem(sprite, item);
+
             if (pkm.Shiny > TeraShiny.No)
                 sprite = LayerOverImageShiny(sprite, pkm.Shiny is TeraShiny.Square ? Shiny.AlwaysSquare : Shiny.AlwaysStar);
 
             if (!active) sprite = ImageUtil.ToGrayscale(sprite);
             return ImageUtil.BlendTransparentTo(sprite, TypeColor.GetTypeSpriteColor((byte)pkm.TeraType), 0xAF, 0x3740);
+        }
+
+        private static Image LayerOverImageItem(Image image, int item)
+        {
+            var str = item > 0 ? $"bitem_{item}" : "";
+            var icon = (Image?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(str);
+            if (icon is not null)
+            {
+                // Redraw item in bottom right corner; since images are cropped, try to not have them at the edge
+                int x = image.Width - icon.Width - ((32 - icon.Width) / 4) - 2;
+                int y = image.Height - icon.Height - 2;
+                return ImageUtil.LayerImage(image, icon, x, y);
+            }
+            
+            return image;
         }
 
         private static Image LayerOverImageShiny(Image image, Shiny shiny)

@@ -61,6 +61,7 @@ CalculatorForm.btnSave=Salva i risultati selezionati come TXT
 CalculatorForm.btnSavePk9=Salva il risultato selezionato come PK9
 CalculatorForm.btnToPkmEditor=Invia il risultato selezionato al PKM Editor
 CalculatorForm.btnSendToEditor=Invia il risultato selezionato al Raid Editor
+CalculatorForm.lblEventct=Cont. Eventi:
 
 RewardCalcForm=Calcolatore Ricompense
 RewardCalcForm.grpFilters=Filtri
@@ -89,6 +90,7 @@ RewardCalcForm.btnSearch=Cerca
 RewardCalcForm.btnSaveAllTxt=Salva tutti i risultati come TXT
 RewardCalcForm.btnSaveSelectedTxt=Salva i risultati selezionati come TXT
 RewardCalcForm.btnSendSelectedRaid=Invia il risultato selezionato al Raid Editor
+RewardCalcForm.lblEventCt=Cont. Eventi:
 
 CheckerForm=Controllo Seed
 CheckerForm.lblTID=TID:

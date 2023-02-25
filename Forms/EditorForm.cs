@@ -307,7 +307,7 @@ namespace TeraFinder
 
         private void UpdatePKMInfo(TeraRaidDetail raid)
         {
-            if (Progress is not GameProgress.Beginning)
+            if (Progress is not GameProgress.Beginning && ((raid.Seed == 0 && raid.IsEnabled) || raid.Seed > 0))
             {
                 var content = (RaidContent)cmbContent.SelectedIndex;
                 var groupid = TeraUtil.GetDeliveryGroupID(SAV, Progress, content, content is RaidContent.Event_Mighty ? Mighty : Dist, cmbDens.SelectedIndex);
@@ -339,9 +339,8 @@ namespace TeraFinder
                     txtMove4.Text = $"{GameInfo.GetStrings(Language).movelist[rngres.Move4]}";
 
                     pictureBox.BackgroundImage = null;
-                    pictureBox.Image = GetRaidResultSprite(rngres, raid.IsEnabled);
+                    pictureBox.Image = GetRaidResultSprite(rngres, raid.IsEnabled, encounter.Item);
                     pictureBox.Size = pictureBox.Image.Size;
-
 
                     imgMap.SetMapPoint(rngres.TeraType, (int)raid.AreaID, (int)raid.SpawnPointID, DenLocations);
 
