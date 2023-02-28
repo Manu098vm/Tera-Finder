@@ -43,6 +43,8 @@
             this.txtMove2 = new System.Windows.Forms.TextBox();
             this.txtMove3 = new System.Windows.Forms.TextBox();
             this.txtMove1 = new System.Windows.Forms.TextBox();
+            this.txtScale = new System.Windows.Forms.TextBox();
+            this.lblScale = new System.Windows.Forms.Label();
             this.lblLevel = new System.Windows.Forms.Label();
             this.btnRewards = new System.Windows.Forms.Button();
             this.lblStarSymbols = new System.Windows.Forms.Label();
@@ -70,11 +72,13 @@
             this.btnSx = new System.Windows.Forms.Button();
             this.btnOpenRewardCalculator = new System.Windows.Forms.Button();
             this.imgMap = new System.Windows.Forms.PictureBox();
+            this.grpMap = new System.Windows.Forms.GroupBox();
             this.GrpRaidInfo.SuspendLayout();
             this.grpPkmInfo.SuspendLayout();
             this.grpMoves.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMap)).BeginInit();
+            this.grpMap.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmbDens
@@ -95,7 +99,7 @@
             this.GrpRaidInfo.Controls.Add(this.txtSeed);
             this.GrpRaidInfo.Controls.Add(this.lblSeed);
             this.GrpRaidInfo.Controls.Add(this.chkLP);
-            this.GrpRaidInfo.Location = new System.Drawing.Point(8, 56);
+            this.GrpRaidInfo.Location = new System.Drawing.Point(8, 49);
             this.GrpRaidInfo.Name = "GrpRaidInfo";
             this.GrpRaidInfo.Size = new System.Drawing.Size(390, 123);
             this.GrpRaidInfo.TabIndex = 2;
@@ -169,6 +173,8 @@
             // grpPkmInfo
             // 
             this.grpPkmInfo.Controls.Add(this.grpMoves);
+            this.grpPkmInfo.Controls.Add(this.txtScale);
+            this.grpPkmInfo.Controls.Add(this.lblScale);
             this.grpPkmInfo.Controls.Add(this.lblLevel);
             this.grpPkmInfo.Controls.Add(this.btnRewards);
             this.grpPkmInfo.Controls.Add(this.lblStarSymbols);
@@ -191,9 +197,9 @@
             this.grpPkmInfo.Controls.Add(this.txtDef);
             this.grpPkmInfo.Controls.Add(this.txtAtk);
             this.grpPkmInfo.Controls.Add(this.txtHP);
-            this.grpPkmInfo.Location = new System.Drawing.Point(8, 185);
+            this.grpPkmInfo.Location = new System.Drawing.Point(8, 178);
             this.grpPkmInfo.Name = "grpPkmInfo";
-            this.grpPkmInfo.Size = new System.Drawing.Size(390, 339);
+            this.grpPkmInfo.Size = new System.Drawing.Size(390, 367);
             this.grpPkmInfo.TabIndex = 3;
             this.grpPkmInfo.TabStop = false;
             this.grpPkmInfo.Text = "Pokémon Info";
@@ -204,9 +210,9 @@
             this.grpMoves.Controls.Add(this.txtMove2);
             this.grpMoves.Controls.Add(this.txtMove3);
             this.grpMoves.Controls.Add(this.txtMove1);
-            this.grpMoves.Location = new System.Drawing.Point(4, 220);
+            this.grpMoves.Location = new System.Drawing.Point(0, 251);
             this.grpMoves.Name = "grpMoves";
-            this.grpMoves.Size = new System.Drawing.Size(380, 110);
+            this.grpMoves.Size = new System.Drawing.Size(384, 110);
             this.grpMoves.TabIndex = 22;
             this.grpMoves.TabStop = false;
             this.grpMoves.Text = "Moves";
@@ -251,6 +257,23 @@
             this.txtMove1.Text = "None";
             this.txtMove1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // txtScale
+            // 
+            this.txtScale.Enabled = false;
+            this.txtScale.Location = new System.Drawing.Point(61, 218);
+            this.txtScale.Name = "txtScale";
+            this.txtScale.Size = new System.Drawing.Size(31, 27);
+            this.txtScale.TabIndex = 23;
+            // 
+            // lblScale
+            // 
+            this.lblScale.AutoSize = true;
+            this.lblScale.Location = new System.Drawing.Point(7, 221);
+            this.lblScale.Name = "lblScale";
+            this.lblScale.Size = new System.Drawing.Size(47, 20);
+            this.lblScale.TabIndex = 22;
+            this.lblScale.Text = "Scale:";
+            // 
             // lblLevel
             // 
             this.lblLevel.AutoSize = true;
@@ -284,7 +307,7 @@
             // lblSpecies
             // 
             this.lblSpecies.AutoSize = true;
-            this.lblSpecies.Location = new System.Drawing.Point(107, 25);
+            this.lblSpecies.Location = new System.Drawing.Point(114, 23);
             this.lblSpecies.Name = "lblSpecies";
             this.lblSpecies.Size = new System.Drawing.Size(62, 20);
             this.lblSpecies.TabIndex = 18;
@@ -293,7 +316,7 @@
             // lblTera
             // 
             this.lblTera.AutoSize = true;
-            this.lblTera.Location = new System.Drawing.Point(107, 91);
+            this.lblTera.Location = new System.Drawing.Point(114, 89);
             this.lblTera.Name = "lblTera";
             this.lblTera.Size = new System.Drawing.Size(71, 20);
             this.lblTera.TabIndex = 17;
@@ -302,7 +325,7 @@
             // lblShiny
             // 
             this.lblShiny.AutoSize = true;
-            this.lblShiny.Location = new System.Drawing.Point(107, 157);
+            this.lblShiny.Location = new System.Drawing.Point(114, 155);
             this.lblShiny.Name = "lblShiny";
             this.lblShiny.Size = new System.Drawing.Size(51, 20);
             this.lblShiny.TabIndex = 16;
@@ -311,7 +334,7 @@
             // lblAbility
             // 
             this.lblAbility.AutoSize = true;
-            this.lblAbility.Location = new System.Drawing.Point(107, 59);
+            this.lblAbility.Location = new System.Drawing.Point(114, 57);
             this.lblAbility.Name = "lblAbility";
             this.lblAbility.Size = new System.Drawing.Size(59, 20);
             this.lblAbility.TabIndex = 15;
@@ -320,7 +343,7 @@
             // lblNature
             // 
             this.lblNature.AutoSize = true;
-            this.lblNature.Location = new System.Drawing.Point(107, 124);
+            this.lblNature.Location = new System.Drawing.Point(114, 122);
             this.lblNature.Name = "lblNature";
             this.lblNature.Size = new System.Drawing.Size(61, 20);
             this.lblNature.TabIndex = 14;
@@ -329,7 +352,7 @@
             // lblGender
             // 
             this.lblGender.AutoSize = true;
-            this.lblGender.Location = new System.Drawing.Point(107, 189);
+            this.lblGender.Location = new System.Drawing.Point(114, 187);
             this.lblGender.Name = "lblGender";
             this.lblGender.Size = new System.Drawing.Size(60, 20);
             this.lblGender.TabIndex = 13;
@@ -404,7 +427,7 @@
             // txtSpe
             // 
             this.txtSpe.Enabled = false;
-            this.txtSpe.Location = new System.Drawing.Point(54, 187);
+            this.txtSpe.Location = new System.Drawing.Point(61, 185);
             this.txtSpe.Name = "txtSpe";
             this.txtSpe.Size = new System.Drawing.Size(31, 27);
             this.txtSpe.TabIndex = 5;
@@ -412,7 +435,7 @@
             // txtSpD
             // 
             this.txtSpD.Enabled = false;
-            this.txtSpD.Location = new System.Drawing.Point(54, 155);
+            this.txtSpD.Location = new System.Drawing.Point(61, 153);
             this.txtSpD.Name = "txtSpD";
             this.txtSpD.Size = new System.Drawing.Size(31, 27);
             this.txtSpD.TabIndex = 4;
@@ -420,7 +443,7 @@
             // txtSpA
             // 
             this.txtSpA.Enabled = false;
-            this.txtSpA.Location = new System.Drawing.Point(54, 121);
+            this.txtSpA.Location = new System.Drawing.Point(61, 119);
             this.txtSpA.Name = "txtSpA";
             this.txtSpA.Size = new System.Drawing.Size(31, 27);
             this.txtSpA.TabIndex = 3;
@@ -428,7 +451,7 @@
             // txtDef
             // 
             this.txtDef.Enabled = false;
-            this.txtDef.Location = new System.Drawing.Point(54, 88);
+            this.txtDef.Location = new System.Drawing.Point(61, 86);
             this.txtDef.Name = "txtDef";
             this.txtDef.Size = new System.Drawing.Size(31, 27);
             this.txtDef.TabIndex = 2;
@@ -436,7 +459,7 @@
             // txtAtk
             // 
             this.txtAtk.Enabled = false;
-            this.txtAtk.Location = new System.Drawing.Point(54, 55);
+            this.txtAtk.Location = new System.Drawing.Point(61, 53);
             this.txtAtk.Name = "txtAtk";
             this.txtAtk.Size = new System.Drawing.Size(31, 27);
             this.txtAtk.TabIndex = 1;
@@ -444,14 +467,14 @@
             // txtHP
             // 
             this.txtHP.Enabled = false;
-            this.txtHP.Location = new System.Drawing.Point(54, 21);
+            this.txtHP.Location = new System.Drawing.Point(61, 19);
             this.txtHP.Name = "txtHP";
             this.txtHP.Size = new System.Drawing.Size(31, 27);
             this.txtHP.TabIndex = 0;
             // 
             // btnOpenCalculator
             // 
-            this.btnOpenCalculator.Location = new System.Drawing.Point(8, 530);
+            this.btnOpenCalculator.Location = new System.Drawing.Point(8, 545);
             this.btnOpenCalculator.Name = "btnOpenCalculator";
             this.btnOpenCalculator.Size = new System.Drawing.Size(192, 52);
             this.btnOpenCalculator.TabIndex = 4;
@@ -481,7 +504,7 @@
             // 
             // btnOpenRewardCalculator
             // 
-            this.btnOpenRewardCalculator.Location = new System.Drawing.Point(206, 530);
+            this.btnOpenRewardCalculator.Location = new System.Drawing.Point(206, 545);
             this.btnOpenRewardCalculator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnOpenRewardCalculator.Name = "btnOpenRewardCalculator";
             this.btnOpenRewardCalculator.Size = new System.Drawing.Size(192, 52);
@@ -495,18 +518,27 @@
             this.imgMap.BackgroundImage = global::TeraFinder.Properties.Resources.world;
             this.imgMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.imgMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.imgMap.Location = new System.Drawing.Point(404, 12);
+            this.imgMap.Location = new System.Drawing.Point(6, 17);
             this.imgMap.Name = "imgMap";
-            this.imgMap.Size = new System.Drawing.Size(570, 570);
+            this.imgMap.Size = new System.Drawing.Size(572, 570);
             this.imgMap.TabIndex = 22;
             this.imgMap.TabStop = false;
+            // 
+            // grpMap
+            // 
+            this.grpMap.Controls.Add(this.imgMap);
+            this.grpMap.Location = new System.Drawing.Point(404, 3);
+            this.grpMap.Name = "grpMap";
+            this.grpMap.Size = new System.Drawing.Size(584, 594);
+            this.grpMap.TabIndex = 23;
+            this.grpMap.TabStop = false;
             // 
             // EditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(986, 589);
-            this.Controls.Add(this.imgMap);
+            this.ClientSize = new System.Drawing.Size(994, 602);
+            this.Controls.Add(this.grpMap);
             this.Controls.Add(this.btnOpenRewardCalculator);
             this.Controls.Add(this.btnDx);
             this.Controls.Add(this.btnSx);
@@ -528,6 +560,7 @@
             this.grpMoves.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgMap)).EndInit();
+            this.grpMap.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -574,5 +607,8 @@
         private Label lblLevel;
         private PictureBox imgMap;
         public ComboBox cmbDens;
+        private TextBox txtScale;
+        private Label lblScale;
+        private GroupBox grpMap;
     }
 }

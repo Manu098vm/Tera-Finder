@@ -333,6 +333,7 @@ namespace TeraFinder
                     txtSpA.Text = $"{rngres.SPA}";
                     txtSpD.Text = $"{rngres.SPD}";
                     txtSpe.Text = $"{rngres.SPE}";
+                    txtScale.Text = $"{rngres.Scale}";
                     txtMove1.Text = $"{GameInfo.GetStrings(Language).movelist[rngres.Move1]}";
                     txtMove2.Text = $"{GameInfo.GetStrings(Language).movelist[rngres.Move2]}";
                     txtMove3.Text = $"{GameInfo.GetStrings(Language).movelist[rngres.Move3]}";
@@ -367,6 +368,7 @@ namespace TeraFinder
             txtSpA.Text = $"";
             txtSpD.Text = $"";
             txtSpe.Text = $"";
+            txtScale.Text = $"";
             txtMove1.Text = $"{Strings["EditorForm.txtMove1"]}";
             txtMove2.Text = $"{Strings["EditorForm.txtMove2"]}";
             txtMove3.Text = $"{Strings["EditorForm.txtMove3"]}";

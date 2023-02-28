@@ -22,6 +22,7 @@ namespace TeraFinder
         public AbilityPermission Ability { get => GetAbility(); }
         public Shiny Shiny { get => GetShiny(); }
         public Nature Nature { get => GetNature(); }
+        public SizeType9 ScaleType { get => GetScaleType(); }
         public byte Scale { get => GetScale(); }
         public IndividualValueSet IVs { get => GetIVs(); }
         public sbyte Gender { get => GetGender(); }
@@ -247,19 +248,38 @@ namespace TeraFinder
             else throw new ArgumentOutOfRangeException();
         }
 
+        private SizeType9 GetScaleType()
+        {
+            if (Encounter is EncounterTera9)
+                return 0;
+            else if (Encounter is EncounterMight9 might)
+                return might.ScaleType;
+            else if (Encounter is EncounterDist9)
+                return 0;
+            else if (Encounter is EncounterRaid9 raid)
+                return raid.ScaleType;
+            else if (Encounter is PKHeX.Core.EncounterTera9)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterDist9)
+                return 0;
+            else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
+                return h_might.ScaleType;
+            else throw new ArgumentOutOfRangeException();
+        }
+
         private byte GetScale()
         {
-            if (Encounter is EncounterTera9 tera)
+            if (Encounter is EncounterTera9)
                 return 0;
             else if (Encounter is EncounterMight9 might)
                 return might.Scale;
-            else if (Encounter is EncounterDist9 dist)
+            else if (Encounter is EncounterDist9)
                 return 0;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.Scale;
-            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+            else if (Encounter is PKHeX.Core.EncounterTera9)
                 return 0;
-            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+            else if (Encounter is PKHeX.Core.EncounterDist9)
                 return 0;
             else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
                 return h_might.Scale;
@@ -268,17 +288,17 @@ namespace TeraFinder
 
         private IndividualValueSet GetIVs()
         {
-            if (Encounter is EncounterTera9 tera)
+            if (Encounter is EncounterTera9)
                 return default;
             else if (Encounter is EncounterMight9 might)
                 return might.IVs;
-            else if (Encounter is EncounterDist9 dist)
+            else if (Encounter is EncounterDist9)
                 return default;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.IVs;
-            else if (Encounter is PKHeX.Core.EncounterTera9 h_tera)
+            else if (Encounter is PKHeX.Core.EncounterTera9)
                 return default;
-            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+            else if (Encounter is PKHeX.Core.EncounterDist9)
                 return default;
             else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
                 return h_might.IVs;

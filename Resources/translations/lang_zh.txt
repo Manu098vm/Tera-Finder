@@ -141,6 +141,7 @@ EditorForm.lblNature=性格:
 EditorForm.lblShiny=闪光:
 EditorForm.lblGender=性别:
 EditorForm.btnRewards=奖励
+EditorForm.lblScale=Scale
 EditorForm.grpMoves=技能
 EditorForm.txtMove1=无
 EditorForm.txtMove2=无
