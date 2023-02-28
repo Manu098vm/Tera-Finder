@@ -254,14 +254,14 @@ namespace TeraFinder
                 return 0;
             else if (Encounter is EncounterMight9 might)
                 return might.ScaleType;
-            else if (Encounter is EncounterDist9)
-                return 0;
+            else if (Encounter is EncounterDist9 dist)
+                return dist.ScaleType;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.ScaleType;
             else if (Encounter is PKHeX.Core.EncounterTera9)
                 return 0;
-            else if (Encounter is PKHeX.Core.EncounterDist9)
-                return 0;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.ScaleType;
             else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
                 return h_might.ScaleType;
             else throw new ArgumentOutOfRangeException();
@@ -273,14 +273,14 @@ namespace TeraFinder
                 return 0;
             else if (Encounter is EncounterMight9 might)
                 return might.Scale;
-            else if (Encounter is EncounterDist9)
-                return 0;
+            else if (Encounter is EncounterDist9 dist)
+                return dist.Scale;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.Scale;
             else if (Encounter is PKHeX.Core.EncounterTera9)
                 return 0;
-            else if (Encounter is PKHeX.Core.EncounterDist9)
-                return 0;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.Scale;
             else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
                 return h_might.Scale;
             else throw new ArgumentOutOfRangeException();

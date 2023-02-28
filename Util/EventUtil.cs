@@ -189,6 +189,9 @@ namespace TeraFinder
 
             enc.SerializeTeraFinder(bw);
 
+            if (format == RaidSerializationFormat.Type2)
+                enc.SerializeType2(bw);
+
             var bin = ms.ToArray();
             if (!list.Any(z => z.SequenceEqual(bin)))
                 list.Add(bin);
