@@ -105,9 +105,9 @@ namespace TeraFinder.Forms
                 var version = await Executor.ReadGameVersion(token).ConfigureAwait(false);
                 SAV.Game = (int)version;
                 var mystatusblock = SAV.Accessor.FindOrDefault(Blocks.KMyStatus.Key);
-                mystatusblock.ChangeData(await Executor.ReadEncryptedBlock(Blocks.KMyStatus, token).ConfigureAwait(false));
+                mystatusblock.ChangeData(await Executor.ReadBlock(Blocks.KMyStatus, token).ConfigureAwait(false));
                 var raidblock = SAV.Accessor.FindOrDefault(Blocks.KTeraRaids.Key);
-                raidblock.ChangeData(await Executor.ReadDecryptedBlock(Blocks.KTeraRaids, raidblock.Data.Length, token).ConfigureAwait(false));
+                raidblock.ChangeData(await Executor.ReadBlock(Blocks.KTeraRaids, token).ConfigureAwait(false));
                 var progress = await Executor.ReadGameProgress(token).ConfigureAwait(false);
                 ProgressForm.EditProgress(SAV, progress);
 
@@ -134,12 +134,15 @@ namespace TeraFinder.Forms
         {
             var token = new CancellationToken();
             var KBCATEventRaidIdentifier = SAV.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
+            var raidIdentifierBlock = await Executor.ReadBlock(Blocks.KBCATEventRaidIdentifier, token).ConfigureAwait(false);
 
-            if (KBCATEventRaidIdentifier.Type is SCTypeCode.None)
-                BlockUtil.EditBlock(KBCATEventRaidIdentifier, SCTypeCode.Object, BitConverter.GetBytes((uint)1));
+            if (KBCATEventRaidIdentifier.Type is not SCTypeCode.None)
+                KBCATEventRaidIdentifier.ChangeData(raidIdentifierBlock);
+            else
+                BlockUtil.EditBlock(KBCATEventRaidIdentifier, SCTypeCode.Object, raidIdentifierBlock);
 
             var KBCATFixedRewardItemArray = SAV.Accessor.FindOrDefault(Blocks.KBCATFixedRewardItemArray.Key);
-            var rewardItemBlock = await Executor.ReadEncryptedBlock(Blocks.KBCATFixedRewardItemArray, token).ConfigureAwait(false);
+            var rewardItemBlock = await Executor.ReadBlock(Blocks.KBCATFixedRewardItemArray, token).ConfigureAwait(false);
 
             if (KBCATFixedRewardItemArray.Type is not SCTypeCode.None)
                 KBCATFixedRewardItemArray.ChangeData(rewardItemBlock);
@@ -147,7 +150,7 @@ namespace TeraFinder.Forms
                 BlockUtil.EditBlock(KBCATFixedRewardItemArray, SCTypeCode.Object, rewardItemBlock);
 
             var KBCATLotteryRewardItemArray = SAV.Accessor.FindOrDefault(Blocks.KBCATLotteryRewardItemArray.Key);
-            var lotteryItemBlock = await Executor.ReadEncryptedBlock(Blocks.KBCATLotteryRewardItemArray, token).ConfigureAwait(false);
+            var lotteryItemBlock = await Executor.ReadBlock(Blocks.KBCATLotteryRewardItemArray, token).ConfigureAwait(false);
 
             if (KBCATLotteryRewardItemArray.Type is not SCTypeCode.None)
                 KBCATLotteryRewardItemArray.ChangeData(lotteryItemBlock);
@@ -155,7 +158,7 @@ namespace TeraFinder.Forms
                 BlockUtil.EditBlock(KBCATLotteryRewardItemArray, SCTypeCode.Object, lotteryItemBlock);
 
             var KBCATRaidEnemyArray = SAV.Accessor.FindOrDefault(Blocks.KBCATRaidEnemyArray.Key);
-            var raidEnemyBlock = await Executor.ReadEncryptedBlock(Blocks.KBCATRaidEnemyArray, token).ConfigureAwait(false);
+            var raidEnemyBlock = await Executor.ReadBlock(Blocks.KBCATRaidEnemyArray, token).ConfigureAwait(false);
 
             if (KBCATRaidEnemyArray.Type is not SCTypeCode.None)
                 KBCATRaidEnemyArray.ChangeData(raidEnemyBlock);
@@ -163,7 +166,7 @@ namespace TeraFinder.Forms
                 BlockUtil.EditBlock(KBCATRaidEnemyArray, SCTypeCode.Object, raidEnemyBlock);
 
             var KBCATRaidPriorityArray = SAV.Accessor.FindOrDefault(Blocks.KBCATRaidPriorityArray.Key);
-            var raidPriorityBlock = await Executor.ReadEncryptedBlock(Blocks.KBCATRaidPriorityArray, token).ConfigureAwait(false);
+            var raidPriorityBlock = await Executor.ReadBlock(Blocks.KBCATRaidPriorityArray, token).ConfigureAwait(false);
 
             if (KBCATRaidPriorityArray.Type is not SCTypeCode.None)
                 KBCATRaidPriorityArray.ChangeData(raidPriorityBlock);
