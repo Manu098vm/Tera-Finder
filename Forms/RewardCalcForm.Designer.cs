@@ -60,9 +60,6 @@
             this.btnApply = new System.Windows.Forms.Button();
             this.chkAccurateSearch = new System.Windows.Forms.CheckBox();
             this.grpItems = new System.Windows.Forms.GroupBox();
-            this.numericUpDown21 = new System.Windows.Forms.NumericUpDown();
-            this.label29 = new System.Windows.Forms.Label();
-            this.comboBox21 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -115,15 +112,15 @@
             this.cmbGame = new System.Windows.Forms.ComboBox();
             this.lblGame = new System.Windows.Forms.Label();
             this.grpSettings = new System.Windows.Forms.GroupBox();
-            this.numEventCt = new System.Windows.Forms.NumericUpDown();
             this.cmbBoost = new System.Windows.Forms.ComboBox();
+            this.numEventCt = new System.Windows.Forms.NumericUpDown();
             this.lblEventCt = new System.Windows.Forms.Label();
-            this.lblSandwich = new System.Windows.Forms.Label();
             this.cmbContent = new System.Windows.Forms.ComboBox();
+            this.numMaxCalc = new System.Windows.Forms.NumericUpDown();
+            this.lblSandwich = new System.Windows.Forms.Label();
             this.lblContent = new System.Windows.Forms.Label();
             this.lblSeed = new System.Windows.Forms.Label();
             this.lblCalcs = new System.Windows.Forms.Label();
-            this.numMaxCalc = new System.Windows.Forms.NumericUpDown();
             this.txtSeed = new System.Windows.Forms.TextBox();
             this.grpSearch = new System.Windows.Forms.GroupBox();
             this.lblFound = new System.Windows.Forms.Label();
@@ -138,7 +135,6 @@
             this.grpFilters.SuspendLayout();
             this.grpEncounter.SuspendLayout();
             this.grpItems.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).BeginInit();
@@ -359,7 +355,7 @@
             this.grpFilters.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpFilters.Name = "grpFilters";
             this.grpFilters.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpFilters.Size = new System.Drawing.Size(343, 989);
+            this.grpFilters.Size = new System.Drawing.Size(343, 949);
             this.grpFilters.TabIndex = 20;
             this.grpFilters.TabStop = false;
             this.grpFilters.Text = "Filters";
@@ -441,7 +437,7 @@
             // 
             // btnApply
             // 
-            this.btnApply.Location = new System.Drawing.Point(181, 941);
+            this.btnApply.Location = new System.Drawing.Point(181, 900);
             this.btnApply.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(157, 41);
@@ -463,9 +459,6 @@
             // 
             // grpItems
             // 
-            this.grpItems.Controls.Add(this.numericUpDown21);
-            this.grpItems.Controls.Add(this.label29);
-            this.grpItems.Controls.Add(this.comboBox21);
             this.grpItems.Controls.Add(this.label1);
             this.grpItems.Controls.Add(this.label2);
             this.grpItems.Controls.Add(this.label3);
@@ -530,36 +523,10 @@
             this.grpItems.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpItems.Name = "grpItems";
             this.grpItems.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpItems.Size = new System.Drawing.Size(331, 782);
+            this.grpItems.Size = new System.Drawing.Size(331, 741);
             this.grpItems.TabIndex = 21;
             this.grpItems.TabStop = false;
             this.grpItems.Text = "Items";
-            // 
-            // numericUpDown21
-            // 
-            this.numericUpDown21.Location = new System.Drawing.Point(264, 745);
-            this.numericUpDown21.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown21.Name = "numericUpDown21";
-            this.numericUpDown21.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown21.TabIndex = 25;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(235, 748);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(29, 20);
-            this.label29.TabIndex = 25;
-            this.label29.Text = ">=";
-            // 
-            // comboBox21
-            // 
-            this.comboBox21.FormattingEnabled = true;
-            this.comboBox21.Location = new System.Drawing.Point(6, 745);
-            this.comboBox21.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox21.Name = "comboBox21";
-            this.comboBox21.Size = new System.Drawing.Size(219, 28);
-            this.comboBox21.TabIndex = 41;
             // 
             // label1
             // 
@@ -903,7 +870,7 @@
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(7, 941);
+            this.btnReset.Location = new System.Drawing.Point(7, 900);
             this.btnReset.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(157, 41);
@@ -934,7 +901,7 @@
             this.grpProfile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpProfile.Name = "grpProfile";
             this.grpProfile.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpProfile.Size = new System.Drawing.Size(1235, 73);
+            this.grpProfile.Size = new System.Drawing.Size(1165, 73);
             this.grpProfile.TabIndex = 21;
             this.grpProfile.TabStop = false;
             this.grpProfile.Text = "Game Info";
@@ -1025,28 +992,42 @@
             // 
             // grpSettings
             // 
-            this.grpSettings.Controls.Add(this.numEventCt);
             this.grpSettings.Controls.Add(this.cmbBoost);
+            this.grpSettings.Controls.Add(this.numEventCt);
             this.grpSettings.Controls.Add(this.lblEventCt);
-            this.grpSettings.Controls.Add(this.lblSandwich);
             this.grpSettings.Controls.Add(this.cmbContent);
+            this.grpSettings.Controls.Add(this.numMaxCalc);
+            this.grpSettings.Controls.Add(this.lblSandwich);
             this.grpSettings.Controls.Add(this.lblContent);
             this.grpSettings.Controls.Add(this.lblSeed);
             this.grpSettings.Controls.Add(this.lblCalcs);
-            this.grpSettings.Controls.Add(this.numMaxCalc);
             this.grpSettings.Controls.Add(this.txtSeed);
             this.grpSettings.Location = new System.Drawing.Point(363, 89);
             this.grpSettings.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpSettings.Name = "grpSettings";
             this.grpSettings.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpSettings.Size = new System.Drawing.Size(1235, 73);
+            this.grpSettings.Size = new System.Drawing.Size(1165, 73);
             this.grpSettings.TabIndex = 22;
             this.grpSettings.TabStop = false;
             this.grpSettings.Text = "Raid Settings";
             // 
+            // cmbBoost
+            // 
+            this.cmbBoost.FormattingEnabled = true;
+            this.cmbBoost.Items.AddRange(new object[] {
+            "No Boost",
+            "Level 1",
+            "Level 2",
+            "Level 3"});
+            this.cmbBoost.Location = new System.Drawing.Point(1009, 31);
+            this.cmbBoost.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cmbBoost.Name = "cmbBoost";
+            this.cmbBoost.Size = new System.Drawing.Size(129, 28);
+            this.cmbBoost.TabIndex = 26;
+            // 
             // numEventCt
             // 
-            this.numEventCt.Location = new System.Drawing.Point(805, 28);
+            this.numEventCt.Location = new System.Drawing.Point(741, 31);
             this.numEventCt.Maximum = new decimal(new int[] {
             69,
             0,
@@ -1058,40 +1039,17 @@
             0,
             -2147483648});
             this.numEventCt.Name = "numEventCt";
-            this.numEventCt.Size = new System.Drawing.Size(138, 27);
+            this.numEventCt.Size = new System.Drawing.Size(129, 27);
             this.numEventCt.TabIndex = 28;
-            // 
-            // cmbBoost
-            // 
-            this.cmbBoost.FormattingEnabled = true;
-            this.cmbBoost.Items.AddRange(new object[] {
-            "No Boost",
-            "Level 1",
-            "Level 2",
-            "Level 3"});
-            this.cmbBoost.Location = new System.Drawing.Point(1087, 27);
-            this.cmbBoost.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cmbBoost.Name = "cmbBoost";
-            this.cmbBoost.Size = new System.Drawing.Size(138, 28);
-            this.cmbBoost.TabIndex = 26;
             // 
             // lblEventCt
             // 
             this.lblEventCt.AutoSize = true;
-            this.lblEventCt.Location = new System.Drawing.Point(708, 32);
+            this.lblEventCt.Location = new System.Drawing.Point(644, 34);
             this.lblEventCt.Name = "lblEventCt";
             this.lblEventCt.Size = new System.Drawing.Size(91, 20);
             this.lblEventCt.TabIndex = 27;
             this.lblEventCt.Text = "Event Count:";
-            // 
-            // lblSandwich
-            // 
-            this.lblSandwich.AutoSize = true;
-            this.lblSandwich.Location = new System.Drawing.Point(962, 32);
-            this.lblSandwich.Name = "lblSandwich";
-            this.lblSandwich.Size = new System.Drawing.Size(117, 20);
-            this.lblSandwich.TabIndex = 25;
-            this.lblSandwich.Text = "Sandwich Boost:";
             // 
             // cmbContent
             // 
@@ -1101,16 +1059,48 @@
             "Black",
             "Event",
             "Event-Mighty"});
-            this.cmbContent.Location = new System.Drawing.Point(550, 29);
+            this.cmbContent.Location = new System.Drawing.Point(501, 31);
             this.cmbContent.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmbContent.Name = "cmbContent";
-            this.cmbContent.Size = new System.Drawing.Size(138, 28);
+            this.cmbContent.Size = new System.Drawing.Size(129, 28);
             this.cmbContent.TabIndex = 24;
+            // 
+            // numMaxCalc
+            // 
+            this.numMaxCalc.Location = new System.Drawing.Point(282, 31);
+            this.numMaxCalc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.numMaxCalc.Maximum = new decimal(new int[] {
+            -1,
+            0,
+            0,
+            0});
+            this.numMaxCalc.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numMaxCalc.Name = "numMaxCalc";
+            this.numMaxCalc.Size = new System.Drawing.Size(129, 27);
+            this.numMaxCalc.TabIndex = 5;
+            this.numMaxCalc.Value = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            // 
+            // lblSandwich
+            // 
+            this.lblSandwich.AutoSize = true;
+            this.lblSandwich.Location = new System.Drawing.Point(886, 34);
+            this.lblSandwich.Name = "lblSandwich";
+            this.lblSandwich.Size = new System.Drawing.Size(117, 20);
+            this.lblSandwich.TabIndex = 25;
+            this.lblSandwich.Text = "Sandwich Boost:";
             // 
             // lblContent
             // 
             this.lblContent.AutoSize = true;
-            this.lblContent.Location = new System.Drawing.Point(467, 33);
+            this.lblContent.Location = new System.Drawing.Point(417, 34);
             this.lblContent.Name = "lblContent";
             this.lblContent.Size = new System.Drawing.Size(64, 20);
             this.lblContent.TabIndex = 0;
@@ -1128,34 +1118,11 @@
             // lblCalcs
             // 
             this.lblCalcs.AutoSize = true;
-            this.lblCalcs.Location = new System.Drawing.Point(216, 33);
+            this.lblCalcs.Location = new System.Drawing.Point(198, 33);
             this.lblCalcs.Name = "lblCalcs";
             this.lblCalcs.Size = new System.Drawing.Size(78, 20);
             this.lblCalcs.TabIndex = 2;
             this.lblCalcs.Text = "Max Calcs:";
-            // 
-            // numMaxCalc
-            // 
-            this.numMaxCalc.Location = new System.Drawing.Point(303, 30);
-            this.numMaxCalc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numMaxCalc.Maximum = new decimal(new int[] {
-            -1,
-            0,
-            0,
-            0});
-            this.numMaxCalc.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numMaxCalc.Name = "numMaxCalc";
-            this.numMaxCalc.Size = new System.Drawing.Size(138, 27);
-            this.numMaxCalc.TabIndex = 5;
-            this.numMaxCalc.Value = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
             // 
             // txtSeed
             // 
@@ -1163,7 +1130,7 @@
             this.txtSeed.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSeed.MaxLength = 8;
             this.txtSeed.Name = "txtSeed";
-            this.txtSeed.Size = new System.Drawing.Size(138, 27);
+            this.txtSeed.Size = new System.Drawing.Size(129, 27);
             this.txtSeed.TabIndex = 3;
             this.txtSeed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtSeed_KeyPress);
             // 
@@ -1176,7 +1143,7 @@
             this.grpSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpSearch.Name = "grpSearch";
             this.grpSearch.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpSearch.Size = new System.Drawing.Size(1235, 73);
+            this.grpSearch.Size = new System.Drawing.Size(1165, 73);
             this.grpSearch.TabIndex = 24;
             this.grpSearch.TabStop = false;
             this.grpSearch.Text = "Search";
@@ -1228,7 +1195,7 @@
             this.dataGrid.ReadOnly = true;
             this.dataGrid.RowHeadersWidth = 51;
             this.dataGrid.RowTemplate.Height = 25;
-            this.dataGrid.Size = new System.Drawing.Size(1235, 755);
+            this.dataGrid.Size = new System.Drawing.Size(1165, 716);
             this.dataGrid.TabIndex = 23;
             this.dataGrid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGrid_MouseUp);
             // 
@@ -1275,7 +1242,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1606, 1007);
+            this.ClientSize = new System.Drawing.Size(1540, 964);
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.grpSearch);
             this.Controls.Add(this.grpSettings);
@@ -1292,7 +1259,6 @@
             this.grpEncounter.PerformLayout();
             this.grpItems.ResumeLayout(false);
             this.grpItems.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown21)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).EndInit();
@@ -1422,9 +1388,6 @@
         public TextBox txtTID;
         public CheckBox chkAccurateSearch;
         public ComboBox cmbContent;
-        private NumericUpDown numericUpDown21;
-        private Label label29;
-        private ComboBox comboBox21;
         private GroupBox grpEncounter;
         private ComboBox cmbStars;
         private Label lblStars;
