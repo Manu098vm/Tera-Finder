@@ -208,21 +208,23 @@ namespace TeraFinder
                     0 => PersonalInfo.RatioMagicMale,
                     1 => PersonalInfo.RatioMagicFemale,
                     2 => PersonalInfo.RatioMagicGenderless,
-                    _ => (byte)PersonalTable.SV.GetFormEntry(enc.Species, enc.Form).Gender,
+                    _ => PersonalTable.SV.GetFormEntry(enc.Species, enc.Form).Gender,
                 };
             }
-            return (byte)PersonalTable.SV.GetFormEntry(enc.Species, enc.Form).Gender;
+            return PersonalTable.SV.GetFormEntry(enc.Species, enc.Form).Gender;
         }
 
         public static TeraDetails CalcRNG(uint seed, uint tid, uint sid, RaidContent content, EncounterRaid9 encounter, ulong calc = 0)
         {
             var param = new GenerateParam9
             {
-                GenderRatio = TeraUtil.GetGender(encounter, content is RaidContent.Event_Mighty),
+                Species = encounter.Species,
+                GenderRatio = GetGender(encounter, content is RaidContent.Event_Mighty),
                 FlawlessIVs = encounter.FlawlessIVCount,
                 RollCount = 1,
                 Height = 0,
                 Weight = 0,
+                ScaleType = encounter.ScaleType,
                 Scale = encounter.Scale,
                 Ability = encounter.Ability,
                 Shiny = encounter.Shiny,

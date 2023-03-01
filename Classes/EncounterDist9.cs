@@ -15,6 +15,11 @@ public sealed record EncounterDist9 : EncounterStatic, ITeraRaid9
     public byte Stars { get; private init; }
     public byte RandRate { get; private init; } // weight chance of this encounter
 
+    /// <summary> Indicates how the <see cref="Scale"/> value is used, if at all. </summary>
+    public SizeType9 ScaleType { get; private init; }
+    /// <summary>  Used only for <see cref="ScaleType"/> == <see cref="SizeType9.VALUE"/> </summary>
+    public byte Scale { get; private init; }
+
     public uint Identifier { get; private init; }
     public ulong FixedRewardHash { get; private init; }
     public ulong LotteryRewardHash { get; private init; }
@@ -155,7 +160,7 @@ public sealed record EncounterDist9 : EncounterStatic, ITeraRaid9
 
     private EncounterDist9() : base(GameVersion.SV) { }
 
-    private const int SerializedSize = WeightStart + (sizeof(ushort) * 2 * 2 * 4) + (sizeof(uint) * 2) + (sizeof(ulong) * 2);
+    private const int SerializedSize = WeightStart + (sizeof(ushort) * 2 * 2 * 4) + (sizeof(uint) * 2) + (sizeof(ulong) * 2) + (sizeof(byte) * 2);
     private const int WeightStart = 0x14;
     private static EncounterDist9 ReadEncounter(ReadOnlySpan<byte> data) => new()
     {
@@ -199,7 +204,10 @@ public sealed record EncounterDist9 : EncounterStatic, ITeraRaid9
         Identifier = (uint)Math.Truncate((double)(ReadUInt32LittleEndian(data[(WeightStart + (sizeof(ushort) * 16))..]) / 100)),
         FixedRewardHash = ReadUInt64LittleEndian(data[(WeightStart + (sizeof(ushort) * 16) + sizeof(uint))..]),
         LotteryRewardHash = ReadUInt64LittleEndian(data[(WeightStart + (sizeof(ushort) * 16) + sizeof(uint) + sizeof(ulong))..]),
-        Item = ReadUInt32LittleEndian(data[(WeightStart + (sizeof(ushort) * 16) + sizeof(uint) + sizeof(ulong) + sizeof(ulong))..]),
+        Item = ReadUInt32LittleEndian(data[(WeightStart + (sizeof(ushort) * 16) + sizeof(uint) + (sizeof(ulong) * 2))..]),
+
+        ScaleType = (SizeType9)data[WeightStart +(sizeof(ushort) * 16) + (sizeof(uint) * 2) + (sizeof(ulong) * 2)],
+        Scale = data[WeightStart + (sizeof(ushort) * 16) + (sizeof(uint) * 2) + (sizeof(ulong) * 2) + sizeof(byte)],
     };
 
     private static AbilityPermission GetAbility(byte b) => b switch
@@ -249,7 +257,7 @@ public sealed record EncounterDist9 : EncounterStatic, ITeraRaid9
             return true;
 
         var pi = PersonalTable.SV.GetFormEntry(Species, Form);
-        var param = new GenerateParam9(Species, pi.Gender, FlawlessIVCount, 1, 0, 0, 0, 0, Ability, Shiny);
+        var param = new GenerateParam9(Species, pi.Gender, FlawlessIVCount, 1, 0, 0, ScaleType, Scale, Ability, Shiny);
         if (!Encounter9RNG.IsMatch(pk, param, seed))
             return true;
         return base.IsMatchPartial(pk);
@@ -270,7 +278,7 @@ public sealed record EncounterDist9 : EncounterStatic, ITeraRaid9
         const byte undefinedSize = 0;
         var pi = PersonalTable.SV.GetFormEntry(Species, Form);
         var param = new GenerateParam9(Species, pi.Gender, FlawlessIVCount, rollCount,
-            undefinedSize, undefinedSize, undefinedSize, undefinedSize,
+            undefinedSize, undefinedSize, ScaleType, Scale,
             Ability, Shiny);
 
         var init = Util.Rand.Rand64();

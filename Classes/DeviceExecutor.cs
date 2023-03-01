@@ -93,15 +93,12 @@ namespace TeraFinder
             return GameProgress.UnlockedTeraRaids;
         }
 
-        public async Task<byte[]> ReadDecryptedBlock(DataBlock block, int size, CancellationToken token)
+        public async Task<byte[]?> ReadBlock(DataBlock block, CancellationToken token)
         {
-            if (!Connection.Connected)
-                throw new InvalidOperationException("No remote connection");
-
-            Log($"Reading decrypted block {block.Key:X8}...");
-            var data = await SwitchConnection.PointerPeek(size, block.Pointer!, token).ConfigureAwait(false);
-            Log("Done");
-            return data;
+            if (block.IsEncrypted)
+                return await ReadEncryptedBlock(block, token).ConfigureAwait(false);
+            else
+                return await ReadDecryptedBlock(block, token).ConfigureAwait(false);
         }
 
         public async Task WriteDecryptedBlock(byte[] data, DataBlock block, CancellationToken token)
@@ -114,11 +111,22 @@ namespace TeraFinder
             Log("Done");
         }
 
+        private async Task<byte[]> ReadDecryptedBlock(DataBlock block, CancellationToken token)
+        {
+            if (!Connection.Connected)
+                throw new InvalidOperationException("No remote connection");
+
+            Log($"Reading decrypted block {block.Key:X8}...");
+            var data = await SwitchConnection.PointerPeek(block.Size, block.Pointer!, token).ConfigureAwait(false);
+            Log("Done");
+            return data;
+        }
+
         //Thanks to Lincoln-LM (original scblock code) and Architdate (ported C# reference code)!!
         //https://github.com/Lincoln-LM/sv-live-map/blob/e0f4a30c72ef81f1dc175dae74e2fd3d63b0e881/sv_live_map_core/nxreader/raid_reader.py#L168
         //https://github.com/LegoFigure11/RaidCrawler/blob/2e1832ae89e5ac39dcc25ccf2ae911ef0f634580/MainWindow.cs#L199
 
-        public async Task<byte[]?> ReadEncryptedBlock(DataBlock block, CancellationToken token)
+        private async Task<byte[]?> ReadEncryptedBlock(DataBlock block, CancellationToken token)
         {
             if (!Connection.Connected)
                 throw new InvalidOperationException("No remote connection");
@@ -134,7 +142,7 @@ namespace TeraFinder
             return res;
         }
 
-        public async Task<byte[]> ReadEncryptedBlock(DataBlock block, int size, CancellationToken token)
+        private async Task<byte[]> ReadEncryptedBlock(DataBlock block, int size, CancellationToken token)
         {
             if (!Connection.Connected)
                 throw new InvalidOperationException("No remote connection");

@@ -141,6 +141,7 @@ EditorForm.lblNature=Natura:
 EditorForm.lblShiny=Shiny:
 EditorForm.lblGender=Genere:
 EditorForm.btnRewards=Rewards
+EditorForm.lblScale=Scala:
 EditorForm.grpMoves=Mosse
 EditorForm.txtMove1=Nullo
 EditorForm.txtMove2=Nullo
