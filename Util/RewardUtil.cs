@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using NLog;
 using PKHeX.Core;
 
 namespace TeraFinder

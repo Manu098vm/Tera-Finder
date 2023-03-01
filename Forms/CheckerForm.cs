@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using System.Security.Cryptography;
 
 namespace TeraFinder.Forms
 {
