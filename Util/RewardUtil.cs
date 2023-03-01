@@ -244,6 +244,8 @@ namespace TeraFinder
                 Species.Toedscool or Species.Toedscruel => 2158,
                 Species.Wooper or Species.Quagsire or Species.Clodsire => 2159,
 
+                Species.WalkingWake or Species.IronLeaves => 0,
+
                 _ => ushort.MaxValue,
             };
         }
