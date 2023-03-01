@@ -37,7 +37,6 @@
             this.radioWiFi = new System.Windows.Forms.RadioButton();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.btnConnect = new System.Windows.Forms.Button();
-            this.chkEventData = new System.Windows.Forms.CheckBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnDisconnect = new System.Windows.Forms.Button();
             this.grpDevice.SuspendLayout();
@@ -133,23 +132,13 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(10, 157);
+            this.btnConnect.Location = new System.Drawing.Point(12, 126);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(356, 52);
             this.btnConnect.TabIndex = 1;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
-            // 
-            // chkEventData
-            // 
-            this.chkEventData.AutoSize = true;
-            this.chkEventData.Location = new System.Drawing.Point(21, 127);
-            this.chkEventData.Name = "chkEventData";
-            this.chkEventData.Size = new System.Drawing.Size(289, 24);
-            this.chkEventData.TabIndex = 2;
-            this.chkEventData.Text = "Download Event Data from Remote (?)";
-            this.chkEventData.UseVisualStyleBackColor = true;
             // 
             // toolTip
             // 
@@ -162,7 +151,7 @@
             // btnDisconnect
             // 
             this.btnDisconnect.Enabled = false;
-            this.btnDisconnect.Location = new System.Drawing.Point(12, 215);
+            this.btnDisconnect.Location = new System.Drawing.Point(14, 184);
             this.btnDisconnect.Name = "btnDisconnect";
             this.btnDisconnect.Size = new System.Drawing.Size(354, 52);
             this.btnDisconnect.TabIndex = 3;
@@ -174,9 +163,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(375, 275);
+            this.ClientSize = new System.Drawing.Size(375, 245);
             this.Controls.Add(this.btnDisconnect);
-            this.Controls.Add(this.chkEventData);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.grpDevice);
             this.MaximizeBox = false;
@@ -188,7 +176,6 @@
             this.grpDevice.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -202,7 +189,6 @@
         private TextBox txtAddress;
         private Button btnConnect;
         private NumericUpDown numPort;
-        private CheckBox chkEventData;
         private ToolTip toolTip;
         private Button btnDisconnect;
     }
