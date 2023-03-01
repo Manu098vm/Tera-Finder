@@ -50,7 +50,7 @@ namespace TeraFinder
             Name = "KBCATFixedRewardItemArray",
             Key = 0x7D6C2B82,
             Type = SCTypeCode.Object,
-            Pointer = new long[] { 0x44CC800, 0x268, 0xE2C0, 0x0, 0x48, 0x10, 0x1C8, 0x0 },
+            Pointer = new long[] { 0x44CCA68, 0x160, 0x6C68, 0x0 },
             IsEncrypted = false,
             Size = 0x6B40,
         };
@@ -60,7 +60,7 @@ namespace TeraFinder
             Name = "KBCATLotteryRewardItemArray",
             Key = 0xA52B4811,
             Type = SCTypeCode.Object,
-            Pointer = new long[] { 0x44CC800, 0x268, 0x67B0, 0x0, 0x108, 0x10, 0x1C8, 0x0 },
+            Pointer = new long[] { 0x44CCA68, 0x160, 0x6CA0, 0x0 },
             IsEncrypted = false,
             Size = 0xD0D8,
         };
@@ -80,7 +80,7 @@ namespace TeraFinder
             Name = "KBCATRaidPriorityArray",
             Key = 0x095451E4,
             Type = SCTypeCode.Object,
-            Pointer = new long[] { 0x44CCA68, 0x140, 0xB0 },
+            Pointer = new long[] { 0x44CCA68, 0x160, 0x6CD8, 0x0 },
             IsEncrypted = false,
             Size = 0x58,
         };
