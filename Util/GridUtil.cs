@@ -221,9 +221,21 @@ namespace TeraFinder
                                 }
                         }
 
+                        //OT Name for Jap and Kor max 6 char
                         if (!la.Valid)
                         {
-                            if (la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault() is not null && content is RaidContent.Event or RaidContent.Event_Mighty)
+                            var la_ot = la.Results.Where(l => l.Identifier is CheckIdentifier.Trainer).FirstOrDefault();
+                            if(la_ot is not null && !la_ot.Valid)
+                            {
+                                template.OT_Name = "TF";
+                                la = new LegalityAnalysis(template);
+                            }
+                        }
+
+                        if (!la.Valid)
+                        {
+                            var la_encounter = la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault();
+                            if (la_encounter is not null && !la_encounter.Valid && content is RaidContent.Event or RaidContent.Event_Mighty)
                                 MessageBox.Show($"{strings["GridUtil.ErrorParsing"]}\n{strings["GridUtil.MissingData"]} [{encounter!.Identifier}].\n{strings["GridUtil.CheckWiki"]}");
                             else
                                 MessageBox.Show($"{strings["GridUtil.ErrorParsing"]} {strings["GridUtil.Report"]}\n{la.Report()}");
