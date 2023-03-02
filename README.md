@@ -1,5 +1,5 @@
 # Tera Finder
-![immagine](https://user-images.githubusercontent.com/52102823/215150829-64a5fc71-0fba-4f20-938b-25988168f8c9.png)
+![terafinder_140](https://user-images.githubusercontent.com/52102823/222451258-136310eb-e277-4b9b-8e02-47f9b411767b.png)
 
 This is a PKHeX.Core based program that allows to view, edit and calculate Raids for Scarlet & Violet. This is the spiritual sequel of my [SVXoroCalc](https://github.com/Manu098vm/SVResearches).
 Both a standalone program and a PKHeX plugin are available for use.
