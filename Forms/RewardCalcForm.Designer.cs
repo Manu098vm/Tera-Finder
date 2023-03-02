@@ -1029,7 +1029,7 @@
             // 
             this.numEventCt.Location = new System.Drawing.Point(741, 31);
             this.numEventCt.Maximum = new decimal(new int[] {
-            69,
+            10,
             0,
             0,
             0});
@@ -1047,9 +1047,9 @@
             this.lblEventCt.AutoSize = true;
             this.lblEventCt.Location = new System.Drawing.Point(644, 34);
             this.lblEventCt.Name = "lblEventCt";
-            this.lblEventCt.Size = new System.Drawing.Size(91, 20);
+            this.lblEventCt.Size = new System.Drawing.Size(88, 20);
             this.lblEventCt.TabIndex = 27;
-            this.lblEventCt.Text = "Event Count:";
+            this.lblEventCt.Text = "Event Index:";
             // 
             // cmbContent
             // 

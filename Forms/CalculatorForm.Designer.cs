@@ -157,7 +157,7 @@
             // 
             this.numEventCt.Location = new System.Drawing.Point(119, 130);
             this.numEventCt.Maximum = new decimal(new int[] {
-            69,
+            10,
             0,
             0,
             0});
@@ -173,16 +173,16 @@
             // lblEventct
             // 
             this.lblEventct.AutoSize = true;
-            this.lblEventct.Location = new System.Drawing.Point(26, 132);
+            this.lblEventct.Location = new System.Drawing.Point(16, 132);
             this.lblEventct.Name = "lblEventct";
-            this.lblEventct.Size = new System.Drawing.Size(91, 20);
+            this.lblEventct.Size = new System.Drawing.Size(88, 20);
             this.lblEventct.TabIndex = 10;
-            this.lblEventct.Text = "Event Count:";
+            this.lblEventct.Text = "Event Index:";
             // 
             // showresults
             // 
             this.showresults.AutoSize = true;
-            this.showresults.Location = new System.Drawing.Point(26, 164);
+            this.showresults.Location = new System.Drawing.Point(25, 164);
             this.showresults.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.showresults.Name = "showresults";
             this.showresults.Size = new System.Drawing.Size(160, 24);
@@ -215,10 +215,10 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(26, 191);
+            this.btnSearch.Location = new System.Drawing.Point(16, 191);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(267, 45);
+            this.btnSearch.Size = new System.Drawing.Size(277, 45);
             this.btnSearch.TabIndex = 5;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -227,7 +227,7 @@
             // lblFrames
             // 
             this.lblFrames.AutoSize = true;
-            this.lblFrames.Location = new System.Drawing.Point(26, 64);
+            this.lblFrames.Location = new System.Drawing.Point(16, 65);
             this.lblFrames.Name = "lblFrames";
             this.lblFrames.Size = new System.Drawing.Size(78, 20);
             this.lblFrames.TabIndex = 1;
@@ -236,7 +236,7 @@
             // lblContent
             // 
             this.lblContent.AutoSize = true;
-            this.lblContent.Location = new System.Drawing.Point(26, 96);
+            this.lblContent.Location = new System.Drawing.Point(16, 98);
             this.lblContent.Name = "lblContent";
             this.lblContent.Size = new System.Drawing.Size(64, 20);
             this.lblContent.TabIndex = 2;
@@ -270,7 +270,7 @@
             // lblSeed
             // 
             this.lblSeed.AutoSize = true;
-            this.lblSeed.Location = new System.Drawing.Point(26, 32);
+            this.lblSeed.Location = new System.Drawing.Point(16, 31);
             this.lblSeed.Name = "lblSeed";
             this.lblSeed.Size = new System.Drawing.Size(45, 20);
             this.lblSeed.TabIndex = 1;

@@ -61,7 +61,7 @@ CalculatorForm.btnSave=將所選結果轉儲為TXT
 CalculatorForm.btnSavePk9=將所選結果另存為PK9
 CalculatorForm.btnToPkmEditor=將所選結果發送到PKM編輯器
 CalculatorForm.btnSendToEditor=將所選結果發送到Raid編輯器
-CalculatorForm.lblEventct=Event Count:
+CalculatorForm.lblEventct=Event Index:
 
 RewardCalcForm=獎勵計算器
 RewardCalcForm.grpFilters=篩選器
@@ -90,7 +90,7 @@ RewardCalcForm.btnSearch=搜索
 RewardCalcForm.btnSaveAllTxt=將所有結果轉儲為TXT
 RewardCalcForm.btnSaveSelectedTxt=將所選結果轉儲為TXT
 RewardCalcForm.btnSendSelectedRaid=將所選結果發送到Raid編輯器
-RewardCalcForm.lblEventCt=Event Count:
+RewardCalcForm.lblEventCt=Event Index:
 
 CheckerForm=Seed檢索器
 CheckerForm.lblTID=表ID:

@@ -63,7 +63,9 @@ namespace TeraFinder.Forms
             if (!IsBlankSAV()) grpProfile.Enabled = false;
             txtSeed.Text = Editor.txtSeed.Text;
             cmbContent.SelectedIndex = Editor.cmbContent.SelectedIndex;
-            numEventCt.Value = cmbContent.SelectedIndex >= 2 ? TeraUtil.GetEventCount(Editor.SAV.Raid, Editor.cmbDens.SelectedIndex) : -1;
+            var content = (RaidContent)cmbContent.SelectedIndex;
+            numEventCt.Value = content >= RaidContent.Event ? TeraUtil.GetDeliveryGroupID(Editor.SAV, Editor.Progress, content,
+                content is RaidContent.Event_Mighty ? Editor.Mighty : Editor.Dist, Editor.cmbDens.SelectedIndex) : -1;
             cmbBoost.SelectedIndex = 0;
 
             toolTip.SetToolTip(chkAccurateSearch, Strings["ToolTipAccurate"]);
@@ -388,8 +390,6 @@ namespace TeraFinder.Forms
             var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
             var lang = (LanguageID)Editor.SAV.Language;
 
-            var groupid = TeraUtil.GetDeliveryGroupID(Editor.SAV, progress, content, content is RaidContent.Event_Mighty ? Editor.Mighty : Editor.Dist, -1, (int)numEventCt.Value);
-
             await Task.Run(() =>
             {
                 var nthreads = (uint)numMaxCalc.Value < 1000 ? 1 : Environment.ProcessorCount;
@@ -416,7 +416,7 @@ namespace TeraFinder.Forms
 
                         for (ulong i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
                         {
-                            var res = CalcResult(tseed, progress, sav, content, i, chkAccurateSearch.Checked, boost, groupid);
+                            var res = CalcResult(tseed, progress, sav, content, i, chkAccurateSearch.Checked, boost, (int)numEventCt.Value);
                             if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
                             {
                                 tmpgridlist.Add(new RewardGridEntry(res, Items, SpeciesNames, ShinyNames, Editor.Language));
