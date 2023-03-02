@@ -23,7 +23,6 @@ namespace TeraFinder.Forms
             numPort.Value = Settings.Default.port;
             if (Settings.Default.protocol)
                 radioUSB.Checked = true;
-            toolTip.SetToolTip(chkEventData, Strings["ToolTipSyncEvent"]);
         }
 
         private void GenerateDictionary()
@@ -54,7 +53,6 @@ namespace TeraFinder.Forms
             EnableConnectButton(Strings["ActionConnect"]);
             DisableDisconnectButton();
             EnableGrpDevice();
-            EnableCheckEvent();
         }
 
         private async void btnConnect_Click(object sender, EventArgs e)
@@ -62,7 +60,6 @@ namespace TeraFinder.Forms
             Connected = false;
             DisableConnectButton();
             DisableDisconnectButton();
-            DisableCheckEvent();
             DisableGrpDevice();
             var token = new CancellationToken();
 
@@ -110,16 +107,13 @@ namespace TeraFinder.Forms
                 raidblock.ChangeData(await Executor.ReadBlock(Blocks.KTeraRaids, token).ConfigureAwait(false));
                 var progress = await Executor.ReadGameProgress(token).ConfigureAwait(false);
                 ProgressForm.EditProgress(SAV, progress);
-
-                if (chkEventData.Checked)
-                    await DownloadEventData().ConfigureAwait(false);
+                await DownloadEventData().ConfigureAwait(false);
 
                 MessageBox.Show(Strings["ConnectionSuccess"]);
                 Log($"{Strings["ExecutorConnected"]} {version} - {SAV.OT} ({SAV.TrainerTID7}) [{progress}]");
                 EnableConnectButton(Strings["ActionConnected"]);
                 EnableDisconnectButton();
                 EnableGrpDevice();
-                EnableCheckEvent();
                 SafeClose();
             }
             catch (Exception ex)
@@ -257,30 +251,6 @@ namespace TeraFinder.Forms
             }
         }
 
-        private void EnableCheckEvent()
-        {
-            if(chkEventData.InvokeRequired)
-            {
-                chkEventData.Invoke(() => { chkEventData.Enabled = true; });
-            }
-            else
-            {
-                chkEventData.Enabled = true;
-            }
-        }
-
-        private void DisableCheckEvent()
-        {
-            if (chkEventData.InvokeRequired)
-            {
-                chkEventData.Invoke(() => { chkEventData.Enabled = false; });
-            }
-            else
-            {
-                chkEventData.Enabled = false;
-            }
-        }
-
         private void SafeClose()
         {
             if (InvokeRequired)
@@ -316,7 +286,6 @@ namespace TeraFinder.Forms
             DisableConnectButton();
             DisableDisconnectButton();
             DisableGrpDevice();
-            DisableCheckEvent();
             Disconnect();
             MessageBox.Show(Strings["DisconnectionSuccess"]);
         }

@@ -161,7 +161,7 @@ namespace TeraFinder
             return null;
         }
 
-        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, int groupid = -1)
+        public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, int groupid = -2)
         {
             var game = (GameVersion)sav.Game;
             var p = progress switch
@@ -174,7 +174,7 @@ namespace TeraFinder
 
             foreach (var encounter in encounters)
             {
-                if (groupid != -1 && encounter.Index != groupid)
+                if (groupid != -2 && encounter.Index != groupid)
                     continue;
                 var max = game is GameVersion.SL ? encounter.GetRandRateTotalScarlet(p) : encounter.GetRandRateTotalViolet(p);
                 var min = game is GameVersion.SL ? encounter.GetRandRateMinScarlet(p) : encounter.GetRandRateMinViolet(p);
