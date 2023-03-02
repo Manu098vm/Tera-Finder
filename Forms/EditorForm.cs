@@ -103,6 +103,7 @@ namespace TeraFinder
                 { "EditorForm.lblNature", "Nature:" },
                 { "EditorForm.lblShiny", "Shiny:" },
                 { "EditorForm.lblGender", "Gender:" },
+                { "EditorForm.lblIndex", "Event Index:" },
                 { "EditorForm.txtMove1", "None" },
                 { "EditorForm.txtMove2", "None" },
                 { "EditorForm.txtMove3", "None" },
@@ -327,6 +328,7 @@ namespace TeraFinder
                     lblAbility.Text = $"{Strings["EditorForm.lblAbility"]} {GameInfo.GetStrings(Language).abilitylist[rngres.Ability]}";
                     lblShiny.Text = $"{Strings["EditorForm.lblShiny"]} {rngres.Shiny}";
                     lblGender.Text = $"{Strings["EditorForm.lblGender"]} {GameInfo.GenderSymbolUnicode[(int)rngres.Gender]}";
+                    lblIndex.Text = $"{Strings["EditorForm.lblIndex"]} {groupid}";
                     txtHP.Text = $"{rngres.HP}";
                     txtAtk.Text = $"{rngres.ATK}";
                     txtDef.Text = $"{rngres.DEF}";
@@ -362,6 +364,7 @@ namespace TeraFinder
             lblAbility.Text = $"{Strings["EditorForm.lblAbility"]}";
             lblShiny.Text = $"{Strings["EditorForm.lblShiny"]}";
             lblGender.Text = $"{Strings["EditorForm.lblGender"]}";
+            lblIndex.Text = $"{Strings["EditorForm.lblIndex"]}";
             txtHP.Text = $"";
             txtAtk.Text = $"";
             txtDef.Text = $"";

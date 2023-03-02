@@ -155,7 +155,7 @@ namespace TeraFinder
                         var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
                         var content = GetContent(seed, selectedRows.ElementAt(0), f);
                         var progress = GetProgress(seed, selectedRows.ElementAt(0), f);
-                        var groupid = TeraUtil.GetDeliveryGroupID(f.Editor.SAV, progress, content, content is RaidContent.Event_Mighty ? f.Editor.Mighty : f.Editor.Dist, -1, (int)f.numEventCt.Value);
+                        var groupid = (int)f.numEventCt.Value;
 
                         var sav = (SAV9SV)f.Editor.SAV.Clone();
                         sav.Game = (int)GetGameVersion(seed, selectedRows.ElementAt(0), f);
@@ -401,7 +401,7 @@ namespace TeraFinder
                         var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
                         var content = GetContent(seed, selectedRows.ElementAt(0), f);
                         var progress = GetProgress(seed, selectedRows.ElementAt(0), f);
-                        var groupid = TeraUtil.GetDeliveryGroupID(f.Editor.SAV, progress, content, content is RaidContent.Event_Mighty ? f.Editor.Mighty : f.Editor.Dist, -1, (int)f.numEventCt.Value);
+                        var groupid = (int)f.numEventCt.Value;
 
                         var sav = (SAV9SV)f.Editor.SAV.Clone();
                         sav.Game = (int)GetGameVersion(seed, selectedRows.ElementAt(0), f);
