@@ -83,8 +83,17 @@ namespace TeraFinder
         public static DeliveryRaidPriority? GetDeliveryPriority(PKHeX.Core.SAV9SV sav)
         {
             var KBCATRaidPriorityArray = sav.Accessor.FindOrDefault(Blocks.KBCATRaidPriorityArray.Key);
-            if(KBCATRaidPriorityArray.Type is not PKHeX.Core.SCTypeCode.None && KBCATRaidPriorityArray.Data.Length > 0)
-                return FlatBufferConverter.DeserializeFrom<DeliveryRaidPriorityArray>(KBCATRaidPriorityArray.Data).Table.First();
+            if (KBCATRaidPriorityArray.Type is not PKHeX.Core.SCTypeCode.None && KBCATRaidPriorityArray.Data.Length > 0)
+            {
+                try
+                {
+                    return FlatBufferConverter.DeserializeFrom<DeliveryRaidPriorityArray>(KBCATRaidPriorityArray.Data).Table.First();
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
             return null;
         }
 

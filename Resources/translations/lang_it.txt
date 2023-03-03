@@ -142,6 +142,7 @@ EditorForm.lblShiny=Shiny:
 EditorForm.lblGender=Genere:
 EditorForm.btnRewards=Rewards
 EditorForm.lblScale=Scala:
+EditorForm.lblIndex=Indice Evento:
 EditorForm.grpMoves=Mosse
 EditorForm.txtMove1=Nullo
 EditorForm.txtMove2=Nullo

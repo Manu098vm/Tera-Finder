@@ -38,6 +38,7 @@
             this.lblSeed = new System.Windows.Forms.Label();
             this.chkLP = new System.Windows.Forms.CheckBox();
             this.grpPkmInfo = new System.Windows.Forms.GroupBox();
+            this.lblIndex = new System.Windows.Forms.Label();
             this.grpMoves = new System.Windows.Forms.GroupBox();
             this.txtMove4 = new System.Windows.Forms.TextBox();
             this.txtMove2 = new System.Windows.Forms.TextBox();
@@ -172,6 +173,7 @@
             // 
             // grpPkmInfo
             // 
+            this.grpPkmInfo.Controls.Add(this.lblIndex);
             this.grpPkmInfo.Controls.Add(this.grpMoves);
             this.grpPkmInfo.Controls.Add(this.txtScale);
             this.grpPkmInfo.Controls.Add(this.lblScale);
@@ -203,6 +205,15 @@
             this.grpPkmInfo.TabIndex = 3;
             this.grpPkmInfo.TabStop = false;
             this.grpPkmInfo.Text = "Pokémon Info";
+            // 
+            // lblIndex
+            // 
+            this.lblIndex.AutoSize = true;
+            this.lblIndex.Location = new System.Drawing.Point(114, 221);
+            this.lblIndex.Name = "lblIndex";
+            this.lblIndex.Size = new System.Drawing.Size(88, 20);
+            this.lblIndex.TabIndex = 24;
+            this.lblIndex.Text = "Event Index:";
             // 
             // grpMoves
             // 
@@ -307,7 +318,7 @@
             // lblSpecies
             // 
             this.lblSpecies.AutoSize = true;
-            this.lblSpecies.Location = new System.Drawing.Point(114, 23);
+            this.lblSpecies.Location = new System.Drawing.Point(114, 26);
             this.lblSpecies.Name = "lblSpecies";
             this.lblSpecies.Size = new System.Drawing.Size(62, 20);
             this.lblSpecies.TabIndex = 18;
@@ -316,7 +327,7 @@
             // lblTera
             // 
             this.lblTera.AutoSize = true;
-            this.lblTera.Location = new System.Drawing.Point(114, 89);
+            this.lblTera.Location = new System.Drawing.Point(114, 91);
             this.lblTera.Name = "lblTera";
             this.lblTera.Size = new System.Drawing.Size(71, 20);
             this.lblTera.TabIndex = 17;
@@ -325,7 +336,7 @@
             // lblShiny
             // 
             this.lblShiny.AutoSize = true;
-            this.lblShiny.Location = new System.Drawing.Point(114, 155);
+            this.lblShiny.Location = new System.Drawing.Point(114, 157);
             this.lblShiny.Name = "lblShiny";
             this.lblShiny.Size = new System.Drawing.Size(51, 20);
             this.lblShiny.TabIndex = 16;
@@ -334,7 +345,7 @@
             // lblAbility
             // 
             this.lblAbility.AutoSize = true;
-            this.lblAbility.Location = new System.Drawing.Point(114, 57);
+            this.lblAbility.Location = new System.Drawing.Point(114, 59);
             this.lblAbility.Name = "lblAbility";
             this.lblAbility.Size = new System.Drawing.Size(59, 20);
             this.lblAbility.TabIndex = 15;
@@ -343,7 +354,7 @@
             // lblNature
             // 
             this.lblNature.AutoSize = true;
-            this.lblNature.Location = new System.Drawing.Point(114, 122);
+            this.lblNature.Location = new System.Drawing.Point(114, 124);
             this.lblNature.Name = "lblNature";
             this.lblNature.Size = new System.Drawing.Size(61, 20);
             this.lblNature.TabIndex = 14;
@@ -352,7 +363,7 @@
             // lblGender
             // 
             this.lblGender.AutoSize = true;
-            this.lblGender.Location = new System.Drawing.Point(114, 187);
+            this.lblGender.Location = new System.Drawing.Point(114, 189);
             this.lblGender.Name = "lblGender";
             this.lblGender.Size = new System.Drawing.Size(60, 20);
             this.lblGender.TabIndex = 13;
@@ -418,7 +429,7 @@
             // lblHP
             // 
             this.lblHP.AutoSize = true;
-            this.lblHP.Location = new System.Drawing.Point(15, 29);
+            this.lblHP.Location = new System.Drawing.Point(15, 26);
             this.lblHP.Name = "lblHP";
             this.lblHP.Size = new System.Drawing.Size(31, 20);
             this.lblHP.TabIndex = 6;
@@ -467,7 +478,7 @@
             // txtHP
             // 
             this.txtHP.Enabled = false;
-            this.txtHP.Location = new System.Drawing.Point(61, 19);
+            this.txtHP.Location = new System.Drawing.Point(61, 23);
             this.txtHP.Name = "txtHP";
             this.txtHP.Size = new System.Drawing.Size(31, 27);
             this.txtHP.TabIndex = 0;
@@ -610,5 +621,6 @@
         private TextBox txtScale;
         private Label lblScale;
         private GroupBox grpMap;
+        private Label lblIndex;
     }
 }
