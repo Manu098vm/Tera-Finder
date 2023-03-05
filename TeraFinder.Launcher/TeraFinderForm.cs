@@ -86,6 +86,10 @@ namespace TeraFinder.Launcher
                     this.Text += TeraPlugin.Version;
                     txtSAV.Text = GetGameString();
                 }
+                else if (!Connection.IsConnected())
+                {
+                    btnLoad.Enabled = true;
+                }
             }
             else
             {
