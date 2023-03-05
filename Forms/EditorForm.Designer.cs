@@ -29,551 +29,545 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditorForm));
-            this.cmbDens = new System.Windows.Forms.ComboBox();
-            this.GrpRaidInfo = new System.Windows.Forms.GroupBox();
-            this.lblContent = new System.Windows.Forms.Label();
-            this.cmbContent = new System.Windows.Forms.ComboBox();
-            this.chkActive = new System.Windows.Forms.CheckBox();
-            this.txtSeed = new System.Windows.Forms.TextBox();
-            this.lblSeed = new System.Windows.Forms.Label();
-            this.chkLP = new System.Windows.Forms.CheckBox();
-            this.grpPkmInfo = new System.Windows.Forms.GroupBox();
-            this.lblIndex = new System.Windows.Forms.Label();
-            this.grpMoves = new System.Windows.Forms.GroupBox();
-            this.txtMove4 = new System.Windows.Forms.TextBox();
-            this.txtMove2 = new System.Windows.Forms.TextBox();
-            this.txtMove3 = new System.Windows.Forms.TextBox();
-            this.txtMove1 = new System.Windows.Forms.TextBox();
-            this.lblLevel = new System.Windows.Forms.Label();
-            this.btnRewards = new System.Windows.Forms.Button();
-            this.lblScale = new System.Windows.Forms.Label();
-            this.lblStarSymbols = new System.Windows.Forms.Label();
-            this.lblSpecies = new System.Windows.Forms.Label();
-            this.txtScale = new System.Windows.Forms.TextBox();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.lblAbility = new System.Windows.Forms.Label();
-            this.lblHP = new System.Windows.Forms.Label();
-            this.lblTera = new System.Windows.Forms.Label();
-            this.txtSpe = new System.Windows.Forms.TextBox();
-            this.txtSpD = new System.Windows.Forms.TextBox();
-            this.lblShiny = new System.Windows.Forms.Label();
-            this.txtSpA = new System.Windows.Forms.TextBox();
-            this.lblNature = new System.Windows.Forms.Label();
-            this.txtDef = new System.Windows.Forms.TextBox();
-            this.lblSpe = new System.Windows.Forms.Label();
-            this.lblSpD = new System.Windows.Forms.Label();
-            this.lblSpA = new System.Windows.Forms.Label();
-            this.lblGender = new System.Windows.Forms.Label();
-            this.lblDef = new System.Windows.Forms.Label();
-            this.lblAtk = new System.Windows.Forms.Label();
-            this.txtAtk = new System.Windows.Forms.TextBox();
-            this.txtHP = new System.Windows.Forms.TextBox();
-            this.btnOpenCalculator = new System.Windows.Forms.Button();
-            this.btnDx = new System.Windows.Forms.Button();
-            this.btnSx = new System.Windows.Forms.Button();
-            this.btnOpenRewardCalculator = new System.Windows.Forms.Button();
-            this.imgMap = new System.Windows.Forms.PictureBox();
-            this.grpMap = new System.Windows.Forms.GroupBox();
-            this.GrpRaidInfo.SuspendLayout();
-            this.grpPkmInfo.SuspendLayout();
-            this.grpMoves.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgMap)).BeginInit();
-            this.grpMap.SuspendLayout();
-            this.SuspendLayout();
+            cmbDens = new ComboBox();
+            GrpRaidInfo = new GroupBox();
+            lblContent = new Label();
+            cmbContent = new ComboBox();
+            chkActive = new CheckBox();
+            txtSeed = new TextBox();
+            lblSeed = new Label();
+            chkLP = new CheckBox();
+            grpPkmInfo = new GroupBox();
+            lblIndex = new Label();
+            grpMoves = new GroupBox();
+            txtMove4 = new TextBox();
+            txtMove2 = new TextBox();
+            txtMove3 = new TextBox();
+            txtMove1 = new TextBox();
+            lblLevel = new Label();
+            btnRewards = new Button();
+            lblScale = new Label();
+            lblStarSymbols = new Label();
+            lblSpecies = new Label();
+            txtScale = new TextBox();
+            pictureBox = new PictureBox();
+            lblAbility = new Label();
+            lblHP = new Label();
+            lblTera = new Label();
+            txtSpe = new TextBox();
+            txtSpD = new TextBox();
+            lblShiny = new Label();
+            txtSpA = new TextBox();
+            lblNature = new Label();
+            txtDef = new TextBox();
+            lblSpe = new Label();
+            lblSpD = new Label();
+            lblSpA = new Label();
+            lblGender = new Label();
+            lblDef = new Label();
+            lblAtk = new Label();
+            txtAtk = new TextBox();
+            txtHP = new TextBox();
+            btnOpenCalculator = new Button();
+            btnDx = new Button();
+            btnSx = new Button();
+            btnOpenRewardCalculator = new Button();
+            imgMap = new PictureBox();
+            grpMap = new GroupBox();
+            GrpRaidInfo.SuspendLayout();
+            grpPkmInfo.SuspendLayout();
+            grpMoves.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)imgMap).BeginInit();
+            grpMap.SuspendLayout();
+            SuspendLayout();
             // 
             // cmbDens
             // 
-            this.cmbDens.FormattingEnabled = true;
-            this.cmbDens.Location = new System.Drawing.Point(45, 14);
-            this.cmbDens.Name = "cmbDens";
-            this.cmbDens.Size = new System.Drawing.Size(316, 28);
-            this.cmbDens.TabIndex = 1;
-            this.cmbDens.SelectedIndexChanged += new System.EventHandler(this.cmbDens_IndexChanged);
-            this.cmbDens.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbDens_KeyPress);
+            cmbDens.FormattingEnabled = true;
+            cmbDens.Location = new Point(39, 12);
+            cmbDens.Name = "cmbDens";
+            cmbDens.Size = new Size(277, 25);
+            cmbDens.TabIndex = 1;
+            cmbDens.SelectedIndexChanged += cmbDens_IndexChanged;
+            cmbDens.KeyPress += cmbDens_KeyPress;
             // 
             // GrpRaidInfo
             // 
-            this.GrpRaidInfo.Controls.Add(this.lblContent);
-            this.GrpRaidInfo.Controls.Add(this.cmbContent);
-            this.GrpRaidInfo.Controls.Add(this.chkActive);
-            this.GrpRaidInfo.Controls.Add(this.txtSeed);
-            this.GrpRaidInfo.Controls.Add(this.lblSeed);
-            this.GrpRaidInfo.Controls.Add(this.chkLP);
-            this.GrpRaidInfo.Location = new System.Drawing.Point(8, 49);
-            this.GrpRaidInfo.Name = "GrpRaidInfo";
-            this.GrpRaidInfo.Size = new System.Drawing.Size(390, 123);
-            this.GrpRaidInfo.TabIndex = 2;
-            this.GrpRaidInfo.TabStop = false;
-            this.GrpRaidInfo.Text = "Raid Info";
+            GrpRaidInfo.Controls.Add(lblContent);
+            GrpRaidInfo.Controls.Add(cmbContent);
+            GrpRaidInfo.Controls.Add(chkActive);
+            GrpRaidInfo.Controls.Add(txtSeed);
+            GrpRaidInfo.Controls.Add(lblSeed);
+            GrpRaidInfo.Controls.Add(chkLP);
+            GrpRaidInfo.Location = new Point(7, 42);
+            GrpRaidInfo.Name = "GrpRaidInfo";
+            GrpRaidInfo.Size = new Size(341, 105);
+            GrpRaidInfo.TabIndex = 2;
+            GrpRaidInfo.TabStop = false;
+            GrpRaidInfo.Text = "Raid Info";
             // 
             // lblContent
             // 
-            this.lblContent.AutoSize = true;
-            this.lblContent.Location = new System.Drawing.Point(7, 80);
-            this.lblContent.Name = "lblContent";
-            this.lblContent.Size = new System.Drawing.Size(64, 20);
-            this.lblContent.TabIndex = 7;
-            this.lblContent.Text = "Content:";
+            lblContent.AutoSize = true;
+            lblContent.Location = new Point(6, 68);
+            lblContent.Name = "lblContent";
+            lblContent.Size = new Size(56, 17);
+            lblContent.TabIndex = 7;
+            lblContent.Text = "Content:";
             // 
             // cmbContent
             // 
-            this.cmbContent.FormattingEnabled = true;
-            this.cmbContent.Items.AddRange(new object[] {
-            "Standard",
-            "Black",
-            "Event",
-            "Event-Mighty"});
-            this.cmbContent.Location = new System.Drawing.Point(91, 77);
-            this.cmbContent.Name = "cmbContent";
-            this.cmbContent.Size = new System.Drawing.Size(131, 28);
-            this.cmbContent.TabIndex = 6;
-            this.cmbContent.SelectedIndexChanged += new System.EventHandler(this.cmbContent_IndexChanged);
+            cmbContent.FormattingEnabled = true;
+            cmbContent.Items.AddRange(new object[] { "Standard", "Black", "Event", "Event-Mighty" });
+            cmbContent.Location = new Point(80, 65);
+            cmbContent.Name = "cmbContent";
+            cmbContent.Size = new Size(115, 25);
+            cmbContent.TabIndex = 6;
+            cmbContent.SelectedIndexChanged += cmbContent_IndexChanged;
             // 
             // chkActive
             // 
-            this.chkActive.AutoSize = true;
-            this.chkActive.Location = new System.Drawing.Point(250, 35);
-            this.chkActive.Name = "chkActive";
-            this.chkActive.Size = new System.Drawing.Size(103, 24);
-            this.chkActive.TabIndex = 3;
-            this.chkActive.Text = "Den Active";
-            this.chkActive.UseVisualStyleBackColor = true;
-            this.chkActive.CheckedChanged += new System.EventHandler(this.chkActive_CheckedChanged);
+            chkActive.AutoSize = true;
+            chkActive.Location = new Point(219, 30);
+            chkActive.Name = "chkActive";
+            chkActive.Size = new Size(88, 21);
+            chkActive.TabIndex = 3;
+            chkActive.Text = "Den Active";
+            chkActive.UseVisualStyleBackColor = true;
+            chkActive.CheckedChanged += chkActive_CheckedChanged;
             // 
             // txtSeed
             // 
-            this.txtSeed.Location = new System.Drawing.Point(91, 35);
-            this.txtSeed.MaxLength = 8;
-            this.txtSeed.Name = "txtSeed";
-            this.txtSeed.Size = new System.Drawing.Size(131, 27);
-            this.txtSeed.TabIndex = 3;
-            this.txtSeed.TextChanged += new System.EventHandler(this.txtSeed_TextChanged);
-            this.txtSeed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSeed_KeyPress);
+            txtSeed.Location = new Point(80, 30);
+            txtSeed.MaxLength = 8;
+            txtSeed.Name = "txtSeed";
+            txtSeed.Size = new Size(115, 23);
+            txtSeed.TabIndex = 3;
+            txtSeed.TextChanged += txtSeed_TextChanged;
+            txtSeed.KeyPress += txtSeed_KeyPress;
             // 
             // lblSeed
             // 
-            this.lblSeed.AutoSize = true;
-            this.lblSeed.Location = new System.Drawing.Point(11, 38);
-            this.lblSeed.Name = "lblSeed";
-            this.lblSeed.Size = new System.Drawing.Size(45, 20);
-            this.lblSeed.TabIndex = 4;
-            this.lblSeed.Text = "Seed:";
+            lblSeed.AutoSize = true;
+            lblSeed.Location = new Point(10, 32);
+            lblSeed.Name = "lblSeed";
+            lblSeed.Size = new Size(40, 17);
+            lblSeed.TabIndex = 4;
+            lblSeed.Text = "Seed:";
             // 
             // chkLP
             // 
-            this.chkLP.AutoSize = true;
-            this.chkLP.Location = new System.Drawing.Point(250, 79);
-            this.chkLP.Name = "chkLP";
-            this.chkLP.Size = new System.Drawing.Size(117, 24);
-            this.chkLP.TabIndex = 5;
-            this.chkLP.Text = "LP Harvested";
-            this.chkLP.UseVisualStyleBackColor = true;
-            this.chkLP.CheckedChanged += new System.EventHandler(this.chkLP_CheckedChanged);
+            chkLP.AutoSize = true;
+            chkLP.Location = new Point(219, 67);
+            chkLP.Name = "chkLP";
+            chkLP.Size = new Size(103, 21);
+            chkLP.TabIndex = 5;
+            chkLP.Text = "LP Harvested";
+            chkLP.UseVisualStyleBackColor = true;
+            chkLP.CheckedChanged += chkLP_CheckedChanged;
             // 
             // grpPkmInfo
             // 
-            this.grpPkmInfo.Controls.Add(this.lblIndex);
-            this.grpPkmInfo.Controls.Add(this.grpMoves);
-            this.grpPkmInfo.Controls.Add(this.lblLevel);
-            this.grpPkmInfo.Controls.Add(this.btnRewards);
-            this.grpPkmInfo.Controls.Add(this.lblScale);
-            this.grpPkmInfo.Controls.Add(this.lblStarSymbols);
-            this.grpPkmInfo.Controls.Add(this.lblSpecies);
-            this.grpPkmInfo.Controls.Add(this.txtScale);
-            this.grpPkmInfo.Controls.Add(this.pictureBox);
-            this.grpPkmInfo.Controls.Add(this.lblAbility);
-            this.grpPkmInfo.Controls.Add(this.lblHP);
-            this.grpPkmInfo.Controls.Add(this.lblTera);
-            this.grpPkmInfo.Controls.Add(this.txtSpe);
-            this.grpPkmInfo.Controls.Add(this.txtSpD);
-            this.grpPkmInfo.Controls.Add(this.lblShiny);
-            this.grpPkmInfo.Controls.Add(this.txtSpA);
-            this.grpPkmInfo.Controls.Add(this.lblNature);
-            this.grpPkmInfo.Controls.Add(this.txtDef);
-            this.grpPkmInfo.Controls.Add(this.lblSpe);
-            this.grpPkmInfo.Controls.Add(this.lblSpD);
-            this.grpPkmInfo.Controls.Add(this.lblSpA);
-            this.grpPkmInfo.Controls.Add(this.lblGender);
-            this.grpPkmInfo.Controls.Add(this.lblDef);
-            this.grpPkmInfo.Controls.Add(this.lblAtk);
-            this.grpPkmInfo.Controls.Add(this.txtAtk);
-            this.grpPkmInfo.Controls.Add(this.txtHP);
-            this.grpPkmInfo.Location = new System.Drawing.Point(8, 178);
-            this.grpPkmInfo.Name = "grpPkmInfo";
-            this.grpPkmInfo.Size = new System.Drawing.Size(390, 367);
-            this.grpPkmInfo.TabIndex = 3;
-            this.grpPkmInfo.TabStop = false;
-            this.grpPkmInfo.Text = "Pokémon Info";
+            grpPkmInfo.Controls.Add(lblIndex);
+            grpPkmInfo.Controls.Add(grpMoves);
+            grpPkmInfo.Controls.Add(lblLevel);
+            grpPkmInfo.Controls.Add(btnRewards);
+            grpPkmInfo.Controls.Add(lblScale);
+            grpPkmInfo.Controls.Add(lblStarSymbols);
+            grpPkmInfo.Controls.Add(lblSpecies);
+            grpPkmInfo.Controls.Add(txtScale);
+            grpPkmInfo.Controls.Add(pictureBox);
+            grpPkmInfo.Controls.Add(lblAbility);
+            grpPkmInfo.Controls.Add(lblHP);
+            grpPkmInfo.Controls.Add(lblTera);
+            grpPkmInfo.Controls.Add(txtSpe);
+            grpPkmInfo.Controls.Add(txtSpD);
+            grpPkmInfo.Controls.Add(lblShiny);
+            grpPkmInfo.Controls.Add(txtSpA);
+            grpPkmInfo.Controls.Add(lblNature);
+            grpPkmInfo.Controls.Add(txtDef);
+            grpPkmInfo.Controls.Add(lblSpe);
+            grpPkmInfo.Controls.Add(lblSpD);
+            grpPkmInfo.Controls.Add(lblSpA);
+            grpPkmInfo.Controls.Add(lblGender);
+            grpPkmInfo.Controls.Add(lblDef);
+            grpPkmInfo.Controls.Add(lblAtk);
+            grpPkmInfo.Controls.Add(txtAtk);
+            grpPkmInfo.Controls.Add(txtHP);
+            grpPkmInfo.Location = new Point(7, 151);
+            grpPkmInfo.Name = "grpPkmInfo";
+            grpPkmInfo.Size = new Size(341, 312);
+            grpPkmInfo.TabIndex = 3;
+            grpPkmInfo.TabStop = false;
+            grpPkmInfo.Text = "Pokémon Info";
             // 
             // lblIndex
             // 
-            this.lblIndex.AutoSize = true;
-            this.lblIndex.Location = new System.Drawing.Point(130, 226);
-            this.lblIndex.Name = "lblIndex";
-            this.lblIndex.Size = new System.Drawing.Size(88, 20);
-            this.lblIndex.TabIndex = 24;
-            this.lblIndex.Text = "Event Index:";
+            lblIndex.AutoSize = true;
+            lblIndex.Location = new Point(114, 192);
+            lblIndex.Name = "lblIndex";
+            lblIndex.Size = new Size(78, 17);
+            lblIndex.TabIndex = 24;
+            lblIndex.Text = "Event Index:";
             // 
             // grpMoves
             // 
-            this.grpMoves.Controls.Add(this.txtMove4);
-            this.grpMoves.Controls.Add(this.txtMove2);
-            this.grpMoves.Controls.Add(this.txtMove3);
-            this.grpMoves.Controls.Add(this.txtMove1);
-            this.grpMoves.Location = new System.Drawing.Point(0, 251);
-            this.grpMoves.Name = "grpMoves";
-            this.grpMoves.Size = new System.Drawing.Size(384, 110);
-            this.grpMoves.TabIndex = 22;
-            this.grpMoves.TabStop = false;
-            this.grpMoves.Text = "Moves";
+            grpMoves.Controls.Add(txtMove4);
+            grpMoves.Controls.Add(txtMove2);
+            grpMoves.Controls.Add(txtMove3);
+            grpMoves.Controls.Add(txtMove1);
+            grpMoves.Location = new Point(0, 213);
+            grpMoves.Name = "grpMoves";
+            grpMoves.Size = new Size(336, 94);
+            grpMoves.TabIndex = 22;
+            grpMoves.TabStop = false;
+            grpMoves.Text = "Moves";
             // 
             // txtMove4
             // 
-            this.txtMove4.Enabled = false;
-            this.txtMove4.Location = new System.Drawing.Point(206, 70);
-            this.txtMove4.Name = "txtMove4";
-            this.txtMove4.Size = new System.Drawing.Size(143, 27);
-            this.txtMove4.TabIndex = 22;
-            this.txtMove4.Text = "None";
-            this.txtMove4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            txtMove4.Enabled = false;
+            txtMove4.Location = new Point(180, 60);
+            txtMove4.Name = "txtMove4";
+            txtMove4.Size = new Size(126, 23);
+            txtMove4.TabIndex = 22;
+            txtMove4.Text = "None";
+            txtMove4.TextAlign = HorizontalAlignment.Center;
             // 
             // txtMove2
             // 
-            this.txtMove2.Enabled = false;
-            this.txtMove2.Location = new System.Drawing.Point(206, 28);
-            this.txtMove2.Name = "txtMove2";
-            this.txtMove2.Size = new System.Drawing.Size(143, 27);
-            this.txtMove2.TabIndex = 23;
-            this.txtMove2.Text = "None";
-            this.txtMove2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            txtMove2.Enabled = false;
+            txtMove2.Location = new Point(180, 24);
+            txtMove2.Name = "txtMove2";
+            txtMove2.Size = new Size(126, 23);
+            txtMove2.TabIndex = 23;
+            txtMove2.Text = "None";
+            txtMove2.TextAlign = HorizontalAlignment.Center;
             // 
             // txtMove3
             // 
-            this.txtMove3.Enabled = false;
-            this.txtMove3.Location = new System.Drawing.Point(31, 70);
-            this.txtMove3.Name = "txtMove3";
-            this.txtMove3.Size = new System.Drawing.Size(143, 27);
-            this.txtMove3.TabIndex = 24;
-            this.txtMove3.Text = "None";
-            this.txtMove3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            txtMove3.Enabled = false;
+            txtMove3.Location = new Point(27, 60);
+            txtMove3.Name = "txtMove3";
+            txtMove3.Size = new Size(126, 23);
+            txtMove3.TabIndex = 24;
+            txtMove3.Text = "None";
+            txtMove3.TextAlign = HorizontalAlignment.Center;
             // 
             // txtMove1
             // 
-            this.txtMove1.Enabled = false;
-            this.txtMove1.Location = new System.Drawing.Point(33, 28);
-            this.txtMove1.Name = "txtMove1";
-            this.txtMove1.Size = new System.Drawing.Size(143, 27);
-            this.txtMove1.TabIndex = 25;
-            this.txtMove1.Text = "None";
-            this.txtMove1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            txtMove1.Enabled = false;
+            txtMove1.Location = new Point(29, 24);
+            txtMove1.Name = "txtMove1";
+            txtMove1.Size = new Size(126, 23);
+            txtMove1.TabIndex = 25;
+            txtMove1.Text = "None";
+            txtMove1.TextAlign = HorizontalAlignment.Center;
             // 
             // lblLevel
             // 
-            this.lblLevel.AutoSize = true;
-            this.lblLevel.Location = new System.Drawing.Point(323, 86);
-            this.lblLevel.Name = "lblLevel";
-            this.lblLevel.Size = new System.Drawing.Size(29, 20);
-            this.lblLevel.TabIndex = 21;
-            this.lblLevel.Text = "Lvl.";
+            lblLevel.AutoSize = true;
+            lblLevel.Location = new Point(283, 73);
+            lblLevel.Name = "lblLevel";
+            lblLevel.Size = new Size(26, 17);
+            lblLevel.TabIndex = 21;
+            lblLevel.Text = "Lvl.";
             // 
             // btnRewards
             // 
-            this.btnRewards.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnRewards.Location = new System.Drawing.Point(309, 219);
-            this.btnRewards.Name = "btnRewards";
-            this.btnRewards.Size = new System.Drawing.Size(75, 31);
-            this.btnRewards.TabIndex = 20;
-            this.btnRewards.Text = "Rewards";
-            this.btnRewards.UseVisualStyleBackColor = true;
-            this.btnRewards.Visible = false;
-            this.btnRewards.Click += new System.EventHandler(this.btnRewards_Click);
+            btnRewards.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
+            btnRewards.Location = new Point(270, 186);
+            btnRewards.Name = "btnRewards";
+            btnRewards.Size = new Size(66, 26);
+            btnRewards.TabIndex = 20;
+            btnRewards.Text = "Rewards";
+            btnRewards.UseVisualStyleBackColor = true;
+            btnRewards.Visible = false;
+            btnRewards.Click += btnRewards_Click;
             // 
             // lblScale
             // 
-            this.lblScale.AutoSize = true;
-            this.lblScale.Location = new System.Drawing.Point(13, 226);
-            this.lblScale.Name = "lblScale";
-            this.lblScale.Size = new System.Drawing.Size(47, 20);
-            this.lblScale.TabIndex = 22;
-            this.lblScale.Text = "Scale:";
+            lblScale.AutoSize = true;
+            lblScale.Location = new Point(10, 192);
+            lblScale.Name = "lblScale";
+            lblScale.Size = new Size(41, 17);
+            lblScale.TabIndex = 22;
+            lblScale.Text = "Scale:";
             // 
             // lblStarSymbols
             // 
-            this.lblStarSymbols.AutoSize = true;
-            this.lblStarSymbols.Location = new System.Drawing.Point(310, 187);
-            this.lblStarSymbols.Name = "lblStarSymbols";
-            this.lblStarSymbols.Size = new System.Drawing.Size(74, 20);
-            this.lblStarSymbols.TabIndex = 19;
-            this.lblStarSymbols.Text = "☆☆☆☆☆";
+            lblStarSymbols.AutoSize = true;
+            lblStarSymbols.Location = new Point(271, 159);
+            lblStarSymbols.Name = "lblStarSymbols";
+            lblStarSymbols.Size = new Size(58, 17);
+            lblStarSymbols.TabIndex = 19;
+            lblStarSymbols.Text = "☆☆☆☆☆";
             // 
             // lblSpecies
             // 
-            this.lblSpecies.AutoSize = true;
-            this.lblSpecies.Location = new System.Drawing.Point(130, 30);
-            this.lblSpecies.Name = "lblSpecies";
-            this.lblSpecies.Size = new System.Drawing.Size(62, 20);
-            this.lblSpecies.TabIndex = 18;
-            this.lblSpecies.Text = "Species:";
+            lblSpecies.AutoSize = true;
+            lblSpecies.Location = new Point(114, 26);
+            lblSpecies.Name = "lblSpecies";
+            lblSpecies.Size = new Size(55, 17);
+            lblSpecies.TabIndex = 18;
+            lblSpecies.Text = "Species:";
             // 
             // txtScale
             // 
-            this.txtScale.Enabled = false;
-            this.txtScale.Location = new System.Drawing.Point(67, 223);
-            this.txtScale.Name = "txtScale";
-            this.txtScale.Size = new System.Drawing.Size(31, 27);
-            this.txtScale.TabIndex = 23;
+            txtScale.Enabled = false;
+            txtScale.Location = new Point(59, 190);
+            txtScale.Name = "txtScale";
+            txtScale.Size = new Size(28, 23);
+            txtScale.TabIndex = 23;
             // 
             // pictureBox
             // 
-            this.pictureBox.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox.BackgroundImage = global::TeraFinder.Properties.Resources._000;
-            this.pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox.Location = new System.Drawing.Point(309, 109);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(75, 75);
-            this.pictureBox.TabIndex = 12;
-            this.pictureBox.TabStop = false;
+            pictureBox.BackColor = Color.Transparent;
+            pictureBox.BackgroundImage = Properties.Resources._000;
+            pictureBox.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBox.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox.Location = new Point(270, 93);
+            pictureBox.Name = "pictureBox";
+            pictureBox.Size = new Size(66, 64);
+            pictureBox.TabIndex = 12;
+            pictureBox.TabStop = false;
             // 
             // lblAbility
             // 
-            this.lblAbility.AutoSize = true;
-            this.lblAbility.Location = new System.Drawing.Point(130, 61);
-            this.lblAbility.Name = "lblAbility";
-            this.lblAbility.Size = new System.Drawing.Size(59, 20);
-            this.lblAbility.TabIndex = 15;
-            this.lblAbility.Text = "Ability: ";
+            lblAbility.AutoSize = true;
+            lblAbility.Location = new Point(114, 52);
+            lblAbility.Name = "lblAbility";
+            lblAbility.Size = new Size(50, 17);
+            lblAbility.TabIndex = 15;
+            lblAbility.Text = "Ability: ";
             // 
             // lblHP
             // 
-            this.lblHP.AutoSize = true;
-            this.lblHP.Location = new System.Drawing.Point(29, 28);
-            this.lblHP.Name = "lblHP";
-            this.lblHP.Size = new System.Drawing.Size(31, 20);
-            this.lblHP.TabIndex = 6;
-            this.lblHP.Text = "HP:";
+            lblHP.AutoSize = true;
+            lblHP.Location = new Point(10, 26);
+            lblHP.Name = "lblHP";
+            lblHP.Size = new Size(27, 17);
+            lblHP.TabIndex = 6;
+            lblHP.Text = "HP:";
             // 
             // lblTera
             // 
-            this.lblTera.AutoSize = true;
-            this.lblTera.Location = new System.Drawing.Point(130, 94);
-            this.lblTera.Name = "lblTera";
-            this.lblTera.Size = new System.Drawing.Size(71, 20);
-            this.lblTera.TabIndex = 17;
-            this.lblTera.Text = "TeraType:";
+            lblTera.AutoSize = true;
+            lblTera.Location = new Point(114, 80);
+            lblTera.Name = "lblTera";
+            lblTera.Size = new Size(65, 17);
+            lblTera.TabIndex = 17;
+            lblTera.Text = "TeraType:";
             // 
             // txtSpe
             // 
-            this.txtSpe.Enabled = false;
-            this.txtSpe.Location = new System.Drawing.Point(67, 190);
-            this.txtSpe.Name = "txtSpe";
-            this.txtSpe.Size = new System.Drawing.Size(31, 27);
-            this.txtSpe.TabIndex = 5;
+            txtSpe.Enabled = false;
+            txtSpe.Location = new Point(59, 162);
+            txtSpe.Name = "txtSpe";
+            txtSpe.Size = new Size(28, 23);
+            txtSpe.TabIndex = 5;
             // 
             // txtSpD
             // 
-            this.txtSpD.Enabled = false;
-            this.txtSpD.Location = new System.Drawing.Point(67, 157);
-            this.txtSpD.Name = "txtSpD";
-            this.txtSpD.Size = new System.Drawing.Size(31, 27);
-            this.txtSpD.TabIndex = 4;
+            txtSpD.Enabled = false;
+            txtSpD.Location = new Point(59, 133);
+            txtSpD.Name = "txtSpD";
+            txtSpD.Size = new Size(28, 23);
+            txtSpD.TabIndex = 4;
             // 
             // lblShiny
             // 
-            this.lblShiny.AutoSize = true;
-            this.lblShiny.Location = new System.Drawing.Point(130, 160);
-            this.lblShiny.Name = "lblShiny";
-            this.lblShiny.Size = new System.Drawing.Size(51, 20);
-            this.lblShiny.TabIndex = 16;
-            this.lblShiny.Text = "Shiny: ";
+            lblShiny.AutoSize = true;
+            lblShiny.Location = new Point(114, 136);
+            lblShiny.Name = "lblShiny";
+            lblShiny.Size = new Size(45, 17);
+            lblShiny.TabIndex = 16;
+            lblShiny.Text = "Shiny: ";
             // 
             // txtSpA
             // 
-            this.txtSpA.Enabled = false;
-            this.txtSpA.Location = new System.Drawing.Point(67, 124);
-            this.txtSpA.Name = "txtSpA";
-            this.txtSpA.Size = new System.Drawing.Size(31, 27);
-            this.txtSpA.TabIndex = 3;
+            txtSpA.Enabled = false;
+            txtSpA.Location = new Point(59, 105);
+            txtSpA.Name = "txtSpA";
+            txtSpA.Size = new Size(28, 23);
+            txtSpA.TabIndex = 3;
             // 
             // lblNature
             // 
-            this.lblNature.AutoSize = true;
-            this.lblNature.Location = new System.Drawing.Point(130, 127);
-            this.lblNature.Name = "lblNature";
-            this.lblNature.Size = new System.Drawing.Size(61, 20);
-            this.lblNature.TabIndex = 14;
-            this.lblNature.Text = "Nature: ";
+            lblNature.AutoSize = true;
+            lblNature.Location = new Point(114, 108);
+            lblNature.Name = "lblNature";
+            lblNature.Size = new Size(55, 17);
+            lblNature.TabIndex = 14;
+            lblNature.Text = "Nature: ";
             // 
             // txtDef
             // 
-            this.txtDef.Enabled = false;
-            this.txtDef.Location = new System.Drawing.Point(67, 91);
-            this.txtDef.Name = "txtDef";
-            this.txtDef.Size = new System.Drawing.Size(31, 27);
-            this.txtDef.TabIndex = 2;
+            txtDef.Enabled = false;
+            txtDef.Location = new Point(59, 77);
+            txtDef.Name = "txtDef";
+            txtDef.Size = new Size(28, 23);
+            txtDef.TabIndex = 2;
             // 
             // lblSpe
             // 
-            this.lblSpe.AutoSize = true;
-            this.lblSpe.Location = new System.Drawing.Point(23, 193);
-            this.lblSpe.Name = "lblSpe";
-            this.lblSpe.Size = new System.Drawing.Size(37, 20);
-            this.lblSpe.TabIndex = 11;
-            this.lblSpe.Text = "Spe:";
+            lblSpe.AutoSize = true;
+            lblSpe.Location = new Point(10, 164);
+            lblSpe.Name = "lblSpe";
+            lblSpe.Size = new Size(33, 17);
+            lblSpe.TabIndex = 11;
+            lblSpe.Text = "Spe:";
             // 
             // lblSpD
             // 
-            this.lblSpD.AutoSize = true;
-            this.lblSpD.Location = new System.Drawing.Point(20, 160);
-            this.lblSpD.Name = "lblSpD";
-            this.lblSpD.Size = new System.Drawing.Size(40, 20);
-            this.lblSpD.TabIndex = 10;
-            this.lblSpD.Text = "SpD:";
+            lblSpD.AutoSize = true;
+            lblSpD.Location = new Point(10, 136);
+            lblSpD.Name = "lblSpD";
+            lblSpD.Size = new Size(35, 17);
+            lblSpD.TabIndex = 10;
+            lblSpD.Text = "SpD:";
             // 
             // lblSpA
             // 
-            this.lblSpA.AutoSize = true;
-            this.lblSpA.Location = new System.Drawing.Point(21, 127);
-            this.lblSpA.Name = "lblSpA";
-            this.lblSpA.Size = new System.Drawing.Size(39, 20);
-            this.lblSpA.TabIndex = 9;
-            this.lblSpA.Text = "SpA:";
+            lblSpA.AutoSize = true;
+            lblSpA.Location = new Point(10, 108);
+            lblSpA.Name = "lblSpA";
+            lblSpA.Size = new Size(34, 17);
+            lblSpA.TabIndex = 9;
+            lblSpA.Text = "SpA:";
             // 
             // lblGender
             // 
-            this.lblGender.AutoSize = true;
-            this.lblGender.Location = new System.Drawing.Point(130, 193);
-            this.lblGender.Name = "lblGender";
-            this.lblGender.Size = new System.Drawing.Size(60, 20);
-            this.lblGender.TabIndex = 13;
-            this.lblGender.Text = "Gender:";
+            lblGender.AutoSize = true;
+            lblGender.Location = new Point(114, 164);
+            lblGender.Name = "lblGender";
+            lblGender.Size = new Size(54, 17);
+            lblGender.TabIndex = 13;
+            lblGender.Text = "Gender:";
             // 
             // lblDef
             // 
-            this.lblDef.AutoSize = true;
-            this.lblDef.Location = new System.Drawing.Point(24, 94);
-            this.lblDef.Name = "lblDef";
-            this.lblDef.Size = new System.Drawing.Size(36, 20);
-            this.lblDef.TabIndex = 8;
-            this.lblDef.Text = "Def:";
+            lblDef.AutoSize = true;
+            lblDef.Location = new Point(10, 80);
+            lblDef.Name = "lblDef";
+            lblDef.Size = new Size(31, 17);
+            lblDef.TabIndex = 8;
+            lblDef.Text = "Def:";
             // 
             // lblAtk
             // 
-            this.lblAtk.AutoSize = true;
-            this.lblAtk.Location = new System.Drawing.Point(26, 61);
-            this.lblAtk.Name = "lblAtk";
-            this.lblAtk.Size = new System.Drawing.Size(34, 20);
-            this.lblAtk.TabIndex = 7;
-            this.lblAtk.Text = "Atk:";
+            lblAtk.AutoSize = true;
+            lblAtk.Location = new Point(10, 52);
+            lblAtk.Name = "lblAtk";
+            lblAtk.Size = new Size(30, 17);
+            lblAtk.TabIndex = 7;
+            lblAtk.Text = "Atk:";
             // 
             // txtAtk
             // 
-            this.txtAtk.Enabled = false;
-            this.txtAtk.Location = new System.Drawing.Point(67, 58);
-            this.txtAtk.Name = "txtAtk";
-            this.txtAtk.Size = new System.Drawing.Size(31, 27);
-            this.txtAtk.TabIndex = 1;
+            txtAtk.Enabled = false;
+            txtAtk.Location = new Point(59, 49);
+            txtAtk.Name = "txtAtk";
+            txtAtk.Size = new Size(28, 23);
+            txtAtk.TabIndex = 1;
             // 
             // txtHP
             // 
-            this.txtHP.Enabled = false;
-            this.txtHP.Location = new System.Drawing.Point(67, 25);
-            this.txtHP.Name = "txtHP";
-            this.txtHP.Size = new System.Drawing.Size(31, 27);
-            this.txtHP.TabIndex = 0;
+            txtHP.Enabled = false;
+            txtHP.Location = new Point(59, 21);
+            txtHP.Name = "txtHP";
+            txtHP.Size = new Size(28, 23);
+            txtHP.TabIndex = 0;
             // 
             // btnOpenCalculator
             // 
-            this.btnOpenCalculator.Location = new System.Drawing.Point(8, 545);
-            this.btnOpenCalculator.Name = "btnOpenCalculator";
-            this.btnOpenCalculator.Size = new System.Drawing.Size(192, 52);
-            this.btnOpenCalculator.TabIndex = 4;
-            this.btnOpenCalculator.Text = "Raid Calculator";
-            this.btnOpenCalculator.UseVisualStyleBackColor = true;
-            this.btnOpenCalculator.Click += new System.EventHandler(this.btnOpenCalculator_Click);
+            btnOpenCalculator.Location = new Point(7, 463);
+            btnOpenCalculator.Name = "btnOpenCalculator";
+            btnOpenCalculator.Size = new Size(168, 44);
+            btnOpenCalculator.TabIndex = 4;
+            btnOpenCalculator.Text = "Raid Calculator";
+            btnOpenCalculator.UseVisualStyleBackColor = true;
+            btnOpenCalculator.Click += btnOpenCalculator_Click;
             // 
             // btnDx
             // 
-            this.btnDx.Location = new System.Drawing.Point(367, 12);
-            this.btnDx.Name = "btnDx";
-            this.btnDx.Size = new System.Drawing.Size(31, 31);
-            this.btnDx.TabIndex = 5;
-            this.btnDx.Text = "ᐅ";
-            this.btnDx.UseVisualStyleBackColor = true;
-            this.btnDx.Click += new System.EventHandler(this.btnDx_Click);
+            btnDx.Location = new Point(321, 10);
+            btnDx.Name = "btnDx";
+            btnDx.Size = new Size(27, 26);
+            btnDx.TabIndex = 5;
+            btnDx.Text = "ᐅ";
+            btnDx.UseVisualStyleBackColor = true;
+            btnDx.Click += btnDx_Click;
             // 
             // btnSx
             // 
-            this.btnSx.Location = new System.Drawing.Point(8, 12);
-            this.btnSx.Name = "btnSx";
-            this.btnSx.Size = new System.Drawing.Size(31, 31);
-            this.btnSx.TabIndex = 20;
-            this.btnSx.Text = "ᐊ";
-            this.btnSx.UseVisualStyleBackColor = true;
-            this.btnSx.Click += new System.EventHandler(this.btnSx_Click);
+            btnSx.Location = new Point(7, 10);
+            btnSx.Name = "btnSx";
+            btnSx.Size = new Size(27, 26);
+            btnSx.TabIndex = 20;
+            btnSx.Text = "ᐊ";
+            btnSx.UseVisualStyleBackColor = true;
+            btnSx.Click += btnSx_Click;
             // 
             // btnOpenRewardCalculator
             // 
-            this.btnOpenRewardCalculator.Location = new System.Drawing.Point(206, 545);
-            this.btnOpenRewardCalculator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnOpenRewardCalculator.Name = "btnOpenRewardCalculator";
-            this.btnOpenRewardCalculator.Size = new System.Drawing.Size(192, 52);
-            this.btnOpenRewardCalculator.TabIndex = 21;
-            this.btnOpenRewardCalculator.Text = "Reward Calculator";
-            this.btnOpenRewardCalculator.UseVisualStyleBackColor = true;
-            this.btnOpenRewardCalculator.Click += new System.EventHandler(this.btnOpenRewardCalculator_Click);
+            btnOpenRewardCalculator.Location = new Point(180, 463);
+            btnOpenRewardCalculator.Name = "btnOpenRewardCalculator";
+            btnOpenRewardCalculator.Size = new Size(168, 44);
+            btnOpenRewardCalculator.TabIndex = 21;
+            btnOpenRewardCalculator.Text = "Reward Calculator";
+            btnOpenRewardCalculator.UseVisualStyleBackColor = true;
+            btnOpenRewardCalculator.Click += btnOpenRewardCalculator_Click;
             // 
             // imgMap
             // 
-            this.imgMap.BackgroundImage = global::TeraFinder.Properties.Resources.world;
-            this.imgMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.imgMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.imgMap.Location = new System.Drawing.Point(6, 17);
-            this.imgMap.Name = "imgMap";
-            this.imgMap.Size = new System.Drawing.Size(572, 570);
-            this.imgMap.TabIndex = 22;
-            this.imgMap.TabStop = false;
+            imgMap.BackgroundImage = Properties.Resources.world;
+            imgMap.BackgroundImageLayout = ImageLayout.Stretch;
+            imgMap.BorderStyle = BorderStyle.Fixed3D;
+            imgMap.Location = new Point(5, 14);
+            imgMap.Name = "imgMap";
+            imgMap.Size = new Size(501, 485);
+            imgMap.TabIndex = 22;
+            imgMap.TabStop = false;
             // 
             // grpMap
             // 
-            this.grpMap.Controls.Add(this.imgMap);
-            this.grpMap.Location = new System.Drawing.Point(404, 3);
-            this.grpMap.Name = "grpMap";
-            this.grpMap.Size = new System.Drawing.Size(584, 594);
-            this.grpMap.TabIndex = 23;
-            this.grpMap.TabStop = false;
+            grpMap.Controls.Add(imgMap);
+            grpMap.Location = new Point(354, 3);
+            grpMap.Name = "grpMap";
+            grpMap.Size = new Size(511, 505);
+            grpMap.TabIndex = 23;
+            grpMap.TabStop = false;
             // 
             // EditorForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(994, 602);
-            this.Controls.Add(this.grpMap);
-            this.Controls.Add(this.btnOpenRewardCalculator);
-            this.Controls.Add(this.btnDx);
-            this.Controls.Add(this.btnSx);
-            this.Controls.Add(this.btnOpenCalculator);
-            this.Controls.Add(this.grpPkmInfo);
-            this.Controls.Add(this.GrpRaidInfo);
-            this.Controls.Add(this.cmbDens);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "EditorForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Tera Raid Editor";
-            this.GrpRaidInfo.ResumeLayout(false);
-            this.GrpRaidInfo.PerformLayout();
-            this.grpPkmInfo.ResumeLayout(false);
-            this.grpPkmInfo.PerformLayout();
-            this.grpMoves.ResumeLayout(false);
-            this.grpMoves.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgMap)).EndInit();
-            this.grpMap.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(870, 512);
+            Controls.Add(grpMap);
+            Controls.Add(btnOpenRewardCalculator);
+            Controls.Add(btnDx);
+            Controls.Add(btnSx);
+            Controls.Add(btnOpenCalculator);
+            Controls.Add(grpPkmInfo);
+            Controls.Add(GrpRaidInfo);
+            Controls.Add(cmbDens);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "EditorForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Tera Raid Editor";
+            GrpRaidInfo.ResumeLayout(false);
+            GrpRaidInfo.PerformLayout();
+            grpPkmInfo.ResumeLayout(false);
+            grpPkmInfo.PerformLayout();
+            grpMoves.ResumeLayout(false);
+            grpMoves.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)imgMap).EndInit();
+            grpMap.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
