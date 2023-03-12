@@ -310,7 +310,7 @@ namespace TeraFinder
                 {
                     var species = Editor.Language.ToLower().Equals("en") ? cmbSpecies.Text[..charLocation] :
                         GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, cmbSpecies.Text[..charLocation])];
-                    res[0] = (ushort)Enum.Parse(typeof(Species), species);
+                    res[0] = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty));
                     res[1] = ShowdownParsing.GetFormFromString(cmbSpecies.Text.AsSpan()[(charLocation + 1)..], GameInfo.GetStrings(Editor.Language), res[0], EntityContext.Gen9);
                 }
             }

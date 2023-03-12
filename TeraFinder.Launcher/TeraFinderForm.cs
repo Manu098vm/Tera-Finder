@@ -25,6 +25,7 @@ namespace TeraFinder.Launcher
             btnEditGame.Enabled = false;
             btnStartEditor.Enabled = false;
             btnExport.Enabled = false;
+            btnEditOutbreaks.Enabled = false;
             UpdateEventLabel();
             cmbLanguage.SelectedIndex = TeraPlugin.GetDefaultLanguage();
         }
@@ -43,30 +44,31 @@ namespace TeraFinder.Launcher
             };
 
             var translated = inner.TranslateInnerStrings(language);
-            if(translated.TryGetValue(nameof(GameVersionSV), out var sv))
+            if (translated.TryGetValue(nameof(GameVersionSV), out var sv))
                 GameVersionSV = sv;
-            if(translated.TryGetValue(nameof(GameVersionSL), out var sl))
+            if (translated.TryGetValue(nameof(GameVersionSL), out var sl))
                 GameVersionSL = sl;
-            if(translated.TryGetValue(nameof(GameVersionVL), out var vl))
+            if (translated.TryGetValue(nameof(GameVersionVL), out var vl))
                 GameVersionVL = vl;
-            if(translated.TryGetValue(nameof(TrainerBlank), out var trainer))
+            if (translated.TryGetValue(nameof(TrainerBlank), out var trainer))
                 TrainerBlank = trainer;
-            if(translated.TryGetValue(nameof(NewsEvent), out var news))
+            if (translated.TryGetValue(nameof(NewsEvent), out var news))
                 NewsEvent = news;
             if (translated.TryGetValue(nameof(None), out var none))
                 None = none;
-            if(translated.TryGetValue(nameof(SAVInvalid), out var sav))
+            if (translated.TryGetValue(nameof(SAVInvalid), out var sav))
                 SAVInvalid = sav;
         }
 
         private void FormEnabledChanged(object sender, EventArgs e)
         {
-            if(Connection is not null)
+            if (Connection is not null)
             {
                 if (Connection.IsConnected())
                 {
                     btnEditGame.Enabled = true;
                     btnStartEditor.Enabled = true;
+                    btnEditOutbreaks.Enabled = false;
                     btnExport.Enabled = false;
                     btnLoad.Enabled = false;
                     this.TranslateInterface(Plugin.Language);
@@ -75,9 +77,10 @@ namespace TeraFinder.Launcher
                     this.Text += TeraPlugin.Version;
                     txtSAV.Text = GetGameString();
                 }
-                else if(Plugin.GetSavName().Equals(TrainerBlank))
+                else if (Plugin.GetSavName().Equals(TrainerBlank))
                 {
                     btnEditGame.Enabled = false;
+                    btnEditOutbreaks.Enabled = false;
                     btnStartEditor.Enabled = false;
                     btnLoad.Enabled = true;
                     this.TranslateInterface(Plugin.Language);
@@ -150,6 +153,7 @@ namespace TeraFinder.Launcher
                     var sav = File.ReadAllBytes(file);
                     Plugin.StandaloneInitialize(TrainerBlank, sav);
                     btnEditGame.Enabled = true;
+                    btnEditOutbreaks.Enabled = true;
                     btnImportNews.Enabled = true;
                     btnStartEditor.Enabled = true;
                     btnExport.Enabled = true;
@@ -164,6 +168,7 @@ namespace TeraFinder.Launcher
                     MessageBox.Show(SAVInvalid);
                     Plugin.StandaloneInitialize(TrainerBlank);
                     btnEditGame.Enabled = false;
+                    btnEditOutbreaks.Enabled = false;
                     btnStartEditor.Enabled = false;
                     btnExport.Enabled = false;
                     this.TranslateInterface(Plugin.Language);
@@ -211,6 +216,11 @@ namespace TeraFinder.Launcher
             Plugin.LaunchRewardCalculator();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Plugin.LaunchMassOutbreakEditor();
+        }
+
         private string GetGameString()
         {
             var str = Plugin.GetSavName();
@@ -231,7 +241,7 @@ namespace TeraFinder.Launcher
             var lang = TeraPlugin.GetStringLanguage(cmbLanguage.SelectedIndex);
             TeraPlugin.SetDefaultLanguage(cmbLanguage.SelectedIndex);
 
-            if(GetGameString().Contains(TrainerBlank))
+            if (GetGameString().Contains(TrainerBlank))
             {
                 this.SuspendLayout();
                 TranslateInnerStrings(lang);
@@ -240,6 +250,7 @@ namespace TeraFinder.Launcher
                 UpdateEventLabel();
                 txtSAV.Text = GetGameString();
                 btnEditGame.Enabled = false;
+                btnEditOutbreaks.Enabled = false;
                 btnStartEditor.Enabled = false;
                 btnExport.Enabled = false;
                 cmbLanguage.PerformClick();
