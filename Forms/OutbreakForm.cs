@@ -98,8 +98,8 @@ namespace TeraFinder.Forms
             {
                 outbreak.Species = SpeciesConverter.GetInternal9(species);
                 cmbForm.SelectedIndex = 0;
-                for(var i = 0; i < 8; i++)
-                    cmbOutbreaks.Items[i] = $"Mass Outbreak {i+1} - {SpeciesList[species]}";
+                var index = cmbOutbreaks.SelectedIndex;
+                cmbOutbreaks.Items[index] = $"Mass Outbreak {index+1} - {SpeciesList[species]}";
             }
             else
             {
