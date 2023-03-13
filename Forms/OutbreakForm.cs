@@ -9,7 +9,6 @@ namespace TeraFinder.Forms
         public string Language = null!;
 
         private ConnectionForm? Connection = null;
-        private Dictionary<string, string> Strings = null!;
         private Image DefBackground = null!;
         private Size DefSize = new(0, 0);
         private bool Loaded = false;
@@ -65,6 +64,7 @@ namespace TeraFinder.Forms
             numMaxSpawn.Value = outbreak.MaxSpawns > 0 ? outbreak.MaxSpawns : 1;
             numKO.Value = outbreak.NumKO;
 
+            chkEnabled.Checked = outbreak.Enabled;
             chkFound.Checked = outbreak.Found;
 
             txtCenterX.Text = $"{(outbreak.LocationCenter is not null ? outbreak.LocationCenter.X : 0)}";
@@ -75,8 +75,8 @@ namespace TeraFinder.Forms
             txtDummyY.Text = $"{(outbreak.LocationDummy is not null ? outbreak.LocationDummy.Y : 0)}";
             txtDummyZ.Text = $"{(outbreak.LocationDummy is not null ? outbreak.LocationDummy.Z : 0)}";
 
-            if (outbreak.LocationDummy is not null)
-                imgMap.SetMapPoint(outbreak.LocationDummy);
+            if (outbreak.LocationCenter is not null)
+                imgMap.SetMapPoint(outbreak.LocationCenter);
             else imgMap.ResetMap();
 
             Loaded = true;
@@ -89,7 +89,7 @@ namespace TeraFinder.Forms
             var species = (ushort)cmbSpecies.SelectedIndex;
             var formlist = FormConverter.GetFormList(species, TypesList, FormsList, GenderList, EntityContext.Gen9);
             if (formlist.Length == 0 || (formlist.Length == 1 && formlist[0].Equals("")))
-                cmbForm.Items.Add("----");
+                cmbForm.Items.Add("---");
             else
                 cmbForm.Items.AddRange(formlist);
 
@@ -106,7 +106,7 @@ namespace TeraFinder.Forms
             }
 
 
-            pictureBox.Image = ImagesUtil.GetSimpleSprite(species, outbreak.Form);
+            pictureBox.Image = ImagesUtil.GetSimpleSprite(species, outbreak.Form, outbreak.Enabled);
             if (pictureBox.Image is not null)
             {
                 pictureBox.BackgroundImage = null;
@@ -127,7 +127,7 @@ namespace TeraFinder.Forms
                 var species = SpeciesConverter.GetNational9((ushort)outbreak.Species);
                 outbreak.Form = (byte)cmbForm.SelectedIndex;
 
-                pictureBox.Image = ImagesUtil.GetSimpleSprite(species, outbreak.Form);
+                pictureBox.Image = ImagesUtil.GetSimpleSprite(species, outbreak.Form, outbreak.Enabled);
                 if (pictureBox.Image is not null)
                 {
                     pictureBox.BackgroundImage = null;
@@ -171,6 +171,18 @@ namespace TeraFinder.Forms
             }
         }
 
+        private void chkEnabled_CheckChanged(object sender, EventArgs e)
+        {
+            if (Loaded)
+            {
+                var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
+                if (chkEnabled.Checked)
+                    outbreak.Enabled = true;
+                else
+                    outbreak.Enabled = false;
+            }
+        }
+
         private void txtCenterX_TextChanged(object sender, EventArgs e)
         {
             if (Loaded)
@@ -181,8 +193,12 @@ namespace TeraFinder.Forms
                     try
                     {
                         outbreak.LocationCenter.X = Convert.ToSingle(txtCenterX.Text);
+                        imgMap.SetMapPoint(outbreak.LocationCenter);
                     }
-                    catch (Exception) { }
+                    catch (Exception)
+                    {
+                        imgMap.ResetMap();
+                    }
                 }
             }
         }
@@ -213,8 +229,12 @@ namespace TeraFinder.Forms
                     try
                     {
                         outbreak.LocationCenter.Z = Convert.ToSingle(txtCenterX.Text);
+                        imgMap.SetMapPoint(outbreak.LocationCenter);
                     }
-                    catch (Exception) { }
+                    catch (Exception)
+                    {
+                        imgMap.ResetMap();
+                    }
                 }
             }
         }
@@ -229,12 +249,8 @@ namespace TeraFinder.Forms
                     try
                     {
                         outbreak.LocationDummy.X = Convert.ToSingle(txtDummyX.Text);
-                        imgMap.SetMapPoint(outbreak.LocationDummy);
                     }
-                    catch (Exception)
-                    {
-                        imgMap.ResetMap();
-                    }
+                    catch (Exception) { }
                 }
             }
         }
@@ -265,12 +281,8 @@ namespace TeraFinder.Forms
                     try
                     {
                         outbreak.LocationDummy.Z = Convert.ToSingle(txtDummyZ.Text);
-                        imgMap.SetMapPoint(outbreak.LocationDummy);
                     }
-                    catch (Exception)
-                    {
-                        imgMap.ResetMap();
-                    }
+                    catch (Exception) { }
                 }
             }
         }

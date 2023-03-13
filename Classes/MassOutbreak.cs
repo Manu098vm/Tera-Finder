@@ -25,10 +25,12 @@ namespace TeraFinder
     {
         protected int ID;
         protected SAV9SV SAV = null!;
+        protected sbyte AmountAvailable { get => GetAmountAvailable(); set => SetAmountAvailable(value); }
 
         public GameCoordinates? LocationCenter { get; private set; }
         public GameCoordinates? LocationDummy { get; private set; }
         public bool Found { get => GetFound(); set => SetFound(value); }
+        public bool Enabled { get => GetEnabled(); set => SetEnabled(value); }
         public uint Species { get => GetSpecies(); set => SetSpecies(value); }
         public byte Form { get => GetForm(); set => SetForm(value); }
         public int NumKO { get => GetNumKO(); set => SetNumKO(value); }
@@ -54,6 +56,37 @@ namespace TeraFinder
                 LocationDummy = new GameCoordinates(block);
             else
                 LocationDummy = null;
+        }
+
+        private sbyte GetAmountAvailable()
+        {
+            var block = SAV.Accessor.GetBlockSafe(Blocks.KMassOutbreakAmount.Key);
+
+            if (block.Type is SCTypeCode.SByte)
+                return (sbyte)block.GetValue();
+
+            return 0;
+        }
+
+        private void SetAmountAvailable(sbyte value)
+        {
+            var block = SAV.Accessor.GetBlockSafe(Blocks.KMassOutbreakAmount.Key);
+
+            if (block.Type is SCTypeCode.SByte)
+                block.ChangeData((new byte[] { (byte)value }).AsSpan());
+        }
+
+        private bool GetEnabled()
+        {
+            return ID <= AmountAvailable;
+        }
+
+        private void SetEnabled(bool value)
+        {
+            if (value && AmountAvailable < ID)
+                    AmountAvailable = (sbyte)ID;
+            else if(!value && AmountAvailable >= ID)
+                    AmountAvailable = (sbyte)(ID - 1);
         }
 
         private bool GetFound()

@@ -35,6 +35,17 @@ namespace TeraFinder
             IsEncrypted = false,
             Size = 0x68,
         };
+
+        public static DataBlock KMassOutbreakAmount = new()
+        {
+            Name = "KMassOutbreakAmount",
+            Key = 0x6C375C8A,
+            Type = SCTypeCode.SByte,
+            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8 }, //TODO
+            IsEncrypted = true,
+            Size = 0x01,
+
+        };
         #endregion
 
         #region DataBCAT

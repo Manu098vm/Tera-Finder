@@ -1,6 +1,7 @@
 ﻿using PKHeX.Core;
 using PKHeX.Drawing;
 using PKHeX.Drawing.PokeSprite;
+using System.Security.Policy;
 
 namespace TeraFinder
 {
@@ -31,11 +32,13 @@ namespace TeraFinder
             return ImageUtil.BlendTransparentTo(sprite, TypeColor.GetTypeSpriteColor((byte)pkm.TeraType), 0xAF, 0x3740);
         }
 
-        public static Image GetSimpleSprite(ushort species, byte form)
+        public static Image GetSimpleSprite(ushort species, byte form, bool active)
         {
             SpriteName.AllowShinySprite = false;
             var file = 'a' + SpriteName.GetResourceStringSprite(species, form, 0, 0, EntityContext.Gen9, false);
-            return (Image?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file)!;
+            var sprite = (Image?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file)!;
+            if (!active) sprite = ImageUtil.ToGrayscale(sprite);
+            return sprite;
 
         }
 

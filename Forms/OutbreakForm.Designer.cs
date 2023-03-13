@@ -55,6 +55,7 @@
             txtCenterY = new TextBox();
             txtCenterX = new TextBox();
             grpMassInfo = new GroupBox();
+            chkEnabled = new CheckBox();
             chkFound = new CheckBox();
             numKO = new NumericUpDown();
             numMaxSpawn = new NumericUpDown();
@@ -212,7 +213,7 @@
             grpLocationDummy.Size = new Size(343, 129);
             grpLocationDummy.TabIndex = 34;
             grpLocationDummy.TabStop = false;
-            grpLocationDummy.Text = "Map Coordinates:";
+            grpLocationDummy.Text = "Dummy Coordinates:";
             // 
             // lblDummyZ
             // 
@@ -333,6 +334,7 @@
             // 
             // grpMassInfo
             // 
+            grpMassInfo.Controls.Add(chkEnabled);
             grpMassInfo.Controls.Add(chkFound);
             grpMassInfo.Controls.Add(numKO);
             grpMassInfo.Controls.Add(numMaxSpawn);
@@ -345,10 +347,21 @@
             grpMassInfo.TabStop = false;
             grpMassInfo.Text = "Mass Outbreak Info";
             // 
+            // chkEnabled
+            // 
+            chkEnabled.AutoSize = true;
+            chkEnabled.Location = new Point(265, 39);
+            chkEnabled.Name = "chkEnabled";
+            chkEnabled.Size = new Size(85, 24);
+            chkEnabled.TabIndex = 5;
+            chkEnabled.Text = "Enabled";
+            chkEnabled.UseVisualStyleBackColor = true;
+            chkEnabled.CheckedChanged += chkEnabled_CheckChanged;
+            // 
             // chkFound
             // 
             chkFound.AutoSize = true;
-            chkFound.Location = new Point(265, 59);
+            chkFound.Location = new Point(265, 71);
             chkFound.Name = "chkFound";
             chkFound.Size = new Size(72, 24);
             chkFound.TabIndex = 4;
@@ -462,5 +475,6 @@
         private NumericUpDown numMaxSpawn;
         private Label lblKoSpawn;
         private Label lblTotalSpawn;
+        private CheckBox chkEnabled;
     }
 }
