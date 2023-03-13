@@ -184,7 +184,8 @@ namespace TeraFinder
                 { "Plugin.TeraViewer", "Tera Raid Viewer/Editor" },
                 { "Plugin.SeedChecker", "Tera Raid Seed Checker" },
                 { "Plugin.FlagEditor", "Edit Game Flags" },
-                { "Plugin.NewsImporter", "Import Poké Portal News" }
+                { "Plugin.NewsImporter", "Import Poké Portal News" },
+                { "Plugin.OutbreakViewer", "Mass Outbreak Viewer/Editor"}
             }.TranslateInnerStrings(Language);
 
             Plugin.Text = dic["Plugin.TeraFinderPlugin"];
@@ -193,6 +194,7 @@ namespace TeraFinder
             Finder.Text = dic["Plugin.SeedChecker"];
             Flags.Text = dic["Plugin.FlagEditor"];
             Events.Text = dic["Plugin.NewsImporter"];
+            Outbreaks.Text = dic["Plugin.OutbreakViewer"];
         }
 
         public void LaunchEditor()

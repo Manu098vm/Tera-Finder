@@ -4,6 +4,7 @@ Plugin.TeraViewer=太晶洞窟查看/编辑
 Plugin.SeedChecker=太晶洞窟Seed检索
 Plugin.FlagEditor=编辑太晶洞窟解锁进度
 Plugin.NewsImporter=导入宝可梦入口站新闻
+Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
 
 TeraFinderForm=太晶洞窟搜索
 TeraFinderForm.remoteConnectToolStripMenuItem=工具

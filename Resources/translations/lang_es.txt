@@ -4,6 +4,7 @@ Plugin.TeraViewer=Visor/Editor de Teraincursiones
 Plugin.SeedChecker=Inspector de Seeds
 Plugin.FlagEditor=Edita Flags del Juego
 Plugin.NewsImporter=Importar Noticias Poképortal
+Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
 
 TeraFinderForm=Tera Finder 
 TeraFinderForm.remoteConnectToolStripMenuItem=Herramientas

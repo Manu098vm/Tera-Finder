@@ -4,6 +4,7 @@ Plugin.TeraViewer=Visualizza e Modifica Raid
 Plugin.SeedChecker=Controlla Seed
 Plugin.FlagEditor=Modifica Flags di Gioco
 Plugin.NewsImporter=Importa Raid Evento
+Plugin.OutbreakViewer=Visualizza e Modifica le Comparse Massicce
 
 TeraFinderForm=Tera Finder 
 TeraFinderForm.remoteConnectToolStripMenuItem=Strumenti
