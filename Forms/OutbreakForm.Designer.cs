@@ -79,7 +79,7 @@
             grpMap.Margin = new Padding(3, 4, 3, 4);
             grpMap.Name = "grpMap";
             grpMap.Padding = new Padding(3, 4, 3, 4);
-            grpMap.Size = new Size(584, 594);
+            grpMap.Size = new Size(584, 595);
             grpMap.TabIndex = 24;
             grpMap.TabStop = false;
             // 
@@ -91,7 +91,7 @@
             imgMap.Location = new Point(6, 16);
             imgMap.Margin = new Padding(3, 4, 3, 4);
             imgMap.Name = "imgMap";
-            imgMap.Size = new Size(572, 570);
+            imgMap.Size = new Size(572, 569);
             imgMap.TabIndex = 22;
             imgMap.TabStop = false;
             // 
@@ -109,7 +109,7 @@
             // 
             btnNext.Location = new Point(332, 12);
             btnNext.Name = "btnNext";
-            btnNext.Size = new Size(32, 28);
+            btnNext.Size = new Size(32, 32);
             btnNext.TabIndex = 26;
             btnNext.Text = "ᐅ";
             btnNext.UseVisualStyleBackColor = true;
@@ -119,7 +119,7 @@
             // 
             btnPrev.Location = new Point(9, 12);
             btnPrev.Name = "btnPrev";
-            btnPrev.Size = new Size(32, 28);
+            btnPrev.Size = new Size(32, 32);
             btnPrev.TabIndex = 27;
             btnPrev.Text = "ᐊ";
             btnPrev.UseVisualStyleBackColor = true;
@@ -131,7 +131,7 @@
             pictureBox.BackgroundImage = Properties.Resources._000;
             pictureBox.BackgroundImageLayout = ImageLayout.Stretch;
             pictureBox.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox.Location = new Point(265, 34);
+            pictureBox.Location = new Point(265, 35);
             pictureBox.Margin = new Padding(3, 4, 3, 4);
             pictureBox.Name = "pictureBox";
             pictureBox.Size = new Size(75, 75);
@@ -145,7 +145,7 @@
             grpPkmInfo.Controls.Add(lblForm);
             grpPkmInfo.Controls.Add(pictureBox);
             grpPkmInfo.Controls.Add(lblSpecies);
-            grpPkmInfo.Location = new Point(9, 46);
+            grpPkmInfo.Location = new Point(9, 45);
             grpPkmInfo.Name = "grpPkmInfo";
             grpPkmInfo.Size = new Size(355, 123);
             grpPkmInfo.TabIndex = 29;
@@ -164,7 +164,7 @@
             // cmbSpecies
             // 
             cmbSpecies.FormattingEnabled = true;
-            cmbSpecies.Location = new Point(85, 34);
+            cmbSpecies.Location = new Point(85, 35);
             cmbSpecies.Name = "cmbSpecies";
             cmbSpecies.Size = new Size(151, 28);
             cmbSpecies.TabIndex = 31;
@@ -229,12 +229,12 @@
             txtDummyZ.Name = "txtDummyZ";
             txtDummyZ.Size = new Size(179, 27);
             txtDummyZ.TabIndex = 2;
-            txtDummyZ.TextChanged += new EventHandler(txtDummyZ_TextChanged);
+            txtDummyZ.TextChanged += txtDummyZ_TextChanged;
             // 
             // lblDummyY
             // 
             lblDummyY.AutoSize = true;
-            lblDummyY.Location = new Point(25, 66);
+            lblDummyY.Location = new Point(25, 67);
             lblDummyY.Name = "lblDummyY";
             lblDummyY.Size = new Size(20, 20);
             lblDummyY.TabIndex = 1;
@@ -246,16 +246,15 @@
             txtDummyY.Name = "txtDummyY";
             txtDummyY.Size = new Size(179, 27);
             txtDummyY.TabIndex = 1;
-            txtDummyY.TextChanged += new EventHandler(txtDummyY_TextChanged);
-
+            txtDummyY.TextChanged += txtDummyY_TextChanged;
             // 
             // txtDummyX
             // 
-            txtDummyX.Location = new Point(79, 30);
+            txtDummyX.Location = new Point(79, 29);
             txtDummyX.Name = "txtDummyX";
             txtDummyX.Size = new Size(179, 27);
             txtDummyX.TabIndex = 0;
-            txtDummyX.TextChanged += new EventHandler(txtDummyX_TextChanged);
+            txtDummyX.TextChanged += txtDummyX_TextChanged;
             // 
             // lblDummyX
             // 
@@ -274,7 +273,7 @@
             grpLocationCenter.Controls.Add(txtCenterZ);
             grpLocationCenter.Controls.Add(txtCenterY);
             grpLocationCenter.Controls.Add(txtCenterX);
-            grpLocationCenter.Location = new Point(6, 26);
+            grpLocationCenter.Location = new Point(6, 27);
             grpLocationCenter.Name = "grpLocationCenter";
             grpLocationCenter.Size = new Size(343, 129);
             grpLocationCenter.TabIndex = 34;
@@ -293,7 +292,7 @@
             // lblCenterY
             // 
             lblCenterY.AutoSize = true;
-            lblCenterY.Location = new Point(25, 66);
+            lblCenterY.Location = new Point(25, 67);
             lblCenterY.Name = "lblCenterY";
             lblCenterY.Size = new Size(20, 20);
             lblCenterY.TabIndex = 4;
@@ -314,7 +313,7 @@
             txtCenterZ.Name = "txtCenterZ";
             txtCenterZ.Size = new Size(179, 27);
             txtCenterZ.TabIndex = 2;
-            txtCenterZ.TextChanged += new EventHandler(txtCenterZ_TextChanged);
+            txtCenterZ.TextChanged += txtCenterZ_TextChanged;
             // 
             // txtCenterY
             // 
@@ -322,15 +321,15 @@
             txtCenterY.Name = "txtCenterY";
             txtCenterY.Size = new Size(179, 27);
             txtCenterY.TabIndex = 1;
-            txtCenterY.TextChanged += new EventHandler(txtCenterY_TextChanged);
+            txtCenterY.TextChanged += txtCenterY_TextChanged;
             // 
             // txtCenterX
             // 
-            txtCenterX.Location = new Point(79, 30);
+            txtCenterX.Location = new Point(79, 29);
             txtCenterX.Name = "txtCenterX";
             txtCenterX.Size = new Size(179, 27);
             txtCenterX.TabIndex = 0;
-            txtCenterX.TextChanged += new EventHandler(txtCenterX_TextChanged);
+            txtCenterX.TextChanged += txtCenterX_TextChanged;
             // 
             // grpMassInfo
             // 
@@ -341,7 +340,7 @@
             grpMassInfo.Controls.Add(lblTotalSpawn);
             grpMassInfo.Location = new Point(9, 175);
             grpMassInfo.Name = "grpMassInfo";
-            grpMassInfo.Size = new Size(355, 122);
+            grpMassInfo.Size = new Size(355, 123);
             grpMassInfo.TabIndex = 34;
             grpMassInfo.TabStop = false;
             grpMassInfo.Text = "Mass Outbreak Info";
@@ -349,13 +348,13 @@
             // chkFound
             // 
             chkFound.AutoSize = true;
-            chkFound.Location = new Point(265, 58);
+            chkFound.Location = new Point(265, 59);
             chkFound.Name = "chkFound";
             chkFound.Size = new Size(72, 24);
             chkFound.TabIndex = 4;
             chkFound.Text = "Found";
             chkFound.UseVisualStyleBackColor = true;
-            chkFound.CheckedChanged += new EventHandler(chkFound_CheckedChanged);
+            chkFound.CheckedChanged += chkFound_CheckedChanged;
             // 
             // numKO
             // 
@@ -364,7 +363,7 @@
             numKO.Name = "numKO";
             numKO.Size = new Size(88, 27);
             numKO.TabIndex = 3;
-            numKO.ValueChanged += new EventHandler(numKO_ValueChanged);
+            numKO.ValueChanged += numKO_ValueChanged;
             // 
             // numMaxSpawn
             // 
@@ -375,12 +374,12 @@
             numMaxSpawn.Size = new Size(88, 27);
             numMaxSpawn.TabIndex = 2;
             numMaxSpawn.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            numMaxSpawn.ValueChanged += new EventHandler(numMaxSpawn_ValueChanged);
+            numMaxSpawn.ValueChanged += numMaxSpawn_ValueChanged;
             // 
             // lblKoSpawn
             // 
             lblKoSpawn.AutoSize = true;
-            lblKoSpawn.Location = new Point(20, 75);
+            lblKoSpawn.Location = new Point(21, 75);
             lblKoSpawn.Name = "lblKoSpawn";
             lblKoSpawn.Size = new Size(70, 20);
             lblKoSpawn.TabIndex = 1;
@@ -389,7 +388,7 @@
             // lblTotalSpawn
             // 
             lblTotalSpawn.AutoSize = true;
-            lblTotalSpawn.Location = new Point(20, 42);
+            lblTotalSpawn.Location = new Point(21, 43);
             lblTotalSpawn.Name = "lblTotalSpawn";
             lblTotalSpawn.Size = new Size(94, 20);
             lblTotalSpawn.TabIndex = 0;
@@ -399,12 +398,12 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(956, 602);
+            ClientSize = new Size(955, 603);
             Controls.Add(grpMassInfo);
             Controls.Add(grpLocation);
             Controls.Add(grpPkmInfo);
-            Controls.Add(btnPrev);
             Controls.Add(btnNext);
+            Controls.Add(btnPrev);
             Controls.Add(cmbOutbreaks);
             Controls.Add(grpMap);
             MaximizeBox = false;

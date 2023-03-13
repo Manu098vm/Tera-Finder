@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using System.Reflection;
 using static System.Buffers.Binary.BinaryPrimitives;
 
 namespace TeraFinder

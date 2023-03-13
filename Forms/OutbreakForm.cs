@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using System.Reflection;
 
 namespace TeraFinder.Forms
 {
@@ -99,16 +98,16 @@ namespace TeraFinder.Forms
                 outbreak.Species = SpeciesConverter.GetInternal9(species);
                 cmbForm.SelectedIndex = 0;
                 var index = cmbOutbreaks.SelectedIndex;
-                cmbOutbreaks.Items[index] = $"Mass Outbreak {index+1} - {SpeciesList[species]}";
+                cmbOutbreaks.Items[index] = $"Mass Outbreak {index + 1} - {SpeciesList[species]}";
             }
             else
             {
                 cmbForm.SelectedIndex = outbreak.Form;
             }
 
-            
+
             pictureBox.Image = ImagesUtil.GetSimpleSprite(species, outbreak.Form);
-            if(pictureBox.Image is not null)
+            if (pictureBox.Image is not null)
             {
                 pictureBox.BackgroundImage = null;
                 pictureBox.Size = pictureBox.Image.Size;
@@ -153,7 +152,7 @@ namespace TeraFinder.Forms
 
         private void numKO_ValueChanged(object sender, EventArgs e)
         {
-            if(Loaded)
+            if (Loaded)
             {
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
                 outbreak.NumKO = (int)numKO.Value;
@@ -177,7 +176,7 @@ namespace TeraFinder.Forms
             if (Loaded)
             {
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
-                if(outbreak.LocationCenter is not null)
+                if (outbreak.LocationCenter is not null)
                 {
                     try
                     {
@@ -232,7 +231,7 @@ namespace TeraFinder.Forms
                         outbreak.LocationDummy.X = Convert.ToSingle(txtDummyX.Text);
                         imgMap.SetMapPoint(outbreak.LocationDummy);
                     }
-                    catch (Exception) 
+                    catch (Exception)
                     {
                         imgMap.ResetMap();
                     }
