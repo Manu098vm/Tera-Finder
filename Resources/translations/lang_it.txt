@@ -202,6 +202,7 @@ ActionConnected=Connesso
 NoProtocol=Protocollo non valido.
 ConnectionSuccess=Connesso con successo.
 ConnectionFailed=Impossibile connettersi.
+ConnectionFailedAux=Per favore salva il gioco, riavvialo e riprova.
 ExecutorConnected=Executor connesso con successo:
 DisconnectionSuccess=Dispositivo disconnesso.
 ToolTipSyncEvent=Sincronizza i dati Evento dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.

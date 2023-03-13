@@ -202,6 +202,7 @@ ActionConnected=연결됨
 NoProtocol=아이피를 다시확인해주세요
 ConnectionSuccess=성공적으로 연결완료되었습니다
 ConnectionFailed=연결이 되지않았습니다
+ConnectionFailedAux=Please try saving in-game and reboot the game.
 ExecutorConnected=성공적으로 연결되었습니다
 DisconnectionSuccess=연결이 끊겼습니다
 ToolTipSyncEvent=스위치에서 이벤트 데이터를 동기화합니다. 상당한 시간이 소요될 수 있습니다.

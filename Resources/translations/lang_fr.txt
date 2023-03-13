@@ -202,6 +202,7 @@ ActionConnected=Connected
 NoProtocol=No valid protocol
 ConnectionSuccess=Successfully connected.
 ConnectionFailed=Could not connect.
+ConnectionFailedAux=Please try saving in-game and reboot the game.
 ExecutorConnected=Executor succesfully connected:
 DisconnectionSuccess=Device disconnected.
 ToolTipSyncEvent=Syncronize event data from the remote device. Might require a sgnificant amount of time.

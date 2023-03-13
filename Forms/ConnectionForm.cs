@@ -35,6 +35,7 @@ namespace TeraFinder.Forms
                 { "NoProtocol", "No valid protocol" },
                 { "ConnectionSuccess", "Successfully connected." },
                 { "ConnectionFailed", "Could not connect." },
+                { "ConnectionFailedAux", "Please try saving in-game and reboot the game." },
                 { "ExecutorConnected", "Executor succesfully connected:" },
                 { "DisconnectionSuccess", "Device disconnected." },
                 { "ToolTipSyncEvent", "Syncronize event data from the remote device. Might require a sgnificant amount of time." }
@@ -119,7 +120,7 @@ namespace TeraFinder.Forms
             catch (Exception ex)
             {
                 Disconnect();
-                MessageBox.Show($"{Strings["ConnectionFailed"]}\n{ex.Message}");
+                MessageBox.Show($"{Strings["ConnectionFailed"]}\n{Strings["ConnectionFailedAux"]}\n{ex.Message}");
                 return;
             }
         }

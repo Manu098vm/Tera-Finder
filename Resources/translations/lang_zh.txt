@@ -202,6 +202,7 @@ ActionConnected=已连接
 NoProtocol=无效的协议
 ConnectionSuccess=成功连接
 ConnectionFailed=无法连接
+ConnectionFailedAux=Please try saving in-game and reboot the game.
 ExecutorConnected=框架连接成功:
 DisconnectionSuccess=设备已断开
 ToolTipSyncEvent=从远程设备同步事件数据。可能需要相当长的时间。
