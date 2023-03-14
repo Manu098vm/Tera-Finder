@@ -421,7 +421,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { toolsToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(955, 28);
+            menuStrip1.Size = new Size(962, 28);
             menuStrip1.TabIndex = 35;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -435,14 +435,14 @@
             // dumpToJsonToolStripMenuItem
             // 
             dumpToJsonToolStripMenuItem.Name = "dumpToJsonToolStripMenuItem";
-            dumpToJsonToolStripMenuItem.Size = new Size(224, 26);
+            dumpToJsonToolStripMenuItem.Size = new Size(196, 26);
             dumpToJsonToolStripMenuItem.Text = "Dump to Json";
             dumpToJsonToolStripMenuItem.Click += dumpToJsonToolStripMenuItem_Click;
             // 
             // injectFromJsonToolStripMenuItem
             // 
             injectFromJsonToolStripMenuItem.Name = "injectFromJsonToolStripMenuItem";
-            injectFromJsonToolStripMenuItem.Size = new Size(224, 26);
+            injectFromJsonToolStripMenuItem.Size = new Size(196, 26);
             injectFromJsonToolStripMenuItem.Text = "Inject from Json";
             injectFromJsonToolStripMenuItem.Click += injectFromJsonToolStripMenuItem_Click;
             // 
@@ -462,7 +462,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(955, 631);
+            ClientSize = new Size(962, 631);
             Controls.Add(grpMassInfo);
             Controls.Add(grpLocation);
             Controls.Add(grpPkmInfo);

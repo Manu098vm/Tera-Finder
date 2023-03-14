@@ -59,7 +59,7 @@ namespace TeraFinder.Forms
             var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
 
             var species = SpeciesConverter.GetNational9((ushort)outbreak.Species);
-            if(species != cmbSpecies.SelectedIndex)
+            if (species != cmbSpecies.SelectedIndex)
                 cmbSpecies.SelectedIndex = species;
             else
                 cmbSpecies_IndexChanged(this, EventArgs.Empty);
@@ -87,7 +87,7 @@ namespace TeraFinder.Forms
 
         private void cmbSpecies_IndexChanged(object sender, EventArgs e)
         {
-            
+
             cmbForm.Items.Clear();
             var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
             var species = (ushort)cmbSpecies.SelectedIndex;
@@ -184,6 +184,19 @@ namespace TeraFinder.Forms
                     outbreak.Enabled = true;
                 else
                     outbreak.Enabled = false;
+
+                var species = SpeciesConverter.GetNational9((ushort)outbreak.Species);
+                pictureBox.Image = ImagesUtil.GetSimpleSprite(species, outbreak.Form, outbreak.Enabled);
+                if (pictureBox.Image is not null)
+                {
+                    pictureBox.BackgroundImage = null;
+                    pictureBox.Size = pictureBox.Image.Size;
+                }
+                else
+                {
+                    pictureBox.BackgroundImage = DefBackground;
+                    pictureBox.Size = DefSize;
+                }
             }
         }
 

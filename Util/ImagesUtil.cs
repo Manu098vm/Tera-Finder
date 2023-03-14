@@ -6,7 +6,7 @@ namespace TeraFinder
 {
     public static class ImagesUtil
     {
-        public static Image GetRaidResultSprite(TeraDetails pkm, bool active = true, int item = 0)
+        public static Image? GetRaidResultSprite(TeraDetails pkm, bool active = true, int item = 0)
         {
             SpriteName.AllowShinySprite = true;
             var file = pkm.Shiny > TeraShiny.No && pkm.Species < (ushort)Species.Sprigatito ?
@@ -18,25 +18,29 @@ namespace TeraFinder
             if (sprite is null)
             {
                 file = 'a' + SpriteName.GetResourceStringSprite(pkm.Species, pkm.Form, (int)pkm.Gender, (uint)(pkm.Species == (ushort)Species.Gholdengo ? 999 : 0), EntityContext.Gen9, false);
-                sprite = (Image)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file)!;
+                sprite = (Image?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file);
             }
 
-            if (item > 0)
+            if (item > 0 && sprite is not null)
                 sprite = LayerOverImageItem(sprite, item);
 
-            if (pkm.Shiny > TeraShiny.No)
+            if (pkm.Shiny > TeraShiny.No && sprite is not null)
                 sprite = LayerOverImageShiny(sprite, pkm.Shiny is TeraShiny.Square ? Shiny.AlwaysSquare : Shiny.AlwaysStar);
 
-            if (!active) sprite = ImageUtil.ToGrayscale(sprite);
-            return ImageUtil.BlendTransparentTo(sprite, TypeColor.GetTypeSpriteColor((byte)pkm.TeraType), 0xAF, 0x3740);
+            if (!active && sprite is not null) sprite = ImageUtil.ToGrayscale(sprite);
+
+            if(sprite is not null)
+                ImageUtil.BlendTransparentTo(sprite, TypeColor.GetTypeSpriteColor((byte)pkm.TeraType), 0xAF, 0x3740);
+
+            return sprite;
         }
 
-        public static Image GetSimpleSprite(ushort species, byte form, bool active)
+        public static Image? GetSimpleSprite(ushort species, byte form, bool active)
         {
             SpriteName.AllowShinySprite = false;
             var file = 'a' + SpriteName.GetResourceStringSprite(species, form, 0, 0, EntityContext.Gen9, false);
-            var sprite = (Image?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file)!;
-            if (!active) sprite = ImageUtil.ToGrayscale(sprite);
+            var sprite = (Image?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file);
+            if (!active && sprite is not null) sprite = ImageUtil.ToGrayscale(sprite);
             return sprite;
         }
 

@@ -343,11 +343,19 @@ namespace TeraFinder
 
                     pictureBox.BackgroundImage = null;
                     pictureBox.Image = GetRaidResultSprite(rngres, raid.IsEnabled, encounter.Item);
-                    pictureBox.Size = pictureBox.Image.Size;
+                    if (pictureBox.Image is not null)
+                    {
+                        pictureBox.Size = pictureBox.Image.Size;
+                    }
+                    else
+                    {
+                        pictureBox.BackgroundImage = DefBackground;
+                        pictureBox.Size = DefSize;
+                    }
 
                     imgMap.SetMapPoint(rngres.TeraType, (int)raid.AreaID, (int)raid.SpawnPointID, DenLocations);
 
-                    btnRewards.Width = pictureBox.Image.Width;
+                    btnRewards.Width = pictureBox.Image is not null ? pictureBox.Image.Width : pictureBox.BackgroundImage!.Width;
                     btnRewards.Visible = true;
 
                     CurrEncount = encounter;
