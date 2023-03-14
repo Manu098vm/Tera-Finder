@@ -28,155 +28,155 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.grpDevice = new System.Windows.Forms.GroupBox();
-            this.numPort = new System.Windows.Forms.NumericUpDown();
-            this.lblPort = new System.Windows.Forms.Label();
-            this.radioUSB = new System.Windows.Forms.RadioButton();
-            this.lblAddress = new System.Windows.Forms.Label();
-            this.radioWiFi = new System.Windows.Forms.RadioButton();
-            this.txtAddress = new System.Windows.Forms.TextBox();
-            this.btnConnect = new System.Windows.Forms.Button();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.btnDisconnect = new System.Windows.Forms.Button();
-            this.grpDevice.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            grpDevice = new GroupBox();
+            numPort = new NumericUpDown();
+            lblPort = new Label();
+            radioUSB = new RadioButton();
+            lblAddress = new Label();
+            radioWiFi = new RadioButton();
+            txtAddress = new TextBox();
+            btnConnect = new Button();
+            toolTip = new ToolTip(components);
+            btnDisconnect = new Button();
+            chkOutbreaks = new CheckBox();
+            grpDevice.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numPort).BeginInit();
+            SuspendLayout();
             // 
             // grpDevice
             // 
-            this.grpDevice.Controls.Add(this.numPort);
-            this.grpDevice.Controls.Add(this.lblPort);
-            this.grpDevice.Controls.Add(this.radioUSB);
-            this.grpDevice.Controls.Add(this.lblAddress);
-            this.grpDevice.Controls.Add(this.radioWiFi);
-            this.grpDevice.Controls.Add(this.txtAddress);
-            this.grpDevice.Location = new System.Drawing.Point(12, 12);
-            this.grpDevice.Name = "grpDevice";
-            this.grpDevice.Size = new System.Drawing.Size(356, 109);
-            this.grpDevice.TabIndex = 0;
-            this.grpDevice.TabStop = false;
-            this.grpDevice.Text = "Connection";
+            grpDevice.Controls.Add(numPort);
+            grpDevice.Controls.Add(lblPort);
+            grpDevice.Controls.Add(radioUSB);
+            grpDevice.Controls.Add(lblAddress);
+            grpDevice.Controls.Add(radioWiFi);
+            grpDevice.Controls.Add(txtAddress);
+            grpDevice.Location = new Point(12, 12);
+            grpDevice.Name = "grpDevice";
+            grpDevice.Size = new Size(356, 109);
+            grpDevice.TabIndex = 0;
+            grpDevice.TabStop = false;
+            grpDevice.Text = "Connection";
             // 
             // numPort
             // 
-            this.numPort.Location = new System.Drawing.Point(263, 67);
-            this.numPort.Maximum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            0});
-            this.numPort.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numPort.Name = "numPort";
-            this.numPort.Size = new System.Drawing.Size(64, 27);
-            this.numPort.TabIndex = 5;
-            this.numPort.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            numPort.Location = new Point(263, 67);
+            numPort.Maximum = new decimal(new int[] { 99999, 0, 0, 0 });
+            numPort.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numPort.Name = "numPort";
+            numPort.Size = new Size(64, 27);
+            numPort.TabIndex = 5;
+            numPort.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // lblPort
             // 
-            this.lblPort.AutoSize = true;
-            this.lblPort.Location = new System.Drawing.Point(219, 70);
-            this.lblPort.Name = "lblPort";
-            this.lblPort.Size = new System.Drawing.Size(38, 20);
-            this.lblPort.TabIndex = 4;
-            this.lblPort.Text = "Port:";
+            lblPort.AutoSize = true;
+            lblPort.Location = new Point(219, 70);
+            lblPort.Name = "lblPort";
+            lblPort.Size = new Size(38, 20);
+            lblPort.TabIndex = 4;
+            lblPort.Text = "Port:";
             // 
             // radioUSB
             // 
-            this.radioUSB.AutoSize = true;
-            this.radioUSB.Location = new System.Drawing.Point(214, 26);
-            this.radioUSB.Name = "radioUSB";
-            this.radioUSB.Size = new System.Drawing.Size(57, 24);
-            this.radioUSB.TabIndex = 1;
-            this.radioUSB.TabStop = true;
-            this.radioUSB.Text = "USB";
-            this.radioUSB.UseVisualStyleBackColor = true;
-            this.radioUSB.CheckedChanged += new System.EventHandler(this.radioUSB_CheckedChanged);
+            radioUSB.AutoSize = true;
+            radioUSB.Location = new Point(214, 26);
+            radioUSB.Name = "radioUSB";
+            radioUSB.Size = new Size(57, 24);
+            radioUSB.TabIndex = 1;
+            radioUSB.TabStop = true;
+            radioUSB.Text = "USB";
+            radioUSB.UseVisualStyleBackColor = true;
+            radioUSB.CheckedChanged += radioUSB_CheckedChanged;
             // 
             // lblAddress
             // 
-            this.lblAddress.AutoSize = true;
-            this.lblAddress.Location = new System.Drawing.Point(21, 70);
-            this.lblAddress.Name = "lblAddress";
-            this.lblAddress.Size = new System.Drawing.Size(65, 20);
-            this.lblAddress.TabIndex = 3;
-            this.lblAddress.Text = "Address:";
+            lblAddress.AutoSize = true;
+            lblAddress.Location = new Point(21, 70);
+            lblAddress.Name = "lblAddress";
+            lblAddress.Size = new Size(65, 20);
+            lblAddress.TabIndex = 3;
+            lblAddress.Text = "Address:";
             // 
             // radioWiFi
             // 
-            this.radioWiFi.AutoSize = true;
-            this.radioWiFi.Checked = true;
-            this.radioWiFi.Location = new System.Drawing.Point(103, 26);
-            this.radioWiFi.Name = "radioWiFi";
-            this.radioWiFi.Size = new System.Drawing.Size(65, 24);
-            this.radioWiFi.TabIndex = 0;
-            this.radioWiFi.TabStop = true;
-            this.radioWiFi.Text = "Wi-Fi";
-            this.radioWiFi.UseVisualStyleBackColor = true;
-            this.radioWiFi.CheckedChanged += new System.EventHandler(this.radioWiFi_CheckedChanged);
+            radioWiFi.AutoSize = true;
+            radioWiFi.Checked = true;
+            radioWiFi.Location = new Point(103, 26);
+            radioWiFi.Name = "radioWiFi";
+            radioWiFi.Size = new Size(65, 24);
+            radioWiFi.TabIndex = 0;
+            radioWiFi.TabStop = true;
+            radioWiFi.Text = "Wi-Fi";
+            radioWiFi.UseVisualStyleBackColor = true;
+            radioWiFi.CheckedChanged += radioWiFi_CheckedChanged;
             // 
             // txtAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(92, 67);
-            this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(125, 27);
-            this.txtAddress.TabIndex = 1;
+            txtAddress.Location = new Point(92, 67);
+            txtAddress.Name = "txtAddress";
+            txtAddress.Size = new Size(125, 27);
+            txtAddress.TabIndex = 1;
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(12, 126);
-            this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(356, 52);
-            this.btnConnect.TabIndex = 1;
-            this.btnConnect.Text = "Connect";
-            this.btnConnect.UseVisualStyleBackColor = true;
-            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            btnConnect.Location = new Point(12, 157);
+            btnConnect.Name = "btnConnect";
+            btnConnect.Size = new Size(356, 52);
+            btnConnect.TabIndex = 1;
+            btnConnect.Text = "Connect";
+            btnConnect.UseVisualStyleBackColor = true;
+            btnConnect.Click += btnConnect_Click;
             // 
             // toolTip
             // 
-            this.toolTip.AutoPopDelay = 10000;
-            this.toolTip.InitialDelay = 500;
-            this.toolTip.IsBalloon = true;
-            this.toolTip.ReshowDelay = 100;
-            this.toolTip.ToolTipTitle = "Event Data";
+            toolTip.AutoPopDelay = 10000;
+            toolTip.InitialDelay = 500;
+            toolTip.IsBalloon = true;
+            toolTip.ReshowDelay = 100;
+            toolTip.ToolTipTitle = "Mass Outbreaks Data";
             // 
             // btnDisconnect
             // 
-            this.btnDisconnect.Enabled = false;
-            this.btnDisconnect.Location = new System.Drawing.Point(14, 184);
-            this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(354, 52);
-            this.btnDisconnect.TabIndex = 3;
-            this.btnDisconnect.Text = "Disconnect";
-            this.btnDisconnect.UseVisualStyleBackColor = true;
-            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
+            btnDisconnect.Enabled = false;
+            btnDisconnect.Location = new Point(14, 215);
+            btnDisconnect.Name = "btnDisconnect";
+            btnDisconnect.Size = new Size(354, 52);
+            btnDisconnect.TabIndex = 3;
+            btnDisconnect.Text = "Disconnect";
+            btnDisconnect.UseVisualStyleBackColor = true;
+            btnDisconnect.Click += btnDisconnect_Click;
+            // 
+            // chkOutbreaks
+            // 
+            chkOutbreaks.AutoSize = true;
+            chkOutbreaks.Location = new Point(12, 127);
+            chkOutbreaks.Name = "chkOutbreaks";
+            chkOutbreaks.Size = new Size(265, 24);
+            chkOutbreaks.TabIndex = 4;
+            chkOutbreaks.Text = "Download Mass Outbreaks Data (?)";
+            chkOutbreaks.UseVisualStyleBackColor = true;
             // 
             // ConnectionForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(375, 245);
-            this.Controls.Add(this.btnDisconnect);
-            this.Controls.Add(this.btnConnect);
-            this.Controls.Add(this.grpDevice);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "ConnectionForm";
-            this.ShowIcon = false;
-            this.Text = "Remote Connection";
-            this.grpDevice.ResumeLayout(false);
-            this.grpDevice.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numPort)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(375, 274);
+            Controls.Add(chkOutbreaks);
+            Controls.Add(btnDisconnect);
+            Controls.Add(btnConnect);
+            Controls.Add(grpDevice);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "ConnectionForm";
+            ShowIcon = false;
+            Text = "Remote Connection";
+            grpDevice.ResumeLayout(false);
+            grpDevice.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numPort).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -191,5 +191,6 @@
         private NumericUpDown numPort;
         private ToolTip toolTip;
         private Button btnDisconnect;
+        private CheckBox chkOutbreaks;
     }
 }

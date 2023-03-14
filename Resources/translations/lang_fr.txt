@@ -206,7 +206,7 @@ ConnectionFailed=Could not connect.
 ConnectionFailedAux=Please try saving in-game and reboot the game.
 ExecutorConnected=Executor succesfully connected:
 DisconnectionSuccess=Device disconnected.
-ToolTipSyncEvent=Syncronize event data from the remote device. Might require a sgnificant amount of time.
+ToolTipSyncOutbreaks=Syncronize Outbreaks data from the remote device. Might require a sgnificant amount of time.
 
 TeraShiny.Any=Any
 TeraShiny.No=No

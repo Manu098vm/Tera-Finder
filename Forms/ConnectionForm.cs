@@ -23,6 +23,8 @@ namespace TeraFinder.Forms
             numPort.Value = Settings.Default.port;
             if (Settings.Default.protocol)
                 radioUSB.Checked = true;
+
+            toolTip.SetToolTip(chkOutbreaks, Strings["ToolTipSyncOutbreaks"]);
         }
 
         private void GenerateDictionary()
@@ -38,7 +40,7 @@ namespace TeraFinder.Forms
                 { "ConnectionFailedAux", "Please try saving in-game and reboot the game." },
                 { "ExecutorConnected", "Executor succesfully connected:" },
                 { "DisconnectionSuccess", "Device disconnected." },
-                { "ToolTipSyncEvent", "Syncronize event data from the remote device. Might require a sgnificant amount of time." }
+                { "ToolTipSyncOutbreaks", "Syncronize Outbreaks data from the remote device. Might require a sgnificant amount of time." }
             };
         }
 
@@ -54,6 +56,7 @@ namespace TeraFinder.Forms
             EnableConnectButton(Strings["ActionConnect"]);
             DisableDisconnectButton();
             EnableGrpDevice();
+            EnableCheckBox();
         }
 
         private async void btnConnect_Click(object sender, EventArgs e)
@@ -62,6 +65,7 @@ namespace TeraFinder.Forms
             DisableConnectButton();
             DisableDisconnectButton();
             DisableGrpDevice();
+            DisableCheckBox();
             var token = new CancellationToken();
 
             try
@@ -109,12 +113,13 @@ namespace TeraFinder.Forms
                 var progress = await Executor.ReadGameProgress(token).ConfigureAwait(false);
                 ProgressForm.EditProgress(SAV, progress);
                 await DownloadEventData(token).ConfigureAwait(false);
-                await DownloadOutbreakData(token).ConfigureAwait(false);
+                if (chkOutbreaks.Checked) await DownloadOutbreakData(token).ConfigureAwait(false);
 
                 MessageBox.Show(Strings["ConnectionSuccess"]);
                 Log($"{Strings["ExecutorConnected"]} {version} - {SAV.OT} ({SAV.TrainerTID7}) [{progress}]");
                 EnableConnectButton(Strings["ActionConnected"]);
                 EnableDisconnectButton();
+                EnableCheckBox();
                 EnableGrpDevice();
                 SafeClose();
             }
@@ -129,7 +134,7 @@ namespace TeraFinder.Forms
         private async Task DownloadEventData(CancellationToken token)
         {
             var KBCATEventRaidIdentifier = SAV.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
-            var raidIdentifierBlock = (byte[]?) await Executor.ReadBlock(Blocks.KBCATEventRaidIdentifier, token).ConfigureAwait(false);
+            var raidIdentifierBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATEventRaidIdentifier, token).ConfigureAwait(false);
 
             if (KBCATEventRaidIdentifier.Type is not SCTypeCode.None)
                 KBCATEventRaidIdentifier.ChangeData(raidIdentifierBlock);
@@ -137,7 +142,7 @@ namespace TeraFinder.Forms
                 BlockUtil.EditBlock(KBCATEventRaidIdentifier, SCTypeCode.Object, raidIdentifierBlock);
 
             var KBCATFixedRewardItemArray = SAV.Accessor.FindOrDefault(Blocks.KBCATFixedRewardItemArray.Key);
-            var rewardItemBlock = (byte[]?) await Executor.ReadBlock(Blocks.KBCATFixedRewardItemArray, token).ConfigureAwait(false);
+            var rewardItemBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATFixedRewardItemArray, token).ConfigureAwait(false);
 
             if (KBCATFixedRewardItemArray.Type is not SCTypeCode.None)
                 KBCATFixedRewardItemArray.ChangeData(rewardItemBlock);
@@ -145,7 +150,7 @@ namespace TeraFinder.Forms
                 BlockUtil.EditBlock(KBCATFixedRewardItemArray, SCTypeCode.Object, rewardItemBlock);
 
             var KBCATLotteryRewardItemArray = SAV.Accessor.FindOrDefault(Blocks.KBCATLotteryRewardItemArray.Key);
-            var lotteryItemBlock = (byte[]?) await Executor.ReadBlock(Blocks.KBCATLotteryRewardItemArray, token).ConfigureAwait(false);
+            var lotteryItemBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATLotteryRewardItemArray, token).ConfigureAwait(false);
 
             if (KBCATLotteryRewardItemArray.Type is not SCTypeCode.None)
                 KBCATLotteryRewardItemArray.ChangeData(lotteryItemBlock);
@@ -153,7 +158,7 @@ namespace TeraFinder.Forms
                 BlockUtil.EditBlock(KBCATLotteryRewardItemArray, SCTypeCode.Object, lotteryItemBlock);
 
             var KBCATRaidEnemyArray = SAV.Accessor.FindOrDefault(Blocks.KBCATRaidEnemyArray.Key);
-            var raidEnemyBlock = (byte[]?) await Executor.ReadBlock(Blocks.KBCATRaidEnemyArray, token).ConfigureAwait(false);
+            var raidEnemyBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATRaidEnemyArray, token).ConfigureAwait(false);
 
             if (KBCATRaidEnemyArray.Type is not SCTypeCode.None)
                 KBCATRaidEnemyArray.ChangeData(raidEnemyBlock);
@@ -161,7 +166,7 @@ namespace TeraFinder.Forms
                 BlockUtil.EditBlock(KBCATRaidEnemyArray, SCTypeCode.Object, raidEnemyBlock);
 
             var KBCATRaidPriorityArray = SAV.Accessor.FindOrDefault(Blocks.KBCATRaidPriorityArray.Key);
-            var raidPriorityBlock = (byte[]?) await Executor.ReadBlock(Blocks.KBCATRaidPriorityArray, token).ConfigureAwait(false);
+            var raidPriorityBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATRaidPriorityArray, token).ConfigureAwait(false);
 
             if (KBCATRaidPriorityArray.Type is not SCTypeCode.None)
                 KBCATRaidPriorityArray.ChangeData(raidPriorityBlock);
@@ -281,6 +286,30 @@ namespace TeraFinder.Forms
             }
         }
 
+        private void DisableCheckBox()
+        {
+            if (chkOutbreaks.InvokeRequired)
+            {
+                chkOutbreaks.Invoke(() => { chkOutbreaks.Enabled = false; });
+            }
+            else
+            {
+                chkOutbreaks.Enabled = false;
+            }
+        }
+
+        private void EnableCheckBox()
+        {
+            if (chkOutbreaks.InvokeRequired)
+            {
+                chkOutbreaks.Invoke(() => { chkOutbreaks.Enabled = true; });
+            }
+            else
+            {
+                chkOutbreaks.Enabled = true;
+            }
+        }
+
         private void EnableDisconnectButton()
         {
             if (btnDisconnect.InvokeRequired)
@@ -319,7 +348,7 @@ namespace TeraFinder.Forms
 
         private void DisableGrpDevice()
         {
-            if(grpDevice.InvokeRequired)
+            if (grpDevice.InvokeRequired)
             {
                 grpDevice.Invoke(() => { grpDevice.Enabled = false; });
             }

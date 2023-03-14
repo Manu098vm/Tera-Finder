@@ -206,7 +206,7 @@ ConnectionFailed=Impossibile connettersi.
 ConnectionFailedAux=Per favore salva il gioco, riavvialo e riprova.
 ExecutorConnected=Executor connesso con successo:
 DisconnectionSuccess=Dispositivo disconnesso.
-ToolTipSyncEvent=Sincronizza i dati Evento dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
+ToolTipSyncOutbreaks=Sincronizza i dati delle Comparse Massicce dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
 
 TeraShiny.Any=Qualsiasi
 TeraShiny.No=No

@@ -206,7 +206,7 @@ ConnectionFailed=无法连接
 ConnectionFailedAux=Please try saving in-game and reboot the game.
 ExecutorConnected=框架连接成功:
 DisconnectionSuccess=设备已断开
-ToolTipSyncEvent=从远程设备同步事件数据。可能需要相当长的时间。
+ToolTipSyncOutbreaks=Syncronize Outbreaks data from the remote device. Might require a sgnificant amount of time.
 
 TeraShiny.Any=任意
 TeraShiny.No=否
