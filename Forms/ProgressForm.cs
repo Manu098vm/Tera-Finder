@@ -85,7 +85,7 @@ namespace TeraFinder.Forms
                 var block = sav.Accessor.FindOrDefault(dummy.Key);
                 if (block.Type is SCTypeCode.None)
                 {
-                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    block = BlockUtil.CreateDummyBlock(dummy.Key, dummy.Type);
                     BlockUtil.AddBlockToFakeSAV(sav, block);
                 }
                 block.ChangeBooleanType(SCTypeCode.Bool2);
@@ -96,7 +96,7 @@ namespace TeraFinder.Forms
                 var block = sav.Accessor.FindOrDefault(dummy.Key);
                 if (block.Type is SCTypeCode.None)
                 {
-                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    block = BlockUtil.CreateDummyBlock(dummy.Key, dummy.Type);
                     BlockUtil.AddBlockToFakeSAV(sav, block);
                 }
                 block.ChangeBooleanType(SCTypeCode.Bool1);
@@ -108,7 +108,7 @@ namespace TeraFinder.Forms
                 var block = sav.Accessor.FindOrDefault(dummy.Key);
                 if (block.Type is SCTypeCode.None)
                 {
-                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    block = BlockUtil.CreateDummyBlock(dummy.Key, dummy.Type);
                     BlockUtil.AddBlockToFakeSAV(sav, block);
                 }
                 block.ChangeBooleanType(SCTypeCode.Bool2);
@@ -119,7 +119,7 @@ namespace TeraFinder.Forms
                 var block = sav.Accessor.FindOrDefault(dummy.Key);
                 if (block.Type is SCTypeCode.None)
                 {
-                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    block = BlockUtil.CreateDummyBlock(dummy.Key, dummy.Type);
                     BlockUtil.AddBlockToFakeSAV(sav, block);
                 }
                 block.ChangeBooleanType(SCTypeCode.Bool1);
@@ -131,7 +131,7 @@ namespace TeraFinder.Forms
                 var block = sav.Accessor.FindOrDefault(dummy.Key);
                 if (block.Type is SCTypeCode.None)
                 {
-                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    block = BlockUtil.CreateDummyBlock(dummy.Key, dummy.Type);
                     BlockUtil.AddBlockToFakeSAV(sav, block);
                 }
                 block.ChangeBooleanType(SCTypeCode.Bool2);
@@ -142,7 +142,7 @@ namespace TeraFinder.Forms
                 var block = sav.Accessor.FindOrDefault(dummy.Key);
                 if (block.Type is SCTypeCode.None)
                 {
-                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    block = BlockUtil.CreateDummyBlock(dummy.Key, dummy.Type);
                     BlockUtil.AddBlockToFakeSAV(sav, block);
                 }
                 block.ChangeBooleanType(SCTypeCode.Bool1);
@@ -154,7 +154,7 @@ namespace TeraFinder.Forms
                 var block = sav.Accessor.FindOrDefault(dummy.Key);
                 if (block.Type is SCTypeCode.None)
                 {
-                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    block = BlockUtil.CreateDummyBlock(dummy.Key, dummy.Type);
                     BlockUtil.AddBlockToFakeSAV(sav, block);
                 }
                 block.ChangeBooleanType(SCTypeCode.Bool2);
@@ -165,7 +165,7 @@ namespace TeraFinder.Forms
                 var block = sav.Accessor.FindOrDefault(dummy.Key);
                 if (block.Type is SCTypeCode.None)
                 {
-                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    block = BlockUtil.CreateDummyBlock(dummy.Key, dummy.Type);
                     BlockUtil.AddBlockToFakeSAV(sav, block);
                 }
                 block.ChangeBooleanType(SCTypeCode.Bool1);
@@ -177,7 +177,7 @@ namespace TeraFinder.Forms
                 var block = sav.Accessor.FindOrDefault(dummy.Key);
                 if (block.Type is SCTypeCode.None)
                 {
-                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    block = BlockUtil.CreateDummyBlock(dummy.Key, dummy.Type);
                     BlockUtil.AddBlockToFakeSAV(sav, block);
                 }
                 block.ChangeBooleanType(SCTypeCode.Bool2);
@@ -188,7 +188,7 @@ namespace TeraFinder.Forms
                 var block = sav.Accessor.FindOrDefault(dummy.Key);
                 if (block.Type is SCTypeCode.None)
                 {
-                    block = BlockUtil.CreateBoolBlock(dummy.Key, dummy.Type);
+                    block = BlockUtil.CreateDummyBlock(dummy.Key, dummy.Type);
                     BlockUtil.AddBlockToFakeSAV(sav, block);
                 }
                 block.ChangeBooleanType(SCTypeCode.Bool1);

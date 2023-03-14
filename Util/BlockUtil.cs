@@ -18,13 +18,13 @@ namespace TeraFinder
             return block;
         }
 
-        public static SCBlock CreateBoolBlock(uint key, SCTypeCode boolean)
+        public static SCBlock CreateDummyBlock(uint key, SCTypeCode dummy)
         {
             var block = (SCBlock)FormatterServices.GetUninitializedObject(typeof(SCBlock));
             var keyInfo = typeof(SCBlock).GetField("Key", BindingFlags.Instance | BindingFlags.Public)!;
             keyInfo.SetValue(block, key);
             var typeInfo = typeof(SCBlock).GetProperty("Type")!;
-            typeInfo.SetValue(block, boolean);
+            typeInfo.SetValue(block, dummy);
             var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
             dataInfo.SetValue(block, Array.Empty<byte>());
             return block;
@@ -43,10 +43,36 @@ namespace TeraFinder
 
         public static void EditBlock(SCBlock block, SCTypeCode type, ReadOnlySpan<byte> data)
         {
-            var typeInfo = typeof(SCBlock).GetProperty("Type")!;
-            typeInfo.SetValue(block, type);
+            EditBlockType(block, type);
             var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
             dataInfo.SetValue(block, data.ToArray());
+        }
+
+        public static void EditBlock(SCBlock block, SCTypeCode type, uint value)
+        {
+            EditBlockType(block, type);
+            var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
+            dataInfo.SetValue(block, BitConverter.GetBytes(value));
+        }
+
+        public static void EditBlock(SCBlock block, SCTypeCode type, int value)
+        {
+            EditBlockType(block, type);
+            var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
+            dataInfo.SetValue(block, BitConverter.GetBytes(value));
+        }
+
+        public static void EditBlock(SCBlock block, SCTypeCode type, byte value)
+        {
+            EditBlockType(block, type);
+            var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
+            dataInfo.SetValue(block, new byte[] { value });
+        }
+
+        public static void EditBlockType(SCBlock block, SCTypeCode type)
+        {
+            var typeInfo = typeof(SCBlock).GetProperty("Type")!;
+            typeInfo.SetValue(block, type);
         }
 
         public static SCBlock FindOrDefault(this SCBlockAccessor Accessor, uint Key) => Accessor.BlockInfo.FindOrDefault(Key);
@@ -54,7 +80,7 @@ namespace TeraFinder
         public static SCBlock FindOrDefault(this IReadOnlyList<SCBlock> blocks, uint key)
         {
             var res = blocks.Where(block => block.Key == key).FirstOrDefault();
-            return res is not null ? res : CreateBoolBlock(key, SCTypeCode.None);
+            return res is not null ? res : CreateDummyBlock(key, SCTypeCode.None);
         }
 
         public static byte[] DecryptBlock(uint key, byte[] block)

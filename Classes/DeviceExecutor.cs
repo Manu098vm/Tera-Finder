@@ -70,22 +70,22 @@ namespace TeraFinder
             if (!Connection.Connected)
                 throw new InvalidOperationException("No remote connection");
 
-            var Unlocked6Stars = (await ReadEncryptedBlock(Blocks.KUnlockedRaidDifficulty6, 1, token).ConfigureAwait(false))[0] == 2;
+            var Unlocked6Stars = await ReadEncryptedBlockBool(Blocks.KUnlockedRaidDifficulty6, token).ConfigureAwait(false);
 
             if (Unlocked6Stars)
                 return GameProgress.Unlocked6Stars;
 
-            var Unlocked5Stars = (await ReadEncryptedBlock(Blocks.KUnlockedRaidDifficulty5, 1, token).ConfigureAwait(false))[0] == 2;
+            var Unlocked5Stars = await ReadEncryptedBlockBool(Blocks.KUnlockedRaidDifficulty5, token).ConfigureAwait(false);
 
             if (Unlocked5Stars)
                 return GameProgress.Unlocked5Stars;
 
-            var Unlocked4Stars = (await ReadEncryptedBlock(Blocks.KUnlockedRaidDifficulty4, 1, token).ConfigureAwait(false))[0] == 2;
+            var Unlocked4Stars = await ReadEncryptedBlockBool(Blocks.KUnlockedRaidDifficulty4, token).ConfigureAwait(false);
 
             if (Unlocked4Stars)
                 return GameProgress.Unlocked4Stars;
 
-            var Unlocked3Stars = (await ReadEncryptedBlock(Blocks.KUnlockedRaidDifficulty3, 1, token).ConfigureAwait(false))[0] == 2;
+            var Unlocked3Stars = await ReadEncryptedBlockBool(Blocks.KUnlockedRaidDifficulty3, token).ConfigureAwait(false);
 
             if (Unlocked3Stars)
                 return GameProgress.Unlocked3Stars;
@@ -93,12 +93,27 @@ namespace TeraFinder
             return GameProgress.UnlockedTeraRaids;
         }
 
-        public async Task<byte[]?> ReadBlock(DataBlock block, CancellationToken token)
+
+        //Thanks santacrab2 & Zyro670 for the help with the following code
+        public async Task<object?> ReadBlock(DataBlock block, CancellationToken token)
         {
             if (block.IsEncrypted)
-                return await ReadEncryptedBlock(block, token).ConfigureAwait(false);
+            {
+                return block.Type switch
+                {
+                    SCTypeCode.Object => await ReadEncryptedBlockObject(block, token).ConfigureAwait(false),
+                    SCTypeCode.Array => await ReadEncryptedBlockArray(block, token).ConfigureAwait(false),
+                    SCTypeCode.Bool1 or SCTypeCode.Bool2 or SCTypeCode.Bool3 => await ReadEncryptedBlockBool(block, token).ConfigureAwait(false),
+                    SCTypeCode.Byte or SCTypeCode.SByte => await ReadEncryptedBlockByte(block, token).ConfigureAwait(false),
+                    SCTypeCode.UInt32 => await ReadEncryptedBlockUint(block, token).ConfigureAwait(false),
+                    SCTypeCode.Int32 => await ReadEncryptedBlockInt32(block, token).ConfigureAwait(false),
+                    _ => ReadEncryptedBlock(block, token).ConfigureAwait(false),
+                };
+            }
             else
+            {
                 return await ReadDecryptedBlock(block, token).ConfigureAwait(false);
+            }
         }
 
         public async Task WriteDecryptedBlock(byte[] data, DataBlock block, CancellationToken token)
@@ -122,11 +137,61 @@ namespace TeraFinder
             return data;
         }
 
+        private async Task<bool> ReadEncryptedBlockBool(DataBlock block, CancellationToken token)
+        {
+            var data = await ReadEncryptedBlock(block, token).ConfigureAwait(false);
+            return data[0] == 2;
+        }
+
+        private async Task<uint> ReadEncryptedBlockUint(DataBlock block, CancellationToken token)
+        {
+            var header = await ReadEncryptedBlockHeader(block, token).ConfigureAwait(false);
+            return ReadUInt32LittleEndian(header.AsSpan()[1..]);
+        }
+
+        private async Task<int> ReadEncryptedBlockInt32(DataBlock block, CancellationToken token)
+        {
+            var header = await ReadEncryptedBlockHeader(block, token).ConfigureAwait(false);
+            return ReadInt32LittleEndian(header.AsSpan()[1..]);
+        }
+
+        private async Task<byte> ReadEncryptedBlockByte(DataBlock block, CancellationToken token)
+        {
+            var header = await ReadEncryptedBlockHeader(block, token).ConfigureAwait(false);
+            return header[1];
+        }
+
+        private async Task<byte[]?> ReadEncryptedBlockArray(DataBlock block, CancellationToken token)
+        {
+            if (!Connection.Connected)
+                throw new InvalidOperationException("No remote connection");
+
+            Log($"Reading encrypted block {block.Key:X8}...");
+            var address = await GetBlockAddress(block, token).ConfigureAwait(false);
+            var data = await SwitchConnection.ReadBytesAbsoluteAsync(address, 6 + block.Size, token).ConfigureAwait(false);
+            data = BlockUtil.DecryptBlock(block.Key, data);
+            Log("Done");
+            return data[6..];
+        }
+
+        private async Task<byte[]> ReadEncryptedBlockHeader(DataBlock block, CancellationToken token)
+        {
+            if (!Connection.Connected)
+                throw new InvalidOperationException("No remote connection");
+
+            Log($"Reading encrypted block header {block.Key:X8}...");
+            var address = await GetBlockAddress(block, token).ConfigureAwait(false);
+            var header = await SwitchConnection.ReadBytesAbsoluteAsync(address, 5, token).ConfigureAwait(false);
+            header = BlockUtil.DecryptBlock(block.Key, header);
+            Log("Done");
+            return header;
+        }
+
         //Thanks to Lincoln-LM (original scblock code) and Architdate (ported C# reference code)!!
         //https://github.com/Lincoln-LM/sv-live-map/blob/e0f4a30c72ef81f1dc175dae74e2fd3d63b0e881/sv_live_map_core/nxreader/raid_reader.py#L168
         //https://github.com/LegoFigure11/RaidCrawler/blob/2e1832ae89e5ac39dcc25ccf2ae911ef0f634580/MainWindow.cs#L199
 
-        private async Task<byte[]?> ReadEncryptedBlock(DataBlock block, CancellationToken token)
+        private async Task<byte[]?> ReadEncryptedBlockObject(DataBlock block, CancellationToken token)
         {
             if (!Connection.Connected)
                 throw new InvalidOperationException("No remote connection");
@@ -142,14 +207,14 @@ namespace TeraFinder
             return res;
         }
 
-        private async Task<byte[]> ReadEncryptedBlock(DataBlock block, int size, CancellationToken token)
+        private async Task<byte[]> ReadEncryptedBlock(DataBlock block, CancellationToken token)
         {
             if (!Connection.Connected)
                 throw new InvalidOperationException("No remote connection");
 
-            Log($"Reading encrypted block {block.Key:X8}[L:{size:X8}]...");
+            Log($"Reading encrypted block {block.Key:X8}[L:{block.Size:X8}]...");
             var address = await GetBlockAddress(block, token).ConfigureAwait(false);
-            var data = await SwitchConnection.ReadBytesAbsoluteAsync(address, size, token).ConfigureAwait(false);
+            var data = await SwitchConnection.ReadBytesAbsoluteAsync(address, block.Size, token).ConfigureAwait(false);
             var res = BlockUtil.DecryptBlock(block.Key, data);
             Log("Done");
             return res;

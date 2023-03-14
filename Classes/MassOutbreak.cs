@@ -1,4 +1,6 @@
 ﻿using PKHeX.Core;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using static System.Buffers.Binary.BinaryPrimitives;
 
 namespace TeraFinder
@@ -17,8 +19,10 @@ namespace TeraFinder
         private void SetY(float y) => SetCoordinates(4, y);
         private void SetZ(float z) => SetCoordinates(8, z);
 
-        public ReadOnlySpan<byte> GetCoordinates() => Coordinates.Data.AsSpan();
         private void SetCoordinates(int index, float value) => WriteSingleLittleEndian(Coordinates.Data.AsSpan()[index..], value);
+
+        public ReadOnlySpan<byte> GetCoordinates() => Coordinates.Data.AsSpan();
+        public void SetCoordinates(ReadOnlySpan<byte> coordinates) => Coordinates.ChangeData(coordinates);
     }
 
     public class MassOutbreak
@@ -35,6 +39,38 @@ namespace TeraFinder
         public byte Form { get => GetForm(); set => SetForm(value); }
         public int NumKO { get => GetNumKO(); set => SetNumKO(value); }
         public int MaxSpawns { get => GetMaxSpawns(); set => SetMaxSpawns(value); }
+
+        public void DumpToJson(string path) 
+        {
+            if (LocationCenter is not null && LocationDummy is not null)
+            {
+                var json = "{\n" +
+                    "\t\"LocationCenter\": \"" + BitConverter.ToString(LocationCenter.GetCoordinates().ToArray()).Replace("-", string.Empty) + "\",\n" +
+                    "\t\"LocationDummy\": \"" + BitConverter.ToString(LocationDummy.GetCoordinates().ToArray()).Replace("-", string.Empty) + "\",\n" +
+                    "\t\"Species\": " + SpeciesConverter.GetNational9((ushort)Species) + ",\n" +
+                    "\t\"Form\": " + Form + ",\n" +
+                    "\t\"MaxSpawns\": " + MaxSpawns + "\n" +
+                    "}";
+
+                File.WriteAllText(path, json);
+            }
+        }
+
+        public void RestoreFromJson(string path)
+        { 
+            var simpleOutbreak = JsonSerializer.Deserialize<JsonNode>(File.ReadAllText(path))!;
+            var locationCenter = Convert.FromHexString(simpleOutbreak["LocationCenter"]!.GetValue<string>());
+            var locationDummy = Convert.FromHexString(simpleOutbreak["LocationDummy"]!.GetValue<string>());
+            var species = (uint)SpeciesConverter.GetInternal9(simpleOutbreak["Species"]!.GetValue<ushort>());
+            var form = simpleOutbreak["Form"]!.GetValue<byte>();
+            var maxSpawns = simpleOutbreak["MaxSpawns"]!.GetValue<int>();
+
+            LocationCenter!.SetCoordinates(locationCenter);
+            LocationDummy!.SetCoordinates(locationDummy);
+            Species = species;
+            Form = form;
+            MaxSpawns = maxSpawns;
+        }
 
         public MassOutbreak(SAV9SV sav, int id)
         {
@@ -150,6 +186,8 @@ namespace TeraFinder
             var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{ID}Form")!.GetValue(new DataBlock())!;
             var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
 
+            
+            
             if (block.Type is SCTypeCode.Byte or SCTypeCode.SByte)
                 block.SetValue(value);
         }

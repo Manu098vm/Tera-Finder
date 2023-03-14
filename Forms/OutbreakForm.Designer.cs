@@ -61,6 +61,12 @@
             numMaxSpawn = new NumericUpDown();
             lblKoSpawn = new Label();
             lblTotalSpawn = new Label();
+            menuStrip1 = new MenuStrip();
+            toolsToolStripMenuItem = new ToolStripMenuItem();
+            dumpToJsonToolStripMenuItem = new ToolStripMenuItem();
+            injectFromJsonToolStripMenuItem = new ToolStripMenuItem();
+            saveFileDialog = new SaveFileDialog();
+            openFileDialog = new OpenFileDialog();
             grpMap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)imgMap).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
@@ -71,12 +77,13 @@
             grpMassInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numKO).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numMaxSpawn).BeginInit();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // grpMap
             // 
             grpMap.Controls.Add(imgMap);
-            grpMap.Location = new Point(368, 4);
+            grpMap.Location = new Point(371, 29);
             grpMap.Margin = new Padding(3, 4, 3, 4);
             grpMap.Name = "grpMap";
             grpMap.Padding = new Padding(3, 4, 3, 4);
@@ -100,7 +107,7 @@
             // 
             cmbOutbreaks.FormattingEnabled = true;
             cmbOutbreaks.Items.AddRange(new object[] { "Mass Outbreak 1 - ", "Mass Outbreak 2 - ", "Mass Outbreak 3 - ", "Mass Outbreak 4 - ", "Mass Outbreak 5 - ", "Mass Outbreak 6 - ", "Mass Outbreak 7 - ", "Mass Outbreak 8 - " });
-            cmbOutbreaks.Location = new Point(47, 12);
+            cmbOutbreaks.Location = new Point(50, 37);
             cmbOutbreaks.Name = "cmbOutbreaks";
             cmbOutbreaks.Size = new Size(279, 28);
             cmbOutbreaks.TabIndex = 25;
@@ -108,7 +115,7 @@
             // 
             // btnNext
             // 
-            btnNext.Location = new Point(332, 12);
+            btnNext.Location = new Point(335, 37);
             btnNext.Name = "btnNext";
             btnNext.Size = new Size(32, 32);
             btnNext.TabIndex = 26;
@@ -118,7 +125,7 @@
             // 
             // btnPrev
             // 
-            btnPrev.Location = new Point(9, 12);
+            btnPrev.Location = new Point(12, 37);
             btnPrev.Name = "btnPrev";
             btnPrev.Size = new Size(32, 32);
             btnPrev.TabIndex = 27;
@@ -146,7 +153,7 @@
             grpPkmInfo.Controls.Add(lblForm);
             grpPkmInfo.Controls.Add(pictureBox);
             grpPkmInfo.Controls.Add(lblSpecies);
-            grpPkmInfo.Location = new Point(9, 45);
+            grpPkmInfo.Location = new Point(12, 70);
             grpPkmInfo.Name = "grpPkmInfo";
             grpPkmInfo.Size = new Size(355, 123);
             grpPkmInfo.TabIndex = 29;
@@ -193,7 +200,7 @@
             // 
             grpLocation.Controls.Add(grpLocationDummy);
             grpLocation.Controls.Add(grpLocationCenter);
-            grpLocation.Location = new Point(9, 303);
+            grpLocation.Location = new Point(12, 328);
             grpLocation.Name = "grpLocation";
             grpLocation.Size = new Size(355, 295);
             grpLocation.TabIndex = 33;
@@ -340,7 +347,7 @@
             grpMassInfo.Controls.Add(numMaxSpawn);
             grpMassInfo.Controls.Add(lblKoSpawn);
             grpMassInfo.Controls.Add(lblTotalSpawn);
-            grpMassInfo.Location = new Point(9, 175);
+            grpMassInfo.Location = new Point(12, 200);
             grpMassInfo.Name = "grpMassInfo";
             grpMassInfo.Size = new Size(355, 123);
             grpMassInfo.TabIndex = 34;
@@ -407,11 +414,55 @@
             lblTotalSpawn.TabIndex = 0;
             lblTotalSpawn.Text = "Max Spawns:";
             // 
+            // menuStrip1
+            // 
+            menuStrip1.BackColor = SystemColors.ButtonFace;
+            menuStrip1.ImageScalingSize = new Size(20, 20);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolsToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(955, 28);
+            menuStrip1.TabIndex = 35;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // toolsToolStripMenuItem
+            // 
+            toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { dumpToJsonToolStripMenuItem, injectFromJsonToolStripMenuItem });
+            toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            toolsToolStripMenuItem.Size = new Size(58, 24);
+            toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // dumpToJsonToolStripMenuItem
+            // 
+            dumpToJsonToolStripMenuItem.Name = "dumpToJsonToolStripMenuItem";
+            dumpToJsonToolStripMenuItem.Size = new Size(224, 26);
+            dumpToJsonToolStripMenuItem.Text = "Dump to Json";
+            dumpToJsonToolStripMenuItem.Click += dumpToJsonToolStripMenuItem_Click;
+            // 
+            // injectFromJsonToolStripMenuItem
+            // 
+            injectFromJsonToolStripMenuItem.Name = "injectFromJsonToolStripMenuItem";
+            injectFromJsonToolStripMenuItem.Size = new Size(224, 26);
+            injectFromJsonToolStripMenuItem.Text = "Inject from Json";
+            injectFromJsonToolStripMenuItem.Click += injectFromJsonToolStripMenuItem_Click;
+            // 
+            // saveFileDialog
+            // 
+            saveFileDialog.DefaultExt = "json";
+            saveFileDialog.Filter = "Json file|*.json";
+            saveFileDialog.Title = "Save Outbreak Json";
+            // 
+            // openFileDialog
+            // 
+            openFileDialog.DefaultExt = "json";
+            openFileDialog.Filter = "Json file|*.json";
+            openFileDialog.Title = "Load Outbreak Json";
+            // 
             // OutbreakForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(955, 603);
+            ClientSize = new Size(955, 631);
             Controls.Add(grpMassInfo);
             Controls.Add(grpLocation);
             Controls.Add(grpPkmInfo);
@@ -419,6 +470,8 @@
             Controls.Add(btnPrev);
             Controls.Add(cmbOutbreaks);
             Controls.Add(grpMap);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "OutbreakForm";
@@ -438,7 +491,10 @@
             grpMassInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numKO).EndInit();
             ((System.ComponentModel.ISupportInitialize)numMaxSpawn).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -476,5 +532,11 @@
         private Label lblKoSpawn;
         private Label lblTotalSpawn;
         private CheckBox chkEnabled;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem toolsToolStripMenuItem;
+        private ToolStripMenuItem dumpToJsonToolStripMenuItem;
+        private ToolStripMenuItem injectFromJsonToolStripMenuItem;
+        private SaveFileDialog saveFileDialog;
+        private OpenFileDialog openFileDialog;
     }
 }

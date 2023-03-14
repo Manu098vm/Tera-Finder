@@ -103,12 +103,13 @@ namespace TeraFinder.Forms
                 var version = await Executor.ReadGameVersion(token).ConfigureAwait(false);
                 SAV.Game = (int)version;
                 var mystatusblock = SAV.Accessor.FindOrDefault(Blocks.KMyStatus.Key);
-                mystatusblock.ChangeData(await Executor.ReadBlock(Blocks.KMyStatus, token).ConfigureAwait(false));
+                mystatusblock.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.KMyStatus, token).ConfigureAwait(false));
                 var raidblock = SAV.Accessor.FindOrDefault(Blocks.KTeraRaids.Key);
-                raidblock.ChangeData(await Executor.ReadBlock(Blocks.KTeraRaids, token).ConfigureAwait(false));
+                raidblock.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.KTeraRaids, token).ConfigureAwait(false));
                 var progress = await Executor.ReadGameProgress(token).ConfigureAwait(false);
                 ProgressForm.EditProgress(SAV, progress);
-                await DownloadEventData().ConfigureAwait(false);
+                await DownloadEventData(token).ConfigureAwait(false);
+                await DownloadOutbreakData(token).ConfigureAwait(false);
 
                 MessageBox.Show(Strings["ConnectionSuccess"]);
                 Log($"{Strings["ExecutorConnected"]} {version} - {SAV.OT} ({SAV.TrainerTID7}) [{progress}]");
@@ -125,11 +126,10 @@ namespace TeraFinder.Forms
             }
         }
 
-        private async Task DownloadEventData()
+        private async Task DownloadEventData(CancellationToken token)
         {
-            var token = new CancellationToken();
             var KBCATEventRaidIdentifier = SAV.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
-            var raidIdentifierBlock = await Executor.ReadBlock(Blocks.KBCATEventRaidIdentifier, token).ConfigureAwait(false);
+            var raidIdentifierBlock = (byte[]?) await Executor.ReadBlock(Blocks.KBCATEventRaidIdentifier, token).ConfigureAwait(false);
 
             if (KBCATEventRaidIdentifier.Type is not SCTypeCode.None)
                 KBCATEventRaidIdentifier.ChangeData(raidIdentifierBlock);
@@ -137,7 +137,7 @@ namespace TeraFinder.Forms
                 BlockUtil.EditBlock(KBCATEventRaidIdentifier, SCTypeCode.Object, raidIdentifierBlock);
 
             var KBCATFixedRewardItemArray = SAV.Accessor.FindOrDefault(Blocks.KBCATFixedRewardItemArray.Key);
-            var rewardItemBlock = await Executor.ReadBlock(Blocks.KBCATFixedRewardItemArray, token).ConfigureAwait(false);
+            var rewardItemBlock = (byte[]?) await Executor.ReadBlock(Blocks.KBCATFixedRewardItemArray, token).ConfigureAwait(false);
 
             if (KBCATFixedRewardItemArray.Type is not SCTypeCode.None)
                 KBCATFixedRewardItemArray.ChangeData(rewardItemBlock);
@@ -145,7 +145,7 @@ namespace TeraFinder.Forms
                 BlockUtil.EditBlock(KBCATFixedRewardItemArray, SCTypeCode.Object, rewardItemBlock);
 
             var KBCATLotteryRewardItemArray = SAV.Accessor.FindOrDefault(Blocks.KBCATLotteryRewardItemArray.Key);
-            var lotteryItemBlock = await Executor.ReadBlock(Blocks.KBCATLotteryRewardItemArray, token).ConfigureAwait(false);
+            var lotteryItemBlock = (byte[]?) await Executor.ReadBlock(Blocks.KBCATLotteryRewardItemArray, token).ConfigureAwait(false);
 
             if (KBCATLotteryRewardItemArray.Type is not SCTypeCode.None)
                 KBCATLotteryRewardItemArray.ChangeData(lotteryItemBlock);
@@ -153,7 +153,7 @@ namespace TeraFinder.Forms
                 BlockUtil.EditBlock(KBCATLotteryRewardItemArray, SCTypeCode.Object, lotteryItemBlock);
 
             var KBCATRaidEnemyArray = SAV.Accessor.FindOrDefault(Blocks.KBCATRaidEnemyArray.Key);
-            var raidEnemyBlock = await Executor.ReadBlock(Blocks.KBCATRaidEnemyArray, token).ConfigureAwait(false);
+            var raidEnemyBlock = (byte[]?) await Executor.ReadBlock(Blocks.KBCATRaidEnemyArray, token).ConfigureAwait(false);
 
             if (KBCATRaidEnemyArray.Type is not SCTypeCode.None)
                 KBCATRaidEnemyArray.ChangeData(raidEnemyBlock);
@@ -161,12 +161,89 @@ namespace TeraFinder.Forms
                 BlockUtil.EditBlock(KBCATRaidEnemyArray, SCTypeCode.Object, raidEnemyBlock);
 
             var KBCATRaidPriorityArray = SAV.Accessor.FindOrDefault(Blocks.KBCATRaidPriorityArray.Key);
-            var raidPriorityBlock = await Executor.ReadBlock(Blocks.KBCATRaidPriorityArray, token).ConfigureAwait(false);
+            var raidPriorityBlock = (byte[]?) await Executor.ReadBlock(Blocks.KBCATRaidPriorityArray, token).ConfigureAwait(false);
 
             if (KBCATRaidPriorityArray.Type is not SCTypeCode.None)
                 KBCATRaidPriorityArray.ChangeData(raidPriorityBlock);
             else
                 BlockUtil.EditBlock(KBCATRaidPriorityArray, SCTypeCode.Object, raidPriorityBlock);
+        }
+
+        private async Task DownloadOutbreakData(CancellationToken token)
+        {
+            var KMassOutbreakAmount = SAV.Accessor.FindOrDefault(Blocks.KMassOutbreakAmount.Key);
+            var KMassOutbreakAmountData = (byte?)await Executor.ReadBlock(Blocks.KMassOutbreakAmount, token).ConfigureAwait(false);
+
+            if (KMassOutbreakAmount.Type is not SCTypeCode.None)
+                KMassOutbreakAmount.ChangeData((new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
+            else
+                BlockUtil.EditBlock(KMassOutbreakAmount, Blocks.KMassOutbreakAmount.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
+
+            for (var i = 1; i <= 8; i++)
+            {
+                var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}CenterPos")!.GetValue(new DataBlock())!;
+                var KMassOutbreakCenterPos = SAV.Accessor.FindOrDefault(blockInfo.Key);
+                var KMassOutbreakCenterPosData = (byte[]?)await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false);
+
+                if (KMassOutbreakCenterPos.Type is not SCTypeCode.None)
+                    KMassOutbreakCenterPos.ChangeData(KMassOutbreakCenterPosData);
+                else
+                    BlockUtil.EditBlock(KMassOutbreakCenterPos, blockInfo.Type, KMassOutbreakCenterPosData);
+
+                blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}DummyPos")!.GetValue(new DataBlock())!;
+                var KMassOutbreakDummyPos = SAV.Accessor.FindOrDefault(blockInfo.Key);
+                var KMassOutbreakDummyPosData = (byte[]?)await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false);
+
+                if (KMassOutbreakDummyPos.Type is not SCTypeCode.None)
+                    KMassOutbreakDummyPos.ChangeData(KMassOutbreakDummyPosData);
+                else
+                    BlockUtil.EditBlock(KMassOutbreakDummyPos, blockInfo.Type, KMassOutbreakDummyPosData);
+
+                blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}Species")!.GetValue(new DataBlock())!;
+                var KMassOutbreakSpecies = SAV.Accessor.FindOrDefault(blockInfo.Key);
+                var KMassOutbreakSpeciesData = (uint)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
+
+                if (KMassOutbreakSpecies.Type is not SCTypeCode.None)
+                    KMassOutbreakSpecies.SetValue(KMassOutbreakSpeciesData);
+                else
+                    BlockUtil.EditBlock(KMassOutbreakSpecies, blockInfo.Type, KMassOutbreakSpeciesData);
+
+                blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}Form")!.GetValue(new DataBlock())!;
+                var KMassOutbreakForm = SAV.Accessor.FindOrDefault(blockInfo.Key);
+                var KMassOutbreakFormData = (byte)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
+
+                if (KMassOutbreakForm.Type is not SCTypeCode.None)
+                    KMassOutbreakForm.SetValue(KMassOutbreakFormData);
+                else
+                    BlockUtil.EditBlock(KMassOutbreakForm, blockInfo.Type, KMassOutbreakFormData);
+
+                blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak01Found")!.GetValue(new DataBlock())!;
+                var KMassOutbreakFound = SAV.Accessor.FindOrDefault(blockInfo.Key);
+                var KMassOutbreakFoundData = (bool)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
+
+                if (KMassOutbreakFound.Type is SCTypeCode.None)
+                    KMassOutbreakFound = BlockUtil.CreateDummyBlock(blockInfo.Key, blockInfo.Type);
+
+                KMassOutbreakFound.ChangeBooleanType(KMassOutbreakFoundData ? SCTypeCode.Bool2 : SCTypeCode.Bool1);
+
+                blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}NumKOed")!.GetValue(new DataBlock())!;
+                var KMassOutbreakNumKOed = SAV.Accessor.FindOrDefault(blockInfo.Key);
+                var KMassOutbreakNumKOedData = (int)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
+
+                if (KMassOutbreakNumKOed.Type is not SCTypeCode.None)
+                    KMassOutbreakNumKOed.SetValue(KMassOutbreakNumKOedData);
+                else
+                    BlockUtil.EditBlock(KMassOutbreakNumKOed, blockInfo.Type, KMassOutbreakNumKOedData);
+
+                blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}TotalSpawns")!.GetValue(new DataBlock())!;
+                var KMassOutbreakTotalSpawns = SAV.Accessor.FindOrDefault(blockInfo.Key);
+                var KMassOutbreakTotalSpawnsData = (int)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
+
+                if (KMassOutbreakTotalSpawns.Type is not SCTypeCode.None)
+                    KMassOutbreakTotalSpawns.SetValue(KMassOutbreakTotalSpawnsData);
+                else
+                    BlockUtil.EditBlock(KMassOutbreakTotalSpawns, blockInfo.Type, KMassOutbreakTotalSpawnsData);
+            }
         }
 
         private SwitchProtocol GetProtocol()

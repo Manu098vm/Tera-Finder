@@ -68,7 +68,7 @@ namespace TeraFinder.Launcher
                 {
                     btnEditGame.Enabled = true;
                     btnStartEditor.Enabled = true;
-                    btnEditOutbreaks.Enabled = false;
+                    btnEditOutbreaks.Enabled = true;
                     btnExport.Enabled = false;
                     btnLoad.Enabled = false;
                     this.TranslateInterface(Plugin.Language);

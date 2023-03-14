@@ -59,7 +59,10 @@ namespace TeraFinder.Forms
             var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
 
             var species = SpeciesConverter.GetNational9((ushort)outbreak.Species);
-            cmbSpecies.SelectedIndex = species;
+            if(species != cmbSpecies.SelectedIndex)
+                cmbSpecies.SelectedIndex = species;
+            else
+                cmbSpecies_IndexChanged(this, EventArgs.Empty);
 
             numMaxSpawn.Value = outbreak.MaxSpawns > 0 ? outbreak.MaxSpawns : 1;
             numKO.Value = outbreak.NumKO;
@@ -84,6 +87,7 @@ namespace TeraFinder.Forms
 
         private void cmbSpecies_IndexChanged(object sender, EventArgs e)
         {
+            
             cmbForm.Items.Clear();
             var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
             var species = (ushort)cmbSpecies.SelectedIndex;
@@ -299,6 +303,38 @@ namespace TeraFinder.Forms
             btnNext.Enabled = true;
             cmbOutbreaks.SelectedIndex--;
             cmbOutbreaks.Focus();
+        }
+
+        private void dumpToJsonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
+                saveFileDialog.FileName = $"{SpeciesConverter.GetNational9((ushort)outbreak.Species)}";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    outbreak.DumpToJson(saveFileDialog.FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error while parsing:\n{ex.Message}");
+            }
+        }
+
+        private void injectFromJsonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    outbreak.RestoreFromJson(openFileDialog.FileName);
+                    cmbOutbreaks_IndexChanged(this, EventArgs.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error while parsing:\n{ex.Message}");
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using PKHeX.Core;
 using PKHeX.Drawing;
 using PKHeX.Drawing.PokeSprite;
-using System.Security.Policy;
 
 namespace TeraFinder
 {
@@ -39,7 +38,6 @@ namespace TeraFinder
             var sprite = (Image?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file)!;
             if (!active) sprite = ImageUtil.ToGrayscale(sprite);
             return sprite;
-
         }
 
         private static Image LayerOverImageItem(Image image, int item)
