@@ -32,6 +32,7 @@ namespace TeraFinder
         private readonly ToolStripMenuItem Finder = new("Tera Raid Seed Checker");
         private readonly ToolStripMenuItem Flags = new("Edit Game Flags");
         private readonly ToolStripMenuItem Events = new("Import Poké Portal News");
+        private readonly ToolStripMenuItem Outbreaks = new("Mass Outbreak Viewer/Editor");
 
         public void Initialize(params object[] args)
         {
@@ -164,11 +165,13 @@ namespace TeraFinder
             Plugin.DropDownItems.Add(Finder);
             Plugin.DropDownItems.Add(Flags);
             Plugin.DropDownItems.Add(Events);
+            Plugin.DropDownItems.Add(Outbreaks);
             Connect.Click += (s, e) => LaunchConnector();
             Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
             Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
             Flags.Click += (s, e) => new ProgressForm(SAV, Language).Show();
             Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV, Language).Show();
+            Outbreaks.Click += (s, e) => new OutbreakForm(SAV, Language, Connection).Show();
             tools.DropDownItems.Add(Plugin);
         }
 
@@ -181,7 +184,8 @@ namespace TeraFinder
                 { "Plugin.TeraViewer", "Tera Raid Viewer/Editor" },
                 { "Plugin.SeedChecker", "Tera Raid Seed Checker" },
                 { "Plugin.FlagEditor", "Edit Game Flags" },
-                { "Plugin.NewsImporter", "Import Poké Portal News" }
+                { "Plugin.NewsImporter", "Import Poké Portal News" },
+                { "Plugin.OutbreakViewer", "Mass Outbreak Viewer/Editor"}
             }.TranslateInnerStrings(Language);
 
             Plugin.Text = dic["Plugin.TeraFinderPlugin"];
@@ -190,6 +194,7 @@ namespace TeraFinder
             Finder.Text = dic["Plugin.SeedChecker"];
             Flags.Text = dic["Plugin.FlagEditor"];
             Events.Text = dic["Plugin.NewsImporter"];
+            Outbreaks.Text = dic["Plugin.OutbreakViewer"];
         }
 
         public void LaunchEditor()
@@ -222,6 +227,11 @@ namespace TeraFinder
         public void LaunchFinder()
         {
             new CheckerForm(new PK9 { TrainerTID7 = SAV.TrainerTID7, TrainerSID7 = SAV.TrainerSID7 }, SAV, Language).Show();
+        }
+
+        public void LaunchMassOutbreakEditor()
+        {
+            new OutbreakForm(SAV, Language, Connection).Show();
         }
 
         public ConnectionForm LaunchConnector(Form? parent = null)

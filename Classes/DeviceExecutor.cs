@@ -70,22 +70,22 @@ namespace TeraFinder
             if (!Connection.Connected)
                 throw new InvalidOperationException("No remote connection");
 
-            var Unlocked6Stars = (await ReadEncryptedBlock(Blocks.KUnlockedRaidDifficulty6, 1, token).ConfigureAwait(false))[0] == 2;
+            var Unlocked6Stars = await ReadEncryptedBlockBool(Blocks.KUnlockedRaidDifficulty6, token).ConfigureAwait(false);
 
             if (Unlocked6Stars)
                 return GameProgress.Unlocked6Stars;
 
-            var Unlocked5Stars = (await ReadEncryptedBlock(Blocks.KUnlockedRaidDifficulty5, 1, token).ConfigureAwait(false))[0] == 2;
+            var Unlocked5Stars = await ReadEncryptedBlockBool(Blocks.KUnlockedRaidDifficulty5, token).ConfigureAwait(false);
 
             if (Unlocked5Stars)
                 return GameProgress.Unlocked5Stars;
 
-            var Unlocked4Stars = (await ReadEncryptedBlock(Blocks.KUnlockedRaidDifficulty4, 1, token).ConfigureAwait(false))[0] == 2;
+            var Unlocked4Stars = await ReadEncryptedBlockBool(Blocks.KUnlockedRaidDifficulty4, token).ConfigureAwait(false);
 
             if (Unlocked4Stars)
                 return GameProgress.Unlocked4Stars;
 
-            var Unlocked3Stars = (await ReadEncryptedBlock(Blocks.KUnlockedRaidDifficulty3, 1, token).ConfigureAwait(false))[0] == 2;
+            var Unlocked3Stars = await ReadEncryptedBlockBool(Blocks.KUnlockedRaidDifficulty3, token).ConfigureAwait(false);
 
             if (Unlocked3Stars)
                 return GameProgress.Unlocked3Stars;
@@ -93,7 +93,16 @@ namespace TeraFinder
             return GameProgress.UnlockedTeraRaids;
         }
 
-        public async Task<byte[]?> ReadBlock(DataBlock block, CancellationToken token)
+        public async Task<bool> WriteBlock(object data, DataBlock block, CancellationToken token, object? toExpect = default)
+        {
+            if (block.IsEncrypted)
+                return await WriteEncryptedBlockSafe(block, toExpect, data, token).ConfigureAwait(false);
+            else
+                return await WriteDecryptedBlock((byte[])data!, block, token).ConfigureAwait(false);
+        }
+
+        //Thanks santacrab2 & Zyro670 for the help with the following code
+        public async Task<object?> ReadBlock(DataBlock block, CancellationToken token)
         {
             if (block.IsEncrypted)
                 return await ReadEncryptedBlock(block, token).ConfigureAwait(false);
@@ -101,7 +110,7 @@ namespace TeraFinder
                 return await ReadDecryptedBlock(block, token).ConfigureAwait(false);
         }
 
-        public async Task WriteDecryptedBlock(byte[] data, DataBlock block, CancellationToken token)
+        private async Task<bool> WriteDecryptedBlock(byte[] data, DataBlock block, CancellationToken token)
         {
             if (!Connection.Connected)
                 throw new InvalidOperationException("No remote connection");
@@ -109,6 +118,8 @@ namespace TeraFinder
             Log($"Writing decrypted block {block.Key:X8}...");
             await SwitchConnection.PointerPoke(data, block.Pointer!, token).ConfigureAwait(false);
             Log("Done");
+
+            return true;
         }
 
         private async Task<byte[]> ReadDecryptedBlock(DataBlock block, CancellationToken token)
@@ -122,11 +133,205 @@ namespace TeraFinder
             return data;
         }
 
+        private async Task<bool> WriteEncryptedBlockSafe(DataBlock block, object? toExpect, object toWrite, CancellationToken token)
+        {
+            if (toExpect == default || toWrite == default)
+                return false;
+
+            return block.Type switch
+            {
+                SCTypeCode.Array => await WriteEncryptedBlockArray(block, (byte[])toExpect, (byte[])toWrite, token).ConfigureAwait(false),
+                SCTypeCode.Bool1 or SCTypeCode.Bool2 or SCTypeCode.Bool3 => await WriteEncryptedBlockBool(block, (bool)toExpect, (bool)toWrite, token).ConfigureAwait(false),
+                SCTypeCode.Byte or SCTypeCode.SByte => await WriteEncryptedBlockByte(block, (byte)toExpect, (byte)toWrite, token).ConfigureAwait(false),
+                SCTypeCode.UInt32 => await WriteEncryptedBlockUint(block, (uint)toExpect, (uint)toWrite, token).ConfigureAwait(false),
+                SCTypeCode.Int32 => await WriteEncryptedBlockInt32(block, (int)toExpect, (int)toWrite, token).ConfigureAwait(false),
+                _ => throw new NotSupportedException($"Block {block.Name} (Type {block.Type}) is currently not supported.")
+            };
+        }
+
+        private async Task<object?> ReadEncryptedBlock(DataBlock block, CancellationToken token)
+        {
+            return block.Type switch
+            {
+                SCTypeCode.Object => await ReadEncryptedBlockObject(block, token).ConfigureAwait(false),
+                SCTypeCode.Array => await ReadEncryptedBlockArray(block, token).ConfigureAwait(false),
+                SCTypeCode.Bool1 or SCTypeCode.Bool2 or SCTypeCode.Bool3 => await ReadEncryptedBlockBool(block, token).ConfigureAwait(false),
+                SCTypeCode.Byte or SCTypeCode.SByte => await ReadEncryptedBlockByte(block, token).ConfigureAwait(false),
+                SCTypeCode.UInt32 => await ReadEncryptedBlockUint(block, token).ConfigureAwait(false),
+                SCTypeCode.Int32 => await ReadEncryptedBlockInt32(block, token).ConfigureAwait(false),
+                _ => throw new NotSupportedException($"Block {block.Name} (Type {block.Type}) is currently not supported.")
+            };
+        }
+
+        private async Task<bool> WriteEncryptedBlockUint(DataBlock block, uint valueToExpect ,uint valueToInject, CancellationToken token)
+        {
+            if (!Connection.Connected)
+                throw new InvalidOperationException("No remote connection");
+
+            //Always read and decrypt first to validate address and data
+            Log($"Writing encrypted block {block.Key:X8}...");
+            ulong address;
+            try { address = await GetBlockAddress(block, token).ConfigureAwait(false); }
+            catch (Exception) { return false; }
+            //If we get there without exceptions, the block address is valid
+            var header = await SwitchConnection.ReadBytesAbsoluteAsync(address, 5, token).ConfigureAwait(false);
+            header = BlockUtil.DecryptBlock(block.Key, header);
+            //Validate ram data
+            var ram = ReadUInt32LittleEndian(header.AsSpan()[1..]);
+            if (ram != valueToExpect) return false;
+            //If we get there then both block address and block data are valid, we can safely inject
+            WriteUInt32LittleEndian(header.AsSpan()[1..], valueToInject);
+            header = BlockUtil.EncryptBlock(block.Key, header);
+            await SwitchConnection.WriteBytesAbsoluteAsync(header, address, token).ConfigureAwait(false);
+            Log("Done");
+            return true;
+        }
+
+        private async Task<uint> ReadEncryptedBlockUint(DataBlock block, CancellationToken token)
+        {
+            var header = await ReadEncryptedBlockHeader(block, token).ConfigureAwait(false);
+            return ReadUInt32LittleEndian(header.AsSpan()[1..]);
+        }
+
+        private async Task<bool> WriteEncryptedBlockInt32(DataBlock block, int valueToExpect, int valueToInject, CancellationToken token)
+        {
+            if (!Connection.Connected)
+                throw new InvalidOperationException("No remote connection");
+
+            //Always read and decrypt first to validate address and data
+            Log($"Writing encrypted block {block.Key:X8}...");
+            ulong address;
+            try { address = await GetBlockAddress(block, token).ConfigureAwait(false); }
+            catch (Exception) { return false; }
+            //If we get there without exceptions, the block address is valid
+            var header = await SwitchConnection.ReadBytesAbsoluteAsync(address, 5, token).ConfigureAwait(false);
+            header = BlockUtil.DecryptBlock(block.Key, header);
+            //Validate ram data
+            var ram = ReadInt32LittleEndian(header.AsSpan()[1..]);
+            if (ram != valueToExpect) return false;
+            //If we get there then both block address and block data are valid, we can safely inject
+            WriteInt32LittleEndian(header.AsSpan()[1..], valueToInject);
+            header = BlockUtil.EncryptBlock(block.Key, header);
+            await SwitchConnection.WriteBytesAbsoluteAsync(header, address, token).ConfigureAwait(false);
+            Log("Done");
+            return true;
+        }
+
+        private async Task<int> ReadEncryptedBlockInt32(DataBlock block, CancellationToken token)
+        {
+            var header = await ReadEncryptedBlockHeader(block, token).ConfigureAwait(false);
+            return ReadInt32LittleEndian(header.AsSpan()[1..]);
+        }
+
+        private async Task<bool> WriteEncryptedBlockByte(DataBlock block, byte valueToExpect, byte valueToInject, CancellationToken token)
+        {
+            if (!Connection.Connected)
+                throw new InvalidOperationException("No remote connection");
+
+            //Always read and decrypt first to validate address and data
+            Log($"Writing encrypted block {block.Key:X8}...");
+            ulong address;
+            try { address = await GetBlockAddress(block, token).ConfigureAwait(false); }
+            catch (Exception) { return false; }
+            //If we get there without exceptions, the block address is valid
+            var header = await SwitchConnection.ReadBytesAbsoluteAsync(address, 5, token).ConfigureAwait(false);
+            header = BlockUtil.DecryptBlock(block.Key, header);
+            //Validate ram data
+            var ram = header[1];
+            if (ram != valueToExpect) return false;
+            //If we get there then both block address and block data are valid, we can safely inject
+            header[1] = valueToInject;
+            header = BlockUtil.EncryptBlock(block.Key, header);
+            await SwitchConnection.WriteBytesAbsoluteAsync(header, address, token).ConfigureAwait(false);
+            Log("Done");
+            return true;
+        }
+
+        private async Task<byte> ReadEncryptedBlockByte(DataBlock block, CancellationToken token)
+        {
+            var header = await ReadEncryptedBlockHeader(block, token).ConfigureAwait(false);
+            return header[1];
+        }
+
+        private async Task<bool> WriteEncryptedBlockArray(DataBlock block, byte[] arrayToExpect, byte[] arrayToInject, CancellationToken token)
+        {
+            if (!Connection.Connected)
+                throw new InvalidOperationException("No remote connection");
+
+            //Always read and decrypt first to validate address and data
+            Log($"Writing encrypted block {block.Key:X8}...");
+            ulong address;
+            try { address = await GetBlockAddress(block, token).ConfigureAwait(false); }
+            catch (Exception) { return false; }
+            //If we get there without exceptions, the block address is valid
+            var data = await SwitchConnection.ReadBytesAbsoluteAsync(address, 6 + block.Size, token).ConfigureAwait(false);
+            data = BlockUtil.DecryptBlock(block.Key, data);
+            //Validate ram data
+            var ram = data[6..];
+            if (!ram.SequenceEqual(arrayToExpect)) return false;
+            //If we get there then both block address and block data are valid, we can safely inject
+            Array.ConstrainedCopy(arrayToInject, 0, data, 6, block.Size);
+            data = BlockUtil.EncryptBlock(block.Key, data);
+            await SwitchConnection.WriteBytesAbsoluteAsync(data, address, token).ConfigureAwait(false);
+            Log("Done");
+            return true;
+        }
+
+        private async Task<byte[]?> ReadEncryptedBlockArray(DataBlock block, CancellationToken token)
+        {
+            if (!Connection.Connected)
+                throw new InvalidOperationException("No remote connection");
+
+            Log($"Reading encrypted block {block.Key:X8}...");
+            var address = await GetBlockAddress(block, token).ConfigureAwait(false);
+            var data = await SwitchConnection.ReadBytesAbsoluteAsync(address, 6 + block.Size, token).ConfigureAwait(false);
+            data = BlockUtil.DecryptBlock(block.Key, data);
+            Log("Done");
+            return data[6..];
+        }
+
+        private async Task<byte[]> ReadEncryptedBlockHeader(DataBlock block, CancellationToken token)
+        {
+            if (!Connection.Connected)
+                throw new InvalidOperationException("No remote connection");
+
+            Log($"Reading encrypted block header {block.Key:X8}...");
+            var address = await GetBlockAddress(block, token).ConfigureAwait(false);
+            var header = await SwitchConnection.ReadBytesAbsoluteAsync(address, 5, token).ConfigureAwait(false);
+            header = BlockUtil.DecryptBlock(block.Key, header);
+            Log("Done");
+            return header;
+        }
+
+        private async Task<bool> WriteEncryptedBlockBool(DataBlock block, bool valueToExpect, bool valueToInject, CancellationToken token)
+        {
+            if (!Connection.Connected)
+                throw new InvalidOperationException("No remote connection");
+
+            //Always read and decrypt first to validate address and data
+            Log($"Writing encrypted block {block.Key:X8}...");
+            ulong address;
+            try { address = await GetBlockAddress(block, token).ConfigureAwait(false); }
+            catch (Exception) { return false; }
+            //If we get there without exceptions, the block address is valid
+            var data = await SwitchConnection.ReadBytesAbsoluteAsync(address, block.Size, token).ConfigureAwait(false);
+            data = BlockUtil.DecryptBlock(block.Key, data);
+            //Validate ram data
+            var ram = data[0] == 2;
+            if (ram != valueToExpect) return false;
+            //If we get there then both block address and block data are valid, we can safely inject
+            data[0] = valueToInject ? (byte)2 : (byte)1;
+            data = BlockUtil.EncryptBlock(block.Key, data);
+            await SwitchConnection.WriteBytesAbsoluteAsync(data, address, token).ConfigureAwait(false);
+            Log("Done");
+            return true;
+        }
+
         //Thanks to Lincoln-LM (original scblock code) and Architdate (ported C# reference code)!!
         //https://github.com/Lincoln-LM/sv-live-map/blob/e0f4a30c72ef81f1dc175dae74e2fd3d63b0e881/sv_live_map_core/nxreader/raid_reader.py#L168
         //https://github.com/LegoFigure11/RaidCrawler/blob/2e1832ae89e5ac39dcc25ccf2ae911ef0f634580/MainWindow.cs#L199
 
-        private async Task<byte[]?> ReadEncryptedBlock(DataBlock block, CancellationToken token)
+        private async Task<byte[]?> ReadEncryptedBlockObject(DataBlock block, CancellationToken token)
         {
             if (!Connection.Connected)
                 throw new InvalidOperationException("No remote connection");
@@ -142,17 +347,17 @@ namespace TeraFinder
             return res;
         }
 
-        private async Task<byte[]> ReadEncryptedBlock(DataBlock block, int size, CancellationToken token)
+        private async Task<bool> ReadEncryptedBlockBool(DataBlock block, CancellationToken token)
         {
             if (!Connection.Connected)
                 throw new InvalidOperationException("No remote connection");
 
-            Log($"Reading encrypted block {block.Key:X8}[L:{size:X8}]...");
+            Log($"Reading encrypted block {block.Key:X8}[L:{block.Size:X8}]...");
             var address = await GetBlockAddress(block, token).ConfigureAwait(false);
-            var data = await SwitchConnection.ReadBytesAbsoluteAsync(address, size, token).ConfigureAwait(false);
+            var data = await SwitchConnection.ReadBytesAbsoluteAsync(address, block.Size, token).ConfigureAwait(false);
             var res = BlockUtil.DecryptBlock(block.Key, data);
             Log("Done");
-            return res;
+            return res[0] == 2;
         }
 
         private async Task<ulong> GetBlockAddress(DataBlock block, CancellationToken token)
@@ -162,7 +367,7 @@ namespace TeraFinder
                 return await SwitchConnection.PointerAll(PreparePointer(block.Pointer!), token).ConfigureAwait(false);
             var direction = block.Key > read_key ? 1 : -1;
             var base_offset = block.Pointer![block.Pointer.Count - 1];
-            for (var offset = base_offset; offset < base_offset + 0x1000 && offset > base_offset - 0x1000; offset += direction * 0x20)
+            for (var offset = base_offset; offset < base_offset + 0x2000 && offset > base_offset - 0x2000; offset += direction * 0x20)
             {
                 var pointer = block.Pointer!.ToArray();
                 pointer[^1] = offset;

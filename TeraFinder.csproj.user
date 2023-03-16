@@ -14,6 +14,9 @@
     <Compile Update="Forms\EditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\OutbreakForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\ProgressForm.cs">
       <SubType>Form</SubType>
     </Compile>
