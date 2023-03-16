@@ -1,5 +1,4 @@
-﻿using NLog.LayoutRenderers.Wrappers;
-using PKHeX.Core;
+﻿using PKHeX.Core;
 using SysBot.Base;
 using TeraFinder.Properties;
 

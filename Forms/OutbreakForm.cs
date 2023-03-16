@@ -1,6 +1,8 @@
 ﻿using PKHeX.Core;
 using System.Text.Json.Nodes;
 using System.Text.Json;
+using Microsoft.VisualBasic;
+using System;
 
 namespace TeraFinder.Forms
 {
@@ -9,6 +11,7 @@ namespace TeraFinder.Forms
         public SAV9SV SAV = null!;
         public List<MassOutbreak> MassOutbreaks = new();
         public string Language = null!;
+        private Dictionary<string, string> Strings = null!;
 
         private ConnectionForm? Connection;
 
@@ -27,6 +30,8 @@ namespace TeraFinder.Forms
             Language = language;
 
             this.TranslateInterface(Language);
+            GenerateDictionary();
+            TranslateDictionary(Language);
 
             for (var i = 1; i <= 8; i++)
                 MassOutbreaks.Add(new MassOutbreak(SAV, i));
@@ -39,13 +44,27 @@ namespace TeraFinder.Forms
             GenderList = GameInfo.GenderSymbolUnicode.ToArray();
 
             for (var i = 0; i < 8; i++)
-                cmbOutbreaks.Items[i] += SpeciesList[SpeciesConverter.GetNational9((ushort)MassOutbreaks[i].Species)];
+                cmbOutbreaks.Items[i] = $"{Strings["OutBreakForm.MassOutbreakName"]} {i+1} - " +
+                    $"{SpeciesList[SpeciesConverter.GetNational9((ushort)MassOutbreaks[i].Species)]}";
 
             cmbSpecies.Items.AddRange(SpeciesList);
             cmbOutbreaks.SelectedIndex = 0;
 
             Connection = connection;
         }
+
+        private void GenerateDictionary()
+        {
+            Strings = new Dictionary<string, string>
+            {
+                { "OutBreakForm.MassOutbreakName", "Mass Outbreak" },
+                { "OutbreakForm.DeviceDisconnected", "Device disconnected." },
+                { "OutbreakForm.ErrorParsing", "Error while parsing:" },
+                { "OutbreakForm.LoadDefault", "Do you want to load default legal data for {species}?" },
+            };
+        }
+
+        private void TranslateDictionary(string language) => Strings = Strings.TranslateInnerStrings(language);
 
         private void cmbOutbreaks_IndexChanged(object sender, EventArgs e)
         {
@@ -108,7 +127,7 @@ namespace TeraFinder.Forms
                 outbreak.Species = SpeciesConverter.GetInternal9(species);
                 cmbForm.SelectedIndex = 0;
                 var index = cmbOutbreaks.SelectedIndex;
-                cmbOutbreaks.Items[index] = $"Mass Outbreak {index + 1} - {SpeciesList[species]}";
+                cmbOutbreaks.Items[index] = $"{Strings["OutBreakForm.MassOutbreakName"]} {index + 1} - {SpeciesList[species]}";
 
                 if (Connection is not null && Connection.IsConnected())
                 {
@@ -119,7 +138,7 @@ namespace TeraFinder.Forms
                     if (!success)
                     {
                         Connection.Disconnect();
-                        MessageBox.Show("Device disconnected.");
+                        MessageBox.Show(Strings["OutbreakForm.DeviceDisconnected"]);
                     }
                 }
             }
@@ -172,7 +191,7 @@ namespace TeraFinder.Forms
                     if (!success)
                     {
                         Connection.Disconnect();
-                        MessageBox.Show("Device disconnected.");
+                        MessageBox.Show(Strings["OutbreakForm.DeviceDisconnected"]);
                     }
                 }
             }
@@ -195,7 +214,7 @@ namespace TeraFinder.Forms
                     if (!success)
                     {
                         Connection.Disconnect();
-                        MessageBox.Show("Device disconnected.");
+                        MessageBox.Show(Strings["OutbreakForm.DeviceDisconnected"]);
                     }
                 }
             }
@@ -218,7 +237,7 @@ namespace TeraFinder.Forms
                     if (!success)
                     {
                         Connection.Disconnect();
-                        MessageBox.Show("Device disconnected.");
+                        MessageBox.Show(Strings["OutbreakForm.DeviceDisconnected"]);
                     }
                 }
             }
@@ -245,7 +264,7 @@ namespace TeraFinder.Forms
                     if (!success)
                     {
                         Connection.Disconnect();
-                        MessageBox.Show("Device disconnected.");
+                        MessageBox.Show(Strings["OutbreakForm.DeviceDisconnected"]);
                     }
                 }
             }
@@ -286,7 +305,7 @@ namespace TeraFinder.Forms
                     if (!success)
                     {
                         Connection.Disconnect();
-                        MessageBox.Show("Device disconnected.");
+                        MessageBox.Show(Strings["OutbreakForm.DeviceDisconnected"]);
                     }
                 }
             }
@@ -315,7 +334,7 @@ namespace TeraFinder.Forms
                             if (!success)
                             {
                                 Connection.Disconnect();
-                                MessageBox.Show("Device disconnected.");
+                                MessageBox.Show(Strings["OutbreakForm.DeviceDisconnected"]);
                             }
                         }
                     }
@@ -348,7 +367,7 @@ namespace TeraFinder.Forms
                             if (!success)
                             {
                                 Connection.Disconnect();
-                                MessageBox.Show("Device disconnected.");
+                                MessageBox.Show(Strings["OutbreakForm.DeviceDisconnected"]);
                             }
                         }
                     }
@@ -380,7 +399,7 @@ namespace TeraFinder.Forms
                             if (!success)
                             {
                                 Connection.Disconnect();
-                                MessageBox.Show("Device disconnected.");
+                                MessageBox.Show(Strings["OutbreakForm.DeviceDisconnected"]);
                             }
                         }
                     }
@@ -413,7 +432,7 @@ namespace TeraFinder.Forms
                             if (!success)
                             {
                                 Connection.Disconnect();
-                                MessageBox.Show("Device disconnected.");
+                                MessageBox.Show(Strings["OutbreakForm.DeviceDisconnected"]);
                             }
                         }
                     }
@@ -443,7 +462,7 @@ namespace TeraFinder.Forms
                             if (!success)
                             {
                                 Connection.Disconnect();
-                                MessageBox.Show("Device disconnected.");
+                                MessageBox.Show(Strings["OutbreakForm.DeviceDisconnected"]);
                             }
                         }
                     }
@@ -473,7 +492,7 @@ namespace TeraFinder.Forms
                             if (!success)
                             {
                                 Connection.Disconnect();
-                                MessageBox.Show("Device disconnected.");
+                                MessageBox.Show(Strings["OutbreakForm.DeviceDisconnected"]);
                             }
                         }
                     }
@@ -520,7 +539,7 @@ namespace TeraFinder.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error while parsing:\n{ex.Message}");
+                MessageBox.Show($"{Strings["OutbreakForm.ErrorParsing"]}\n{ex.Message}");
             }
         }
 
@@ -562,7 +581,7 @@ namespace TeraFinder.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error while parsing:\n{ex.Message}");
+                MessageBox.Show($"{Strings["OutbreakForm.ErrorParsing"]}\n{ex.Message}");
             }
         }
     }
