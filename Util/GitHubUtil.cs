@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using Octokit;
-using PKHeX.Core;
 
 namespace TeraFinder
 {
