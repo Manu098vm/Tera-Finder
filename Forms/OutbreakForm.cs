@@ -1,4 +1,6 @@
 ﻿using PKHeX.Core;
+using System.Text.Json.Nodes;
+using System.Text.Json;
 
 namespace TeraFinder.Forms
 {
@@ -8,7 +10,8 @@ namespace TeraFinder.Forms
         public List<MassOutbreak> MassOutbreaks = new();
         public string Language = null!;
 
-        private ConnectionForm? Connection = null;
+        private ConnectionForm? Connection;
+
         private Image DefBackground = null!;
         private Size DefSize = new(0, 0);
         private bool Loaded = false;
@@ -17,7 +20,7 @@ namespace TeraFinder.Forms
         private string[] TypesList = null!;
         private string[] GenderList = null!;
 
-        public OutbreakForm(SAV9SV sav, string language)
+        public OutbreakForm(SAV9SV sav, string language, ConnectionForm? connection)
         {
             InitializeComponent();
             SAV = sav;
@@ -40,6 +43,8 @@ namespace TeraFinder.Forms
 
             cmbSpecies.Items.AddRange(SpeciesList);
             cmbOutbreaks.SelectedIndex = 0;
+
+            Connection = connection;
         }
 
         private void cmbOutbreaks_IndexChanged(object sender, EventArgs e)
@@ -90,6 +95,7 @@ namespace TeraFinder.Forms
 
             cmbForm.Items.Clear();
             var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
+            var toExpect = outbreak.Species;
             var species = (ushort)cmbSpecies.SelectedIndex;
             var formlist = FormConverter.GetFormList(species, TypesList, FormsList, GenderList, EntityContext.Gen9);
             if (formlist.Length == 0 || (formlist.Length == 1 && formlist[0].Equals("")))
@@ -103,6 +109,19 @@ namespace TeraFinder.Forms
                 cmbForm.SelectedIndex = 0;
                 var index = cmbOutbreaks.SelectedIndex;
                 cmbOutbreaks.Items[index] = $"Mass Outbreak {index + 1} - {SpeciesList[species]}";
+
+                if (Connection is not null && Connection.IsConnected())
+                {
+                    var success = false;
+                    var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{cmbOutbreaks.SelectedIndex+1}Species")!.GetValue(new DataBlock())!;
+                    Task.Run(async () => { success = await Connection.Executor.WriteBlock(outbreak.Species, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
+
+                    if (!success)
+                    {
+                        Connection.Disconnect();
+                        MessageBox.Show("Device disconnected.");
+                    }
+                }
             }
             else
             {
@@ -128,6 +147,7 @@ namespace TeraFinder.Forms
             if (Loaded)
             {
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
+                var toExpect = outbreak.Form;
                 var species = SpeciesConverter.GetNational9((ushort)outbreak.Species);
                 outbreak.Form = (byte)cmbForm.SelectedIndex;
 
@@ -142,6 +162,19 @@ namespace TeraFinder.Forms
                     pictureBox.BackgroundImage = DefBackground;
                     pictureBox.Size = DefSize;
                 }
+
+                if (Connection is not null && Connection.IsConnected())
+                {
+                    var success = false;
+                    var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{cmbOutbreaks.SelectedIndex+1}Form")!.GetValue(new DataBlock())!;
+                    Task.Run(async () => { success = await Connection.Executor.WriteBlock(outbreak.Form, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
+
+                    if (!success)
+                    {
+                        Connection.Disconnect();
+                        MessageBox.Show("Device disconnected.");
+                    }
+                }
             }
         }
 
@@ -150,7 +183,21 @@ namespace TeraFinder.Forms
             if (Loaded)
             {
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
+                var toExpect = outbreak.MaxSpawns;
                 outbreak.MaxSpawns = (int)numMaxSpawn.Value;
+
+                if (Connection is not null && Connection.IsConnected())
+                {
+                    var success = false;
+                    var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{cmbOutbreaks.SelectedIndex+1}TotalSpawns")!.GetValue(new DataBlock())!;
+                    Task.Run(async () => { success = await Connection.Executor.WriteBlock(outbreak.MaxSpawns, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
+
+                    if (!success)
+                    {
+                        Connection.Disconnect();
+                        MessageBox.Show("Device disconnected.");
+                    }
+                }
             }
         }
 
@@ -159,7 +206,21 @@ namespace TeraFinder.Forms
             if (Loaded)
             {
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
+                var toExpect = outbreak.NumKO;
                 outbreak.NumKO = (int)numKO.Value;
+
+                if (Connection is not null && Connection.IsConnected())
+                {
+                    var success = false;
+                    var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{cmbOutbreaks.SelectedIndex+1}NumKOed")!.GetValue(new DataBlock())!;
+                    Task.Run(async () => { success = await Connection.Executor.WriteBlock(outbreak.NumKO, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
+
+                    if (!success)
+                    {
+                        Connection.Disconnect();
+                        MessageBox.Show("Device disconnected.");
+                    }
+                }
             }
         }
 
@@ -168,10 +229,25 @@ namespace TeraFinder.Forms
             if (Loaded)
             {
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
+                var toExpect = outbreak.Found;
+
                 if (chkFound.Checked)
                     outbreak.Found = true;
                 else
                     outbreak.Found = false;
+
+                if(Connection is not null && Connection.IsConnected())
+                {
+                    var success = false;
+                    var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{cmbOutbreaks.SelectedIndex+1}Found")!.GetValue(new DataBlock())!;
+                    Task.Run(async () => { success = await Connection.Executor.WriteBlock(outbreak.Found, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
+
+                    if (!success)
+                    {
+                        Connection.Disconnect();
+                        MessageBox.Show("Device disconnected.");
+                    }
+                }
             }
         }
 
@@ -180,6 +256,8 @@ namespace TeraFinder.Forms
             if (Loaded)
             {
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
+                var toExpect = (byte)outbreak.GetAmountAvailable();
+
                 if (chkEnabled.Checked)
                     outbreak.Enabled = true;
                 else
@@ -197,6 +275,20 @@ namespace TeraFinder.Forms
                     pictureBox.BackgroundImage = DefBackground;
                     pictureBox.Size = DefSize;
                 }
+
+                if (Connection is not null && Connection.IsConnected())
+                {
+                    var success = false;
+                    var value = (byte)outbreak.GetAmountAvailable();
+                    var blockInfo = Blocks.KMassOutbreakAmount;
+                    Task.Run(async () => { success = await Connection.Executor.WriteBlock(value, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
+
+                    if (!success)
+                    {
+                        Connection.Disconnect();
+                        MessageBox.Show("Device disconnected.");
+                    }
+                }
             }
         }
 
@@ -207,10 +299,25 @@ namespace TeraFinder.Forms
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
                 if (outbreak.LocationCenter is not null)
                 {
+                    var toExpect = outbreak.LocationCenter.GetCoordinates().ToArray();
                     try
                     {
                         outbreak.LocationCenter.X = Convert.ToSingle(txtCenterX.Text);
                         imgMap.SetMapPoint(outbreak.LocationCenter);
+
+                        if (Connection is not null && Connection.IsConnected())
+                        {
+                            var success = false;
+                            var toInject = outbreak.LocationCenter.GetCoordinates().ToArray();
+                            var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{cmbOutbreaks.SelectedIndex + 1}CenterPos")!.GetValue(new DataBlock())!;
+                            Task.Run(async () => { success = await Connection.Executor.WriteBlock(toInject, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
+
+                            if (!success)
+                            {
+                                Connection.Disconnect();
+                                MessageBox.Show("Device disconnected.");
+                            }
+                        }
                     }
                     catch (Exception)
                     {
@@ -227,9 +334,23 @@ namespace TeraFinder.Forms
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
                 if (outbreak.LocationCenter is not null)
                 {
+                    var toExpect = outbreak.LocationCenter.GetCoordinates().ToArray();
                     try
                     {
-                        outbreak.LocationCenter.Y = Convert.ToSingle(txtCenterX.Text);
+                        outbreak.LocationCenter.Y = Convert.ToSingle(txtCenterY.Text);
+                        if (Connection is not null && Connection.IsConnected())
+                        {
+                            var success = false;
+                            var toInject = outbreak.LocationCenter.GetCoordinates().ToArray();
+                            var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{cmbOutbreaks.SelectedIndex + 1}CenterPos")!.GetValue(new DataBlock())!;
+                            Task.Run(async () => { success = await Connection.Executor.WriteBlock(toInject, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
+
+                            if (!success)
+                            {
+                                Connection.Disconnect();
+                                MessageBox.Show("Device disconnected.");
+                            }
+                        }
                     }
                     catch (Exception) { }
                 }
@@ -243,10 +364,25 @@ namespace TeraFinder.Forms
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
                 if (outbreak.LocationCenter is not null)
                 {
+                    var toExpect = outbreak.LocationCenter.GetCoordinates().ToArray();
                     try
                     {
-                        outbreak.LocationCenter.Z = Convert.ToSingle(txtCenterX.Text);
+                        outbreak.LocationCenter.Z = Convert.ToSingle(txtCenterZ.Text);
                         imgMap.SetMapPoint(outbreak.LocationCenter);
+
+                        if (Connection is not null && Connection.IsConnected())
+                        {
+                            var success = false;
+                            var toInject = outbreak.LocationCenter.GetCoordinates().ToArray();
+                            var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{cmbOutbreaks.SelectedIndex + 1}CenterPos")!.GetValue(new DataBlock())!;
+                            Task.Run(async () => { success = await Connection.Executor.WriteBlock(toInject, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
+
+                            if (!success)
+                            {
+                                Connection.Disconnect();
+                                MessageBox.Show("Device disconnected.");
+                            }
+                        }
                     }
                     catch (Exception)
                     {
@@ -263,9 +399,23 @@ namespace TeraFinder.Forms
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
                 if (outbreak.LocationDummy is not null)
                 {
+                    var toExpect = outbreak.LocationDummy.GetCoordinates().ToArray();
                     try
                     {
                         outbreak.LocationDummy.X = Convert.ToSingle(txtDummyX.Text);
+                        if (Connection is not null && Connection.IsConnected())
+                        {
+                            var success = false;
+                            var toInject = outbreak.LocationDummy.GetCoordinates().ToArray();
+                            var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{cmbOutbreaks.SelectedIndex+1}DummyPos")!.GetValue(new DataBlock())!;
+                            Task.Run(async () => { success = await Connection.Executor.WriteBlock(toInject, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
+
+                            if (!success)
+                            {
+                                Connection.Disconnect();
+                                MessageBox.Show("Device disconnected.");
+                            }
+                        }
                     }
                     catch (Exception) { }
                 }
@@ -279,9 +429,23 @@ namespace TeraFinder.Forms
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
                 if (outbreak.LocationDummy is not null)
                 {
+                    var toExpect = outbreak.LocationDummy.GetCoordinates().ToArray();
                     try
                     {
                         outbreak.LocationDummy.Y = Convert.ToSingle(txtDummyY.Text);
+                        if (Connection is not null && Connection.IsConnected())
+                        {
+                            var success = false;
+                            var toInject = outbreak.LocationDummy.GetCoordinates().ToArray();
+                            var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{cmbOutbreaks.SelectedIndex + 1}DummyPos")!.GetValue(new DataBlock())!;
+                            Task.Run(async () => { success = await Connection.Executor.WriteBlock(toInject, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
+
+                            if (!success)
+                            {
+                                Connection.Disconnect();
+                                MessageBox.Show("Device disconnected.");
+                            }
+                        }
                     }
                     catch (Exception) { }
                 }
@@ -295,9 +459,23 @@ namespace TeraFinder.Forms
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
                 if (outbreak.LocationDummy is not null)
                 {
+                    var toExpect = outbreak.LocationDummy.GetCoordinates().ToArray();
                     try
                     {
                         outbreak.LocationDummy.Z = Convert.ToSingle(txtDummyZ.Text);
+                        if (Connection is not null && Connection.IsConnected())
+                        {
+                            var success = false;
+                            var toInject = outbreak.LocationDummy.GetCoordinates().ToArray();
+                            var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{cmbOutbreaks.SelectedIndex + 1}DummyPos")!.GetValue(new DataBlock())!;
+                            Task.Run(async () => { success = await Connection.Executor.WriteBlock(toInject, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
+
+                            if (!success)
+                            {
+                                Connection.Disconnect();
+                                MessageBox.Show("Device disconnected.");
+                            }
+                        }
                     }
                     catch (Exception) { }
                 }
@@ -325,7 +503,20 @@ namespace TeraFinder.Forms
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
                 saveFileDialog.FileName = $"{SpeciesConverter.GetNational9((ushort)outbreak.Species)}";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                    outbreak.DumpToJson(saveFileDialog.FileName);
+                {
+                    if (outbreak.LocationCenter is not null && outbreak.LocationDummy is not null)
+                    {
+                        var json = "{\n" +
+                            "\t\"LocationCenter\": \"" + BitConverter.ToString(outbreak.LocationCenter.GetCoordinates().ToArray()).Replace("-", string.Empty) + "\",\n" +
+                            "\t\"LocationDummy\": \"" + BitConverter.ToString(outbreak.LocationDummy.GetCoordinates().ToArray()).Replace("-", string.Empty) + "\",\n" +
+                            "\t\"Species\": " + SpeciesConverter.GetNational9((ushort)outbreak.Species) + ",\n" +
+                            "\t\"Form\": " + outbreak.Form + ",\n" +
+                            "\t\"MaxSpawns\": " + outbreak.MaxSpawns + "\n" +
+                        "}";
+
+                        File.WriteAllText(saveFileDialog.FileName, json);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -340,8 +531,33 @@ namespace TeraFinder.Forms
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    outbreak.RestoreFromJson(openFileDialog.FileName);
-                    cmbOutbreaks_IndexChanged(this, EventArgs.Empty);
+                    var simpleOutbreak = JsonSerializer.Deserialize<JsonNode>(File.ReadAllText(openFileDialog.FileName))!;
+                    var locationCenter = Convert.FromHexString(simpleOutbreak["LocationCenter"]!.GetValue<string>());
+                    var locationDummy = Convert.FromHexString(simpleOutbreak["LocationDummy"]!.GetValue<string>());
+                    var species = SpeciesConverter.GetInternal9(simpleOutbreak["Species"]!.GetValue<ushort>());
+                    var form = simpleOutbreak["Form"]!.GetValue<byte>();
+                    var maxSpawns = simpleOutbreak["MaxSpawns"]!.GetValue<int>();
+
+                    var block = SAV.Accessor.GetBlockSafe(Blocks.KMassOutbreak01CenterPos.Key);
+                    GameCoordinates coordC, coordD;
+                    if (block is not null)
+                    {
+                        coordC = new GameCoordinates(block);
+                        coordD = new GameCoordinates(block);
+                        coordC.SetCoordinates(locationCenter);
+                        coordD.SetCoordinates(locationDummy);
+
+                        cmbSpecies.SelectedIndex = species;
+                        cmbForm.SelectedIndex = form;
+                        numMaxSpawn.Value = maxSpawns;
+                        numKO.Value = numKO.Value >= maxSpawns ? 0 : numKO.Value;
+                        txtCenterX.Text = $"{coordC.X}";
+                        txtCenterY.Text = $"{coordC.Y}";
+                        txtCenterZ.Text = $"{coordC.Z}";
+                        txtDummyX.Text = $"{coordD.X}";
+                        txtDummyY.Text = $"{coordD.Y}";
+                        txtDummyZ.Text = $"{coordD.Z}";
+                    }
                 }
             }
             catch (Exception ex)

@@ -83,10 +83,12 @@ namespace TeraFinder
             return res is not null ? res : CreateDummyBlock(key, SCTypeCode.None);
         }
 
+        public static byte[] EncryptBlock(uint key, byte[] block) => DecryptBlock(key, block);
+
         public static byte[] DecryptBlock(uint key, byte[] block)
         {
             var rng = new SCXorShift32(key);
-            for (int i = 0; i < block.Length; i++)
+            for (var i = 0; i < block.Length; i++)
                 block[i] = (byte)(block[i] ^ rng.Next());
             return block;
         }

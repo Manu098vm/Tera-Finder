@@ -292,7 +292,7 @@ namespace TeraFinder
                 if (Connection is not null && Connection.IsConnected())
                 {
                     var block = SAV.Accessor.FindOrDefault(Blocks.KTeraRaids.Key)!;
-                    await Connection.Executor.WriteDecryptedBlock(block.Data, Blocks.KTeraRaids, new CancellationToken()).ConfigureAwait(false);
+                    await Connection.Executor.WriteBlock(block.Data, Blocks.KTeraRaids, new CancellationToken()).ConfigureAwait(false);
                 }
             }
             catch (Exception)

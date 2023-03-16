@@ -1,4 +1,5 @@
-﻿using PKHeX.Core;
+﻿using NLog.LayoutRenderers.Wrappers;
+using PKHeX.Core;
 using SysBot.Base;
 using TeraFinder.Properties;
 
@@ -222,14 +223,17 @@ namespace TeraFinder.Forms
                 else
                     BlockUtil.EditBlock(KMassOutbreakForm, blockInfo.Type, KMassOutbreakFormData);
 
-                blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak01Found")!.GetValue(new DataBlock())!;
+                blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}Found")!.GetValue(new DataBlock())!;
                 var KMassOutbreakFound = SAV.Accessor.FindOrDefault(blockInfo.Key);
                 var KMassOutbreakFoundData = (bool)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
 
-                if (KMassOutbreakFound.Type is SCTypeCode.None)
-                    KMassOutbreakFound = BlockUtil.CreateDummyBlock(blockInfo.Key, blockInfo.Type);
-
-                KMassOutbreakFound.ChangeBooleanType(KMassOutbreakFoundData ? SCTypeCode.Bool2 : SCTypeCode.Bool1);
+                if (KMassOutbreakFound.Type is not SCTypeCode.None)
+                    KMassOutbreakFound.ChangeBooleanType(KMassOutbreakFoundData ? SCTypeCode.Bool2 : SCTypeCode.Bool1);
+                else
+                {
+                    BlockUtil.EditBlockType(KMassOutbreakFound, KMassOutbreakFoundData ? SCTypeCode.Bool2 : SCTypeCode.Bool1);
+                    BlockUtil.AddBlockToFakeSAV(SAV, KMassOutbreakFound);
+                }
 
                 blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}NumKOed")!.GetValue(new DataBlock())!;
                 var KMassOutbreakNumKOed = SAV.Accessor.FindOrDefault(blockInfo.Key);

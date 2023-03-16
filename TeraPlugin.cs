@@ -171,7 +171,7 @@ namespace TeraFinder
             Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
             Flags.Click += (s, e) => new ProgressForm(SAV, Language).Show();
             Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV, Language).Show();
-            Outbreaks.Click += (s, e) => new OutbreakForm(SAV, Language).Show();
+            Outbreaks.Click += (s, e) => new OutbreakForm(SAV, Language, Connection).Show();
             tools.DropDownItems.Add(Plugin);
         }
 
@@ -231,7 +231,7 @@ namespace TeraFinder
 
         public void LaunchMassOutbreakEditor()
         {
-            new OutbreakForm(SAV, Language).Show();
+            new OutbreakForm(SAV, Language, Connection).Show();
         }
 
         public ConnectionForm LaunchConnector(Form? parent = null)
