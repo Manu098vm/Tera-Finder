@@ -24,6 +24,7 @@ TeraFinderForm.btnStartCalculator=太晶洞窟計算器
 TeraFinderForm.btnStartRewardCalc=獎勵計算器
 TeraFinderForm.btnEditOutbreaks=大量出現查看/編輯
 
+OutbreakForm=大量出現編輯器
 OutbreakForm.toolsToolStripMenuItem=工具
 OutbreakForm.dumpToJsonToolStripMenuItem=轉儲到JSON文件
 OutbreakForm.injectFromJsonToolStripMenuItem=從JSON文件載入
