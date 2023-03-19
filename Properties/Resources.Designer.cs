@@ -279,188 +279,198 @@ namespace TeraFinder.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugin
+        ///Plugin.ConnectRemote=Connect to Remote Device
+        ///Plugin.TeraViewer=Tera Raid Viewer/Editor
+        ///Plugin.SeedChecker=Tera Raid Seed Checker
+        ///Plugin.FlagEditor=Edit Game Flags
+        ///Plugin.NewsImporter=Import Poké Portal News
+        ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
+        ///
+        ///TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
         ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
-        ///TeraFinderForm.grpSAV=Save File
-        ///TeraFinderForm.grpSavTools=SAV Tools
-        ///TeraFinderForm.grpStaticTools=Standalone Tools
-        ///TeraFinderForm.grpTools=Tools
-        ///TeraFinderForm.btnLoad=Load Save File
-        ///TeraFinderForm.btnExport=Export Save File
-        ///TeraFinderForm.btnEditGame=Edit Game Flags
-        ///TeraFinderForm.btnImportNews=Import Poke Portal News
-        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
-        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.languageToolStrip=Default Language
+        ///TeraFinderF [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_de {
             get {
                 return ResourceManager.GetString("lang_de", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugin
+        ///Plugin.ConnectRemote=Connect to Remote Device
+        ///Plugin.TeraViewer=Tera Raid Viewer/Editor
+        ///Plugin.SeedChecker=Tera Raid Seed Checker
+        ///Plugin.FlagEditor=Edit Game Flags
+        ///Plugin.NewsImporter=Import Poké Portal News
+        ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
+        ///
+        ///TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
         ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
-        ///TeraFinderForm.grpSAV=Save File
-        ///TeraFinderForm.grpSavTools=SAV Tools
-        ///TeraFinderForm.grpStaticTools=Standalone Tools
-        ///TeraFinderForm.grpTools=Tools
-        ///TeraFinderForm.btnLoad=Load Save File
-        ///TeraFinderForm.btnExport=Export Save File
-        ///TeraFinderForm.btnEditGame=Edit Game Flags
-        ///TeraFinderForm.btnImportNews=Import Poke Portal News
-        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
-        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.languageToolStrip=Default Language
+        ///TeraFinderF [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_en {
             get {
                 return ResourceManager.GetString("lang_en", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
-        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
-        ///TeraFinderForm.grpSAV=Save File
-        ///TeraFinderForm.grpSavTools=SAV Tools
-        ///TeraFinderForm.grpStaticTools=Standalone Tools
-        ///TeraFinderForm.grpTools=Tools
-        ///TeraFinderForm.btnLoad=Load Save File
-        ///TeraFinderForm.btnExport=Export Save File
-        ///TeraFinderForm.btnEditGame=Edit Game Flags
-        ///TeraFinderForm.btnImportNews=Import Poke Portal News
-        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
-        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugin
+        ///Plugin.ConnectRemote=Conectar a Dispositivo Remoto
+        ///Plugin.TeraViewer=Visor/Editor de Teraincursiones
+        ///Plugin.SeedChecker=Inspector de Seeds
+        ///Plugin.FlagEditor=Edita Flags del Juego
+        ///Plugin.NewsImporter=Importar Noticias Poképortal
+        ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
+        ///
+        ///TeraFinderForm=Tera Finder 
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=Herramientas
+        ///TeraFinderForm.btnRemoteConnect=Conectar a Dispositivo Remoto
+        ///TeraFinderForm.languageToolStr [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_es {
             get {
                 return ResourceManager.GetString("lang_es", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugin
+        ///Plugin.ConnectRemote=Connect to Remote Device
+        ///Plugin.TeraViewer=Tera Raid Viewer/Editor
+        ///Plugin.SeedChecker=Tera Raid Seed Checker
+        ///Plugin.FlagEditor=Edit Game Flags
+        ///Plugin.NewsImporter=Import Poké Portal News
+        ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
+        ///
+        ///TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
         ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
-        ///TeraFinderForm.grpSAV=Save File
-        ///TeraFinderForm.grpSavTools=SAV Tools
-        ///TeraFinderForm.grpStaticTools=Standalone Tools
-        ///TeraFinderForm.grpTools=Tools
-        ///TeraFinderForm.btnLoad=Load Save File
-        ///TeraFinderForm.btnExport=Export Save File
-        ///TeraFinderForm.btnEditGame=Edit Game Flags
-        ///TeraFinderForm.btnImportNews=Import Poke Portal News
-        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
-        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.languageToolStrip=Default Language
+        ///TeraFinderF [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_fr {
             get {
                 return ResourceManager.GetString("lang_fr", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugin
+        ///Plugin.ConnectRemote=Connetti a Dispositivo Remoto
+        ///Plugin.TeraViewer=Visualizza e Modifica Raid
+        ///Plugin.SeedChecker=Controlla Seed
+        ///Plugin.FlagEditor=Modifica Flags di Gioco
+        ///Plugin.NewsImporter=Importa Raid Evento
+        ///Plugin.OutbreakViewer=Visualizza e Modifica Comparse Massicce
+        ///
+        ///TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Strumenti
         ///TeraFinderForm.btnRemoteConnect=Connetti a Dispositivo Remoto
-        ///TeraFinderForm.grpSAV=Salvataggio
-        ///TeraFinderForm.grpSavTools=Strumenti SAV
-        ///TeraFinderForm.grpStaticTools=Strumenti Indipendenti
-        ///TeraFinderForm.grpTools=Tools
-        ///TeraFinderForm.btnLoad=Carica SAV
-        ///TeraFinderForm.btnExport=Esporta SAV
-        ///TeraFinderForm.btnEditGame=Modifica Flags di Gioco
-        ///TeraFinderForm.btnImportNews=Importa Raid Evento
-        ///TeraFinderForm.btnStartEditor=Visualizza e Modifica Raid        /// [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.languageToolStrip=Ling [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_it {
             get {
                 return ResourceManager.GetString("lang_it", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugin
+        ///Plugin.ConnectRemote=Connect to Remote Device
+        ///Plugin.TeraViewer=Tera Raid Viewer/Editor
+        ///Plugin.SeedChecker=Tera Raid Seed Checker
+        ///Plugin.FlagEditor=Edit Game Flags
+        ///Plugin.NewsImporter=Import Poké Portal News
+        ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
+        ///
+        ///TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
         ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
-        ///TeraFinderForm.grpSAV=Save File
-        ///TeraFinderForm.grpSavTools=SAV Tools
-        ///TeraFinderForm.grpStaticTools=Standalone Tools
-        ///TeraFinderForm.grpTools=Tools
-        ///TeraFinderForm.btnLoad=Load Save File
-        ///TeraFinderForm.btnExport=Export Save File
-        ///TeraFinderForm.btnEditGame=Edit Game Flags
-        ///TeraFinderForm.btnImportNews=Import Poke Portal News
-        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
-        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.languageToolStrip=Default Language
+        ///TeraFinderF [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_ja {
             get {
                 return ResourceManager.GetString("lang_ja", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
-        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
-        ///TeraFinderForm.grpSAV=Save File
-        ///TeraFinderForm.grpSavTools=SAV Tools
-        ///TeraFinderForm.grpStaticTools=Standalone Tools
-        ///TeraFinderForm.grpTools=Tools
-        ///TeraFinderForm.btnLoad=Load Save File
-        ///TeraFinderForm.btnExport=Export Save File
-        ///TeraFinderForm.btnEditGame=Edit Game Flags
-        ///TeraFinderForm.btnImportNews=Import Poke Portal News
-        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
-        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=테라 파인더 플러그인
+        ///Plugin.ConnectRemote=스위치에 연결
+        ///Plugin.TeraViewer=레이드 보기/편집
+        ///Plugin.SeedChecker=테라 레이드 시드체크
+        ///Plugin.FlagEditor=게임 플래그 편집
+        ///Plugin.NewsImporter=포켓포털 뉴스 불러오기
+        ///Plugin.OutbreakViewer=대량발생 보기/편집
+        ///
+        ///TeraFinderForm=테라 파인더 
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=도구
+        ///TeraFinderForm.btnRemoteConnect=스위치에 연결
+        ///TeraFinderForm.languageToolStrip=언어
+        ///TeraFinderForm.grpSAV=세이브 파일
+        ///TeraFinderForm.grpSavTools=세이브 툴
+        ///TeraFinderForm.grpStaticTools=독립 툴
+        ///TeraFinderForm.grpTools=테라 파인더 도구 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_ko {
             get {
                 return ResourceManager.GetString("lang_ko", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
-        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
-        ///TeraFinderForm.grpSAV=Save File
-        ///TeraFinderForm.grpSavTools=SAV Tools
-        ///TeraFinderForm.grpStaticTools=Standalone Tools
-        ///TeraFinderForm.grpTools=Tools
-        ///TeraFinderForm.btnLoad=Load Save File
-        ///TeraFinderForm.btnExport=Export Save File
-        ///TeraFinderForm.btnEditGame=Edit Game Flags
-        ///TeraFinderForm.btnImportNews=Import Poke Portal News
-        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
-        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=太晶洞窟搜索插件
+        ///Plugin.ConnectRemote=远程连接
+        ///Plugin.TeraViewer=太晶洞窟查看/编辑
+        ///Plugin.SeedChecker=太晶洞窟Seed检索
+        ///Plugin.FlagEditor=编辑太晶洞窟解锁进度
+        ///Plugin.NewsImporter=导入宝可梦入口站新闻
+        ///Plugin.OutbreakViewer=大量出现查看/编辑
+        ///
+        ///TeraFinderForm=太晶洞窟搜索
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=工具
+        ///TeraFinderForm.btnRemoteConnect=远程连接
+        ///TeraFinderForm.languageToolStrip=语言设置
+        ///TeraFinderForm.grpSAV=存档文件
+        ///TeraFinderForm.grpSavTools=存档工具
+        ///TeraFinderForm.grpStaticTools=独立工具
+        ///TeraFinderForm.grpTools=工具
+        ///TeraFinderForm.btnL [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_zh {
             get {
                 return ResourceManager.GetString("lang_zh", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
-        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
-        ///TeraFinderForm.grpSAV=Save File
-        ///TeraFinderForm.grpSavTools=SAV Tools
-        ///TeraFinderForm.grpStaticTools=Standalone Tools
-        ///TeraFinderForm.grpTools=Tools
-        ///TeraFinderForm.btnLoad=Load Save File
-        ///TeraFinderForm.btnExport=Export Save File
-        ///TeraFinderForm.btnEditGame=Edit Game Flags
-        ///TeraFinderForm.btnImportNews=Import Poke Portal News
-        ///TeraFinderForm.btnStartEditor=Raid Viewer/Editor
-        ///TeraFinderForm.btnStart [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=太晶洞窟搜索插件
+        ///Plugin.ConnectRemote=遠程連接
+        ///Plugin.TeraViewer=太晶洞窟查看/編輯
+        ///Plugin.SeedChecker=太晶洞窟Seed檢索
+        ///Plugin.FlagEditor=編輯太晶洞窟解鎖進度
+        ///Plugin.NewsImporter=導入寶可夢入口站新聞
+        ///Plugin.OutbreakViewer=大量出現查看/編輯
+        ///
+        ///TeraFinderForm=太晶洞窟搜索
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=工具
+        ///TeraFinderForm.btnRemoteConnect=遠程連接
+        ///TeraFinderForm.languageToolStrip=語言設置
+        ///TeraFinderForm.grpSAV=储存资料文件
+        ///TeraFinderForm.grpSavTools=储存资料工具
+        ///TeraFinderForm.grpStaticTools=獨立工具
+        ///TeraFinderForm.grpTools=工具
+        ///TeraFinderForm. [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_zh2 {
             get {
