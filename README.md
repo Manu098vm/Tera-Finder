@@ -39,9 +39,12 @@ Alternatively, feel free to contact me on my [Discord Server](https://discord.gg
 ## Credits and Thanks
 * [kwsch](https://github.com/kwsch) for [PKHeX](https://github.com/kwsch/PKHeX), [pkNX](https://github.com/kwsch/pkNX) and [SysBot.NET](https://github.com/kwsch/SysBot.NET), on which this program relies on
 * [Archit Date](https://github.com/architdate), [LegoFigure11](https://github.com/LegoFigure11), [SteveCookTU](https://github.com/SteveCookTU) for their great researches on the item rewards structures and event group ids handling implemented in [RaidCrawler](https://github.com/LegoFigure11/RaidCrawler/blob/main/Structures/RaidRewards.cs) and [sv raid reader](https://github.com/SteveCookTU/sv_raid_reader/blob/master/src/item_list.rs)
-* [Lincoln-LM](https://github.com/Lincoln-LM) for the raid map coordinates and the save RAM pointer/logic in [sv-live-map](https://github.com/Lincoln-LM/sv-live-map)
+* [Lincoln-LM](https://github.com/Lincoln-LM) for the raid map coordinates and the save RAM logic in [sv-live-map](https://github.com/Lincoln-LM/sv-live-map)
+* [Archit Date](https://github.com/architdate) for his C# port of the Lincoln's logic implemented in [RaidCrawler](https://github.com/LegoFigure11/RaidCrawler), on which my code is based on
+* [Lusamine](https://github.com/Lusamine) for the Key Block pointer taken from the disassembled game code for v1.2.0
 * [Leanny](https://github.com/Leanny) for his Sword/Shield [PKHeX Raid Plugin](https://github.com/Leanny/PKHeX_Raid_Plugin) which was of inspiration for my plugin
-* [santacrab2](https://github.com/santacrab2) for his contributions to make the searches lot faster and v1.2.0 save pointers
+* [santacrab2](https://github.com/santacrab2) for his contributions to make the searches lot faster
+* [Zyro670](https://github.com/zyro670) and [santacrab2](https://github.com/santacrab2) for their help with the ram block reading/writing, specifically related to outbreaks
 * [olliz0r](https://github.com/olliz0r) and [berichan](https://github.com/berichan) for [sys-botbase](https://github.com/olliz0r/sys-botbase)
 * [fishguy6564](https://github.com/fishguy6564) and [Koi-3088](https://github.com/Koi-3088) for [usb-botbase](https://github.com/Koi-3088/USB-Botbase)
 * [kwsch](https://github.com/kwsch), [Lusamine](https://github.com/Lusamine), [LegoFigure11](https://github.com/LegoFigure11), [Archit Date](https://github.com/architdate), [SteveCookTU](https://github.com/SteveCookTU), [Lincoln-LM](https://github.com/Lincoln-LM), and all the contributors to the mentioned programs for their awesome researches
