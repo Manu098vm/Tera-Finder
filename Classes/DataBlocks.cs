@@ -13,7 +13,7 @@ namespace TeraFinder
         public int Size { get; set; }
     }
 
-    //Thanks Lincoln-LM, santacrab2 and Zyro670 for a lot of Pointers and offsets!!
+    //Thanks Anubis, Lincoln-LM, santacrab2 and Zyro670 for a lot of Pointers and offsets!!
     public static class Blocks
     {
         #region DataSAV
@@ -42,7 +42,7 @@ namespace TeraFinder
             Name = "KMassOutbreakAmount",
             Key = 0x6C375C8A,
             Type = SCTypeCode.SByte,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x13A80 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x13A80 },
             IsEncrypted = true,
             Size = 0x01,
         };
@@ -106,7 +106,7 @@ namespace TeraFinder
             Name = "KUnlockedTeraRaidBattles",
             Key = 0x27025EBF,
             Type = SCTypeCode.Bool1,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x70C0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x70C0 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -116,7 +116,7 @@ namespace TeraFinder
             Name = "KUnlockedRaidDifficulty3",
             Key = 0xEC95D8EF,
             Type = SCTypeCode.Bool1,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x2C1A0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x2C1A0 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -126,7 +126,7 @@ namespace TeraFinder
             Name = "KUnlockedRaidDifficulty4",
             Key = 0xA9428DFE,
             Type = SCTypeCode.Bool1,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x1F5E0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x1F5E0 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -136,7 +136,7 @@ namespace TeraFinder
             Name = "KUnlockedRaidDifficulty5",
             Key = 0x9535F471,
             Type = SCTypeCode.Bool1,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x1B800 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x1B800 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -146,7 +146,7 @@ namespace TeraFinder
             Name = "KUnlockedRaidDifficulty6",
             Key = 0x6E7F8220,
             Type = SCTypeCode.Bool1,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x14040 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x14040 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -158,7 +158,7 @@ namespace TeraFinder
             Name = "KMassOutbreak01CenterPos",
             Key = 0x2ED42F4D,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x8800 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x8800 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -168,7 +168,7 @@ namespace TeraFinder
             Name = "KMassOutbreak01DummyPos",
             Key = 0x4A13BE7C,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xD6E0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xD6E0 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -178,7 +178,7 @@ namespace TeraFinder
             Name = "KMassOutbreak01Species",
             Key = 0x76A2F996,
             Type = SCTypeCode.UInt32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x15B80 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x15B80 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -188,7 +188,7 @@ namespace TeraFinder
             Name = "KMassOutbreak01Form",
             Key = 0x29B4615D,
             Type = SCTypeCode.Byte,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x7840 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x7840 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -198,7 +198,7 @@ namespace TeraFinder
             Name = "KMassOutbreak01Found",
             Key = 0x7E203623,
             Type = SCTypeCode.Bool1,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x170E0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x170E0 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -208,7 +208,7 @@ namespace TeraFinder
             Name = "KMassOutbreak01NumKOed",
             Key = 0x4B16FBC2,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xDAE0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xDAE0 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -218,7 +218,7 @@ namespace TeraFinder
             Name = "KMassOutbreak01TotalSpawns",
             Key = 0xB7DC495A,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x22920 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x22920 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -230,7 +230,7 @@ namespace TeraFinder
             Name = "KMassOutbreak02CenterPos",
             Key = 0x2ED5F198,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x8820 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x8820 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -240,7 +240,7 @@ namespace TeraFinder
             Name = "KMassOutbreak02DummyPos",
             Key = 0x4A118F71,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xD6C0 }, 
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xD6C0 }, 
             IsEncrypted = true,
             Size = 12,
         };
@@ -250,7 +250,7 @@ namespace TeraFinder
             Name = "KMassOutbreak02Species",
             Key = 0x76A0BCF3,
             Type = SCTypeCode.UInt32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x15B60 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x15B60 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -260,7 +260,7 @@ namespace TeraFinder
             Name = "KMassOutbreak02Form",
             Key = 0x29B84368,
             Type = SCTypeCode.Byte,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x7880 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x7880 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -270,7 +270,7 @@ namespace TeraFinder
             Name = "KMassOutbreak02Found",
             Key = 0x7E22DF86,
             Type = SCTypeCode.Bool1,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x17100 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x17100 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -280,7 +280,7 @@ namespace TeraFinder
             Name = "KMassOutbreak02NumKOed",
             Key = 0x4B14BF1F,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xDAA0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xDAA0 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -290,7 +290,7 @@ namespace TeraFinder
             Name = "KMassOutbreak02TotalSpawns",
             Key = 0xB7DA0CB7,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x228E0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x228E0 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -302,7 +302,7 @@ namespace TeraFinder
             Name = "KMassOutbreak03CenterPos",
             Key = 0x2ECE09D3,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x87C0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x87C0 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -312,7 +312,7 @@ namespace TeraFinder
             Name = "KMassOutbreak03DummyPos",
             Key = 0x4A0E135A,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xD680 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xD680 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -322,7 +322,7 @@ namespace TeraFinder
             Name = "KMassOutbreak03Species",
             Key = 0x76A97E38,
             Type = SCTypeCode.UInt32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x15BC0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x15BC0 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -332,7 +332,7 @@ namespace TeraFinder
             Name = "KMassOutbreak03Form",
             Key = 0x29AF8223,
             Type = SCTypeCode.Byte,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x7800 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x7800 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -342,7 +342,7 @@ namespace TeraFinder
             Name = "KMassOutbreak03Found",
             Key = 0x7E25155D,
             Type = SCTypeCode.Bool1,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x17120 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x17120 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -352,7 +352,7 @@ namespace TeraFinder
             Name = "KMassOutbreak03NumKOed",
             Key = 0x4B1CA6E4,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xDB40 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xDB40 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -362,7 +362,7 @@ namespace TeraFinder
             Name = "KMassOutbreak03TotalSpawns",
             Key = 0xB7E1F47C,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x22960 }, 
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x22960 }, 
             IsEncrypted = true,
             Size = 4,
         };
@@ -374,7 +374,7 @@ namespace TeraFinder
             Name = "KMassOutbreak04CenterPos",
             Key = 0x2ED04676,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x87E0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x87E0 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -384,7 +384,7 @@ namespace TeraFinder
             Name = "KMassOutbreak04DummyPos",
             Key = 0x4A0BD6B7,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xD660 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xD660 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -394,7 +394,7 @@ namespace TeraFinder
             Name = "KMassOutbreak04Species",
             Key = 0x76A6E26D,
             Type = SCTypeCode.UInt32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x15BA0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x15BA0 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -404,7 +404,7 @@ namespace TeraFinder
             Name = "KMassOutbreak04Form",
             Key = 0x29B22B86,
             Type = SCTypeCode.Byte,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x7820 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x7820 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -414,7 +414,7 @@ namespace TeraFinder
             Name = "KMassOutbreak04Found",
             Key = 0x7E28F768,
             Type = SCTypeCode.Bool1,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x17160 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x17160 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -424,7 +424,7 @@ namespace TeraFinder
             Name = "KMassOutbreak04NumKOed",
             Key = 0x4B1A77D9,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xDB20 }, 
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xDB20 }, 
             IsEncrypted = true,
             Size = 4,
         };
@@ -434,7 +434,7 @@ namespace TeraFinder
             Name = "KMassOutbreak04TotalSpawns",
             Key = 0xB7DFC571,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x22940 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x22940 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -446,7 +446,7 @@ namespace TeraFinder
             Name = "KMassOutbreak05CenterPos",
             Key = 0x2EC78531,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x8780 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x8780 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -456,7 +456,7 @@ namespace TeraFinder
             Name = "KMassOutbreak05DummyPos",
             Key = 0x4A1FFBD8,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xD780 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xD780 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -466,7 +466,7 @@ namespace TeraFinder
             Name = "KMassOutbreak05Species",
             Key = 0x76986F3A,
             Type = SCTypeCode.UInt32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x15B00 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x15B00 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -476,7 +476,7 @@ namespace TeraFinder
             Name = "KMassOutbreak05Form",
             Key = 0x29A9D701,
             Type = SCTypeCode.Byte,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x77C0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x77C0 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -486,7 +486,7 @@ namespace TeraFinder
             Name = "KMassOutbreak05Found",
             Key = 0x7E13F8C7,
             Type = SCTypeCode.Bool1,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x17040 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x17040 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -496,7 +496,7 @@ namespace TeraFinder
             Name = "KMassOutbreak05NumKOed",
             Key = 0x4B23391E,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xDBA0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xDBA0 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -506,7 +506,7 @@ namespace TeraFinder
             Name = "KMassOutbreak05TotalSpawns",
             Key = 0xB7E886B6,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x229C0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x229C0 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -518,7 +518,7 @@ namespace TeraFinder
             Name = "KMassOutbreak06CenterPos",
             Key = 0x2ECB673C,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x87A0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x87A0 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -528,7 +528,7 @@ namespace TeraFinder
             Name = "KMassOutbreak06DummyPos",
             Key = 0x4A1C868D,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xD760 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xD760 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -538,7 +538,7 @@ namespace TeraFinder
             Name = "KMassOutbreak06Species",
             Key = 0x76947F97,
             Type = SCTypeCode.UInt32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x15AC0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x15AC0 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -548,7 +548,7 @@ namespace TeraFinder
             Name = "KMassOutbreak06Form",
             Key = 0x29AB994C,
             Type = SCTypeCode.Byte,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x77E0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x77E0 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -558,7 +558,7 @@ namespace TeraFinder
             Name = "KMassOutbreak06Found",
             Key = 0x7E16A22A,
             Type = SCTypeCode.Bool1,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x17060 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x17060 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -568,7 +568,7 @@ namespace TeraFinder
             Name = "KMassOutbreak06NumKOed",
             Key = 0x4B208FBB,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xDB60 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xDB60 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -578,7 +578,7 @@ namespace TeraFinder
             Name = "KMassOutbreak06TotalSpawns",
             Key = 0xB7E49713,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x229A0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x229A0 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -590,7 +590,7 @@ namespace TeraFinder
             Name = "KMassOutbreak07CenterPos",
             Key = 0x2EC1CC77,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x8740 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x8740 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -600,7 +600,7 @@ namespace TeraFinder
             Name = "KMassOutbreak07DummyPos",
             Key = 0x4A1A50B6,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xD740 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xD740 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -610,7 +610,7 @@ namespace TeraFinder
             Name = "KMassOutbreak07Species",
             Key = 0x769D40DC,
             Type = SCTypeCode.UInt32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x15B40 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x15B40 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -620,7 +620,7 @@ namespace TeraFinder
             Name = "KMassOutbreak07Form",
             Key = 0x29A344C7,
             Type = SCTypeCode.Byte,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x7740 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x7740 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -630,7 +630,7 @@ namespace TeraFinder
             Name = "KMassOutbreak07Found",
             Key = 0x7E1A8B01,
             Type = SCTypeCode.Bool1,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x17080 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x17080 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -640,7 +640,7 @@ namespace TeraFinder
             Name = "KMassOutbreak07NumKOed",
             Key = 0x4B28E440,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xDBE0 }, 
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xDBE0 }, 
             IsEncrypted = true,
             Size = 4,
         };
@@ -650,7 +650,7 @@ namespace TeraFinder
             Name = "KMassOutbreak07TotalSpawns",
             Key = 0xB7EE31D8,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x22A00 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x22A00 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -662,7 +662,7 @@ namespace TeraFinder
             Name = "KMassOutbreak08CenterPos",
             Key = 0x2EC5BC1A,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x8760 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x8760 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -672,7 +672,7 @@ namespace TeraFinder
             Name = "KMassOutbreak08DummyPos",
             Key = 0x4A166113,
             Type = SCTypeCode.Array,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xD700 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xD700 },
             IsEncrypted = true,
             Size = 12,
         };
@@ -682,7 +682,7 @@ namespace TeraFinder
             Name = "KMassOutbreak08Species",
             Key = 0x769B11D1,
             Type = SCTypeCode.UInt32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x15B20 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x15B20 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -692,7 +692,7 @@ namespace TeraFinder
             Name = "KMassOutbreak08Form",
             Key = 0x29A5EE2A,
             Type = SCTypeCode.Byte,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x77A0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x77A0 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -702,7 +702,7 @@ namespace TeraFinder
             Name = "KMassOutbreak08Found",
             Key = 0x7E1C4D4C,
             Type = SCTypeCode.Bool1,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x170C0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x170C0 },
             IsEncrypted = true,
             Size = 1,
         };
@@ -712,7 +712,7 @@ namespace TeraFinder
             Name = "KMassOutbreak08NumKOed",
             Key = 0x4B256EF5,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0xDBC0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0xDBC0 },
             IsEncrypted = true,
             Size = 4,
         };
@@ -722,7 +722,7 @@ namespace TeraFinder
             Name = "KMassOutbreak08TotalSpawns",
             Key = 0xB7EABC8D,
             Type = SCTypeCode.Int32,
-            Pointer = new long[] { 0x44AAC88, 0xE0, 0x80, 0x8, 0x229E0 },
+            Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x229E0 },
             IsEncrypted = true,
             Size = 4,
         };

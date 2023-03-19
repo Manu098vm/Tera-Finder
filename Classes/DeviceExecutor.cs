@@ -367,7 +367,7 @@ namespace TeraFinder
                 return await SwitchConnection.PointerAll(PreparePointer(block.Pointer!), token).ConfigureAwait(false);
             var direction = block.Key > read_key ? 1 : -1;
             var base_offset = block.Pointer![block.Pointer.Count - 1];
-            for (var offset = base_offset; offset < base_offset + 0x2000 && offset > base_offset - 0x2000; offset += direction * 0x20)
+            for (var offset = base_offset; offset < base_offset + 0x1000 && offset > base_offset - 0x1000; offset += direction * 0x20)
             {
                 var pointer = block.Pointer!.ToArray();
                 pointer[^1] = offset;
