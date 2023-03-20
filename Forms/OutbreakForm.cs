@@ -1,6 +1,4 @@
 ﻿using PKHeX.Core;
-using System.Text.Json.Nodes;
-using System.Text.Json;
 
 namespace TeraFinder.Forms
 {
@@ -64,6 +62,20 @@ namespace TeraFinder.Forms
 
         private void TranslateDictionary(string language) => Strings = Strings.TranslateInnerStrings(language);
 
+        private void UpdateForm(MassOutbreak outbreak)
+        {
+            cmbSpecies.SelectedIndex = SpeciesConverter.GetNational9((ushort)outbreak.Species);
+            cmbForm.SelectedIndex = outbreak.Form;
+            numMaxSpawn.Value = outbreak.MaxSpawns;
+            numKO.Value = outbreak.NumKO >= outbreak.MaxSpawns ? 0 : outbreak.NumKO;
+            txtCenterX.Text = $"{outbreak.LocationCenter!.X}";
+            txtCenterY.Text = $"{outbreak.LocationCenter!.Y}";
+            txtCenterZ.Text = $"{outbreak.LocationCenter!.Z}";
+            txtDummyX.Text = $"{outbreak.LocationDummy!.X}";
+            txtDummyY.Text = $"{outbreak.LocationDummy!.Y}";
+            txtDummyZ.Text = $"{outbreak.LocationDummy!.Z}";
+        }
+
         private void cmbOutbreaks_IndexChanged(object sender, EventArgs e)
         {
             Loaded = false;
@@ -122,15 +134,34 @@ namespace TeraFinder.Forms
 
             if (Loaded)
             {
-                outbreak.Species = SpeciesConverter.GetInternal9(species);
-                cmbForm.SelectedIndex = 0;
-                var index = cmbOutbreaks.SelectedIndex;
-                cmbOutbreaks.Items[index] = $"{Strings["OutBreakForm.MassOutbreakName"]} {index + 1} - {SpeciesList[species]}";
+                var restore = false;
+                var json = (string?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject($"{species}.json");
+                if (json is not null && json.Length > 0)
+                {
+                    var message = Strings["OutbreakForm.LoadDefault"].Replace("{species}", SpeciesList[species]);
+                    var dialog = MessageBox.Show(message, "", MessageBoxButtons.YesNo);
+                    if (dialog is DialogResult.Yes)
+                        restore = true;
+                }
+
+                if (restore)
+                {
+                    var clone = outbreak.Clone();
+                    clone.RestoreFromJson(json!);
+                    UpdateForm(clone);
+                }
+                else
+                {
+                    outbreak.Species = SpeciesConverter.GetInternal9(species);
+                    cmbForm.SelectedIndex = 0;
+                    var index = cmbOutbreaks.SelectedIndex;
+                    cmbOutbreaks.Items[index] = $"{Strings["OutBreakForm.MassOutbreakName"]} {index + 1} - {SpeciesList[species]}";
+                }
 
                 if (Connection is not null && Connection.IsConnected())
                 {
                     var success = false;
-                    var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{cmbOutbreaks.SelectedIndex+1}Species")!.GetValue(new DataBlock())!;
+                    var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{cmbOutbreaks.SelectedIndex + 1}Species")!.GetValue(new DataBlock())!;
                     Task.Run(async () => { success = await Connection.Executor.WriteBlock(outbreak.Species, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                     if (!success)
@@ -520,20 +551,7 @@ namespace TeraFinder.Forms
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
                 saveFileDialog.FileName = $"{SpeciesConverter.GetNational9((ushort)outbreak.Species)}";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    if (outbreak.LocationCenter is not null && outbreak.LocationDummy is not null)
-                    {
-                        var json = "{\n" +
-                            "\t\"LocationCenter\": \"" + BitConverter.ToString(outbreak.LocationCenter.GetCoordinates().ToArray()).Replace("-", string.Empty) + "\",\n" +
-                            "\t\"LocationDummy\": \"" + BitConverter.ToString(outbreak.LocationDummy.GetCoordinates().ToArray()).Replace("-", string.Empty) + "\",\n" +
-                            "\t\"Species\": " + SpeciesConverter.GetNational9((ushort)outbreak.Species) + ",\n" +
-                            "\t\"Form\": " + outbreak.Form + ",\n" +
-                            "\t\"MaxSpawns\": " + outbreak.MaxSpawns + "\n" +
-                        "}";
-
-                        File.WriteAllText(saveFileDialog.FileName, json);
-                    }
-                }
+                    outbreak.DumpTojson(saveFileDialog.FileName);
             }
             catch (Exception ex)
             {
@@ -545,36 +563,12 @@ namespace TeraFinder.Forms
         {
             try
             {
-                var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
+                var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex].Clone();
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    var simpleOutbreak = JsonSerializer.Deserialize<JsonNode>(File.ReadAllText(openFileDialog.FileName))!;
-                    var locationCenter = Convert.FromHexString(simpleOutbreak["LocationCenter"]!.GetValue<string>());
-                    var locationDummy = Convert.FromHexString(simpleOutbreak["LocationDummy"]!.GetValue<string>());
-                    var species = SpeciesConverter.GetInternal9(simpleOutbreak["Species"]!.GetValue<ushort>());
-                    var form = simpleOutbreak["Form"]!.GetValue<byte>();
-                    var maxSpawns = simpleOutbreak["MaxSpawns"]!.GetValue<int>();
-
-                    var block = SAV.Accessor.GetBlockSafe(Blocks.KMassOutbreak01CenterPos.Key);
-                    GameCoordinates coordC, coordD;
-                    if (block is not null)
-                    {
-                        coordC = new GameCoordinates(block);
-                        coordD = new GameCoordinates(block);
-                        coordC.SetCoordinates(locationCenter);
-                        coordD.SetCoordinates(locationDummy);
-
-                        cmbSpecies.SelectedIndex = species;
-                        cmbForm.SelectedIndex = form;
-                        numMaxSpawn.Value = maxSpawns;
-                        numKO.Value = numKO.Value >= maxSpawns ? 0 : numKO.Value;
-                        txtCenterX.Text = $"{coordC.X}";
-                        txtCenterY.Text = $"{coordC.Y}";
-                        txtCenterZ.Text = $"{coordC.Z}";
-                        txtDummyX.Text = $"{coordD.X}";
-                        txtDummyY.Text = $"{coordD.Y}";
-                        txtDummyZ.Text = $"{coordD.Z}";
-                    }
+                    var json = File.ReadAllText(openFileDialog.FileName);
+                    outbreak.RestoreFromJson(json);
+                    UpdateForm(outbreak);
                 }
             }
             catch (Exception ex)

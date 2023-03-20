@@ -1,4 +1,6 @@
 ﻿using PKHeX.Core;
+using System.Text.Json.Nodes;
+using System.Text.Json;
 using static System.Buffers.Binary.BinaryPrimitives;
 
 namespace TeraFinder
@@ -58,6 +60,41 @@ namespace TeraFinder
                 LocationDummy = new GameCoordinates(block);
             else
                 LocationDummy = null;
+        }
+
+
+        public MassOutbreak Clone() => new(SAV, ID);
+
+        public void DumpTojson(string path)
+        {
+            if (LocationCenter is not null && LocationDummy is not null)
+            {
+                var json = "{\n" +
+                    "\t\"LocationCenter\": \"" + BitConverter.ToString(LocationCenter.GetCoordinates().ToArray()).Replace("-", string.Empty) + "\",\n" +
+                    "\t\"LocationDummy\": \"" + BitConverter.ToString(LocationDummy.GetCoordinates().ToArray()).Replace("-", string.Empty) + "\",\n" +
+                    "\t\"Species\": " + SpeciesConverter.GetNational9((ushort)Species) + ",\n" +
+                    "\t\"Form\": " + Form + ",\n" +
+                    "\t\"MaxSpawns\": " + MaxSpawns + "\n" +
+                "}";
+
+                File.WriteAllText(path, json);
+            }
+        }
+
+        public void RestoreFromJson(string json)
+        {
+            var simpleOutbreak = JsonSerializer.Deserialize<JsonNode>(json)!;
+            var locationCenter = Convert.FromHexString(simpleOutbreak["LocationCenter"]!.GetValue<string>());
+            var locationDummy = Convert.FromHexString(simpleOutbreak["LocationDummy"]!.GetValue<string>());
+            var species = SpeciesConverter.GetInternal9(simpleOutbreak["Species"]!.GetValue<ushort>());
+            var form = simpleOutbreak["Form"]!.GetValue<byte>();
+            var maxSpawns = simpleOutbreak["MaxSpawns"]!.GetValue<int>();
+
+            LocationCenter!.SetCoordinates(locationCenter);
+            LocationDummy!.SetCoordinates(locationDummy);
+            Species = species;
+            Form = form;
+            MaxSpawns = maxSpawns;
         }
 
         public sbyte GetAmountAvailable()

@@ -48,7 +48,7 @@ OutbreakForm.lblDummyZ=Z:
 OutBreakForm.MassOutbreakName=大量出現
 OutbreakForm.DeviceDisconnected=終端已斷開連接。
 OutbreakForm.ErrorParsing=解析錯誤:
-OutbreakForm.LoadDefault=是否加載｛寶可夢種類｝的默認合法數據？
+OutbreakForm.LoadDefault=是否加載 {species} 的默認合法數據？
 
 CalculatorForm=太晶洞窟計算器
 CalculatorForm.lblSeed=Seed:
