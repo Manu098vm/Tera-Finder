@@ -134,14 +134,20 @@ namespace TeraFinder.Forms
 
             if (Loaded)
             {
+                var json = "";
                 var restore = false;
-                var json = (string?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject($"{species}.json");
-                if (json is not null && json.Length > 0)
+                var content = (byte[]?) Properties.Resources.ResourceManager.GetObject($"_{species}");
+
+                if (content is not null)
                 {
-                    var message = Strings["OutbreakForm.LoadDefault"].Replace("{species}", SpeciesList[species]);
-                    var dialog = MessageBox.Show(message, "", MessageBoxButtons.YesNo);
-                    if (dialog is DialogResult.Yes)
-                        restore = true;
+                    json = System.Text.Encoding.UTF8.GetString(content);
+                    if (json is not null && json.Length > 0)
+                    {
+                        var message = Strings["OutbreakForm.LoadDefault"].Replace("{species}", SpeciesList[species]);
+                        var dialog = MessageBox.Show(message, "", MessageBoxButtons.YesNo);
+                        if (dialog is DialogResult.Yes)
+                            restore = true;
+                    }
                 }
 
                 if (restore)
