@@ -37,9 +37,9 @@ namespace TeraFinder
             Size = 0x68,
         };
 
-        public static DataBlock KMassOutbreakAmount = new()
+        public static DataBlock KMassOutbreakNumActive = new()
         {
-            Name = "KMassOutbreakAmount",
+            Name = "KMassOutbreakNumActive",
             Key = 0x6C375C8A,
             Type = SCTypeCode.SByte,
             Pointer = new long[] { 0x449EEE8, 0xD8, 0x0, 0x0, 0x30, 0x8, 0x13A80 },

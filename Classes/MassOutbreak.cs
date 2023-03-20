@@ -62,7 +62,7 @@ namespace TeraFinder
 
         public sbyte GetAmountAvailable()
         {
-            var block = SAV.Accessor.GetBlockSafe(Blocks.KMassOutbreakAmount.Key);
+            var block = SAV.Accessor.GetBlockSafe(Blocks.KMassOutbreakNumActive.Key);
 
             if (block.Type is SCTypeCode.SByte)
                 return (sbyte)block.GetValue();
@@ -72,7 +72,7 @@ namespace TeraFinder
 
         private void SetAmountAvailable(sbyte value)
         {
-            var block = SAV.Accessor.GetBlockSafe(Blocks.KMassOutbreakAmount.Key);
+            var block = SAV.Accessor.GetBlockSafe(Blocks.KMassOutbreakNumActive.Key);
 
             if (block.Type is SCTypeCode.SByte)
                 block.ChangeData((new byte[] { (byte)value }).AsSpan());

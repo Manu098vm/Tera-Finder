@@ -176,13 +176,13 @@ namespace TeraFinder.Forms
 
         private async Task DownloadOutbreakData(CancellationToken token)
         {
-            var KMassOutbreakAmount = SAV.Accessor.FindOrDefault(Blocks.KMassOutbreakAmount.Key);
-            var KMassOutbreakAmountData = (byte?)await Executor.ReadBlock(Blocks.KMassOutbreakAmount, token).ConfigureAwait(false);
+            var KMassOutbreakAmount = SAV.Accessor.FindOrDefault(Blocks.KMassOutbreakNumActive.Key);
+            var KMassOutbreakAmountData = (byte?)await Executor.ReadBlock(Blocks.KMassOutbreakNumActive, token).ConfigureAwait(false);
 
             if (KMassOutbreakAmount.Type is not SCTypeCode.None)
                 KMassOutbreakAmount.ChangeData((new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
             else
-                BlockUtil.EditBlock(KMassOutbreakAmount, Blocks.KMassOutbreakAmount.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
+                BlockUtil.EditBlock(KMassOutbreakAmount, Blocks.KMassOutbreakNumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
 
             for (var i = 1; i <= 8; i++)
             {

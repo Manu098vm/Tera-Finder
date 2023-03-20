@@ -297,7 +297,7 @@ namespace TeraFinder.Forms
                 {
                     var success = false;
                     var value = (byte)outbreak.GetAmountAvailable();
-                    var blockInfo = Blocks.KMassOutbreakAmount;
+                    var blockInfo = Blocks.KMassOutbreakNumActive;
                     Task.Run(async () => { success = await Connection.Executor.WriteBlock(value, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                     if (!success)
