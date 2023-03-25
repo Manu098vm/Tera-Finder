@@ -121,7 +121,6 @@ namespace TeraFinder.Forms
 
         private void cmbSpecies_IndexChanged(object sender, EventArgs e)
         {
-
             cmbForm.Items.Clear();
             var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
             var toExpect = outbreak.Species;
