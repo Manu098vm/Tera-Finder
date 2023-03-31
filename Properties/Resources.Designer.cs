@@ -153,6 +153,16 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _133 {
+            get {
+                object obj = ResourceManager.GetObject("_133", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _134 {
             get {
                 object obj = ResourceManager.GetObject("_134", resourceCulture);
@@ -533,6 +543,16 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _25 {
+            get {
+                object obj = ResourceManager.GetObject("_25", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _26 {
             get {
                 object obj = ResourceManager.GetObject("_26", resourceCulture);
@@ -683,9 +703,49 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _307 {
+            get {
+                object obj = ResourceManager.GetObject("_307", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _308 {
             get {
                 object obj = ResourceManager.GetObject("_308", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _316 {
+            get {
+                object obj = ResourceManager.GetObject("_316", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _317 {
+            get {
+                object obj = ResourceManager.GetObject("_317", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _322 {
+            get {
+                object obj = ResourceManager.GetObject("_322", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -726,6 +786,16 @@ namespace TeraFinder.Properties {
         internal static byte[] _326 {
             get {
                 object obj = ResourceManager.GetObject("_326", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _331 {
+            get {
+                object obj = ResourceManager.GetObject("_331", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -853,6 +923,46 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _371 {
+            get {
+                object obj = ResourceManager.GetObject("_371", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _372 {
+            get {
+                object obj = ResourceManager.GetObject("_372", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _39 {
+            get {
+                object obj = ResourceManager.GetObject("_39", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _396 {
+            get {
+                object obj = ResourceManager.GetObject("_396", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _397 {
             get {
                 object obj = ResourceManager.GetObject("_397", resourceCulture);
@@ -973,6 +1083,26 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _422 {
+            get {
+                object obj = ResourceManager.GetObject("_422", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _422_0 {
+            get {
+                object obj = ResourceManager.GetObject("_422_0", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _425 {
             get {
                 object obj = ResourceManager.GetObject("_425", resourceCulture);
@@ -1066,6 +1196,16 @@ namespace TeraFinder.Properties {
         internal static byte[] _440 {
             get {
                 object obj = ResourceManager.GetObject("_440", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _443 {
+            get {
+                object obj = ResourceManager.GetObject("_443", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1276,6 +1416,26 @@ namespace TeraFinder.Properties {
         internal static byte[] _550 {
             get {
                 object obj = ResourceManager.GetObject("_550", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _550_0 {
+            get {
+                object obj = ResourceManager.GetObject("_550_0", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _550_1 {
+            get {
+                object obj = ResourceManager.GetObject("_550_1", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1503,6 +1663,16 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _636 {
+            get {
+                object obj = ResourceManager.GetObject("_636", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _661 {
             get {
                 object obj = ResourceManager.GetObject("_661", resourceCulture);
@@ -1583,6 +1753,56 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _670_0 {
+            get {
+                object obj = ResourceManager.GetObject("_670_0", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _670_1 {
+            get {
+                object obj = ResourceManager.GetObject("_670_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _670_2 {
+            get {
+                object obj = ResourceManager.GetObject("_670_2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _670_3 {
+            get {
+                object obj = ResourceManager.GetObject("_670_3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _670_4 {
+            get {
+                object obj = ResourceManager.GetObject("_670_4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _671 {
             get {
                 object obj = ResourceManager.GetObject("_671", resourceCulture);
@@ -1596,6 +1816,26 @@ namespace TeraFinder.Properties {
         internal static byte[] _671_1 {
             get {
                 object obj = ResourceManager.GetObject("_671_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _671_3 {
+            get {
+                object obj = ResourceManager.GetObject("_671_3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _671_4 {
+            get {
+                object obj = ResourceManager.GetObject("_671_4", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1653,6 +1893,16 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _693 {
+            get {
+                object obj = ResourceManager.GetObject("_693", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _700 {
             get {
                 object obj = ResourceManager.GetObject("_700", resourceCulture);
@@ -1686,6 +1936,16 @@ namespace TeraFinder.Properties {
         internal static byte[] _704 {
             get {
                 object obj = ResourceManager.GetObject("_704", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _705 {
+            get {
+                object obj = ResourceManager.GetObject("_705", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1883,6 +2143,26 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _766 {
+            get {
+                object obj = ResourceManager.GetObject("_766", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _769 {
+            get {
+                object obj = ResourceManager.GetObject("_769", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _775 {
             get {
                 object obj = ResourceManager.GetObject("_775", resourceCulture);
@@ -2043,6 +2323,36 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _849 {
+            get {
+                object obj = ResourceManager.GetObject("_849", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _849_0 {
+            get {
+                object obj = ResourceManager.GetObject("_849_0", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _849_1 {
+            get {
+                object obj = ResourceManager.GetObject("_849_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _854 {
             get {
                 object obj = ResourceManager.GetObject("_854", resourceCulture);
@@ -2143,6 +2453,16 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _875 {
+            get {
+                object obj = ResourceManager.GetObject("_875", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _876 {
             get {
                 object obj = ResourceManager.GetObject("_876", resourceCulture);
@@ -2166,6 +2486,36 @@ namespace TeraFinder.Properties {
         internal static byte[] _879 {
             get {
                 object obj = ResourceManager.GetObject("_879", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _88 {
+            get {
+                object obj = ResourceManager.GetObject("_88", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _885 {
+            get {
+                object obj = ResourceManager.GetObject("_885", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _886 {
+            get {
+                object obj = ResourceManager.GetObject("_886", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -2676,6 +3026,26 @@ namespace TeraFinder.Properties {
         internal static byte[] _978 {
             get {
                 object obj = ResourceManager.GetObject("_978", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _978_0 {
+            get {
+                object obj = ResourceManager.GetObject("_978_0", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] _978_1 {
+            get {
+                object obj = ResourceManager.GetObject("_978_1", resourceCulture);
                 return ((byte[])(obj));
             }
         }
