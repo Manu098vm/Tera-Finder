@@ -14,6 +14,7 @@ namespace TeraFinder.Forms
         private Image DefBackground = null!;
         private Size DefSize = new(0, 0);
         private bool Loaded = false;
+        private bool Importing = false;
         private string[] SpeciesList = null!;
         private string[] FormsList = null!;
         private string[] TypesList = null!;
@@ -62,18 +63,25 @@ namespace TeraFinder.Forms
 
         private void TranslateDictionary(string language) => Strings = Strings.TranslateInnerStrings(language);
 
-        private void UpdateForm(MassOutbreak outbreak)
+        private void UpdateForm(FakeOutBreak outbreak)
         {
-            cmbSpecies.SelectedIndex = SpeciesConverter.GetNational9((ushort)outbreak.Species);
-            cmbForm.SelectedIndex = outbreak.Form;
+            SuspendLayout();
+            Enabled = false;
+            if(Importing)
+                cmbSpecies.SelectedIndex = SpeciesConverter.GetNational9((ushort)outbreak.Species);
             numMaxSpawn.Value = outbreak.MaxSpawns;
-            numKO.Value = outbreak.NumKO >= outbreak.MaxSpawns ? 0 : outbreak.NumKO;
-            txtCenterX.Text = $"{outbreak.LocationCenter!.X}";
-            txtCenterY.Text = $"{outbreak.LocationCenter!.Y}";
-            txtCenterZ.Text = $"{outbreak.LocationCenter!.Z}";
-            txtDummyX.Text = $"{outbreak.LocationDummy!.X}";
-            txtDummyY.Text = $"{outbreak.LocationDummy!.Y}";
-            txtDummyZ.Text = $"{outbreak.LocationDummy!.Z}";
+            numKO.Value = 0;
+            txtCenterX.Text = $"{outbreak.CenterX}";
+            txtCenterY.Text = $"{outbreak.CenterY}";
+            txtCenterZ.Text = $"{outbreak.CenterZ}";
+            txtDummyX.Text = $"{outbreak.DummyX}";
+            txtDummyY.Text = $"{outbreak.DummyY}";
+            txtDummyZ.Text = $"{outbreak.DummyZ}";
+            chkEnabled.Checked = true;
+            chkFound.Checked = false;
+            cmbForm.SelectedIndex = outbreak.Form;
+            Enabled = true;
+            ResumeLayout();
         }
 
         private void cmbOutbreaks_IndexChanged(object sender, EventArgs e)
@@ -133,19 +141,24 @@ namespace TeraFinder.Forms
 
             if (Loaded)
             {
-                var json = "";
                 var restore = false;
-                var content = (byte[]?) Properties.Resources.ResourceManager.GetObject($"_{species}");
+                var json = "";
 
-                if (content is not null)
+                if (!Importing)
                 {
-                    json = System.Text.Encoding.UTF8.GetString(content);
-                    if (json is not null && json.Length > 0)
+                    var content = (byte[]?)Properties.Resources.ResourceManager.GetObject($"_{species}");
+
+                    if (content is not null)
                     {
-                        var message = Strings["OutbreakForm.LoadDefault"].Replace("{species}", SpeciesList[species]);
-                        var dialog = MessageBox.Show(message, "", MessageBoxButtons.YesNo);
-                        if (dialog is DialogResult.Yes)
-                            restore = true;
+                        json = System.Text.Encoding.UTF8.GetString(content);
+                        if (json is not null && json.Length > 0)
+                        {
+                            var message = Strings["OutbreakForm.LoadDefault"].Replace("{species}", SpeciesList[species]);
+                            var dialog = MessageBox.Show(message, "", MessageBoxButtons.YesNo);
+                            if (dialog is DialogResult.Yes)
+                                restore = true;
+                            else return;
+                        }
                     }
                 }
 
@@ -154,14 +167,16 @@ namespace TeraFinder.Forms
                     var clone = outbreak.Clone();
                     clone.RestoreFromJson(json!);
                     UpdateForm(clone);
+                    outbreak.Species = SpeciesConverter.GetInternal9(species);
                 }
                 else
                 {
                     outbreak.Species = SpeciesConverter.GetInternal9(species);
                     cmbForm.SelectedIndex = 0;
-                    var index = cmbOutbreaks.SelectedIndex;
-                    cmbOutbreaks.Items[index] = $"{Strings["OutBreakForm.MassOutbreakName"]} {index + 1} - {SpeciesList[species]}";
                 }
+                
+                var index = cmbOutbreaks.SelectedIndex;
+                cmbOutbreaks.Items[index] = $"{Strings["OutBreakForm.MassOutbreakName"]} {index + 1} - {SpeciesList[species]}";
 
                 if (Connection is not null && Connection.IsConnected())
                 {
@@ -566,6 +581,7 @@ namespace TeraFinder.Forms
 
         private void injectFromJsonToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Importing = true;
             try
             {
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex].Clone();
@@ -580,6 +596,7 @@ namespace TeraFinder.Forms
             {
                 MessageBox.Show($"{Strings["OutbreakForm.ErrorParsing"]}\n{ex.Message}");
             }
+            Importing = false;
         }
     }
 }

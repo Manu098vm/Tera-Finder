@@ -63,7 +63,7 @@ namespace TeraFinder
         }
 
 
-        public MassOutbreak Clone() => new(SAV, ID);
+        public FakeOutBreak Clone() => new FakeOutBreak(this);
 
         public void DumpTojson(string path)
         {
@@ -231,6 +231,48 @@ namespace TeraFinder
 
             if (block.Type is SCTypeCode.Int32)
                 block.SetValue(value);
+        }
+    }
+
+    public class FakeOutBreak
+    {
+        private byte[] LocationCenter { get; set; }
+        private byte[] LocationDummy { get; set; }
+        public uint Species { get; private set; }
+        public byte Form { get; private set; }
+        public int MaxSpawns { get; private set; }
+
+        public float CenterX { get => ReadSingleLittleEndian(LocationCenter.AsSpan()); }
+        public float CenterY { get => ReadSingleLittleEndian(LocationCenter.AsSpan()[4..]); }
+        public float CenterZ { get => ReadSingleLittleEndian(LocationCenter.AsSpan()[8..]); }
+
+        public float DummyX { get => ReadSingleLittleEndian(LocationDummy.AsSpan()); }
+        public float DummyY { get => ReadSingleLittleEndian(LocationDummy.AsSpan()[4..]); }
+        public float DummyZ { get => ReadSingleLittleEndian(LocationDummy.AsSpan()[8..]); }
+
+        public FakeOutBreak(MassOutbreak outbreak)
+        {
+            LocationCenter = outbreak.LocationCenter!.GetCoordinates().ToArray();
+            LocationDummy = outbreak.LocationDummy!.GetCoordinates().ToArray();
+            Species = outbreak.Species;
+            Form = outbreak.Form;
+            MaxSpawns = outbreak.MaxSpawns;
+        }
+
+        public void RestoreFromJson(string json)
+        {
+            var simpleOutbreak = JsonSerializer.Deserialize<JsonNode>(json)!;
+            var locationCenter = Convert.FromHexString(simpleOutbreak["LocationCenter"]!.GetValue<string>());
+            var locationDummy = Convert.FromHexString(simpleOutbreak["LocationDummy"]!.GetValue<string>());
+            var species = SpeciesConverter.GetInternal9(simpleOutbreak["Species"]!.GetValue<ushort>());
+            var form = simpleOutbreak["Form"]!.GetValue<byte>();
+            var maxSpawns = simpleOutbreak["MaxSpawns"]!.GetValue<int>();
+
+            LocationCenter = locationCenter;
+            LocationDummy = locationDummy;
+            Species = species;
+            Form = form;
+            MaxSpawns = maxSpawns;
         }
     }
 }

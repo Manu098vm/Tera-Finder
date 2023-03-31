@@ -177,6 +177,7 @@
             cmbSpecies.Size = new Size(151, 28);
             cmbSpecies.TabIndex = 31;
             cmbSpecies.SelectedIndexChanged += cmbSpecies_IndexChanged;
+            cmbSpecies.KeyDown += (s, e) => { e.SuppressKeyPress = (e.KeyCode is Keys.Up or Keys.Down or Keys.Left or Keys.Right); };
             // 
             // lblForm
             // 
