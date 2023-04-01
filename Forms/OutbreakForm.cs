@@ -163,7 +163,6 @@ namespace TeraFinder.Forms
                             var dialog = MessageBox.Show(message, "", MessageBoxButtons.YesNo);
                             if (dialog is DialogResult.Yes)
                                 restore = true;
-                            else return;
                         }
                     }
                 }
@@ -177,8 +176,11 @@ namespace TeraFinder.Forms
                 }
                 else
                 {
+                    var wasImporting = Importing;
+                    Importing = true;
                     outbreak.Species = SpeciesConverter.GetInternal9(species);
                     cmbForm.SelectedIndex = 0;
+                    Importing = wasImporting;
                 }
 
                 var index = cmbOutbreaks.SelectedIndex;
