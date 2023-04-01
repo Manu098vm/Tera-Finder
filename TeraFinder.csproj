@@ -47,7 +47,7 @@
 	  <PackageReference Include="LibUsbDotNet" Version="2.2.29" />
 	  <PackageReference Include="NLog" Version="5.1.2" />
 	  <PackageReference Include="Octokit" Version="5.0.0" />
-	  <PackageReference Include="PKHeX.Core" Version="23.2.27" />
+	  <PackageReference Include="PKHeX.Core" Version="23.2.28" />
 	</ItemGroup>
 
   <ItemGroup>

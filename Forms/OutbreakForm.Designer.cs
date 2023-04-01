@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OutbreakForm));
             grpMap = new GroupBox();
             imgMap = new PictureBox();
             cmbOutbreaks = new ComboBox();
@@ -177,7 +178,6 @@
             cmbSpecies.Size = new Size(151, 28);
             cmbSpecies.TabIndex = 31;
             cmbSpecies.SelectedIndexChanged += cmbSpecies_IndexChanged;
-            cmbSpecies.KeyDown += (s, e) => { e.SuppressKeyPress = (e.KeyCode is Keys.Up or Keys.Down or Keys.Left or Keys.Right); };
             // 
             // lblForm
             // 
@@ -472,11 +472,11 @@
             Controls.Add(cmbOutbreaks);
             Controls.Add(grpMap);
             Controls.Add(menuStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "OutbreakForm";
-            ShowIcon = false;
             Text = "Mass Outbreak Editor";
             grpMap.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)imgMap).EndInit();
