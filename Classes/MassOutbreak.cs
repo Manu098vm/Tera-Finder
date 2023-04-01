@@ -63,7 +63,7 @@ namespace TeraFinder
         }
 
 
-        public FakeOutBreak Clone() => new FakeOutBreak(this);
+        public FakeOutbreak Clone() => new(this);
 
         public void DumpTojson(string path)
         {
@@ -84,11 +84,11 @@ namespace TeraFinder
         public void RestoreFromJson(string json)
         {
             var simpleOutbreak = JsonSerializer.Deserialize<JsonNode>(json)!;
-            var locationCenter = Convert.FromHexString(simpleOutbreak["LocationCenter"]!.GetValue<string>());
-            var locationDummy = Convert.FromHexString(simpleOutbreak["LocationDummy"]!.GetValue<string>());
-            var species = SpeciesConverter.GetInternal9(simpleOutbreak["Species"]!.GetValue<ushort>());
-            var form = simpleOutbreak["Form"]!.GetValue<byte>();
-            var maxSpawns = simpleOutbreak["MaxSpawns"]!.GetValue<int>();
+            var locationCenter = Convert.FromHexString(simpleOutbreak[nameof(LocationCenter)]!.GetValue<string>());
+            var locationDummy = Convert.FromHexString(simpleOutbreak[nameof(LocationDummy)]!.GetValue<string>());
+            var species = SpeciesConverter.GetInternal9(simpleOutbreak[nameof(Species)]!.GetValue<ushort>());
+            var form = simpleOutbreak[nameof(Form)]!.GetValue<byte>();
+            var maxSpawns = simpleOutbreak[nameof(MaxSpawns)]!.GetValue<int>();
 
             LocationCenter!.SetCoordinates(locationCenter);
             LocationDummy!.SetCoordinates(locationDummy);
@@ -234,7 +234,7 @@ namespace TeraFinder
         }
     }
 
-    public class FakeOutBreak
+    public class FakeOutbreak
     {
         private byte[] LocationCenter { get; set; }
         private byte[] LocationDummy { get; set; }
@@ -250,7 +250,7 @@ namespace TeraFinder
         public float DummyY { get => ReadSingleLittleEndian(LocationDummy.AsSpan()[4..]); }
         public float DummyZ { get => ReadSingleLittleEndian(LocationDummy.AsSpan()[8..]); }
 
-        public FakeOutBreak(MassOutbreak outbreak)
+        public FakeOutbreak(MassOutbreak outbreak)
         {
             LocationCenter = outbreak.LocationCenter!.GetCoordinates().ToArray();
             LocationDummy = outbreak.LocationDummy!.GetCoordinates().ToArray();
@@ -262,11 +262,11 @@ namespace TeraFinder
         public void RestoreFromJson(string json)
         {
             var simpleOutbreak = JsonSerializer.Deserialize<JsonNode>(json)!;
-            var locationCenter = Convert.FromHexString(simpleOutbreak["LocationCenter"]!.GetValue<string>());
-            var locationDummy = Convert.FromHexString(simpleOutbreak["LocationDummy"]!.GetValue<string>());
-            var species = SpeciesConverter.GetInternal9(simpleOutbreak["Species"]!.GetValue<ushort>());
-            var form = simpleOutbreak["Form"]!.GetValue<byte>();
-            var maxSpawns = simpleOutbreak["MaxSpawns"]!.GetValue<int>();
+            var locationCenter = Convert.FromHexString(simpleOutbreak[nameof(LocationCenter)]!.GetValue<string>());
+            var locationDummy = Convert.FromHexString(simpleOutbreak[nameof(LocationDummy)]!.GetValue<string>());
+            var species = SpeciesConverter.GetInternal9(simpleOutbreak[nameof(Species)]!.GetValue<ushort>());
+            var form = simpleOutbreak[nameof(Form)]!.GetValue<byte>();
+            var maxSpawns = simpleOutbreak[nameof(MaxSpawns)]!.GetValue<int>();
 
             LocationCenter = locationCenter;
             LocationDummy = locationDummy;

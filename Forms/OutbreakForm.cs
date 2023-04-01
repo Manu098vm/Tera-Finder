@@ -63,7 +63,7 @@ namespace TeraFinder.Forms
 
         private void TranslateDictionary(string language) => Strings = Strings.TranslateInnerStrings(language);
 
-        private void UpdateForm(FakeOutBreak outbreak)
+        private void UpdateForm(FakeOutbreak outbreak)
         {
             SuspendLayout();
             Enabled = false;
@@ -79,7 +79,10 @@ namespace TeraFinder.Forms
             txtDummyZ.Text = $"{outbreak.DummyZ}";
             chkEnabled.Checked = true;
             chkFound.Checked = false;
+            var wasImporting = Importing;
+            Importing = true;
             cmbForm.SelectedIndex = outbreak.Form;
+            Importing = wasImporting;
             Enabled = true;
             ResumeLayout();
         }
@@ -217,8 +220,32 @@ namespace TeraFinder.Forms
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
                 var toExpect = outbreak.Form;
                 var species = SpeciesConverter.GetNational9((ushort)outbreak.Species);
-                outbreak.Form = (byte)cmbForm.SelectedIndex;
 
+                var test = $"_{species}_{cmbForm.SelectedIndex}";
+                var content = (byte[]?)Properties.Resources.ResourceManager.GetObject($"_{species}_{cmbForm.SelectedIndex}");
+                if (!Importing && content is not null)
+                {
+                    var json = System.Text.Encoding.UTF8.GetString(content);
+                    if (json is not null && json.Length > 0)
+                    {
+                        var formlist = FormConverter.GetFormList(species, TypesList, FormsList, GenderList, EntityContext.Gen9);
+                        var hasForm = false;
+                        if (!(formlist.Length == 0 || (formlist.Length == 1 && formlist[0].Equals(""))))
+                            hasForm = true;
+                        var name = $"{SpeciesList[species]}{(hasForm ? $"-{formlist[cmbForm.SelectedIndex]}" : "")}";
+
+                        var message = Strings["OutbreakForm.LoadDefault"].Replace("{species}", name);
+                        var dialog = MessageBox.Show(message, "", MessageBoxButtons.YesNo);
+                        if (dialog is DialogResult.Yes)
+                        {
+                            var clone = outbreak.Clone();
+                            clone.RestoreFromJson(json!);
+                            UpdateForm(clone);
+                        }
+                    }
+                }
+
+                outbreak.Form = (byte)cmbForm.SelectedIndex;
                 pictureBox.Image = ImagesUtil.GetSimpleSprite(species, outbreak.Form, outbreak.Enabled);
                 if (pictureBox.Image is not null)
                 {
@@ -569,7 +596,12 @@ namespace TeraFinder.Forms
             try
             {
                 var outbreak = MassOutbreaks[cmbOutbreaks.SelectedIndex];
-                saveFileDialog.FileName = $"{SpeciesConverter.GetNational9((ushort)outbreak.Species)}";
+                var species = SpeciesConverter.GetNational9((ushort)outbreak.Species);
+                var formlist = FormConverter.GetFormList(species, TypesList, FormsList, GenderList, EntityContext.Gen9);
+                var hasForm = false;
+                if (!(formlist.Length == 0 || (formlist.Length == 1 && formlist[0].Equals(""))))
+                    hasForm = true;
+                saveFileDialog.FileName = $"{species}{(hasForm ? $"-{outbreak.Form}" : "")}";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                     outbreak.DumpTojson(saveFileDialog.FileName);
             }
