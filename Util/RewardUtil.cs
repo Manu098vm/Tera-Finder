@@ -10,8 +10,8 @@ namespace TeraFinder
 
         public static Dictionary<ulong, List<Reward>>[] GetTeraRewardsTables()
         {
-            var drops = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.DeliveryRaidFixedRewardItemArray>(Properties.Resources.raid_fixed_reward_item_array)!;
-            var lottery = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.DeliveryRaidLotteryRewardItemArray>(Properties.Resources.raid_lottery_reward_item_array)!;
+            var drops = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidFixedRewardItemArray>(Properties.Resources.raid_fixed_reward_item_array)!;
+            var lottery = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidLotteryRewardItemArray>(Properties.Resources.raid_lottery_reward_item_array)!;
             var fixedTable = GetFixedTable(drops.Table);
             var lotteryTable = GetLotteryTable(lottery.Table);
             return new Dictionary<ulong, List<Reward>>[] { fixedTable, lotteryTable };
@@ -20,8 +20,8 @@ namespace TeraFinder
         public static Dictionary<ulong, List<Reward>>[] GetDistRewardsTables(SAV9SV sav)
         {
             var rewards = EventUtil.GetEventItemDataFromSAV(sav);
-            var drops = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.DeliveryRaidFixedRewardItemArray>(rewards[0])!;
-            var lottery = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.DeliveryRaidLotteryRewardItemArray>(rewards[1])!;
+            var drops = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidFixedRewardItemArray>(rewards[0])!;
+            var lottery = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidLotteryRewardItemArray>(rewards[1])!;
             var fixedTable = GetFixedTable(drops.Table);
             var lotteryTable = GetLotteryTable(lottery.Table);
             return new Dictionary<ulong, List<Reward>>[] { fixedTable, lotteryTable };
@@ -353,7 +353,7 @@ namespace TeraFinder
 
         //Port from https://github.com/SteveCookTU/sv_raid_reader/blob/master/src/item_list.rs
         //Thanks SteveCookTU/EzPzStreamz!
-        private static Dictionary<ulong, List<Reward>> GetFixedTable(pkNX.Structures.FlatBuffers.DeliveryRaidFixedRewardItem[] drops)
+        private static Dictionary<ulong, List<Reward>> GetFixedTable(IEnumerable<pkNX.Structures.FlatBuffers.SV.DeliveryRaidFixedRewardItem> drops)
         {
             var table = new Dictionary<ulong, List<Reward>>();
             foreach (var d in drops)
@@ -820,7 +820,7 @@ namespace TeraFinder
             return table;
         }
 
-        private static Dictionary<ulong, List<Reward>> GetLotteryTable(pkNX.Structures.FlatBuffers.DeliveryRaidLotteryRewardItem[] lottery)
+        private static Dictionary<ulong, List<Reward>> GetLotteryTable(IEnumerable<pkNX.Structures.FlatBuffers.SV.DeliveryRaidLotteryRewardItem> lottery)
         {
             var table = new Dictionary<ulong, List<Reward>>();
 

@@ -305,7 +305,7 @@ namespace TeraFinder
                 eventCount = (int)content >= 2 ? GetEventCount(sav.Raid, currRaid) : -1;
 
             var priority = EventUtil.GetDeliveryPriority(sav);
-            var groupid = priority is not null ? GetDeliveryGroupID(eventCount, priority.DeliveryGroupID, possibleGroups) : -1;
+            var groupid = priority is not null ? GetDeliveryGroupID(eventCount, priority.GroupID.Groups, possibleGroups) : -1;
 
             return groupid;
         }
@@ -313,12 +313,14 @@ namespace TeraFinder
         //From https://github.com/LegoFigure11/RaidCrawler/blob/7e764a9a5c0aa74270b3679083c813471abc55d6/Structures/TeraDistribution.cs#L145
         //GPL v3 License
         //Thanks LegoFigure11 & architade!
-        private static int GetDeliveryGroupID(int eventct, pkNX.Structures.FlatBuffers.DeliveryGroupID ids, HashSet<int> possible_groups)
+        private static int GetDeliveryGroupID(int eventct, pkNX.Structures.FlatBuffers.SV.GroupSet ids, HashSet<int> possible_groups)
         {
             if (eventct > -1 && possible_groups.Count > 0)
             {
-                int[] cts = new int[10] { ids.GroupID01, ids.GroupID02, ids.GroupID03, ids.GroupID04, ids.GroupID05,
-                                      ids.GroupID06, ids.GroupID07, ids.GroupID08, ids.GroupID09, ids.GroupID10 };
+                var cts = new int[10];
+                for (var i = 0; i < ids.Groups_Length; i++)
+                    cts[i] = pkNX.Structures.FlatBuffers.SV.GroupSet.Groups_Item(ref ids, i);
+
                 for (int i = 0; i < cts.Length; i++)
                 {
                     var ct = cts[i];

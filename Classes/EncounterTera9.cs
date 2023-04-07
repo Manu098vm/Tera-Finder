@@ -1,5 +1,5 @@
-using System.Buffers.Binary;
 using PKHeX.Core;
+using System.Buffers.Binary;
 using static PKHeX.Core.AbilityPermission;
 
 //Extension of https://github.com/kwsch/PKHeX/blob/master/PKHeX.Core/Legality/Encounters/EncounterStatic/EncounterTera9.cs
@@ -23,10 +23,11 @@ public sealed record EncounterTera9 : EncounterStatic, ITeraRaid9
     public bool IsAvailableHostScarlet => RandRateMinScarlet != -1;
     public bool IsAvailableHostViolet => RandRateMinViolet != -1;
 
+    //TeraFinder Serialization
     public uint Identifier { get; private init; }
     public ulong FixedRewardHash { get; private init; }
     public ulong LotteryRewardHash { get; private init; }
-
+    public int Item { get; private init; }
 
     public bool CanBeEncountered(uint seed) => Tera9RNG.IsMatchStarChoice(seed, Stars, RandRate, RandRateMinScarlet, RandRateMinViolet);
 
@@ -59,7 +60,7 @@ public sealed record EncounterTera9 : EncounterStatic, ITeraRaid9
 
     public static EncounterTera9[] GetArray(ReadOnlySpan<byte> data)
     {
-        const int size = 0x2C;
+        const int size = 0x30;
         var count = data.Length / size;
         var result = new EncounterTera9[count];
         for (int i = 0; i < result.Length; i++)
@@ -92,6 +93,7 @@ public sealed record EncounterTera9 : EncounterStatic, ITeraRaid9
         Identifier = BinaryPrimitives.ReadUInt32LittleEndian(data[0x18..]),
         FixedRewardHash = BinaryPrimitives.ReadUInt64LittleEndian(data[0x1C..]),
         LotteryRewardHash = BinaryPrimitives.ReadUInt64LittleEndian(data[0x24..]),
+        Item = (int)BinaryPrimitives.ReadUInt32LittleEndian(data[0x2C..]),
     };
 
     private static AbilityPermission GetAbility(byte b) => b switch
