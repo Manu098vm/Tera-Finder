@@ -27,12 +27,6 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="pkNX.Structures.FlatBuffers\**" />
-    <EmbeddedResource Remove="pkNX.Structures.FlatBuffers\**" />
-    <None Remove="pkNX.Structures.FlatBuffers\**" />
-  </ItemGroup>
-
 	<ItemGroup>
 		<Compile Remove="TeraFinder.Launcher\**" />
 		<EmbeddedResource Remove="TeraFinder.Launcher\**" />
@@ -86,13 +80,6 @@
 			<HintPath>Resources\deps\pkNX.Structures.FlatBuffers.SV.dll</HintPath>
 		</Reference>
     </ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="pkNX.Structures.FlatBuffers\pkNX.Structures.FlatBuffers.csproj">
-			<Private>True</Private>
-			<CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
-		</ProjectReference>
-	</ItemGroup>
 
 	<ItemGroup>
 	  <Compile Update="Properties\Resources.Designer.cs">

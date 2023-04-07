@@ -19,12 +19,6 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<Compile Remove="pkNX.Structures.FlatBuffers\**" />
-		<EmbeddedResource Remove="pkNX.Structures.FlatBuffers\**" />
-		<None Remove="pkNX.Structures.FlatBuffers\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Compile Remove="TeraFinder\**" />
 		<EmbeddedResource Remove="TeraFinder\**" />
 		<None Remove="TeraFinder\**" />
