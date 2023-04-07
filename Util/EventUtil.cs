@@ -1,7 +1,8 @@
 ﻿using System.Data;
 using System.Text;
 using System.Text.Json;
-using pkNX.Structures.FlatBuffers;
+using pkNX.Structures;
+using pkNX.Structures.FlatBuffers.SV;
 
 //Most of functions here are taken from pkNX
 //https://github.com/kwsch/pkNX/blob/master/pkNX.WinForms/Dumping/TeraRaidRipper.cs
@@ -18,8 +19,8 @@ namespace TeraFinder
             {
                 var KBCATFixedRewardItemArray = sav.Accessor.FindOrDefault(Blocks.KBCATFixedRewardItemArray.Key).Data;
                 var KBCATLotteryRewardItemArray = sav.Accessor.FindOrDefault(Blocks.KBCATLotteryRewardItemArray.Key).Data;
-                var tableDrops = FlatBufferConverter.DeserializeFrom<DeliveryRaidFixedRewardItemArray>(KBCATFixedRewardItemArray);
-                var tableBonus = FlatBufferConverter.DeserializeFrom<DeliveryRaidLotteryRewardItemArray>(KBCATLotteryRewardItemArray);
+                var tableDrops = pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidFixedRewardItemArray>(KBCATFixedRewardItemArray);
+                var tableBonus = pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidLotteryRewardItemArray>(KBCATLotteryRewardItemArray);
                 var opt = new JsonSerializerOptions { WriteIndented = true };
                 var drops = JsonSerializer.Serialize(tableDrops, opt);
                 var lottery = JsonSerializer.Serialize(tableBonus, opt);
@@ -39,11 +40,11 @@ namespace TeraFinder
 
             var KBCATRaidEnemyArray = sav.Accessor.FindOrDefault(Blocks.KBCATRaidEnemyArray.Key).Data;
 
-            var tableEncounters = FlatBufferConverter.DeserializeFrom<DeliveryRaidEnemyTableArray>(KBCATRaidEnemyArray);
+            var tableEncounters = pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidEnemyTableArray>(KBCATRaidEnemyArray);
 
             var byGroupID = tableEncounters.Table
-                .Where(z => z.RaidEnemyInfo.Rate != 0)
-                .GroupBy(z => z.RaidEnemyInfo.DeliveryGroupID);
+                .Where(z => z.Info.Rate != 0)
+                .GroupBy(z => z.Info.DeliveryGroupID);
 
             var seven = DistroGroupSet.None;
             var other = DistroGroupSet.None;
@@ -52,28 +53,28 @@ namespace TeraFinder
                 var items = group.ToArray();
                 var groupSet = Evaluate(items);
 
-                if (items.Any(z => z.RaidEnemyInfo.Difficulty > 7))
-                    throw new Exception($"Undocumented difficulty {items.First(z => z.RaidEnemyInfo.Difficulty > 7).RaidEnemyInfo.Difficulty}");
+                if (items.Any(z => z.Info.Difficulty > 7))
+                    throw new Exception($"Undocumented difficulty {items.First(z => z.Info.Difficulty > 7).Info.Difficulty}");
 
-                if (items.All(z => z.RaidEnemyInfo.Difficulty == 7))
+                if (items.All(z => z.Info.Difficulty == 7))
                 {
-                    if (items.Any(z => z.RaidEnemyInfo.CaptureRate != 2))
-                        throw new Exception($"Undocumented 7 star capture rate {items.First(z => z.RaidEnemyInfo.CaptureRate != 2).RaidEnemyInfo.CaptureRate}");
+                    if (items.Any(z => z.Info.CaptureRate != 2))
+                        throw new Exception($"Undocumented 7 star capture rate {items.First(z => z.Info.CaptureRate != 2).Info.CaptureRate}");
 
                     if (!TryAdd(ref seven, groupSet))
                         Console.WriteLine("Already saw a 7-star group. How do we differentiate this slot determination from prior?");
 
-                    AddToList(items, type3list, RaidSerializationFormat.Type3);
+                    AddToList(items, type3list, RaidSerializationFormat.Might);
                     continue;
                 }
 
-                if (items.Any(z => z.RaidEnemyInfo.Difficulty == 7))
-                    throw new Exception($"Mixed difficulty {items.First(z => z.RaidEnemyInfo.Difficulty >= 7).RaidEnemyInfo.Difficulty}");
+                if (items.Any(z => z.Info.Difficulty == 7))
+                    throw new Exception($"Mixed difficulty {items.First(z => z.Info.Difficulty >= 7).Info.Difficulty}");
 
                 if (!TryAdd(ref other, groupSet))
                     Console.WriteLine("Already saw a not-7-star group. How do we differentiate this slot determination from prior?");
 
-                AddToList(items, type2list, RaidSerializationFormat.Type2);
+                AddToList(items, type2list, RaidSerializationFormat.Distribution);
             }
 
             res = new byte[][] { type2list.SelectMany(z => z).ToArray(), type3list.SelectMany(z => z).ToArray() };
@@ -87,7 +88,7 @@ namespace TeraFinder
             {
                 try
                 {
-                    return FlatBufferConverter.DeserializeFrom<DeliveryRaidPriorityArray>(KBCATRaidPriorityArray.Data).Table.First();
+                    return pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidPriorityArray>(KBCATRaidPriorityArray.Data).Table.First();
                 }
                 catch (Exception)
                 {
@@ -116,7 +117,7 @@ namespace TeraFinder
 
         private static DistroGroupSet Evaluate(DeliveryRaidEnemyTable[] items)
         {
-            var versions = items.Select(z => z.RaidEnemyInfo.RomVer).Distinct().ToArray();
+            var versions = items.Select(z => z.Info.RomVer).Distinct().ToArray();
             if (versions.Length == 2 && versions.Contains(RaidRomType.TYPE_A) && versions.Contains(RaidRomType.TYPE_B))
                 return DistroGroupSet.Both;
             if (versions.Length == 1)
@@ -139,7 +140,7 @@ namespace TeraFinder
             Span<ushort> weightTotalV = stackalloc ushort[StageStars.Length];
             foreach (var enc in table)
             {
-                var info = enc.RaidEnemyInfo;
+                var info = enc.Info;
                 if (info.Rate == 0)
                     continue;
                 var difficulty = info.Difficulty;
@@ -158,7 +159,7 @@ namespace TeraFinder
             Span<ushort> weightMinV = stackalloc ushort[StageStars.Length];
             foreach (var enc in table)
             {
-                var info = enc.RaidEnemyInfo;
+                var info = enc.Info;
                 if (info.Rate == 0)
                     continue;
                 var difficulty = info.Difficulty;
@@ -193,17 +194,25 @@ namespace TeraFinder
                 bw.Write(noTotal || enc.RomVer is RaidRomType.TYPE_A ? (ushort)0 : totalV[stage]);
             }
 
-            if (format == RaidSerializationFormat.Type3)
-                enc.SerializeType3(bw);
+            if (format == RaidSerializationFormat.Might)
+                enc.SerializeMight(bw);
+
+            if (format == RaidSerializationFormat.Distribution)
+                enc.SerializeDistribution(bw);
 
             enc.SerializeTeraFinder(bw);
-
-            if (format == RaidSerializationFormat.Type2)
-                enc.SerializeType2(bw);
 
             var bin = ms.ToArray();
             if (!list.Any(z => z.SequenceEqual(bin)))
                 list.Add(bin);
+        }
+
+        public static void SerializeTeraFinder(this RaidEnemyInfo encounter, BinaryWriter bw)
+        {
+            bw.Write((uint)encounter.No);
+            bw.Write(encounter.DropTableFix);
+            bw.Write(encounter.DropTableRandom);
+            bw.Write((uint)encounter.BossPokePara.Item);
         }
 
         private static readonly int[][] StageStars =

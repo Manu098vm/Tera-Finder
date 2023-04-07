@@ -231,7 +231,7 @@ namespace TeraFinder
 
         private Nature GetNature()
         {
-            if (Encounter is EncounterTera9 tera)
+            if (Encounter is EncounterTera9)
                 return Nature.Random;
             else if (Encounter is EncounterMight9 might)
                 return might.Nature;
@@ -292,14 +292,14 @@ namespace TeraFinder
                 return default;
             else if (Encounter is EncounterMight9 might)
                 return might.IVs;
-            else if (Encounter is EncounterDist9)
-                return default;
+            else if (Encounter is EncounterDist9 dist)
+                return dist.IVs;
             else if (Encounter is EncounterRaid9 raid)
                 return raid.IVs;
             else if (Encounter is PKHeX.Core.EncounterTera9)
                 return default;
-            else if (Encounter is PKHeX.Core.EncounterDist9)
-                return default;
+            else if (Encounter is PKHeX.Core.EncounterDist9 h_dist)
+                return h_dist.IVs;
             else if (Encounter is PKHeX.Core.EncounterMight9 h_might)
                 return h_might.IVs;
             else throw new ArgumentOutOfRangeException();
@@ -421,8 +421,8 @@ namespace TeraFinder
 
         private int GetItem()
         {
-            if (Encounter is EncounterTera9)
-                return 0;
+            if (Encounter is EncounterTera9 tera)
+                return tera.Item;
             else if (Encounter is EncounterMight9 might)
                 return (int)might.Item;
             else if (Encounter is EncounterDist9 dist)

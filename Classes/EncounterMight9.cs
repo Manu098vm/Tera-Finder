@@ -1,4 +1,5 @@
 using PKHeX.Core;
+using System.Buffers.Binary;
 using static System.Buffers.Binary.BinaryPrimitives;
 
 //Extension of https://github.com/kwsch/PKHeX/blob/master/PKHeX.Core/Legality/Encounters/EncounterStatic/EncounterMight9.cs
@@ -15,15 +16,16 @@ public sealed record EncounterMight9 : EncounterStatic, ITeraRaid9
     public byte Stars { get; private init; }
     public byte RandRate { get; private init; } // weight chance of this encounter
 
+    //TeraFinder Serialization
+    public uint Identifier { get; private init; }
+    public ulong FixedRewardHash { get; private init; }
+    public ulong LotteryRewardHash { get; private init; }
+    public int Item { get; private init; }
+
     /// <summary> Indicates how the <see cref="Scale"/> value is used, if at all. </summary>
     public SizeType9 ScaleType { get; private init; }
     /// <summary>  Used only for <see cref="ScaleType"/> == <see cref="SizeType9.VALUE"/> </summary>
     public byte Scale { get; private init; }
-
-    public uint Identifier { get; private init; }
-    public ulong FixedRewardHash { get; private init; }
-    public ulong LotteryRewardHash { get; private init; }
-    public uint Item { get; private init; }
 
     public ushort RandRate0MinScarlet { get; private init; }
     public ushort RandRate0MinViolet { get; private init; }
@@ -202,14 +204,13 @@ public sealed record EncounterMight9 : EncounterStatic, ITeraRaid9
         RandRate3TotalViolet = ReadUInt16LittleEndian(data[(WeightStart + (sizeof(ushort) * 15))..]),
 
         Nature = (Nature)data[0x34],
-        IVs = new IndividualValueSet((sbyte)data[0x35], (sbyte)data[0x36], (sbyte)data[0x37], (sbyte)data[0x38], (sbyte)data[0x39], (sbyte)data[0x3A], data[0x3B]),
+        IVs = new IndividualValueSet((sbyte)data[0x35], (sbyte)data[0x36], (sbyte)data[0x37], (sbyte)data[0x38], (sbyte)data[0x39], (sbyte)data[0x3A], (IndividualValueSetType)data[0x3B]),
         ScaleType = (SizeType9)data[0x3C],
         Scale = data[0x3D],
-
-        Identifier = (uint)Math.Truncate((double)(ReadUInt32LittleEndian(data[0x3E..]) / 100)),
+        Identifier = ReadUInt32LittleEndian(data[0x3E..]),
         FixedRewardHash = ReadUInt64LittleEndian(data[0x42..]),
         LotteryRewardHash = ReadUInt64LittleEndian(data[0x4A..]),
-        Item = ReadUInt32LittleEndian(data[0x52..]),
+        Item = (int)ReadUInt32LittleEndian(data[0x52..]),
     };
 
     private static AbilityPermission GetAbility(byte b) => b switch
@@ -298,6 +299,6 @@ public sealed record EncounterMight9 : EncounterStatic, ITeraRaid9
         0 => PersonalInfo.RatioMagicMale,
         1 => PersonalInfo.RatioMagicFemale,
         2 => PersonalInfo.RatioMagicGenderless,
-        _ => (byte)PersonalTable.SV.GetFormEntry(Species, Form).Gender,
+        _ => PersonalTable.SV.GetFormEntry(Species, Form).Gender,
     };
 }
