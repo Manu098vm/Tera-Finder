@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System.Buffers.Binary;
 using TeraFinder.Forms;
 
 namespace TeraFinder
@@ -297,11 +298,10 @@ namespace TeraFinder
 
         public uint GetEventIdentifier()
         {
-            if (Dist is not null && Dist.Length > 0)
-                return Dist[0].Identifier;
-
-            if(Mighty is not null && Mighty.Length > 0)
-                return Mighty[0].Identifier;
+            var block = SAV.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
+            var data = block.Data;
+            if (data.Length > 0)
+                return BinaryPrimitives.ReadUInt32LittleEndian(data);
 
             return 0;
         }
