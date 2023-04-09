@@ -23,6 +23,7 @@ TeraFinderForm.btnStartFinder=Controlla Seed
 TeraFinderForm.btnStartCalculator=Calcolatore Raid
 TeraFinderForm.btnStartRewardCalc=Calcolatore Ricompense
 TeraFinderForm.btnEditOutbreaks=Visualizza e Modifica Comparse Massicce
+OutbreakForm.SpeciesExclusive={species} è una esclusiva di {game}!
 
 OutbreakForm.toolsToolStripMenuItem=Strumenti
 OutbreakForm.dumpToJsonToolStripMenuItem=Esporta su Json

@@ -48,6 +48,7 @@ OutBreakForm.MassOutbreakName=Mass Outbreak
 OutbreakForm.DeviceDisconnected=Device disconnected.
 OutbreakForm.ErrorParsing=Error while parsing:
 OutbreakForm.LoadDefault=Do you want to load default legal data for {species}?
+OutbreakForm.SpeciesExclusive={species} is a {game} exclusive!
 
 CalculatorForm=Calculadora de Teraincursiones
 CalculatorForm.lblSeed=Seed:

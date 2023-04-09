@@ -23,6 +23,7 @@ TeraFinderForm.btnStartFinder=Seed Checker
 TeraFinderForm.btnStartCalculator=Raid Calculator
 TeraFinderForm.btnStartRewardCalc=Reward Calculator
 TeraFinderForm.btnEditOutbreaks=Mass Outbreak Viewer/Editor
+OutbreakForm.SpeciesExclusive={species} is a {game} exclusive!
 
 OutbreakForm.toolsToolStripMenuItem=Tools
 OutbreakForm.dumpToJsonToolStripMenuItem=Dump to Json

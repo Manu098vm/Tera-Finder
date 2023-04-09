@@ -48,6 +48,7 @@ OutBreakForm.MassOutbreakName=대량발생
 OutbreakForm.DeviceDisconnected=연결이 끊겼습니다.
 OutbreakForm.ErrorParsing=분석 중 오류가 발생했습니다:
 OutbreakForm.LoadDefault=적법성이 맞는 기본 포켓몬 데이터를 불러오시겠습니까?
+OutbreakForm.SpeciesExclusive={species} is a {game} exclusive!
 
 CalculatorForm=레이드 계산기
 CalculatorForm.lblSeed=시드:

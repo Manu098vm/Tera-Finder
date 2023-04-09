@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System.CodeDom;
 
 namespace TeraFinder.Forms
 {
@@ -19,6 +20,7 @@ namespace TeraFinder.Forms
         private string[] FormsList = null!;
         private string[] TypesList = null!;
         private string[] GenderList = null!;
+        private string[] GameList = null!;
 
         public OutbreakForm(SAV9SV sav, string language, ConnectionForm? connection)
         {
@@ -39,6 +41,7 @@ namespace TeraFinder.Forms
             FormsList = GameInfo.GetStrings(Language).forms;
             TypesList = GameInfo.GetStrings(Language).types;
             GenderList = GameInfo.GenderSymbolUnicode.ToArray();
+            GameList = GameInfo.GetStrings(Language).gamelist;
 
             for (var i = 0; i < 8; i++)
                 cmbOutbreaks.Items[i] = $"{Strings["OutBreakForm.MassOutbreakName"]} {i + 1} - " +
@@ -61,6 +64,7 @@ namespace TeraFinder.Forms
                 { "OutbreakForm.DeviceDisconnected", "Device disconnected." },
                 { "OutbreakForm.ErrorParsing", "Error while parsing:" },
                 { "OutbreakForm.LoadDefault", "Do you want to load default legal data for {species}?" },
+                { "OutbreakForm.SpeciesExclusive", "{species} is a {game} exclusive!" }
             };
         }
 
@@ -152,18 +156,33 @@ namespace TeraFinder.Forms
 
                 if (!Importing)
                 {
-                    var content = (byte[]?)Properties.Resources.ResourceManager.GetObject($"_{species}");
+                    var versionType = SAV.Version is GameVersion.SL ? typeof(VioletExclusives) : typeof(ScarletExclusives);
+                    var isExclusive = Enum.IsDefined(versionType, species);
 
-                    if (content is not null)
+                    if (!isExclusive)
                     {
-                        json = System.Text.Encoding.UTF8.GetString(content);
-                        if (json is not null && json.Length > 0)
+                        var content = (byte[]?)Properties.Resources.ResourceManager.GetObject($"_{species}");
+
+                        if (content is not null)
                         {
-                            var message = Strings["OutbreakForm.LoadDefault"].Replace("{species}", SpeciesList[species]);
-                            var dialog = MessageBox.Show(message, "", MessageBoxButtons.YesNo);
-                            if (dialog is DialogResult.Yes)
-                                restore = true;
+                            json = System.Text.Encoding.UTF8.GetString(content);
+                            if (json is not null && json.Length > 0)
+                            {
+                                var message = Strings["OutbreakForm.LoadDefault"].Replace("{species}", SpeciesList[species]);
+                                var dialog = MessageBox.Show(message, "", MessageBoxButtons.YesNo);
+                                if (dialog is DialogResult.Yes)
+                                    restore = true;
+                            }
                         }
+                    }
+                    else
+                    {
+                        var message = Strings["OutbreakForm.SpeciesExclusive"]
+                            .Replace("{species}", $"{SpeciesList[species]}")
+                            .Replace("{game}", $"{(versionType == typeof(ScarletExclusives) ?
+                            GameList[(byte)GameVersion.SL] : GameList[(byte)GameVersion.VL])}");
+
+                        MessageBox.Show(message);
                     }
                 }
 
