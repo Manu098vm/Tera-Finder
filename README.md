@@ -1,19 +1,21 @@
 # Tera Finder
-![terafinder_140](https://user-images.githubusercontent.com/52102823/222451258-136310eb-e277-4b9b-8e02-47f9b411767b.png)
+![immagine](https://user-images.githubusercontent.com/52102823/230898427-4adaad12-2d5e-4a9c-af78-7232f82811d5.png)
 
-This is a PKHeX.Core based program that allows to view, edit and calculate Raids for Scarlet & Violet. This is the spiritual sequel of my [SVXoroCalc](https://github.com/Manu098vm/SVResearches).
+
+This is a PKHeX.Core based program that allows to view, edit and calculate Raids and Mass Outbreaks for Scarlet & Violet. This is the spiritual sequel of [SVXoroCalc](https://github.com/Manu098vm/SVResearches).
 Both a standalone program and a PKHeX plugin are available for use.
 
-### Features:
-* [Import Poké Portal News in Zip/Folder formats](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Event---Pok%C3%A9-Portal-News-Importer)
+## Features:
+* [Connection to Remote Device](https://github.com/Manu098vm/Tera-Finder/wiki/Connect-To-Remote-Device)
+* [View & Edit Mass Outbreaks](https://github.com/Manu098vm/Tera-Finder/wiki/Mass-Outbreak-Viewer-&-Editor)
 * [View & Edit Raids](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Viewer-&-Editor)
+* [Import Poké Portal News in Zip/Folder formats](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Event---Pok%C3%A9-Portal-News-Importer)
 * [Reverse a Pokémon into its origin Seed to check legality](https://github.com/Manu098vm/Tera-Finder/wiki/Seed-Checker)
 * [Calculate RNG seeds that results in a Pokémon with given details](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Calculator)
 * [Calculate RNG seeds that results in a Raid with wanted rewards](https://github.com/Manu098vm/Tera-Finder/wiki/Reward-Calculator)
 * [Generate Legal PK9 files from Raid searches](https://github.com/Manu098vm/Tera-Finder/wiki/How-to-generate-Legal-PK9-Pok%C3%A9mon-from-Tera-Raids)
 * [Edit Tera Raid related Game Progress/Caught Flags](https://github.com/Manu098vm/Tera-Finder/wiki/Game-Flags-Editor)
 * [Supports localized languages](https://github.com/Manu098vm/Tera-Finder/wiki/General-Guide#about-the-localizations)
-* [Supports Connections to Remote Devices (WiFi or USB)](https://github.com/Manu098vm/Tera-Finder/wiki/Connect-To-Remote-Device)
 
 Powered by [PKHeX](https://github.com/kwsch/PKHeX), [pkNX](https://github.com/kwsch/pkNX) and [SysBot.NET](https://github.com/kwsch/SysBot.NET).
 
@@ -32,9 +34,11 @@ The Standalone Launcher will be placed in `TeraFinder.Launcher/bin/`.
 The Plugin files will be placed in `bin/`.
 
 ### Support/Troubleshooting
-For common troubleshooting, please the check the [appropriate section in the wiki](https://github.com/Manu098vm/Tera-Finder/wiki#troubleshooting).
+For common troubleshooting, please check the [appropriate section in the wiki](https://github.com/Manu098vm/Tera-Finder/wiki#troubleshooting).
 If you find any bug or you need support, please write a comment in the [Project Pokémon thread](https://projectpokemon.org/home/forums/topic/62964-scvi-tera-finder-saveram-tera-raid-viewer-editor-calculator-and-more/).
-Alternatively, feel free to contact me on my [Discord Server](https://discord.gg/F9nMfvw9sS).
+Alternatively, feel free to contact me on my [Discord Server](https://discord.gg/yWveAjKbKt):
+
+[<img src="https://canary.discordapp.com/api/guilds/693083823197519873/widget.png?style=banner2">](https://discord.gg/yWveAjKbKt)
 
 ## Credits and Thanks
 * [kwsch](https://github.com/kwsch) for [PKHeX](https://github.com/kwsch/PKHeX), [pkNX](https://github.com/kwsch/pkNX) and [SysBot.NET](https://github.com/kwsch/SysBot.NET), on which this program relies on
