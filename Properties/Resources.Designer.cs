@@ -3503,9 +3503,9 @@ namespace TeraFinder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] _978_3 {
+        internal static byte[] _978_2 {
             get {
-                object obj = ResourceManager.GetObject("_978_3", resourceCulture);
+                object obj = ResourceManager.GetObject("_978_2", resourceCulture);
                 return ((byte[])(obj));
             }
         }
