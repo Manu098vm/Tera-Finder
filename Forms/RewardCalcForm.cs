@@ -43,7 +43,7 @@ namespace TeraFinder.Forms
             cbitems.AddRange(Items[1..]);
 
             var items = cbitems.ToArray();
-            foreach(var cb in grpItems.Controls.OfType<ComboBox>())
+            foreach (var cb in grpItems.Controls.OfType<ComboBox>())
             {
                 cb.Items.AddRange(items);
                 cb.SelectedIndex = 0;
@@ -231,9 +231,9 @@ namespace TeraFinder.Forms
                 {
                     var numericName = $"numericUpDown{cb.Name[8..]}";
                     var num = nums.Where(num => num.Name.Equals(numericName)).FirstOrDefault()!;
-                    if(!anyherba)
+                    if (!anyherba)
                         anyherba = cb.SelectedIndex == 1;
-                    items.Add(new Reward { ItemID = cb.SelectedIndex == 1 ? ushort.MaxValue-2 : cb.SelectedIndex-1, Amount = (int)num.Value });
+                    items.Add(new Reward { ItemID = cb.SelectedIndex == 1 ? ushort.MaxValue - 2 : cb.SelectedIndex - 1, Amount = (int)num.Value });
                 }
             }
 
@@ -299,7 +299,8 @@ namespace TeraFinder.Forms
 
         private void UpdateLabel()
         {
-            if (Filter is not null && !Filter.IsFilterNull()) {
+            if (Filter is not null && !Filter.IsFilterNull())
+            {
                 if (chkAllResults.Checked)
                     try
                     {
@@ -487,7 +488,7 @@ namespace TeraFinder.Forms
                 list = RewardUtil.GetRewardList(seed, encounter.Species, encounter.Stars, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist, boost);
             }
 
-            return new RewardDetails{ Seed = seed, Rewards = list, Species = encounter.Species, Stars = encounter.Stars, Shiny = shiny, Calcs = calc };
+            return new RewardDetails { Seed = seed, Rewards = list, Species = encounter.Species, Stars = encounter.Stars, Shiny = shiny, Calcs = calc };
         }
 
         private void dataGrid_MouseUp(object sender, MouseEventArgs e)

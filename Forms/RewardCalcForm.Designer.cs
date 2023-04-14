@@ -28,1269 +28,1238 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RewardCalcForm));
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
-            this.comboBox8 = new System.Windows.Forms.ComboBox();
-            this.comboBox9 = new System.Windows.Forms.ComboBox();
-            this.comboBox10 = new System.Windows.Forms.ComboBox();
-            this.comboBox11 = new System.Windows.Forms.ComboBox();
-            this.comboBox12 = new System.Windows.Forms.ComboBox();
-            this.comboBox13 = new System.Windows.Forms.ComboBox();
-            this.comboBox14 = new System.Windows.Forms.ComboBox();
-            this.comboBox15 = new System.Windows.Forms.ComboBox();
-            this.comboBox16 = new System.Windows.Forms.ComboBox();
-            this.comboBox17 = new System.Windows.Forms.ComboBox();
-            this.comboBox18 = new System.Windows.Forms.ComboBox();
-            this.comboBox19 = new System.Windows.Forms.ComboBox();
-            this.comboBox20 = new System.Windows.Forms.ComboBox();
-            this.grpFilters = new System.Windows.Forms.GroupBox();
-            this.grpEncounter = new System.Windows.Forms.GroupBox();
-            this.chkShiny = new System.Windows.Forms.CheckBox();
-            this.cmbStars = new System.Windows.Forms.ComboBox();
-            this.lblStars = new System.Windows.Forms.Label();
-            this.cmbSpecies = new System.Windows.Forms.ComboBox();
-            this.lblSpecies = new System.Windows.Forms.Label();
-            this.btnApply = new System.Windows.Forms.Button();
-            this.chkAccurateSearch = new System.Windows.Forms.CheckBox();
-            this.grpItems = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.numericUpDown20 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown19 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown18 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown17 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown16 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown15 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown14 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown12 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown11 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown10 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.btnReset = new System.Windows.Forms.Button();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.grpProfile = new System.Windows.Forms.GroupBox();
-            this.txtSID = new System.Windows.Forms.TextBox();
-            this.lblSID = new System.Windows.Forms.Label();
-            this.txtTID = new System.Windows.Forms.TextBox();
-            this.cmbProgress = new System.Windows.Forms.ComboBox();
-            this.lblTID = new System.Windows.Forms.Label();
-            this.lblProgress = new System.Windows.Forms.Label();
-            this.cmbGame = new System.Windows.Forms.ComboBox();
-            this.lblGame = new System.Windows.Forms.Label();
-            this.grpSettings = new System.Windows.Forms.GroupBox();
-            this.cmbBoost = new System.Windows.Forms.ComboBox();
-            this.numEventCt = new System.Windows.Forms.NumericUpDown();
-            this.lblEventCt = new System.Windows.Forms.Label();
-            this.cmbContent = new System.Windows.Forms.ComboBox();
-            this.numMaxCalc = new System.Windows.Forms.NumericUpDown();
-            this.lblSandwich = new System.Windows.Forms.Label();
-            this.lblContent = new System.Windows.Forms.Label();
-            this.lblSeed = new System.Windows.Forms.Label();
-            this.lblCalcs = new System.Windows.Forms.Label();
-            this.txtSeed = new System.Windows.Forms.TextBox();
-            this.grpSearch = new System.Windows.Forms.GroupBox();
-            this.lblFound = new System.Windows.Forms.Label();
-            this.chkAllResults = new System.Windows.Forms.CheckBox();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.btnSaveAllTxt = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSaveSelectedTxt = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSendSelectedRaid = new System.Windows.Forms.ToolStripMenuItem();
-            this.grpFilters.SuspendLayout();
-            this.grpEncounter.SuspendLayout();
-            this.grpItems.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            this.grpProfile.SuspendLayout();
-            this.grpSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numEventCt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numMaxCalc)).BeginInit();
-            this.grpSearch.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
-            this.contextMenuStrip.SuspendLayout();
-            this.SuspendLayout();
+            comboBox1 = new ComboBox();
+            comboBox2 = new ComboBox();
+            comboBox3 = new ComboBox();
+            comboBox4 = new ComboBox();
+            comboBox5 = new ComboBox();
+            comboBox6 = new ComboBox();
+            comboBox7 = new ComboBox();
+            comboBox8 = new ComboBox();
+            comboBox9 = new ComboBox();
+            comboBox10 = new ComboBox();
+            comboBox11 = new ComboBox();
+            comboBox12 = new ComboBox();
+            comboBox13 = new ComboBox();
+            comboBox14 = new ComboBox();
+            comboBox15 = new ComboBox();
+            comboBox16 = new ComboBox();
+            comboBox17 = new ComboBox();
+            comboBox18 = new ComboBox();
+            comboBox19 = new ComboBox();
+            comboBox20 = new ComboBox();
+            grpFilters = new GroupBox();
+            grpEncounter = new GroupBox();
+            chkShiny = new CheckBox();
+            cmbStars = new ComboBox();
+            lblStars = new Label();
+            cmbSpecies = new ComboBox();
+            lblSpecies = new Label();
+            btnApply = new Button();
+            chkAccurateSearch = new CheckBox();
+            grpItems = new GroupBox();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            label4 = new Label();
+            label5 = new Label();
+            label6 = new Label();
+            label7 = new Label();
+            label8 = new Label();
+            label9 = new Label();
+            label10 = new Label();
+            label11 = new Label();
+            label12 = new Label();
+            label13 = new Label();
+            label14 = new Label();
+            label15 = new Label();
+            label16 = new Label();
+            label17 = new Label();
+            label18 = new Label();
+            label19 = new Label();
+            label20 = new Label();
+            numericUpDown20 = new NumericUpDown();
+            numericUpDown19 = new NumericUpDown();
+            numericUpDown18 = new NumericUpDown();
+            numericUpDown17 = new NumericUpDown();
+            numericUpDown16 = new NumericUpDown();
+            numericUpDown15 = new NumericUpDown();
+            numericUpDown14 = new NumericUpDown();
+            numericUpDown13 = new NumericUpDown();
+            numericUpDown12 = new NumericUpDown();
+            numericUpDown11 = new NumericUpDown();
+            numericUpDown10 = new NumericUpDown();
+            numericUpDown9 = new NumericUpDown();
+            numericUpDown8 = new NumericUpDown();
+            numericUpDown7 = new NumericUpDown();
+            numericUpDown6 = new NumericUpDown();
+            numericUpDown5 = new NumericUpDown();
+            numericUpDown4 = new NumericUpDown();
+            numericUpDown3 = new NumericUpDown();
+            numericUpDown2 = new NumericUpDown();
+            numericUpDown1 = new NumericUpDown();
+            btnReset = new Button();
+            toolTip = new ToolTip(components);
+            grpProfile = new GroupBox();
+            txtSID = new TextBox();
+            lblSID = new Label();
+            txtTID = new TextBox();
+            cmbProgress = new ComboBox();
+            lblTID = new Label();
+            lblProgress = new Label();
+            cmbGame = new ComboBox();
+            lblGame = new Label();
+            grpSettings = new GroupBox();
+            cmbBoost = new ComboBox();
+            numEventCt = new NumericUpDown();
+            lblEventCt = new Label();
+            cmbContent = new ComboBox();
+            numMaxCalc = new NumericUpDown();
+            lblSandwich = new Label();
+            lblContent = new Label();
+            lblSeed = new Label();
+            lblCalcs = new Label();
+            txtSeed = new TextBox();
+            grpSearch = new GroupBox();
+            lblFound = new Label();
+            chkAllResults = new CheckBox();
+            btnSearch = new Button();
+            dataGrid = new DataGridView();
+            toolTip1 = new ToolTip(components);
+            contextMenuStrip = new ContextMenuStrip(components);
+            btnSaveAllTxt = new ToolStripMenuItem();
+            btnSaveSelectedTxt = new ToolStripMenuItem();
+            btnSendSelectedRaid = new ToolStripMenuItem();
+            grpFilters.SuspendLayout();
+            grpEncounter.SuspendLayout();
+            grpItems.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown20).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown19).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown18).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown17).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown16).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown15).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown14).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown13).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown12).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown11).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown10).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown9).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown7).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            grpProfile.SuspendLayout();
+            grpSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numEventCt).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numMaxCalc).BeginInit();
+            grpSearch.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGrid).BeginInit();
+            contextMenuStrip.SuspendLayout();
+            SuspendLayout();
             // 
             // comboBox1
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(7, 24);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(219, 28);
-            this.comboBox1.TabIndex = 0;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(7, 24);
+            comboBox1.Margin = new Padding(3, 4, 3, 4);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(219, 28);
+            comboBox1.TabIndex = 0;
             // 
             // comboBox2
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(7, 60);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(219, 28);
-            this.comboBox2.TabIndex = 1;
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Location = new Point(7, 60);
+            comboBox2.Margin = new Padding(3, 4, 3, 4);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(219, 28);
+            comboBox2.TabIndex = 1;
             // 
             // comboBox3
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(7, 96);
-            this.comboBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(219, 28);
-            this.comboBox3.TabIndex = 2;
+            comboBox3.FormattingEnabled = true;
+            comboBox3.Location = new Point(7, 96);
+            comboBox3.Margin = new Padding(3, 4, 3, 4);
+            comboBox3.Name = "comboBox3";
+            comboBox3.Size = new Size(219, 28);
+            comboBox3.TabIndex = 2;
             // 
             // comboBox4
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(7, 132);
-            this.comboBox4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(219, 28);
-            this.comboBox4.TabIndex = 3;
+            comboBox4.FormattingEnabled = true;
+            comboBox4.Location = new Point(7, 132);
+            comboBox4.Margin = new Padding(3, 4, 3, 4);
+            comboBox4.Name = "comboBox4";
+            comboBox4.Size = new Size(219, 28);
+            comboBox4.TabIndex = 3;
             // 
             // comboBox5
             // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(7, 168);
-            this.comboBox5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(219, 28);
-            this.comboBox5.TabIndex = 4;
+            comboBox5.FormattingEnabled = true;
+            comboBox5.Location = new Point(7, 168);
+            comboBox5.Margin = new Padding(3, 4, 3, 4);
+            comboBox5.Name = "comboBox5";
+            comboBox5.Size = new Size(219, 28);
+            comboBox5.TabIndex = 4;
             // 
             // comboBox6
             // 
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(7, 204);
-            this.comboBox6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(219, 28);
-            this.comboBox6.TabIndex = 5;
+            comboBox6.FormattingEnabled = true;
+            comboBox6.Location = new Point(7, 204);
+            comboBox6.Margin = new Padding(3, 4, 3, 4);
+            comboBox6.Name = "comboBox6";
+            comboBox6.Size = new Size(219, 28);
+            comboBox6.TabIndex = 5;
             // 
             // comboBox7
             // 
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(7, 240);
-            this.comboBox7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(219, 28);
-            this.comboBox7.TabIndex = 6;
+            comboBox7.FormattingEnabled = true;
+            comboBox7.Location = new Point(7, 240);
+            comboBox7.Margin = new Padding(3, 4, 3, 4);
+            comboBox7.Name = "comboBox7";
+            comboBox7.Size = new Size(219, 28);
+            comboBox7.TabIndex = 6;
             // 
             // comboBox8
             // 
-            this.comboBox8.FormattingEnabled = true;
-            this.comboBox8.Location = new System.Drawing.Point(7, 276);
-            this.comboBox8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(219, 28);
-            this.comboBox8.TabIndex = 7;
+            comboBox8.FormattingEnabled = true;
+            comboBox8.Location = new Point(7, 276);
+            comboBox8.Margin = new Padding(3, 4, 3, 4);
+            comboBox8.Name = "comboBox8";
+            comboBox8.Size = new Size(219, 28);
+            comboBox8.TabIndex = 7;
             // 
             // comboBox9
             // 
-            this.comboBox9.FormattingEnabled = true;
-            this.comboBox9.Location = new System.Drawing.Point(7, 312);
-            this.comboBox9.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox9.Name = "comboBox9";
-            this.comboBox9.Size = new System.Drawing.Size(219, 28);
-            this.comboBox9.TabIndex = 8;
+            comboBox9.FormattingEnabled = true;
+            comboBox9.Location = new Point(7, 312);
+            comboBox9.Margin = new Padding(3, 4, 3, 4);
+            comboBox9.Name = "comboBox9";
+            comboBox9.Size = new Size(219, 28);
+            comboBox9.TabIndex = 8;
             // 
             // comboBox10
             // 
-            this.comboBox10.FormattingEnabled = true;
-            this.comboBox10.Location = new System.Drawing.Point(7, 348);
-            this.comboBox10.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox10.Name = "comboBox10";
-            this.comboBox10.Size = new System.Drawing.Size(219, 28);
-            this.comboBox10.TabIndex = 9;
+            comboBox10.FormattingEnabled = true;
+            comboBox10.Location = new Point(7, 348);
+            comboBox10.Margin = new Padding(3, 4, 3, 4);
+            comboBox10.Name = "comboBox10";
+            comboBox10.Size = new Size(219, 28);
+            comboBox10.TabIndex = 9;
             // 
             // comboBox11
             // 
-            this.comboBox11.FormattingEnabled = true;
-            this.comboBox11.Location = new System.Drawing.Point(7, 384);
-            this.comboBox11.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox11.Name = "comboBox11";
-            this.comboBox11.Size = new System.Drawing.Size(219, 28);
-            this.comboBox11.TabIndex = 10;
+            comboBox11.FormattingEnabled = true;
+            comboBox11.Location = new Point(7, 384);
+            comboBox11.Margin = new Padding(3, 4, 3, 4);
+            comboBox11.Name = "comboBox11";
+            comboBox11.Size = new Size(219, 28);
+            comboBox11.TabIndex = 10;
             // 
             // comboBox12
             // 
-            this.comboBox12.FormattingEnabled = true;
-            this.comboBox12.Location = new System.Drawing.Point(7, 420);
-            this.comboBox12.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox12.Name = "comboBox12";
-            this.comboBox12.Size = new System.Drawing.Size(219, 28);
-            this.comboBox12.TabIndex = 11;
+            comboBox12.FormattingEnabled = true;
+            comboBox12.Location = new Point(7, 420);
+            comboBox12.Margin = new Padding(3, 4, 3, 4);
+            comboBox12.Name = "comboBox12";
+            comboBox12.Size = new Size(219, 28);
+            comboBox12.TabIndex = 11;
             // 
             // comboBox13
             // 
-            this.comboBox13.FormattingEnabled = true;
-            this.comboBox13.Location = new System.Drawing.Point(7, 456);
-            this.comboBox13.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox13.Name = "comboBox13";
-            this.comboBox13.Size = new System.Drawing.Size(219, 28);
-            this.comboBox13.TabIndex = 12;
+            comboBox13.FormattingEnabled = true;
+            comboBox13.Location = new Point(7, 456);
+            comboBox13.Margin = new Padding(3, 4, 3, 4);
+            comboBox13.Name = "comboBox13";
+            comboBox13.Size = new Size(219, 28);
+            comboBox13.TabIndex = 12;
             // 
             // comboBox14
             // 
-            this.comboBox14.FormattingEnabled = true;
-            this.comboBox14.Location = new System.Drawing.Point(7, 492);
-            this.comboBox14.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox14.Name = "comboBox14";
-            this.comboBox14.Size = new System.Drawing.Size(219, 28);
-            this.comboBox14.TabIndex = 13;
+            comboBox14.FormattingEnabled = true;
+            comboBox14.Location = new Point(7, 492);
+            comboBox14.Margin = new Padding(3, 4, 3, 4);
+            comboBox14.Name = "comboBox14";
+            comboBox14.Size = new Size(219, 28);
+            comboBox14.TabIndex = 13;
             // 
             // comboBox15
             // 
-            this.comboBox15.FormattingEnabled = true;
-            this.comboBox15.Location = new System.Drawing.Point(7, 528);
-            this.comboBox15.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox15.Name = "comboBox15";
-            this.comboBox15.Size = new System.Drawing.Size(219, 28);
-            this.comboBox15.TabIndex = 14;
+            comboBox15.FormattingEnabled = true;
+            comboBox15.Location = new Point(7, 528);
+            comboBox15.Margin = new Padding(3, 4, 3, 4);
+            comboBox15.Name = "comboBox15";
+            comboBox15.Size = new Size(219, 28);
+            comboBox15.TabIndex = 14;
             // 
             // comboBox16
             // 
-            this.comboBox16.FormattingEnabled = true;
-            this.comboBox16.Location = new System.Drawing.Point(7, 564);
-            this.comboBox16.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox16.Name = "comboBox16";
-            this.comboBox16.Size = new System.Drawing.Size(219, 28);
-            this.comboBox16.TabIndex = 15;
+            comboBox16.FormattingEnabled = true;
+            comboBox16.Location = new Point(7, 564);
+            comboBox16.Margin = new Padding(3, 4, 3, 4);
+            comboBox16.Name = "comboBox16";
+            comboBox16.Size = new Size(219, 28);
+            comboBox16.TabIndex = 15;
             // 
             // comboBox17
             // 
-            this.comboBox17.FormattingEnabled = true;
-            this.comboBox17.Location = new System.Drawing.Point(7, 600);
-            this.comboBox17.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox17.Name = "comboBox17";
-            this.comboBox17.Size = new System.Drawing.Size(219, 28);
-            this.comboBox17.TabIndex = 16;
+            comboBox17.FormattingEnabled = true;
+            comboBox17.Location = new Point(7, 600);
+            comboBox17.Margin = new Padding(3, 4, 3, 4);
+            comboBox17.Name = "comboBox17";
+            comboBox17.Size = new Size(219, 28);
+            comboBox17.TabIndex = 16;
             // 
             // comboBox18
             // 
-            this.comboBox18.FormattingEnabled = true;
-            this.comboBox18.Location = new System.Drawing.Point(7, 636);
-            this.comboBox18.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox18.Name = "comboBox18";
-            this.comboBox18.Size = new System.Drawing.Size(219, 28);
-            this.comboBox18.TabIndex = 17;
+            comboBox18.FormattingEnabled = true;
+            comboBox18.Location = new Point(7, 636);
+            comboBox18.Margin = new Padding(3, 4, 3, 4);
+            comboBox18.Name = "comboBox18";
+            comboBox18.Size = new Size(219, 28);
+            comboBox18.TabIndex = 17;
             // 
             // comboBox19
             // 
-            this.comboBox19.FormattingEnabled = true;
-            this.comboBox19.Location = new System.Drawing.Point(7, 672);
-            this.comboBox19.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox19.Name = "comboBox19";
-            this.comboBox19.Size = new System.Drawing.Size(219, 28);
-            this.comboBox19.TabIndex = 18;
+            comboBox19.FormattingEnabled = true;
+            comboBox19.Location = new Point(7, 672);
+            comboBox19.Margin = new Padding(3, 4, 3, 4);
+            comboBox19.Name = "comboBox19";
+            comboBox19.Size = new Size(219, 28);
+            comboBox19.TabIndex = 18;
             // 
             // comboBox20
             // 
-            this.comboBox20.FormattingEnabled = true;
-            this.comboBox20.Location = new System.Drawing.Point(7, 708);
-            this.comboBox20.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.comboBox20.Name = "comboBox20";
-            this.comboBox20.Size = new System.Drawing.Size(219, 28);
-            this.comboBox20.TabIndex = 19;
+            comboBox20.FormattingEnabled = true;
+            comboBox20.Location = new Point(7, 708);
+            comboBox20.Margin = new Padding(3, 4, 3, 4);
+            comboBox20.Name = "comboBox20";
+            comboBox20.Size = new Size(219, 28);
+            comboBox20.TabIndex = 19;
             // 
             // grpFilters
             // 
-            this.grpFilters.Controls.Add(this.grpEncounter);
-            this.grpFilters.Controls.Add(this.btnApply);
-            this.grpFilters.Controls.Add(this.chkAccurateSearch);
-            this.grpFilters.Controls.Add(this.grpItems);
-            this.grpFilters.Controls.Add(this.btnReset);
-            this.grpFilters.Location = new System.Drawing.Point(14, 12);
-            this.grpFilters.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpFilters.Name = "grpFilters";
-            this.grpFilters.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpFilters.Size = new System.Drawing.Size(343, 949);
-            this.grpFilters.TabIndex = 20;
-            this.grpFilters.TabStop = false;
-            this.grpFilters.Text = "Filters";
+            grpFilters.Controls.Add(grpEncounter);
+            grpFilters.Controls.Add(btnApply);
+            grpFilters.Controls.Add(chkAccurateSearch);
+            grpFilters.Controls.Add(grpItems);
+            grpFilters.Controls.Add(btnReset);
+            grpFilters.Location = new Point(14, 12);
+            grpFilters.Margin = new Padding(3, 4, 3, 4);
+            grpFilters.Name = "grpFilters";
+            grpFilters.Padding = new Padding(3, 4, 3, 4);
+            grpFilters.Size = new Size(343, 949);
+            grpFilters.TabIndex = 20;
+            grpFilters.TabStop = false;
+            grpFilters.Text = "Filters";
             // 
             // grpEncounter
             // 
-            this.grpEncounter.Controls.Add(this.chkShiny);
-            this.grpEncounter.Controls.Add(this.cmbStars);
-            this.grpEncounter.Controls.Add(this.lblStars);
-            this.grpEncounter.Controls.Add(this.cmbSpecies);
-            this.grpEncounter.Controls.Add(this.lblSpecies);
-            this.grpEncounter.Location = new System.Drawing.Point(7, 60);
-            this.grpEncounter.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpEncounter.Name = "grpEncounter";
-            this.grpEncounter.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpEncounter.Size = new System.Drawing.Size(330, 96);
-            this.grpEncounter.TabIndex = 25;
-            this.grpEncounter.TabStop = false;
-            this.grpEncounter.Text = "Encounter";
+            grpEncounter.Controls.Add(chkShiny);
+            grpEncounter.Controls.Add(cmbStars);
+            grpEncounter.Controls.Add(lblStars);
+            grpEncounter.Controls.Add(cmbSpecies);
+            grpEncounter.Controls.Add(lblSpecies);
+            grpEncounter.Location = new Point(7, 60);
+            grpEncounter.Margin = new Padding(3, 4, 3, 4);
+            grpEncounter.Name = "grpEncounter";
+            grpEncounter.Padding = new Padding(3, 4, 3, 4);
+            grpEncounter.Size = new Size(330, 96);
+            grpEncounter.TabIndex = 25;
+            grpEncounter.TabStop = false;
+            grpEncounter.Text = "Encounter";
             // 
             // chkShiny
             // 
-            this.chkShiny.AutoSize = true;
-            this.chkShiny.Location = new System.Drawing.Point(191, 64);
-            this.chkShiny.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.chkShiny.Name = "chkShiny";
-            this.chkShiny.Size = new System.Drawing.Size(100, 24);
-            this.chkShiny.TabIndex = 24;
-            this.chkShiny.Text = "Only Shiny";
-            this.chkShiny.UseVisualStyleBackColor = true;
+            chkShiny.AutoSize = true;
+            chkShiny.Location = new Point(191, 64);
+            chkShiny.Margin = new Padding(3, 4, 3, 4);
+            chkShiny.Name = "chkShiny";
+            chkShiny.Size = new Size(100, 24);
+            chkShiny.TabIndex = 24;
+            chkShiny.Text = "Only Shiny";
+            chkShiny.UseVisualStyleBackColor = true;
             // 
             // cmbStars
             // 
-            this.cmbStars.FormattingEnabled = true;
-            this.cmbStars.Items.AddRange(new object[] {
-            "Any",
-            "1☆",
-            "2☆",
-            "3☆",
-            "4☆",
-            "5☆",
-            "6☆",
-            "7☆"});
-            this.cmbStars.Location = new System.Drawing.Point(104, 60);
-            this.cmbStars.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cmbStars.Name = "cmbStars";
-            this.cmbStars.Size = new System.Drawing.Size(65, 28);
-            this.cmbStars.TabIndex = 3;
+            cmbStars.FormattingEnabled = true;
+            cmbStars.Items.AddRange(new object[] { "Any", "1☆", "2☆", "3☆", "4☆", "5☆", "6☆", "7☆" });
+            cmbStars.Location = new Point(104, 60);
+            cmbStars.Margin = new Padding(3, 4, 3, 4);
+            cmbStars.Name = "cmbStars";
+            cmbStars.Size = new Size(65, 28);
+            cmbStars.TabIndex = 3;
             // 
             // lblStars
             // 
-            this.lblStars.AutoSize = true;
-            this.lblStars.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblStars.Location = new System.Drawing.Point(19, 63);
-            this.lblStars.Name = "lblStars";
-            this.lblStars.Size = new System.Drawing.Size(44, 20);
-            this.lblStars.TabIndex = 2;
-            this.lblStars.Text = "Stars:";
+            lblStars.AutoSize = true;
+            lblStars.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            lblStars.Location = new Point(19, 63);
+            lblStars.Name = "lblStars";
+            lblStars.Size = new Size(44, 20);
+            lblStars.TabIndex = 2;
+            lblStars.Text = "Stars:";
             // 
             // cmbSpecies
             // 
-            this.cmbSpecies.FormattingEnabled = true;
-            this.cmbSpecies.Items.AddRange(new object[] {
-            "Any"});
-            this.cmbSpecies.Location = new System.Drawing.Point(104, 26);
-            this.cmbSpecies.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cmbSpecies.Name = "cmbSpecies";
-            this.cmbSpecies.Size = new System.Drawing.Size(187, 28);
-            this.cmbSpecies.TabIndex = 1;
+            cmbSpecies.FormattingEnabled = true;
+            cmbSpecies.Items.AddRange(new object[] { "Any" });
+            cmbSpecies.Location = new Point(104, 26);
+            cmbSpecies.Margin = new Padding(3, 4, 3, 4);
+            cmbSpecies.Name = "cmbSpecies";
+            cmbSpecies.Size = new Size(187, 28);
+            cmbSpecies.TabIndex = 1;
             // 
             // lblSpecies
             // 
-            this.lblSpecies.AutoSize = true;
-            this.lblSpecies.Location = new System.Drawing.Point(19, 29);
-            this.lblSpecies.Name = "lblSpecies";
-            this.lblSpecies.Size = new System.Drawing.Size(62, 20);
-            this.lblSpecies.TabIndex = 0;
-            this.lblSpecies.Text = "Species:";
+            lblSpecies.AutoSize = true;
+            lblSpecies.Location = new Point(19, 29);
+            lblSpecies.Name = "lblSpecies";
+            lblSpecies.Size = new Size(62, 20);
+            lblSpecies.TabIndex = 0;
+            lblSpecies.Text = "Species:";
             // 
             // btnApply
             // 
-            this.btnApply.Location = new System.Drawing.Point(181, 900);
-            this.btnApply.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(157, 41);
-            this.btnApply.TabIndex = 24;
-            this.btnApply.Text = "Apply Filters";
-            this.btnApply.UseVisualStyleBackColor = true;
-            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
+            btnApply.Location = new Point(181, 900);
+            btnApply.Margin = new Padding(3, 4, 3, 4);
+            btnApply.Name = "btnApply";
+            btnApply.Size = new Size(157, 41);
+            btnApply.TabIndex = 24;
+            btnApply.Text = "Apply Filters";
+            btnApply.UseVisualStyleBackColor = true;
+            btnApply.Click += btnApply_Click;
             // 
             // chkAccurateSearch
             // 
-            this.chkAccurateSearch.AutoSize = true;
-            this.chkAccurateSearch.Location = new System.Drawing.Point(75, 31);
-            this.chkAccurateSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.chkAccurateSearch.Name = "chkAccurateSearch";
-            this.chkAccurateSearch.Size = new System.Drawing.Size(158, 24);
-            this.chkAccurateSearch.TabIndex = 21;
-            this.chkAccurateSearch.Text = "Accurate Search (?)";
-            this.chkAccurateSearch.UseVisualStyleBackColor = true;
+            chkAccurateSearch.AutoSize = true;
+            chkAccurateSearch.Location = new Point(75, 31);
+            chkAccurateSearch.Margin = new Padding(3, 4, 3, 4);
+            chkAccurateSearch.Name = "chkAccurateSearch";
+            chkAccurateSearch.Size = new Size(158, 24);
+            chkAccurateSearch.TabIndex = 21;
+            chkAccurateSearch.Text = "Accurate Search (?)";
+            chkAccurateSearch.UseVisualStyleBackColor = true;
             // 
             // grpItems
             // 
-            this.grpItems.Controls.Add(this.label1);
-            this.grpItems.Controls.Add(this.label2);
-            this.grpItems.Controls.Add(this.label3);
-            this.grpItems.Controls.Add(this.label4);
-            this.grpItems.Controls.Add(this.label5);
-            this.grpItems.Controls.Add(this.label6);
-            this.grpItems.Controls.Add(this.label7);
-            this.grpItems.Controls.Add(this.label8);
-            this.grpItems.Controls.Add(this.label9);
-            this.grpItems.Controls.Add(this.label10);
-            this.grpItems.Controls.Add(this.label11);
-            this.grpItems.Controls.Add(this.label12);
-            this.grpItems.Controls.Add(this.label13);
-            this.grpItems.Controls.Add(this.label14);
-            this.grpItems.Controls.Add(this.label15);
-            this.grpItems.Controls.Add(this.label16);
-            this.grpItems.Controls.Add(this.label17);
-            this.grpItems.Controls.Add(this.label18);
-            this.grpItems.Controls.Add(this.label19);
-            this.grpItems.Controls.Add(this.label20);
-            this.grpItems.Controls.Add(this.numericUpDown20);
-            this.grpItems.Controls.Add(this.numericUpDown19);
-            this.grpItems.Controls.Add(this.numericUpDown18);
-            this.grpItems.Controls.Add(this.numericUpDown17);
-            this.grpItems.Controls.Add(this.numericUpDown16);
-            this.grpItems.Controls.Add(this.numericUpDown15);
-            this.grpItems.Controls.Add(this.numericUpDown14);
-            this.grpItems.Controls.Add(this.numericUpDown13);
-            this.grpItems.Controls.Add(this.numericUpDown12);
-            this.grpItems.Controls.Add(this.numericUpDown11);
-            this.grpItems.Controls.Add(this.numericUpDown10);
-            this.grpItems.Controls.Add(this.numericUpDown9);
-            this.grpItems.Controls.Add(this.numericUpDown8);
-            this.grpItems.Controls.Add(this.numericUpDown7);
-            this.grpItems.Controls.Add(this.numericUpDown6);
-            this.grpItems.Controls.Add(this.numericUpDown5);
-            this.grpItems.Controls.Add(this.numericUpDown4);
-            this.grpItems.Controls.Add(this.numericUpDown3);
-            this.grpItems.Controls.Add(this.numericUpDown2);
-            this.grpItems.Controls.Add(this.numericUpDown1);
-            this.grpItems.Controls.Add(this.comboBox20);
-            this.grpItems.Controls.Add(this.comboBox1);
-            this.grpItems.Controls.Add(this.comboBox10);
-            this.grpItems.Controls.Add(this.comboBox19);
-            this.grpItems.Controls.Add(this.comboBox11);
-            this.grpItems.Controls.Add(this.comboBox2);
-            this.grpItems.Controls.Add(this.comboBox9);
-            this.grpItems.Controls.Add(this.comboBox18);
-            this.grpItems.Controls.Add(this.comboBox12);
-            this.grpItems.Controls.Add(this.comboBox3);
-            this.grpItems.Controls.Add(this.comboBox8);
-            this.grpItems.Controls.Add(this.comboBox17);
-            this.grpItems.Controls.Add(this.comboBox13);
-            this.grpItems.Controls.Add(this.comboBox4);
-            this.grpItems.Controls.Add(this.comboBox7);
-            this.grpItems.Controls.Add(this.comboBox16);
-            this.grpItems.Controls.Add(this.comboBox14);
-            this.grpItems.Controls.Add(this.comboBox5);
-            this.grpItems.Controls.Add(this.comboBox6);
-            this.grpItems.Controls.Add(this.comboBox15);
-            this.grpItems.Location = new System.Drawing.Point(7, 156);
-            this.grpItems.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpItems.Name = "grpItems";
-            this.grpItems.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpItems.Size = new System.Drawing.Size(331, 741);
-            this.grpItems.TabIndex = 21;
-            this.grpItems.TabStop = false;
-            this.grpItems.Text = "Items";
+            grpItems.Controls.Add(label1);
+            grpItems.Controls.Add(label2);
+            grpItems.Controls.Add(label3);
+            grpItems.Controls.Add(label4);
+            grpItems.Controls.Add(label5);
+            grpItems.Controls.Add(label6);
+            grpItems.Controls.Add(label7);
+            grpItems.Controls.Add(label8);
+            grpItems.Controls.Add(label9);
+            grpItems.Controls.Add(label10);
+            grpItems.Controls.Add(label11);
+            grpItems.Controls.Add(label12);
+            grpItems.Controls.Add(label13);
+            grpItems.Controls.Add(label14);
+            grpItems.Controls.Add(label15);
+            grpItems.Controls.Add(label16);
+            grpItems.Controls.Add(label17);
+            grpItems.Controls.Add(label18);
+            grpItems.Controls.Add(label19);
+            grpItems.Controls.Add(label20);
+            grpItems.Controls.Add(numericUpDown20);
+            grpItems.Controls.Add(numericUpDown19);
+            grpItems.Controls.Add(numericUpDown18);
+            grpItems.Controls.Add(numericUpDown17);
+            grpItems.Controls.Add(numericUpDown16);
+            grpItems.Controls.Add(numericUpDown15);
+            grpItems.Controls.Add(numericUpDown14);
+            grpItems.Controls.Add(numericUpDown13);
+            grpItems.Controls.Add(numericUpDown12);
+            grpItems.Controls.Add(numericUpDown11);
+            grpItems.Controls.Add(numericUpDown10);
+            grpItems.Controls.Add(numericUpDown9);
+            grpItems.Controls.Add(numericUpDown8);
+            grpItems.Controls.Add(numericUpDown7);
+            grpItems.Controls.Add(numericUpDown6);
+            grpItems.Controls.Add(numericUpDown5);
+            grpItems.Controls.Add(numericUpDown4);
+            grpItems.Controls.Add(numericUpDown3);
+            grpItems.Controls.Add(numericUpDown2);
+            grpItems.Controls.Add(numericUpDown1);
+            grpItems.Controls.Add(comboBox20);
+            grpItems.Controls.Add(comboBox1);
+            grpItems.Controls.Add(comboBox10);
+            grpItems.Controls.Add(comboBox19);
+            grpItems.Controls.Add(comboBox11);
+            grpItems.Controls.Add(comboBox2);
+            grpItems.Controls.Add(comboBox9);
+            grpItems.Controls.Add(comboBox18);
+            grpItems.Controls.Add(comboBox12);
+            grpItems.Controls.Add(comboBox3);
+            grpItems.Controls.Add(comboBox8);
+            grpItems.Controls.Add(comboBox17);
+            grpItems.Controls.Add(comboBox13);
+            grpItems.Controls.Add(comboBox4);
+            grpItems.Controls.Add(comboBox7);
+            grpItems.Controls.Add(comboBox16);
+            grpItems.Controls.Add(comboBox14);
+            grpItems.Controls.Add(comboBox5);
+            grpItems.Controls.Add(comboBox6);
+            grpItems.Controls.Add(comboBox15);
+            grpItems.Location = new Point(7, 156);
+            grpItems.Margin = new Padding(3, 4, 3, 4);
+            grpItems.Name = "grpItems";
+            grpItems.Padding = new Padding(3, 4, 3, 4);
+            grpItems.Size = new Size(331, 741);
+            grpItems.TabIndex = 21;
+            grpItems.TabStop = false;
+            grpItems.Text = "Items";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(235, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 20);
-            this.label1.TabIndex = 21;
-            this.label1.Text = ">=";
+            label1.AutoSize = true;
+            label1.Location = new Point(235, 28);
+            label1.Name = "label1";
+            label1.Size = new Size(29, 20);
+            label1.TabIndex = 21;
+            label1.Text = ">=";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(235, 64);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 20);
-            this.label2.TabIndex = 22;
-            this.label2.Text = ">=";
+            label2.AutoSize = true;
+            label2.Location = new Point(235, 64);
+            label2.Name = "label2";
+            label2.Size = new Size(29, 20);
+            label2.TabIndex = 22;
+            label2.Text = ">=";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(235, 100);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 20);
-            this.label3.TabIndex = 23;
-            this.label3.Text = ">=";
+            label3.AutoSize = true;
+            label3.Location = new Point(235, 100);
+            label3.Name = "label3";
+            label3.Size = new Size(29, 20);
+            label3.TabIndex = 23;
+            label3.Text = ">=";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(235, 136);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(29, 20);
-            this.label4.TabIndex = 24;
-            this.label4.Text = ">=";
+            label4.AutoSize = true;
+            label4.Location = new Point(235, 136);
+            label4.Name = "label4";
+            label4.Size = new Size(29, 20);
+            label4.TabIndex = 24;
+            label4.Text = ">=";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(235, 171);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 20);
-            this.label5.TabIndex = 25;
-            this.label5.Text = ">=";
+            label5.AutoSize = true;
+            label5.Location = new Point(235, 171);
+            label5.Name = "label5";
+            label5.Size = new Size(29, 20);
+            label5.TabIndex = 25;
+            label5.Text = ">=";
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(235, 208);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 20);
-            this.label6.TabIndex = 26;
-            this.label6.Text = ">=";
+            label6.AutoSize = true;
+            label6.Location = new Point(235, 208);
+            label6.Name = "label6";
+            label6.Size = new Size(29, 20);
+            label6.TabIndex = 26;
+            label6.Text = ">=";
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(235, 244);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(29, 20);
-            this.label7.TabIndex = 27;
-            this.label7.Text = ">=";
+            label7.AutoSize = true;
+            label7.Location = new Point(235, 244);
+            label7.Name = "label7";
+            label7.Size = new Size(29, 20);
+            label7.TabIndex = 27;
+            label7.Text = ">=";
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(235, 280);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(29, 20);
-            this.label8.TabIndex = 28;
-            this.label8.Text = ">=";
+            label8.AutoSize = true;
+            label8.Location = new Point(235, 280);
+            label8.Name = "label8";
+            label8.Size = new Size(29, 20);
+            label8.TabIndex = 28;
+            label8.Text = ">=";
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(235, 316);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(29, 20);
-            this.label9.TabIndex = 29;
-            this.label9.Text = ">=";
+            label9.AutoSize = true;
+            label9.Location = new Point(235, 316);
+            label9.Name = "label9";
+            label9.Size = new Size(29, 20);
+            label9.TabIndex = 29;
+            label9.Text = ">=";
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(235, 352);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(29, 20);
-            this.label10.TabIndex = 30;
-            this.label10.Text = ">=";
+            label10.AutoSize = true;
+            label10.Location = new Point(235, 352);
+            label10.Name = "label10";
+            label10.Size = new Size(29, 20);
+            label10.TabIndex = 30;
+            label10.Text = ">=";
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(235, 388);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(29, 20);
-            this.label11.TabIndex = 31;
-            this.label11.Text = ">=";
+            label11.AutoSize = true;
+            label11.Location = new Point(235, 388);
+            label11.Name = "label11";
+            label11.Size = new Size(29, 20);
+            label11.TabIndex = 31;
+            label11.Text = ">=";
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(235, 424);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(29, 20);
-            this.label12.TabIndex = 32;
-            this.label12.Text = ">=";
+            label12.AutoSize = true;
+            label12.Location = new Point(235, 424);
+            label12.Name = "label12";
+            label12.Size = new Size(29, 20);
+            label12.TabIndex = 32;
+            label12.Text = ">=";
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(235, 460);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(29, 20);
-            this.label13.TabIndex = 33;
-            this.label13.Text = ">=";
+            label13.AutoSize = true;
+            label13.Location = new Point(235, 460);
+            label13.Name = "label13";
+            label13.Size = new Size(29, 20);
+            label13.TabIndex = 33;
+            label13.Text = ">=";
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(235, 496);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(29, 20);
-            this.label14.TabIndex = 34;
-            this.label14.Text = ">=";
+            label14.AutoSize = true;
+            label14.Location = new Point(235, 496);
+            label14.Name = "label14";
+            label14.Size = new Size(29, 20);
+            label14.TabIndex = 34;
+            label14.Text = ">=";
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(235, 532);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(29, 20);
-            this.label15.TabIndex = 35;
-            this.label15.Text = ">=";
+            label15.AutoSize = true;
+            label15.Location = new Point(235, 532);
+            label15.Name = "label15";
+            label15.Size = new Size(29, 20);
+            label15.TabIndex = 35;
+            label15.Text = ">=";
             // 
             // label16
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(235, 568);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(29, 20);
-            this.label16.TabIndex = 36;
-            this.label16.Text = ">=";
+            label16.AutoSize = true;
+            label16.Location = new Point(235, 568);
+            label16.Name = "label16";
+            label16.Size = new Size(29, 20);
+            label16.TabIndex = 36;
+            label16.Text = ">=";
             // 
             // label17
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(235, 604);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(29, 20);
-            this.label17.TabIndex = 37;
-            this.label17.Text = ">=";
+            label17.AutoSize = true;
+            label17.Location = new Point(235, 604);
+            label17.Name = "label17";
+            label17.Size = new Size(29, 20);
+            label17.TabIndex = 37;
+            label17.Text = ">=";
             // 
             // label18
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(235, 640);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(29, 20);
-            this.label18.TabIndex = 38;
-            this.label18.Text = ">=";
+            label18.AutoSize = true;
+            label18.Location = new Point(235, 640);
+            label18.Name = "label18";
+            label18.Size = new Size(29, 20);
+            label18.TabIndex = 38;
+            label18.Text = ">=";
             // 
             // label19
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(235, 675);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(29, 20);
-            this.label19.TabIndex = 39;
-            this.label19.Text = ">=";
+            label19.AutoSize = true;
+            label19.Location = new Point(235, 675);
+            label19.Name = "label19";
+            label19.Size = new Size(29, 20);
+            label19.TabIndex = 39;
+            label19.Text = ">=";
             // 
             // label20
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(235, 712);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(29, 20);
-            this.label20.TabIndex = 40;
-            this.label20.Text = ">=";
+            label20.AutoSize = true;
+            label20.Location = new Point(235, 712);
+            label20.Name = "label20";
+            label20.Size = new Size(29, 20);
+            label20.TabIndex = 40;
+            label20.Text = ">=";
             // 
             // numericUpDown20
             // 
-            this.numericUpDown20.Location = new System.Drawing.Point(264, 708);
-            this.numericUpDown20.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown20.Name = "numericUpDown20";
-            this.numericUpDown20.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown20.TabIndex = 39;
+            numericUpDown20.Location = new Point(264, 708);
+            numericUpDown20.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown20.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown20.Name = "numericUpDown20";
+            numericUpDown20.Size = new Size(51, 27);
+            numericUpDown20.TabIndex = 39;
             // 
             // numericUpDown19
             // 
-            this.numericUpDown19.Location = new System.Drawing.Point(264, 672);
-            this.numericUpDown19.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown19.Name = "numericUpDown19";
-            this.numericUpDown19.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown19.TabIndex = 38;
+            numericUpDown19.Location = new Point(264, 672);
+            numericUpDown19.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown19.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown19.Name = "numericUpDown19";
+            numericUpDown19.Size = new Size(51, 27);
+            numericUpDown19.TabIndex = 38;
             // 
             // numericUpDown18
             // 
-            this.numericUpDown18.Location = new System.Drawing.Point(264, 636);
-            this.numericUpDown18.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown18.Name = "numericUpDown18";
-            this.numericUpDown18.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown18.TabIndex = 37;
+            numericUpDown18.Location = new Point(264, 636);
+            numericUpDown18.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown18.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown18.Name = "numericUpDown18";
+            numericUpDown18.Size = new Size(51, 27);
+            numericUpDown18.TabIndex = 37;
             // 
             // numericUpDown17
             // 
-            this.numericUpDown17.Location = new System.Drawing.Point(264, 600);
-            this.numericUpDown17.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown17.Name = "numericUpDown17";
-            this.numericUpDown17.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown17.TabIndex = 36;
+            numericUpDown17.Location = new Point(264, 600);
+            numericUpDown17.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown17.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown17.Name = "numericUpDown17";
+            numericUpDown17.Size = new Size(51, 27);
+            numericUpDown17.TabIndex = 36;
             // 
             // numericUpDown16
             // 
-            this.numericUpDown16.Location = new System.Drawing.Point(264, 564);
-            this.numericUpDown16.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown16.Name = "numericUpDown16";
-            this.numericUpDown16.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown16.TabIndex = 35;
+            numericUpDown16.Location = new Point(264, 564);
+            numericUpDown16.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown16.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown16.Name = "numericUpDown16";
+            numericUpDown16.Size = new Size(51, 27);
+            numericUpDown16.TabIndex = 35;
             // 
             // numericUpDown15
             // 
-            this.numericUpDown15.Location = new System.Drawing.Point(264, 528);
-            this.numericUpDown15.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown15.Name = "numericUpDown15";
-            this.numericUpDown15.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown15.TabIndex = 34;
+            numericUpDown15.Location = new Point(264, 528);
+            numericUpDown15.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown15.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown15.Name = "numericUpDown15";
+            numericUpDown15.Size = new Size(51, 27);
+            numericUpDown15.TabIndex = 34;
             // 
             // numericUpDown14
             // 
-            this.numericUpDown14.Location = new System.Drawing.Point(264, 492);
-            this.numericUpDown14.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown14.Name = "numericUpDown14";
-            this.numericUpDown14.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown14.TabIndex = 33;
+            numericUpDown14.Location = new Point(264, 492);
+            numericUpDown14.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown14.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown14.Name = "numericUpDown14";
+            numericUpDown14.Size = new Size(51, 27);
+            numericUpDown14.TabIndex = 33;
             // 
             // numericUpDown13
             // 
-            this.numericUpDown13.Location = new System.Drawing.Point(264, 456);
-            this.numericUpDown13.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown13.Name = "numericUpDown13";
-            this.numericUpDown13.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown13.TabIndex = 32;
+            numericUpDown13.Location = new Point(264, 456);
+            numericUpDown13.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown13.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown13.Name = "numericUpDown13";
+            numericUpDown13.Size = new Size(51, 27);
+            numericUpDown13.TabIndex = 32;
             // 
             // numericUpDown12
             // 
-            this.numericUpDown12.Location = new System.Drawing.Point(264, 420);
-            this.numericUpDown12.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown12.Name = "numericUpDown12";
-            this.numericUpDown12.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown12.TabIndex = 31;
+            numericUpDown12.Location = new Point(264, 420);
+            numericUpDown12.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown12.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown12.Name = "numericUpDown12";
+            numericUpDown12.Size = new Size(51, 27);
+            numericUpDown12.TabIndex = 31;
             // 
             // numericUpDown11
             // 
-            this.numericUpDown11.Location = new System.Drawing.Point(264, 384);
-            this.numericUpDown11.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown11.Name = "numericUpDown11";
-            this.numericUpDown11.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown11.TabIndex = 30;
+            numericUpDown11.Location = new Point(264, 384);
+            numericUpDown11.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown11.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown11.Name = "numericUpDown11";
+            numericUpDown11.Size = new Size(51, 27);
+            numericUpDown11.TabIndex = 30;
             // 
             // numericUpDown10
             // 
-            this.numericUpDown10.Location = new System.Drawing.Point(264, 348);
-            this.numericUpDown10.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown10.Name = "numericUpDown10";
-            this.numericUpDown10.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown10.TabIndex = 29;
+            numericUpDown10.Location = new Point(264, 348);
+            numericUpDown10.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown10.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown10.Name = "numericUpDown10";
+            numericUpDown10.Size = new Size(51, 27);
+            numericUpDown10.TabIndex = 29;
             // 
             // numericUpDown9
             // 
-            this.numericUpDown9.Location = new System.Drawing.Point(264, 312);
-            this.numericUpDown9.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown9.Name = "numericUpDown9";
-            this.numericUpDown9.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown9.TabIndex = 28;
+            numericUpDown9.Location = new Point(264, 312);
+            numericUpDown9.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown9.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown9.Name = "numericUpDown9";
+            numericUpDown9.Size = new Size(51, 27);
+            numericUpDown9.TabIndex = 28;
             // 
             // numericUpDown8
             // 
-            this.numericUpDown8.Location = new System.Drawing.Point(264, 276);
-            this.numericUpDown8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown8.Name = "numericUpDown8";
-            this.numericUpDown8.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown8.TabIndex = 27;
+            numericUpDown8.Location = new Point(264, 276);
+            numericUpDown8.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown8.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown8.Name = "numericUpDown8";
+            numericUpDown8.Size = new Size(51, 27);
+            numericUpDown8.TabIndex = 27;
             // 
             // numericUpDown7
             // 
-            this.numericUpDown7.Location = new System.Drawing.Point(264, 240);
-            this.numericUpDown7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown7.Name = "numericUpDown7";
-            this.numericUpDown7.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown7.TabIndex = 26;
+            numericUpDown7.Location = new Point(264, 240);
+            numericUpDown7.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown7.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown7.Name = "numericUpDown7";
+            numericUpDown7.Size = new Size(51, 27);
+            numericUpDown7.TabIndex = 26;
             // 
             // numericUpDown6
             // 
-            this.numericUpDown6.Location = new System.Drawing.Point(264, 204);
-            this.numericUpDown6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown6.Name = "numericUpDown6";
-            this.numericUpDown6.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown6.TabIndex = 25;
+            numericUpDown6.Location = new Point(264, 204);
+            numericUpDown6.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown6.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown6.Name = "numericUpDown6";
+            numericUpDown6.Size = new Size(51, 27);
+            numericUpDown6.TabIndex = 25;
             // 
             // numericUpDown5
             // 
-            this.numericUpDown5.Location = new System.Drawing.Point(264, 168);
-            this.numericUpDown5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown5.TabIndex = 24;
+            numericUpDown5.Location = new Point(264, 168);
+            numericUpDown5.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown5.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown5.Name = "numericUpDown5";
+            numericUpDown5.Size = new Size(51, 27);
+            numericUpDown5.TabIndex = 24;
             // 
             // numericUpDown4
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(264, 132);
-            this.numericUpDown4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown4.TabIndex = 23;
+            numericUpDown4.Location = new Point(264, 132);
+            numericUpDown4.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown4.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown4.Name = "numericUpDown4";
+            numericUpDown4.Size = new Size(51, 27);
+            numericUpDown4.TabIndex = 23;
             // 
             // numericUpDown3
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(264, 96);
-            this.numericUpDown3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown3.TabIndex = 22;
+            numericUpDown3.Location = new Point(264, 96);
+            numericUpDown3.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown3.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown3.Name = "numericUpDown3";
+            numericUpDown3.Size = new Size(51, 27);
+            numericUpDown3.TabIndex = 22;
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(264, 60);
-            this.numericUpDown2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown2.TabIndex = 21;
+            numericUpDown2.Location = new Point(264, 60);
+            numericUpDown2.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown2.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown2.Name = "numericUpDown2";
+            numericUpDown2.Size = new Size(51, 27);
+            numericUpDown2.TabIndex = 21;
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(264, 24);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(51, 27);
-            this.numericUpDown1.TabIndex = 20;
+            numericUpDown1.Location = new Point(264, 24);
+            numericUpDown1.Margin = new Padding(3, 4, 3, 4);
+            numericUpDown1.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            numericUpDown1.Name = "numericUpDown1";
+            numericUpDown1.Size = new Size(51, 27);
+            numericUpDown1.TabIndex = 20;
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(7, 900);
-            this.btnReset.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(157, 41);
-            this.btnReset.TabIndex = 23;
-            this.btnReset.Text = "Reset Filters";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            btnReset.Location = new Point(7, 900);
+            btnReset.Margin = new Padding(3, 4, 3, 4);
+            btnReset.Name = "btnReset";
+            btnReset.Size = new Size(157, 41);
+            btnReset.TabIndex = 23;
+            btnReset.Text = "Reset Filters";
+            btnReset.UseVisualStyleBackColor = true;
+            btnReset.Click += btnReset_Click;
             // 
             // toolTip
             // 
-            this.toolTip.AutoPopDelay = 10000;
-            this.toolTip.InitialDelay = 500;
-            this.toolTip.IsBalloon = true;
-            this.toolTip.ReshowDelay = 100;
-            this.toolTip.ToolTipTitle = "Accurate Search";
+            toolTip.AutoPopDelay = 10000;
+            toolTip.InitialDelay = 500;
+            toolTip.IsBalloon = true;
+            toolTip.ReshowDelay = 100;
+            toolTip.ToolTipTitle = "Accurate Search";
             // 
             // grpProfile
             // 
-            this.grpProfile.Controls.Add(this.txtSID);
-            this.grpProfile.Controls.Add(this.lblSID);
-            this.grpProfile.Controls.Add(this.txtTID);
-            this.grpProfile.Controls.Add(this.cmbProgress);
-            this.grpProfile.Controls.Add(this.lblTID);
-            this.grpProfile.Controls.Add(this.lblProgress);
-            this.grpProfile.Controls.Add(this.cmbGame);
-            this.grpProfile.Controls.Add(this.lblGame);
-            this.grpProfile.Location = new System.Drawing.Point(363, 12);
-            this.grpProfile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpProfile.Name = "grpProfile";
-            this.grpProfile.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpProfile.Size = new System.Drawing.Size(1165, 73);
-            this.grpProfile.TabIndex = 21;
-            this.grpProfile.TabStop = false;
-            this.grpProfile.Text = "Game Info";
+            grpProfile.Controls.Add(txtSID);
+            grpProfile.Controls.Add(lblSID);
+            grpProfile.Controls.Add(txtTID);
+            grpProfile.Controls.Add(cmbProgress);
+            grpProfile.Controls.Add(lblTID);
+            grpProfile.Controls.Add(lblProgress);
+            grpProfile.Controls.Add(cmbGame);
+            grpProfile.Controls.Add(lblGame);
+            grpProfile.Location = new Point(363, 12);
+            grpProfile.Margin = new Padding(3, 4, 3, 4);
+            grpProfile.Name = "grpProfile";
+            grpProfile.Padding = new Padding(3, 4, 3, 4);
+            grpProfile.Size = new Size(1165, 73);
+            grpProfile.TabIndex = 21;
+            grpProfile.TabStop = false;
+            grpProfile.Text = "Game Info";
             // 
             // txtSID
             // 
-            this.txtSID.Location = new System.Drawing.Point(815, 28);
-            this.txtSID.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtSID.MaxLength = 4;
-            this.txtSID.Name = "txtSID";
-            this.txtSID.Size = new System.Drawing.Size(138, 27);
-            this.txtSID.TabIndex = 23;
-            this.txtSID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtID_KeyPress);
+            txtSID.Location = new Point(815, 28);
+            txtSID.Margin = new Padding(3, 4, 3, 4);
+            txtSID.MaxLength = 4;
+            txtSID.Name = "txtSID";
+            txtSID.Size = new Size(138, 27);
+            txtSID.TabIndex = 23;
+            txtSID.KeyPress += txtID_KeyPress;
             // 
             // lblSID
             // 
-            this.lblSID.AutoSize = true;
-            this.lblSID.Location = new System.Drawing.Point(773, 32);
-            this.lblSID.Name = "lblSID";
-            this.lblSID.Size = new System.Drawing.Size(35, 20);
-            this.lblSID.TabIndex = 23;
-            this.lblSID.Text = "SID:";
+            lblSID.AutoSize = true;
+            lblSID.Location = new Point(773, 32);
+            lblSID.Name = "lblSID";
+            lblSID.Size = new Size(35, 20);
+            lblSID.TabIndex = 23;
+            lblSID.Text = "SID:";
             // 
             // txtTID
             // 
-            this.txtTID.Location = new System.Drawing.Point(616, 28);
-            this.txtTID.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtTID.MaxLength = 6;
-            this.txtTID.Name = "txtTID";
-            this.txtTID.Size = new System.Drawing.Size(138, 27);
-            this.txtTID.TabIndex = 22;
-            this.txtTID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtID_KeyPress);
+            txtTID.Location = new Point(616, 28);
+            txtTID.Margin = new Padding(3, 4, 3, 4);
+            txtTID.MaxLength = 6;
+            txtTID.Name = "txtTID";
+            txtTID.Size = new Size(138, 27);
+            txtTID.TabIndex = 22;
+            txtTID.KeyPress += txtID_KeyPress;
             // 
             // cmbProgress
             // 
-            this.cmbProgress.FormattingEnabled = true;
-            this.cmbProgress.Items.AddRange(new object[] {
-            "Beginning",
-            "UnlockedTeraRaids",
-            "Unlocked3Stars",
-            "Unlocked4Stars",
-            "Unlocked5Stars",
-            "Unlocked6Stars"});
-            this.cmbProgress.Location = new System.Drawing.Point(415, 28);
-            this.cmbProgress.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cmbProgress.Name = "cmbProgress";
-            this.cmbProgress.Size = new System.Drawing.Size(138, 28);
-            this.cmbProgress.TabIndex = 22;
+            cmbProgress.FormattingEnabled = true;
+            cmbProgress.Items.AddRange(new object[] { "Beginning", "UnlockedTeraRaids", "Unlocked3Stars", "Unlocked4Stars", "Unlocked5Stars", "Unlocked6Stars" });
+            cmbProgress.Location = new Point(415, 28);
+            cmbProgress.Margin = new Padding(3, 4, 3, 4);
+            cmbProgress.Name = "cmbProgress";
+            cmbProgress.Size = new Size(138, 28);
+            cmbProgress.TabIndex = 22;
             // 
             // lblTID
             // 
-            this.lblTID.AutoSize = true;
-            this.lblTID.Location = new System.Drawing.Point(574, 32);
-            this.lblTID.Name = "lblTID";
-            this.lblTID.Size = new System.Drawing.Size(35, 20);
-            this.lblTID.TabIndex = 22;
-            this.lblTID.Text = "TID:";
+            lblTID.AutoSize = true;
+            lblTID.Location = new Point(574, 32);
+            lblTID.Name = "lblTID";
+            lblTID.Size = new Size(35, 20);
+            lblTID.TabIndex = 22;
+            lblTID.Text = "TID:";
             // 
             // lblProgress
             // 
-            this.lblProgress.AutoSize = true;
-            this.lblProgress.Location = new System.Drawing.Point(336, 32);
-            this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(68, 20);
-            this.lblProgress.TabIndex = 22;
-            this.lblProgress.Text = "Progress:";
+            lblProgress.AutoSize = true;
+            lblProgress.Location = new Point(336, 32);
+            lblProgress.Name = "lblProgress";
+            lblProgress.Size = new Size(68, 20);
+            lblProgress.TabIndex = 22;
+            lblProgress.Text = "Progress:";
             // 
             // cmbGame
             // 
-            this.cmbGame.FormattingEnabled = true;
-            this.cmbGame.Items.AddRange(new object[] {
-            "Scarlet",
-            "Violet"});
-            this.cmbGame.Location = new System.Drawing.Point(176, 27);
-            this.cmbGame.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cmbGame.Name = "cmbGame";
-            this.cmbGame.Size = new System.Drawing.Size(138, 28);
-            this.cmbGame.TabIndex = 22;
+            cmbGame.FormattingEnabled = true;
+            cmbGame.Items.AddRange(new object[] { "Scarlet", "Violet" });
+            cmbGame.Location = new Point(176, 27);
+            cmbGame.Margin = new Padding(3, 4, 3, 4);
+            cmbGame.Name = "cmbGame";
+            cmbGame.Size = new Size(138, 28);
+            cmbGame.TabIndex = 22;
             // 
             // lblGame
             // 
-            this.lblGame.AutoSize = true;
-            this.lblGame.Location = new System.Drawing.Point(105, 32);
-            this.lblGame.Name = "lblGame";
-            this.lblGame.Size = new System.Drawing.Size(51, 20);
-            this.lblGame.TabIndex = 22;
-            this.lblGame.Text = "Game:";
+            lblGame.AutoSize = true;
+            lblGame.Location = new Point(105, 32);
+            lblGame.Name = "lblGame";
+            lblGame.Size = new Size(51, 20);
+            lblGame.TabIndex = 22;
+            lblGame.Text = "Game:";
             // 
             // grpSettings
             // 
-            this.grpSettings.Controls.Add(this.cmbBoost);
-            this.grpSettings.Controls.Add(this.numEventCt);
-            this.grpSettings.Controls.Add(this.lblEventCt);
-            this.grpSettings.Controls.Add(this.cmbContent);
-            this.grpSettings.Controls.Add(this.numMaxCalc);
-            this.grpSettings.Controls.Add(this.lblSandwich);
-            this.grpSettings.Controls.Add(this.lblContent);
-            this.grpSettings.Controls.Add(this.lblSeed);
-            this.grpSettings.Controls.Add(this.lblCalcs);
-            this.grpSettings.Controls.Add(this.txtSeed);
-            this.grpSettings.Location = new System.Drawing.Point(363, 89);
-            this.grpSettings.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpSettings.Name = "grpSettings";
-            this.grpSettings.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpSettings.Size = new System.Drawing.Size(1165, 73);
-            this.grpSettings.TabIndex = 22;
-            this.grpSettings.TabStop = false;
-            this.grpSettings.Text = "Raid Settings";
+            grpSettings.Controls.Add(cmbBoost);
+            grpSettings.Controls.Add(numEventCt);
+            grpSettings.Controls.Add(lblEventCt);
+            grpSettings.Controls.Add(cmbContent);
+            grpSettings.Controls.Add(numMaxCalc);
+            grpSettings.Controls.Add(lblSandwich);
+            grpSettings.Controls.Add(lblContent);
+            grpSettings.Controls.Add(lblSeed);
+            grpSettings.Controls.Add(lblCalcs);
+            grpSettings.Controls.Add(txtSeed);
+            grpSettings.Location = new Point(363, 89);
+            grpSettings.Margin = new Padding(3, 4, 3, 4);
+            grpSettings.Name = "grpSettings";
+            grpSettings.Padding = new Padding(3, 4, 3, 4);
+            grpSettings.Size = new Size(1165, 73);
+            grpSettings.TabIndex = 22;
+            grpSettings.TabStop = false;
+            grpSettings.Text = "Raid Settings";
             // 
             // cmbBoost
             // 
-            this.cmbBoost.FormattingEnabled = true;
-            this.cmbBoost.Items.AddRange(new object[] {
-            "No Boost",
-            "Level 1",
-            "Level 2",
-            "Level 3"});
-            this.cmbBoost.Location = new System.Drawing.Point(1009, 31);
-            this.cmbBoost.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cmbBoost.Name = "cmbBoost";
-            this.cmbBoost.Size = new System.Drawing.Size(129, 28);
-            this.cmbBoost.TabIndex = 26;
+            cmbBoost.FormattingEnabled = true;
+            cmbBoost.Items.AddRange(new object[] { "No Boost", "Level 1", "Level 2", "Level 3" });
+            cmbBoost.Location = new Point(1009, 31);
+            cmbBoost.Margin = new Padding(3, 4, 3, 4);
+            cmbBoost.Name = "cmbBoost";
+            cmbBoost.Size = new Size(129, 28);
+            cmbBoost.TabIndex = 26;
             // 
             // numEventCt
             // 
-            this.numEventCt.Location = new System.Drawing.Point(741, 31);
-            this.numEventCt.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numEventCt.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.numEventCt.Name = "numEventCt";
-            this.numEventCt.Size = new System.Drawing.Size(129, 27);
-            this.numEventCt.TabIndex = 28;
+            numEventCt.Location = new Point(741, 31);
+            numEventCt.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
+            numEventCt.Minimum = new decimal(new int[] { 1, 0, 0, int.MinValue });
+            numEventCt.Name = "numEventCt";
+            numEventCt.Size = new Size(129, 27);
+            numEventCt.TabIndex = 28;
             // 
             // lblEventCt
             // 
-            this.lblEventCt.AutoSize = true;
-            this.lblEventCt.Location = new System.Drawing.Point(644, 34);
-            this.lblEventCt.Name = "lblEventCt";
-            this.lblEventCt.Size = new System.Drawing.Size(88, 20);
-            this.lblEventCt.TabIndex = 27;
-            this.lblEventCt.Text = "Event Index:";
+            lblEventCt.AutoSize = true;
+            lblEventCt.Location = new Point(644, 34);
+            lblEventCt.Name = "lblEventCt";
+            lblEventCt.Size = new Size(88, 20);
+            lblEventCt.TabIndex = 27;
+            lblEventCt.Text = "Event Index:";
             // 
             // cmbContent
             // 
-            this.cmbContent.FormattingEnabled = true;
-            this.cmbContent.Items.AddRange(new object[] {
-            "Standard",
-            "Black",
-            "Event",
-            "Event-Mighty"});
-            this.cmbContent.Location = new System.Drawing.Point(501, 31);
-            this.cmbContent.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cmbContent.Name = "cmbContent";
-            this.cmbContent.Size = new System.Drawing.Size(129, 28);
-            this.cmbContent.TabIndex = 24;
+            cmbContent.FormattingEnabled = true;
+            cmbContent.Items.AddRange(new object[] { "Standard", "Black", "Event", "Event-Mighty" });
+            cmbContent.Location = new Point(501, 31);
+            cmbContent.Margin = new Padding(3, 4, 3, 4);
+            cmbContent.Name = "cmbContent";
+            cmbContent.Size = new Size(129, 28);
+            cmbContent.TabIndex = 24;
             // 
             // numMaxCalc
             // 
-            this.numMaxCalc.Location = new System.Drawing.Point(282, 31);
-            this.numMaxCalc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.numMaxCalc.Maximum = new decimal(new int[] {
-            -1,
-            0,
-            0,
-            0});
-            this.numMaxCalc.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numMaxCalc.Name = "numMaxCalc";
-            this.numMaxCalc.Size = new System.Drawing.Size(129, 27);
-            this.numMaxCalc.TabIndex = 5;
-            this.numMaxCalc.Value = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
+            numMaxCalc.Location = new Point(282, 31);
+            numMaxCalc.Margin = new Padding(3, 4, 3, 4);
+            numMaxCalc.Maximum = new decimal(new int[] { -1, 0, 0, 0 });
+            numMaxCalc.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numMaxCalc.Name = "numMaxCalc";
+            numMaxCalc.Size = new Size(129, 27);
+            numMaxCalc.TabIndex = 5;
+            numMaxCalc.Value = new decimal(new int[] { 100000, 0, 0, 0 });
             // 
             // lblSandwich
             // 
-            this.lblSandwich.AutoSize = true;
-            this.lblSandwich.Location = new System.Drawing.Point(886, 34);
-            this.lblSandwich.Name = "lblSandwich";
-            this.lblSandwich.Size = new System.Drawing.Size(117, 20);
-            this.lblSandwich.TabIndex = 25;
-            this.lblSandwich.Text = "Sandwich Boost:";
+            lblSandwich.AutoSize = true;
+            lblSandwich.Location = new Point(886, 34);
+            lblSandwich.Name = "lblSandwich";
+            lblSandwich.Size = new Size(117, 20);
+            lblSandwich.TabIndex = 25;
+            lblSandwich.Text = "Sandwich Boost:";
             // 
             // lblContent
             // 
-            this.lblContent.AutoSize = true;
-            this.lblContent.Location = new System.Drawing.Point(417, 34);
-            this.lblContent.Name = "lblContent";
-            this.lblContent.Size = new System.Drawing.Size(64, 20);
-            this.lblContent.TabIndex = 0;
-            this.lblContent.Text = "Content:";
+            lblContent.AutoSize = true;
+            lblContent.Location = new Point(417, 34);
+            lblContent.Name = "lblContent";
+            lblContent.Size = new Size(64, 20);
+            lblContent.TabIndex = 0;
+            lblContent.Text = "Content:";
             // 
             // lblSeed
             // 
-            this.lblSeed.AutoSize = true;
-            this.lblSeed.Location = new System.Drawing.Point(11, 33);
-            this.lblSeed.Name = "lblSeed";
-            this.lblSeed.Size = new System.Drawing.Size(45, 20);
-            this.lblSeed.TabIndex = 1;
-            this.lblSeed.Text = "Seed:";
+            lblSeed.AutoSize = true;
+            lblSeed.Location = new Point(11, 33);
+            lblSeed.Name = "lblSeed";
+            lblSeed.Size = new Size(45, 20);
+            lblSeed.TabIndex = 1;
+            lblSeed.Text = "Seed:";
             // 
             // lblCalcs
             // 
-            this.lblCalcs.AutoSize = true;
-            this.lblCalcs.Location = new System.Drawing.Point(198, 33);
-            this.lblCalcs.Name = "lblCalcs";
-            this.lblCalcs.Size = new System.Drawing.Size(78, 20);
-            this.lblCalcs.TabIndex = 2;
-            this.lblCalcs.Text = "Max Calcs:";
+            lblCalcs.AutoSize = true;
+            lblCalcs.Location = new Point(198, 33);
+            lblCalcs.Name = "lblCalcs";
+            lblCalcs.Size = new Size(78, 20);
+            lblCalcs.TabIndex = 2;
+            lblCalcs.Text = "Max Calcs:";
             // 
             // txtSeed
             // 
-            this.txtSeed.Location = new System.Drawing.Point(63, 30);
-            this.txtSeed.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtSeed.MaxLength = 8;
-            this.txtSeed.Name = "txtSeed";
-            this.txtSeed.Size = new System.Drawing.Size(129, 27);
-            this.txtSeed.TabIndex = 3;
-            this.txtSeed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtSeed_KeyPress);
+            txtSeed.Location = new Point(63, 30);
+            txtSeed.Margin = new Padding(3, 4, 3, 4);
+            txtSeed.MaxLength = 8;
+            txtSeed.Name = "txtSeed";
+            txtSeed.Size = new Size(129, 27);
+            txtSeed.TabIndex = 3;
+            txtSeed.KeyPress += TxtSeed_KeyPress;
             // 
             // grpSearch
             // 
-            this.grpSearch.Controls.Add(this.lblFound);
-            this.grpSearch.Controls.Add(this.chkAllResults);
-            this.grpSearch.Controls.Add(this.btnSearch);
-            this.grpSearch.Location = new System.Drawing.Point(363, 168);
-            this.grpSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpSearch.Name = "grpSearch";
-            this.grpSearch.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.grpSearch.Size = new System.Drawing.Size(1165, 73);
-            this.grpSearch.TabIndex = 24;
-            this.grpSearch.TabStop = false;
-            this.grpSearch.Text = "Search";
+            grpSearch.Controls.Add(lblFound);
+            grpSearch.Controls.Add(chkAllResults);
+            grpSearch.Controls.Add(btnSearch);
+            grpSearch.Location = new Point(363, 168);
+            grpSearch.Margin = new Padding(3, 4, 3, 4);
+            grpSearch.Name = "grpSearch";
+            grpSearch.Padding = new Padding(3, 4, 3, 4);
+            grpSearch.Size = new Size(1165, 73);
+            grpSearch.TabIndex = 24;
+            grpSearch.TabStop = false;
+            grpSearch.Text = "Search";
             // 
             // lblFound
             // 
-            this.lblFound.AutoSize = true;
-            this.lblFound.Location = new System.Drawing.Point(19, 35);
-            this.lblFound.Name = "lblFound";
-            this.lblFound.Size = new System.Drawing.Size(53, 20);
-            this.lblFound.TabIndex = 24;
-            this.lblFound.Text = "Found:";
-            this.lblFound.Visible = false;
+            lblFound.AutoSize = true;
+            lblFound.Location = new Point(19, 35);
+            lblFound.Name = "lblFound";
+            lblFound.Size = new Size(53, 20);
+            lblFound.TabIndex = 24;
+            lblFound.Text = "Found:";
+            lblFound.Visible = false;
             // 
             // chkAllResults
             // 
-            this.chkAllResults.AutoSize = true;
-            this.chkAllResults.Location = new System.Drawing.Point(287, 31);
-            this.chkAllResults.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.chkAllResults.Name = "chkAllResults";
-            this.chkAllResults.Size = new System.Drawing.Size(160, 24);
-            this.chkAllResults.TabIndex = 6;
-            this.chkAllResults.Text = "Show All Results (?)";
-            this.chkAllResults.UseVisualStyleBackColor = true;
+            chkAllResults.AutoSize = true;
+            chkAllResults.Location = new Point(287, 31);
+            chkAllResults.Margin = new Padding(3, 4, 3, 4);
+            chkAllResults.Name = "chkAllResults";
+            chkAllResults.Size = new Size(160, 24);
+            chkAllResults.TabIndex = 6;
+            chkAllResults.Text = "Show All Results (?)";
+            chkAllResults.UseVisualStyleBackColor = true;
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(550, 20);
-            this.btnSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(185, 45);
-            this.btnSearch.TabIndex = 23;
-            this.btnSearch.Text = "Search";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            btnSearch.Location = new Point(550, 20);
+            btnSearch.Margin = new Padding(3, 4, 3, 4);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(185, 45);
+            btnSearch.TabIndex = 23;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.Click += btnSearch_Click;
             // 
             // dataGrid
             // 
-            this.dataGrid.AllowUserToAddRows = false;
-            this.dataGrid.AllowUserToDeleteRows = false;
-            this.dataGrid.AllowUserToResizeRows = false;
-            this.dataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid.Location = new System.Drawing.Point(363, 245);
-            this.dataGrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dataGrid.Name = "dataGrid";
-            this.dataGrid.ReadOnly = true;
-            this.dataGrid.RowHeadersWidth = 51;
-            this.dataGrid.RowTemplate.Height = 25;
-            this.dataGrid.Size = new System.Drawing.Size(1165, 716);
-            this.dataGrid.TabIndex = 23;
-            this.dataGrid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dataGrid_MouseUp);
+            dataGrid.AllowUserToAddRows = false;
+            dataGrid.AllowUserToDeleteRows = false;
+            dataGrid.AllowUserToResizeRows = false;
+            dataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGrid.Location = new Point(363, 245);
+            dataGrid.Margin = new Padding(3, 4, 3, 4);
+            dataGrid.Name = "dataGrid";
+            dataGrid.ReadOnly = true;
+            dataGrid.RowHeadersWidth = 51;
+            dataGrid.RowTemplate.Height = 25;
+            dataGrid.Size = new Size(1165, 716);
+            dataGrid.TabIndex = 23;
+            dataGrid.MouseUp += dataGrid_MouseUp;
             // 
             // toolTip1
             // 
-            this.toolTip1.AutoPopDelay = 10000;
-            this.toolTip1.InitialDelay = 500;
-            this.toolTip1.IsBalloon = true;
-            this.toolTip1.ReshowDelay = 100;
-            this.toolTip1.ToolTipTitle = "Show All Results";
+            toolTip1.AutoPopDelay = 10000;
+            toolTip1.InitialDelay = 500;
+            toolTip1.IsBalloon = true;
+            toolTip1.ReshowDelay = 100;
+            toolTip1.ToolTipTitle = "Show All Results";
             // 
             // contextMenuStrip
             // 
-            this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnSaveAllTxt,
-            this.btnSaveSelectedTxt,
-            this.btnSendSelectedRaid});
-            this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(313, 76);
+            contextMenuStrip.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip.Items.AddRange(new ToolStripItem[] { btnSaveAllTxt, btnSaveSelectedTxt, btnSendSelectedRaid });
+            contextMenuStrip.Name = "contextMenuStrip";
+            contextMenuStrip.Size = new Size(313, 76);
             // 
             // btnSaveAllTxt
             // 
-            this.btnSaveAllTxt.Name = "btnSaveAllTxt";
-            this.btnSaveAllTxt.Size = new System.Drawing.Size(312, 24);
-            this.btnSaveAllTxt.Text = "Save All Results as TXT";
-            this.btnSaveAllTxt.Click += new System.EventHandler(this.btnSaveAllTxt_Click);
+            btnSaveAllTxt.Name = "btnSaveAllTxt";
+            btnSaveAllTxt.Size = new Size(312, 24);
+            btnSaveAllTxt.Text = "Save All Results as TXT";
+            btnSaveAllTxt.Click += btnSaveAllTxt_Click;
             // 
             // btnSaveSelectedTxt
             // 
-            this.btnSaveSelectedTxt.Name = "btnSaveSelectedTxt";
-            this.btnSaveSelectedTxt.Size = new System.Drawing.Size(312, 24);
-            this.btnSaveSelectedTxt.Text = "Save Selected Results as TXT";
-            this.btnSaveSelectedTxt.Click += new System.EventHandler(this.btnSaveSelectedTxt_Click);
+            btnSaveSelectedTxt.Name = "btnSaveSelectedTxt";
+            btnSaveSelectedTxt.Size = new Size(312, 24);
+            btnSaveSelectedTxt.Text = "Save Selected Results as TXT";
+            btnSaveSelectedTxt.Click += btnSaveSelectedTxt_Click;
             // 
             // btnSendSelectedRaid
             // 
-            this.btnSendSelectedRaid.Name = "btnSendSelectedRaid";
-            this.btnSendSelectedRaid.Size = new System.Drawing.Size(312, 24);
-            this.btnSendSelectedRaid.Text = "Send Selected Result to Raid Editor";
-            this.btnSendSelectedRaid.Click += new System.EventHandler(this.btnSendSelectedRaid_Click);
+            btnSendSelectedRaid.Name = "btnSendSelectedRaid";
+            btnSendSelectedRaid.Size = new Size(312, 24);
+            btnSendSelectedRaid.Text = "Send Selected Result to Raid Editor";
+            btnSendSelectedRaid.Click += btnSendSelectedRaid_Click;
             // 
             // RewardCalcForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1540, 964);
-            this.Controls.Add(this.dataGrid);
-            this.Controls.Add(this.grpSearch);
-            this.Controls.Add(this.grpSettings);
-            this.Controls.Add(this.grpProfile);
-            this.Controls.Add(this.grpFilters);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "RewardCalcForm";
-            this.Text = "Reward Calculator";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
-            this.grpFilters.ResumeLayout(false);
-            this.grpFilters.PerformLayout();
-            this.grpEncounter.ResumeLayout(false);
-            this.grpEncounter.PerformLayout();
-            this.grpItems.ResumeLayout(false);
-            this.grpItems.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown20)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown19)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown17)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            this.grpProfile.ResumeLayout(false);
-            this.grpProfile.PerformLayout();
-            this.grpSettings.ResumeLayout(false);
-            this.grpSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numEventCt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numMaxCalc)).EndInit();
-            this.grpSearch.ResumeLayout(false);
-            this.grpSearch.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
-            this.contextMenuStrip.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1540, 964);
+            Controls.Add(dataGrid);
+            Controls.Add(grpSearch);
+            Controls.Add(grpSettings);
+            Controls.Add(grpProfile);
+            Controls.Add(grpFilters);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "RewardCalcForm";
+            Text = "Reward Calculator";
+            FormClosing += Form_FormClosing;
+            grpFilters.ResumeLayout(false);
+            grpFilters.PerformLayout();
+            grpEncounter.ResumeLayout(false);
+            grpEncounter.PerformLayout();
+            grpItems.ResumeLayout(false);
+            grpItems.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown20).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown19).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown18).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown17).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown16).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown15).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown14).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown13).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown12).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown11).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown10).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown9).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown7).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            grpProfile.ResumeLayout(false);
+            grpProfile.PerformLayout();
+            grpSettings.ResumeLayout(false);
+            grpSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numEventCt).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numMaxCalc).EndInit();
+            grpSearch.ResumeLayout(false);
+            grpSearch.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGrid).EndInit();
+            contextMenuStrip.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
