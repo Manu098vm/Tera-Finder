@@ -1,5 +1,6 @@
 ﻿using PKHeX.Core;
 using System.Buffers.Binary;
+using System.Reflection;
 using TeraFinder.Forms;
 
 namespace TeraFinder
@@ -313,54 +314,13 @@ namespace TeraFinder
         private void DisablePlugins() => Plugin.Enabled = false;
 
 
-        //From PKHeX
-        //https://github.com/kwsch/PKHeX/blob/master/PKHeX.WinForms/Util/WinFormsUtil.cs
-        //GPL V3 license
-        private static SlotViewInfo<PictureBox> GetSenderInfo(ref object sender)
+        // Use Reflection To get ContextMenuSAV's private static method GetSenderInfo
+        private SlotViewInfo<PictureBox> GetSenderInfo(ref object sender)
         {
-            var pb = GetUnderlyingControl<PictureBox>(sender);
-            if (pb == null)
-                throw new InvalidCastException("Unable to find PictureBox");
-            var view = FindFirstControlOfType<ISlotViewer<PictureBox>>(pb);
-            if (view == null)
-                throw new InvalidCastException("Unable to find View Parent");
-            var loc = view.GetSlotData(pb);
-            sender = pb;
-            return new SlotViewInfo<PictureBox>(loc, view);
-        }
-
-        public static T? GetUnderlyingControl<T>(object sender) where T : class
-        {
-            while (true)
-            {
-                switch (sender)
-                {
-                    case T p:
-                        return p;
-                    case ToolStripItem { Owner: { } o }:
-                        sender = o;
-                        continue;
-                    case ContextMenuStrip { SourceControl: { } s }:
-                        sender = s;
-                        continue;
-                    default:
-                        return default;
-                }
-            }
-        }
-
-        public static T? FindFirstControlOfType<T>(Control aParent) where T : class
-        {
-            while (true)
-            {
-                if (aParent is T t)
-                    return t;
-
-                if (aParent.Parent != null)
-                    aParent = aParent.Parent;
-                else
-                    return null;
-            }
+            Type contextMenuSAVType = ((dynamic)SaveFileEditor).menu.GetType();
+            MethodInfo? getSenderInfoMethod = contextMenuSAVType.GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
+                .SingleOrDefault(m => m.Name.Contains("GetSenderInfo"));
+            return (SlotViewInfo<PictureBox>)getSenderInfoMethod?.Invoke(null, new object[] { sender })!;
         }
 
         public bool ExportSAVDialog(int currentBox = 0)
