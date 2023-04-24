@@ -1,5 +1,7 @@
 ﻿using PKHeX.Core;
 using SysBot.Base;
+using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 using static System.Buffers.Binary.BinaryPrimitives;
 
 namespace TeraFinder
@@ -16,6 +18,8 @@ namespace TeraFinder
     {
         private const string ScarletID = "0100A3D008C5C000";
         private const string VioletID = "01008F6008C5E000";
+
+        private ulong KeyBlockAddress = 0;
 
         public DeviceExecutor(DeviceState cfg) : base(cfg) { }
 
@@ -48,6 +52,7 @@ namespace TeraFinder
 
         public void Disconnect()
         {
+            KeyBlockAddress = 0;
             HardStop();
             Connection.Disconnect();
         }
@@ -330,7 +335,6 @@ namespace TeraFinder
         //Thanks to Lincoln-LM (original scblock code) and Architdate (ported C# reference code)!!
         //https://github.com/Lincoln-LM/sv-live-map/blob/e0f4a30c72ef81f1dc175dae74e2fd3d63b0e881/sv_live_map_core/nxreader/raid_reader.py#L168
         //https://github.com/LegoFigure11/RaidCrawler/blob/2e1832ae89e5ac39dcc25ccf2ae911ef0f634580/MainWindow.cs#L199
-
         private async Task<byte[]?> ReadEncryptedBlockObject(DataBlock block, CancellationToken token)
         {
             if (!Connection.Connected)
@@ -360,33 +364,40 @@ namespace TeraFinder
             return res[0] == 2;
         }
 
-        private async Task<ulong> GetBlockAddress(DataBlock block, CancellationToken token)
+        //Thanks Architdate & Santacrab2!
+        //https://github.com/LegoFigure11/RaidCrawler/blob/f8e996aac4b134e6eb6231d539c345748fead490/RaidCrawler.Core/Connection/ConnectionWrapper.cs#L126
+        private async Task<ulong> GetBlockAddress(DataBlock block, CancellationToken token, bool prepareAddress = true)
         {
-            var read_key = ReadUInt32LittleEndian(await SwitchConnection.PointerPeek(4, block.Pointer!, token).ConfigureAwait(false));
-            if (read_key == block.Key)
-                return await SwitchConnection.PointerAll(PreparePointer(block.Pointer!), token).ConfigureAwait(false);
-            var direction = block.Key > read_key ? 1 : -1;
-            var base_offset = block.Pointer![block.Pointer.Count - 1];
-            for (var offset = base_offset; offset < base_offset + 0x1000 && offset > base_offset - 0x1000; offset += direction * 0x20)
+            if (KeyBlockAddress == 0)
+                KeyBlockAddress = await SwitchConnection.PointerAll(block.Pointer!, token).ConfigureAwait(false);
+
+            var keyblock = await SwitchConnection.ReadBytesAbsoluteAsync(KeyBlockAddress, 16, token).ConfigureAwait(false);
+            var start = BitConverter.ToUInt64(keyblock.AsSpan()[..8]);
+            var end = BitConverter.ToUInt64(keyblock.AsSpan()[8..]);
+            var ct = (ulong)48;
+
+            while (start < end)
             {
-                var pointer = block.Pointer!.ToArray();
-                pointer[^1] = offset;
-                read_key = ReadUInt32LittleEndian(await SwitchConnection.PointerPeek(4, pointer, token).ConfigureAwait(false));
-                if (read_key == block.Key)
-                    return await SwitchConnection.PointerAll(PreparePointer(pointer), token).ConfigureAwait(false);
+                var block_ct = (end - start) / ct;
+                var mid = start + (block_ct >> 1) * ct;
+
+                var data = await SwitchConnection.ReadBytesAbsoluteAsync(mid, 4, token).ConfigureAwait(false);
+                var found = BitConverter.ToUInt32(data);
+                if (found == block.Key)
+                {
+                    if(prepareAddress)
+                        mid = await PrepareAddress(mid, token).ConfigureAwait(false);
+                    return mid;
+                }
+
+                if (found >= block.Key)
+                    end = mid;
+                else start = mid + ct;
             }
-            throw new ArgumentOutOfRangeException("Save block not found in range +- 0x1000");
+            throw new ArgumentOutOfRangeException("Save block not found.");
         }
 
-        private static IEnumerable<long> PreparePointer(IEnumerable<long> pointer)
-        {
-            var count = pointer.Count();
-            var p = new long[count+1];
-            for (var i = 0; i < pointer.Count(); i++)
-                p[i] = pointer.ElementAt(i);
-            p[count-1] += 8;
-            p[count] = 0x0;
-            return p;
-        }
+        private async Task<ulong> PrepareAddress(ulong address, CancellationToken token) =>
+            BitConverter.ToUInt64(await SwitchConnection.ReadBytesAbsoluteAsync(address + 8, 8, token).ConfigureAwait(false));
     }
 }
