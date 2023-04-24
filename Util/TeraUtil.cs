@@ -326,7 +326,7 @@ namespace TeraFinder
                     var ct = cts[i];
                     if (!possible_groups.Contains(i + 1))
                         continue;
-                    if (eventct < ct)
+                    if (eventct <= ct)
                         return i + 1;
                     eventct -= ct;
                 }
