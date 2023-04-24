@@ -1,7 +1,5 @@
 ﻿using PKHeX.Core;
 using SysBot.Base;
-using System.Runtime.CompilerServices;
-using System.Windows.Forms;
 using static System.Buffers.Binary.BinaryPrimitives;
 
 namespace TeraFinder
