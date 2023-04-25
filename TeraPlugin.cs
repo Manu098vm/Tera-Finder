@@ -63,8 +63,7 @@ namespace TeraFinder
                     if (pk is PK9 pk9 && pk9.Met_Location == 30024)
                     {
                         var dic = new Dictionary<string, string> { { "CheckerForm", "" } }.TranslateInnerStrings(Language);
-                        var calcSeed = new ToolStripMenuItem(dic["CheckerForm"]);
-                        calcSeed.Image = Properties.Resources.icon.ToBitmap();
+                        var calcSeed = new ToolStripMenuItem(dic["CheckerForm"]) { Image = Properties.Resources.icon.ToBitmap() };
                         menuVSD.Items.Insert(menuVSD.Items.Count, calcSeed);
                         calcSeed.Click += (s, e) => new CheckerForm(pk, sav, Language).ShowDialog();
                         menuVSD.Closing += (s, e) => menuVSD.Items.Remove(calcSeed);
@@ -347,10 +346,7 @@ namespace TeraFinder
             if (SAV.HasBox)
                 SAV.CurrentBox = currentBox;
 
-            var path = sfd.FileName;
-            if (path == null)
-                throw new NullReferenceException(nameof(sfd.FileName));
-
+            var path = sfd.FileName ?? throw new NullReferenceException(nameof(sfd.FileName));
             ExportSAV(SAV, path);
             return true;
         }

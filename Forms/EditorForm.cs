@@ -9,7 +9,7 @@ namespace TeraFinder
     {
         public SAV9SV SAV { get; set; } = null!;
         public IPKMView? PKMEditor { get; private set; } = null!;
-        private Dictionary<string, float[]> DenLocations = null!;
+        private readonly Dictionary<string, float[]> DenLocations = null!;
         public GameProgress Progress { get; set; } = GameProgress.None;
         private Image DefBackground = null!;
         private Size DefSize = new(0, 0);
@@ -414,7 +414,6 @@ namespace TeraFinder
         {
             var str = level == 0 ? "" : $"{Strings["EditorForm.LblLvl"]} {level}";
             lblLevel.Text = str;
-            var img = pictureBox.Image != null ? pictureBox.Image : pictureBox.BackgroundImage;
             lblLevel.Location = new(pictureBox.Location.X + (pictureBox.Width - lblLevel.Size.Width) / 2, pictureBox.Location.Y - lblLevel.Height);
         }
 
