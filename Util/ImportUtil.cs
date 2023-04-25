@@ -72,15 +72,15 @@ namespace TeraFinder
         {
             if (!File.Exists($"{path}\\Identifier.txt"))
                 return false;
-            if (!File.Exists($"{path}\\Files\\event_raid_identifier"))
+            if (!File.Exists($"{path}\\Files\\event_raid_identifier") && !File.Exists($"{path}\\Files\\event_raid_identifier_1_3_0"))
                 return false;
-            if (!File.Exists($"{path}\\Files\\fixed_reward_item_array"))
+            if (!File.Exists($"{path}\\Files\\fixed_reward_item_array") && !File.Exists($"{path}\\Files\\fixed_reward_item_array_1_3_0"))
                 return false;
-            if (!File.Exists($"{path}\\Files\\lottery_reward_item_array"))
+            if (!File.Exists($"{path}\\Files\\lottery_reward_item_array") && !File.Exists($"{path}\\Files\\lottery_reward_item_array_1_3_0"))
                 return false;
-            if (!File.Exists($"{path}\\Files\\raid_enemy_array"))
+            if (!File.Exists($"{path}\\Files\\raid_enemy_array") && !File.Exists($"{path}\\Files\\raid_enemy_array_1_3_0"))
                 return false;
-            if (!File.Exists($"{path}\\Files\\raid_priority_array"))
+            if (!File.Exists($"{path}\\Files\\raid_priority_array") && !File.Exists($"{path}\\Files\\raid_priority_array_1_3_0"))
                 return false;
 
             return true;
@@ -114,12 +114,32 @@ namespace TeraFinder
         {
             try
             {
-                var index = File.ReadAllText($"{path}\\Identifier.txt");
-                var identifierBlock = File.ReadAllBytes($"{path}\\Files\\event_raid_identifier");
-                var rewardItemBlock = File.ReadAllBytes($"{path}\\Files\\fixed_reward_item_array");
-                var lotteryItemBlock = File.ReadAllBytes($"{path}\\Files\\lottery_reward_item_array");
-                var raidEnemyBlock = File.ReadAllBytes($"{path}\\Files\\raid_enemy_array");
-                var raidPriorityBlock = File.ReadAllBytes($"{path}\\Files\\raid_priority_array");
+                var indexpath = Path.Combine(path, "Identifier.txt");
+
+                var filespath = Path.Combine(path, "Files");
+                var identifierpath = Path.Combine(filespath, "event_raid_identifier_1_3_0");
+                var encounterspath = Path.Combine(filespath, "raid_enemy_array_1_3_0");
+                var dropspath = Path.Combine(filespath, "fixed_reward_item_array_1_3_0");
+                var bonuspath = Path.Combine(filespath, "lottery_reward_item_array_1_3_0");
+                var prioritypath = Path.Combine(filespath, "raid_priority_array_1_3_0");
+
+                if (!File.Exists(identifierpath))
+                    identifierpath = Path.Combine(filespath, "event_raid_identifier");
+                if (!File.Exists(encounterspath))
+                    encounterspath = Path.Combine(filespath, "raid_enemy_array");
+                if (!File.Exists(dropspath))
+                    dropspath = Path.Combine(filespath, "fixed_reward_item_array");
+                if (!File.Exists(bonuspath))
+                    bonuspath = Path.Combine(filespath, "lottery_reward_item_array");
+                if (!File.Exists(prioritypath))
+                    prioritypath = Path.Combine(filespath, "raid_priority_array");
+
+                var index = File.ReadAllText(indexpath);
+                var identifierBlock = File.ReadAllBytes(identifierpath);
+                var rewardItemBlock = File.ReadAllBytes(dropspath);
+                var lotteryItemBlock = File.ReadAllBytes(bonuspath);
+                var raidEnemyBlock = File.ReadAllBytes(encounterspath);
+                var raidPriorityBlock = File.ReadAllBytes(prioritypath);
 
                 if (zip) DeleteFilesAndDirectory(path);
 
