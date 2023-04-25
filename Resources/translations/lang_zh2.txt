@@ -49,7 +49,7 @@ OutBreakForm.MassOutbreakName=大量出現
 OutbreakForm.DeviceDisconnected=終端已斷開連接。
 OutbreakForm.ErrorParsing=解析錯誤:
 OutbreakForm.LoadDefault=是否加載 {species} 的默認合法數據？
-OutbreakForm.SpeciesExclusive={species} is a {game} exclusive!
+OutbreakForm.SpeciesExclusive={species} 是{game} 限定的!
 
 CalculatorForm=太晶洞窟計算器
 CalculatorForm.lblSeed=Seed:
