@@ -140,9 +140,9 @@
             // btnDisconnect
             // 
             btnDisconnect.Enabled = false;
-            btnDisconnect.Location = new Point(14, 215);
+            btnDisconnect.Location = new Point(12, 213);
             btnDisconnect.Name = "btnDisconnect";
-            btnDisconnect.Size = new Size(354, 52);
+            btnDisconnect.Size = new Size(356, 52);
             btnDisconnect.TabIndex = 3;
             btnDisconnect.Text = "Disconnect";
             btnDisconnect.UseVisualStyleBackColor = true;
