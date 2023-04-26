@@ -10,6 +10,8 @@ namespace TeraFinder.Forms
 
         private SAV9SV SAV = null!;
         private bool Connected = false;
+        private int CurrentProgress = 0;
+        private int MaxProgress = 0;
 
         private Dictionary<string, string> Strings = null!;
 
@@ -103,14 +105,21 @@ namespace TeraFinder.Forms
 
             try
             {
+                MaxProgress = chkOutbreaks.Checked ? 66 : 9;
+                CurrentProgress = 0;
                 await Executor.Connect(token).ConfigureAwait(false);
+                UpdateProgress(CurrentProgress++, MaxProgress);
                 var version = await Executor.ReadGameVersion(token).ConfigureAwait(false);
+                UpdateProgress(CurrentProgress++, MaxProgress);
                 SAV.Game = (int)version;
                 var mystatusblock = SAV.Accessor.FindOrDefault(Blocks.KMyStatus.Key);
                 mystatusblock.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.KMyStatus, token).ConfigureAwait(false));
+                UpdateProgress(CurrentProgress++, MaxProgress);
                 var raidblock = SAV.Accessor.FindOrDefault(Blocks.KTeraRaids.Key);
                 raidblock.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.KTeraRaids, token).ConfigureAwait(false));
+                UpdateProgress(CurrentProgress++, MaxProgress);
                 var progress = await Executor.ReadGameProgress(token).ConfigureAwait(false);
+                UpdateProgress(CurrentProgress++, MaxProgress);
                 ProgressForm.EditProgress(SAV, progress);
                 await DownloadEventData(token).ConfigureAwait(false);
                 if (chkOutbreaks.Checked) await DownloadOutbreakData(token).ConfigureAwait(false);
@@ -141,6 +150,8 @@ namespace TeraFinder.Forms
             else
                 BlockUtil.EditBlock(KBCATEventRaidIdentifier, SCTypeCode.Object, raidIdentifierBlock);
 
+            UpdateProgress(CurrentProgress++, MaxProgress);
+
             var KBCATFixedRewardItemArray = SAV.Accessor.FindOrDefault(Blocks.KBCATFixedRewardItemArray.Key);
             var rewardItemBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATFixedRewardItemArray, token).ConfigureAwait(false);
 
@@ -148,6 +159,8 @@ namespace TeraFinder.Forms
                 KBCATFixedRewardItemArray.ChangeData(rewardItemBlock);
             else
                 BlockUtil.EditBlock(KBCATFixedRewardItemArray, SCTypeCode.Object, rewardItemBlock);
+
+            UpdateProgress(CurrentProgress++, MaxProgress);
 
             var KBCATLotteryRewardItemArray = SAV.Accessor.FindOrDefault(Blocks.KBCATLotteryRewardItemArray.Key);
             var lotteryItemBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATLotteryRewardItemArray, token).ConfigureAwait(false);
@@ -157,6 +170,8 @@ namespace TeraFinder.Forms
             else
                 BlockUtil.EditBlock(KBCATLotteryRewardItemArray, SCTypeCode.Object, lotteryItemBlock);
 
+            UpdateProgress(CurrentProgress++, MaxProgress);
+
             var KBCATRaidEnemyArray = SAV.Accessor.FindOrDefault(Blocks.KBCATRaidEnemyArray.Key);
             var raidEnemyBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATRaidEnemyArray, token).ConfigureAwait(false);
 
@@ -165,6 +180,8 @@ namespace TeraFinder.Forms
             else
                 BlockUtil.EditBlock(KBCATRaidEnemyArray, SCTypeCode.Object, raidEnemyBlock);
 
+            UpdateProgress(CurrentProgress++, MaxProgress);
+
             var KBCATRaidPriorityArray = SAV.Accessor.FindOrDefault(Blocks.KBCATRaidPriorityArray.Key);
             var raidPriorityBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATRaidPriorityArray, token).ConfigureAwait(false);
 
@@ -172,6 +189,8 @@ namespace TeraFinder.Forms
                 KBCATRaidPriorityArray.ChangeData(raidPriorityBlock);
             else
                 BlockUtil.EditBlock(KBCATRaidPriorityArray, SCTypeCode.Object, raidPriorityBlock);
+
+            UpdateProgress(CurrentProgress++, MaxProgress);
         }
 
         private async Task DownloadOutbreakData(CancellationToken token)
@@ -184,6 +203,8 @@ namespace TeraFinder.Forms
             else
                 BlockUtil.EditBlock(KMassOutbreakAmount, Blocks.KMassOutbreakNumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
 
+            UpdateProgress(CurrentProgress++, MaxProgress);
+
             for (var i = 1; i <= 8; i++)
             {
                 var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}CenterPos")!.GetValue(new DataBlock())!;
@@ -195,6 +216,8 @@ namespace TeraFinder.Forms
                 else
                     BlockUtil.EditBlock(KMassOutbreakCenterPos, blockInfo.Type, KMassOutbreakCenterPosData);
 
+                UpdateProgress(CurrentProgress++, MaxProgress);
+
                 blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}DummyPos")!.GetValue(new DataBlock())!;
                 var KMassOutbreakDummyPos = SAV.Accessor.FindOrDefault(blockInfo.Key);
                 var KMassOutbreakDummyPosData = (byte[]?)await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false);
@@ -203,6 +226,8 @@ namespace TeraFinder.Forms
                     KMassOutbreakDummyPos.ChangeData(KMassOutbreakDummyPosData);
                 else
                     BlockUtil.EditBlock(KMassOutbreakDummyPos, blockInfo.Type, KMassOutbreakDummyPosData);
+
+                UpdateProgress(CurrentProgress++, MaxProgress);
 
                 blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}Species")!.GetValue(new DataBlock())!;
                 var KMassOutbreakSpecies = SAV.Accessor.FindOrDefault(blockInfo.Key);
@@ -213,6 +238,8 @@ namespace TeraFinder.Forms
                 else
                     BlockUtil.EditBlock(KMassOutbreakSpecies, blockInfo.Type, KMassOutbreakSpeciesData);
 
+                UpdateProgress(CurrentProgress++, MaxProgress);
+
                 blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}Form")!.GetValue(new DataBlock())!;
                 var KMassOutbreakForm = SAV.Accessor.FindOrDefault(blockInfo.Key);
                 var KMassOutbreakFormData = (byte)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
@@ -222,6 +249,8 @@ namespace TeraFinder.Forms
                 else
                     BlockUtil.EditBlock(KMassOutbreakForm, blockInfo.Type, KMassOutbreakFormData);
 
+                UpdateProgress(CurrentProgress++, MaxProgress);
+                    
                 blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}Found")!.GetValue(new DataBlock())!;
                 var KMassOutbreakFound = SAV.Accessor.FindOrDefault(blockInfo.Key);
                 var KMassOutbreakFoundData = (bool)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
@@ -234,6 +263,8 @@ namespace TeraFinder.Forms
                     BlockUtil.AddBlockToFakeSAV(SAV, KMassOutbreakFound);
                 }
 
+                UpdateProgress(CurrentProgress++, MaxProgress);
+
                 blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}NumKOed")!.GetValue(new DataBlock())!;
                 var KMassOutbreakNumKOed = SAV.Accessor.FindOrDefault(blockInfo.Key);
                 var KMassOutbreakNumKOedData = (int)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
@@ -243,6 +274,8 @@ namespace TeraFinder.Forms
                 else
                     BlockUtil.EditBlock(KMassOutbreakNumKOed, blockInfo.Type, KMassOutbreakNumKOedData);
 
+                UpdateProgress(CurrentProgress++, MaxProgress);
+
                 blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{i}TotalSpawns")!.GetValue(new DataBlock())!;
                 var KMassOutbreakTotalSpawns = SAV.Accessor.FindOrDefault(blockInfo.Key);
                 var KMassOutbreakTotalSpawnsData = (int)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
@@ -251,7 +284,18 @@ namespace TeraFinder.Forms
                     KMassOutbreakTotalSpawns.SetValue(KMassOutbreakTotalSpawnsData);
                 else
                     BlockUtil.EditBlock(KMassOutbreakTotalSpawns, blockInfo.Type, KMassOutbreakTotalSpawnsData);
+
+                UpdateProgress(CurrentProgress++, MaxProgress);
             }
+        }
+
+        private void UpdateProgress(int currProgress, int maxProgress)
+        {
+            var value = (100 * currProgress) / maxProgress;
+            if (progressBar.InvokeRequired)
+                progressBar.Invoke(() => progressBar.Value = value);
+            else
+                progressBar.Value = value;
         }
 
         private SwitchProtocol GetProtocol()
@@ -398,6 +442,7 @@ namespace TeraFinder.Forms
             DisableGrpDevice();
             Disconnect();
             MessageBox.Show(Strings["DisconnectionSuccess"]);
+            UpdateProgress(0, 100);
         }
     }
 }

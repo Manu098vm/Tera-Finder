@@ -40,6 +40,7 @@
             toolTip = new ToolTip(components);
             btnDisconnect = new Button();
             chkOutbreaks = new CheckBox();
+            progressBar = new ProgressBar();
             grpDevice.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numPort).BeginInit();
             SuspendLayout();
@@ -158,11 +159,19 @@
             chkOutbreaks.Text = "Download Mass Outbreaks Data (?)";
             chkOutbreaks.UseVisualStyleBackColor = true;
             // 
+            // progressBar
+            // 
+            progressBar.Location = new Point(12, 271);
+            progressBar.Name = "progressBar";
+            progressBar.Size = new Size(356, 22);
+            progressBar.TabIndex = 5;
+            // 
             // ConnectionForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(375, 274);
+            ClientSize = new Size(378, 298);
+            Controls.Add(progressBar);
             Controls.Add(chkOutbreaks);
             Controls.Add(btnDisconnect);
             Controls.Add(btnConnect);
@@ -192,5 +201,6 @@
         private ToolTip toolTip;
         private Button btnDisconnect;
         private CheckBox chkOutbreaks;
+        private ProgressBar progressBar;
     }
 }
