@@ -85,9 +85,10 @@
             // cmbDens
             // 
             cmbDens.FormattingEnabled = true;
-            cmbDens.Location = new Point(39, 10);
+            cmbDens.Location = new Point(45, 13);
+            cmbDens.Margin = new Padding(3, 4, 3, 4);
             cmbDens.Name = "cmbDens";
-            cmbDens.Size = new Size(277, 23);
+            cmbDens.Size = new Size(316, 28);
             cmbDens.TabIndex = 1;
             cmbDens.SelectedIndexChanged += cmbDens_IndexChanged;
             cmbDens.KeyPress += cmbDens_KeyPress;
@@ -100,9 +101,11 @@
             GrpRaidInfo.Controls.Add(txtSeed);
             GrpRaidInfo.Controls.Add(lblSeed);
             GrpRaidInfo.Controls.Add(chkLP);
-            GrpRaidInfo.Location = new Point(7, 37);
+            GrpRaidInfo.Location = new Point(8, 49);
+            GrpRaidInfo.Margin = new Padding(3, 4, 3, 4);
             GrpRaidInfo.Name = "GrpRaidInfo";
-            GrpRaidInfo.Size = new Size(341, 86);
+            GrpRaidInfo.Padding = new Padding(3, 4, 3, 4);
+            GrpRaidInfo.Size = new Size(390, 115);
             GrpRaidInfo.TabIndex = 2;
             GrpRaidInfo.TabStop = false;
             GrpRaidInfo.Text = "Raid Info";
@@ -110,9 +113,9 @@
             // lblContent
             // 
             lblContent.AutoSize = true;
-            lblContent.Location = new Point(6, 60);
+            lblContent.Location = new Point(7, 80);
             lblContent.Name = "lblContent";
-            lblContent.Size = new Size(53, 15);
+            lblContent.Size = new Size(64, 20);
             lblContent.TabIndex = 7;
             lblContent.Text = "Content:";
             // 
@@ -120,18 +123,20 @@
             // 
             cmbContent.FormattingEnabled = true;
             cmbContent.Items.AddRange(new object[] { "Standard", "Black", "Event", "Event-Mighty" });
-            cmbContent.Location = new Point(80, 57);
+            cmbContent.Location = new Point(91, 76);
+            cmbContent.Margin = new Padding(3, 4, 3, 4);
             cmbContent.Name = "cmbContent";
-            cmbContent.Size = new Size(115, 23);
+            cmbContent.Size = new Size(131, 28);
             cmbContent.TabIndex = 6;
             cmbContent.SelectedIndexChanged += cmbContent_IndexChanged;
             // 
             // chkActive
             // 
             chkActive.AutoSize = true;
-            chkActive.Location = new Point(219, 26);
+            chkActive.Location = new Point(250, 35);
+            chkActive.Margin = new Padding(3, 4, 3, 4);
             chkActive.Name = "chkActive";
-            chkActive.Size = new Size(83, 19);
+            chkActive.Size = new Size(103, 24);
             chkActive.TabIndex = 3;
             chkActive.Text = "Den Active";
             chkActive.UseVisualStyleBackColor = true;
@@ -139,10 +144,11 @@
             // 
             // txtSeed
             // 
-            txtSeed.Location = new Point(80, 26);
+            txtSeed.Location = new Point(91, 35);
+            txtSeed.Margin = new Padding(3, 4, 3, 4);
             txtSeed.MaxLength = 8;
             txtSeed.Name = "txtSeed";
-            txtSeed.Size = new Size(115, 23);
+            txtSeed.Size = new Size(131, 27);
             txtSeed.TabIndex = 3;
             txtSeed.TextChanged += txtSeed_TextChanged;
             txtSeed.KeyPress += txtSeed_KeyPress;
@@ -150,18 +156,19 @@
             // lblSeed
             // 
             lblSeed.AutoSize = true;
-            lblSeed.Location = new Point(10, 28);
+            lblSeed.Location = new Point(11, 37);
             lblSeed.Name = "lblSeed";
-            lblSeed.Size = new Size(35, 15);
+            lblSeed.Size = new Size(45, 20);
             lblSeed.TabIndex = 4;
             lblSeed.Text = "Seed:";
             // 
             // chkLP
             // 
             chkLP.AutoSize = true;
-            chkLP.Location = new Point(219, 59);
+            chkLP.Location = new Point(250, 79);
+            chkLP.Margin = new Padding(3, 4, 3, 4);
             chkLP.Name = "chkLP";
-            chkLP.Size = new Size(95, 19);
+            chkLP.Size = new Size(117, 24);
             chkLP.TabIndex = 5;
             chkLP.Text = "LP Harvested";
             chkLP.UseVisualStyleBackColor = true;
@@ -195,9 +202,11 @@
             grpPkmInfo.Controls.Add(txtAtk);
             grpPkmInfo.Controls.Add(txtScale);
             grpPkmInfo.Controls.Add(txtHP);
-            grpPkmInfo.Location = new Point(7, 123);
+            grpPkmInfo.Location = new Point(8, 164);
+            grpPkmInfo.Margin = new Padding(3, 4, 3, 4);
             grpPkmInfo.Name = "grpPkmInfo";
-            grpPkmInfo.Size = new Size(341, 286);
+            grpPkmInfo.Padding = new Padding(3, 4, 3, 4);
+            grpPkmInfo.Size = new Size(390, 381);
             grpPkmInfo.TabIndex = 3;
             grpPkmInfo.TabStop = false;
             grpPkmInfo.Text = "Pokémon Info";
@@ -205,9 +214,9 @@
             // lblIndex
             // 
             lblIndex.AutoSize = true;
-            lblIndex.Location = new Point(114, 176);
+            lblIndex.Location = new Point(130, 235);
             lblIndex.Name = "lblIndex";
-            lblIndex.Size = new Size(71, 15);
+            lblIndex.Size = new Size(88, 20);
             lblIndex.TabIndex = 24;
             lblIndex.Text = "Event Index:";
             // 
@@ -217,9 +226,11 @@
             grpMoves.Controls.Add(txtMove2);
             grpMoves.Controls.Add(txtMove3);
             grpMoves.Controls.Add(txtMove1);
-            grpMoves.Location = new Point(4, 196);
+            grpMoves.Location = new Point(5, 261);
+            grpMoves.Margin = new Padding(3, 4, 3, 4);
             grpMoves.Name = "grpMoves";
-            grpMoves.Size = new Size(332, 83);
+            grpMoves.Padding = new Padding(3, 4, 3, 4);
+            grpMoves.Size = new Size(379, 111);
             grpMoves.TabIndex = 22;
             grpMoves.TabStop = false;
             grpMoves.Text = "Moves";
@@ -227,9 +238,10 @@
             // txtMove4
             // 
             txtMove4.Enabled = false;
-            txtMove4.Location = new Point(180, 53);
+            txtMove4.Location = new Point(206, 71);
+            txtMove4.Margin = new Padding(3, 4, 3, 4);
             txtMove4.Name = "txtMove4";
-            txtMove4.Size = new Size(126, 23);
+            txtMove4.Size = new Size(143, 27);
             txtMove4.TabIndex = 22;
             txtMove4.Text = "None";
             txtMove4.TextAlign = HorizontalAlignment.Center;
@@ -237,9 +249,10 @@
             // txtMove2
             // 
             txtMove2.Enabled = false;
-            txtMove2.Location = new Point(180, 21);
+            txtMove2.Location = new Point(206, 28);
+            txtMove2.Margin = new Padding(3, 4, 3, 4);
             txtMove2.Name = "txtMove2";
-            txtMove2.Size = new Size(126, 23);
+            txtMove2.Size = new Size(143, 27);
             txtMove2.TabIndex = 23;
             txtMove2.Text = "None";
             txtMove2.TextAlign = HorizontalAlignment.Center;
@@ -247,9 +260,10 @@
             // txtMove3
             // 
             txtMove3.Enabled = false;
-            txtMove3.Location = new Point(27, 53);
+            txtMove3.Location = new Point(31, 71);
+            txtMove3.Margin = new Padding(3, 4, 3, 4);
             txtMove3.Name = "txtMove3";
-            txtMove3.Size = new Size(126, 23);
+            txtMove3.Size = new Size(143, 27);
             txtMove3.TabIndex = 24;
             txtMove3.Text = "None";
             txtMove3.TextAlign = HorizontalAlignment.Center;
@@ -257,9 +271,10 @@
             // txtMove1
             // 
             txtMove1.Enabled = false;
-            txtMove1.Location = new Point(29, 21);
+            txtMove1.Location = new Point(33, 28);
+            txtMove1.Margin = new Padding(3, 4, 3, 4);
             txtMove1.Name = "txtMove1";
-            txtMove1.Size = new Size(126, 23);
+            txtMove1.Size = new Size(143, 27);
             txtMove1.TabIndex = 25;
             txtMove1.Text = "None";
             txtMove1.TextAlign = HorizontalAlignment.Center;
@@ -267,18 +282,19 @@
             // lblLevel
             // 
             lblLevel.AutoSize = true;
-            lblLevel.Location = new Point(283, 64);
+            lblLevel.Location = new Point(306, 85);
             lblLevel.Name = "lblLevel";
-            lblLevel.Size = new Size(24, 15);
+            lblLevel.Size = new Size(29, 20);
             lblLevel.TabIndex = 21;
             lblLevel.Text = "Lvl.";
             // 
             // btnRewards
             // 
             btnRewards.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
-            btnRewards.Location = new Point(270, 164);
+            btnRewards.Location = new Point(293, 211);
+            btnRewards.Margin = new Padding(3, 4, 3, 4);
             btnRewards.Name = "btnRewards";
-            btnRewards.Size = new Size(66, 23);
+            btnRewards.Size = new Size(75, 31);
             btnRewards.TabIndex = 20;
             btnRewards.Text = "Rewards";
             btnRewards.UseVisualStyleBackColor = true;
@@ -288,11 +304,11 @@
             // lblStarSymbols
             // 
             lblStarSymbols.AutoSize = true;
-            lblStarSymbols.Location = new Point(271, 140);
+            lblStarSymbols.Location = new Point(293, 187);
             lblStarSymbols.Name = "lblStarSymbols";
-            lblStarSymbols.Size = new Size(57, 15);
+            lblStarSymbols.Size = new Size(87, 20);
             lblStarSymbols.TabIndex = 19;
-            lblStarSymbols.Text = "☆☆☆☆☆";
+            lblStarSymbols.Text = "☆☆☆☆☆☆";
             // 
             // pictureBox
             // 
@@ -300,190 +316,199 @@
             pictureBox.BackgroundImage = Properties.Resources._000;
             pictureBox.BackgroundImageLayout = ImageLayout.Stretch;
             pictureBox.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox.Location = new Point(270, 82);
+            pictureBox.Location = new Point(292, 109);
+            pictureBox.Margin = new Padding(3, 4, 3, 4);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(66, 57);
+            pictureBox.Size = new Size(75, 75);
             pictureBox.TabIndex = 12;
             pictureBox.TabStop = false;
             // 
             // lblScale
             // 
             lblScale.AutoSize = true;
-            lblScale.Location = new Point(10, 176);
+            lblScale.Location = new Point(11, 235);
             lblScale.Name = "lblScale";
-            lblScale.Size = new Size(37, 15);
+            lblScale.Size = new Size(47, 20);
             lblScale.TabIndex = 22;
             lblScale.Text = "Scale:";
             // 
             // lblSpecies
             // 
             lblSpecies.AutoSize = true;
-            lblSpecies.Location = new Point(114, 18);
+            lblSpecies.Location = new Point(130, 24);
             lblSpecies.Name = "lblSpecies";
-            lblSpecies.Size = new Size(49, 15);
+            lblSpecies.Size = new Size(62, 20);
             lblSpecies.TabIndex = 18;
             lblSpecies.Text = "Species:";
             // 
             // txtSpD
             // 
             txtSpD.Enabled = false;
-            txtSpD.Location = new Point(57, 121);
+            txtSpD.Location = new Point(65, 161);
+            txtSpD.Margin = new Padding(3, 4, 3, 4);
             txtSpD.Name = "txtSpD";
-            txtSpD.Size = new Size(28, 23);
+            txtSpD.Size = new Size(31, 27);
             txtSpD.TabIndex = 4;
             // 
             // lblGender
             // 
             lblGender.AutoSize = true;
-            lblGender.Location = new Point(114, 149);
+            lblGender.Location = new Point(130, 199);
             lblGender.Name = "lblGender";
-            lblGender.Size = new Size(48, 15);
+            lblGender.Size = new Size(60, 20);
             lblGender.TabIndex = 13;
             lblGender.Text = "Gender:";
             // 
             // txtSpe
             // 
             txtSpe.Enabled = false;
-            txtSpe.Location = new Point(57, 147);
+            txtSpe.Location = new Point(65, 196);
+            txtSpe.Margin = new Padding(3, 4, 3, 4);
             txtSpe.Name = "txtSpe";
-            txtSpe.Size = new Size(28, 23);
+            txtSpe.Size = new Size(31, 27);
             txtSpe.TabIndex = 5;
             // 
             // lblShiny
             // 
             lblShiny.AutoSize = true;
-            lblShiny.Location = new Point(114, 123);
+            lblShiny.Location = new Point(130, 164);
             lblShiny.Name = "lblShiny";
-            lblShiny.Size = new Size(42, 15);
+            lblShiny.Size = new Size(51, 20);
             lblShiny.TabIndex = 16;
             lblShiny.Text = "Shiny: ";
             // 
             // txtSpA
             // 
             txtSpA.Enabled = false;
-            txtSpA.Location = new Point(57, 94);
+            txtSpA.Location = new Point(65, 125);
+            txtSpA.Margin = new Padding(3, 4, 3, 4);
             txtSpA.Name = "txtSpA";
-            txtSpA.Size = new Size(28, 23);
+            txtSpA.Size = new Size(31, 27);
             txtSpA.TabIndex = 3;
             // 
             // lblTera
             // 
             lblTera.AutoSize = true;
-            lblTera.Location = new Point(114, 70);
+            lblTera.Location = new Point(130, 93);
             lblTera.Name = "lblTera";
-            lblTera.Size = new Size(55, 15);
+            lblTera.Size = new Size(71, 20);
             lblTera.TabIndex = 17;
             lblTera.Text = "TeraType:";
             // 
             // txtDef
             // 
             txtDef.Enabled = false;
-            txtDef.Location = new Point(57, 68);
+            txtDef.Location = new Point(65, 91);
+            txtDef.Margin = new Padding(3, 4, 3, 4);
             txtDef.Name = "txtDef";
-            txtDef.Size = new Size(28, 23);
+            txtDef.Size = new Size(31, 27);
             txtDef.TabIndex = 2;
             // 
             // lblNature
             // 
             lblNature.AutoSize = true;
-            lblNature.Location = new Point(114, 97);
+            lblNature.Location = new Point(130, 129);
             lblNature.Name = "lblNature";
-            lblNature.Size = new Size(49, 15);
+            lblNature.Size = new Size(61, 20);
             lblNature.TabIndex = 14;
             lblNature.Text = "Nature: ";
             // 
             // lblSpe
             // 
             lblSpe.AutoSize = true;
-            lblSpe.Location = new Point(10, 149);
+            lblSpe.Location = new Point(11, 199);
             lblSpe.Name = "lblSpe";
-            lblSpe.Size = new Size(29, 15);
+            lblSpe.Size = new Size(37, 20);
             lblSpe.TabIndex = 11;
             lblSpe.Text = "Spe:";
             // 
             // lblAbility
             // 
             lblAbility.AutoSize = true;
-            lblAbility.Location = new Point(114, 44);
+            lblAbility.Location = new Point(130, 59);
             lblAbility.Name = "lblAbility";
-            lblAbility.Size = new Size(47, 15);
+            lblAbility.Size = new Size(59, 20);
             lblAbility.TabIndex = 15;
             lblAbility.Text = "Ability: ";
             // 
             // lblSpD
             // 
             lblSpD.AutoSize = true;
-            lblSpD.Location = new Point(10, 123);
+            lblSpD.Location = new Point(11, 164);
             lblSpD.Name = "lblSpD";
-            lblSpD.Size = new Size(31, 15);
+            lblSpD.Size = new Size(40, 20);
             lblSpD.TabIndex = 10;
             lblSpD.Text = "SpD:";
             // 
             // lblDef
             // 
             lblDef.AutoSize = true;
-            lblDef.Location = new Point(10, 70);
+            lblDef.Location = new Point(11, 93);
             lblDef.Name = "lblDef";
-            lblDef.Size = new Size(28, 15);
+            lblDef.Size = new Size(36, 20);
             lblDef.TabIndex = 8;
             lblDef.Text = "Def:";
             // 
             // lblAtk
             // 
             lblAtk.AutoSize = true;
-            lblAtk.Location = new Point(10, 44);
+            lblAtk.Location = new Point(11, 59);
             lblAtk.Name = "lblAtk";
-            lblAtk.Size = new Size(28, 15);
+            lblAtk.Size = new Size(34, 20);
             lblAtk.TabIndex = 7;
             lblAtk.Text = "Atk:";
             // 
             // lblSpA
             // 
             lblSpA.AutoSize = true;
-            lblSpA.Location = new Point(10, 97);
+            lblSpA.Location = new Point(11, 129);
             lblSpA.Name = "lblSpA";
-            lblSpA.Size = new Size(31, 15);
+            lblSpA.Size = new Size(39, 20);
             lblSpA.TabIndex = 9;
             lblSpA.Text = "SpA:";
             // 
             // lblHP
             // 
             lblHP.AutoSize = true;
-            lblHP.Location = new Point(10, 18);
+            lblHP.Location = new Point(11, 24);
             lblHP.Name = "lblHP";
-            lblHP.Size = new Size(26, 15);
+            lblHP.Size = new Size(31, 20);
             lblHP.TabIndex = 6;
             lblHP.Text = "HP:";
             // 
             // txtAtk
             // 
             txtAtk.Enabled = false;
-            txtAtk.Location = new Point(57, 42);
+            txtAtk.Location = new Point(65, 56);
+            txtAtk.Margin = new Padding(3, 4, 3, 4);
             txtAtk.Name = "txtAtk";
-            txtAtk.Size = new Size(28, 23);
+            txtAtk.Size = new Size(31, 27);
             txtAtk.TabIndex = 1;
             // 
             // txtScale
             // 
             txtScale.Enabled = false;
-            txtScale.Location = new Point(57, 173);
+            txtScale.Location = new Point(65, 231);
+            txtScale.Margin = new Padding(3, 4, 3, 4);
             txtScale.Name = "txtScale";
-            txtScale.Size = new Size(28, 23);
+            txtScale.Size = new Size(31, 27);
             txtScale.TabIndex = 23;
             // 
             // txtHP
             // 
             txtHP.Enabled = false;
-            txtHP.Location = new Point(57, 16);
+            txtHP.Location = new Point(65, 21);
+            txtHP.Margin = new Padding(3, 4, 3, 4);
             txtHP.Name = "txtHP";
-            txtHP.Size = new Size(28, 23);
+            txtHP.Size = new Size(31, 27);
             txtHP.TabIndex = 0;
             // 
             // btnOpenCalculator
             // 
-            btnOpenCalculator.Location = new Point(7, 409);
+            btnOpenCalculator.Location = new Point(8, 545);
+            btnOpenCalculator.Margin = new Padding(3, 4, 3, 4);
             btnOpenCalculator.Name = "btnOpenCalculator";
-            btnOpenCalculator.Size = new Size(168, 39);
+            btnOpenCalculator.Size = new Size(192, 52);
             btnOpenCalculator.TabIndex = 4;
             btnOpenCalculator.Text = "Raid Calculator";
             btnOpenCalculator.UseVisualStyleBackColor = true;
@@ -491,9 +516,10 @@
             // 
             // btnDx
             // 
-            btnDx.Location = new Point(321, 9);
+            btnDx.Location = new Point(367, 12);
+            btnDx.Margin = new Padding(3, 4, 3, 4);
             btnDx.Name = "btnDx";
-            btnDx.Size = new Size(27, 24);
+            btnDx.Size = new Size(31, 32);
             btnDx.TabIndex = 5;
             btnDx.Text = "ᐅ";
             btnDx.UseVisualStyleBackColor = true;
@@ -501,9 +527,10 @@
             // 
             // btnSx
             // 
-            btnSx.Location = new Point(6, 9);
+            btnSx.Location = new Point(7, 12);
+            btnSx.Margin = new Padding(3, 4, 3, 4);
             btnSx.Name = "btnSx";
-            btnSx.Size = new Size(27, 24);
+            btnSx.Size = new Size(31, 32);
             btnSx.TabIndex = 20;
             btnSx.Text = "ᐊ";
             btnSx.UseVisualStyleBackColor = true;
@@ -511,9 +538,10 @@
             // 
             // btnOpenRewardCalculator
             // 
-            btnOpenRewardCalculator.Location = new Point(180, 409);
+            btnOpenRewardCalculator.Location = new Point(206, 545);
+            btnOpenRewardCalculator.Margin = new Padding(3, 4, 3, 4);
             btnOpenRewardCalculator.Name = "btnOpenRewardCalculator";
-            btnOpenRewardCalculator.Size = new Size(168, 39);
+            btnOpenRewardCalculator.Size = new Size(192, 52);
             btnOpenRewardCalculator.TabIndex = 21;
             btnOpenRewardCalculator.Text = "Reward Calculator";
             btnOpenRewardCalculator.UseVisualStyleBackColor = true;
@@ -524,26 +552,29 @@
             imgMap.BackgroundImage = Properties.Resources.world;
             imgMap.BackgroundImageLayout = ImageLayout.Stretch;
             imgMap.BorderStyle = BorderStyle.Fixed3D;
-            imgMap.Location = new Point(5, 12);
+            imgMap.Location = new Point(6, 16);
+            imgMap.Margin = new Padding(3, 4, 3, 4);
             imgMap.Name = "imgMap";
-            imgMap.Size = new Size(501, 428);
+            imgMap.Size = new Size(572, 569);
             imgMap.TabIndex = 22;
             imgMap.TabStop = false;
             // 
             // grpMap
             // 
             grpMap.Controls.Add(imgMap);
-            grpMap.Location = new Point(354, 3);
+            grpMap.Location = new Point(405, 4);
+            grpMap.Margin = new Padding(3, 4, 3, 4);
             grpMap.Name = "grpMap";
-            grpMap.Size = new Size(511, 446);
+            grpMap.Padding = new Padding(3, 4, 3, 4);
+            grpMap.Size = new Size(584, 595);
             grpMap.TabIndex = 23;
             grpMap.TabStop = false;
             // 
             // EditorForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(871, 452);
+            ClientSize = new Size(995, 603);
             Controls.Add(grpMap);
             Controls.Add(btnOpenRewardCalculator);
             Controls.Add(btnDx);
@@ -553,6 +584,7 @@
             Controls.Add(GrpRaidInfo);
             Controls.Add(cmbDens);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "EditorForm";
