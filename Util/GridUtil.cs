@@ -212,7 +212,7 @@ namespace TeraFinder
                         if (!la.Valid)
                         {
                             var ability = la.Results.Where(l => l.Identifier is CheckIdentifier.Ability).FirstOrDefault();
-                            if (ability is not null && !ability.Valid)
+                            if (!ability.Valid)
                                 for (var i = 0; i <= 4 && !la.Valid; i++)
                                 {
                                     template.AbilityNumber = i;
@@ -225,7 +225,7 @@ namespace TeraFinder
                         if (!la.Valid)
                         {
                             var la_ot = la.Results.Where(l => l.Identifier is CheckIdentifier.Trainer).FirstOrDefault();
-                            if(la_ot is not null && !la_ot.Valid)
+                            if(!la_ot.Valid)
                             {
                                 template.OT_Name = "TF";
                                 la = new LegalityAnalysis(template);
@@ -235,7 +235,7 @@ namespace TeraFinder
                         if (!la.Valid)
                         {
                             var la_encounter = la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault();
-                            if (la_encounter is not null && content is RaidContent.Event or RaidContent.Event_Mighty)
+                            if (content is RaidContent.Event or RaidContent.Event_Mighty)
                                 MessageBox.Show($"{strings["GridUtil.ErrorParsing"]}\n{strings["GridUtil.MissingData"]} [{encounter!.Identifier}].\n{strings["GridUtil.CheckWiki"]}");
                             else
                                 MessageBox.Show($"{strings["GridUtil.ErrorParsing"]} {strings["GridUtil.Report"]}\n{la.Report()}");
@@ -470,7 +470,7 @@ namespace TeraFinder
                         if (!la.Valid)
                         {
                             var ability = la.Results.Where(l => l.Identifier is CheckIdentifier.Ability).FirstOrDefault();
-                            if (ability is not null && !ability.Valid)
+                            if (!ability.Valid)
                                 for (var i = 0; i <= 4 && !la.Valid; i++)
                                 {
                                     template.AbilityNumber = i;
@@ -483,7 +483,7 @@ namespace TeraFinder
                         if (!la.Valid)
                         {
                             var la_ot = la.Results.Where(l => l.Identifier is CheckIdentifier.Trainer).FirstOrDefault();
-                            if (la_ot is not null && !la_ot.Valid)
+                            if (!la_ot.Valid)
                             {
                                 template.OT_Name = "TF";
                                 la = new LegalityAnalysis(template);
@@ -493,7 +493,7 @@ namespace TeraFinder
                         if (!la.Valid)
                         {
                             var la_encounter = la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault();
-                            if (la_encounter is not null && content is RaidContent.Event or RaidContent.Event_Mighty)
+                            if (content is RaidContent.Event or RaidContent.Event_Mighty)
                                 MessageBox.Show($"{strings["GridUtil.ErrorParsing"]}\n{strings["GridUtil.MissingData"]} [{encounter!.Identifier}].\n{strings["GridUtil.CheckWiki"]}");
                             else
                                 MessageBox.Show($"{strings["GridUtil.ErrorParsing"]} {strings["GridUtil.Report"]}\n{la.Report()}");
@@ -640,9 +640,7 @@ namespace TeraFinder
 
                                 if (rngres != null)
                                 {
-                                    var strlist = new List<string>();
-
-                                    strlist.Add($"{seed:X8}");
+                                    var strlist = new List<string> { $"{seed:X8}" };
                                     foreach (var item in rngres.Rewards)
                                         strlist.Add(item.GetItemName(f.Items, f.Editor.Language, true));
 
