@@ -1,68 +1,72 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Title>Tera Raid Editor Launcher</Title>
-    <Authors>Manu098vm</Authors>
-    <Company>ProjectPokémon</Company>
-    <Copyright>Manu098vm</Copyright>
-    <PackageIcon>icon.png</PackageIcon>
-    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Title>Tera Raid Editor Launcher</Title>
+		<Authors>Manu098vm</Authors>
+		<Company>ProjectPokémon</Company>
+		<Copyright>Manu098vm</Copyright>
+		<PackageIcon>icon.png</PackageIcon>
+		<ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+		<PackageProjectUrl>https://github.com/Manu098vm/Tera-Finder</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Manu098vm/Tera-Finder</RepositoryUrl>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>embedded</DebugType>
+		<NoWarn>1701;1702;IDE1006</NoWarn>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>embedded</DebugType>
+		<NoWarn>1701;1702;IDE1006</NoWarn>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="TeraFinder\**" />
-    <EmbeddedResource Remove="TeraFinder\**" />
-    <None Remove="TeraFinder\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="TeraFinder\**" />
+		<EmbeddedResource Remove="TeraFinder\**" />
+		<None Remove="TeraFinder\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Resources\icon.ico" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="Resources\icon.ico" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="../TeraFinder.csproj">
-      <Private>True</Private>
-      <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
-    </ProjectReference>
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\TeraFinder.Plugins\TeraFinder.Plugins.csproj">
+			<Private>True</Private>
+			<CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+		</ProjectReference>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Resources\icon.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Resources\icon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' == 'Windows_NT'">
-    <RemoveDir Directories="$(OUTDIR)\cs; $(OUTDIR)\de; $(OUTDIR)\es; $(OUTDIR)\fr; $(OUTDIR)\it; $(OUTDIR)\ja; $(OUTDIR)\ko; $(OUTDIR)\pl; $(OUTDIR)\pt-BR; $(OUTDIR)\ru; $(OUTDIR)\tr; $(OUTDIR)\zh-Hans; $(OUTDIR)\zh-Hant" />
-    <Delete Files="$(OUTDIR)\TeraFinder.Launcher.deps.json; $(OUTDIR)\TeraFinder.dll.config; $(OUTDIR)\Humanizer.dll; $(OUTDIR)\Microsoft.Bcl.AsyncInterfaces.dll; $(OUTDIR)\Microsoft.CodeAnalysis.CSharp.Workspaces.dll; $(OUTDIR)\System.Composition.AttributedModel.dll; $(OUTDIR)\System.Composition.Convention.dll; $(OUTDIR)\System.Composition.Hosting.dll; $(OUTDIR)\System.Composition.Runtime.dll; $(OUTDIR)\System.Composition.TypedParts.dll" />
-  </Target>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' == 'Windows_NT'">
+		<RemoveDir Directories="$(OUTDIR)\cs; $(OUTDIR)\de; $(OUTDIR)\es; $(OUTDIR)\fr; $(OUTDIR)\it; $(OUTDIR)\ja; $(OUTDIR)\ko; $(OUTDIR)\pl; $(OUTDIR)\pt-BR; $(OUTDIR)\ru; $(OUTDIR)\tr; $(OUTDIR)\zh-Hans; $(OUTDIR)\zh-Hant" />
+		<Delete Files="$(OUTDIR)\TeraFinder.dll.config; $(OUTDIR)\Humanizer.dll; $(OUTDIR)\Microsoft.Bcl.AsyncInterfaces.dll; $(OUTDIR)\Microsoft.CodeAnalysis.CSharp.Workspaces.dll; $(OUTDIR)\System.Composition.AttributedModel.dll; $(OUTDIR)\System.Composition.Convention.dll; $(OUTDIR)\System.Composition.Hosting.dll; $(OUTDIR)\System.Composition.Runtime.dll; $(OUTDIR)\System.Composition.TypedParts.dll" />
+	</Target>
 </Project>

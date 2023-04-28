@@ -1,0 +1,1 @@
+Tera Finder plugins for PKHeX. Place the dll files in the PKHeX/plugins folder.
