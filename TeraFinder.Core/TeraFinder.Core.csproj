@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<CopyLocalLockFileAssemblies>True</CopyLocalLockFileAssemblies>
+		<Title>Tera Finder</Title>
+		<Authors>Manu098vm</Authors>
+		<Company>ProjectPokémon</Company>
+		<Copyright>Manu098vm</Copyright>
+		<PackageProjectUrl>https://github.com/Manu098vm/Tera-Finder</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Manu098vm/Tera-Finder</RepositoryUrl>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>embedded</DebugType>
+		<NoWarn>1701;1702;CA2211</NoWarn>
+		<TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>embedded</DebugType>
+		<NoWarn>1701;1702;CA2211</NoWarn>
+		<TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FlatSharp.Runtime" Version="7.1.1" />
+		<PackageReference Include="PKHeX.Core" Version="23.4.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="SysBot.Base">
+			<HintPath>deps\SysBot.Base.dll</HintPath>
+		</Reference>
+		<Reference Include="pkNX.Structures">
+			<HintPath>deps\pkNX.Structures.dll</HintPath>
+		</Reference>
+		<Reference Include="pkNX.Structures.FlatBuffers">
+			<HintPath>deps\pkNX.Structures.FlatBuffers.dll</HintPath>
+		</Reference>
+		<Reference Include="pkNX.Structures.FlatBuffers.SV">
+			<HintPath>deps\pkNX.Structures.FlatBuffers.SV.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+</Project>

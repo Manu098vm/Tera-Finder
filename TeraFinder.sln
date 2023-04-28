@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeraFinder", "TeraFinder.csproj", "{4E369721-CF2E-4C16-B409-F95272E7468D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeraFinder.Core", "TeraFinder.Core\TeraFinder.Core.csproj", "{34B925D5-E9EE-45CD-95C2-133D632D5DFD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeraFinder.Plugins", "TeraFinder.Plugins\TeraFinder.Plugins.csproj", "{4E369721-CF2E-4C16-B409-F95272E7468D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeraFinder.Launcher", "TeraFinder.Launcher\TeraFinder.Launcher.csproj", "{E3234482-506B-4A94-9446-13247EE0A7A3}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -16,6 +18,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34B925D5-E9EE-45CD-95C2-133D632D5DFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34B925D5-E9EE-45CD-95C2-133D632D5DFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34B925D5-E9EE-45CD-95C2-133D632D5DFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34B925D5-E9EE-45CD-95C2-133D632D5DFD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E369721-CF2E-4C16-B409-F95272E7468D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4E369721-CF2E-4C16-B409-F95272E7468D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E369721-CF2E-4C16-B409-F95272E7468D}.Release|Any CPU.ActiveCfg = Release|Any CPU
