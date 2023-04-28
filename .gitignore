@@ -4,5 +4,5 @@
 **/bin
 **/obj
 **/PublishProfiles
-.user
-.config
+**.user
+**.config
