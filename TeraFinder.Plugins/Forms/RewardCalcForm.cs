@@ -354,8 +354,8 @@ public partial class RewardCalcForm : Form
                 chkAccurateSearch.Checked = true;
 
             var sav = (SAV9SV)Editor.SAV.Clone();
-            sav.TrainerTID7 = (uint)Int32.Parse(txtTID.Text);
-            sav.TrainerSID7 = (uint)Int32.Parse(txtSID.Text);
+            sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
+            sav.TrainerSID7 = Convert.ToUInt32(txtSID.Text, 10);
             sav.Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV;
             var progress = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black ? GameProgress.None : (GameProgress)cmbProgress.SelectedIndex;
             var content = (RaidContent)cmbContent.SelectedIndex;

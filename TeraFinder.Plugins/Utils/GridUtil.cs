@@ -1,4 +1,5 @@
-﻿using PKHeX.Core;
+﻿using NLog;
+using PKHeX.Core;
 using System.Text;
 using TeraFinder.Core;
 
@@ -116,7 +117,7 @@ public static class GridUtil
 
                             for (var i = 0; i < count; i++)
                                 for (var j = 0; j < columnCount; j++)
-                                    if (count > 1 && int.Parse(selectedRows.ElementAt(0).Cells[columnCount-1].Value.ToString()!) > int.Parse(selectedRows.ElementAt(1).Cells[columnCount-1].Value.ToString()!))
+                                    if (count > 1 && Convert.ToUInt32((string)selectedRows.ElementAt(0).Cells[columnCount - 1].Value, 10) > Convert.ToUInt32((string)selectedRows.ElementAt(1).Cells[columnCount - 1].Value, 10))
                                         outputTxt[i + 1] += Convert.ToString(selectedRows.ElementAt(count - (i + 1)).Cells[j].Value) + "\t";
                                     else
                                         outputTxt[i + 1] += Convert.ToString(selectedRows.ElementAt(i).Cells[j].Value) + "\t";
@@ -155,8 +156,8 @@ public static class GridUtil
                     var content = GetContent(seed, selectedRows.ElementAt(0), f);
                     var progress = GetProgress(seed, selectedRows.ElementAt(0), f);
                     var groupid = (int)f.numEventCt.Value;
-                    var tid = (uint)Int32.Parse(f.txtTID.Text);
-                    var sid = (uint)Int32.Parse(f.txtSID.Text);
+                    var tid = Convert.ToUInt32(f.txtTID.Text, 10);
+                    var sid = Convert.ToUInt32(f.txtSID.Text, 10);
 
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
                     sav.Game = (int)GetGameVersion(seed, selectedRows.ElementAt(0), f);
@@ -240,7 +241,7 @@ public static class GridUtil
                         content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
                         TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
-                    var rngres = TeraUtil.CalcRNG(seed, (uint)Int32.Parse(f.txtTID.Text), (uint)Int32.Parse(f.txtSID.Text), content, encounter!);
+                    var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter!);
 
                     var lvl0 = RewardUtil.GetRewardList(rngres, encounter!.FixedRewardHash, encounter!.LotteryRewardHash,
                         encounter!.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards, encounter!.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards, 0);
@@ -349,8 +350,8 @@ public static class GridUtil
                     var content = GetContent(seed, selectedRows.ElementAt(0), f);
                     var progress = GetProgress(seed, selectedRows.ElementAt(0), f);
                     var groupid = (int)f.numEventCt.Value;
-                    var tid = (uint)Int32.Parse(f.txtTID.Text);
-                    var sid = (uint)Int32.Parse(f.txtSID.Text);
+                    var tid = Convert.ToUInt32(f.txtTID.Text, 10);
+                    var sid = Convert.ToUInt32(f.txtSID.Text, 10);
 
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
                     sav.Game = (int)GetGameVersion(seed, selectedRows.ElementAt(0), f);
@@ -407,7 +408,7 @@ public static class GridUtil
 
                     if (encounter is not null)
                     {
-                        var rngres = TeraUtil.CalcRNG(seed, (uint)Int32.Parse(f.txtTID.Text), (uint)Int32.Parse(f.txtSID.Text), content, encounter);
+                        var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter);
                         var success = true;
 
                         if (rngres != null)
@@ -445,7 +446,7 @@ public static class GridUtil
 
                     if (encounter is not null)
                     {
-                        var rngres = TeraUtil.CalcRNG(seed, (uint)Int32.Parse(f.txtTID.Text), (uint)Int32.Parse(f.txtSID.Text), content, encounter);
+                        var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter);
                         var success = true;
 
                         if (rngres != null)
@@ -554,7 +555,7 @@ public static class GridUtil
 
                     if (encounter is not null)
                     {
-                        var rngres = TeraUtil.CalcRNG(seed, (uint)Int32.Parse(f.txtTID.Text), (uint)Int32.Parse(f.txtSID.Text), content, encounter);
+                        var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter);
                         var success = true;
 
                         if (rngres != null)
