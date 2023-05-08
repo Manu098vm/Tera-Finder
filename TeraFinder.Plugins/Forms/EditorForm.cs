@@ -322,12 +322,20 @@ public partial class EditorForm : Form
             {
                 var rngres = TeraUtil.CalcRNG(raid.Seed, SAV.TrainerTID7, SAV.TrainerSID7, (RaidContent)raid.Content, encounter);
 
-                lblSpecies.Text = $"{Strings["EditorForm.lblSpecies"]} {GameInfo.GetStrings(Language).specieslist[rngres.Species]}";
-                lblTera.Text = $"{Strings["EditorForm.lblTera"]} {GameInfo.GetStrings(Language).types[rngres.TeraType]}";
-                lblNature.Text = $"{Strings["EditorForm.lblNature"]} {GameInfo.GetStrings(Language).natures[rngres.Nature]}";
-                lblAbility.Text = $"{Strings["EditorForm.lblAbility"]} {GameInfo.GetStrings(Language).abilitylist[rngres.Ability]}";
+                var species = GameInfo.GetStrings(Language).specieslist;
+                var types = GameInfo.GetStrings(Language).types;
+                var forms = GameInfo.GetStrings(Language).forms;
+                var natures = GameInfo.GetStrings(Language).natures;
+                var abilities = GameInfo.GetStrings(Language).abilitylist;
+                var genders = GameInfo.GenderSymbolUnicode.ToArray();
+                var moves = GameInfo.GetStrings(Language).movelist;
+
+                lblSpecies.Text = $"{Strings["EditorForm.lblSpecies"]} {rngres.GetName(species, types, forms, genders)}";
+                lblTera.Text = $"{Strings["EditorForm.lblTera"]} {types[rngres.TeraType]}";
+                lblNature.Text = $"{Strings["EditorForm.lblNature"]} {natures[rngres.Nature]}";
+                lblAbility.Text = $"{Strings["EditorForm.lblAbility"]} {abilities[rngres.Ability]}";
                 lblShiny.Text = $"{Strings["EditorForm.lblShiny"]} {rngres.Shiny}";
-                lblGender.Text = $"{Strings["EditorForm.lblGender"]} {GameInfo.GenderSymbolUnicode[(int)rngres.Gender]}";
+                lblGender.Text = $"{Strings["EditorForm.lblGender"]} {genders[(int)rngres.Gender]}";
                 lblIndex.Text = $"{Strings["EditorForm.lblIndex"]} {groupid}";
                 lblIndex.Visible = groupid != -1;
                 txtHP.Text = $"{rngres.HP}";
@@ -337,10 +345,10 @@ public partial class EditorForm : Form
                 txtSpD.Text = $"{rngres.SPD}";
                 txtSpe.Text = $"{rngres.SPE}";
                 txtScale.Text = $"{rngres.Scale}";
-                txtMove1.Text = $"{GameInfo.GetStrings(Language).movelist[rngres.Move1]}";
-                txtMove2.Text = $"{GameInfo.GetStrings(Language).movelist[rngres.Move2]}";
-                txtMove3.Text = $"{GameInfo.GetStrings(Language).movelist[rngres.Move3]}";
-                txtMove4.Text = $"{GameInfo.GetStrings(Language).movelist[rngres.Move4]}";
+                txtMove1.Text = $"{moves[rngres.Move1]}";
+                txtMove2.Text = $"{moves[rngres.Move2]}";
+                txtMove3.Text = $"{moves[rngres.Move3]}";
+                txtMove4.Text = $"{moves[rngres.Move4]}";
 
                 pictureBox.BackgroundImage = null;
                 pictureBox.Image = GetRaidResultSprite(rngres, raid.IsEnabled, encounter.Item);

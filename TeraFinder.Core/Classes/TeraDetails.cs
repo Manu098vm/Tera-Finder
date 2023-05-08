@@ -79,7 +79,7 @@ public class TeraDetails
         return shinies[(int)Shiny];
     }
 
-    private string GetName(string[] namelist, string[] typelist ,string[] formlist, string[] genderlist)
+    public string GetName(string[] namelist, string[] typelist ,string[] formlist, string[] genderlist)
     {
         var forms = FormConverter.GetFormList(Species, typelist, formlist, genderlist, EntityContext.Gen9);
         return $"{namelist[Species]}{(forms.Length > 1 ? $"-{forms[Form]}" : "")}";
