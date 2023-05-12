@@ -35,9 +35,9 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; compile</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="LibUsbDotNet" Version="2.2.29" />
-		<PackageReference Include="NLog" Version="5.1.2" />
-		<PackageReference Include="Octokit" Version="5.0.4" />
-		<PackageReference Include="PKHeX.Core" Version="23.4.6" />
+		<PackageReference Include="NLog" Version="5.1.4" />
+		<PackageReference Include="Octokit" Version="6.0.0" />
+		<PackageReference Include="PKHeX.Core" Version="23.5.11" />
 	</ItemGroup>
 
 	<ItemGroup>
