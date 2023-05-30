@@ -193,6 +193,9 @@
   <data name="_128_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\128-1.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="_128_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\128-3.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="_129" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\129.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -565,6 +568,9 @@
   <data name="_460" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\460.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="_461" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\461.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="_470" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\470.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -649,6 +655,9 @@
   <data name="_571_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\571-0.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="_574" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\574.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="_576" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\576.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -666,6 +675,9 @@
   </data>
   <data name="_585_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\585-2.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_585_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\585-3.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="_586" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\586.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -750,6 +762,12 @@
   </data>
   <data name="_669" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\669.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_669_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\669-0.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_669_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\669-1.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="_669_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\669-2.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
