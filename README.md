@@ -1,6 +1,5 @@
 # Tera Finder
-![immagine](https://user-images.githubusercontent.com/52102823/230898427-4adaad12-2d5e-4a9c-af78-7232f82811d5.png)
-
+![immagine](https://github.com/Manu098vm/Tera-Finder/assets/52102823/9e602c4e-9e57-42b5-aed6-e3239f89c721)
 
 This is a PKHeX.Core based program that allows to view, edit and calculate Raids and Mass Outbreaks for Scarlet & Violet. This is the spiritual sequel of [SVXoroCalc](https://github.com/Manu098vm/SVResearches).
 Both a standalone program and a PKHeX plugin are available for use.
