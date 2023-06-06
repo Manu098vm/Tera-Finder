@@ -211,7 +211,7 @@ public partial class CheckerForm : Form
             return false;
         if ((sbyte)pk.TeraTypeOriginal != pkm.TeraType)
             return false;
-        if (pk.HeightScalar != pkm.Height)
+        if (pk.HeightScalar != pkm.Height && pk.HeightScalar != pkm.Scale)
             return false;
         if (pk.WeightScalar != pkm.Weight)
             return false;
