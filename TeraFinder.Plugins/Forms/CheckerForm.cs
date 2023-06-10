@@ -117,9 +117,20 @@ public partial class CheckerForm : Form
         };
 
         var seed = Tera9RNG.GetOriginalSeed(pk);
+        var legality = new LegalityAnalysis(pk);
 
-        if (!CalculateStandard(seed, tid, sid, pk) && !CalculateEvent(seed, tid, sid, pk))
-            txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Invalid"]})";
+        if (legality.Valid)
+        {
+            var match = legality.EncounterMatch is PKHeX.Core.EncounterDist9 ? CalculateDist(seed, tid, sid, pk) :
+                legality.EncounterMatch is PKHeX.Core.EncounterMight9 ? CalculateMighty(seed, tid, sid, pk) : CalculateStandard(seed, tid, sid, pk);
+            if (!match)
+                txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Invalid"]})";
+        }
+        else
+        {
+            if (!CalculateStandard(seed, tid, sid, pk) && !CalculateDist(seed, tid, sid, pk) && !CalculateMighty(seed, tid, sid, pk))
+                txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Invalid"]})";
+        }
     }
 
     private bool CalculateStandard(uint seed, uint tid, uint sid, PK9 pk)
@@ -155,37 +166,37 @@ public partial class CheckerForm : Form
         return false;
     }
 
-    private bool CalculateEvent(uint seed, uint tid, uint sid, PK9 pk)
+    private bool CalculateDist(uint seed, uint tid, uint sid, PK9 pk) => CalculateEvent(seed, tid, sid, pk, RaidContent.Event, Dist);
+    private bool CalculateMighty(uint seed, uint tid, uint sid, PK9 pk) => CalculateEvent(seed, tid, sid, pk, RaidContent.Event_Mighty, Mighty);
+
+    private bool CalculateEvent(uint seed, uint tid, uint sid, PK9 pk, RaidContent content, EncounterRaid9[] encounters)
     {
-        for (var content = RaidContent.Event; content <= RaidContent.Event_Mighty; content++)
+        for (var progress = GameProgress.UnlockedTeraRaids; progress < GameProgress.Unlocked6Stars; progress++)
         {
-            for (var progress = GameProgress.UnlockedTeraRaids; progress < GameProgress.Unlocked6Stars; progress++)
+            for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
             {
-                for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
+                for (var index = 0; index < encounters.Length; index++)
                 {
-                    for (var index = 0; index < (content is RaidContent.Event ? Dist.Length : Mighty.Length); index++)
+                    var sav = (SAV9SV)SAV.Clone();
+                    sav.Game = (int)game;
+
+                    var encounter = TeraUtil.GetDistEncounterWithIndex(seed, sav, progress, encounters, index);
+
+                    if (encounter is not null)
                     {
-                        var sav = (SAV9SV)SAV.Clone();
-                        sav.Game = (int)game;
-
-                        var encounter = content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounterWithIndex(seed, sav, progress, Mighty, index) :
-                            TeraUtil.GetDistEncounterWithIndex(seed, sav, progress, Dist, index);
-
-                        if (encounter is not null)
+                        var rngres = TeraUtil.CalcRNG(seed, tid, sid, content, encounter);
+                        var success = ComparePKM(pk, rngres);
+                        if (success)
                         {
-                            var rngres = TeraUtil.CalcRNG(seed, tid, sid, content, encounter);
-                            var success = ComparePKM(pk, rngres);
-                            if (success)
-                            {
-                                var type = $"{Contents[(byte)content]}";
-                                txtSeed.Text = $"{seed:X8} ({type})";
-                                return true;
-                            }
+                            var type = $"{Contents[(byte)content]}";
+                            txtSeed.Text = $"{seed:X8} ({type})";
+                            return true;
                         }
                     }
                 }
             }
         }
+
         return false;
     }
 
