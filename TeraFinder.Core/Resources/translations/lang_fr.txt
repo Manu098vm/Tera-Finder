@@ -1,4 +1,4 @@
-Plugin.TeraFinderPlugin=Tera Finder Plugin
+Plugin.TeraFinderPlugin=Tera Finder Plugins
 Plugin.ConnectRemote=Connect to Remote Device
 Plugin.TeraViewer=Tera Raid Viewer/Editor
 Plugin.SeedChecker=Tera Raid Seed Checker

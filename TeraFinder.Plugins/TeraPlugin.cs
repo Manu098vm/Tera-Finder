@@ -28,7 +28,7 @@ public class TeraPlugin : IPlugin
     public Dictionary<ulong, List<Reward>>? DistFixedRewards = null;
     public Dictionary<ulong, List<Reward>>? DistLotteryRewards = null;
 
-    private readonly ToolStripMenuItem Plugin = new("Tera Finder Plugin");
+    private readonly ToolStripMenuItem Plugin = new("Tera Finder Plugins");
     private readonly ToolStripMenuItem Connect = new("Connect to Remote Device");
     private readonly ToolStripMenuItem Editor = new("Tera Raid Viewer/Editor");
     private readonly ToolStripMenuItem Finder = new("Tera Raid Seed Checker");
