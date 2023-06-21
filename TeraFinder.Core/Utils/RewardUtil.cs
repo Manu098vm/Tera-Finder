@@ -834,41 +834,41 @@ public static class RewardUtil
             var items = new List<Reward>();
 
             var rate = 0;
-            rate += l.RewardItem00.Rate;
-            rate += l.RewardItem01.Rate;
-            rate += l.RewardItem02.Rate;
-            rate += l.RewardItem03.Rate;
-            rate += l.RewardItem04.Rate;
-            rate += l.RewardItem05.Rate;
-            rate += l.RewardItem06.Rate;
-            rate += l.RewardItem07.Rate;
-            rate += l.RewardItem08.Rate;
-            rate += l.RewardItem09.Rate;
-            rate += l.RewardItem10.Rate;
-            rate += l.RewardItem11.Rate;
-            rate += l.RewardItem12.Rate;
-            rate += l.RewardItem13.Rate;
-            rate += l.RewardItem14.Rate;
-            rate += l.RewardItem15.Rate;
-            rate += l.RewardItem16.Rate;
-            rate += l.RewardItem17.Rate;
-            rate += l.RewardItem18.Rate;
-            rate += l.RewardItem19.Rate;
-            rate += l.RewardItem20.Rate;
-            rate += l.RewardItem21.Rate;
-            rate += l.RewardItem22.Rate;
-            rate += l.RewardItem23.Rate;
-            rate += l.RewardItem24.Rate;
-            rate += l.RewardItem25.Rate;
-            rate += l.RewardItem26.Rate;
-            rate += l.RewardItem27.Rate;
-            rate += l.RewardItem28.Rate;
-            rate += l.RewardItem29.Rate;
+            rate += l.RewardItem00 is null ? 0 : l.RewardItem00.Rate;
+            rate += l.RewardItem01 is null ? 0 : l.RewardItem01.Rate;
+            rate += l.RewardItem02 is null ? 0 : l.RewardItem02.Rate;
+            rate += l.RewardItem03 is null ? 0 : l.RewardItem03.Rate;
+            rate += l.RewardItem04 is null ? 0 : l.RewardItem04.Rate;
+            rate += l.RewardItem05 is null ? 0 : l.RewardItem05.Rate;
+            rate += l.RewardItem06 is null ? 0 : l.RewardItem06.Rate;
+            rate += l.RewardItem07 is null ? 0 : l.RewardItem07.Rate;
+            rate += l.RewardItem08 is null ? 0 : l.RewardItem08.Rate;
+            rate += l.RewardItem09 is null ? 0 : l.RewardItem09.Rate;
+            rate += l.RewardItem10 is null ? 0 : l.RewardItem10.Rate;
+            rate += l.RewardItem11 is null ? 0 : l.RewardItem11.Rate;
+            rate += l.RewardItem12 is null ? 0 : l.RewardItem12.Rate;
+            rate += l.RewardItem13 is null ? 0 : l.RewardItem13.Rate;
+            rate += l.RewardItem14 is null ? 0 : l.RewardItem14.Rate;
+            rate += l.RewardItem15 is null ? 0 : l.RewardItem15.Rate;
+            rate += l.RewardItem16 is null ? 0 : l.RewardItem16.Rate;
+            rate += l.RewardItem17 is null ? 0 : l.RewardItem17.Rate;
+            rate += l.RewardItem18 is null ? 0 : l.RewardItem18.Rate;
+            rate += l.RewardItem19 is null ? 0 : l.RewardItem19.Rate;
+            rate += l.RewardItem20 is null ? 0 : l.RewardItem20.Rate;
+            rate += l.RewardItem21 is null ? 0 : l.RewardItem21.Rate;
+            rate += l.RewardItem22 is null ? 0 : l.RewardItem22.Rate;
+            rate += l.RewardItem23 is null ? 0 : l.RewardItem23.Rate;
+            rate += l.RewardItem24 is null ? 0 : l.RewardItem24.Rate;
+            rate += l.RewardItem25 is null ? 0 : l.RewardItem25.Rate;
+            rate += l.RewardItem26 is null ? 0 : l.RewardItem26.Rate;
+            rate += l.RewardItem27 is null ? 0 : l.RewardItem27.Rate;
+            rate += l.RewardItem28 is null ? 0 : l.RewardItem28.Rate;
+            rate += l.RewardItem29 is null ? 0 : l.RewardItem29.Rate;
 
             var totalrate = rate;
 
             //RewardItem00
-            if (l.RewardItem00.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem00 is not null && l.RewardItem00.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -877,7 +877,7 @@ public static class RewardUtil
                     Probability = l.RewardItem00.Rate,
                 });
             }
-            else if ((int)l.RewardItem00.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem00 is not null && (int)l.RewardItem00.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -886,7 +886,7 @@ public static class RewardUtil
                     Probability = l.RewardItem00.Rate
                 });
             }
-            else if ((int)l.RewardItem00.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem00 is not null && (int)l.RewardItem00.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -897,7 +897,7 @@ public static class RewardUtil
             }
 
             //RewardItem01
-            if (l.RewardItem01.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem01 is not null && l.RewardItem01.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -906,7 +906,7 @@ public static class RewardUtil
                     Probability = l.RewardItem01.Rate
                 });
             }
-            else if ((int)l.RewardItem01.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem01 is not null && (int)l.RewardItem01.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -915,7 +915,7 @@ public static class RewardUtil
                     Probability = l.RewardItem01.Rate
                 });
             }
-            else if ((int)l.RewardItem01.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem01 is not null && (int)l.RewardItem01.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -926,7 +926,7 @@ public static class RewardUtil
             }
 
             //RewardItem02
-            if (l.RewardItem02.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem02 is not null && l.RewardItem02.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -935,7 +935,7 @@ public static class RewardUtil
                     Probability = l.RewardItem02.Rate
                 });
             }
-            else if ((int)l.RewardItem02.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem02 is not null && (int)l.RewardItem02.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -944,7 +944,7 @@ public static class RewardUtil
                     Probability = l.RewardItem02.Rate
                 });
             }
-            else if ((int)l.RewardItem02.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem02 is not null && (int)l.RewardItem02.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -955,7 +955,7 @@ public static class RewardUtil
             }
 
             //RewardItem03
-            if (l.RewardItem03.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem03 is not null && l.RewardItem03.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -964,7 +964,7 @@ public static class RewardUtil
                     Probability = l.RewardItem03.Rate
                 });
             }
-            else if ((int)l.RewardItem03.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem03 is not null && (int)l.RewardItem03.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -973,7 +973,7 @@ public static class RewardUtil
                     Probability = l.RewardItem03.Rate
                 });
             }
-            else if ((int)l.RewardItem03.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem03 is not null && (int)l.RewardItem03.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -984,7 +984,7 @@ public static class RewardUtil
             }
 
             //RewardItem04
-            if (l.RewardItem04.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem04 is not null && l.RewardItem04.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -993,7 +993,7 @@ public static class RewardUtil
                     Probability = l.RewardItem04.Rate
                 });
             }
-            else if ((int)l.RewardItem04.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem04 is not null && (int)l.RewardItem04.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1002,7 +1002,7 @@ public static class RewardUtil
                     Probability = l.RewardItem04.Rate
                 });
             }
-            else if ((int)l.RewardItem04.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem04 is not null && (int)l.RewardItem04.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1013,7 +1013,7 @@ public static class RewardUtil
             }
 
             //RewardItem05
-            if (l.RewardItem05.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem05 is not null && l.RewardItem05.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1022,7 +1022,7 @@ public static class RewardUtil
                     Probability = l.RewardItem05.Rate
                 });
             }
-            else if ((int)l.RewardItem05.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem05 is not null && (int)l.RewardItem05.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1031,7 +1031,7 @@ public static class RewardUtil
                     Probability = l.RewardItem05.Rate
                 });
             }
-            else if ((int)l.RewardItem05.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem05 is not null && (int)l.RewardItem05.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1042,7 +1042,7 @@ public static class RewardUtil
             }
 
             //RewardItem06
-            if (l.RewardItem06.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem06 is not null && l.RewardItem06.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1051,7 +1051,7 @@ public static class RewardUtil
                     Probability = l.RewardItem06.Rate
                 });
             }
-            else if ((int)l.RewardItem06.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem06 is not null && (int)l.RewardItem06.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1060,7 +1060,7 @@ public static class RewardUtil
                     Probability = l.RewardItem06.Rate
                 });
             }
-            else if ((int)l.RewardItem06.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem06 is not null && (int)l.RewardItem06.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1071,7 +1071,7 @@ public static class RewardUtil
             }
 
             //RewardItem07
-            if (l.RewardItem07.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem07 is not null && l.RewardItem07.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1080,7 +1080,7 @@ public static class RewardUtil
                     Probability = l.RewardItem07.Rate
                 });
             }
-            else if ((int)l.RewardItem07.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem07 is not null && (int)l.RewardItem07.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1089,7 +1089,7 @@ public static class RewardUtil
                     Probability = l.RewardItem07.Rate
                 });
             }
-            else if ((int)l.RewardItem07.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem07 is not null && (int)l.RewardItem07.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1100,7 +1100,7 @@ public static class RewardUtil
             }
 
             //RewardItem08
-            if (l.RewardItem08.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem08 is not null && l.RewardItem08.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1109,7 +1109,7 @@ public static class RewardUtil
                     Probability = l.RewardItem08.Rate
                 });
             }
-            else if ((int)l.RewardItem08.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem08 is not null && (int)l.RewardItem08.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1118,7 +1118,7 @@ public static class RewardUtil
                     Probability = l.RewardItem08.Rate
                 });
             }
-            else if ((int)l.RewardItem08.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem08 is not null && (int)l.RewardItem08.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1129,7 +1129,7 @@ public static class RewardUtil
             }
 
             //RewardItem09
-            if (l.RewardItem09.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem09 is not null && l.RewardItem09.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1138,7 +1138,7 @@ public static class RewardUtil
                     Probability = l.RewardItem09.Rate
                 });
             }
-            else if ((int)l.RewardItem09.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem09 is not null && (int)l.RewardItem09.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1147,7 +1147,7 @@ public static class RewardUtil
                     Probability = l.RewardItem09.Rate
                 });
             }
-            else if ((int)l.RewardItem09.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem09 is not null && (int)l.RewardItem09.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1158,7 +1158,7 @@ public static class RewardUtil
             }
 
             //RewardItem10
-            if (l.RewardItem10.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem10 is not null && l.RewardItem10.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1167,7 +1167,7 @@ public static class RewardUtil
                     Probability = l.RewardItem10.Rate
                 });
             }
-            else if ((int)l.RewardItem10.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem10 is not null && (int)l.RewardItem10.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1176,7 +1176,7 @@ public static class RewardUtil
                     Probability = l.RewardItem10.Rate
                 });
             }
-            else if ((int)l.RewardItem10.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem10 is not null && (int)l.RewardItem10.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1187,7 +1187,7 @@ public static class RewardUtil
             }
 
             //RewardItem11
-            if (l.RewardItem11.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem11 is not null && l.RewardItem11.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1196,7 +1196,7 @@ public static class RewardUtil
                     Probability = l.RewardItem11.Rate
                 });
             }
-            else if ((int)l.RewardItem11.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem11 is not null && (int)l.RewardItem11.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1205,7 +1205,7 @@ public static class RewardUtil
                     Probability = l.RewardItem11.Rate
                 });
             }
-            else if ((int)l.RewardItem11.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem11 is not null && (int)l.RewardItem11.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1216,7 +1216,7 @@ public static class RewardUtil
             }
 
             //RewardItem12
-            if (l.RewardItem12.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem12 is not null && l.RewardItem12.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1225,7 +1225,7 @@ public static class RewardUtil
                     Probability = l.RewardItem12.Rate
                 });
             }
-            else if ((int)l.RewardItem12.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem12 is not null && (int)l.RewardItem12.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1234,7 +1234,7 @@ public static class RewardUtil
                     Probability = l.RewardItem12.Rate
                 });
             }
-            else if ((int)l.RewardItem12.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem12 is not null && (int)l.RewardItem12.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1245,7 +1245,7 @@ public static class RewardUtil
             }
 
             //RewardItem13
-            if (l.RewardItem13.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem13 is not null && l.RewardItem13.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1254,7 +1254,7 @@ public static class RewardUtil
                     Probability = l.RewardItem13.Rate
                 });
             }
-            else if ((int)l.RewardItem13.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem13 is not null && (int)l.RewardItem13.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1263,7 +1263,7 @@ public static class RewardUtil
                     Probability = l.RewardItem13.Rate
                 });
             }
-            else if ((int)l.RewardItem13.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem13 is not null && (int)l.RewardItem13.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1274,7 +1274,7 @@ public static class RewardUtil
             }
 
             //RewardItem14
-            if (l.RewardItem14.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem14 is not null && l.RewardItem14.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1283,7 +1283,7 @@ public static class RewardUtil
                     Probability = l.RewardItem14.Rate
                 });
             }
-            else if ((int)l.RewardItem14.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem14 is not null && (int)l.RewardItem14.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1292,7 +1292,7 @@ public static class RewardUtil
                     Probability = l.RewardItem14.Rate
                 });
             }
-            else if ((int)l.RewardItem14.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem14 is not null && (int)l.RewardItem14.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1303,7 +1303,7 @@ public static class RewardUtil
             }
 
             //RewardItem15
-            if (l.RewardItem15.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem15 is not null && l.RewardItem15.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1312,7 +1312,7 @@ public static class RewardUtil
                     Probability = l.RewardItem15.Rate
                 });
             }
-            else if ((int)l.RewardItem15.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem15 is not null && (int)l.RewardItem15.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1321,7 +1321,7 @@ public static class RewardUtil
                     Probability = l.RewardItem15.Rate
                 });
             }
-            else if ((int)l.RewardItem15.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem15 is not null && (int)l.RewardItem15.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1332,7 +1332,7 @@ public static class RewardUtil
             }
 
             //RewardItem16
-            if (l.RewardItem16.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem16 is not null && l.RewardItem16.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1341,7 +1341,7 @@ public static class RewardUtil
                     Probability = l.RewardItem16.Rate
                 });
             }
-            else if ((int)l.RewardItem16.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem16 is not null && (int)l.RewardItem16.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1350,7 +1350,7 @@ public static class RewardUtil
                     Probability = l.RewardItem16.Rate
                 });
             }
-            else if ((int)l.RewardItem16.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem16 is not null && (int)l.RewardItem16.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1361,7 +1361,7 @@ public static class RewardUtil
             }
 
             //RewardItem17
-            if (l.RewardItem17.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem17 is not null && l.RewardItem17.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1370,7 +1370,7 @@ public static class RewardUtil
                     Probability = l.RewardItem17.Rate
                 });
             }
-            else if ((int)l.RewardItem17.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem17 is not null && (int)l.RewardItem17.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1379,7 +1379,7 @@ public static class RewardUtil
                     Probability = l.RewardItem17.Rate
                 });
             }
-            else if ((int)l.RewardItem17.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem17 is not null && (int)l.RewardItem17.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1390,7 +1390,7 @@ public static class RewardUtil
             }
 
             //RewardItem18
-            if (l.RewardItem18.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem18 is not null && l.RewardItem18.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1399,7 +1399,7 @@ public static class RewardUtil
                     Probability = l.RewardItem18.Rate
                 });
             }
-            else if ((int)l.RewardItem18.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem18 is not null && (int)l.RewardItem18.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1408,7 +1408,7 @@ public static class RewardUtil
                     Probability = l.RewardItem18.Rate
                 });
             }
-            else if ((int)l.RewardItem18.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem18 is not null && (int)l.RewardItem18.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1419,7 +1419,7 @@ public static class RewardUtil
             }
 
             //RewardItem19
-            if (l.RewardItem19.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem19 is not null && l.RewardItem19.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1428,7 +1428,7 @@ public static class RewardUtil
                     Probability = l.RewardItem19.Rate
                 });
             }
-            else if ((int)l.RewardItem19.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem19 is not null && (int)l.RewardItem19.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1437,7 +1437,7 @@ public static class RewardUtil
                     Probability = l.RewardItem19.Rate
                 });
             }
-            else if ((int)l.RewardItem19.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem19 is not null && (int)l.RewardItem19.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1448,7 +1448,7 @@ public static class RewardUtil
             }
 
             //RewardItem20
-            if (l.RewardItem20.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem20 is not null && l.RewardItem20.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1457,7 +1457,7 @@ public static class RewardUtil
                     Probability = l.RewardItem20.Rate
                 });
             }
-            else if ((int)l.RewardItem20.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem20 is not null && (int)l.RewardItem20.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1466,7 +1466,7 @@ public static class RewardUtil
                     Probability = l.RewardItem20.Rate
                 });
             }
-            else if ((int)l.RewardItem20.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem20 is not null && (int)l.RewardItem20.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1477,7 +1477,7 @@ public static class RewardUtil
             }
 
             //RewardItem21
-            if (l.RewardItem21.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem21 is not null && l.RewardItem21.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1486,7 +1486,7 @@ public static class RewardUtil
                     Probability = l.RewardItem21.Rate
                 });
             }
-            else if ((int)l.RewardItem21.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem21 is not null && (int)l.RewardItem21.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1495,7 +1495,7 @@ public static class RewardUtil
                     Probability = l.RewardItem21.Rate
                 });
             }
-            else if ((int)l.RewardItem21.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem21 is not null && (int)l.RewardItem21.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1506,7 +1506,7 @@ public static class RewardUtil
             }
 
             //RewardItem22
-            if (l.RewardItem22.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem22 is not null && l.RewardItem22.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1515,7 +1515,7 @@ public static class RewardUtil
                     Probability = l.RewardItem22.Rate
                 });
             }
-            else if ((int)l.RewardItem22.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem22 is not null && (int)l.RewardItem22.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1524,7 +1524,7 @@ public static class RewardUtil
                     Probability = l.RewardItem22.Rate
                 });
             }
-            else if ((int)l.RewardItem22.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem22 is not null && (int)l.RewardItem22.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1535,7 +1535,7 @@ public static class RewardUtil
             }
 
             //RewardItem23
-            if (l.RewardItem23.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem23 is not null && l.RewardItem23.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1544,7 +1544,7 @@ public static class RewardUtil
                     Probability = l.RewardItem23.Rate
                 });
             }
-            else if ((int)l.RewardItem23.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem23 is not null && (int)l.RewardItem23.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1553,7 +1553,7 @@ public static class RewardUtil
                     Probability = l.RewardItem23.Rate
                 });
             }
-            else if ((int)l.RewardItem23.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem23 is not null && (int)l.RewardItem23.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1564,7 +1564,7 @@ public static class RewardUtil
             }
 
             //RewardItem24
-            if (l.RewardItem24.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem24 is not null && l.RewardItem24.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1573,7 +1573,7 @@ public static class RewardUtil
                     Probability = l.RewardItem24.Rate
                 });
             }
-            else if ((int)l.RewardItem24.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem24 is not null && (int)l.RewardItem24.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1582,7 +1582,7 @@ public static class RewardUtil
                     Probability = l.RewardItem24.Rate
                 });
             }
-            else if ((int)l.RewardItem24.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem24 is not null && (int)l.RewardItem24.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1593,7 +1593,7 @@ public static class RewardUtil
             }
 
             //RewardItem25
-            if (l.RewardItem25.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem25 is not null && l.RewardItem25.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1602,7 +1602,7 @@ public static class RewardUtil
                     Probability = l.RewardItem25.Rate
                 });
             }
-            else if ((int)l.RewardItem25.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem25 is not null && (int)l.RewardItem25.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1611,7 +1611,7 @@ public static class RewardUtil
                     Probability = l.RewardItem25.Rate
                 });
             }
-            else if ((int)l.RewardItem25.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem25 is not null && (int)l.RewardItem25.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1622,7 +1622,7 @@ public static class RewardUtil
             }
 
             //RewardItem26
-            if (l.RewardItem26.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem26 is not null && l.RewardItem26.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1631,7 +1631,7 @@ public static class RewardUtil
                     Probability = l.RewardItem26.Rate
                 });
             }
-            else if ((int)l.RewardItem26.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem26 is not null && (int)l.RewardItem26.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1640,7 +1640,7 @@ public static class RewardUtil
                     Probability = l.RewardItem26.Rate
                 });
             }
-            else if ((int)l.RewardItem26.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem26 is not null && (int)l.RewardItem26.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1651,7 +1651,7 @@ public static class RewardUtil
             }
 
             //RewardItem27
-            if (l.RewardItem27.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem27 is not null && l.RewardItem27.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1660,7 +1660,7 @@ public static class RewardUtil
                     Probability = l.RewardItem27.Rate
                 });
             }
-            else if ((int)l.RewardItem27.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem27 is not null && (int)l.RewardItem27.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1669,7 +1669,7 @@ public static class RewardUtil
                     Probability = l.RewardItem27.Rate
                 });
             }
-            else if ((int)l.RewardItem27.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem27 is not null && (int)l.RewardItem27.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1680,7 +1680,7 @@ public static class RewardUtil
             }
 
             //RewardItem28
-            if (l.RewardItem28.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem28 is not null && l.RewardItem28.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1689,7 +1689,7 @@ public static class RewardUtil
                     Probability = l.RewardItem28.Rate
                 });
             }
-            else if ((int)l.RewardItem28.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem28 is not null && (int)l.RewardItem28.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1698,7 +1698,7 @@ public static class RewardUtil
                     Probability = l.RewardItem28.Rate
                 });
             }
-            else if ((int)l.RewardItem28.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem28 is not null && (int)l.RewardItem28.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
@@ -1709,7 +1709,7 @@ public static class RewardUtil
             }
 
             //RewardItem29
-            if (l.RewardItem29.ItemID != (int)RewardCategory.ItemNone)
+            if (l.RewardItem29 is not null && l.RewardItem29.ItemID != (int)RewardCategory.ItemNone)
             {
                 items.Add(new Reward
                 {
@@ -1718,7 +1718,7 @@ public static class RewardUtil
                     Probability = l.RewardItem29.Rate,
                 });
             }
-            else if ((int)l.RewardItem29.Category == (int)RewardCategory.Gem)
+            else if (l.RewardItem29 is not null && (int)l.RewardItem29.Category == (int)RewardCategory.Gem)
             {
                 items.Add(new Reward
                 {
@@ -1727,7 +1727,7 @@ public static class RewardUtil
                     Probability = l.RewardItem29.Rate
                 });
             }
-            else if ((int)l.RewardItem29.Category == (int)RewardCategory.Poke)
+            else if (l.RewardItem29 is not null && (int)l.RewardItem29.Category == (int)RewardCategory.Poke)
             {
                 items.Add(new Reward
                 {
