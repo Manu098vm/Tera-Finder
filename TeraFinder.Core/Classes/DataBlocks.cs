@@ -16,7 +16,7 @@ public class DataBlock
 //Thanks Anubis, Lincoln-LM, santacrab2 and Zyro670 for a lot of Pointers and offsets!!
 public static class Blocks
 {
-    public static readonly long[] SaveBlockKeyPointer = { 0x44b5158, 0xD8, 0x0, 0x0, 0x30, 0x8 };
+    public static readonly long[] SaveBlockKeyPointer = { 0x44B71A8, 0xD8, 0x0, 0x0, 0x30, 0x08 };
 
     #region DataSAV
     public static readonly DataBlock KTeraRaids = new()
@@ -24,7 +24,7 @@ public static class Blocks
         Name = "KTeraRaids",
         Key = 0xCAAC8800,
         Type = SCTypeCode.Object,
-        Pointer = new long[] { 0x44E2F48, 0x160, 0x40 },
+        Pointer = new long[] { 0x44E4FE8, 0x160, 0x40 },
         IsEncrypted = false,
         Size = 0xC98,
     };
@@ -34,7 +34,7 @@ public static class Blocks
         Name = "KMyStatus",
         Key = 0xE3E89BD1,
         Type = SCTypeCode.Object,
-        Pointer = new long[] { 0x44E2F48, 0xE0, 0x40 },
+        Pointer = new long[] { 0x44E4FE8, 0xE0, 0x40 },
         IsEncrypted = false,
         Size = 0x68,
     };
@@ -66,7 +66,7 @@ public static class Blocks
         Name = "KBCATFixedRewardItemArray",
         Key = 0x7D6C2B82,
         Type = SCTypeCode.Object,
-        Pointer = new long[] { 0x44E2F48, 0x160, 0x6C68, 0x0 },
+        Pointer = new long[] { 0x44E4FE8, 0x160, 0x6C68, 0x0 },
         IsEncrypted = false,
         Size = 0x6B40,
     };
@@ -76,7 +76,7 @@ public static class Blocks
         Name = "KBCATLotteryRewardItemArray",
         Key = 0xA52B4811,
         Type = SCTypeCode.Object,
-        Pointer = new long[] { 0x44E2F48, 0x160, 0x6CA0, 0x0 },
+        Pointer = new long[] { 0x44E4FE8, 0x160, 0x6CA0, 0x0 },
         IsEncrypted = false,
         Size = 0xD0D8,
     };
@@ -86,7 +86,7 @@ public static class Blocks
         Name = "KBCATRaidEnemyArray",
         Key = 0x0520A1B0,
         Type = SCTypeCode.Object,
-        Pointer = new long[] { 0x44E2F48, 0x160, 0x6C30, 0x0 },
+        Pointer = new long[] { 0x44E4FE8, 0x160, 0x6C30, 0x0 },
         IsEncrypted = false,
         Size = 0x7530,
     };
@@ -96,7 +96,7 @@ public static class Blocks
         Name = "KBCATRaidPriorityArray",
         Key = 0x095451E4,
         Type = SCTypeCode.Object,
-        Pointer = new long[] { 0x44E2F48, 0x160, 0x6CD8, 0x0 },
+        Pointer = new long[] { 0x44E4FE8, 0x160, 0x6CD8, 0x0 },
         IsEncrypted = false,
         Size = 0x58,
     };
