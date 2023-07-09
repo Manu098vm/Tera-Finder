@@ -72,7 +72,14 @@ public static class ImagesUtil
         var x = loc_available ? location![0] : 0;
         var y = loc_available ? location![2] : 0;
 
-        pic.SetMapPoint(teratype, x, y);
+        var loc2_available = locations.TryGetValue($"{area}-{spawnpoint}_", out var location2);
+        var x2 = loc2_available ? location2![0] : 0;
+        var y2 = loc2_available ? location2![2] : 0;
+
+        if (loc2_available)
+            pic.SetMapPoint(teratype, x, y, x2, y2);
+        else if (loc_available)
+            pic.SetMapPoint(teratype, x, y);
     }
 
     public static void SetMapPoint(this PictureBox pic, GameCoordinates coordinates, int teratype = 0)
@@ -80,7 +87,7 @@ public static class ImagesUtil
         pic.SetMapPoint(teratype, coordinates.X, coordinates.Z);
     }
 
-    private static void SetMapPoint(this PictureBox pic, int teratype, float x, float y)
+    private static void SetMapPoint(this PictureBox pic, int teratype, float x, float y, float x2 = 0, float y2 = 0)
     {
         const int def_size = 570;
         const int def_width = 52;
@@ -116,14 +123,25 @@ public static class ImagesUtil
 
         var coordinates = new Point
         {
-            X = (int)((x - width_scale) * pic.Width / 5000),
-            Y = (int)((y + height_scale) * pic.Height / 5000),
+            X = x != 0 ? (int)((x - width_scale) * pic.Width / 5000) : 0,
+            Y = y != 0 ? (int)((y + height_scale) * pic.Height / 5000) : 0,
+        };
+
+        var coordinates2 = new Point
+        {
+            X = x2 != 0 ? (int)((x2 - width_scale) * pic.Width / 5000) : 0,
+            Y = y2 != 0 ? (int)((y2 + height_scale) * pic.Height / 5000) : 0,
         };
 
         var pointer = new Bitmap(crystal, new Size(crystal.Width / 4, crystal.Height / 4));
         var map = new Bitmap(pic.BackgroundImage!, new Size(pic.Width, pic.Height));
+
         if (coordinates.X != 0 && coordinates.Y != 0)
             Graphics.FromImage(map).DrawImage(pointer, coordinates);
+
+        if (coordinates2.X != 0 && coordinates2.Y != 0)
+            Graphics.FromImage(map).DrawImage(pointer, coordinates2);
+
         pic.Image = map;
     }
 
