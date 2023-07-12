@@ -1,5 +1,6 @@
 ﻿using PKHeX.Core;
 using SysBot.Base;
+using System.Globalization;
 using static System.Buffers.Binary.BinaryPrimitives;
 
 namespace TeraFinder.Core;
@@ -14,6 +15,10 @@ public class DeviceState : BotState<RoutineType, SwitchConnectionConfig>
 
 public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 {
+    public const decimal BotbaseVersion = 2.3m;
+
+    //Game Infos
+    private const string VersionNumber = "1.3.2";
     private const string ScarletID = "0100A3D008C5C000";
     private const string VioletID = "01008F6008C5E000";
 
@@ -35,8 +40,12 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
     public override async Task MainLoop(CancellationToken token)
     {
-        var version = await ReadGameVersion(token).ConfigureAwait(false);
-        Log($"Valid Title ID ({(version is GameVersion.SL ? $"{ScarletID}" : $"{VioletID}")})");
+        var botbase = await VerifyBotbaseVersion(token).ConfigureAwait(false);
+        Log($"Valid Botbase Version: {botbase}");
+        var game = await ReadGame(token).ConfigureAwait(false);
+        Log($"Valid Title ID ({(game is GameVersion.SL ? $"{ScarletID}" : $"{VioletID}")})");
+        var version = await SwitchConnection.GetGameInfo("version", token).ConfigureAwait(false);
+        Log($"Valid Game Version: {version}");
         Log("Connection Test OK");
         Config.IterateNextRoutine();
     }
@@ -55,7 +64,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
         Connection.Disconnect();
     }
 
-    public async Task<GameVersion> ReadGameVersion(CancellationToken token)
+    public async Task<GameVersion> ReadGame(CancellationToken token)
     {
         if (!Connection.Connected)
             throw new InvalidOperationException("No remote connection");
@@ -66,6 +75,46 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
         else if (title.Equals(ScarletID))
             return GameVersion.SL;
         else throw new ArgumentOutOfRangeException($"Invalid Title ID ({title})");
+    }
+
+    //Thanks Anubis
+    //https://github.com/kwsch/SysBot.NET/blob/b26c8c957364efe316573bec4b82e8c5c5a1a60f/SysBot.Pokemon/SV/PokeRoutineExecutor9SV.cs#L83C19-L83C19
+    //AGPL v3 License
+    public async Task<string> ReadGameVersion(CancellationToken token)
+    {
+        if (!Connection.Connected)
+            throw new InvalidOperationException("No remote connection");
+
+        var version = await SwitchConnection.GetGameInfo("version", token).ConfigureAwait(false);
+
+        if (!version.SequenceEqual(VersionNumber))
+            throw new Exception($"Game version is not supported. Expected version {VersionNumber}, and current game version is {version}.");
+
+        return version;
+    }
+
+    //Thanks Anubis
+    //https://github.com/kwsch/SysBot.NET/blob/b26c8c957364efe316573bec4b82e8c5c5a1a60f/SysBot.Pokemon/Actions/PokeRoutineExecutor.cs#L88
+    //AGPL v3 License
+    public async Task<string> VerifyBotbaseVersion(CancellationToken token)
+    {
+        if (!Connection.Connected)
+            throw new InvalidOperationException("No remote connection");
+
+        var data = await SwitchConnection.GetBotbaseVersion(token).ConfigureAwait(false);
+        var version = decimal.TryParse(data, CultureInfo.InvariantCulture, out var v) ? v : 0;
+        if (version < BotbaseVersion)
+        {
+            var protocol = Config.Connection.Protocol;
+            var msg = protocol is SwitchProtocol.WiFi ? "sys-botbase" : "usb-botbase";
+            msg += $" version is not supported. Expected version {BotbaseVersion} or greater, and current version is {version}. Please download the latest version from: ";
+            if (protocol is SwitchProtocol.WiFi)
+                msg += "https://github.com/olliz0r/sys-botbase/releases/latest";
+            else
+                msg += "https://github.com/Koi-3088/usb-botbase/releases/latest";
+            throw new Exception(msg);
+        }
+        return data;
     }
 
     public async Task<GameProgress> ReadGameProgress(CancellationToken token)

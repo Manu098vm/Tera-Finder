@@ -110,7 +110,7 @@ public partial class ConnectionForm : Form
             CurrentProgress = 0;
             await Executor.Connect(token).ConfigureAwait(false);
             UpdateProgress(CurrentProgress++, MaxProgress);
-            var version = await Executor.ReadGameVersion(token).ConfigureAwait(false);
+            var version = await Executor.ReadGame(token).ConfigureAwait(false);
             UpdateProgress(CurrentProgress++, MaxProgress);
             SAV.Game = (int)version;
             var mystatusblock = SAV.Accessor.FindOrDefault(Blocks.KMyStatus.Key);
