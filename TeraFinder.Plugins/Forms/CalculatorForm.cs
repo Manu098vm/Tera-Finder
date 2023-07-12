@@ -8,7 +8,7 @@ public partial class CalculatorForm : Form
     public EditorForm Editor = null!;
     private List<TeraDetails> CalculatedList = new();
     private TeraFilter? Filter = null;
-    private CancellationTokenSource Token = new ();
+    private CancellationTokenSource Token = new();
 
     private Dictionary<string, string> Strings = null!;
 
@@ -56,8 +56,6 @@ public partial class CalculatorForm : Form
         txtSeed.Text = Editor.txtSeed.Text;
         cmbContent.SelectedIndex = Editor.cmbContent.SelectedIndex;
         var content = (RaidContent)cmbContent.SelectedIndex;
-        numEventCt.Value = content >= RaidContent.Event ? TeraUtil.GetDeliveryGroupID(Editor.SAV, Editor.Progress, content,
-            content is RaidContent.Event_Mighty ? Editor.Mighty : Editor.Dist, Editor.cmbDens.SelectedIndex) : -1;
 
         cmbTeraType.Items.Clear();
         cmbTeraType.Items.Add(Strings["Any"]);
@@ -84,7 +82,10 @@ public partial class CalculatorForm : Form
         nSpeMax.Value = 31;
         numScaleMax.Value = 255;
 
+        numEventCt.Value = content >= RaidContent.Event ? TeraUtil.GetDeliveryGroupID(Editor.SAV, Editor.Progress, content,
+            content is RaidContent.Event_Mighty ? Editor.Mighty : Editor.Dist, Editor.cmbDens.SelectedIndex) : 0;
         toolTip.SetToolTip(showresults, Strings["ToolTipAllResults"]);
+        SetSpeciesOnIndex((int)numEventCt.Value);
 
         TranslateCmbProgress();
         TranslateCmbShiny();
@@ -186,7 +187,7 @@ public partial class CalculatorForm : Form
 
     private bool IsBlankSAV()
     {
-        if(Editor.Progress is GameProgress.Beginning or GameProgress.None)
+        if (Editor.Progress is GameProgress.Beginning or GameProgress.None)
             return true;
         return false;
     }
@@ -208,6 +209,70 @@ public partial class CalculatorForm : Form
         if (cmbStars.SelectedIndex == 0)
             cmbStars_IndexChanged(sender, e);
         cmbStars.SelectedIndex = 0;
+    }
+
+    private void numEventCt_ValueChanged(object sender, EventArgs e) => SetSpeciesOnIndex((int)numEventCt.Value);
+
+    private void SetSpeciesOnIndex(int index)
+    {
+        var content = (RaidContent)cmbContent.SelectedIndex;
+        if (index > 0 && ((content is RaidContent.Event && Editor.Dist is not null) ||
+            (content is RaidContent.Event_Mighty && Editor.Mighty is not null)))
+        {
+            var species = (ushort)0;
+            var form = (byte)0;
+
+            foreach (var enc in content == RaidContent.Event ? Editor.Dist! : Editor.Mighty!)
+            {
+                if (enc.Index == index)
+                {
+                    species = enc.Species;
+                    form = enc.Form;
+                    break;
+                }
+            }
+
+            var i = 0;
+            foreach (var obj in cmbSpecies.Items)
+            {
+                var str = obj.ToString();
+                var cmbSpecies = GetSpeciesAndForm(str!);
+                if (cmbSpecies[0] == species && cmbSpecies[1] == form)
+                    break;
+                i++;
+            }
+
+            cmbSpecies.SelectedIndex = i;
+            return;
+        }
+        cmbSpecies.SelectedIndex = 0;
+    }
+
+    private void SetIndexOnSpecies(object sender, EventArgs e)
+    {
+        var index = 0;
+        var content = (RaidContent)cmbContent.SelectedIndex;
+
+        if (cmbSpecies.SelectedIndex > 0 && ((content is RaidContent.Event && Editor.Dist is not null) ||
+            (content is RaidContent.Event_Mighty && Editor.Mighty is not null)))
+        {
+            var species = GetSpeciesAndForm();
+            var encounters = content is RaidContent.Event ? Editor.Dist : Editor.Mighty;
+
+            if (encounters is not null)
+            {
+                foreach (var enc in encounters)
+                {
+                    if (enc.Species == species[0] && enc.Form == species[1])
+                    {
+                        index = enc.Index;
+                        break;
+                    }
+                }
+            }
+        }
+
+        numEventCt.Value = index;
     }
 
     private void cmbStars_IndexChanged(object sender, EventArgs e)
@@ -294,25 +359,27 @@ public partial class CalculatorForm : Form
             return (int)char.GetNumericValue(cmbStars.Text[0]);
     }
 
-    private ushort[] GetSpeciesAndForm()
+    private ushort[] GetSpeciesAndForm() => GetSpeciesAndForm(cmbSpecies.Text);
+
+    private ushort[] GetSpeciesAndForm(string str)
     {
         var res = new ushort[2];
-        if (!cmbSpecies.Text.Equals(Strings["Any"]))
+        if (!str.Equals(Strings["Any"]))
         {
-            int charLocation = cmbSpecies.Text.IndexOf("-", StringComparison.Ordinal);
+            int charLocation = str.IndexOf("-", StringComparison.Ordinal);
 
             if (charLocation == -1)
             {
-                var species = Editor.Language.ToLower().Equals("en") ? cmbSpecies.Text :
-                    GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, cmbSpecies.Text)];
+                var species = Editor.Language.ToLower().Equals("en") ? str :
+                    GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, str)];
                 res[0] = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty));
             }
             else
             {
-                var species = Editor.Language.ToLower().Equals("en") ? cmbSpecies.Text[..charLocation] :
-                    GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, cmbSpecies.Text[..charLocation])];
+                var species = Editor.Language.ToLower().Equals("en") ? str[..charLocation] :
+                    GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, str[..charLocation])];
                 res[0] = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty));
-                res[1] = ShowdownParsing.GetFormFromString(cmbSpecies.Text.AsSpan()[(charLocation + 1)..], GameInfo.GetStrings(Editor.Language), res[0], EntityContext.Gen9);
+                res[1] = ShowdownParsing.GetFormFromString(str.AsSpan()[(charLocation + 1)..], GameInfo.GetStrings(Editor.Language), res[0], EntityContext.Gen9);
             }
         }
         return res;
@@ -334,7 +401,7 @@ public partial class CalculatorForm : Form
         CreateFilter();
         if (dataGrid.Rows.Count > 0)
         {
-            DialogResult d = MessageBox.Show(Strings["FiltersPopup"], Strings["FiltersApply"] , MessageBoxButtons.YesNo);
+            DialogResult d = MessageBox.Show(Strings["FiltersPopup"], Strings["FiltersApply"], MessageBoxButtons.YesNo);
             if (d == DialogResult.Yes)
             {
                 var list = new List<GridEntry>();
@@ -398,7 +465,7 @@ public partial class CalculatorForm : Form
 
     private void DisableControls()
     {
-        lblFound.Visible= false;
+        lblFound.Visible = false;
         grpFilters.Enabled = false;
         grpGameInfo.Enabled = false;
         cmbContent.Enabled = false;
@@ -416,7 +483,7 @@ public partial class CalculatorForm : Form
         showresults.Enabled = true;
         txtSeed.Enabled = true;
         numFrames.Enabled = true;
-        numEventCt.Enabled = true;  
+        numEventCt.Enabled = true;
     }
 
     private void UpdateLabel()
@@ -490,13 +557,13 @@ public partial class CalculatorForm : Form
 
             try
             {
-                var griddata= await StartSearch(sav, progress, content, Token);
+                var griddata = await StartSearch(sav, progress, content, Token);
                 dataGrid.DataSource = griddata;
                 btnSearch.Text = Strings["ActionSearch"];
                 EnableControls(IsBlankSAV());
                 UpdateLabel();
             }
-            catch(OperationCanceledException)
+            catch (OperationCanceledException)
             {
                 btnSearch.Text = Strings["ActionSearch"];
                 EnableControls(IsBlankSAV());

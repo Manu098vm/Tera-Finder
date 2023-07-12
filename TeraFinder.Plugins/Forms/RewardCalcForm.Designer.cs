@@ -416,6 +416,7 @@ partial class RewardCalcForm
         cmbSpecies.Name = "cmbSpecies";
         cmbSpecies.Size = new Size(187, 28);
         cmbSpecies.TabIndex = 1;
+        cmbSpecies.SelectedIndexChanged += SetIndexOnSpecies;
         // 
         // lblSpecies
         // 
@@ -1028,10 +1029,10 @@ partial class RewardCalcForm
         // 
         numEventCt.Location = new Point(741, 31);
         numEventCt.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
-        numEventCt.Minimum = new decimal(new int[] { 1, 0, 0, int.MinValue });
         numEventCt.Name = "numEventCt";
         numEventCt.Size = new Size(129, 27);
         numEventCt.TabIndex = 28;
+        numEventCt.ValueChanged += numEventCt_ValueChanged;
         // 
         // lblEventCt
         // 

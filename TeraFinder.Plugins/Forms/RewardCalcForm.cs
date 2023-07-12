@@ -66,11 +66,12 @@ public partial class RewardCalcForm : Form
         cmbContent.SelectedIndex = Editor.cmbContent.SelectedIndex;
         var content = (RaidContent)cmbContent.SelectedIndex;
         numEventCt.Value = content >= RaidContent.Event ? TeraUtil.GetDeliveryGroupID(Editor.SAV, Editor.Progress, content,
-            content is RaidContent.Event_Mighty ? Editor.Mighty : Editor.Dist, Editor.cmbDens.SelectedIndex) : -1;
+            content is RaidContent.Event_Mighty ? Editor.Mighty : Editor.Dist, Editor.cmbDens.SelectedIndex) : 0;
         cmbBoost.SelectedIndex = 0;
 
         toolTip.SetToolTip(chkAccurateSearch, Strings["ToolTipAccurate"]);
         toolTip1.SetToolTip(chkAllResults, Strings["ToolTipAllResults"]);
+        SetSpeciesOnIndex((int)numEventCt.Value);
 
         TranslateCmbProgress();
         TranslateCmbGame();
@@ -178,6 +179,58 @@ public partial class RewardCalcForm : Form
         var c = e.KeyChar;
         if (!char.IsControl(e.KeyChar) && !(c >= '0' && c <= '9'))
             e.Handled = true;
+    }
+
+    private void numEventCt_ValueChanged(object sender, EventArgs e) => SetSpeciesOnIndex((int)numEventCt.Value);
+
+    private void SetSpeciesOnIndex(int index)
+    {
+        var content = (RaidContent)cmbContent.SelectedIndex;
+        if (index > 0 && ((content is RaidContent.Event && Editor.Dist is not null) ||
+            (content is RaidContent.Event_Mighty && Editor.Mighty is not null)))
+        {
+
+            var species = (ushort)0;
+            foreach (var enc in content == RaidContent.Event ? Editor.Dist! : Editor.Mighty!)
+            {
+                if (enc.Index == index)
+                {
+                    species = enc.Species;
+                    break;
+                }
+            }
+
+            cmbSpecies.SelectedIndex = species;
+            return;
+        }
+        cmbSpecies.SelectedIndex = 0;
+    }
+
+    private void SetIndexOnSpecies(object sender, EventArgs e)
+    {
+        var index = 0;
+        var content = (RaidContent)cmbContent.SelectedIndex;
+
+        if (cmbSpecies.SelectedIndex > 0 && ((content is RaidContent.Event && Editor.Dist is not null) ||
+            (content is RaidContent.Event_Mighty && Editor.Mighty is not null)))
+        {
+            var species = cmbSpecies.SelectedIndex;
+            var encounters = content is RaidContent.Event ? Editor.Dist : Editor.Mighty;
+
+            if (encounters is not null)
+            {
+                foreach (var enc in encounters)
+                {
+                    if (enc.Species == species)
+                    {
+                        index = enc.Index;
+                        break;
+                    }
+                }
+            }
+        }
+
+        numEventCt.Value = index;
     }
 
     private bool IsBlankSAV()

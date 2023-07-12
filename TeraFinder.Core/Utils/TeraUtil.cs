@@ -268,15 +268,6 @@ public static class TeraUtil
         return null;
     }
 
-    public static EncounterRaid9? GetDistEncounterWithIndex(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, int index)
-    {
-        if (index < 0)
-            return null;
-
-        var encounter = new EncounterRaid9[] { encounters[index] };
-        return GetDistEncounter(seed, sav, progress, encounter);
-    }
-
     public static byte GetGender(EncounterRaid9 enc, bool isMighty)
     {
         if (isMighty)
@@ -353,16 +344,7 @@ public static class TeraUtil
         return result;
     }
 
-    public static int GetEventCount(RaidSpawnList9 raids, int raidIndex)
-    {
-        var count = -1;
-        for (var i = 0; i <= raidIndex; i++)
-            if ((int)raids.GetRaid(i).Content >= (int)TeraRaidContentType.Distribution)
-                count++;
-        return count;
-    }
-
-    public static int GetDeliveryGroupID(SAV9SV sav, GameProgress progress, RaidContent content, EncounterRaid9[]? Dist, int currRaid = -1, int eventCount = -1)
+    public static int GetDeliveryGroupID(SAV9SV sav, GameProgress progress, RaidContent content, EncounterRaid9[]? Dist, int currRaid = -1)
     {
         var p = progress switch
         {
@@ -379,13 +361,21 @@ public static class TeraUtil
                     ((GameVersion)sav.Game is GameVersion.VL && enc.GetRandRateTotalViolet(p) > 0))
                     possibleGroups.Add(enc.Index);
 
-        if(eventCount == -1 && currRaid > -1)
-            eventCount = (int)content >= 2 ? GetEventCount(sav.Raid, currRaid) : -1;
+        var eventCount = content >= RaidContent.Event ? GetEventCount(sav.Raid, currRaid+1) : 0;
 
         var priority = EventUtil.GetDeliveryPriority(sav);
-        var groupid = priority is not null ? GetDeliveryGroupID(eventCount, priority.GroupID.Groups, possibleGroups) : -1;
+        var groupid = priority is not null ? GetDeliveryGroupID(eventCount, priority.GroupID.Groups, possibleGroups) : 0;
 
         return groupid;
+    }
+
+    private static int GetEventCount(RaidSpawnList9 raids, int selected)
+    {
+        var count = 0;
+        for (var i = 0; i < selected; i++)
+            if ((RaidContent)raids.GetRaid(i).Content >= RaidContent.Event)
+                count++;
+        return count;
     }
 
     //From https://github.com/LegoFigure11/RaidCrawler/blob/7e764a9a5c0aa74270b3679083c813471abc55d6/Structures/TeraDistribution.cs#L145
@@ -409,7 +399,7 @@ public static class TeraUtil
                 eventct -= ct;
             }
         }
-        return -1;
+        return 0;
     }
 
     //From https://github.com/LegoFigure11/RaidCrawler/blob/main/Structures/Areas.cs

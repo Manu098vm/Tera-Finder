@@ -337,7 +337,7 @@ public partial class EditorForm : Form
                 lblShiny.Text = $"{Strings["EditorForm.lblShiny"]} {rngres.Shiny}";
                 lblGender.Text = $"{Strings["EditorForm.lblGender"]} {genders[(int)rngres.Gender]}";
                 lblIndex.Text = $"{Strings["EditorForm.lblIndex"]} {groupid}";
-                lblIndex.Visible = groupid != -1;
+                lblIndex.Visible = groupid != 0;
                 txtHP.Text = $"{rngres.HP}";
                 txtAtk.Text = $"{rngres.ATK}";
                 txtDef.Text = $"{rngres.DEF}";
