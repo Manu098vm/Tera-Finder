@@ -143,7 +143,8 @@ public static class ImagesUtil
         if (coordinates2.X != 0 && coordinates2.Y != 0)
             Graphics.FromImage(map).DrawImage(pointer, coordinates2);
 
-        if (coordinates.X != 0 && coordinates.Y != 0 && coordinates2.X != 0 && coordinates2.Y != 0)
+        if (coordinates.X != 0 && coordinates.Y != 0 && coordinates2.X != 0 && coordinates2.Y != 0 && 
+            coordinates.X != coordinates2.X && coordinates.Y != coordinates2.Y)
             Graphics.FromImage(map).DrawString("This Raid Den may have multiple locations.", 
                 new Font("Arial", 14), new SolidBrush(Color.Black), new PointF(0, 0));
 
