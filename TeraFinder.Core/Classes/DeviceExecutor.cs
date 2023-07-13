@@ -66,7 +66,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
     public async Task<GameVersion> ReadGame(CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         var title = await SwitchConnection.GetTitleID(token).ConfigureAwait(false);
@@ -82,7 +82,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
     //AGPL v3 License
     public async Task<string> ReadGameVersion(CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         var version = await SwitchConnection.GetGameInfo("version", token).ConfigureAwait(false);
@@ -98,7 +98,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
     //AGPL v3 License
     public async Task<string> VerifyBotbaseVersion(CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         var data = await SwitchConnection.GetBotbaseVersion(token).ConfigureAwait(false);
@@ -119,7 +119,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
     public async Task<GameProgress> ReadGameProgress(CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         var Unlocked6Stars = await ReadEncryptedBlockBool(Blocks.KUnlockedRaidDifficulty6, token).ConfigureAwait(false);
@@ -164,7 +164,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
     private async Task<bool> WriteDecryptedBlock(byte[] data, DataBlock block, CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         Log($"Writing decrypted block {block.Key:X8}...");
@@ -176,7 +176,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
     private async Task<byte[]> ReadDecryptedBlock(DataBlock block, CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         Log($"Reading decrypted block {block.Key:X8}...");
@@ -217,7 +217,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
     private async Task<bool> WriteEncryptedBlockUint(DataBlock block, uint valueToExpect ,uint valueToInject, CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         //Always read and decrypt first to validate address and data
@@ -247,7 +247,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
     private async Task<bool> WriteEncryptedBlockInt32(DataBlock block, int valueToExpect, int valueToInject, CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         //Always read and decrypt first to validate address and data
@@ -277,7 +277,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
     private async Task<bool> WriteEncryptedBlockByte(DataBlock block, byte valueToExpect, byte valueToInject, CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         //Always read and decrypt first to validate address and data
@@ -307,7 +307,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
     private async Task<bool> WriteEncryptedBlockArray(DataBlock block, byte[] arrayToExpect, byte[] arrayToInject, CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         //Always read and decrypt first to validate address and data
@@ -331,7 +331,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
     private async Task<byte[]?> ReadEncryptedBlockArray(DataBlock block, CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         Log($"Reading encrypted block {block.Key:X8}...");
@@ -344,7 +344,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
     private async Task<byte[]> ReadEncryptedBlockHeader(DataBlock block, CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         Log($"Reading encrypted block header {block.Key:X8}...");
@@ -357,7 +357,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
     private async Task<bool> WriteEncryptedBlockBool(DataBlock block, bool valueToExpect, bool valueToInject, CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         //Always read and decrypt first to validate address and data
@@ -384,7 +384,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
     //https://github.com/LegoFigure11/RaidCrawler/blob/2e1832ae89e5ac39dcc25ccf2ae911ef0f634580/MainWindow.cs#L199
     private async Task<byte[]?> ReadEncryptedBlockObject(DataBlock block, CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         Log($"Reading encrypted block {block.Key:X8}...");
@@ -400,7 +400,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
     private async Task<bool> ReadEncryptedBlockBool(DataBlock block, CancellationToken token)
     {
-        if (!Connection.Connected)
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         Log($"Reading encrypted block {block.Key:X8}[L:{block.Size:X8}]...");
