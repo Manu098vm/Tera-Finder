@@ -1052,6 +1052,7 @@ partial class RewardCalcForm
         cmbContent.Name = "cmbContent";
         cmbContent.Size = new Size(129, 28);
         cmbContent.TabIndex = 24;
+        cmbContent.SelectedIndexChanged += cmbContent_IndexChanged;
         // 
         // numMaxCalc
         // 

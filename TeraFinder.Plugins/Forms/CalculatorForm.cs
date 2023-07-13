@@ -209,6 +209,26 @@ public partial class CalculatorForm : Form
         if (cmbStars.SelectedIndex == 0)
             cmbStars_IndexChanged(sender, e);
         cmbStars.SelectedIndex = 0;
+
+        var content = (RaidContent)cmbContent.SelectedIndex;
+
+        if ((content is RaidContent.Event && Editor.Dist is not null) ||
+            (content is RaidContent.Event_Mighty && Editor.Mighty is not null))
+        {
+            var index = 0;
+            var encounters = content is RaidContent.Event ? Editor.Dist! : Editor.Mighty!;
+
+            foreach (var enc in encounters)
+            {
+                if (enc.Species > 0)
+                {
+                    index = enc.Index;
+                    break;
+                }    
+            }
+
+            numEventCt.Value = index;
+        }
     }
 
     private void numEventCt_ValueChanged(object sender, EventArgs e) => SetSpeciesOnIndex((int)numEventCt.Value);

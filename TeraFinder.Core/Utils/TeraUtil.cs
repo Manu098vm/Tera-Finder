@@ -177,7 +177,7 @@ public static class TeraUtil
 
         foreach (var encounter in encounters)
         {
-            if ((encounter.Version is GameVersion.SV || encounter.Version == game) && (stars == 0 || encounter.Stars == stars))
+            if (encounter.Species > 0 && (encounter.Version is GameVersion.SV || encounter.Version == game) && (stars == 0 || encounter.Stars == stars))
             {
                 var forms = FormConverter.GetFormList(encounter.Species, GameInfo.GetStrings(language).Types, GameInfo.GetStrings(language).forms, GameInfo.GenderSymbolASCII, EntityContext.Gen9);
                 var names = GameInfo.GetStrings(language).Species;
@@ -200,26 +200,19 @@ public static class TeraUtil
 
     public static EncounterRaid9[][] GetSAVDistEncounters(SAV9SV sav)
     {
-        var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
-        if (KBCATEventRaidIdentifier.Type is not SCTypeCode.None && BitConverter.ToUInt32(KBCATEventRaidIdentifier.Data) > 0)
+        try
         {
-            try
-            {
-                var events = EventUtil.GetEventEncounterDataFromSAV(sav);
-                var dist = EncounterRaid9.GetEncounters(EncounterDist9.GetArray(events[0]));
-                var mighty = EncounterRaid9.GetEncounters(EncounterMight9.GetArray(events[1]));
-                return new EncounterRaid9[][] { dist, mighty };
-            }
-            catch
-            {
-                var encounters = GetAllTeraEncounters();
-                return new EncounterRaid9[][] { encounters, encounters };
-            }
+            var events = EventUtil.GetEventEncounterDataFromSAV(sav);
+            var dist = EncounterRaid9.GetEncounters(EncounterDist9.GetArray(events[0]));
+            var mighty = EncounterRaid9.GetEncounters(EncounterMight9.GetArray(events[1]));
+            return new EncounterRaid9[][] { dist, mighty };
         }
-        else
+        catch
         {
-            var encounters = GetAllTeraEncounters();
-            return new EncounterRaid9[][] { encounters, encounters };
+            const int encSize = 86;
+            var dist = EncounterRaid9.GetEncounters(EncounterDist9.GetArray(new byte[encSize]));
+            var might = EncounterRaid9.GetEncounters(EncounterMight9.GetArray(new byte[encSize]));
+            return new EncounterRaid9[][] { dist, might };
         }
     }
 
