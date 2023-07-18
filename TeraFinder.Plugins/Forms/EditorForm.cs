@@ -519,5 +519,20 @@ public partial class EditorForm : Form
             MessageBox.Show(Strings["RandomShinyRaid"]);
             SystemSounds.Asterisk.Play();
         }
+        if (Loaded)
+        {
+            if (!txtSeed.Text.Equals(""))
+            {
+                var raid = SAV.Raid.GetRaid(cmbDens.SelectedIndex);
+                try
+                {
+                    var seed = Convert.ToUInt32(txtSeed.Text, 16);
+                    raid.Seed = seed;
+                }
+                catch { }
+                Task.Run(UpdateRemote).Wait();
+                UpdatePKMInfo(raid);
+            }
+        }
     }
 }
