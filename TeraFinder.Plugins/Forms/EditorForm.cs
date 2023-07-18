@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Media;
+using System;
+using System.Text.Json;
 using PKHeX.Core;
 using TeraFinder.Core;
 using static TeraFinder.Plugins.ImagesUtil;
@@ -29,6 +31,8 @@ public partial class EditorForm : Form
 
     public EncounterRaid9? CurrEncount = null;
     public TeraDetails? CurrTera = null;
+
+    private static Random random = new Random();
 
     public EditorForm(SAV9SV sav,
         IPKMView? editor,
@@ -138,6 +142,7 @@ public partial class EditorForm : Form
             { "AREANPA3", "North Province (Area 3)" },
             { "AREANPA1", "North Province (Area 1)" },
             { "AREANPA2", "North Province (Area 2)" },
+            { "RandomShinyRaid", "All Tera Raid random shiny have been generated, Except for Event Raid." }
         };
     }
 
@@ -478,6 +483,41 @@ public partial class EditorForm : Form
 
             var form = new RewardListForm(Language, lvl0, lvl1, lvl2, lvl3);
             form.Show();
+        }
+    }
+
+    private static int Raidshiny(uint Seed)
+    {
+        Xoroshiro128Plus xoroshiro128Plus = new Xoroshiro128Plus(Seed);
+        uint num = (uint)xoroshiro128Plus.NextInt(4294967295uL);
+        uint num2 = (uint)xoroshiro128Plus.NextInt(4294967295uL);
+        uint num3 = (uint)xoroshiro128Plus.NextInt(4294967295uL);
+        return (((num3 >> 16) ^ (num3 & 0xFFFF)) >> 4 == ((num2 >> 16) ^ (num2 & 0xFFFF)) >> 4) ? 1 : 0;
+    }
+
+    private void oneChickToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        if (SAV is SAV9SV sv)
+        {
+            TeraRaidDetail[] allRaids = sv.Raid.GetAllRaids();
+
+            foreach (TeraRaidDetail teraRaidDetail in allRaids)
+            {
+                if (teraRaidDetail.AreaID != 0 && (teraRaidDetail.Content == TeraRaidContentType.Base05 || teraRaidDetail.Content == TeraRaidContentType.Black6))
+                {
+                    teraRaidDetail.IsEnabled = true;
+                    uint seed;
+                    do
+                    {
+                        seed = (uint)random.Next();
+                    }
+                    while (Raidshiny(seed) == 0);
+                    teraRaidDetail.Seed = seed;
+                    teraRaidDetail.IsClaimedLeaguePoints = false;
+                }
+            }
+            MessageBox.Show(Strings["RandomShinyRaid"]);
+            SystemSounds.Asterisk.Play();
         }
     }
 }

@@ -151,6 +151,8 @@ ConnectionForm.btnConnect=連接
 ConnectionForm.btnDisconnect=斷開
 
 EditorForm=太晶洞窟編輯器
+EditorForm.toolsToolStripMenuItem=工具
+EditorForm.oneChickToolStripMenuItem=一键随机色违
 EditorForm.GrpRaidInfo=太晶洞窟信息
 EditorForm.lblSeed=Seed:
 EditorForm.lblContent=洞窟類型:
@@ -235,6 +237,7 @@ ConnectionFailedAux=請嘗試在遊戲記錄存並重新啟動遊戲。
 ExecutorConnected=框架連接成功:
 DisconnectionSuccess=終端已斷開
 ToolTipSyncOutbreaks=同步遠程終端的寶可夢大量出現數據。可能需要相當長的時間。
+RandomShinyRaid=所有太晶洞窟随机异色已经生成，活动除外。
 
 TeraShiny.Any=任意
 TeraShiny.No=否

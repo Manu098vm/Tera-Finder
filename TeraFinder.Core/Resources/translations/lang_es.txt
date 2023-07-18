@@ -150,6 +150,8 @@ ConnectionForm.btnConnect=Conectar
 ConnectionForm.btnDisconnect=Desconectar
 
 EditorForm=Editor de Teraincursiones
+EditorForm.toolsToolStripMenuItem=Tools
+EditorForm.oneChickToolStripMenuItem=One click random shiny
 EditorForm.GrpRaidInfo=Info. de Teraincursiones
 EditorForm.lblSeed=Seed:
 EditorForm.lblContent=Contenido:
@@ -234,6 +236,7 @@ ConnectionFailedAux=Por favor, intenta guardar dentro del juego e intenta de nue
 ExecutorConnected=Ejecutor conectado con éxito:
 DisconnectionSuccess=Dispositivo desconectado.
 ToolTipSyncOutbreaks=Sincronizar datos de Aparición Masiva desde dispositivo remoto. Puede requerir una considerable cantidad de tiempo.
+RandomShinyRaid=All Tera Raid random shiny have been generated,  Except for Event Raid.
 
 TeraShiny.Any=Cualquiera
 TeraShiny.No=No
