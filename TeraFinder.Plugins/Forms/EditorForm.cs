@@ -525,7 +525,7 @@ public partial class EditorForm : Form
                     if (enc.Index != groupid)
                         continue;
 
-                    if (enc.Species != originalEncounter.Species || enc.Form != originalEncounter.Form)
+                    if (keepEncounter && (enc.Species != originalEncounter.Species || enc.Form != originalEncounter.Form))
                         continue;
 
                     if (enc.Shiny is not Shiny.Never)
@@ -592,8 +592,8 @@ public partial class EditorForm : Form
         progressWindow.Close();
         cmbDens_IndexChanged(this, new EventArgs());
         Task.Run(UpdateRemote).Wait();
-        MessageBox.Show(Strings["ShinifiedAll"]);
         SystemSounds.Asterisk.Play();
+        MessageBox.Show(Strings["ShinifiedAll"]);
     }
 
     public class ShinifyForm : Form
