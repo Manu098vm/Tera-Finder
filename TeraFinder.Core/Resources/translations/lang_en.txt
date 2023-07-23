@@ -151,6 +151,9 @@ ConnectionForm.btnDisconnect=Disconnect
 
 EditorForm=Tera Raid Editor
 EditorForm.GrpRaidInfo=Raid Info
+EditorForm.toolsToolStripMenuItem=Tools
+EditorForm.btnShinifyAll=Shinify All Raids (Random Encounters)
+EditorForm.btnShinifyAllEncounters=Shinify All Raids (Keep Encounters)
 EditorForm.lblSeed=Seed:
 EditorForm.lblContent=Content:
 EditorForm.chkActive=Den Active
@@ -180,6 +183,7 @@ EditorForm.btnOpenCalculator=Raid Calculator
 EditorForm.btnOpenRewardCalculator=Reward Calculator
 EditorForm.LblLvl=Lvl.
 EditorForm.CmbRaid=Raid
+ShinifyForm.lblValue=Progress:
 
 ProgressForm=Flag Editor
 ProgressForm.grpGameProgress=Current Game Progress:
@@ -234,6 +238,7 @@ ConnectionFailedAux=Please try saving in-game and reboot the game.
 ExecutorConnected=Executor succesfully connected:
 DisconnectionSuccess=Device disconnected.
 ToolTipSyncOutbreaks=Syncronize Outbreaks data from the remote device. Might require a sgnificant amount of time.
+ShinifiedAll=All raids have been Shinified.
 
 TeraShiny.Any=Any
 TeraShiny.No=No

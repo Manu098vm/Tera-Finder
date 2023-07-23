@@ -152,7 +152,8 @@ ConnectionForm.btnDisconnect=断开
 
 EditorForm=太晶洞窟编辑器
 EditorForm.toolsToolStripMenuItem=工具
-EditorForm.oneChickToolStripMenuItem=一键随机异色
+EditorForm.btnShinifyAll=一键随机异色
+EditorForm.btnShinifyAllEncounters=Shinify All Raids (Keep Encounters)
 EditorForm.GrpRaidInfo=太晶洞窟信息
 EditorForm.lblSeed=Seed:
 EditorForm.lblContent=洞窟类型:
@@ -183,6 +184,7 @@ EditorForm.btnOpenCalculator=太晶洞窟计算器
 EditorForm.btnOpenRewardCalculator=奖励计算器
 EditorForm.LblLvl=等级:
 EditorForm.CmbRaid=太晶洞窟
+ShinifyForm.lblValue=Progress:
 
 ProgressForm=太晶洞窟解锁进度编辑器
 ProgressForm.grpGameProgress=当前解锁进度:
@@ -237,7 +239,7 @@ ConnectionFailedAux=请尝试在游戏中保存并重新启动游戏。
 ExecutorConnected=框架连接成功:
 DisconnectionSuccess=设备已断开
 ToolTipSyncOutbreaks=同步远程设备的宝可梦大量出现数据。可能需要相当长的时间。
-RandomShinyRaid=所有太晶洞窟随机异色已经生成，活动除外。
+ShinifiedAll=所有太晶洞窟异色已经生成。
 
 TeraShiny.Any=任意
 TeraShiny.No=否

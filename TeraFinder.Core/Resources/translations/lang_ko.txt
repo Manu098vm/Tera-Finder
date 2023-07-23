@@ -151,7 +151,8 @@ ConnectionForm.btnDisconnect=연결 끊기
 
 EditorForm=테라 레이드 편집기
 EditorForm.toolsToolStripMenuItem=Tools
-EditorForm.oneChickToolStripMenuItem=One click random shiny
+EditorForm.btnShinifyAll=Shinify All Raids (Random Encounters)
+EditorForm.btnShinifyAllEncounters=Shinify All Raids (Keep Encounters)
 EditorForm.GrpRaidInfo=레이드 정보
 EditorForm.lblSeed=시드:
 EditorForm.lblContent=레이드종류:
@@ -182,6 +183,7 @@ EditorForm.btnOpenCalculator=레이드 계산기
 EditorForm.btnOpenRewardCalculator=보상 계산기
 EditorForm.LblLvl=Lvl.
 EditorForm.CmbRaid=레이드
+ShinifyForm.lblValue=Progress:
 
 ProgressForm=플래그 편집기
 ProgressForm.grpGameProgress=최근 게임 진행상황:
@@ -236,7 +238,7 @@ ConnectionFailedAux=게임을 저장하고 다시 켜주세요.
 ExecutorConnected=성공적으로 연결되었습니다
 DisconnectionSuccess=연결이 끊겼습니다
 ToolTipSyncOutbreaks=스위치에서 대량발생 데이터를 동기화합니다. 상당한 시간이 소요될 수 있습니다.
-RandomShinyRaid=All Tera Raid random shiny have been generated,  Except for Event Raid.
+ShinifiedAll=All raids have been Shinified.
 
 TeraShiny.Any=모두
 TeraShiny.No=X

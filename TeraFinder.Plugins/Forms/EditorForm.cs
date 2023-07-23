@@ -1,5 +1,4 @@
 ﻿using System.Media;
-using System;
 using System.Text.Json;
 using PKHeX.Core;
 using TeraFinder.Core;
@@ -31,8 +30,6 @@ public partial class EditorForm : Form
 
     public EncounterRaid9? CurrEncount = null;
     public TeraDetails? CurrTera = null;
-
-    private static Random random = new Random();
 
     public EditorForm(SAV9SV sav,
         IPKMView? editor,
@@ -142,7 +139,8 @@ public partial class EditorForm : Form
             { "AREANPA3", "North Province (Area 3)" },
             { "AREANPA1", "North Province (Area 1)" },
             { "AREANPA2", "North Province (Area 2)" },
-            { "RandomShinyRaid", "All Tera Raid random shiny have been generated, Except for Event Raid." }
+            { "ShinifyForm.lblValue", "Progress:" },
+            { "ShinifiedAll", "All raids have been Shinified." }
         };
     }
 
@@ -486,53 +484,142 @@ public partial class EditorForm : Form
         }
     }
 
-    private static int Raidshiny(uint Seed)
+    private void BtnShinifyAllRaids_Click(object sender, EventArgs e) => ShinifyRaids(false);
+    private void BtnShinyAllEncounters_Click(object sender, EventArgs e) => ShinifyRaids(true);
+
+    private void ShinifyRaids(bool keepEncounter)
     {
-        Xoroshiro128Plus xoroshiro128Plus = new Xoroshiro128Plus(Seed);
-        uint num = (uint)xoroshiro128Plus.NextInt(4294967295uL);
-        uint num2 = (uint)xoroshiro128Plus.NextInt(4294967295uL);
-        uint num3 = (uint)xoroshiro128Plus.NextInt(4294967295uL);
-        return (((num3 >> 16) ^ (num3 & 0xFFFF)) >> 4 == ((num2 >> 16) ^ (num2 & 0xFFFF)) >> 4) ? 1 : 0;
+        var progressWindow = new ShinifyForm(0, Strings["ShinifyForm.lblValue"]);
+
+        var raidList = SAV.Raid.GetAllRaids();
+        foreach (var iterator in raidList.Select((value, i) => new { i, value }))
+        {
+            var raid = iterator.value;
+            var index = iterator.i;
+
+            if (index > 69)
+                break;
+
+            if (raid.AreaID == 0)
+                continue;
+
+            var currProgress = (index * 100) / 69;
+            progressWindow.UpdateComputedValue(currProgress);
+
+            var seed = raid.Seed;
+            var content = (RaidContent)raid.Content;
+            var groupid = TeraUtil.GetDeliveryGroupID(SAV, Progress, content, content is RaidContent.Event_Mighty ? Mighty : Dist, index);
+            var progress = content is RaidContent.Black ? (GameProgress)6 : Progress;
+            var originalEncounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, SAV, TeraUtil.GetStars(seed, progress), Tera!) :
+                content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, SAV, progress, Dist!, groupid);
+
+            if (originalEncounter is null)
+                continue;
+
+            if (originalEncounter.IsDistribution)
+            {
+                var canBeShiny = false;
+                foreach (var enc in content is RaidContent.Event ? Dist! : Mighty!)
+                {
+                    if (enc.Index != groupid)
+                        continue;
+
+                    if (enc.Species != originalEncounter.Species || enc.Form != originalEncounter.Form)
+                        continue;
+
+                    if (enc.Shiny is not Shiny.Never)
+                    {
+                        canBeShiny = true;
+                        break;
+                    }
+                }
+
+                if (!canBeShiny)
+                    continue;
+            }
+
+            var token = new CancellationTokenSource();
+            var nthreads = Environment.ProcessorCount;
+            var resetEvent = new ManualResetEvent(false);
+            var toProcess = nthreads;
+            var calcsperthread = 0xFFFFFFFF / (uint)nthreads;
+
+            for (uint i = 0; i < nthreads; i++)
+            {
+                var n = i;
+                var tseed = seed;
+
+                new Thread(delegate ()
+                {
+                    var initialFrame = calcsperthread * n;
+                    var maxFrame = n < nthreads - 1 ? calcsperthread * (n + 1) : 0xFFFFFFFF;
+                    tseed += initialFrame;
+
+                    for (ulong j = initialFrame; j <= maxFrame && !token.IsCancellationRequested; j++)
+                    {
+                        var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(tseed, SAV, TeraUtil.GetStars(tseed, progress), Tera!) :
+                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(tseed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(tseed, SAV, progress, Dist!, groupid);
+
+                        var rngres = encounter is not null && (!keepEncounter || (encounter.Species == originalEncounter.Species && encounter.Form == originalEncounter.Form)) ?
+                            TeraUtil.CalcRNG(tseed, SAV.TrainerTID7, SAV.TrainerSID7, content, encounter) : null;
+
+                        var isShiny = rngres is not null && rngres.Shiny >= TeraShiny.Yes;
+
+                        if (!isShiny)
+                            tseed++;
+                        else
+                        {
+                            seed = rngres!.Seed;
+                            token.Cancel();
+                            break;
+                        }
+                    }
+
+                    if (Interlocked.Decrement(ref toProcess) == 0 || token.IsCancellationRequested)
+                        resetEvent.Set();
+
+                }).Start();
+
+                resetEvent.WaitOne();
+
+                raid.Seed = seed;
+                raid.IsEnabled = true;
+                raid.IsClaimedLeaguePoints = false;
+            }
+        }
+
+        progressWindow.Close();
+        cmbDens_IndexChanged(this, new EventArgs());
+        Task.Run(UpdateRemote).Wait();
+        MessageBox.Show(Strings["ShinifiedAll"]);
+        SystemSounds.Asterisk.Play();
     }
 
-    private void oneChickToolStripMenuItem_Click(object sender, EventArgs e)
+    public class ShinifyForm : Form
     {
-        if (SAV is SAV9SV sv)
-        {
-            TeraRaidDetail[] allRaids = sv.Raid.GetAllRaids();
+        private readonly Label lblValue;
+        private readonly string Progress;
 
-            foreach (TeraRaidDetail teraRaidDetail in allRaids)
-            {
-                if (teraRaidDetail.AreaID != 0 && (teraRaidDetail.Content == TeraRaidContentType.Base05 || teraRaidDetail.Content == TeraRaidContentType.Black6))
-                {
-                    teraRaidDetail.IsEnabled = true;
-                    uint seed;
-                    do
-                    {
-                        seed = (uint)random.Next();
-                    }
-                    while (Raidshiny(seed) == 0);
-                    teraRaidDetail.Seed = seed;
-                    teraRaidDetail.IsClaimedLeaguePoints = false;
-                }
-            }
-            MessageBox.Show(Strings["RandomShinyRaid"]);
-            SystemSounds.Asterisk.Play();
+        public ShinifyForm(int computedValue, string progress)
+        { 
+            MaximizeBox = false;
+            MinimizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Size = new Size(150, 75);
+            StartPosition = FormStartPosition.CenterParent;
+
+            Progress = progress;
+            lblValue = new Label { Text = $"{Progress} {computedValue}%", TextAlign = ContentAlignment.TopCenter };
+            lblValue.Location = new Point((Width - lblValue.Width) / 2, lblValue.Location.Y);
+
+            Controls.Add(lblValue);
+            Show();
         }
-        if (Loaded)
+
+        public void UpdateComputedValue(int computed)
         {
-            if (!txtSeed.Text.Equals(""))
-            {
-                var raid = SAV.Raid.GetRaid(cmbDens.SelectedIndex);
-                try
-                {
-                    var seed = Convert.ToUInt32(txtSeed.Text, 16);
-                    raid.Seed = seed;
-                }
-                catch { }
-                Task.Run(UpdateRemote).Wait();
-                UpdatePKMInfo(raid);
-            }
+            lblValue.Text = $"{Progress} {computed}%";
+            lblValue.Location = new Point((Width - lblValue.Width) / 2, lblValue.Location.Y);
         }
     }
 }
