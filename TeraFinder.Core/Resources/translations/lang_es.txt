@@ -150,6 +150,9 @@ ConnectionForm.btnConnect=Conectar
 ConnectionForm.btnDisconnect=Desconectar
 
 EditorForm=Editor de Teraincursiones
+EditorForm.toolsToolStripMenuItem=Tools
+EditorForm.btnShinifyAll=Shinify All Raids (Random Encounters)
+EditorForm.btnShinifyAllEncounters=Shinify All Raids (Keep Encounters)
 EditorForm.GrpRaidInfo=Info. de Teraincursiones
 EditorForm.lblSeed=Seed:
 EditorForm.lblContent=Contenido:
@@ -180,6 +183,7 @@ EditorForm.btnOpenCalculator=Calculadora Teraincursiones
 EditorForm.btnOpenRewardCalculator=Calculadora Recompensas
 EditorForm.LblLvl=Nvl.
 EditorForm.CmbRaid=Teraincursión
+ShinifyForm.lblValue=Progress:
 
 ProgressForm=Editor de Flags
 ProgressForm.grpGameProgress=Progreso actual del juego:
@@ -234,6 +238,7 @@ ConnectionFailedAux=Por favor, intenta guardar dentro del juego e intenta de nue
 ExecutorConnected=Ejecutor conectado con éxito:
 DisconnectionSuccess=Dispositivo desconectado.
 ToolTipSyncOutbreaks=Sincronizar datos de Aparición Masiva desde dispositivo remoto. Puede requerir una considerable cantidad de tiempo.
+ShinifiedAll=All raids have been Shinified.
 
 TeraShiny.Any=Cualquiera
 TeraShiny.No=No

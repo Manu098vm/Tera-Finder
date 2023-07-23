@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Media;
+using System.Text.Json;
 using PKHeX.Core;
 using TeraFinder.Core;
 using static TeraFinder.Plugins.ImagesUtil;
@@ -138,6 +139,8 @@ public partial class EditorForm : Form
             { "AREANPA3", "North Province (Area 3)" },
             { "AREANPA1", "North Province (Area 1)" },
             { "AREANPA2", "North Province (Area 2)" },
+            { "ShinifyForm.lblValue", "Progress:" },
+            { "ShinifiedAll", "All raids have been Shinified." }
         };
     }
 
@@ -478,6 +481,145 @@ public partial class EditorForm : Form
 
             var form = new RewardListForm(Language, lvl0, lvl1, lvl2, lvl3);
             form.Show();
+        }
+    }
+
+    private void BtnShinifyAllRaids_Click(object sender, EventArgs e) => ShinifyRaids(false);
+    private void BtnShinyAllEncounters_Click(object sender, EventArgs e) => ShinifyRaids(true);
+
+    private void ShinifyRaids(bool keepEncounter)
+    {
+        var progressWindow = new ShinifyForm(0, Strings["ShinifyForm.lblValue"]);
+
+        var raidList = SAV.Raid.GetAllRaids();
+        foreach (var iterator in raidList.Select((value, i) => new { i, value }))
+        {
+            var raid = iterator.value;
+            var index = iterator.i;
+
+            if (index > 69)
+                break;
+
+            if (raid.AreaID == 0)
+                continue;
+
+            var currProgress = (index * 100) / 69;
+            progressWindow.UpdateComputedValue(currProgress);
+
+            var seed = raid.Seed;
+            var content = (RaidContent)raid.Content;
+            var groupid = TeraUtil.GetDeliveryGroupID(SAV, Progress, content, content is RaidContent.Event_Mighty ? Mighty : Dist, index);
+            var progress = content is RaidContent.Black ? (GameProgress)6 : Progress;
+            var originalEncounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, SAV, TeraUtil.GetStars(seed, progress), Tera!) :
+                content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, SAV, progress, Dist!, groupid);
+
+            if (originalEncounter is null)
+                continue;
+
+            if (originalEncounter.IsDistribution)
+            {
+                var canBeShiny = false;
+                foreach (var enc in content is RaidContent.Event ? Dist! : Mighty!)
+                {
+                    if (enc.Index != groupid)
+                        continue;
+
+                    if (enc.Species != originalEncounter.Species || enc.Form != originalEncounter.Form)
+                        continue;
+
+                    if (enc.Shiny is not Shiny.Never)
+                    {
+                        canBeShiny = true;
+                        break;
+                    }
+                }
+
+                if (!canBeShiny)
+                    continue;
+            }
+
+            var token = new CancellationTokenSource();
+            var nthreads = Environment.ProcessorCount;
+            var resetEvent = new ManualResetEvent(false);
+            var toProcess = nthreads;
+            var calcsperthread = 0xFFFFFFFF / (uint)nthreads;
+
+            for (uint i = 0; i < nthreads; i++)
+            {
+                var n = i;
+                var tseed = seed;
+
+                new Thread(delegate ()
+                {
+                    var initialFrame = calcsperthread * n;
+                    var maxFrame = n < nthreads - 1 ? calcsperthread * (n + 1) : 0xFFFFFFFF;
+                    tseed += initialFrame;
+
+                    for (ulong j = initialFrame; j <= maxFrame && !token.IsCancellationRequested; j++)
+                    {
+                        var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(tseed, SAV, TeraUtil.GetStars(tseed, progress), Tera!) :
+                            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(tseed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(tseed, SAV, progress, Dist!, groupid);
+
+                        var rngres = encounter is not null && (!keepEncounter || (encounter.Species == originalEncounter.Species && encounter.Form == originalEncounter.Form)) ?
+                            TeraUtil.CalcRNG(tseed, SAV.TrainerTID7, SAV.TrainerSID7, content, encounter) : null;
+
+                        var isShiny = rngres is not null && rngres.Shiny >= TeraShiny.Yes;
+
+                        if (!isShiny)
+                            tseed++;
+                        else
+                        {
+                            seed = rngres!.Seed;
+                            token.Cancel();
+                            break;
+                        }
+                    }
+
+                    if (Interlocked.Decrement(ref toProcess) == 0 || token.IsCancellationRequested)
+                        resetEvent.Set();
+
+                }).Start();
+
+                resetEvent.WaitOne();
+
+                raid.Seed = seed;
+                raid.IsEnabled = true;
+                raid.IsClaimedLeaguePoints = false;
+            }
+        }
+
+        progressWindow.Close();
+        cmbDens_IndexChanged(this, new EventArgs());
+        Task.Run(UpdateRemote).Wait();
+        MessageBox.Show(Strings["ShinifiedAll"]);
+        SystemSounds.Asterisk.Play();
+    }
+
+    public class ShinifyForm : Form
+    {
+        private readonly Label lblValue;
+        private readonly string Progress;
+
+        public ShinifyForm(int computedValue, string progress)
+        { 
+            MaximizeBox = false;
+            MinimizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Size = new Size(150, 75);
+            StartPosition = FormStartPosition.CenterParent;
+
+            Progress = progress;
+            lblValue = new Label { Text = $"{Progress} {computedValue}%", TextAlign = ContentAlignment.TopCenter };
+            lblValue.Location = new Point((Width - lblValue.Width) / 2, lblValue.Location.Y);
+
+            Controls.Add(lblValue);
+            Show();
+        }
+
+        public void UpdateComputedValue(int computed)
+        {
+            lblValue.Text = $"{Progress} {computed}%";
+            lblValue.Location = new Point((Width - lblValue.Width) / 2, lblValue.Location.Y);
         }
     }
 }

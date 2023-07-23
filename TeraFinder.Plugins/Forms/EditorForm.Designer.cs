@@ -74,18 +74,23 @@ partial class EditorForm
         btnOpenRewardCalculator = new Button();
         imgMap = new PictureBox();
         grpMap = new GroupBox();
+        menuStrip1 = new MenuStrip();
+        toolsToolStripMenuItem = new ToolStripMenuItem();
+        btnShinifyAll = new ToolStripMenuItem();
+        btnShinifyAllEncounters = new ToolStripMenuItem();
         GrpRaidInfo.SuspendLayout();
         grpPkmInfo.SuspendLayout();
         grpMoves.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
         ((System.ComponentModel.ISupportInitialize)imgMap).BeginInit();
         grpMap.SuspendLayout();
+        menuStrip1.SuspendLayout();
         SuspendLayout();
         // 
         // cmbDens
         // 
         cmbDens.FormattingEnabled = true;
-        cmbDens.Location = new Point(45, 13);
+        cmbDens.Location = new Point(50, 34);
         cmbDens.Margin = new Padding(3, 4, 3, 4);
         cmbDens.Name = "cmbDens";
         cmbDens.Size = new Size(316, 28);
@@ -101,7 +106,7 @@ partial class EditorForm
         GrpRaidInfo.Controls.Add(txtSeed);
         GrpRaidInfo.Controls.Add(lblSeed);
         GrpRaidInfo.Controls.Add(chkLP);
-        GrpRaidInfo.Location = new Point(8, 49);
+        GrpRaidInfo.Location = new Point(13, 67);
         GrpRaidInfo.Margin = new Padding(3, 4, 3, 4);
         GrpRaidInfo.Name = "GrpRaidInfo";
         GrpRaidInfo.Padding = new Padding(3, 4, 3, 4);
@@ -156,7 +161,7 @@ partial class EditorForm
         // lblSeed
         // 
         lblSeed.AutoSize = true;
-        lblSeed.Location = new Point(11, 37);
+        lblSeed.Location = new Point(11, 36);
         lblSeed.Name = "lblSeed";
         lblSeed.Size = new Size(45, 20);
         lblSeed.TabIndex = 4;
@@ -202,11 +207,11 @@ partial class EditorForm
         grpPkmInfo.Controls.Add(txtAtk);
         grpPkmInfo.Controls.Add(txtScale);
         grpPkmInfo.Controls.Add(txtHP);
-        grpPkmInfo.Location = new Point(8, 164);
+        grpPkmInfo.Location = new Point(8, 189);
         grpPkmInfo.Margin = new Padding(3, 4, 3, 4);
         grpPkmInfo.Name = "grpPkmInfo";
         grpPkmInfo.Padding = new Padding(3, 4, 3, 4);
-        grpPkmInfo.Size = new Size(390, 381);
+        grpPkmInfo.Size = new Size(390, 380);
         grpPkmInfo.TabIndex = 3;
         grpPkmInfo.TabStop = false;
         grpPkmInfo.Text = "Pokémon Info";
@@ -316,7 +321,7 @@ partial class EditorForm
         pictureBox.BackgroundImage = Properties.Resources._000;
         pictureBox.BackgroundImageLayout = ImageLayout.Stretch;
         pictureBox.BorderStyle = BorderStyle.FixedSingle;
-        pictureBox.Location = new Point(292, 109);
+        pictureBox.Location = new Point(293, 109);
         pictureBox.Margin = new Padding(3, 4, 3, 4);
         pictureBox.Name = "pictureBox";
         pictureBox.Size = new Size(75, 75);
@@ -505,7 +510,7 @@ partial class EditorForm
         // 
         // btnOpenCalculator
         // 
-        btnOpenCalculator.Location = new Point(8, 545);
+        btnOpenCalculator.Location = new Point(8, 577);
         btnOpenCalculator.Margin = new Padding(3, 4, 3, 4);
         btnOpenCalculator.Name = "btnOpenCalculator";
         btnOpenCalculator.Size = new Size(192, 52);
@@ -516,7 +521,7 @@ partial class EditorForm
         // 
         // btnDx
         // 
-        btnDx.Location = new Point(367, 12);
+        btnDx.Location = new Point(372, 34);
         btnDx.Margin = new Padding(3, 4, 3, 4);
         btnDx.Name = "btnDx";
         btnDx.Size = new Size(31, 32);
@@ -527,7 +532,7 @@ partial class EditorForm
         // 
         // btnSx
         // 
-        btnSx.Location = new Point(7, 12);
+        btnSx.Location = new Point(13, 34);
         btnSx.Margin = new Padding(3, 4, 3, 4);
         btnSx.Name = "btnSx";
         btnSx.Size = new Size(31, 32);
@@ -538,7 +543,7 @@ partial class EditorForm
         // 
         // btnOpenRewardCalculator
         // 
-        btnOpenRewardCalculator.Location = new Point(206, 545);
+        btnOpenRewardCalculator.Location = new Point(211, 577);
         btnOpenRewardCalculator.Margin = new Padding(3, 4, 3, 4);
         btnOpenRewardCalculator.Name = "btnOpenRewardCalculator";
         btnOpenRewardCalculator.Size = new Size(192, 52);
@@ -552,7 +557,7 @@ partial class EditorForm
         imgMap.BackgroundImage = Properties.Resources.world;
         imgMap.BackgroundImageLayout = ImageLayout.Stretch;
         imgMap.BorderStyle = BorderStyle.Fixed3D;
-        imgMap.Location = new Point(6, 16);
+        imgMap.Location = new Point(7, 16);
         imgMap.Margin = new Padding(3, 4, 3, 4);
         imgMap.Name = "imgMap";
         imgMap.Size = new Size(572, 569);
@@ -562,28 +567,63 @@ partial class EditorForm
         // grpMap
         // 
         grpMap.Controls.Add(imgMap);
-        grpMap.Location = new Point(405, 4);
+        grpMap.Location = new Point(411, 32);
         grpMap.Margin = new Padding(3, 4, 3, 4);
         grpMap.Name = "grpMap";
         grpMap.Padding = new Padding(3, 4, 3, 4);
-        grpMap.Size = new Size(584, 595);
+        grpMap.Size = new Size(584, 590);
         grpMap.TabIndex = 23;
         grpMap.TabStop = false;
+        // 
+        // menuStrip1
+        // 
+        menuStrip1.BackColor = SystemColors.ButtonFace;
+        menuStrip1.ImageScalingSize = new Size(20, 20);
+        menuStrip1.Items.AddRange(new ToolStripItem[] { toolsToolStripMenuItem });
+        menuStrip1.Location = new Point(0, 0);
+        menuStrip1.Name = "menuStrip1";
+        menuStrip1.Padding = new Padding(7, 2, 0, 2);
+        menuStrip1.Size = new Size(1003, 28);
+        menuStrip1.TabIndex = 24;
+        menuStrip1.Text = "menuStrip1";
+        // 
+        // toolsToolStripMenuItem
+        // 
+        toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { btnShinifyAll, btnShinifyAllEncounters });
+        toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+        toolsToolStripMenuItem.Size = new Size(58, 24);
+        toolsToolStripMenuItem.Text = "Tools";
+        // 
+        // btnShinifyAll
+        // 
+        btnShinifyAll.Name = "btnShinifyAll";
+        btnShinifyAll.Size = new Size(344, 26);
+        btnShinifyAll.Text = "Shinify All Raids (Random Encounters)";
+        btnShinifyAll.Click += BtnShinifyAllRaids_Click;
+        // 
+        // btnShinifyAllEncounters
+        // 
+        btnShinifyAllEncounters.Name = "btnShinifyAllEncounters";
+        btnShinifyAllEncounters.Size = new Size(344, 26);
+        btnShinifyAllEncounters.Text = "Shinify All Raids (Keep Encounters)";
+        btnShinifyAllEncounters.Click += BtnShinyAllEncounters_Click;
         // 
         // EditorForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(995, 603);
+        ClientSize = new Size(1003, 634);
         Controls.Add(grpMap);
+        Controls.Add(cmbDens);
         Controls.Add(btnOpenRewardCalculator);
         Controls.Add(btnDx);
         Controls.Add(btnSx);
         Controls.Add(btnOpenCalculator);
         Controls.Add(grpPkmInfo);
         Controls.Add(GrpRaidInfo);
-        Controls.Add(cmbDens);
+        Controls.Add(menuStrip1);
         Icon = (Icon)resources.GetObject("$this.Icon");
+        MainMenuStrip = menuStrip1;
         Margin = new Padding(3, 4, 3, 4);
         MaximizeBox = false;
         MinimizeBox = false;
@@ -599,7 +639,10 @@ partial class EditorForm
         ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
         ((System.ComponentModel.ISupportInitialize)imgMap).EndInit();
         grpMap.ResumeLayout(false);
+        menuStrip1.ResumeLayout(false);
+        menuStrip1.PerformLayout();
         ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
@@ -648,4 +691,8 @@ partial class EditorForm
     private Label lblScale;
     private GroupBox grpMap;
     private Label lblIndex;
+    private MenuStrip menuStrip1;
+    private ToolStripMenuItem toolsToolStripMenuItem;
+    private ToolStripMenuItem btnShinifyAll;
+    private ToolStripMenuItem btnShinifyAllEncounters;
 }
