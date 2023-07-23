@@ -140,7 +140,8 @@ public partial class EditorForm : Form
             { "AREANPA1", "North Province (Area 1)" },
             { "AREANPA2", "North Province (Area 2)" },
             { "ShinifyForm.lblValue", "Progress:" },
-            { "ShinifiedAll", "All raids have been Shinified." }
+            { "ShinifiedAll", "All raids have been Shinified." },
+            { "MultipleLocations", "This Raid Den may have multiple locations." }
         };
     }
 
@@ -365,7 +366,7 @@ public partial class EditorForm : Form
                     pictureBox.Size = DefSize;
                 }
 
-                imgMap.SetMapPoint(rngres.TeraType, (int)raid.AreaID, (int)raid.SpawnPointID, DenLocations);
+                imgMap.SetMapPoint(Strings["MultipleLocations"], rngres.TeraType, (int)raid.AreaID, (int)raid.SpawnPointID, DenLocations);
 
                 btnRewards.Width = pictureBox.Image is not null ? pictureBox.Image.Width : pictureBox.BackgroundImage!.Width;
                 btnRewards.Visible = true;
@@ -605,7 +606,7 @@ public partial class EditorForm : Form
             MaximizeBox = false;
             MinimizeBox = false;
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Size = new Size(150, 75);
+            Size = new Size(200, 75);
             StartPosition = FormStartPosition.CenterParent;
 
             Progress = progress;

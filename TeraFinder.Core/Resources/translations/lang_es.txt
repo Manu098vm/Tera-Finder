@@ -24,6 +24,7 @@ TeraFinderForm.btnStartCalculator=Calcular Teraincursión
 TeraFinderForm.btnStartRewardCalc=Calcular Recompensas
 TeraFinderForm.btnEditOutbreaks=Ver/Editar Apariciones Masivas
 
+OutbreakForm=Mass Outbreak Editor
 OutbreakForm.toolsToolStripMenuItem=Herramientas
 OutbreakForm.dumpToJsonToolStripMenuItem=Volcar a Json
 OutbreakForm.injectFromJsonToolStripMenuItem=Inyectar desde Json
@@ -239,6 +240,7 @@ ExecutorConnected=Ejecutor conectado con éxito:
 DisconnectionSuccess=Dispositivo desconectado.
 ToolTipSyncOutbreaks=Sincronizar datos de Aparición Masiva desde dispositivo remoto. Puede requerir una considerable cantidad de tiempo.
 ShinifiedAll=All raids have been Shinified.
+MultipleLocations=This Raid Den may have multiple locations.
 
 TeraShiny.Any=Cualquiera
 TeraShiny.No=No

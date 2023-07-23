@@ -67,7 +67,7 @@ public static class ImagesUtil
         return ImageUtil.LayerImage(image, icon, 0, 0, 0.7);
     }
 
-    public static void SetMapPoint(this PictureBox pic, int teratype, int area, int spawnpoint, Dictionary<string, float[]> locations)
+    public static void SetMapPoint(this PictureBox pic, string multipleden, int teratype, int area, int spawnpoint, Dictionary<string, float[]> locations)
     {
         var loc_available = locations.TryGetValue($"{area}-{spawnpoint}", out var location);
         var x = loc_available ? location![0] : 0;
@@ -78,17 +78,17 @@ public static class ImagesUtil
         var y2 = loc2_available ? location2![2] : 0;
 
         if (loc2_available)
-            pic.SetMapPoint(teratype, x, y, x2, y2);
+            pic.SetMapPoint(teratype, multipleden, x, y, x2, y2);
         else if (loc_available)
-            pic.SetMapPoint(teratype, x, y);
+            pic.SetMapPoint(teratype, multipleden, x, y);
     }
 
-    public static void SetMapPoint(this PictureBox pic, GameCoordinates coordinates, int teratype = 0)
+    public static void SetMapPoint(this PictureBox pic, string multipleden, GameCoordinates coordinates, int teratype = 0)
     {
-        pic.SetMapPoint(teratype, coordinates.X, coordinates.Z);
+        pic.SetMapPoint(teratype, multipleden, coordinates.X, coordinates.Z);
     }
 
-    private static void SetMapPoint(this PictureBox pic, int teratype, float x, float y, float x2 = 0, float y2 = 0)
+    private static void SetMapPoint(this PictureBox pic, int teratype, string multipleden, float x, float y, float x2 = 0, float y2 = 0)
     {
         const int def_size = 570;
         const int def_width = 52;
@@ -145,8 +145,7 @@ public static class ImagesUtil
 
         if (coordinates.X != 0 && coordinates.Y != 0 && coordinates2.X != 0 && coordinates2.Y != 0 && 
             coordinates.X != coordinates2.X && coordinates.Y != coordinates2.Y)
-            Graphics.FromImage(map).DrawString("This Raid Den may have multiple locations.", 
-                new Font("Arial", 14), new SolidBrush(Color.Black), new PointF(0, 0));
+            Graphics.FromImage(map).DrawString(multipleden, new Font("Arial", 14), new SolidBrush(Color.Black), new PointF(0, 0));
 
         pic.Image = map;
     }

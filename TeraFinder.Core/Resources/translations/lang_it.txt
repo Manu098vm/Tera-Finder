@@ -25,6 +25,7 @@ TeraFinderForm.btnStartRewardCalc=Calcolatore Ricompense
 TeraFinderForm.btnEditOutbreaks=Visualizza e Modifica Comparse Massicce
 OutbreakForm.SpeciesExclusive={species} è una esclusiva di {game}!
 
+OutbreakForm=Mass Outbreak Editor
 OutbreakForm.toolsToolStripMenuItem=Strumenti
 OutbreakForm.dumpToJsonToolStripMenuItem=Esporta su Json
 OutbreakForm.injectFromJsonToolStripMenuItem=Importa da Json
@@ -183,7 +184,7 @@ EditorForm.btnOpenCalculator=Calcolatore Raid
 EditorForm.btnOpenRewardCalculator=Calcolatore Ricompense
 EditorForm.LblLvl=Lvl.
 EditorForm.CmbRaid=Raid
-ShinifyForm.lblValue=Progresso:
+ShinifyForm.lblValue=Progress:
 
 ProgressForm=Flag Editor
 ProgressForm.grpGameProgress=Progresso di gioco attuale:
@@ -239,6 +240,7 @@ ExecutorConnected=Executor connesso con successo:
 DisconnectionSuccess=Dispositivo disconnesso.
 ToolTipSyncOutbreaks=Sincronizza i dati delle Comparse Massicce dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
 ShinifiedAll=Tutti i Raid sono stati resi Shiny.
+MultipleLocations=Questo Raid può avere differenti posizioni.
 
 TeraShiny.Any=Qualsiasi
 TeraShiny.No=No
