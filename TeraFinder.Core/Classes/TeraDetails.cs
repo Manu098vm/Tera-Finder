@@ -29,6 +29,7 @@ public class TeraDetails
     public ushort Move2 { get; set; }
     public ushort Move3 { get; set; }
     public ushort Move4 { get; set; }
+    public byte GroupID { get; set; }
     public ulong Calcs { get; set; }
 
 
@@ -45,7 +46,7 @@ public class TeraDetails
 
     public string[] GetStrings(string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlistascii, string[] genderlistunicode, string[] shinies)
     {
-        var list = new string[25];
+        var list = new string[26];
         list[0] = ($"{Seed:X8}");
         list[1] = ($"{GetShiny(shinies)}");
         list[2] = ($"{Stars}");
@@ -70,7 +71,8 @@ public class TeraDetails
         list[21] = ($"{movelist[Move2]}");
         list[22] = ($"{movelist[Move3]}");
         list[23] = ($"{movelist[Move4]}");
-        list[24] = ($"{Calcs}");
+        list[24] = ($"{GroupID}");
+        list[25] = ($"{Calcs}");
         return list;
     }
 
@@ -118,6 +120,7 @@ public class GridEntry
     public string? Move2 { get; private set; }
     public string? Move3 { get; private set; }
     public string? Move4 { get; private set; }
+    public string? GroupID { get; private set; }
     public string? Calcs { get; private set; }
 
     public GridEntry(TeraDetails res, string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlistascii, string[] genderlistunicode, string[] shinylist)
@@ -147,7 +150,8 @@ public class GridEntry
         Move2 = str[21];
         Move3 = str[22];
         Move4 = str[23];
-        Calcs = str[24];
+        GroupID = str[24];
+        Calcs = str[25];
     }
 
     public GridEntry(string[] str)
@@ -176,12 +180,13 @@ public class GridEntry
         Move2 = str[21];
         Move3 = str[22];
         Move4 = str[23];
-        Calcs = str[24];
+        GroupID = str[24];
+        Calcs = str[25];
     }
 
     public string[] GetStrings()
     {
-        var list = new string[25];
+        var list = new string[26];
         list[0] = ($"{Seed}");
         list[1] = ($"{Shiny}");
         list[2] = ($"{Stars}");
@@ -206,7 +211,8 @@ public class GridEntry
         list[21] = ($"{Move2}");
         list[22] = ($"{Move3}");
         list[23] = ($"{Move4}");
-        list[24] = ($"{Calcs}");
+        list[24] = ($"{GroupID}");
+        list[25] = ($"{Calcs}");
         return list;
     }
 }

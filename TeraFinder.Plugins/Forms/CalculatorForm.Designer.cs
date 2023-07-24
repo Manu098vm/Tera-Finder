@@ -31,8 +31,6 @@ partial class CalculatorForm
         components = new System.ComponentModel.Container();
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalculatorForm));
         grpRaidDetails = new GroupBox();
-        numEventCt = new NumericUpDown();
-        lblEventct = new Label();
         showresults = new CheckBox();
         numFrames = new NumericUpDown();
         btnSearch = new Button();
@@ -110,7 +108,6 @@ partial class CalculatorForm
         btnToPkmEditor = new ToolStripMenuItem();
         btnSendToEditor = new ToolStripMenuItem();
         grpRaidDetails.SuspendLayout();
-        ((System.ComponentModel.ISupportInitialize)numEventCt).BeginInit();
         ((System.ComponentModel.ISupportInitialize)numFrames).BeginInit();
         grpFilters.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)numScaleMax).BeginInit();
@@ -134,8 +131,6 @@ partial class CalculatorForm
         // 
         // grpRaidDetails
         // 
-        grpRaidDetails.Controls.Add(numEventCt);
-        grpRaidDetails.Controls.Add(lblEventct);
         grpRaidDetails.Controls.Add(showresults);
         grpRaidDetails.Controls.Add(numFrames);
         grpRaidDetails.Controls.Add(btnSearch);
@@ -153,24 +148,6 @@ partial class CalculatorForm
         grpRaidDetails.TabStop = false;
         grpRaidDetails.Text = "Raid Settings";
         // 
-        // numEventCt
-        // 
-        numEventCt.Location = new Point(119, 130);
-        numEventCt.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
-        numEventCt.Name = "numEventCt";
-        numEventCt.Size = new Size(174, 27);
-        numEventCt.TabIndex = 11;
-        numEventCt.ValueChanged += numEventCt_ValueChanged;
-        // 
-        // lblEventct
-        // 
-        lblEventct.AutoSize = true;
-        lblEventct.Location = new Point(16, 132);
-        lblEventct.Name = "lblEventct";
-        lblEventct.Size = new Size(88, 20);
-        lblEventct.TabIndex = 10;
-        lblEventct.Text = "Event Index:";
-        // 
         // showresults
         // 
         showresults.AutoSize = true;
@@ -184,7 +161,7 @@ partial class CalculatorForm
         // 
         // numFrames
         // 
-        numFrames.Location = new Point(119, 63);
+        numFrames.Location = new Point(119, 80);
         numFrames.Margin = new Padding(3, 4, 3, 4);
         numFrames.Maximum = new decimal(new int[] { -1, 0, 0, 0 });
         numFrames.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
@@ -207,7 +184,7 @@ partial class CalculatorForm
         // lblFrames
         // 
         lblFrames.AutoSize = true;
-        lblFrames.Location = new Point(16, 65);
+        lblFrames.Location = new Point(16, 82);
         lblFrames.Name = "lblFrames";
         lblFrames.Size = new Size(78, 20);
         lblFrames.TabIndex = 1;
@@ -216,7 +193,7 @@ partial class CalculatorForm
         // lblContent
         // 
         lblContent.AutoSize = true;
-        lblContent.Location = new Point(16, 98);
+        lblContent.Location = new Point(16, 115);
         lblContent.Name = "lblContent";
         lblContent.Size = new Size(64, 20);
         lblContent.TabIndex = 2;
@@ -224,7 +201,7 @@ partial class CalculatorForm
         // 
         // txtSeed
         // 
-        txtSeed.Location = new Point(119, 28);
+        txtSeed.Location = new Point(119, 45);
         txtSeed.Margin = new Padding(3, 4, 3, 4);
         txtSeed.MaxLength = 8;
         txtSeed.Name = "txtSeed";
@@ -236,7 +213,7 @@ partial class CalculatorForm
         // 
         cmbContent.FormattingEnabled = true;
         cmbContent.Items.AddRange(new object[] { "Standard", "Black", "Event", "Event-Mighty" });
-        cmbContent.Location = new Point(119, 95);
+        cmbContent.Location = new Point(119, 112);
         cmbContent.Margin = new Padding(3, 4, 3, 4);
         cmbContent.Name = "cmbContent";
         cmbContent.Size = new Size(174, 28);
@@ -246,7 +223,7 @@ partial class CalculatorForm
         // lblSeed
         // 
         lblSeed.AutoSize = true;
-        lblSeed.Location = new Point(16, 31);
+        lblSeed.Location = new Point(16, 48);
         lblSeed.Name = "lblSeed";
         lblSeed.Size = new Size(45, 20);
         lblSeed.TabIndex = 1;
@@ -436,8 +413,6 @@ partial class CalculatorForm
         cmbSpecies.Name = "cmbSpecies";
         cmbSpecies.Size = new Size(194, 28);
         cmbSpecies.TabIndex = 29;
-        cmbSpecies.SelectedIndexChanged += cmbSpecies_IndexChanged;
-        cmbSpecies.SelectedIndexChanged += SetIndexOnSpecies;
         // 
         // cmbStars
         // 
@@ -956,7 +931,6 @@ partial class CalculatorForm
         FormClosing += Form_FormClosing;
         grpRaidDetails.ResumeLayout(false);
         grpRaidDetails.PerformLayout();
-        ((System.ComponentModel.ISupportInitialize)numEventCt).EndInit();
         ((System.ComponentModel.ISupportInitialize)numFrames).EndInit();
         grpFilters.ResumeLayout(false);
         grpFilters.PerformLayout();
@@ -1059,6 +1033,4 @@ partial class CalculatorForm
     public ComboBox cmbGame;
     private ToolStripMenuItem btnViewRewards;
     private Label lblFound;
-    private Label lblEventct;
-    public NumericUpDown numEventCt;
 }

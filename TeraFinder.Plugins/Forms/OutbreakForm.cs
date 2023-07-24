@@ -10,17 +10,17 @@ public partial class OutbreakForm : Form
     public string Language = null!;
     private Dictionary<string, string> Strings = null!;
 
-    private ConnectionForm? Connection;
+    private readonly ConnectionForm? Connection;
 
-    private Image DefBackground = null!;
+    private readonly Image DefBackground = null!;
     private Size DefSize = new(0, 0);
     private bool Loaded = false;
     private bool Importing = false;
-    private string[] SpeciesList = null!;
-    private string[] FormsList = null!;
-    private string[] TypesList = null!;
-    private string[] GenderList = null!;
-    private string[] GameList = null!;
+    private readonly string[] SpeciesList = null!;
+    private readonly string[] FormsList = null!;
+    private readonly string[] TypesList = null!;
+    private readonly string[] GenderList = null!;
+    private readonly string[] GameList = null!;
 
     public OutbreakForm(SAV9SV sav, string language, ConnectionForm? connection)
     {

@@ -16,10 +16,10 @@ public static class TeraUtil
         return UTF8Encoding.UTF8.GetString((byte[]) obj);
     }
 
-    public static PK9 GenerateTeraEntity(SAV9SV sav, EncounterRaid9 encounter, RaidContent content, uint seed, uint tid, uint sid)
+    public static PK9 GenerateTeraEntity(SAV9SV sav, EncounterRaid9 encounter, RaidContent content, uint seed, uint tid, uint sid, int groupid)
     {
         var template = new PK9(Properties.Resources.template);
-        var rngres = CalcRNG(seed, tid, sid, content, encounter);
+        var rngres = CalcRNG(seed, tid, sid, content, encounter, groupid);
         template.Species = rngres.Species;
         template.Form = rngres.Form;
         if (rngres.Stars == 7) template.RibbonMarkMightiest = true;
@@ -276,7 +276,7 @@ public static class TeraUtil
         return PersonalTable.SV.GetFormEntry(enc.Species, enc.Form).Gender;
     }
 
-    public static TeraDetails CalcRNG(uint seed, uint tid, uint sid, RaidContent content, EncounterRaid9 encounter, ulong calc = 0)
+    public static TeraDetails CalcRNG(uint seed, uint tid, uint sid, RaidContent content, EncounterRaid9 encounter, int groupid, ulong calc = 0)
     {
         var param = new GenerateParam9
         {
@@ -332,6 +332,7 @@ public static class TeraUtil
             Move2 = encounter.Moves.Move2,
             Move3 = encounter.Moves.Move3,
             Move4 = encounter.Moves.Move4,
+            GroupID = (byte)groupid,
             Calcs = calc,
         };
         return result;

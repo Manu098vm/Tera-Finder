@@ -302,3 +302,4 @@ GridUtil.MissingData=PKHeX Core no contiene datos de evento
 GridUtil.CheckWiki=Por favor, consulta wiki de Tera Finder para saber cómo actualizar la dependencia PKHeX.Core.
 GridUtil.Report=Por favor, reporta este error al autor de Tera Finder.
 GridUtil.RowsExceeded=Selección de filas superó el máximo permitido [1].
+GridUtil.MismatchGroupID=GroupID Mismatch. The selected Raid Den on the Raid Editor can only contain Event Raids with index {editorIndex}. The selected Raid result has Index {resultIndex}.

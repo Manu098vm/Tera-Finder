@@ -18,6 +18,7 @@ public static class GridUtil
             { "GridUtil.CheckWiki", "" },
             { "GridUtil.Report", "" },
             { "GridUtil.RowsExceeded", "" },
+            { "GridUtil.MismatchGroupID", "" },
         }.TranslateInnerStrings(language);
     }
 
@@ -153,20 +154,20 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var content = GetContent(seed, selectedRows.ElementAt(0), f);
-                    var progress = GetProgress(seed, selectedRows.ElementAt(0), f);
-                    var groupid = (int)f.numEventCt.Value;
+                    var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
+                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f);
+                    var progress = GetProgress(seed, groupid, selectedRows.ElementAt(0), f);
                     var tid = Convert.ToUInt32(f.txtTID.Text, 10);
                     var sid = Convert.ToUInt32(f.txtSID.Text, 10);
 
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Game = (int)GetGameVersion(seed, selectedRows.ElementAt(0), f);
+                    sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f);
 
                     var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
                         content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, groupid) :
                         TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, groupid);
 
-                    var res = TeraUtil.GenerateTeraEntity(sav, encounter!, content, seed, tid, sid);
+                    var res = TeraUtil.GenerateTeraEntity(sav, encounter!, content, seed, tid, sid, groupid);
                     var la = new LegalityAnalysis(res);
 
                     if (!la.Valid)
@@ -231,17 +232,18 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var content = GetContent(seed, selectedRows.ElementAt(0), f);
-                    var progress = GetProgress(seed, selectedRows.ElementAt(0), f);
+                    var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
+                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f);
+                    var progress = GetProgress(seed, groupid, selectedRows.ElementAt(0), f);
 
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Game = (int)GetGameVersion(seed, selectedRows.ElementAt(0), f);
+                    sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f);
 
                     var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
                         content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
                         TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
-                    var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter!);
+                    var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter!, groupid);
 
                     var lvl0 = RewardUtil.GetRewardList(rngres, encounter!.FixedRewardHash, encounter!.LotteryRewardHash,
                         encounter!.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards, encounter!.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards, 0);
@@ -283,7 +285,18 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var content = GetContent(seed, selectedRows.ElementAt(0), f);
+                    var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
+                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f);
+
+                    if (content is RaidContent.Event or RaidContent.Event_Mighty)
+                    {
+                        if (f.Editor.CurrTera!.GroupID != groupid)
+                        {
+                            MessageBox.Show($"{strings["GridUtil.MismatchGroupID"].Replace("{editorIndex}", $"{f.Editor.CurrTera!.GroupID}").Replace("{resultIndex}", $"{groupid}")}");
+                            return;
+                        }
+                    }
+
                     f.Editor.txtSeed.Text = $"{seed:X8}";
                     f.Editor.cmbContent.SelectedIndex = (int)content;
                 }
@@ -315,7 +328,18 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var content = GetContent(seed, selectedRows.ElementAt(0), f);
+                    var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
+                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f);
+
+                    if (content is RaidContent.Event or RaidContent.Event_Mighty)
+                    {
+                        if (f.Editor.CurrTera!.GroupID != groupid)
+                        {
+                            MessageBox.Show($"{strings["GridUtil.MismatchGroupID"].Replace("{editorIndex}", $"{f.Editor.CurrTera!.GroupID}").Replace("{resultIndex}", $"{groupid}")}");
+                            return;
+                        }
+                    }
+
                     f.Editor.txtSeed.Text = $"{seed:X8}";
                     f.Editor.cmbContent.SelectedIndex = (int)content;
                 }
@@ -347,20 +371,20 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var content = GetContent(seed, selectedRows.ElementAt(0), f);
-                    var progress = GetProgress(seed, selectedRows.ElementAt(0), f);
-                    var groupid = (int)f.numEventCt.Value;
+                    var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
+                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f);
+                    var progress = GetProgress(seed, groupid, selectedRows.ElementAt(0), f);
                     var tid = Convert.ToUInt32(f.txtTID.Text, 10);
                     var sid = Convert.ToUInt32(f.txtSID.Text, 10);
 
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Game = (int)GetGameVersion(seed, selectedRows.ElementAt(0), f);
+                    sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f);
 
                     var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
                         content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, groupid) :
                         TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, groupid);
 
-                    var res = TeraUtil.GenerateTeraEntity(sav, encounter!, content, seed, tid, sid);
+                    var res = TeraUtil.GenerateTeraEntity(sav, encounter!, content, seed, tid, sid, groupid);
                     var la = new LegalityAnalysis(res);
 
                     if (!la.Valid)
@@ -392,7 +416,7 @@ public static class GridUtil
         }
     }
 
-    private static GameProgress GetProgress(uint seed, DataGridViewRow row, CalculatorForm f)
+    private static GameProgress GetProgress(uint seed, int groupid, DataGridViewRow row, CalculatorForm f)
     {
         for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
         {
@@ -408,7 +432,7 @@ public static class GridUtil
 
                     if (encounter is not null)
                     {
-                        var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter);
+                        var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter, groupid);
                         var success = true;
 
                         if (rngres != null)
@@ -429,7 +453,7 @@ public static class GridUtil
         return (GameProgress)f.cmbProgress.SelectedIndex;
     }
 
-    private static RaidContent GetContent(uint seed, DataGridViewRow row, CalculatorForm f)
+    private static RaidContent GetContent(uint seed, int groupid, DataGridViewRow row, CalculatorForm f)
     {
         for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
         {
@@ -446,7 +470,7 @@ public static class GridUtil
 
                     if (encounter is not null)
                     {
-                        var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter);
+                        var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter, groupid);
                         var success = true;
 
                         if (rngres != null)
@@ -472,7 +496,7 @@ public static class GridUtil
         return (RaidContent)f.cmbContent.SelectedIndex;
     }
 
-    private static RaidContent GetContent(uint seed, DataGridViewRow row, RewardCalcForm f)
+    private static RaidContent GetContent(uint seed, int groupid, DataGridViewRow row, RewardCalcForm f)
     {
         foreach (var accuratesearch in new[] { true, false })
         {
@@ -499,7 +523,7 @@ public static class GridUtil
 
                             if (accuratesearch)
                             {
-                                var det = TeraUtil.CalcRNG(seed, sav.TrainerTID7, sav.TrainerSID7, content, encounter);
+                                var det = TeraUtil.CalcRNG(seed, sav.TrainerTID7, sav.TrainerSID7, content, encounter, groupid);
                                 list = RewardUtil.GetRewardList(det, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
                                 shiny = det.Shiny;
                             }
@@ -539,7 +563,7 @@ public static class GridUtil
         return (RaidContent)f.cmbContent.SelectedIndex;
     }
 
-    private static GameVersion GetGameVersion(uint seed, DataGridViewRow row, CalculatorForm f)
+    private static GameVersion GetGameVersion(uint seed, int groupid, DataGridViewRow row, CalculatorForm f)
     {
         for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
         {
@@ -555,7 +579,7 @@ public static class GridUtil
 
                     if (encounter is not null)
                     {
-                        var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter);
+                        var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter, groupid);
                         var success = true;
 
                         if (rngres != null)

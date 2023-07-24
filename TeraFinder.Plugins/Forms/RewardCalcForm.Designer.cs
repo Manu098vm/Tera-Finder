@@ -113,8 +113,6 @@ partial class RewardCalcForm
         lblGame = new Label();
         grpSettings = new GroupBox();
         cmbBoost = new ComboBox();
-        numEventCt = new NumericUpDown();
-        lblEventCt = new Label();
         cmbContent = new ComboBox();
         numMaxCalc = new NumericUpDown();
         lblSandwich = new Label();
@@ -157,7 +155,6 @@ partial class RewardCalcForm
         ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
         grpProfile.SuspendLayout();
         grpSettings.SuspendLayout();
-        ((System.ComponentModel.ISupportInitialize)numEventCt).BeginInit();
         ((System.ComponentModel.ISupportInitialize)numMaxCalc).BeginInit();
         grpSearch.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)dataGrid).BeginInit();
@@ -416,7 +413,6 @@ partial class RewardCalcForm
         cmbSpecies.Name = "cmbSpecies";
         cmbSpecies.Size = new Size(187, 28);
         cmbSpecies.TabIndex = 1;
-        cmbSpecies.SelectedIndexChanged += SetIndexOnSpecies;
         // 
         // lblSpecies
         // 
@@ -997,8 +993,6 @@ partial class RewardCalcForm
         // grpSettings
         // 
         grpSettings.Controls.Add(cmbBoost);
-        grpSettings.Controls.Add(numEventCt);
-        grpSettings.Controls.Add(lblEventCt);
         grpSettings.Controls.Add(cmbContent);
         grpSettings.Controls.Add(numMaxCalc);
         grpSettings.Controls.Add(lblSandwich);
@@ -1019,44 +1013,25 @@ partial class RewardCalcForm
         // 
         cmbBoost.FormattingEnabled = true;
         cmbBoost.Items.AddRange(new object[] { "No Boost", "Level 1", "Level 2", "Level 3" });
-        cmbBoost.Location = new Point(1009, 31);
+        cmbBoost.Location = new Point(859, 27);
         cmbBoost.Margin = new Padding(3, 4, 3, 4);
         cmbBoost.Name = "cmbBoost";
         cmbBoost.Size = new Size(129, 28);
         cmbBoost.TabIndex = 26;
         // 
-        // numEventCt
-        // 
-        numEventCt.Location = new Point(741, 31);
-        numEventCt.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
-        numEventCt.Name = "numEventCt";
-        numEventCt.Size = new Size(129, 27);
-        numEventCt.TabIndex = 28;
-        numEventCt.ValueChanged += numEventCt_ValueChanged;
-        // 
-        // lblEventCt
-        // 
-        lblEventCt.AutoSize = true;
-        lblEventCt.Location = new Point(644, 34);
-        lblEventCt.Name = "lblEventCt";
-        lblEventCt.Size = new Size(88, 20);
-        lblEventCt.TabIndex = 27;
-        lblEventCt.Text = "Event Index:";
-        // 
         // cmbContent
         // 
         cmbContent.FormattingEnabled = true;
         cmbContent.Items.AddRange(new object[] { "Standard", "Black", "Event", "Event-Mighty" });
-        cmbContent.Location = new Point(501, 31);
+        cmbContent.Location = new Point(587, 28);
         cmbContent.Margin = new Padding(3, 4, 3, 4);
         cmbContent.Name = "cmbContent";
         cmbContent.Size = new Size(129, 28);
         cmbContent.TabIndex = 24;
-        cmbContent.SelectedIndexChanged += cmbContent_IndexChanged;
         // 
         // numMaxCalc
         // 
-        numMaxCalc.Location = new Point(282, 31);
+        numMaxCalc.Location = new Point(368, 28);
         numMaxCalc.Margin = new Padding(3, 4, 3, 4);
         numMaxCalc.Maximum = new decimal(new int[] { -1, 0, 0, 0 });
         numMaxCalc.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
@@ -1068,7 +1043,7 @@ partial class RewardCalcForm
         // lblSandwich
         // 
         lblSandwich.AutoSize = true;
-        lblSandwich.Location = new Point(886, 34);
+        lblSandwich.Location = new Point(736, 30);
         lblSandwich.Name = "lblSandwich";
         lblSandwich.Size = new Size(117, 20);
         lblSandwich.TabIndex = 25;
@@ -1077,7 +1052,7 @@ partial class RewardCalcForm
         // lblContent
         // 
         lblContent.AutoSize = true;
-        lblContent.Location = new Point(417, 34);
+        lblContent.Location = new Point(503, 31);
         lblContent.Name = "lblContent";
         lblContent.Size = new Size(64, 20);
         lblContent.TabIndex = 0;
@@ -1086,7 +1061,7 @@ partial class RewardCalcForm
         // lblSeed
         // 
         lblSeed.AutoSize = true;
-        lblSeed.Location = new Point(11, 33);
+        lblSeed.Location = new Point(97, 30);
         lblSeed.Name = "lblSeed";
         lblSeed.Size = new Size(45, 20);
         lblSeed.TabIndex = 1;
@@ -1095,7 +1070,7 @@ partial class RewardCalcForm
         // lblCalcs
         // 
         lblCalcs.AutoSize = true;
-        lblCalcs.Location = new Point(198, 33);
+        lblCalcs.Location = new Point(284, 30);
         lblCalcs.Name = "lblCalcs";
         lblCalcs.Size = new Size(78, 20);
         lblCalcs.TabIndex = 2;
@@ -1103,7 +1078,7 @@ partial class RewardCalcForm
         // 
         // txtSeed
         // 
-        txtSeed.Location = new Point(63, 30);
+        txtSeed.Location = new Point(149, 27);
         txtSeed.Margin = new Padding(3, 4, 3, 4);
         txtSeed.MaxLength = 8;
         txtSeed.Name = "txtSeed";
@@ -1255,7 +1230,6 @@ partial class RewardCalcForm
         grpProfile.PerformLayout();
         grpSettings.ResumeLayout(false);
         grpSettings.PerformLayout();
-        ((System.ComponentModel.ISupportInitialize)numEventCt).EndInit();
         ((System.ComponentModel.ISupportInitialize)numMaxCalc).EndInit();
         grpSearch.ResumeLayout(false);
         grpSearch.PerformLayout();
@@ -1366,6 +1340,4 @@ partial class RewardCalcForm
     private Label lblSpecies;
     private CheckBox chkShiny;
     private Label lblFound;
-    private NumericUpDown numEventCt;
-    private Label lblEventCt;
 }

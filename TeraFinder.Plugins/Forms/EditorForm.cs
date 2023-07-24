@@ -12,7 +12,7 @@ public partial class EditorForm : Form
     public IPKMView? PKMEditor { get; private set; } = null!;
     private readonly Dictionary<string, float[]> DenLocations = null!;
     public GameProgress Progress { get; set; } = GameProgress.None;
-    private Image DefBackground = null!;
+    private readonly Image DefBackground = null!;
     private Size DefSize = new(0, 0);
     private bool Loaded = false;
     private Dictionary<string, string> Strings = null!;
@@ -324,7 +324,7 @@ public partial class EditorForm : Form
 
             if (encounter is not null)
             {
-                var rngres = TeraUtil.CalcRNG(raid.Seed, SAV.TrainerTID7, SAV.TrainerSID7, (RaidContent)raid.Content, encounter);
+                var rngres = TeraUtil.CalcRNG(raid.Seed, SAV.TrainerTID7, SAV.TrainerSID7, (RaidContent)raid.Content, encounter, groupid);
 
                 var species = GameInfo.GetStrings(Language).specieslist;
                 var types = GameInfo.GetStrings(Language).types;
@@ -562,7 +562,7 @@ public partial class EditorForm : Form
                             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(tseed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(tseed, SAV, progress, Dist!, groupid);
 
                         var rngres = encounter is not null && (!keepEncounter || (encounter.Species == originalEncounter.Species && encounter.Form == originalEncounter.Form)) ?
-                            TeraUtil.CalcRNG(tseed, SAV.TrainerTID7, SAV.TrainerSID7, content, encounter) : null;
+                            TeraUtil.CalcRNG(tseed, SAV.TrainerTID7, SAV.TrainerSID7, content, encounter, groupid) : null;
 
                         var isShiny = rngres is not null && rngres.Shiny >= TeraShiny.Yes;
 

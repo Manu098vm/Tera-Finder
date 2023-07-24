@@ -6,7 +6,7 @@ namespace TeraFinder.Plugins;
 public partial class CalculatorForm : Form
 {
     public EditorForm Editor = null!;
-    private List<TeraDetails> CalculatedList = new();
+    private readonly List<TeraDetails> CalculatedList = new();
     private TeraFilter? Filter = null;
     private CancellationTokenSource Token = new();
 
@@ -55,7 +55,6 @@ public partial class CalculatorForm : Form
 
         txtSeed.Text = Editor.txtSeed.Text;
         cmbContent.SelectedIndex = Editor.cmbContent.SelectedIndex;
-        var content = (RaidContent)cmbContent.SelectedIndex;
 
         cmbTeraType.Items.Clear();
         cmbTeraType.Items.Add(Strings["Any"]);
@@ -81,11 +80,6 @@ public partial class CalculatorForm : Form
         nSpdMax.Value = 31;
         nSpeMax.Value = 31;
         numScaleMax.Value = 255;
-
-        numEventCt.Value = content >= RaidContent.Event ? TeraUtil.GetDeliveryGroupID(Editor.SAV, Editor.Progress, content,
-            content is RaidContent.Event_Mighty ? Editor.Mighty : Editor.Dist, Editor.cmbDens.SelectedIndex) : 0;
-        toolTip.SetToolTip(showresults, Strings["ToolTipAllResults"]);
-        SetSpeciesOnIndex((int)numEventCt.Value);
 
         TranslateCmbProgress();
         TranslateCmbShiny();
@@ -209,90 +203,6 @@ public partial class CalculatorForm : Form
         if (cmbStars.SelectedIndex == 0)
             cmbStars_IndexChanged(sender, e);
         cmbStars.SelectedIndex = 0;
-
-        var content = (RaidContent)cmbContent.SelectedIndex;
-
-        if ((content is RaidContent.Event && Editor.Dist is not null) ||
-            (content is RaidContent.Event_Mighty && Editor.Mighty is not null))
-        {
-            var index = 0;
-            var encounters = content is RaidContent.Event ? Editor.Dist! : Editor.Mighty!;
-
-            foreach (var enc in encounters)
-            {
-                if (enc.Species > 0)
-                {
-                    index = enc.Index;
-                    break;
-                }    
-            }
-
-            numEventCt.Value = index;
-        }
-    }
-
-    private void numEventCt_ValueChanged(object sender, EventArgs e) => SetSpeciesOnIndex((int)numEventCt.Value);
-
-    private void SetSpeciesOnIndex(int index)
-    {
-        var content = (RaidContent)cmbContent.SelectedIndex;
-        if (index > 0 && ((content is RaidContent.Event && Editor.Dist is not null) ||
-            (content is RaidContent.Event_Mighty && Editor.Mighty is not null)))
-        {
-            var species = (ushort)0;
-            var form = (byte)0;
-
-            foreach (var enc in content == RaidContent.Event ? Editor.Dist! : Editor.Mighty!)
-            {
-                if (enc.Index == index)
-                {
-                    species = enc.Species;
-                    form = enc.Form;
-                    break;
-                }
-            }
-
-            var i = 0;
-            foreach (var obj in cmbSpecies.Items)
-            {
-                var str = obj.ToString();
-                var cmbSpecies = GetSpeciesAndForm(str!);
-                if (cmbSpecies[0] == species && cmbSpecies[1] == form)
-                    break;
-                i++;
-            }
-
-            cmbSpecies.SelectedIndex = i;
-            return;
-        }
-        cmbSpecies.SelectedIndex = 0;
-    }
-
-    private void SetIndexOnSpecies(object sender, EventArgs e)
-    {
-        var index = 0;
-        var content = (RaidContent)cmbContent.SelectedIndex;
-
-        if (cmbSpecies.SelectedIndex > 0 && ((content is RaidContent.Event && Editor.Dist is not null) ||
-            (content is RaidContent.Event_Mighty && Editor.Mighty is not null)))
-        {
-            var species = GetSpeciesAndForm();
-            var encounters = content is RaidContent.Event ? Editor.Dist : Editor.Mighty;
-
-            if (encounters is not null)
-            {
-                foreach (var enc in encounters)
-                {
-                    if (enc.Species == species[0] && enc.Form == species[1])
-                    {
-                        index = enc.Index;
-                        break;
-                    }
-                }
-            }
-        }
-
-        numEventCt.Value = index;
     }
 
     private void cmbStars_IndexChanged(object sender, EventArgs e)
@@ -492,7 +402,6 @@ public partial class CalculatorForm : Form
         showresults.Enabled = false;
         txtSeed.Enabled = false;
         numFrames.Enabled = false;
-        numEventCt.Enabled = false;
     }
 
     private void EnableControls(bool enableProfile = false)
@@ -503,7 +412,6 @@ public partial class CalculatorForm : Form
         showresults.Enabled = true;
         txtSeed.Enabled = true;
         numFrames.Enabled = true;
-        numEventCt.Enabled = true;
     }
 
     private void UpdateLabel()
@@ -530,6 +438,9 @@ public partial class CalculatorForm : Form
 
     public async void btnSearch_Click(object sender, EventArgs e)
     {
+        ushort species;
+        byte form;
+
         if (btnSearch.Text.Equals(Strings["ActionSearch"]))
         {
             Token = new();
@@ -550,7 +461,9 @@ public partial class CalculatorForm : Form
             }
             try
             {
-                GetSpeciesAndForm();
+                var f = GetSpeciesAndForm();
+                species = f[0];
+                form = (byte)f[1];
             }
             catch (Exception)
             {
@@ -575,9 +488,22 @@ public partial class CalculatorForm : Form
             var progress = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black ? GameProgress.None : (GameProgress)cmbProgress.SelectedIndex;
             var content = (RaidContent)cmbContent.SelectedIndex;
 
+            var index = (byte)0;
+            if (content >= RaidContent.Event && cmbSpecies.SelectedIndex != 0)
+            {
+                foreach (var enc in content is RaidContent.Event ? Editor.Dist! : Editor.Mighty!)
+                {
+                    if (enc.Species != species || enc.Form != form)
+                        continue;
+
+                    index = enc.Index;
+                    break;
+                }
+            }
+
             try
             {
-                var griddata = await StartSearch(sav, progress, content, Token);
+                var griddata = await StartSearch(sav, progress, content, index, Token);
                 dataGrid.DataSource = griddata;
                 btnSearch.Text = Strings["ActionSearch"];
                 EnableControls(IsBlankSAV());
@@ -600,78 +526,91 @@ public partial class CalculatorForm : Form
         }
     }
 
-    private async Task<List<GridEntry>> StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, CancellationTokenSource token)
+    private async Task<List<GridEntry>> StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, byte index, CancellationTokenSource token)
     {
         var gridList = new List<GridEntry>();
         var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
 
-        await Task.Run(() =>
+        var possibleGroups = new HashSet<int>();
+        if (index == 0 && content is RaidContent.Event or RaidContent.Event_Mighty)
+            foreach (var enc in content is RaidContent.Event ? Editor.Dist! : Editor.Mighty!)
+                possibleGroups.Add(enc.Index);
+        else
+            possibleGroups.Add(index);
+
+        foreach (var group in possibleGroups)
         {
-            var nthreads = (uint)numFrames.Value < 1000 ? 1 : Environment.ProcessorCount;
-            var gridresults = new List<GridEntry>[nthreads];
-            var calcresults = new List<TeraDetails>[nthreads];
-            var resetEvent = new ManualResetEvent(false);
-            var toProcess = nthreads;
-            var maxcalcs = (uint)numFrames.Value;
-            var calcsperthread = maxcalcs / (uint)nthreads;
+            if (token.IsCancellationRequested)
+                break;
 
-            for (uint j = 0; j < nthreads; j++)
+            await Task.Run(() =>
             {
-                var n = j;
-                var tseed = seed;
+                var nthreads = (uint)numFrames.Value < 1000 ? 1 : Environment.ProcessorCount;
+                var gridresults = new List<GridEntry>[nthreads];
+                var calcresults = new List<TeraDetails>[nthreads];
+                var resetEvent = new ManualResetEvent(false);
+                var toProcess = nthreads;
+                var maxcalcs = (uint)numFrames.Value;
+                var calcsperthread = maxcalcs / (uint)nthreads;
 
-                new Thread(delegate ()
+                for (uint j = 0; j < nthreads; j++)
                 {
-                    var tmpgridlist = new List<GridEntry>();
-                    var tmpcalclist = new List<TeraDetails>();
+                    var n = j;
+                    var tseed = seed;
 
-                    var initialFrame = calcsperthread * n;
-                    var maxframe = n < nthreads - 1 ? calcsperthread * (n + 1) : maxcalcs;
-                    tseed += initialFrame;
-
-                    for (ulong i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
+                    new Thread(delegate ()
                     {
-                        var res = CalcResult(tseed, progress, sav, content, i, (int)numEventCt.Value);
-                        if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
+                        var tmpgridlist = new List<GridEntry>();
+                        var tmpcalclist = new List<TeraDetails>();
+
+                        var initialFrame = calcsperthread * n;
+                        var maxframe = n < nthreads - 1 ? calcsperthread * (n + 1) : maxcalcs;
+                        tseed += initialFrame;
+
+                        for (ulong i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
                         {
-                            tmpgridlist.Add(new GridEntry(res, NameList, AbilityList, NatureList, MoveList, TypeList, FormList, GenderListAscii, GenderListUnicode, ShinyList));
-                            tmpcalclist.Add(res);
-                            if (!showresults.Checked)
+                            var res = CalcResult(tseed, progress, sav, content, i, group);
+                            if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
                             {
-                                token.Cancel();
-                                break;
+                                tmpgridlist.Add(new GridEntry(res, NameList, AbilityList, NatureList, MoveList, TypeList, FormList, GenderListAscii, GenderListUnicode, ShinyList));
+                                tmpcalclist.Add(res);
+                                if (!showresults.Checked)
+                                {
+                                    token.Cancel();
+                                    break;
+                                }
                             }
+                            else if (Filter is null && res is not null)
+                            {
+                                tmpgridlist.Add(new GridEntry(res, NameList, AbilityList, NatureList, MoveList, TypeList, FormList, GenderListAscii, GenderListUnicode, ShinyList));
+                                tmpcalclist.Add(res);
+                            }
+
+                            if (token.IsCancellationRequested)
+                                break;
+
+                            tseed++;
                         }
-                        else if (Filter is null && res is not null)
-                        {
-                            tmpgridlist.Add(new GridEntry(res, NameList, AbilityList, NatureList, MoveList, TypeList, FormList, GenderListAscii, GenderListUnicode, ShinyList));
-                            tmpcalclist.Add(res);
-                        }
 
-                        if (token.IsCancellationRequested)
-                            break;
+                        gridresults[n] = tmpgridlist;
+                        calcresults[n] = tmpcalclist;
 
-                        tseed++;
-                    }
+                        if (Interlocked.Decrement(ref toProcess) == 0 || token.IsCancellationRequested)
+                            resetEvent.Set();
+                    }).Start();
+                }
 
-                    gridresults[n] = tmpgridlist;
-                    calcresults[n] = tmpcalclist;
+                resetEvent.WaitOne();
 
-                    if (Interlocked.Decrement(ref toProcess) == 0 || token.IsCancellationRequested)
-                        resetEvent.Set();
-                }).Start();
-            }
-
-            resetEvent.WaitOne();
-
-            for (var i = 0; i < nthreads; i++)
-            {
-                if (gridresults[i] is not null && gridresults[i].Count > 0)
-                    gridList.AddRange(gridresults[i]);
-                if (calcresults[i] is not null && calcresults[i].Count > 0)
-                    CalculatedList.AddRange(calcresults[i]);
-            }
-        }, token.Token);
+                for (var i = 0; i < nthreads; i++)
+                {
+                    if (gridresults[i] is not null && gridresults[i].Count > 0)
+                        gridList.AddRange(gridresults[i]);
+                    if (calcresults[i] is not null && calcresults[i].Count > 0)
+                        CalculatedList.AddRange(calcresults[i]);
+                }
+            }, token.Token);
+        }
 
         return gridList;
     }
@@ -685,7 +624,7 @@ public partial class CalculatorForm : Form
         if (encounter is null)
             return null;
 
-        return TeraUtil.CalcRNG(seed, sav.TrainerTID7, sav.TrainerSID7, content, encounter, calc);
+        return TeraUtil.CalcRNG(seed, sav.TrainerTID7, sav.TrainerSID7, content, encounter, groupid, calc);
     }
 
     private void dataGrid_MouseUp(object sender, MouseEventArgs e)

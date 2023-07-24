@@ -302,3 +302,4 @@ GridUtil.MissingData=PKHeX.Core无活动数据
 GridUtil.CheckWiki=请检查Tera Finder wiki以了解如何更新PKHeX.Core依赖项。
 GridUtil.Report=请将此错误报告给Tera Finder作者。
 GridUtil.RowsExceeded=选择超出了允许的最大值[1]。
+GridUtil.MismatchGroupID=GroupID Mismatch. The selected Raid Den on the Raid Editor can only contain Event Raids with index {editorIndex}. The selected Raid result has Index {resultIndex}.
