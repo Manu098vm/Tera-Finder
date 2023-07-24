@@ -152,8 +152,8 @@ ConnectionForm.btnDisconnect=断开
 
 EditorForm=太晶洞窟编辑器
 EditorForm.toolsToolStripMenuItem=工具
-EditorForm.btnShinifyAll=一键随机异色
-EditorForm.btnShinifyAllEncounters=Shinify All Raids (Keep Encounters)
+EditorForm.btnShinifyAll=异色所有太晶洞窟(只保留原有异色遭遇)
+EditorForm.btnShinifyAllEncounters=异色所有太晶洞窟(原有非异色遭遇变更成异色)
 EditorForm.GrpRaidInfo=太晶洞窟信息
 EditorForm.lblSeed=Seed:
 EditorForm.lblContent=洞窟类型:
@@ -184,7 +184,7 @@ EditorForm.btnOpenCalculator=太晶洞窟计算器
 EditorForm.btnOpenRewardCalculator=奖励计算器
 EditorForm.LblLvl=等级:
 EditorForm.CmbRaid=太晶洞窟
-ShinifyForm.lblValue=Progress:
+ShinifyForm.lblValue=进程:
 
 ProgressForm=太晶洞窟解锁进度编辑器
 ProgressForm.grpGameProgress=当前解锁进度:
@@ -240,7 +240,7 @@ ExecutorConnected=框架连接成功:
 DisconnectionSuccess=设备已断开
 ToolTipSyncOutbreaks=同步远程设备的宝可梦大量出现数据。可能需要相当长的时间。
 ShinifiedAll=所有太晶洞窟异色已经生成。
-MultipleLocations=This Raid Den may have multiple locations.
+MultipleLocations=该太晶洞窟可能有多个位置。
 
 TeraShiny.Any=任意
 TeraShiny.No=否
@@ -302,4 +302,4 @@ GridUtil.MissingData=PKHeX.Core无活动数据
 GridUtil.CheckWiki=请检查Tera Finder wiki以了解如何更新PKHeX.Core依赖项。
 GridUtil.Report=请将此错误报告给Tera Finder作者。
 GridUtil.RowsExceeded=选择超出了允许的最大值[1]。
-GridUtil.MismatchGroupID=GroupID Mismatch. The selected Raid Den on the Raid Editor can only contain Event Raids with index {editorIndex}. The selected Raid result has Index {resultIndex}.
+GridUtil.MismatchGroupID=用户组不匹配。太晶洞窟编辑器上选定的太晶洞窟坑位只能包含索引为{editorIndex}的活动洞窟。所选洞窟结果的索引为{resultIndex}。
