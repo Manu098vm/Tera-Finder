@@ -312,7 +312,7 @@ partial class CalculatorForm
         grpFilters.Margin = new Padding(3, 4, 3, 4);
         grpFilters.Name = "grpFilters";
         grpFilters.Padding = new Padding(3, 4, 3, 4);
-        grpFilters.Size = new Size(925, 245);
+        grpFilters.Size = new Size(811, 245);
         grpFilters.TabIndex = 4;
         grpFilters.TabStop = false;
         grpFilters.Text = "Filters";
@@ -320,7 +320,7 @@ partial class CalculatorForm
         // label1
         // 
         label1.AutoSize = true;
-        label1.Location = new Point(382, 195);
+        label1.Location = new Point(376, 199);
         label1.Name = "label1";
         label1.Size = new Size(19, 20);
         label1.TabIndex = 39;
@@ -328,7 +328,7 @@ partial class CalculatorForm
         // 
         // numScaleMax
         // 
-        numScaleMax.Location = new Point(407, 193);
+        numScaleMax.Location = new Point(401, 197);
         numScaleMax.Margin = new Padding(3, 4, 3, 4);
         numScaleMax.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
         numScaleMax.Name = "numScaleMax";
@@ -338,7 +338,7 @@ partial class CalculatorForm
         // 
         // numScaleMin
         // 
-        numScaleMin.Location = new Point(321, 193);
+        numScaleMin.Location = new Point(315, 197);
         numScaleMin.Margin = new Padding(3, 4, 3, 4);
         numScaleMin.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
         numScaleMin.Name = "numScaleMin";
@@ -348,7 +348,7 @@ partial class CalculatorForm
         // lblScale
         // 
         lblScale.AutoSize = true;
-        lblScale.Location = new Point(261, 195);
+        lblScale.Location = new Point(255, 199);
         lblScale.Name = "lblScale";
         lblScale.Size = new Size(47, 20);
         lblScale.TabIndex = 35;
@@ -358,7 +358,7 @@ partial class CalculatorForm
         // 
         cmbEC.FormattingEnabled = true;
         cmbEC.Items.AddRange(new object[] { "Any", "EC % 100 = 0" });
-        cmbEC.Location = new Point(379, 145);
+        cmbEC.Location = new Point(341, 145);
         cmbEC.Margin = new Padding(3, 4, 3, 4);
         cmbEC.Name = "cmbEC";
         cmbEC.Size = new Size(194, 28);
@@ -367,7 +367,7 @@ partial class CalculatorForm
         // lblEC
         // 
         lblEC.AutoSize = true;
-        lblEC.Location = new Point(293, 149);
+        lblEC.Location = new Point(255, 149);
         lblEC.Name = "lblEC";
         lblEC.Size = new Size(33, 20);
         lblEC.TabIndex = 33;
@@ -377,7 +377,7 @@ partial class CalculatorForm
         // 
         cmbNature.FormattingEnabled = true;
         cmbNature.Items.AddRange(new object[] { "Hardy", "Lonely", "Brave", "Adamant", "Naughty", "Bold", "Docile", "Relaxed", "Impish", "Lax", "Timid", "Hasty", "Serious", "Jolly", "Naive", "Modest", "Mild", "Quiet", "Bashful", "Rash", "Calm", "Gentle", "Sassy", "Careful", "Quirky", "Any" });
-        cmbNature.Location = new Point(717, 72);
+        cmbNature.Location = new Point(657, 72);
         cmbNature.Margin = new Padding(3, 4, 3, 4);
         cmbNature.Name = "cmbNature";
         cmbNature.Size = new Size(143, 28);
@@ -385,10 +385,10 @@ partial class CalculatorForm
         // 
         // btnReset
         // 
-        btnReset.Location = new Point(501, 191);
+        btnReset.Location = new Point(485, 191);
         btnReset.Margin = new Padding(3, 4, 3, 4);
         btnReset.Name = "btnReset";
-        btnReset.Size = new Size(155, 36);
+        btnReset.Size = new Size(140, 36);
         btnReset.TabIndex = 31;
         btnReset.Text = "Reset Filters";
         btnReset.UseVisualStyleBackColor = true;
@@ -398,7 +398,7 @@ partial class CalculatorForm
         // 
         cmbTeraType.FormattingEnabled = true;
         cmbTeraType.Items.AddRange(new object[] { "Any", "Normal", "Fighting", "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost", "Steel", "Fire", "Water", "Grass", "Electric", "Psychic", "Ice", "Dragon", "Dark", "Fairy" });
-        cmbTeraType.Location = new Point(379, 109);
+        cmbTeraType.Location = new Point(341, 109);
         cmbTeraType.Margin = new Padding(3, 4, 3, 4);
         cmbTeraType.Name = "cmbTeraType";
         cmbTeraType.Size = new Size(194, 28);
@@ -408,7 +408,7 @@ partial class CalculatorForm
         // 
         cmbSpecies.FormattingEnabled = true;
         cmbSpecies.Items.AddRange(new object[] { "Any" });
-        cmbSpecies.Location = new Point(379, 72);
+        cmbSpecies.Location = new Point(341, 72);
         cmbSpecies.Margin = new Padding(3, 4, 3, 4);
         cmbSpecies.Name = "cmbSpecies";
         cmbSpecies.Size = new Size(194, 28);
@@ -418,7 +418,7 @@ partial class CalculatorForm
         // 
         cmbStars.FormattingEnabled = true;
         cmbStars.Items.AddRange(new object[] { "Any", "1S ☆", "2S ☆☆", "3S ☆☆☆", "4S ☆☆☆☆", "5S ☆☆☆☆☆", "6S ☆☆☆☆☆☆", "7S ☆☆☆☆☆☆☆" });
-        cmbStars.Location = new Point(379, 35);
+        cmbStars.Location = new Point(341, 35);
         cmbStars.Margin = new Padding(3, 4, 3, 4);
         cmbStars.Name = "cmbStars";
         cmbStars.Size = new Size(194, 28);
@@ -427,10 +427,10 @@ partial class CalculatorForm
         // 
         // btnApply
         // 
-        btnApply.Location = new Point(673, 191);
+        btnApply.Location = new Point(657, 191);
         btnApply.Margin = new Padding(3, 4, 3, 4);
         btnApply.Name = "btnApply";
-        btnApply.Size = new Size(158, 36);
+        btnApply.Size = new Size(143, 36);
         btnApply.TabIndex = 25;
         btnApply.Text = "Apply Filters";
         btnApply.UseVisualStyleBackColor = true;
@@ -440,7 +440,7 @@ partial class CalculatorForm
         // 
         cmbShiny.FormattingEnabled = true;
         cmbShiny.Items.AddRange(new object[] { "Any", "No", "Yes", "Only Star", "Only Square" });
-        cmbShiny.Location = new Point(717, 145);
+        cmbShiny.Location = new Point(657, 145);
         cmbShiny.Margin = new Padding(3, 4, 3, 4);
         cmbShiny.Name = "cmbShiny";
         cmbShiny.Size = new Size(143, 28);
@@ -450,7 +450,7 @@ partial class CalculatorForm
         // 
         cmbGender.FormattingEnabled = true;
         cmbGender.Items.AddRange(new object[] { "Any", "♂️", "♀️" });
-        cmbGender.Location = new Point(717, 109);
+        cmbGender.Location = new Point(657, 109);
         cmbGender.Margin = new Padding(3, 4, 3, 4);
         cmbGender.Name = "cmbGender";
         cmbGender.Size = new Size(143, 28);
@@ -459,7 +459,7 @@ partial class CalculatorForm
         // lblShiny
         // 
         lblShiny.AutoSize = true;
-        lblShiny.Location = new Point(630, 149);
+        lblShiny.Location = new Point(570, 149);
         lblShiny.Name = "lblShiny";
         lblShiny.Size = new Size(47, 20);
         lblShiny.TabIndex = 22;
@@ -468,7 +468,7 @@ partial class CalculatorForm
         // lblAbility
         // 
         lblAbility.AutoSize = true;
-        lblAbility.Location = new Point(630, 39);
+        lblAbility.Location = new Point(570, 39);
         lblAbility.Name = "lblAbility";
         lblAbility.Size = new Size(55, 20);
         lblAbility.TabIndex = 21;
@@ -477,7 +477,7 @@ partial class CalculatorForm
         // label5
         // 
         label5.AutoSize = true;
-        label5.Location = new Point(163, 208);
+        label5.Location = new Point(142, 208);
         label5.Name = "label5";
         label5.Size = new Size(19, 20);
         label5.TabIndex = 11;
@@ -486,7 +486,7 @@ partial class CalculatorForm
         // lblTera
         // 
         lblTera.AutoSize = true;
-        lblTera.Location = new Point(293, 112);
+        lblTera.Location = new Point(255, 112);
         lblTera.Name = "lblTera";
         lblTera.Size = new Size(75, 20);
         lblTera.TabIndex = 8;
@@ -495,7 +495,7 @@ partial class CalculatorForm
         // lblGender
         // 
         lblGender.AutoSize = true;
-        lblGender.Location = new Point(630, 112);
+        lblGender.Location = new Point(570, 112);
         lblGender.Name = "lblGender";
         lblGender.Size = new Size(60, 20);
         lblGender.TabIndex = 20;
@@ -504,7 +504,7 @@ partial class CalculatorForm
         // label6
         // 
         label6.AutoSize = true;
-        label6.Location = new Point(163, 175);
+        label6.Location = new Point(142, 175);
         label6.Name = "label6";
         label6.Size = new Size(19, 20);
         label6.TabIndex = 12;
@@ -513,7 +513,7 @@ partial class CalculatorForm
         // label11
         // 
         label11.AutoSize = true;
-        label11.Location = new Point(163, 141);
+        label11.Location = new Point(142, 141);
         label11.Name = "label11";
         label11.Size = new Size(19, 20);
         label11.TabIndex = 13;
@@ -523,7 +523,7 @@ partial class CalculatorForm
         // 
         cmbAbility.FormattingEnabled = true;
         cmbAbility.Items.AddRange(new object[] { "Any", "(1)", "(2)", "(H)" });
-        cmbAbility.Location = new Point(717, 35);
+        cmbAbility.Location = new Point(657, 35);
         cmbAbility.Margin = new Padding(3, 4, 3, 4);
         cmbAbility.Name = "cmbAbility";
         cmbAbility.Size = new Size(143, 28);
@@ -532,7 +532,7 @@ partial class CalculatorForm
         // label12
         // 
         label12.AutoSize = true;
-        label12.Location = new Point(163, 111);
+        label12.Location = new Point(142, 111);
         label12.Name = "label12";
         label12.Size = new Size(19, 20);
         label12.TabIndex = 14;
@@ -541,7 +541,7 @@ partial class CalculatorForm
         // lblSpecies
         // 
         lblSpecies.AutoSize = true;
-        lblSpecies.Location = new Point(293, 75);
+        lblSpecies.Location = new Point(255, 75);
         lblSpecies.Name = "lblSpecies";
         lblSpecies.Size = new Size(62, 20);
         lblSpecies.TabIndex = 9;
@@ -550,7 +550,7 @@ partial class CalculatorForm
         // label13
         // 
         label13.AutoSize = true;
-        label13.Location = new Point(163, 76);
+        label13.Location = new Point(142, 76);
         label13.Name = "label13";
         label13.Size = new Size(19, 20);
         label13.TabIndex = 15;
@@ -559,7 +559,7 @@ partial class CalculatorForm
         // lblNature
         // 
         lblNature.AutoSize = true;
-        lblNature.Location = new Point(630, 75);
+        lblNature.Location = new Point(570, 75);
         lblNature.Name = "lblNature";
         lblNature.Size = new Size(57, 20);
         lblNature.TabIndex = 7;
@@ -568,7 +568,7 @@ partial class CalculatorForm
         // label14
         // 
         label14.AutoSize = true;
-        label14.Location = new Point(163, 45);
+        label14.Location = new Point(142, 45);
         label14.Name = "label14";
         label14.Size = new Size(19, 20);
         label14.TabIndex = 16;
@@ -577,7 +577,7 @@ partial class CalculatorForm
         // lblStars
         // 
         lblStars.AutoSize = true;
-        lblStars.Location = new Point(293, 39);
+        lblStars.Location = new Point(255, 39);
         lblStars.Name = "lblStars";
         lblStars.Size = new Size(44, 20);
         lblStars.TabIndex = 10;
@@ -585,7 +585,7 @@ partial class CalculatorForm
         // 
         // nHpMax
         // 
-        nHpMax.Location = new Point(183, 42);
+        nHpMax.Location = new Point(162, 42);
         nHpMax.Margin = new Padding(3, 4, 3, 4);
         nHpMax.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nHpMax.Name = "nHpMax";
@@ -595,7 +595,7 @@ partial class CalculatorForm
         // lblMaxIv
         // 
         lblMaxIv.AutoSize = true;
-        lblMaxIv.Location = new Point(179, 19);
+        lblMaxIv.Location = new Point(158, 19);
         lblMaxIv.Name = "lblMaxIv";
         lblMaxIv.Size = new Size(54, 20);
         lblMaxIv.TabIndex = 5;
@@ -603,7 +603,7 @@ partial class CalculatorForm
         // 
         // nHpMin
         // 
-        nHpMin.Location = new Point(102, 42);
+        nHpMin.Location = new Point(81, 42);
         nHpMin.Margin = new Padding(3, 4, 3, 4);
         nHpMin.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nHpMin.Name = "nHpMin";
@@ -612,7 +612,7 @@ partial class CalculatorForm
         // 
         // nAtkMin
         // 
-        nAtkMin.Location = new Point(102, 75);
+        nAtkMin.Location = new Point(81, 75);
         nAtkMin.Margin = new Padding(3, 4, 3, 4);
         nAtkMin.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nAtkMin.Name = "nAtkMin";
@@ -622,7 +622,7 @@ partial class CalculatorForm
         // lblMinIv
         // 
         lblMinIv.AutoSize = true;
-        lblMinIv.Location = new Point(98, 19);
+        lblMinIv.Location = new Point(77, 19);
         lblMinIv.Name = "lblMinIv";
         lblMinIv.Size = new Size(51, 20);
         lblMinIv.TabIndex = 6;
@@ -630,7 +630,7 @@ partial class CalculatorForm
         // 
         // nAtkMax
         // 
-        nAtkMax.Location = new Point(183, 75);
+        nAtkMax.Location = new Point(162, 75);
         nAtkMax.Margin = new Padding(3, 4, 3, 4);
         nAtkMax.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nAtkMax.Name = "nAtkMax";
@@ -639,7 +639,7 @@ partial class CalculatorForm
         // 
         // nDefMin
         // 
-        nDefMin.Location = new Point(102, 107);
+        nDefMin.Location = new Point(81, 107);
         nDefMin.Margin = new Padding(3, 4, 3, 4);
         nDefMin.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nDefMin.Name = "nDefMin";
@@ -648,7 +648,7 @@ partial class CalculatorForm
         // 
         // nSpaMin
         // 
-        nSpaMin.Location = new Point(102, 140);
+        nSpaMin.Location = new Point(81, 140);
         nSpaMin.Margin = new Padding(3, 4, 3, 4);
         nSpaMin.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nSpaMin.Name = "nSpaMin";
@@ -658,7 +658,7 @@ partial class CalculatorForm
         // lblSpe
         // 
         lblSpe.AutoSize = true;
-        lblSpe.Location = new Point(59, 208);
+        lblSpe.Location = new Point(38, 208);
         lblSpe.Name = "lblSpe";
         lblSpe.Size = new Size(37, 20);
         lblSpe.TabIndex = 11;
@@ -666,7 +666,7 @@ partial class CalculatorForm
         // 
         // nSpdMin
         // 
-        nSpdMin.Location = new Point(102, 173);
+        nSpdMin.Location = new Point(81, 173);
         nSpdMin.Margin = new Padding(3, 4, 3, 4);
         nSpdMin.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nSpdMin.Name = "nSpdMin";
@@ -676,7 +676,7 @@ partial class CalculatorForm
         // lblSpd
         // 
         lblSpd.AutoSize = true;
-        lblSpd.Location = new Point(57, 176);
+        lblSpd.Location = new Point(36, 176);
         lblSpd.Name = "lblSpd";
         lblSpd.Size = new Size(40, 20);
         lblSpd.TabIndex = 16;
@@ -685,7 +685,7 @@ partial class CalculatorForm
         // lblSpa
         // 
         lblSpa.AutoSize = true;
-        lblSpa.Location = new Point(57, 144);
+        lblSpa.Location = new Point(36, 144);
         lblSpa.Name = "lblSpa";
         lblSpa.Size = new Size(39, 20);
         lblSpa.TabIndex = 15;
@@ -694,7 +694,7 @@ partial class CalculatorForm
         // lblDef
         // 
         lblDef.AutoSize = true;
-        lblDef.Location = new Point(57, 111);
+        lblDef.Location = new Point(36, 111);
         lblDef.Name = "lblDef";
         lblDef.Size = new Size(36, 20);
         lblDef.TabIndex = 14;
@@ -703,7 +703,7 @@ partial class CalculatorForm
         // lblAtk
         // 
         lblAtk.AutoSize = true;
-        lblAtk.Location = new Point(57, 76);
+        lblAtk.Location = new Point(36, 76);
         lblAtk.Name = "lblAtk";
         lblAtk.Size = new Size(34, 20);
         lblAtk.TabIndex = 13;
@@ -712,7 +712,7 @@ partial class CalculatorForm
         // lblHp
         // 
         lblHp.AutoSize = true;
-        lblHp.Location = new Point(57, 44);
+        lblHp.Location = new Point(36, 44);
         lblHp.Name = "lblHp";
         lblHp.Size = new Size(31, 20);
         lblHp.TabIndex = 12;
@@ -720,7 +720,7 @@ partial class CalculatorForm
         // 
         // nSpeMin
         // 
-        nSpeMin.Location = new Point(102, 206);
+        nSpeMin.Location = new Point(81, 206);
         nSpeMin.Margin = new Padding(3, 4, 3, 4);
         nSpeMin.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nSpeMin.Name = "nSpeMin";
@@ -729,7 +729,7 @@ partial class CalculatorForm
         // 
         // nDefMax
         // 
-        nDefMax.Location = new Point(183, 107);
+        nDefMax.Location = new Point(162, 107);
         nDefMax.Margin = new Padding(3, 4, 3, 4);
         nDefMax.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nDefMax.Name = "nDefMax";
@@ -738,7 +738,7 @@ partial class CalculatorForm
         // 
         // nSpaMax
         // 
-        nSpaMax.Location = new Point(183, 140);
+        nSpaMax.Location = new Point(162, 140);
         nSpaMax.Margin = new Padding(3, 4, 3, 4);
         nSpaMax.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nSpaMax.Name = "nSpaMax";
@@ -747,7 +747,7 @@ partial class CalculatorForm
         // 
         // nSpdMax
         // 
-        nSpdMax.Location = new Point(183, 173);
+        nSpdMax.Location = new Point(162, 173);
         nSpdMax.Margin = new Padding(3, 4, 3, 4);
         nSpdMax.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nSpdMax.Name = "nSpdMax";
@@ -756,7 +756,7 @@ partial class CalculatorForm
         // 
         // nSpeMax
         // 
-        nSpeMax.Location = new Point(183, 206);
+        nSpeMax.Location = new Point(162, 206);
         nSpeMax.Margin = new Padding(3, 4, 3, 4);
         nSpeMax.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nSpeMax.Name = "nSpeMax";
@@ -777,7 +777,7 @@ partial class CalculatorForm
         dataGrid.RowHeadersVisible = false;
         dataGrid.RowHeadersWidth = 51;
         dataGrid.RowTemplate.Height = 29;
-        dataGrid.Size = new Size(1534, 541);
+        dataGrid.Size = new Size(1466, 541);
         dataGrid.TabIndex = 5;
         dataGrid.MouseUp += dataGrid_MouseUp;
         // 
@@ -918,7 +918,7 @@ partial class CalculatorForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(1559, 811);
+        ClientSize = new Size(1483, 811);
         Controls.Add(grpGameInfo);
         Controls.Add(dataGrid);
         Controls.Add(grpFilters);
