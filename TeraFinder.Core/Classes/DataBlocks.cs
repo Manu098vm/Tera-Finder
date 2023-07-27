@@ -101,7 +101,17 @@ public static class Blocks
         Size = 0x58,
     };
     #endregion
-
+    #region SevenStarFlags
+    public static readonly DataBlock SevenStarRaid = new()
+    {
+        Name = "SevenStarRaid",
+        Key = 0x8B14392F,
+        Type = SCTypeCode.Object,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 0x5DC0,
+    };
+    #endregion
     #region UnlockedFlags
     public static readonly DataBlock KUnlockedTeraRaidBattles = new()
     {
