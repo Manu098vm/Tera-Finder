@@ -170,7 +170,7 @@ public class TeraPlugin : IPlugin
         Connect.Click += (s, e) => LaunchConnector();
         Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
         Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
-        Flags.Click += (s, e) => new ProgressForm(SAV, Language).Show();
+        Flags.Click += (s, e) => new ProgressForm(SAV, Language,Connection).Show();
         Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV, Language).Show();
         Outbreaks.Click += (s, e) => new OutbreakForm(SAV, Language, Connection).Show();
         tools.DropDownItems.Add(Plugin);
@@ -222,7 +222,7 @@ public class TeraPlugin : IPlugin
 
     public void LaunchGameEditor()
     {
-        new ProgressForm(SAV, Language).Show();
+        new ProgressForm(SAV, Language,Connection).Show();
     }
 
     public void LaunchFinder()

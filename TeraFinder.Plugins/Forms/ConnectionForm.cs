@@ -106,7 +106,7 @@ public partial class ConnectionForm : Form
 
         try
         {
-            MaxProgress = chkOutbreaks.Checked ? 66 : 9;
+            MaxProgress = chkOutbreaks.Checked ? 66 : 10;
             CurrentProgress = 0;
             await Executor.Connect(token).ConfigureAwait(false);
             UpdateProgress(CurrentProgress++, MaxProgress);
@@ -123,6 +123,9 @@ public partial class ConnectionForm : Form
             UpdateProgress(CurrentProgress++, MaxProgress);
             ProgressForm.EditProgress(SAV, progress);
             await DownloadEventData(token).ConfigureAwait(false);
+            var raidSevenStar = SAV.Accessor.FindOrDefault(Blocks.RaidSevenStar.Key);
+            raidSevenStar.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.RaidSevenStar, token).ConfigureAwait(false));
+            UpdateProgress(CurrentProgress++, MaxProgress);
             if (chkOutbreaks.Checked) await DownloadOutbreakData(token).ConfigureAwait(false);
 
             MessageBox.Show(Strings["ConnectionSuccess"]);

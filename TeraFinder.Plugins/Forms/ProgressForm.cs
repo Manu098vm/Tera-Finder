@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System.CodeDom.Compiler;
 using TeraFinder.Core;
 
 namespace TeraFinder.Plugins;
@@ -8,8 +9,8 @@ public partial class ProgressForm : Form
     SAV9SV SAV = null!;
     List<SevenStarRaidDetail> Raids = null!;
     private Dictionary<string, string> Strings = null!;
-
-    public ProgressForm(SAV9SV sav, string language)
+    private ConnectionForm? Connection = null;
+    public ProgressForm(SAV9SV sav, string language, ConnectionForm connection)
     {
         InitializeComponent();
         GenerateDictionary();
@@ -34,6 +35,7 @@ public partial class ProgressForm : Form
             grpRaidMighty.Enabled = false;
         else
             cmbMightyIndex.SelectedIndex = 0;
+        Connection = connection;
     }
 
     private void GenerateDictionary()
@@ -63,12 +65,14 @@ public partial class ProgressForm : Form
         cmbProgress.Items[5] = Strings["GameProgress.Unlocked6Stars"];
     }
 
-    private void btnApplyProgress_Click(object sender, EventArgs e)
+    private async void btnApplyProgress_Click(object sender, EventArgs e)
     {
         if (SAV.Accessor is not null)
         {
             var progress = (GameProgress)cmbProgress.SelectedIndex;
             EditProgress(SAV, progress);
+            if(Connection is not null && Connection.IsConnected())
+               await WriteProgressLive(SAV,progress);
             MessageBox.Show(Strings["MsgSuccess"]);
         }
         else
@@ -77,7 +81,60 @@ public partial class ProgressForm : Form
             this.Close();
         }
     }
+    private async Task WriteProgressLive(SAV9SV sav, GameProgress progress)
+    {
+        if (progress >= GameProgress.Unlocked3Stars)
+        {
 
+            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty3, CancellationToken.None);
+            await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty3, CancellationToken.None, toexpect);
+        }
+        else
+        {
+
+            bool toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty3, CancellationToken.None);
+            await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty3, CancellationToken.None, toexpect);
+        }
+
+        if (progress >= GameProgress.Unlocked4Stars)
+        {
+
+            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty4, CancellationToken.None);
+            await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty4, CancellationToken.None, toexpect);
+        }
+        else
+        {
+
+            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty4, CancellationToken.None);
+            await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty4, CancellationToken.None, toexpect);
+        }
+
+        if (progress >= GameProgress.Unlocked5Stars)
+        {
+
+            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty5, CancellationToken.None);
+            await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty5, CancellationToken.None, toexpect);
+        }
+        else
+        {
+
+            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty5, CancellationToken.None);
+            await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty5, CancellationToken.None, toexpect);
+        }
+
+        if (progress >= GameProgress.Unlocked6Stars)
+        {
+
+            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty6, CancellationToken.None);
+            await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty6, CancellationToken.None, toexpect);
+        }
+        else
+        {
+
+            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty6, CancellationToken.None);
+            await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty6, CancellationToken.None, toexpect);
+        }
+    }
     public static void EditProgress(SAV9SV sav, GameProgress progress)
     {
         if (progress >= GameProgress.UnlockedTeraRaids)
@@ -196,7 +253,7 @@ public partial class ProgressForm : Form
         }
     }
 
-    private void btnApplyRaid7_Click(object sender, EventArgs e)
+    private async void btnApplyRaid7_Click(object sender, EventArgs e)
     {
         var raid = Raids.ElementAt(cmbMightyIndex.SelectedIndex);
         if (chkCaptured.Checked)
@@ -207,7 +264,12 @@ public partial class ProgressForm : Form
             raid.Defeated = true;
         else
             raid.Defeated = false;
-
+        if (Connection is not null && Connection.IsConnected())
+        {
+            var toexpect = (byte[]?)await Connection.Executor.ReadBlock(Blocks.RaidSevenStar, CancellationToken.None).ConfigureAwait(false);
+            var raidSevenStar = SAV.Accessor.FindOrDefault(Blocks.RaidSevenStar.Key);
+            await Connection.Executor.WriteBlock(raidSevenStar.Data, Blocks.RaidSevenStar, CancellationToken.None,toexpect).ConfigureAwait(false);
+        }
         MessageBox.Show(Strings["MsgSuccess"]);
     }
 
