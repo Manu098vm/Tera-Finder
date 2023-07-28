@@ -192,6 +192,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
 
         return block.Type switch
         {
+            SCTypeCode.Object => await WriteEncryptedBlockObject(block, (byte[])toExpect, (byte[])toWrite,token),
             SCTypeCode.Array => await WriteEncryptedBlockArray(block, (byte[])toExpect, (byte[])toWrite, token).ConfigureAwait(false),
             SCTypeCode.Bool1 or SCTypeCode.Bool2 or SCTypeCode.Bool3 => await WriteEncryptedBlockBool(block, (bool)toExpect, (bool)toWrite, token).ConfigureAwait(false),
             SCTypeCode.Byte or SCTypeCode.SByte => await WriteEncryptedBlockByte(block, (byte)toExpect, (byte)toWrite, token).ConfigureAwait(false),
@@ -200,7 +201,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
             _ => throw new NotSupportedException($"Block {block.Name} (Type {block.Type}) is currently not supported.")
         };
     }
-
+    
     private async Task<object?> ReadEncryptedBlock(DataBlock block, CancellationToken token)
     {
         return block.Type switch
@@ -397,7 +398,27 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
         Log("Done");
         return res;
     }
+    public async Task<bool> WriteEncryptedBlockObject(DataBlock block, byte[] valueToExpect, byte[] valueToInject, CancellationToken token)
+    {
+        if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
+            throw new InvalidOperationException("No remote connection");
 
+        //Always read and decrypt first to validate address and data
+
+        var address = await GetBlockAddress(block, token).ConfigureAwait(false);
+        var header = await SwitchConnection.ReadBytesAbsoluteAsync(address, 5, token).ConfigureAwait(false);
+        header = BlockUtil.DecryptBlock(block.Key, header);
+        var size = ReadUInt32LittleEndian(header.AsSpan()[1..]);
+        var data = await SwitchConnection.ReadBytesAbsoluteAsync(address, 5 + (int)size, token);
+        var ram = data[5..];
+        //if (!ram.SequenceEqual(valueToExpect)) { return false; }
+        //If we get there then both block address and block data are valid, we can safely inject
+        Array.ConstrainedCopy(valueToInject, 0, data, 5, block.Size);
+        data = BlockUtil.EncryptBlock(block.Key, data);
+        await SwitchConnection.WriteBytesAbsoluteAsync(data, address, token).ConfigureAwait(false);
+        Log("Done");
+        return true;
+    }
     private async Task<bool> ReadEncryptedBlockBool(DataBlock block, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)

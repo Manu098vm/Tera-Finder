@@ -267,8 +267,7 @@ public partial class ProgressForm : Form
         if (Connection is not null && Connection.IsConnected())
         {
             var toexpect = (byte[]?)await Connection.Executor.ReadBlock(Blocks.RaidSevenStar, CancellationToken.None).ConfigureAwait(false);
-            var raidSevenStar = SAV.Accessor.FindOrDefault(Blocks.RaidSevenStar.Key);
-            await Connection.Executor.WriteBlock(raidSevenStar.Data, Blocks.RaidSevenStar, CancellationToken.None,toexpect).ConfigureAwait(false);
+            await Connection.Executor.WriteBlock(SAV.RaidSevenStar.Data, Blocks.RaidSevenStar, CancellationToken.None, toexpect).ConfigureAwait(false);
         }
         MessageBox.Show(Strings["MsgSuccess"]);
     }
