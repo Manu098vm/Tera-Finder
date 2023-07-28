@@ -102,9 +102,9 @@ public static class Blocks
     };
     #endregion
     #region SevenStarFlags
-    public static readonly DataBlock SevenStarRaid = new()
+    public static readonly DataBlock RaidSevenStar = new()
     {
-        Name = "SevenStarRaid",
+        Name = "RaidSevenStar",
         Key = 0x8B14392F,
         Type = SCTypeCode.Object,
         Pointer = SaveBlockKeyPointer,
