@@ -168,7 +168,8 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
             throw new InvalidOperationException("No remote connection");
 
         Log($"Writing decrypted block {block.Key:X8}...");
-        await SwitchConnection.PointerPoke(data, block.Pointer!, token).ConfigureAwait(false);
+        var pointer = await SwitchConnection.PointerAll(block.Pointer!, token).ConfigureAwait(false);
+        await SwitchConnection.WriteBytesAbsoluteAsync(data, pointer, token).ConfigureAwait(false);
         Log("Done");
 
         return true;
@@ -410,10 +411,10 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
         header = BlockUtil.DecryptBlock(block.Key, header);
         var size = ReadUInt32LittleEndian(header.AsSpan()[1..]);
         var data = await SwitchConnection.ReadBytesAbsoluteAsync(address, 5 + (int)size, token);
-        var ram = data[5..];
-        //if (!ram.SequenceEqual(valueToExpect)) { return false; }
+        var ram = BlockUtil.DecryptBlock(block.Key, data)[5..];
+        if (!ram.SequenceEqual(valueToExpect)) { return false; }
         //If we get there then both block address and block data are valid, we can safely inject
-        Array.ConstrainedCopy(valueToInject, 0, data, 5, block.Size);
+        Array.ConstrainedCopy(valueToInject.ToArray(), 0, data, 5, block.Size);
         data = BlockUtil.EncryptBlock(block.Key, data);
         await SwitchConnection.WriteBytesAbsoluteAsync(data, address, token).ConfigureAwait(false);
         Log("Done");

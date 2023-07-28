@@ -264,12 +264,15 @@ public partial class ProgressForm : Form
             raid.Defeated = true;
         else
             raid.Defeated = false;
+        var success = true;
         if (Connection is not null && Connection.IsConnected())
         {
-            var toexpect = (byte[]?)await Connection.Executor.ReadBlock(Blocks.RaidSevenStar, CancellationToken.None).ConfigureAwait(false);
-            await Connection.Executor.WriteBlock(SAV.RaidSevenStar.Data, Blocks.RaidSevenStar, CancellationToken.None, toexpect).ConfigureAwait(false);
+            success = await Connection.Executor.WriteBlock(SAV.RaidSevenStar.Data, Blocks.RaidSevenStar, CancellationToken.None).ConfigureAwait(false);
         }
-        MessageBox.Show(Strings["MsgSuccess"]);
+        if (success)
+            MessageBox.Show(Strings["MsgSuccess"]);
+        else
+            MessageBox.Show("failed");
     }
 
     private void cmbMightyIndex_IndexChanged(object sender, EventArgs e)
