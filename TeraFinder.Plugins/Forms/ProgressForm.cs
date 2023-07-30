@@ -1,16 +1,16 @@
 ﻿using PKHeX.Core;
-using System.CodeDom.Compiler;
 using TeraFinder.Core;
 
 namespace TeraFinder.Plugins;
 
 public partial class ProgressForm : Form
 {
-    SAV9SV SAV = null!;
-    List<SevenStarRaidDetail> Raids = null!;
+    readonly SAV9SV SAV = null!;
+    readonly List<SevenStarRaidDetail> Raids = null!;
     private Dictionary<string, string> Strings = null!;
     private ConnectionForm? Connection = null;
-    public ProgressForm(SAV9SV sav, string language, ConnectionForm connection)
+
+    public ProgressForm(SAV9SV sav, string language, ConnectionForm? connection)
     {
         InitializeComponent();
         GenerateDictionary();
@@ -49,7 +49,8 @@ public partial class ProgressForm : Form
             { "GameProgress.Unlocked5Stars", "Unlocked 5 Stars" },
             { "GameProgress.Unlocked6Stars", "Unlocked 6 Stars" },
             { "SAVInvalid", "Not a valid save file." },
-            { "MsgSuccess", "Done." }
+            { "MsgSuccess", "Done." },
+            { "DisconnectionSuccess", "Device disconnected." },
         };
     }
 
@@ -71,70 +72,81 @@ public partial class ProgressForm : Form
         {
             var progress = (GameProgress)cmbProgress.SelectedIndex;
             EditProgress(SAV, progress);
-            if(Connection is not null && Connection.IsConnected())
-               await WriteProgressLive(SAV,progress);
-            MessageBox.Show(Strings["MsgSuccess"]);
+            if (Connection is not null && Connection.IsConnected())
+            {
+                try
+                {
+                    await WriteProgressLive(progress);
+                    MessageBox.Show(Strings["MsgSuccess"]);
+                }
+                catch
+                {
+                    if (Connection is not null)
+                    {
+                        Connection.Disconnect();
+                        MessageBox.Show(Strings["DisconnectionSuccess"]);
+                        Connection = null;
+                    }
+                }
+            }
         }
         else
         {
             MessageBox.Show(Strings["SAVInvalid"]);
-            this.Close();
+            Close();
         }
     }
-    private async Task WriteProgressLive(SAV9SV sav, GameProgress progress)
+
+    private async Task WriteProgressLive(GameProgress progress)
     {
+        if (Connection is null)
+            return;
+
         if (progress >= GameProgress.Unlocked3Stars)
         {
-
-            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty3, CancellationToken.None);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty3, CancellationToken.None);
             await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty3, CancellationToken.None, toexpect);
         }
         else
         {
-
-            bool toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty3, CancellationToken.None);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty3, CancellationToken.None);
             await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty3, CancellationToken.None, toexpect);
         }
 
         if (progress >= GameProgress.Unlocked4Stars)
         {
-
-            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty4, CancellationToken.None);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty4, CancellationToken.None);
             await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty4, CancellationToken.None, toexpect);
         }
         else
         {
-
-            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty4, CancellationToken.None);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty4, CancellationToken.None);
             await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty4, CancellationToken.None, toexpect);
         }
 
         if (progress >= GameProgress.Unlocked5Stars)
         {
-
-            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty5, CancellationToken.None);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty5, CancellationToken.None);
             await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty5, CancellationToken.None, toexpect);
         }
         else
         {
-
-            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty5, CancellationToken.None);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty5, CancellationToken.None);
             await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty5, CancellationToken.None, toexpect);
         }
 
         if (progress >= GameProgress.Unlocked6Stars)
         {
-
-            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty6, CancellationToken.None);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty6, CancellationToken.None);
             await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty6, CancellationToken.None, toexpect);
         }
         else
         {
-
-            var toexpect = (bool)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty6, CancellationToken.None);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty6, CancellationToken.None);
             await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty6, CancellationToken.None, toexpect);
         }
     }
+
     public static void EditProgress(SAV9SV sav, GameProgress progress)
     {
         if (progress >= GameProgress.UnlockedTeraRaids)
@@ -264,10 +276,24 @@ public partial class ProgressForm : Form
             raid.Defeated = true;
         else
             raid.Defeated = false;
+
         if (Connection is not null && Connection.IsConnected())
         {
-            await Connection.Executor.WriteBlock(SAV.RaidSevenStar.Data, Blocks.RaidSevenStar, CancellationToken.None).ConfigureAwait(false);
+            try
+            {
+                await Connection.Executor.WriteBlock(SAV.RaidSevenStar.Data, Blocks.RaidSevenStar, CancellationToken.None).ConfigureAwait(false);
+            }
+            catch
+            {
+                if (Connection is not null)
+                {
+                    Connection.Disconnect();
+                    MessageBox.Show(Strings["DisconnectionSuccess"]);
+                    Connection = null;
+                }
+            }
         }
+     
         MessageBox.Show(Strings["MsgSuccess"]);
     }
 

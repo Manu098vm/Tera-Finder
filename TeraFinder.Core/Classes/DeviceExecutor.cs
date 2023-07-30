@@ -399,14 +399,17 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
         Log("Done");
         return res;
     }
+
     public async Task<bool> WriteEncryptedBlockObject(DataBlock block, byte[] valueToExpect, byte[] valueToInject, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
         //Always read and decrypt first to validate address and data
-
-        var address = await GetBlockAddress(block, token).ConfigureAwait(false);
+        ulong address;
+        try { address = await GetBlockAddress(block, token).ConfigureAwait(false); }
+        catch (Exception) { return false; }
+        //If we get there without exceptions, the block address is valid
         var header = await SwitchConnection.ReadBytesAbsoluteAsync(address, 5, token).ConfigureAwait(false);
         header = BlockUtil.DecryptBlock(block.Key, header);
         var size = ReadUInt32LittleEndian(header.AsSpan()[1..]);
@@ -420,6 +423,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
         Log("Done");
         return true;
     }
+
     private async Task<bool> ReadEncryptedBlockBool(DataBlock block, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
@@ -463,7 +467,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
                 end = mid;
             else start = mid + ct;
         }
-        throw new ArgumentOutOfRangeException("Save block not found.");
+        throw new ArgumentOutOfRangeException(nameof(block));
     }
 
     private async Task<ulong> PrepareAddress(ulong address, CancellationToken token) =>

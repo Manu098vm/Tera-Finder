@@ -9,7 +9,7 @@ public partial class ConnectionForm : Form
 {
     public DeviceExecutor Executor = null!;
 
-    private SAV9SV SAV = null!;
+    private readonly SAV9SV SAV = null!;
     private bool Connected = false;
     private int CurrentProgress = 0;
     private int MaxProgress = 0;
@@ -106,7 +106,7 @@ public partial class ConnectionForm : Form
 
         try
         {
-            MaxProgress = chkOutbreaks.Checked ? 66 : 10;
+            MaxProgress = chkOutbreaks.Checked ? 67 : 10;
             CurrentProgress = 0;
             await Executor.Connect(token).ConfigureAwait(false);
             UpdateProgress(CurrentProgress++, MaxProgress);

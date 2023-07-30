@@ -48,6 +48,7 @@ public static class Blocks
         IsEncrypted = true,
         Size = 0x01,
     };
+
     public static readonly DataBlock RaidSevenStar = new()
     {
         Name = "RaidSevenStar",
