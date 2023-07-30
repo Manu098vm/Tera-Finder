@@ -5,11 +5,12 @@ namespace TeraFinder.Plugins;
 
 public partial class ProgressForm : Form
 {
-    SAV9SV SAV = null!;
-    List<SevenStarRaidDetail> Raids = null!;
+    readonly SAV9SV SAV = null!;
+    readonly List<SevenStarRaidDetail> Raids = null!;
     private Dictionary<string, string> Strings = null!;
+    private ConnectionForm? Connection = null;
 
-    public ProgressForm(SAV9SV sav, string language)
+    public ProgressForm(SAV9SV sav, string language, ConnectionForm? connection)
     {
         InitializeComponent();
         GenerateDictionary();
@@ -34,6 +35,7 @@ public partial class ProgressForm : Form
             grpRaidMighty.Enabled = false;
         else
             cmbMightyIndex.SelectedIndex = 0;
+        Connection = connection;
     }
 
     private void GenerateDictionary()
@@ -47,7 +49,8 @@ public partial class ProgressForm : Form
             { "GameProgress.Unlocked5Stars", "Unlocked 5 Stars" },
             { "GameProgress.Unlocked6Stars", "Unlocked 6 Stars" },
             { "SAVInvalid", "Not a valid save file." },
-            { "MsgSuccess", "Done." }
+            { "MsgSuccess", "Done." },
+            { "DisconnectionSuccess", "Device disconnected." },
         };
     }
 
@@ -63,18 +66,84 @@ public partial class ProgressForm : Form
         cmbProgress.Items[5] = Strings["GameProgress.Unlocked6Stars"];
     }
 
-    private void btnApplyProgress_Click(object sender, EventArgs e)
+    private async void btnApplyProgress_Click(object sender, EventArgs e)
     {
         if (SAV.Accessor is not null)
         {
             var progress = (GameProgress)cmbProgress.SelectedIndex;
             EditProgress(SAV, progress);
-            MessageBox.Show(Strings["MsgSuccess"]);
+            if (Connection is not null && Connection.IsConnected())
+            {
+                try
+                {
+                    await WriteProgressLive(progress);
+                    MessageBox.Show(Strings["MsgSuccess"]);
+                }
+                catch
+                {
+                    if (Connection is not null)
+                    {
+                        Connection.Disconnect();
+                        MessageBox.Show(Strings["DisconnectionSuccess"]);
+                        Connection = null;
+                    }
+                }
+            }
         }
         else
         {
             MessageBox.Show(Strings["SAVInvalid"]);
-            this.Close();
+            Close();
+        }
+    }
+
+    private async Task WriteProgressLive(GameProgress progress)
+    {
+        if (Connection is null)
+            return;
+
+        if (progress >= GameProgress.Unlocked3Stars)
+        {
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty3, CancellationToken.None);
+            await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty3, CancellationToken.None, toexpect);
+        }
+        else
+        {
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty3, CancellationToken.None);
+            await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty3, CancellationToken.None, toexpect);
+        }
+
+        if (progress >= GameProgress.Unlocked4Stars)
+        {
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty4, CancellationToken.None);
+            await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty4, CancellationToken.None, toexpect);
+        }
+        else
+        {
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty4, CancellationToken.None);
+            await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty4, CancellationToken.None, toexpect);
+        }
+
+        if (progress >= GameProgress.Unlocked5Stars)
+        {
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty5, CancellationToken.None);
+            await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty5, CancellationToken.None, toexpect);
+        }
+        else
+        {
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty5, CancellationToken.None);
+            await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty5, CancellationToken.None, toexpect);
+        }
+
+        if (progress >= GameProgress.Unlocked6Stars)
+        {
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty6, CancellationToken.None);
+            await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty6, CancellationToken.None, toexpect);
+        }
+        else
+        {
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty6, CancellationToken.None);
+            await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty6, CancellationToken.None, toexpect);
         }
     }
 
@@ -196,7 +265,7 @@ public partial class ProgressForm : Form
         }
     }
 
-    private void btnApplyRaid7_Click(object sender, EventArgs e)
+    private async void btnApplyRaid7_Click(object sender, EventArgs e)
     {
         var raid = Raids.ElementAt(cmbMightyIndex.SelectedIndex);
         if (chkCaptured.Checked)
@@ -208,6 +277,23 @@ public partial class ProgressForm : Form
         else
             raid.Defeated = false;
 
+        if (Connection is not null && Connection.IsConnected())
+        {
+            try
+            {
+                await Connection.Executor.WriteBlock(SAV.RaidSevenStar.Data, Blocks.RaidSevenStar, CancellationToken.None).ConfigureAwait(false);
+            }
+            catch
+            {
+                if (Connection is not null)
+                {
+                    Connection.Disconnect();
+                    MessageBox.Show(Strings["DisconnectionSuccess"]);
+                    Connection = null;
+                }
+            }
+        }
+     
         MessageBox.Show(Strings["MsgSuccess"]);
     }
 

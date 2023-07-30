@@ -48,6 +48,16 @@ public static class Blocks
         IsEncrypted = true,
         Size = 0x01,
     };
+
+    public static readonly DataBlock RaidSevenStar = new()
+    {
+        Name = "RaidSevenStar",
+        Key = 0x8B14392F,
+        Type = SCTypeCode.Object,
+        Pointer = new long[]{ 0x44E4FE8, 0x160, 0xCD8 },
+        IsEncrypted = false,
+        Size = 0x5DC0,
+    };
     #endregion
 
     #region DataBCAT
