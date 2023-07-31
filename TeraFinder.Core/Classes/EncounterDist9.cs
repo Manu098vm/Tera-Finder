@@ -1,16 +1,33 @@
 using PKHeX.Core;
+using static PKHeX.Core.AbilityPermission;
 using static System.Buffers.Binary.BinaryPrimitives;
 
 //Extension of https://github.com/kwsch/PKHeX/blob/master/PKHeX.Core/Legality/Encounters/EncounterStatic/EncounterDist9.cs
 namespace TeraFinder.Core;
 
-public sealed record EncounterDist9 : EncounterStatic, ITeraRaid9
+public sealed record EncounterDist9 : IEncounterable, IEncounterConvertible<PK9>, ITeraRaid9, IMoveset, IFlawlessIVCount, IFixedGender
 {
-    public override int Generation => 9;
-    public override int Location => Locations.TeraCavern9;
-    public override EntityContext Context => EntityContext.Gen9;
+    public int Generation => 9;
+    int ILocation.Location => Location;
+    public const ushort Location = Locations.TeraCavern9;
+    public EntityContext Context => EntityContext.Gen9;
+    public GameVersion Version => GameVersion.SV;
     public bool IsDistribution => Index != 0;
-    public GemType TeraType { get; private init; }
+    public Ball FixedBall => Ball.None;
+    public bool EggEncounter => false;
+    public bool IsShiny => Shiny == Shiny.Always;
+    public int EggLocation => 0;
+
+    public required ushort Species { get; init; }
+    public required byte Form { get; init; }
+    public required sbyte Gender { get; init; }
+    public required AbilityPermission Ability { get; init; }
+    public required byte FlawlessIVCount { get; init; }
+    public required Shiny Shiny { get; init; }
+    public required byte Level { get; init; }
+    public required Moveset Moves { get; init; }
+    public required IndividualValueSet IVs { get; init; }
+    public required GemType TeraType { get; init; }
     public byte Index { get; private init; }
     public byte Stars { get; private init; }
     public byte RandRate { get; private init; } // weight chance of this encounter
@@ -45,6 +62,11 @@ public sealed record EncounterDist9 : EncounterStatic, ITeraRaid9
     public ushort RandRate3MinViolet { get; private init; }
     public ushort RandRate3TotalScarlet { get; private init; }
     public ushort RandRate3TotalViolet { get; private init; }
+
+    public string Name => "Distribution Tera Raid Encounter";
+    public string LongName => Name;
+    public byte LevelMin => Level;
+    public byte LevelMax => Level;
 
     public ushort GetRandRateTotalScarlet(int stage) => stage switch
     {
@@ -159,10 +181,9 @@ public sealed record EncounterDist9 : EncounterStatic, ITeraRaid9
         return result;
     }
 
-    private EncounterDist9() : base(GameVersion.SV) { }
-
     private const int SerializedSize = WeightStart + (sizeof(ushort) * 2 * 2 * 4) + 10 + (sizeof(uint) * 2) + (sizeof(ulong) * 2);
     private const int WeightStart = 0x14;
+
     private static EncounterDist9 ReadEncounter(ReadOnlySpan<byte> data) => new()
     {
         Species = ReadUInt16LittleEndian(data),
@@ -214,81 +235,57 @@ public sealed record EncounterDist9 : EncounterStatic, ITeraRaid9
 
     private static AbilityPermission GetAbility(byte b) => b switch
     {
-        0 => AbilityPermission.Any12,
-        1 => AbilityPermission.Any12H,
-        2 => AbilityPermission.OnlyFirst,
-        3 => AbilityPermission.OnlySecond,
-        4 => AbilityPermission.OnlyHidden,
+        0 => Any12,
+        1 => Any12H,
+        2 => OnlyFirst,
+        3 => OnlySecond,
+        4 => OnlyHidden,
         _ => throw new ArgumentOutOfRangeException(nameof(b), b, null),
     };
 
-    protected override EncounterMatchRating IsMatchDeferred(PKM pk)
+    #region Generating
+    PKM IEncounterConvertible.ConvertToPKM(ITrainerInfo tr, EncounterCriteria criteria) => ConvertToPKM(tr, criteria);
+    PKM IEncounterConvertible.ConvertToPKM(ITrainerInfo tr) => ConvertToPKM(tr);
+    public PK9 ConvertToPKM(ITrainerInfo tr) => ConvertToPKM(tr, EncounterCriteria.Unrestricted);
+    public PK9 ConvertToPKM(ITrainerInfo tr, EncounterCriteria criteria)
     {
-        if (Ability != AbilityPermission.Any12H)
+        int lang = (int)Language.GetSafeLanguage(Generation, (LanguageID)tr.Language);
+        var version = this.GetCompatibleVersion((GameVersion)tr.Game);
+        var pk = new PK9
         {
-            // HA-Only is a strict match. Ability Capsule and Patch can potentially change these.
-            var num = pk.AbilityNumber;
-            if (num == 4)
-            {
-                if (Ability is not AbilityPermission.OnlyHidden && !AbilityVerifier.CanAbilityPatch(9, PersonalTable.SV.GetFormEntry(Species, Form), pk.Species))
-                    return EncounterMatchRating.DeferredErrors;
-            }
-            else if (Ability.IsSingleValue(out int index) && 1 << index != num) // Fixed regular ability
-            {
-                if (Ability is AbilityPermission.OnlyFirst or AbilityPermission.OnlySecond && !AbilityVerifier.CanAbilityCapsule(9, PersonalTable.SV.GetFormEntry(Species, Form)))
-                    return EncounterMatchRating.DeferredErrors;
-            }
-        }
+            Language = lang,
+            Species = Species,
+            Form = Form,
+            CurrentLevel = LevelMin,
+            OT_Friendship = PersonalTable.SV[Species, Form].BaseFriendship,
+            Met_Location = Location,
+            Met_Level = LevelMin,
+            Version = (int)version,
+            Ball = (byte)Ball.Poke,
 
-        return base.IsMatchDeferred(pk);
+            Nickname = SpeciesName.GetSpeciesNameGeneration(Species, lang, Generation),
+            Obedience_Level = LevelMin,
+        };
+        SetPINGA(pk, criteria);
+        pk.SetMoves(Moves);
+
+        pk.ResetPartyStats();
+        return pk;
     }
 
-    protected override bool IsMatchPartial(PKM pk)
+    private void SetPINGA(PK9 pk, EncounterCriteria criteria)
     {
-        switch (Shiny)
-        {
-            case Shiny.Never when pk.IsShiny:
-            case Shiny.Always when !pk.IsShiny:
-                return true;
-        }
-
-        if (IVs.IsSpecified && !Legal.GetIsFixedIVSequenceValidSkipRand(IVs, pk))
-            return true;
-
-        var seed = Tera9RNG.GetOriginalSeed(pk);
-        if (pk is ITeraType t && !Tera9RNG.IsMatchTeraType(seed, TeraType, Species, Form, (byte)t.TeraTypeOriginal))
-            return true;
-        if (!CanBeEncountered(seed))
-            return true;
-
-        var pi = PersonalTable.SV.GetFormEntry(Species, Form);
-        var param = new GenerateParam9(Species, pi.Gender, FlawlessIVCount, 1, 0, 0, ScaleType, Scale, Ability, Shiny, Nature, IVs);
-        if (!Encounter9RNG.IsMatch(pk, param, seed))
-            return true;
-        return base.IsMatchPartial(pk);
-    }
-
-    protected override void ApplyDetails(ITrainerInfo tr, EncounterCriteria criteria, PKM pk)
-    {
-        base.ApplyDetails(tr, criteria, pk);
-        var pk9 = (PK9)pk;
-        pk9.Obedience_Level = (byte)pk9.Met_Level;
-    }
-
-    protected override void SetPINGA(PKM pk, EncounterCriteria criteria)
-    {
-        var pk9 = (PK9)pk;
-
         const byte rollCount = 1;
         const byte undefinedSize = 0;
         var pi = PersonalTable.SV.GetFormEntry(Species, Form);
         var param = new GenerateParam9(Species, pi.Gender, FlawlessIVCount, rollCount,
             undefinedSize, undefinedSize, ScaleType, Scale,
-            Ability, Shiny, Nature, IVs);
+            Ability, Shiny, IVs: IVs);
 
         var init = Util.Rand.Rand64();
-        var success = this.TryApply32(pk9, init, param, criteria);
+        var success = this.TryApply32(pk, init, param, criteria);
         if (!success)
-            this.TryApply32(pk9, init, param, EncounterCriteria.Unrestricted);
+            this.TryApply32(pk, init, param, EncounterCriteria.Unrestricted);
     }
+    #endregion
 }

@@ -293,6 +293,7 @@ public static class TeraUtil
             Nature = encounter.Nature,
             IVs = encounter.IVs,
         };
+
         var pkm = new PK9
         {
             Species = encounter.Species,
