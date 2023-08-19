@@ -683,6 +683,16 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _281 {
+            get {
+                object obj = ResourceManager.GetObject("_281", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _282 {
             get {
                 object obj = ResourceManager.GetObject("_282", resourceCulture);
@@ -3801,7 +3811,7 @@ namespace TeraFinder.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugin
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugins
         ///Plugin.ConnectRemote=Connect to Remote Device
         ///Plugin.TeraViewer=Tera Raid Viewer/Editor
         ///Plugin.SeedChecker=Tera Raid Seed Checker
@@ -3813,7 +3823,7 @@ namespace TeraFinder.Core.Properties {
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
         ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
         ///TeraFinderForm.languageToolStrip=Default Language
-        ///TeraFinderF [rest of string was truncated]&quot;;.
+        ///TeraFinder [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_de {
             get {
@@ -3822,7 +3832,7 @@ namespace TeraFinder.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugin
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugins
         ///Plugin.ConnectRemote=Connect to Remote Device
         ///Plugin.TeraViewer=Tera Raid Viewer/Editor
         ///Plugin.SeedChecker=Tera Raid Seed Checker
@@ -3834,7 +3844,7 @@ namespace TeraFinder.Core.Properties {
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
         ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
         ///TeraFinderForm.languageToolStrip=Default Language
-        ///TeraFinderF [rest of string was truncated]&quot;;.
+        ///TeraFinder [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_en {
             get {
@@ -3843,7 +3853,7 @@ namespace TeraFinder.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugin
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugins
         ///Plugin.ConnectRemote=Conectar a Dispositivo Remoto
         ///Plugin.TeraViewer=Visor/Editor de Teraincursiones
         ///Plugin.SeedChecker=Inspector de Seeds
@@ -3854,7 +3864,7 @@ namespace TeraFinder.Core.Properties {
         ///TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Herramientas
         ///TeraFinderForm.btnRemoteConnect=Conectar a Dispositivo Remoto
-        ///TeraFinderForm.languag [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.langua [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_es {
             get {
@@ -3863,7 +3873,7 @@ namespace TeraFinder.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugin
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugins
         ///Plugin.ConnectRemote=Connect to Remote Device
         ///Plugin.TeraViewer=Tera Raid Viewer/Editor
         ///Plugin.SeedChecker=Tera Raid Seed Checker
@@ -3875,7 +3885,7 @@ namespace TeraFinder.Core.Properties {
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
         ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
         ///TeraFinderForm.languageToolStrip=Default Language
-        ///TeraFinderF [rest of string was truncated]&quot;;.
+        ///TeraFinder [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_fr {
             get {
@@ -3884,7 +3894,7 @@ namespace TeraFinder.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugin
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugins
         ///Plugin.ConnectRemote=Connetti a Dispositivo Remoto
         ///Plugin.TeraViewer=Visualizza e Modifica Raid
         ///Plugin.SeedChecker=Controlla Seed
@@ -3895,7 +3905,7 @@ namespace TeraFinder.Core.Properties {
         ///TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Strumenti
         ///TeraFinderForm.btnRemoteConnect=Connetti a Dispositivo Remoto
-        ///TeraFinderForm.languageToolStrip=Ling [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.languageToolStrip=Lin [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_it {
             get {
@@ -3904,7 +3914,7 @@ namespace TeraFinder.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugin
+        ///   Looks up a localized string similar to Plugin.TeraFinderPlugin=Tera Finder Plugins
         ///Plugin.ConnectRemote=Connect to Remote Device
         ///Plugin.TeraViewer=Tera Raid Viewer/Editor
         ///Plugin.SeedChecker=Tera Raid Seed Checker
@@ -3916,7 +3926,7 @@ namespace TeraFinder.Core.Properties {
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
         ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
         ///TeraFinderForm.languageToolStrip=Default Language
-        ///TeraFinderF [rest of string was truncated]&quot;;.
+        ///TeraFinder [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_ja {
             get {
