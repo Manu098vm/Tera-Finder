@@ -290,9 +290,9 @@ public static class GridUtil
 
                     if (content is RaidContent.Event or RaidContent.Event_Mighty)
                     {
-                        if (f.Editor.CurrTera!.GroupID != groupid)
+                        if (f.Editor.CurrTera!.EventIndex != groupid)
                         {
-                            MessageBox.Show($"{strings["GridUtil.MismatchGroupID"].Replace("{editorIndex}", $"{f.Editor.CurrTera!.GroupID}").Replace("{resultIndex}", $"{groupid}")}");
+                            MessageBox.Show($"{strings["GridUtil.MismatchGroupID"].Replace("{editorIndex}", $"{f.Editor.CurrTera!.EventIndex}").Replace("{resultIndex}", $"{groupid}")}");
                             return;
                         }
                     }
@@ -333,9 +333,9 @@ public static class GridUtil
 
                     if (content is RaidContent.Event or RaidContent.Event_Mighty)
                     {
-                        if (f.Editor.CurrTera!.GroupID != groupid)
+                        if (f.Editor.CurrTera!.EventIndex != groupid)
                         {
-                            MessageBox.Show($"{strings["GridUtil.MismatchGroupID"].Replace("{editorIndex}", $"{f.Editor.CurrTera!.GroupID}").Replace("{resultIndex}", $"{groupid}")}");
+                            MessageBox.Show($"{strings["GridUtil.MismatchGroupID"].Replace("{editorIndex}", $"{f.Editor.CurrTera!.EventIndex}").Replace("{resultIndex}", $"{groupid}")}");
                             return;
                         }
                     }

@@ -441,12 +441,26 @@ public partial class EditorForm : Form
     private void btnOpenCalculator_Click(object sender, EventArgs e)
     {
         var calcform = new CalculatorForm(this);
+
+        if (CurrEncount is not null && CurrEncount.IsDistribution)
+        {
+            calcform.CurrentViewedIndex = CurrEncount.Index;
+            calcform.NotLinkedSearch = false;
+        }
+
         calcform.Show();
     }
 
     private void btnOpenRewardCalculator_Click(object sender, EventArgs e)
     {
         var calcform = new RewardCalcForm(this);
+
+        if (CurrEncount is not null && CurrEncount.IsDistribution)
+        {
+            calcform.CurrentViewedIndex = CurrEncount.Index;
+            calcform.NotLinkedSearch = false;
+        }
+
         calcform.Show();
     }
 

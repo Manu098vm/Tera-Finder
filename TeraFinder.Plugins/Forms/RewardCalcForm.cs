@@ -16,6 +16,9 @@ public partial class RewardCalcForm : Form
 
     private Dictionary<string, string> Strings = null!;
 
+    public int CurrentViewedIndex = 0;
+    public bool NotLinkedSearch = true;
+
     public RewardCalcForm(EditorForm editor)
     {
         InitializeComponent();
@@ -358,7 +361,7 @@ public partial class RewardCalcForm : Form
             var content = (RaidContent)cmbContent.SelectedIndex;
             var boost = cmbBoost.SelectedIndex;
 
-            var index = 0;
+            var index = (byte)CurrentViewedIndex;
             if (content >= RaidContent.Event && cmbSpecies.SelectedIndex != 0)
             {
                 foreach (var enc in content is RaidContent.Event ? Editor.Dist! : Editor.Mighty!)
@@ -402,8 +405,11 @@ public partial class RewardCalcForm : Form
         var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
         var lang = (LanguageID)Editor.SAV.Language;
 
+        var indexSpecific = index != 0;
+        var eventSpecific = content is RaidContent.Event or RaidContent.Event_Mighty;
+
         var possibleGroups = new HashSet<int>();
-        if (index == 0 && content is RaidContent.Event or RaidContent.Event_Mighty)
+        if (!indexSpecific && eventSpecific)
             foreach (var enc in content is RaidContent.Event ? Editor.Dist! : Editor.Mighty!)
                 possibleGroups.Add(enc.Index);
         else
@@ -447,8 +453,11 @@ public partial class RewardCalcForm : Form
                                 tmpcalclist.Add(res);
                                 if (!chkAllResults.Checked)
                                 {
-                                    token.Cancel();
-                                    break;
+                                    if (NotLinkedSearch || (!eventSpecific || (eventSpecific && indexSpecific)))
+                                    {
+                                        token.Cancel();
+                                        break;
+                                    }
                                 }
                             }
                             else if (Filter is null && res is not null)
@@ -512,7 +521,7 @@ public partial class RewardCalcForm : Form
             list = RewardUtil.GetRewardList(seed, encounter.Species, encounter.Stars, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist, boost);
         }
 
-        return new RewardDetails { Seed = seed, Rewards = list, Species = encounter.Species, Stars = encounter.Stars, Shiny = shiny, GroupID = (byte)groupid, Calcs = calc };
+        return new RewardDetails { Seed = seed, Rewards = list, Species = encounter.Species, Stars = encounter.Stars, Shiny = shiny, EventIndex = (byte)groupid, Calcs = calc };
     }
 
     private void dataGrid_MouseUp(object sender, MouseEventArgs e)

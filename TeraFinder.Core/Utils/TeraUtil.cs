@@ -333,7 +333,7 @@ public static class TeraUtil
             Move2 = encounter.Moves.Move2,
             Move3 = encounter.Moves.Move3,
             Move4 = encounter.Moves.Move4,
-            GroupID = (byte)groupid,
+            EventIndex = (byte)groupid,
             Calcs = calc,
         };
         return result;

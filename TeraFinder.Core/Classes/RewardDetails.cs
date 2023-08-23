@@ -67,7 +67,7 @@ public class RewardDetails
     public uint Species { get; set; }
     public int Stars { get; set; }
     public TeraShiny Shiny { get; set; }
-    public byte GroupID { get; set; }
+    public byte EventIndex { get; set; }
     public ulong Calcs { get; set; }
 
     public string[] GetStrings(string[] itemnames, string language)
@@ -109,7 +109,7 @@ public class RewardGridEntry
     public string? Item24 { get; private set; }
     public string? Item25 { get; private set; }
     public string? ExtraInfo { get; private set; }
-    public string? GroupID { get; private set; }
+    public string? EventIndex { get; private set; }
     public string? Calcs { get; private set; }
 
     public RewardGridEntry(RewardDetails res, string[] itemnames, string[]speciesnames, string[] shinynames, string language)
@@ -142,7 +142,7 @@ public class RewardGridEntry
         Item24 = str[23];
         Item25 = str[24];
         ExtraInfo = $"{speciesnames[res.Species]} ({res.Stars}☆) {(res.Shiny > TeraShiny.No ? $"({shinynames[(int)res.Shiny]})" : "")}";
-        GroupID = $"{res.GroupID}";
+        EventIndex = $"{res.EventIndex}";
         Calcs = $"{res.Calcs}";
     }
 
@@ -175,7 +175,7 @@ public class RewardGridEntry
         Item24 = str[24];
         Item25 = str[25];
         ExtraInfo = str[22];
-        GroupID = str[23];
+        EventIndex = str[23];
         Calcs = str[24];
     }
 
@@ -210,7 +210,7 @@ public class RewardGridEntry
             Item24!,
             Item25!,
             ExtraInfo!,
-            GroupID!,
+            EventIndex!,
             Calcs!,
         };
         return list.ToArray();

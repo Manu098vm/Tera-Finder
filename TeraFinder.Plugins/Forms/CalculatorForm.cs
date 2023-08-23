@@ -22,6 +22,9 @@ public partial class CalculatorForm : Form
     public string[] GenderListUnicode = null!;
     public string[] ShinyList = null!;
 
+    public int CurrentViewedIndex = 0;
+    public bool NotLinkedSearch = true;
+
     public CalculatorForm(EditorForm editor)
     {
         InitializeComponent();
@@ -488,7 +491,7 @@ public partial class CalculatorForm : Form
             var progress = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black ? GameProgress.None : (GameProgress)cmbProgress.SelectedIndex;
             var content = (RaidContent)cmbContent.SelectedIndex;
 
-            var index = (byte)0;
+            var index = (byte)CurrentViewedIndex;
             if (content >= RaidContent.Event && cmbSpecies.SelectedIndex != 0)
             {
                 foreach (var enc in content is RaidContent.Event ? Editor.Dist! : Editor.Mighty!)
@@ -531,8 +534,11 @@ public partial class CalculatorForm : Form
         var gridList = new List<GridEntry>();
         var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
 
+        var indexSpecific = index != 0;
+        var eventSpecific = content is RaidContent.Event or RaidContent.Event_Mighty;
+
         var possibleGroups = new HashSet<int>();
-        if (index == 0 && content is RaidContent.Event or RaidContent.Event_Mighty)
+        if (!indexSpecific && eventSpecific)
             foreach (var enc in content is RaidContent.Event ? Editor.Dist! : Editor.Mighty!)
                 possibleGroups.Add(enc.Index);
         else
@@ -576,8 +582,11 @@ public partial class CalculatorForm : Form
                                 tmpcalclist.Add(res);
                                 if (!showresults.Checked)
                                 {
-                                    token.Cancel();
-                                    break;
+                                    if (NotLinkedSearch || (!eventSpecific || (eventSpecific && indexSpecific)))
+                                    {
+                                        token.Cancel();
+                                        break;
+                                    }
                                 }
                             }
                             else if (Filter is null && res is not null)
