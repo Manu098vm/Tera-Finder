@@ -23,7 +23,7 @@ public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>
 
     public required ushort Species { get; init; }
     public required byte Form { get; init; }
-    public required sbyte Gender { get; init; }
+    public required byte Gender { get; init; }
     public required AbilityPermission Ability { get; init; }
     public required byte FlawlessIVCount { get; init; }
     public required Shiny Shiny { get; init; }
@@ -93,7 +93,7 @@ public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>
     {
         Species = BinaryPrimitives.ReadUInt16LittleEndian(data),
         Form = data[0x02],
-        Gender = (sbyte)(data[0x03] - 1),
+        Gender = (byte)(data[0x03] - 1),
         Ability = GetAbility(data[0x04]),
         FlawlessIVCount = data[5],
         Shiny = data[0x06] switch { 0 => Shiny.Random, 1 => Shiny.Never, 2 => Shiny.Always, _ => throw new ArgumentOutOfRangeException(nameof(data)) },
