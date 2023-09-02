@@ -61,22 +61,34 @@ public static class TeraUtil
         template.HealPP();
         template.ClearNickname();
 
-        var la = new LegalityAnalysis(template);
-        if (!la.Valid)
+        try 
         {
-            var ability = la.Results.Where(l => l.Identifier is CheckIdentifier.Ability).FirstOrDefault();
-            var la_ot = la.Results.Where(l => l.Identifier is CheckIdentifier.Trainer).FirstOrDefault();
-            if (!ability.Valid)
+            var la = new LegalityAnalysis(template);
+
+            if (!la.Valid)
             {
-                for (var i = 0; i <= 4 && !la.Valid; i++)
+                var ability = la.Results.Where(l => l.Identifier is CheckIdentifier.Ability).FirstOrDefault();
+                var la_ot = la.Results.Where(l => l.Identifier is CheckIdentifier.Trainer).FirstOrDefault();
+                if (!ability.Valid)
                 {
-                    template.AbilityNumber = i;
-                    i++;
-                    la = new LegalityAnalysis(template);
+                    for (var i = 0; i <= 4 && !la.Valid; i++)
+                    {
+                        template.AbilityNumber = i;
+                        i++;
+                        la = new LegalityAnalysis(template);
+                    }
                 }
+                if ((LanguageID)template.Language is (LanguageID.ChineseS or LanguageID.ChineseT or LanguageID.Korean or LanguageID.Japanese) && !la_ot.Valid)
+                    template.OT_Name = "TF";
             }
-            if ((LanguageID)template.Language is (LanguageID.ChineseS or LanguageID.ChineseT or LanguageID.Korean or LanguageID.Japanese) && !la_ot.Valid)
-                template.OT_Name = "TF";
+        }
+        catch (Exception ex) 
+        {
+            //PKHeX currently has a bug when analyzing the Mighty Mark ribbon if the encounter is not in the db, this is an hacky way to handle the exception
+            if (ex.ToString().Contains("RibbonMarkMightiest"))
+                template.RibbonMarkMightiest = false;
+
+            return template;
         }
 
         return template;
