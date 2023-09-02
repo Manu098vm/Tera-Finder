@@ -19,7 +19,7 @@ public class EncounterRaid9 : IEncounterable, IEncounterConvertible<PK9>, ITeraR
     public byte FlawlessIVCount => ((dynamic)Encounter).FlawlessIVCount; 
     public AbilityPermission Ability => ((dynamic)Encounter).Ability;
     public Shiny Shiny => ((dynamic)Encounter).Shiny;
-    public sbyte Gender => ((dynamic)Encounter).Gender;
+    public byte Gender => ((dynamic)Encounter).Gender;
     public byte Level => ((dynamic)Encounter).Level;
     public Moveset Moves => ((dynamic)Encounter).Moves;
 
