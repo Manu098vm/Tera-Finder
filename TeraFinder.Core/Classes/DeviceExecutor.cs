@@ -18,7 +18,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
     public const decimal BotbaseVersion = 2.3m;
 
     //Game Infos
-    private const string VersionNumber = "1.3.2";
+    private const string VersionNumber = "2.0.1";
     private const string ScarletID = "0100A3D008C5C000";
     private const string VioletID = "01008F6008C5E000";
 
@@ -44,7 +44,7 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
         Log($"Valid Botbase Version: {botbase}");
         var game = await ReadGame(token).ConfigureAwait(false);
         Log($"Valid Title ID ({(game is GameVersion.SL ? $"{ScarletID}" : $"{VioletID}")})");
-        var version = await SwitchConnection.GetGameInfo("version", token).ConfigureAwait(false);
+        var version = await ReadGameVersion(token).ConfigureAwait(false);
         Log($"Valid Game Version: {version}");
         Log("Connection Test OK");
         Config.IterateNextRoutine();

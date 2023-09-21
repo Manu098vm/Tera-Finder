@@ -70,6 +70,11 @@ public partial class RewardCalcForm : Form
         cmbContent.SelectedIndex = Editor.cmbContent.SelectedIndex;
         cmbBoost.SelectedIndex = 0;
 
+        cmbMap.Items.Clear();
+        cmbMap.Items.Add(Strings["Plugin.MapPaldea"]);
+        cmbMap.Items.Add(Strings["Plugin.MapKitakami"]);
+        cmbMap.SelectedIndex = (int)Editor.CurrMap;
+
         toolTip.SetToolTip(chkAccurateSearch, Strings["ToolTipAccurate"]);
         toolTip1.SetToolTip(chkAllResults, Strings["ToolTipAllResults"]);
 
@@ -123,6 +128,8 @@ public partial class RewardCalcForm : Form
             { "RewardCalcForm.btnSaveAllTxt", "Save All Results as TXT" },
             { "RewardCalcForm.btnSaveSelectedTxt", "Save Selected Results as TXT" },
             { "RewardCalcForm.btnSendSelectedRaid", "Send Selected Result to Raid Editor" },
+            { "Plugin.MapPaldea", "Paldea" },
+            { "Plugin.MapKitakami", "Kitakami" },
         };
     }
 
@@ -376,7 +383,7 @@ public partial class RewardCalcForm : Form
 
             try
             {
-                var griddata = await StartSearch(sav, progress, content, boost, index, Token);
+                var griddata = await StartSearch(sav, progress, content, boost, index, (TeraRaidMapParent)cmbMap.SelectedIndex, Token);
                 dataGrid.DataSource = griddata;
                 btnSearch.Text = Strings["ActionSearch"];
                 EnableControls(IsBlankSAV());
@@ -399,7 +406,7 @@ public partial class RewardCalcForm : Form
         }
     }
 
-    private async Task<List<RewardGridEntry>> StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, int boost, int index, CancellationTokenSource token)
+    private async Task<List<RewardGridEntry>> StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, int boost, int index, TeraRaidMapParent map, CancellationTokenSource token)
     {
         var gridList = new List<RewardGridEntry>();
         var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
@@ -446,7 +453,7 @@ public partial class RewardCalcForm : Form
 
                         for (ulong i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
                         {
-                            var res = CalcResult(tseed, progress, sav, content, i, chkAccurateSearch.Checked, boost, group);
+                            var res = CalcResult(tseed, progress, sav, content, i, chkAccurateSearch.Checked, boost, group, map);
                             if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
                             {
                                 tmpgridlist.Add(new RewardGridEntry(res, Items, SpeciesNames, ShinyNames, Editor.Language));
@@ -495,10 +502,11 @@ public partial class RewardCalcForm : Form
         return gridList;
     }
 
-    private RewardDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, ulong calc, bool accuratesearch, int boost, int groupid)
+    private RewardDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, ulong calc, bool accuratesearch, int boost, int groupid, TeraRaidMapParent map)
     {
         var seed = (uint)(Seed & 0xFFFFFFFF);
-        var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Editor.Tera!) :
+        var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav,
+            TeraUtil.GetStars(seed, progress), map is TeraRaidMapParent.Paldea ? Editor.Paldea! : Editor.Kitakami!, map) :
             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Dist!, groupid);
 
         if (encounter is null)
@@ -540,5 +548,5 @@ public partial class RewardCalcForm : Form
 
     private void btnSaveSelectedTxt_Click(object sender, EventArgs e) => dataGrid.SaveSelectedTxt(Editor.Language);
 
-    private void btnSendSelectedRaid_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this, Editor.Language);
+    private void btnSendSelectedRaid_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this, Editor.Language, (TeraRaidMapParent)cmbMap.SelectedIndex);
 }

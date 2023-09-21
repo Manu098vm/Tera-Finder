@@ -263,9 +263,19 @@ namespace TeraFinder.Plugins.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap world {
+        internal static System.Drawing.Bitmap kitakami {
             get {
-                object obj = ResourceManager.GetObject("world", resourceCulture);
+                object obj = ResourceManager.GetObject("kitakami", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap paldea {
+            get {
+                object obj = ResourceManager.GetObject("paldea", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

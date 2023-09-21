@@ -5,6 +5,11 @@ Plugin.SeedChecker=太晶洞窟Seed检索
 Plugin.FlagEditor=编辑太晶洞窟解锁进度
 Plugin.NewsImporter=导入宝可梦入口站新闻
 Plugin.OutbreakViewer=大量出现查看/编辑
+Plugin.MapPaldea=Paldea
+Plugin.MapKitakami=Kitakami
+Plugin.Main=Main
+Plugin.DLC1=DLC1
+Plugin.DLC2=DLC2
 
 TeraFinderForm=太晶洞窟搜索
 TeraFinderForm.remoteConnectToolStripMenuItem=工具
@@ -291,6 +296,18 @@ AREAGLAS=霜抹山
 AREANPA3=东3区
 AREANPA1=东1区
 AREANPA2=东2区
+
+AREA1KR=Kitakami Road
+AREA1AH=Apple Hills
+AREA1RR=Revelers Road
+AREA1OM=Oni Mountain
+AREA1IP=Infernal Pass
+AREA1CP=Crystal Pool
+AREA1WF=Wistful Fields
+AREA1MC=Mossfell Confluence
+AREA1FG=Fellhorn Gorge
+AREA1PB=Paradise Barrens
+AREA1KW=Kitakami Wilds
 
 Update.Popup=有可用更新
 Update.Message=Tera Finder更新可用。是否要下载最新版本？

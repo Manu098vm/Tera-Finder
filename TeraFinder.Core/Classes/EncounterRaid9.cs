@@ -46,7 +46,8 @@ public class EncounterRaid9 : IEncounterable, IEncounterConvertible<PK9>, ITeraR
     public ulong FixedRewardHash => GetFixedRewardHash(); 
     public ulong LotteryRewardHash => GetLotteryRewardHash(); 
     public ushort RandRateMinScarlet => GetRandRateMinScarlet(); 
-    public ushort RandRateMinViolet => GetRandRateMinViolet(); 
+    public ushort RandRateMinViolet => GetRandRateMinViolet();
+    public ExtraMoves ExtraMoves => GetExtraMoves();
 
     public static EncounterRaid9[] GetEncounters(ITeraRaid9[] encounters)
     {
@@ -155,5 +156,13 @@ public class EncounterRaid9 : IEncounterable, IEncounterConvertible<PK9>, ITeraR
             return 0;
 
         return ((dynamic)Encounter).Item;
+    }
+
+    private ExtraMoves GetExtraMoves()
+    {
+        if (Encounter is PKHeX.Core.EncounterTera9 or PKHeX.Core.EncounterDist9 or PKHeX.Core.EncounterMight9)
+            return new();
+
+        return ((dynamic)Encounter).ExtraMoves;
     }
 }

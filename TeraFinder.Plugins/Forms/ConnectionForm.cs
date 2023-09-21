@@ -116,8 +116,10 @@ public partial class ConnectionForm : Form
             var mystatusblock = SAV.Accessor.FindOrDefault(Blocks.KMyStatus.Key);
             mystatusblock.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.KMyStatus, token).ConfigureAwait(false));
             UpdateProgress(CurrentProgress++, MaxProgress);
-            var raidblock = SAV.Accessor.FindOrDefault(Blocks.KTeraRaids.Key);
-            raidblock.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.KTeraRaids, token).ConfigureAwait(false));
+            var raidpaldeablock = SAV.Accessor.FindOrDefault(Blocks.KTeraRaidPaldea.Key);
+            raidpaldeablock.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.KTeraRaidPaldea, token).ConfigureAwait(false));
+            var raidkitakamiblock = SAV.Accessor.FindOrDefault(Blocks.KTeraRaidKitakami.Key);
+            raidkitakamiblock.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.KTeraRaidKitakami, token).ConfigureAwait(false));
             UpdateProgress(CurrentProgress++, MaxProgress);
             var progress = await Executor.ReadGameProgress(token).ConfigureAwait(false);
             UpdateProgress(CurrentProgress++, MaxProgress);

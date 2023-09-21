@@ -66,6 +66,11 @@ public partial class CalculatorForm : Form
         cmbNature.Items.AddRange(NatureList);
         cmbNature.Items.Add(Strings["Any"]);
 
+        cmbMap.Items.Clear();
+        cmbMap.Items.Add(Strings["Plugin.MapPaldea"]);
+        cmbMap.Items.Add(Strings["Plugin.MapKitakami"]);
+
+        cmbMap.SelectedIndex = (int)Editor.CurrMap;
         cmbSpecies.SelectedIndex = 0;
         cmbTeraType.SelectedIndex = 0;
         cmbEC.Items[0] = Strings["Any"];
@@ -134,6 +139,8 @@ public partial class CalculatorForm : Form
             { "CalculatorForm.btnSavePk9", "Save Selected Result as PK9" },
             { "CalculatorForm.btnToPkmEditor", "Send Selected Result to PKM Editor" },
             { "CalculatorForm.btnSendToEditor", "Send Selected Result to Raid Editor" },
+            { "Plugin.MapPaldea", "Paldea" },
+            { "Plugin.MapKitakami", "Kitakami" },
         };
     }
 
@@ -214,7 +221,7 @@ public partial class CalculatorForm : Form
         sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
         sav.TrainerSID7 = Convert.ToUInt32(txtSID.Text, 10);
         sav.Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV;
-        var species = TeraUtil.GetAvailableSpecies((SAV9SV)sav, Editor.Language, GetStars(), (RaidContent)cmbContent.SelectedIndex);
+        var species = TeraUtil.GetAvailableSpecies((SAV9SV)sav, Editor.Language, GetStars(), (RaidContent)cmbContent.SelectedIndex, (TeraRaidMapParent)cmbMap.SelectedIndex);
         cmbSpecies.Items.Clear();
         cmbSpecies.Items.Add(Strings["Any"]);
         cmbSpecies.Items.AddRange(species.ToArray());
@@ -506,7 +513,7 @@ public partial class CalculatorForm : Form
 
             try
             {
-                var griddata = await StartSearch(sav, progress, content, index, Token);
+                var griddata = await StartSearch(sav, progress, content, index, (TeraRaidMapParent)cmbMap.SelectedIndex, Token);
                 dataGrid.DataSource = griddata;
                 btnSearch.Text = Strings["ActionSearch"];
                 EnableControls(IsBlankSAV());
@@ -529,7 +536,7 @@ public partial class CalculatorForm : Form
         }
     }
 
-    private async Task<List<GridEntry>> StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, byte index, CancellationTokenSource token)
+    private async Task<List<GridEntry>> StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, byte index, TeraRaidMapParent map, CancellationTokenSource token)
     {
         var gridList = new List<GridEntry>();
         var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
@@ -575,7 +582,7 @@ public partial class CalculatorForm : Form
 
                         for (ulong i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
                         {
-                            var res = CalcResult(tseed, progress, sav, content, i, group);
+                            var res = CalcResult(tseed, progress, sav, content, i, group, map);
                             if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
                             {
                                 tmpgridlist.Add(new GridEntry(res, NameList, AbilityList, NatureList, MoveList, TypeList, FormList, GenderListAscii, GenderListUnicode, ShinyList));
@@ -624,11 +631,13 @@ public partial class CalculatorForm : Form
         return gridList;
     }
 
-    private TeraDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, ulong calc, int groupid)
+    private TeraDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, ulong calc, int groupid, TeraRaidMapParent map)
     {
         var seed = (uint)(Seed & 0xFFFFFFFF);
-        var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), Editor.Tera!) :
-            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Dist!, groupid);
+        var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav, 
+            TeraUtil.GetStars(seed, progress), map is TeraRaidMapParent.Paldea ? Editor.Paldea! : Editor.Kitakami!, map) :
+            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Mighty!, groupid) : 
+            TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Dist!, groupid);
 
         if (encounter is null)
             return null;
@@ -672,11 +681,11 @@ public partial class CalculatorForm : Form
 
     private void btnSave_Click(object sender, EventArgs e) => dataGrid.SaveSelectedTxt(Editor.Language);
 
-    private void btnToPkmEditor_Click(object sender, EventArgs e) => dataGrid.SendSelectedPk9Editor(this, Editor.Language);
+    private void btnToPkmEditor_Click(object sender, EventArgs e) => dataGrid.SendSelectedPk9Editor(this, Editor.Language, (TeraRaidMapParent)cmbMap.SelectedIndex);
 
-    private void btnSendToEditor_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this, Editor.Language);
+    private void btnSendToEditor_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this, Editor.Language, (TeraRaidMapParent)cmbMap.SelectedIndex);
 
-    private void btnSavePk9_Click(object sender, EventArgs e) => dataGrid.SaveSelectedPk9(this, Editor.Language);
+    private void btnSavePk9_Click(object sender, EventArgs e) => dataGrid.SaveSelectedPk9(this, Editor.Language, (TeraRaidMapParent)cmbMap.SelectedIndex);
 
-    private void btnViewRewards_Click(object sender, EventArgs e) => dataGrid.ViewRewards(this, Editor.Language);
+    private void btnViewRewards_Click(object sender, EventArgs e) => dataGrid.ViewRewards(this, Editor.Language, (TeraRaidMapParent)cmbMap.SelectedIndex);
 }

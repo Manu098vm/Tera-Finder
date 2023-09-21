@@ -10,6 +10,14 @@ namespace TeraFinder.Core;
 /// </summary>
 public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>, ITeraRaid9, IMoveset, IFlawlessIVCount, IFixedGender
 {
+    //TeraFinder Serialization
+    public uint Identifier { get; private init; }
+    public ulong FixedRewardHash { get; private init; }
+    public ulong LotteryRewardHash { get; private init; }
+    public int Item { get; private init; }
+    public required ExtraMoves ExtraMoves { get; init; } 
+
+    //PKHeX Serialization
     public int Generation => 9;
     public EntityContext Context => EntityContext.Gen9;
     public GameVersion Version => GameVersion.SV;
@@ -32,31 +40,41 @@ public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>
     public required GemType TeraType { get; init; }
     public required byte Index { get; init; }
     public required byte Stars { get; init; }
-
-    //TeraFinder Serialization
-    public uint Identifier { get; private init; }
-    public ulong FixedRewardHash { get; private init; }
-    public ulong LotteryRewardHash { get; private init; }
-    public int Item { get; private init; }
-
     public required byte RandRate { get; init; } // weight chance of this encounter
     public required short RandRateMinScarlet { get; init; } // weight chance total of all lower index encounters, for Scarlet
     public required short RandRateMinViolet { get; init; } // weight chance total of all lower index encounters, for Violet
     public bool IsAvailableHostScarlet => RandRateMinScarlet != -1;
     public bool IsAvailableHostViolet => RandRateMinViolet != -1;
+    public required TeraRaidMapParent Map { get; init; }
 
     public string Name => "Tera Raid Encounter";
     public string LongName => Name;
     public byte LevelMin => Level;
     public byte LevelMax => Level;
 
-    public bool CanBeEncountered(uint seed) => Tera9RNG.IsMatchStarChoice(seed, Stars, RandRate, RandRateMinScarlet, RandRateMinViolet);
+    public bool CanBeEncountered(uint seed) => Tera9RNG.IsMatchStarChoice(seed, Stars, RandRate, RandRateMinScarlet, RandRateMinViolet, Map);
 
     /// <summary>
     /// Fetches the rate sum for the base ROM raid, depending on star count.
     /// </summary>
     /// <param name="star">Raid Difficulty</param>
+    /// <param name="map">Map the encounter originates on.</param>
     /// <returns>Total rate value the game uses to call rand(x) with.</returns>
+    public static short GetRateTotalSL(int star, TeraRaidMapParent map) => map switch
+    {
+        TeraRaidMapParent.Paldea => GetRateTotalBaseSL(star),
+        TeraRaidMapParent.Kitakami => GetRateTotalKitakamiSL(star),
+        _ => 0,
+    };
+
+    /// <inheritdoc cref="GetRateTotalSL(int, TeraRaidMapParent)"/>"/>
+    public static short GetRateTotalVL(int star, TeraRaidMapParent map) => map switch
+    {
+        TeraRaidMapParent.Paldea => GetRateTotalBaseVL(star),
+        TeraRaidMapParent.Kitakami => GetRateTotalKitakamiVL(star),
+        _ => 0,
+    };
+
     public static short GetRateTotalBaseSL(int star) => star switch
     {
         1 => 5800,
@@ -79,17 +97,40 @@ public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>
         _ => 0,
     };
 
-    public static EncounterTera9[] GetArray(ReadOnlySpan<byte> data)
+    public static short GetRateTotalKitakamiSL(int star) => star switch
     {
-        const int size = 0x30;
-        var count = data.Length / size;
+        1 => 1500,
+        2 => 1500,
+        3 => 2500,
+        4 => 2100,
+        5 => 2250,
+        6 => 2475, // -99
+        _ => 0,
+    };
+
+    public static short GetRateTotalKitakamiVL(int star) => star switch
+    {
+        1 => 1500,
+        2 => 1500,
+        3 => 2500,
+        4 => 2100,
+        5 => 2250,
+        6 => 2574, // +99
+        _ => 0,
+    };
+
+    public static EncounterTera9[] GetArray(ReadOnlySpan<byte> data, TeraRaidMapParent map)
+    {
+        var count = data.Length / SerializedSize;
         var result = new EncounterTera9[count];
         for (int i = 0; i < result.Length; i++)
-            result[i] = ReadEncounter(data.Slice(i * size, size));
+            result[i] = ReadEncounter(data.Slice(i * SerializedSize, SerializedSize), map);
         return result;
     }
 
-    private static EncounterTera9 ReadEncounter(ReadOnlySpan<byte> data) => new()
+    private const int SerializedSize = 0x3C;
+
+    private static EncounterTera9 ReadEncounter(ReadOnlySpan<byte> data, TeraRaidMapParent map) => new()
     {
         Species = BinaryPrimitives.ReadUInt16LittleEndian(data),
         Form = data[0x02],
@@ -113,6 +154,14 @@ public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>
         FixedRewardHash = BinaryPrimitives.ReadUInt64LittleEndian(data[0x1C..]),
         LotteryRewardHash = BinaryPrimitives.ReadUInt64LittleEndian(data[0x24..]),
         Item = (int)BinaryPrimitives.ReadUInt32LittleEndian(data[0x2C..]),
+        ExtraMoves = new ExtraMoves(BinaryPrimitives.ReadUInt16LittleEndian(data[0x30..]),
+            BinaryPrimitives.ReadUInt16LittleEndian(data[0x32..]),
+            BinaryPrimitives.ReadUInt16LittleEndian(data[0x34..]),
+            BinaryPrimitives.ReadUInt16LittleEndian(data[0x36..]),
+            BinaryPrimitives.ReadUInt16LittleEndian(data[0x38..]),
+            BinaryPrimitives.ReadUInt16LittleEndian(data[0x3A..])),
+
+        Map = map,
     };
 
     private static AbilityPermission GetAbility(byte b) => b switch
@@ -133,33 +182,37 @@ public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>
     {
         int lang = (int)Language.GetSafeLanguage(Generation, (LanguageID)tr.Language);
         var version = this.GetCompatibleVersion((GameVersion)tr.Game);
+        var pi = PersonalTable.SV[Species, Form];
         var pk = new PK9
         {
             Language = lang,
             Species = Species,
             Form = Form,
             CurrentLevel = LevelMin,
-            OT_Friendship = PersonalTable.SV[Species, Form].BaseFriendship,
+            OT_Friendship = pi.BaseFriendship,
             Met_Location = Location,
             Met_Level = LevelMin,
-            Version = (int)version,
+            MetDate = EncounterDate.GetDateSwitch(),
+            Version = (byte)version,
             Ball = (byte)Ball.Poke,
 
             Nickname = SpeciesName.GetSpeciesNameGeneration(Species, lang, Generation),
             Obedience_Level = LevelMin,
+            OT_Name = tr.OT,
+            OT_Gender = tr.Gender,
+            ID32 = tr.ID32,
         };
-        SetPINGA(pk, criteria);
+        SetPINGA(pk, criteria, pi);
         pk.SetMoves(Moves);
 
         pk.ResetPartyStats();
         return pk;
     }
 
-    private void SetPINGA(PK9 pk, EncounterCriteria criteria)
+    private void SetPINGA(PK9 pk, EncounterCriteria criteria, PersonalInfo9SV pi)
     {
         const byte rollCount = 1;
         const byte undefinedSize = 0;
-        var pi = PersonalTable.SV.GetFormEntry(Species, Form);
         var param = new GenerateParam9(Species, pi.Gender, FlawlessIVCount, rollCount,
             undefinedSize, undefinedSize, undefinedSize, undefinedSize,
             Ability, Shiny);

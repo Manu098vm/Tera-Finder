@@ -7,6 +7,13 @@ namespace TeraFinder.Core;
 
 public sealed record EncounterDist9 : IEncounterable, IEncounterConvertible<PK9>, ITeraRaid9, IMoveset, IFlawlessIVCount, IFixedGender
 {
+    //TeraFinder Serialization
+    public uint Identifier { get; private init; }
+    public ulong FixedRewardHash { get; private init; }
+    public ulong LotteryRewardHash { get; private init; }
+    public int Item { get; private init; }
+    public required ExtraMoves ExtraMoves { get; init; }
+
     public int Generation => 9;
     int ILocation.Location => Location;
     public const ushort Location = Locations.TeraCavern9;
@@ -31,12 +38,6 @@ public sealed record EncounterDist9 : IEncounterable, IEncounterConvertible<PK9>
     public byte Index { get; private init; }
     public byte Stars { get; private init; }
     public byte RandRate { get; private init; } // weight chance of this encounter
-
-    //TeraFinder Serialization
-    public uint Identifier { get; private init; }
-    public ulong FixedRewardHash { get; private init; }
-    public ulong LotteryRewardHash { get; private init; }
-    public int Item { get; private init; }
 
     /// <summary> Indicates how the <see cref="Scale"/> value is used, if at all. </summary>
     public SizeType9 ScaleType { get; private init; }
@@ -181,7 +182,7 @@ public sealed record EncounterDist9 : IEncounterable, IEncounterConvertible<PK9>
         return result;
     }
 
-    private const int SerializedSize = WeightStart + (sizeof(ushort) * 2 * 2 * 4) + 10 + (sizeof(uint) * 2) + (sizeof(ulong) * 2);
+    public const int SerializedSize = 0x62;
     private const int WeightStart = 0x14;
 
     private static EncounterDist9 ReadEncounter(ReadOnlySpan<byte> data) => new()
@@ -231,6 +232,13 @@ public sealed record EncounterDist9 : IEncounterable, IEncounterConvertible<PK9>
         FixedRewardHash = ReadUInt64LittleEndian(data[0x42..]),
         LotteryRewardHash = ReadUInt64LittleEndian(data[0x4A..]),
         Item = (int)ReadUInt32LittleEndian(data[0x52..]),
+        ExtraMoves = new ExtraMoves(
+            ReadUInt16LittleEndian(data[0x56..]),
+            ReadUInt16LittleEndian(data[0x58..]),
+            ReadUInt16LittleEndian(data[0x5A..]),
+            ReadUInt16LittleEndian(data[0x5C..]),
+            ReadUInt16LittleEndian(data[0x5E..]),
+            ReadUInt16LittleEndian(data[0x60..])),
     };
 
     private static AbilityPermission GetAbility(byte b) => b switch

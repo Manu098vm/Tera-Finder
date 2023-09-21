@@ -5,6 +5,11 @@ Plugin.SeedChecker=Tera Raid Seed Checker
 Plugin.FlagEditor=Edit Game Flags
 Plugin.NewsImporter=Import Poké Portal News
 Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
+Plugin.MapPaldea=Paldea
+Plugin.MapKitakami=Kitakami
+Plugin.Main=Main
+Plugin.DLC1=DLC1
+Plugin.DLC2=DLC2
 
 TeraFinderForm=Tera Finder 
 TeraFinderForm.remoteConnectToolStripMenuItem=Tools
@@ -291,6 +296,18 @@ AREAGLAS=Glaseado Mountain
 AREANPA3=North Province (Area 3)
 AREANPA1=North Province (Area 1)
 AREANPA2=North Province (Area 2)
+
+AREA1KR=Kitakami Road
+AREA1AH=Apple Hills
+AREA1RR=Revelers Road
+AREA1OM=Oni Mountain
+AREA1IP=Infernal Pass
+AREA1CP=Crystal Pool
+AREA1WF=Wistful Fields
+AREA1MC=Mossfell Confluence
+AREA1FG=Fellhorn Gorge
+AREA1PB=Paradise Barrens
+AREA1KW=Kitakami Wilds
 
 Update.Popup=Update available
 Update.Message=A Tera Finder update is available. Do you want to download the latest release?

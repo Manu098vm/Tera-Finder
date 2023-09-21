@@ -107,6 +107,8 @@ partial class CalculatorForm
         btnSavePk9 = new ToolStripMenuItem();
         btnToPkmEditor = new ToolStripMenuItem();
         btnSendToEditor = new ToolStripMenuItem();
+        label2 = new Label();
+        cmbMap = new ComboBox();
         grpRaidDetails.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)numFrames).BeginInit();
         grpFilters.SuspendLayout();
@@ -131,6 +133,8 @@ partial class CalculatorForm
         // 
         // grpRaidDetails
         // 
+        grpRaidDetails.Controls.Add(label2);
+        grpRaidDetails.Controls.Add(cmbMap);
         grpRaidDetails.Controls.Add(showresults);
         grpRaidDetails.Controls.Add(numFrames);
         grpRaidDetails.Controls.Add(btnSearch);
@@ -151,7 +155,7 @@ partial class CalculatorForm
         // showresults
         // 
         showresults.AutoSize = true;
-        showresults.Location = new Point(25, 164);
+        showresults.Location = new Point(25, 171);
         showresults.Margin = new Padding(3, 4, 3, 4);
         showresults.Name = "showresults";
         showresults.Size = new Size(160, 24);
@@ -161,7 +165,7 @@ partial class CalculatorForm
         // 
         // numFrames
         // 
-        numFrames.Location = new Point(119, 80);
+        numFrames.Location = new Point(119, 103);
         numFrames.Margin = new Padding(3, 4, 3, 4);
         numFrames.Maximum = new decimal(new int[] { -1, 0, 0, 0 });
         numFrames.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
@@ -172,10 +176,10 @@ partial class CalculatorForm
         // 
         // btnSearch
         // 
-        btnSearch.Location = new Point(16, 191);
+        btnSearch.Location = new Point(16, 196);
         btnSearch.Margin = new Padding(3, 4, 3, 4);
         btnSearch.Name = "btnSearch";
-        btnSearch.Size = new Size(277, 45);
+        btnSearch.Size = new Size(277, 40);
         btnSearch.TabIndex = 5;
         btnSearch.Text = "Search";
         btnSearch.UseVisualStyleBackColor = true;
@@ -184,7 +188,7 @@ partial class CalculatorForm
         // lblFrames
         // 
         lblFrames.AutoSize = true;
-        lblFrames.Location = new Point(16, 82);
+        lblFrames.Location = new Point(16, 105);
         lblFrames.Name = "lblFrames";
         lblFrames.Size = new Size(78, 20);
         lblFrames.TabIndex = 1;
@@ -193,7 +197,7 @@ partial class CalculatorForm
         // lblContent
         // 
         lblContent.AutoSize = true;
-        lblContent.Location = new Point(16, 115);
+        lblContent.Location = new Point(16, 138);
         lblContent.Name = "lblContent";
         lblContent.Size = new Size(64, 20);
         lblContent.TabIndex = 2;
@@ -201,7 +205,7 @@ partial class CalculatorForm
         // 
         // txtSeed
         // 
-        txtSeed.Location = new Point(119, 45);
+        txtSeed.Location = new Point(119, 68);
         txtSeed.Margin = new Padding(3, 4, 3, 4);
         txtSeed.MaxLength = 8;
         txtSeed.Name = "txtSeed";
@@ -213,7 +217,7 @@ partial class CalculatorForm
         // 
         cmbContent.FormattingEnabled = true;
         cmbContent.Items.AddRange(new object[] { "Standard", "Black", "Event", "Event-Mighty" });
-        cmbContent.Location = new Point(119, 112);
+        cmbContent.Location = new Point(119, 135);
         cmbContent.Margin = new Padding(3, 4, 3, 4);
         cmbContent.Name = "cmbContent";
         cmbContent.Size = new Size(174, 28);
@@ -223,7 +227,7 @@ partial class CalculatorForm
         // lblSeed
         // 
         lblSeed.AutoSize = true;
-        lblSeed.Location = new Point(16, 48);
+        lblSeed.Location = new Point(16, 71);
         lblSeed.Name = "lblSeed";
         lblSeed.Size = new Size(45, 20);
         lblSeed.TabIndex = 1;
@@ -914,6 +918,23 @@ partial class CalculatorForm
         btnSendToEditor.Text = "Send Selected Result to Raid Editor";
         btnSendToEditor.Click += btnSendToEditor_Click;
         // 
+        // label2
+        // 
+        label2.AutoSize = true;
+        label2.Location = new Point(16, 36);
+        label2.Name = "label2";
+        label2.Size = new Size(69, 20);
+        label2.TabIndex = 10;
+        label2.Text = "Location:";
+        // 
+        // cmbMap
+        // 
+        cmbMap.FormattingEnabled = true;
+        cmbMap.Location = new Point(119, 33);
+        cmbMap.Name = "cmbMap";
+        cmbMap.Size = new Size(174, 28);
+        cmbMap.TabIndex = 10;
+        // 
         // CalculatorForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1033,4 +1054,6 @@ partial class CalculatorForm
     public ComboBox cmbGame;
     private ToolStripMenuItem btnViewRewards;
     private Label lblFound;
+    private Label label2;
+    private ComboBox cmbMap;
 }

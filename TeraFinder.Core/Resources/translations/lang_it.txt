@@ -5,6 +5,11 @@ Plugin.SeedChecker=Controlla Seed
 Plugin.FlagEditor=Modifica Flags di Gioco
 Plugin.NewsImporter=Importa Raid Evento
 Plugin.OutbreakViewer=Visualizza e Modifica Comparse Massicce
+Plugin.MapPaldea=Paldea
+Plugin.MapKitakami=Nordivia
+Plugin.Main=Main
+Plugin.DLC1=DLC1
+Plugin.DLC2=DLC2
 
 TeraFinderForm=Tera Finder 
 TeraFinderForm.remoteConnectToolStripMenuItem=Strumenti
@@ -291,6 +296,18 @@ AREAGLAS=Sierra Nepada
 AREANPA3=Area 3 Nord
 AREANPA1=Area 1 Nord
 AREANPA2=Area 2 Nord
+
+AREA1KR=Via Nordivia
+AREA1AH=Colle Mele
+AREA1RR=Sentiero del Tripudio
+AREA1OM=Monte Orco
+AREA1IP=Pendio Infernale
+AREA1CP=Lago Cristallìo
+AREA1WF=Piana dei Glicini
+AREA1MC=Piana Duefiumi
+AREA1FG=Canyon del Corno
+AREA1PB=Landa Paradisiaca
+AREA1KW=Terre Primeve di Nordivia
 
 Update.Popup=Aggiornamento disponibile
 Update.Message=Un aggiornamento per Tera Finder è disponibile. Vuoi scaricare l'ultima release?

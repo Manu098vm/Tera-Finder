@@ -179,13 +179,13 @@ public static class TeraUtil
         };
     }
 
-    public static List<string> GetAvailableSpecies(SAV9SV sav, string language, int stars, RaidContent content)
+    public static List<string> GetAvailableSpecies(SAV9SV sav, string language, int stars, RaidContent content, TeraRaidMapParent map)
     {
         List<string> list = new();
         var game = (GameVersion)sav.Game;
 
         var encounters = content is RaidContent.Event ? GetSAVDistEncounters(sav)[0] : content is RaidContent.Event_Mighty ? GetSAVDistEncounters(sav)[1] :
-            EncounterRaid9.GetEncounters(EncounterTera9.GetArray(Properties.Resources.encounter_gem_paldea));
+            EncounterRaid9.GetEncounters(EncounterTera9.GetArray(Properties.Resources.encounter_gem_paldea, map));
 
         foreach (var encounter in encounters)
         {
@@ -201,7 +201,9 @@ public static class TeraUtil
         return list;
     }
 
-    public static EncounterRaid9[] GetAllTeraEncounters() => EncounterRaid9.GetEncounters(EncounterTera9.GetArray(Properties.Resources.encounter_gem_paldea));
+    public static EncounterRaid9[] GetAllTeraEncounters(TeraRaidMapParent map) => 
+        EncounterRaid9.GetEncounters(EncounterTera9.GetArray(map is TeraRaidMapParent.Paldea ?
+            Properties.Resources.encounter_gem_paldea : Properties.Resources.encounter_gem_kitakami, map));
 
     public static EncounterRaid9[][] GetAllDistEncounters()
     {
@@ -221,19 +223,19 @@ public static class TeraUtil
         }
         catch
         {
-            const int encSize = 86;
+            const int encSize = EncounterDist9.SerializedSize;
             var dist = EncounterRaid9.GetEncounters(EncounterDist9.GetArray(new byte[encSize]));
             var might = EncounterRaid9.GetEncounters(EncounterMight9.GetArray(new byte[encSize]));
             return new EncounterRaid9[][] { dist, might };
         }
     }
 
-    public static EncounterRaid9? GetTeraEncounter(uint seed, SAV9SV sav, int stars, EncounterRaid9[] encounters)
+    public static EncounterRaid9? GetTeraEncounter(uint seed, SAV9SV sav, int stars, EncounterRaid9[] encounters, TeraRaidMapParent map)
     {
         var game = (GameVersion)sav.Game;
         var xoro = new Xoroshiro128Plus(seed);
         if (stars < 6) xoro.NextInt(100);
-        var max = game is GameVersion.SL ? EncounterTera9.GetRateTotalBaseSL(stars) : EncounterTera9.GetRateTotalBaseVL(stars);
+        var max = game is GameVersion.SL ? EncounterTera9.GetRateTotalSL(stars, map) : EncounterTera9.GetRateTotalVL(stars, map);
         var rateRand = (int)xoro.NextInt((uint)max);
         foreach (var encounter in encounters)
         {
@@ -351,7 +353,7 @@ public static class TeraUtil
         return result;
     }
 
-    public static int GetDeliveryGroupID(SAV9SV sav, GameProgress progress, RaidContent content, EncounterRaid9[]? Dist, int currRaid = -1)
+    public static int GetDeliveryGroupID(SAV9SV sav, GameProgress progress, RaidContent content, EncounterRaid9[]? Dist, RaidSpawnList9 raids, int currRaid = -1)
     {
         var p = progress switch
         {
@@ -368,7 +370,7 @@ public static class TeraUtil
                     ((GameVersion)sav.Game is GameVersion.VL && enc.GetRandRateTotalViolet(p) > 0))
                     possibleGroups.Add(enc.Index);
 
-        var eventCount = content >= RaidContent.Event ? GetEventCount(sav.Raid, currRaid+1) : 0;
+        var eventCount = content >= RaidContent.Event ? GetEventCount(raids, currRaid+1) : 0;
 
         var priority = EventUtil.GetDeliveryPriority(sav);
         var groupid = priority is not null ? GetDeliveryGroupID(eventCount, priority.GroupID.Groups, possibleGroups) : 0;
@@ -412,7 +414,7 @@ public static class TeraUtil
     //From https://github.com/LegoFigure11/RaidCrawler/blob/main/Structures/Areas.cs
     //GPL v3 License
     //Thanks LegoFigure11!
-    public static string[] Area = new string[] {
+    public static string[] AreaPaldea = new string[] {
         "",
         "South Province (Area 1)",
         "", // Unused
@@ -436,5 +438,21 @@ public static class TeraUtil
         "North Province (Area 3)",
         "North Province (Area 1)",
         "North Province (Area 2)",
+    };
+
+    //Thanks santacrab2!
+    public static string[] AreaKitakami = new string[] {
+        "",
+        "Kitakami Road",
+        "Apple Hills",
+        "Revelers Road",
+        "Oni Mountain",
+        "Infernal Pass",
+        "Crystal Pool",
+        "Wistful Fields",
+        "Mossfell Confluence",
+        "Fellhorn Gorge",
+        "Paradise Barrens",
+        "Kitakami Wilds",
     };
 }

@@ -78,6 +78,8 @@ partial class EditorForm
         toolsToolStripMenuItem = new ToolStripMenuItem();
         btnShinifyAll = new ToolStripMenuItem();
         btnShinifyAllEncounters = new ToolStripMenuItem();
+        cmbMap = new ComboBox();
+        label1 = new Label();
         GrpRaidInfo.SuspendLayout();
         grpPkmInfo.SuspendLayout();
         grpMoves.SuspendLayout();
@@ -211,7 +213,7 @@ partial class EditorForm
         grpPkmInfo.Margin = new Padding(3, 4, 3, 4);
         grpPkmInfo.Name = "grpPkmInfo";
         grpPkmInfo.Padding = new Padding(3, 4, 3, 4);
-        grpPkmInfo.Size = new Size(390, 380);
+        grpPkmInfo.Size = new Size(390, 398);
         grpPkmInfo.TabIndex = 3;
         grpPkmInfo.TabStop = false;
         grpPkmInfo.Text = "Pokémon Info";
@@ -231,7 +233,7 @@ partial class EditorForm
         grpMoves.Controls.Add(txtMove2);
         grpMoves.Controls.Add(txtMove3);
         grpMoves.Controls.Add(txtMove1);
-        grpMoves.Location = new Point(5, 261);
+        grpMoves.Location = new Point(6, 279);
         grpMoves.Margin = new Padding(3, 4, 3, 4);
         grpMoves.Name = "grpMoves";
         grpMoves.Padding = new Padding(3, 4, 3, 4);
@@ -510,7 +512,7 @@ partial class EditorForm
         // 
         // btnOpenCalculator
         // 
-        btnOpenCalculator.Location = new Point(8, 577);
+        btnOpenCalculator.Location = new Point(8, 595);
         btnOpenCalculator.Margin = new Padding(3, 4, 3, 4);
         btnOpenCalculator.Name = "btnOpenCalculator";
         btnOpenCalculator.Size = new Size(192, 52);
@@ -543,7 +545,7 @@ partial class EditorForm
         // 
         // btnOpenRewardCalculator
         // 
-        btnOpenRewardCalculator.Location = new Point(211, 577);
+        btnOpenRewardCalculator.Location = new Point(211, 595);
         btnOpenRewardCalculator.Margin = new Padding(3, 4, 3, 4);
         btnOpenRewardCalculator.Name = "btnOpenRewardCalculator";
         btnOpenRewardCalculator.Size = new Size(192, 52);
@@ -554,7 +556,7 @@ partial class EditorForm
         // 
         // imgMap
         // 
-        imgMap.BackgroundImage = Properties.Resources.world;
+        imgMap.BackgroundImage = Properties.Resources.paldea;
         imgMap.BackgroundImageLayout = ImageLayout.Stretch;
         imgMap.BorderStyle = BorderStyle.Fixed3D;
         imgMap.Location = new Point(7, 16);
@@ -567,7 +569,7 @@ partial class EditorForm
         // grpMap
         // 
         grpMap.Controls.Add(imgMap);
-        grpMap.Location = new Point(411, 32);
+        grpMap.Location = new Point(409, 57);
         grpMap.Margin = new Padding(3, 4, 3, 4);
         grpMap.Name = "grpMap";
         grpMap.Padding = new Padding(3, 4, 3, 4);
@@ -583,7 +585,7 @@ partial class EditorForm
         menuStrip1.Location = new Point(0, 0);
         menuStrip1.Name = "menuStrip1";
         menuStrip1.Padding = new Padding(7, 2, 0, 2);
-        menuStrip1.Size = new Size(1003, 28);
+        menuStrip1.Size = new Size(1001, 28);
         menuStrip1.TabIndex = 24;
         menuStrip1.Text = "menuStrip1";
         // 
@@ -608,11 +610,31 @@ partial class EditorForm
         btnShinifyAllEncounters.Text = "Shinify All Raids (Keep Encounters)";
         btnShinifyAllEncounters.Click += BtnShinyAllEncounters_Click;
         // 
+        // cmbMap
+        // 
+        cmbMap.FormattingEnabled = true;
+        cmbMap.Location = new Point(674, 34);
+        cmbMap.Name = "cmbMap";
+        cmbMap.Size = new Size(151, 28);
+        cmbMap.TabIndex = 25;
+        cmbMap.SelectedIndexChanged += cmbMap_IndexChanged;
+        // 
+        // label1
+        // 
+        label1.AutoSize = true;
+        label1.Location = new Point(565, 37);
+        label1.Name = "label1";
+        label1.Size = new Size(103, 20);
+        label1.TabIndex = 26;
+        label1.Text = "Location Map:";
+        // 
         // EditorForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(1003, 634);
+        ClientSize = new Size(1001, 656);
+        Controls.Add(label1);
+        Controls.Add(cmbMap);
         Controls.Add(grpMap);
         Controls.Add(cmbDens);
         Controls.Add(btnOpenRewardCalculator);
@@ -695,4 +717,6 @@ partial class EditorForm
     private ToolStripMenuItem toolsToolStripMenuItem;
     private ToolStripMenuItem btnShinifyAll;
     private ToolStripMenuItem btnShinifyAllEncounters;
+    private ComboBox cmbMap;
+    private Label label1;
 }

@@ -94,7 +94,7 @@ partial class OutbreakForm
         // 
         // imgMap
         // 
-        imgMap.BackgroundImage = Properties.Resources.world;
+        imgMap.BackgroundImage = Properties.Resources.paldea;
         imgMap.BackgroundImageLayout = ImageLayout.Stretch;
         imgMap.BorderStyle = BorderStyle.Fixed3D;
         imgMap.Location = new Point(6, 16);

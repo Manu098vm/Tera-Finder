@@ -178,7 +178,10 @@
   <data name="item_1879" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\items\item_1879.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="world" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\world.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="kitakami" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\kitakami.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="paldea" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\paldea.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

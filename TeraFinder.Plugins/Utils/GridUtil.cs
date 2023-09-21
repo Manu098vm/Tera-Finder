@@ -142,7 +142,7 @@ public static class GridUtil
             MessageBox.Show(strings["GridUtil.NoData"]);
     }
 
-    public static void SaveSelectedPk9(this DataGridView dataGrid, CalculatorForm f, string language)
+    public static void SaveSelectedPk9(this DataGridView dataGrid, CalculatorForm f, string language, TeraRaidMapParent map)
     {
         var strings = GenerateDictionary(language);
         if (dataGrid.SelectedCells.Count > 0)
@@ -155,15 +155,16 @@ public static class GridUtil
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
                     var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
-                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f);
-                    var progress = GetProgress(seed, groupid, selectedRows.ElementAt(0), f);
+                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f, map);
+                    var progress = GetProgress(seed, groupid, selectedRows.ElementAt(0), f, map);
                     var tid = Convert.ToUInt32(f.txtTID.Text, 10);
                     var sid = Convert.ToUInt32(f.txtSID.Text, 10);
 
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f);
+                    sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
 
-                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
+                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress),
+                        map is TeraRaidMapParent.Paldea ? f.Editor.Paldea! : f.Editor.Kitakami!, map) :
                         content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, groupid) :
                         TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, groupid);
 
@@ -220,7 +221,7 @@ public static class GridUtil
         }
     }
 
-    public static void ViewRewards(this DataGridView dataGrid, CalculatorForm f, string language)
+    public static void ViewRewards(this DataGridView dataGrid, CalculatorForm f, string language, TeraRaidMapParent map)
     {
         var strings = GenerateDictionary(language);
         if (dataGrid.SelectedCells.Count > 0)
@@ -233,13 +234,14 @@ public static class GridUtil
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
                     var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
-                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f);
-                    var progress = GetProgress(seed, groupid, selectedRows.ElementAt(0), f);
+                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f, map);
+                    var progress = GetProgress(seed, groupid, selectedRows.ElementAt(0), f, map);
 
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f);
+                    sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
 
-                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
+                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), 
+                        map is TeraRaidMapParent.Paldea ? f.Editor.Paldea! : f.Editor.Kitakami!, map) :
                         content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
                         TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
@@ -273,7 +275,7 @@ public static class GridUtil
         }
     }
 
-    public static void SendSelectedRaidEditor(this DataGridView dataGrid, CalculatorForm f, string language)
+    public static void SendSelectedRaidEditor(this DataGridView dataGrid, CalculatorForm f, string language, TeraRaidMapParent map)
     {
         var strings = GenerateDictionary(language);
         if (dataGrid.SelectedCells.Count > 0)
@@ -286,7 +288,7 @@ public static class GridUtil
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
                     var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
-                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f);
+                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f, map);
 
                     if (content is RaidContent.Event or RaidContent.Event_Mighty)
                     {
@@ -316,7 +318,7 @@ public static class GridUtil
         }
     }
 
-    public static void SendSelectedRaidEditor(this DataGridView dataGrid, RewardCalcForm f, string language)
+    public static void SendSelectedRaidEditor(this DataGridView dataGrid, RewardCalcForm f, string language, TeraRaidMapParent map)
     {
         var strings = GenerateDictionary(language);
         if (dataGrid.SelectedCells.Count > 0)
@@ -329,7 +331,7 @@ public static class GridUtil
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
                     var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
-                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f);
+                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f, map);
 
                     if (content is RaidContent.Event or RaidContent.Event_Mighty)
                     {
@@ -359,7 +361,7 @@ public static class GridUtil
         }
     }
 
-    public static void SendSelectedPk9Editor(this DataGridView dataGrid, CalculatorForm f, string language)
+    public static void SendSelectedPk9Editor(this DataGridView dataGrid, CalculatorForm f, string language, TeraRaidMapParent map)
     {
         var strings = GenerateDictionary(language);
         if (dataGrid.SelectedCells.Count > 0)
@@ -372,15 +374,16 @@ public static class GridUtil
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
                     var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
-                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f);
-                    var progress = GetProgress(seed, groupid, selectedRows.ElementAt(0), f);
+                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f, map);
+                    var progress = GetProgress(seed, groupid, selectedRows.ElementAt(0), f, map);
                     var tid = Convert.ToUInt32(f.txtTID.Text, 10);
                     var sid = Convert.ToUInt32(f.txtSID.Text, 10);
 
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f);
+                    sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
 
-                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
+                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), 
+                        map is TeraRaidMapParent.Paldea ? f.Editor.Paldea! : f.Editor.Kitakami!, map) :
                         content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, groupid) :
                         TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, groupid);
 
@@ -416,7 +419,7 @@ public static class GridUtil
         }
     }
 
-    private static GameProgress GetProgress(uint seed, int groupid, DataGridViewRow row, CalculatorForm f)
+    private static GameProgress GetProgress(uint seed, int groupid, DataGridViewRow row, CalculatorForm f, TeraRaidMapParent map)
     {
         for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
         {
@@ -426,7 +429,8 @@ public static class GridUtil
                 {
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
                     sav.Game = (int)game;
-                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
+                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), 
+                        map is TeraRaidMapParent.Paldea ? f.Editor.Paldea! : f.Editor.Kitakami!, map) :
                     content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
                         TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
@@ -453,7 +457,7 @@ public static class GridUtil
         return (GameProgress)f.cmbProgress.SelectedIndex;
     }
 
-    private static RaidContent GetContent(uint seed, int groupid, DataGridViewRow row, CalculatorForm f)
+    private static RaidContent GetContent(uint seed, int groupid, DataGridViewRow row, CalculatorForm f, TeraRaidMapParent map)
     {
         for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
         {
@@ -464,7 +468,8 @@ public static class GridUtil
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
                     sav.Game = (int)game;
 
-                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
+                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), 
+                        map is TeraRaidMapParent.Paldea ? f.Editor.Paldea! : f.Editor.Kitakami!, map) :
                     content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
                         TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
@@ -496,7 +501,7 @@ public static class GridUtil
         return (RaidContent)f.cmbContent.SelectedIndex;
     }
 
-    private static RaidContent GetContent(uint seed, int groupid, DataGridViewRow row, RewardCalcForm f)
+    private static RaidContent GetContent(uint seed, int groupid, DataGridViewRow row, RewardCalcForm f, TeraRaidMapParent map)
     {
         foreach (var accuratesearch in new[] { true, false })
         {
@@ -509,7 +514,8 @@ public static class GridUtil
                         var sav = (SAV9SV)f.Editor.SAV.Clone();
                         sav.Game = (int)game;
 
-                        var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
+                        var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), 
+                            map is TeraRaidMapParent.Paldea ? f.Editor.Paldea! : f.Editor.Kitakami!, map) :
                         content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
                             TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 
@@ -563,7 +569,7 @@ public static class GridUtil
         return (RaidContent)f.cmbContent.SelectedIndex;
     }
 
-    private static GameVersion GetGameVersion(uint seed, int groupid, DataGridViewRow row, CalculatorForm f)
+    private static GameVersion GetGameVersion(uint seed, int groupid, DataGridViewRow row, CalculatorForm f, TeraRaidMapParent map)
     {
         for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
         {
@@ -573,7 +579,8 @@ public static class GridUtil
                 {
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
                     sav.Game = (int)game;
-                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), f.Editor.Tera!) :
+                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), 
+                        map is TeraRaidMapParent.Paldea ? f.Editor.Paldea! : f.Editor.Kitakami!, map) :
                     content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
                         TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
 

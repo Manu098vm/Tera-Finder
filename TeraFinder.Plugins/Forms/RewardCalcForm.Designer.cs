@@ -130,6 +130,8 @@ partial class RewardCalcForm
         btnSaveAllTxt = new ToolStripMenuItem();
         btnSaveSelectedTxt = new ToolStripMenuItem();
         btnSendSelectedRaid = new ToolStripMenuItem();
+        label21 = new Label();
+        cmbMap = new ComboBox();
         grpFilters.SuspendLayout();
         grpEncounter.SuspendLayout();
         grpItems.SuspendLayout();
@@ -992,8 +994,10 @@ partial class RewardCalcForm
         // 
         // grpSettings
         // 
+        grpSettings.Controls.Add(label21);
         grpSettings.Controls.Add(cmbBoost);
         grpSettings.Controls.Add(cmbContent);
+        grpSettings.Controls.Add(cmbMap);
         grpSettings.Controls.Add(numMaxCalc);
         grpSettings.Controls.Add(lblSandwich);
         grpSettings.Controls.Add(lblContent);
@@ -1013,7 +1017,7 @@ partial class RewardCalcForm
         // 
         cmbBoost.FormattingEnabled = true;
         cmbBoost.Items.AddRange(new object[] { "No Boost", "Level 1", "Level 2", "Level 3" });
-        cmbBoost.Location = new Point(859, 27);
+        cmbBoost.Location = new Point(1010, 29);
         cmbBoost.Margin = new Padding(3, 4, 3, 4);
         cmbBoost.Name = "cmbBoost";
         cmbBoost.Size = new Size(129, 28);
@@ -1023,7 +1027,7 @@ partial class RewardCalcForm
         // 
         cmbContent.FormattingEnabled = true;
         cmbContent.Items.AddRange(new object[] { "Standard", "Black", "Event", "Event-Mighty" });
-        cmbContent.Location = new Point(587, 28);
+        cmbContent.Location = new Point(738, 29);
         cmbContent.Margin = new Padding(3, 4, 3, 4);
         cmbContent.Name = "cmbContent";
         cmbContent.Size = new Size(129, 28);
@@ -1031,7 +1035,7 @@ partial class RewardCalcForm
         // 
         // numMaxCalc
         // 
-        numMaxCalc.Location = new Point(368, 28);
+        numMaxCalc.Location = new Point(519, 29);
         numMaxCalc.Margin = new Padding(3, 4, 3, 4);
         numMaxCalc.Maximum = new decimal(new int[] { -1, 0, 0, 0 });
         numMaxCalc.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
@@ -1043,7 +1047,7 @@ partial class RewardCalcForm
         // lblSandwich
         // 
         lblSandwich.AutoSize = true;
-        lblSandwich.Location = new Point(736, 30);
+        lblSandwich.Location = new Point(887, 31);
         lblSandwich.Name = "lblSandwich";
         lblSandwich.Size = new Size(117, 20);
         lblSandwich.TabIndex = 25;
@@ -1052,7 +1056,7 @@ partial class RewardCalcForm
         // lblContent
         // 
         lblContent.AutoSize = true;
-        lblContent.Location = new Point(503, 31);
+        lblContent.Location = new Point(654, 32);
         lblContent.Name = "lblContent";
         lblContent.Size = new Size(64, 20);
         lblContent.TabIndex = 0;
@@ -1061,7 +1065,7 @@ partial class RewardCalcForm
         // lblSeed
         // 
         lblSeed.AutoSize = true;
-        lblSeed.Location = new Point(97, 30);
+        lblSeed.Location = new Point(248, 31);
         lblSeed.Name = "lblSeed";
         lblSeed.Size = new Size(45, 20);
         lblSeed.TabIndex = 1;
@@ -1070,7 +1074,7 @@ partial class RewardCalcForm
         // lblCalcs
         // 
         lblCalcs.AutoSize = true;
-        lblCalcs.Location = new Point(284, 30);
+        lblCalcs.Location = new Point(435, 31);
         lblCalcs.Name = "lblCalcs";
         lblCalcs.Size = new Size(78, 20);
         lblCalcs.TabIndex = 2;
@@ -1078,7 +1082,7 @@ partial class RewardCalcForm
         // 
         // txtSeed
         // 
-        txtSeed.Location = new Point(149, 27);
+        txtSeed.Location = new Point(300, 28);
         txtSeed.Margin = new Padding(3, 4, 3, 4);
         txtSeed.MaxLength = 8;
         txtSeed.Name = "txtSeed";
@@ -1184,6 +1188,23 @@ partial class RewardCalcForm
         btnSendSelectedRaid.Size = new Size(312, 24);
         btnSendSelectedRaid.Text = "Send Selected Result to Raid Editor";
         btnSendSelectedRaid.Click += btnSendSelectedRaid_Click;
+        // 
+        // label21
+        // 
+        label21.AutoSize = true;
+        label21.Location = new Point(30, 32);
+        label21.Name = "label21";
+        label21.Size = new Size(69, 20);
+        label21.TabIndex = 27;
+        label21.Text = "Location:";
+        // 
+        // cmbMap
+        // 
+        cmbMap.FormattingEnabled = true;
+        cmbMap.Location = new Point(105, 29);
+        cmbMap.Name = "cmbMap";
+        cmbMap.Size = new Size(129, 28);
+        cmbMap.TabIndex = 28;
         // 
         // RewardCalcForm
         // 
@@ -1340,4 +1361,6 @@ partial class RewardCalcForm
     private Label lblSpecies;
     private CheckBox chkShiny;
     private Label lblFound;
+    private Label label21;
+    private ComboBox cmbMap;
 }

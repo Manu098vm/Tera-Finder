@@ -5,6 +5,11 @@ Plugin.SeedChecker=Inspector de Seeds
 Plugin.FlagEditor=Edita Flags del Juego
 Plugin.NewsImporter=Importar Noticias Poképortal
 Plugin.OutbreakViewer=Visor/Editor de Apariciones Masivas
+Plugin.MapPaldea=Paldea
+Plugin.MapKitakami=Noroteo
+Plugin.Main=Main
+Plugin.DLC1=DLC1
+Plugin.DLC2=DLC2
 
 TeraFinderForm=Tera Finder 
 TeraFinderForm.remoteConnectToolStripMenuItem=Herramientas
@@ -291,6 +296,18 @@ AREAGLAS=Sierra Napada
 AREANPA3=Área 3 (Norte)
 AREANPA1=Área 1 (Norte)
 AREANPA2=Área 2 (Norte)
+
+AREA1KR=Kitakami Road
+AREA1AH=Apple Hills
+AREA1RR=Revelers Road
+AREA1OM=Oni Mountain
+AREA1IP=Infernal Pass
+AREA1CP=Crystal Pool
+AREA1WF=Wistful Fields
+AREA1MC=Mossfell Confluence
+AREA1FG=Fellhorn Gorge
+AREA1PB=Paradise Barrens
+AREA1KW=Kitakami Wilds
 
 Update.Popup=Actualización disponible
 Update.Message=Una actualización para Tera Finder está disponible. ¿Quieres descargar la última versión?

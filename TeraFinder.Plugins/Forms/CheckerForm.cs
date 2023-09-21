@@ -5,15 +5,9 @@ namespace TeraFinder.Plugins;
 
 public partial class CheckerForm : Form
 {
-    private PK9 PKM = null!;
-    private SAV9SV SAV;
-
-    private EncounterRaid9[] Tera = null!;
-    private EncounterRaid9[] Dist = null!;
-    private EncounterRaid9[] Mighty = null!;
-
+    private readonly PK9 PKM = null!;
+    private readonly SAV9SV SAV;
     private Dictionary<string, string> Strings = null!;
-    private readonly string[] Contents = null!;
 
     public CheckerForm(PKM pk, SAV9SV sav, string language)
     {
@@ -21,7 +15,6 @@ public partial class CheckerForm : Form
         GenerateDictionary();
         TranslateDictionary(language);
         this.TranslateInterface(language);
-        Contents = new string[] { Strings["RaidContent.Standard"], Strings["RaidContent.Black"], Strings["RaidContent.Event"], Strings["RaidContent.Event_Mighty"] };
 
         var species = GameInfo.GetStrings(language).specieslist;
         var natures = GameInfo.GetStrings(language).natures;
@@ -51,10 +44,6 @@ public partial class CheckerForm : Form
         numHeight.Value = PKM.HeightScalar;
         numWeight.Value = PKM.WeightScalar;
         numScale.Value = PKM.Scale;
-        var events = TeraUtil.GetAllDistEncounters();
-        Tera = TeraUtil.GetAllTeraEncounters();
-        Dist = events[0];
-        Mighty = events[1];
     }
 
     private void GenerateDictionary()

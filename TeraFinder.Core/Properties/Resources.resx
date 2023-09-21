@@ -130,6 +130,9 @@
   <data name="den_locations" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\raid_default\den_locations.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="encounter_gem_kitakami" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\raid_default\encounter_gem_kitakami.pkl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="encounter_gem_paldea" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\raid_default\encounter_gem_paldea.pkl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

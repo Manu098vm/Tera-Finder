@@ -20,7 +20,8 @@ public class TeraPlugin : IPlugin
     public ConnectionForm? Connection = null;
     public string Language = Properties.Settings.Default.def_language;
 
-    public EncounterRaid9[]? Tera = null;
+    public EncounterRaid9[]? Paldea = null;
+    public EncounterRaid9[]? Kitakami = null;
     public EncounterRaid9[]? Dist = null;
     public EncounterRaid9[]? Mighty = null;
     public Dictionary<ulong, List<Reward>>? TeraFixedRewards = null;
@@ -87,7 +88,8 @@ public class TeraPlugin : IPlugin
         var events = TeraUtil.GetSAVDistEncounters(SAV);
         var terarewards = RewardUtil.GetTeraRewardsTables();
         var eventsrewards = RewardUtil.GetDistRewardsTables(SAV);
-        Tera = TeraUtil.GetAllTeraEncounters();
+        Paldea = TeraUtil.GetAllTeraEncounters(TeraRaidMapParent.Paldea);
+        Kitakami = TeraUtil.GetAllTeraEncounters(TeraRaidMapParent.Kitakami);
         Dist = events[0];
         Mighty = events[1];
         TeraFixedRewards = terarewards[0];
@@ -168,7 +170,7 @@ public class TeraPlugin : IPlugin
         Plugin.DropDownItems.Add(Flags);
         Plugin.DropDownItems.Add(Events);
         Connect.Click += (s, e) => LaunchConnector();
-        Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
+        Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
         Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
         Flags.Click += (s, e) => new ProgressForm(SAV, Language,Connection).Show();
         Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV, Language).Show();
@@ -200,18 +202,18 @@ public class TeraPlugin : IPlugin
 
     public void LaunchEditor()
     {
-        new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
+        new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
     }
 
     public void LaunchCalculator()
     {
-        var editor = new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
+        var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
         new CalculatorForm(editor).Show();
     }
 
     public void LaunchRewardCalculator()
     {
-        var editor = new EditorForm(SAV, PKMEditor, Language, Tera, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
+        var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
         new RewardCalcForm(editor).Show();
     }
 

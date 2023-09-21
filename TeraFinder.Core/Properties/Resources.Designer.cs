@@ -3803,6 +3803,16 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] encounter_gem_kitakami {
+            get {
+                object obj = ResourceManager.GetObject("encounter_gem_kitakami", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] encounter_gem_paldea {
             get {
                 object obj = ResourceManager.GetObject("encounter_gem_paldea", resourceCulture);
@@ -3818,12 +3828,15 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.FlagEditor=Edit Game Flags
         ///Plugin.NewsImporter=Import Poké Portal News
         ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
+        ///Plugin.MapPaldea=Paldea
+        ///Plugin.MapKitakami=Kitakami
+        ///Plugin.Main=Main
+        ///Plugin.DLC1=DLC1
+        ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
-        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
-        ///TeraFinderForm.languageToolStrip=Default Language
-        ///TeraFinder [rest of string was truncated]&quot;;.
+        ///TeraFinderF [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_de {
             get {
@@ -3839,12 +3852,15 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.FlagEditor=Edit Game Flags
         ///Plugin.NewsImporter=Import Poké Portal News
         ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
+        ///Plugin.MapPaldea=Paldea
+        ///Plugin.MapKitakami=Kitakami
+        ///Plugin.Main=Main
+        ///Plugin.DLC1=DLC1
+        ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
-        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
-        ///TeraFinderForm.languageToolStrip=Default Language
-        ///TeraFinder [rest of string was truncated]&quot;;.
+        ///TeraFinderF [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_en {
             get {
@@ -3860,11 +3876,14 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.FlagEditor=Edita Flags del Juego
         ///Plugin.NewsImporter=Importar Noticias Poképortal
         ///Plugin.OutbreakViewer=Visor/Editor de Apariciones Masivas
+        ///Plugin.MapPaldea=Paldea
+        ///Plugin.MapKitakami=Noroteo
+        ///Plugin.Main=Main
+        ///Plugin.DLC1=DLC1
+        ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=Herramientas
-        ///TeraFinderForm.btnRemoteConnect=Conectar a Dispositivo Remoto
-        ///TeraFinderForm.langua [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.remoteConnectToolStrip [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_es {
             get {
@@ -3880,12 +3899,15 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.FlagEditor=Edit Game Flags
         ///Plugin.NewsImporter=Import Poké Portal News
         ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
+        ///Plugin.MapPaldea=Paldea
+        ///Plugin.MapKitakami=Septentria
+        ///Plugin.Main=Main
+        ///Plugin.DLC1=DLC1
+        ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
-        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
-        ///TeraFinderForm.languageToolStrip=Default Language
-        ///TeraFinder [rest of string was truncated]&quot;;.
+        ///TeraFinde [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_fr {
             get {
@@ -3901,11 +3923,14 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.FlagEditor=Modifica Flags di Gioco
         ///Plugin.NewsImporter=Importa Raid Evento
         ///Plugin.OutbreakViewer=Visualizza e Modifica Comparse Massicce
+        ///Plugin.MapPaldea=Paldea
+        ///Plugin.MapKitakami=Nordivia
+        ///Plugin.Main=Main
+        ///Plugin.DLC1=DLC1
+        ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=Strumenti
-        ///TeraFinderForm.btnRemoteConnect=Connetti a Dispositivo Remoto
-        ///TeraFinderForm.languageToolStrip=Lin [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=St [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_it {
             get {
@@ -3921,12 +3946,15 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.FlagEditor=Edit Game Flags
         ///Plugin.NewsImporter=Import Poké Portal News
         ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
+        ///Plugin.MapPaldea=Paldea
+        ///Plugin.MapKitakami=??????
+        ///Plugin.Main=Main
+        ///Plugin.DLC1=DLC1
+        ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
-        ///TeraFinderForm.btnRemoteConnect=Connect To Remote Device
-        ///TeraFinderForm.languageToolStrip=Default Language
-        ///TeraFinder [rest of string was truncated]&quot;;.
+        ///TeraFinderFor [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_ja {
             get {
@@ -3942,15 +3970,17 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.FlagEditor=게임 플래그 편집
         ///Plugin.NewsImporter=포켓포털 뉴스 불러오기
         ///Plugin.OutbreakViewer=대량발생 보기/편집
+        ///Plugin.MapPaldea=Paldea
+        ///Plugin.MapKitakami=Kitakami
+        ///Plugin.Main=Main
+        ///Plugin.DLC1=DLC1
+        ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=테라 파인더 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=도구
         ///TeraFinderForm.btnRemoteConnect=스위치에 연결
         ///TeraFinderForm.languageToolStrip=언어
-        ///TeraFinderForm.grpSAV=세이브 파일
-        ///TeraFinderForm.grpSavTools=세이브 툴
-        ///TeraFinderForm.grpStaticTools=독립 툴
-        ///TeraFinderForm.grpTools=테라 파인더 도구 [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.grpSAV=세이브 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_ko {
             get {
@@ -3966,16 +3996,18 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.FlagEditor=编辑太晶洞窟解锁进度
         ///Plugin.NewsImporter=导入宝可梦入口站新闻
         ///Plugin.OutbreakViewer=大量出现查看/编辑
+        ///Plugin.MapPaldea=Paldea
+        ///Plugin.MapKitakami=Kitakami
+        ///Plugin.Main=Main
+        ///Plugin.DLC1=DLC1
+        ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=太晶洞窟搜索
         ///TeraFinderForm.remoteConnectToolStripMenuItem=工具
         ///TeraFinderForm.btnRemoteConnect=远程连接
         ///TeraFinderForm.languageToolStrip=语言设置
         ///TeraFinderForm.grpSAV=存档文件
-        ///TeraFinderForm.grpSavTools=存档工具
-        ///TeraFinderForm.grpStaticTools=独立工具
-        ///TeraFinderForm.grpTools=工具
-        ///TeraFinderForm.btnL [rest of string was truncated]&quot;;.
+        ///TeraFind [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_zh {
             get {
@@ -3991,16 +4023,18 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.FlagEditor=編輯太晶洞窟解鎖進度
         ///Plugin.NewsImporter=導入寶可夢入口站新聞
         ///Plugin.OutbreakViewer=大量出現查看/編輯
+        ///Plugin.MapPaldea=Paldea
+        ///Plugin.MapKitakami=Kitakami
+        ///Plugin.Main=Main
+        ///Plugin.DLC1=DLC1
+        ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=太晶洞窟搜索
         ///TeraFinderForm.remoteConnectToolStripMenuItem=工具
         ///TeraFinderForm.btnRemoteConnect=遠程連接
         ///TeraFinderForm.languageToolStrip=語言設置
         ///TeraFinderForm.grpSAV=储存资料文件
-        ///TeraFinderForm.grpSavTools=储存资料工具
-        ///TeraFinderForm.grpStaticTools=獨立工具
-        ///TeraFinderForm.grpTools=工具
-        ///TeraFinderForm. [rest of string was truncated]&quot;;.
+        ///TeraFi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_zh2 {
             get {
