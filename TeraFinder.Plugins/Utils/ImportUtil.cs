@@ -73,15 +73,25 @@ internal static class ImportUtil
     {
         if (!File.Exists($"{path}\\Identifier.txt"))
             return false;
-        if (!File.Exists($"{path}\\Files\\event_raid_identifier") && !File.Exists($"{path}\\Files\\event_raid_identifier_1_3_0"))
+        if (!File.Exists($"{path}\\Files\\event_raid_identifier") &&
+            !File.Exists($"{path}\\Files\\event_raid_identifier_1_3_0") &&
+            !!File.Exists($"{path}\\Files\\event_raid_identifier_2_0_0"))
             return false;
-        if (!File.Exists($"{path}\\Files\\fixed_reward_item_array") && !File.Exists($"{path}\\Files\\fixed_reward_item_array_1_3_0"))
+        if (!File.Exists($"{path}\\Files\\fixed_reward_item_array") && 
+            !File.Exists($"{path}\\Files\\fixed_reward_item_array_1_3_0") &&
+            !File.Exists($"{path}\\Files\\fixed_reward_item_array_2_0_0"))
             return false;
-        if (!File.Exists($"{path}\\Files\\lottery_reward_item_array") && !File.Exists($"{path}\\Files\\lottery_reward_item_array_1_3_0"))
+        if (!File.Exists($"{path}\\Files\\lottery_reward_item_array") && 
+            !File.Exists($"{path}\\Files\\lottery_reward_item_array_1_3_0") &&
+            !File.Exists($"{path}\\Files\\lottery_reward_item_array_2_0_0"))
             return false;
-        if (!File.Exists($"{path}\\Files\\raid_enemy_array") && !File.Exists($"{path}\\Files\\raid_enemy_array_1_3_0"))
+        if (!File.Exists($"{path}\\Files\\raid_enemy_array") && 
+            !File.Exists($"{path}\\Files\\raid_enemy_array_1_3_0") &&
+            !File.Exists($"{path}\\Files\\raid_enemy_array_2_0_0"))
             return false;
-        if (!File.Exists($"{path}\\Files\\raid_priority_array") && !File.Exists($"{path}\\Files\\raid_priority_array_1_3_0"))
+        if (!File.Exists($"{path}\\Files\\raid_priority_array") && 
+            !File.Exists($"{path}\\Files\\raid_priority_array_1_3_0") &&
+            !File.Exists($"{path}\\Files\\raid_priority_array_2_0_0"))
             return false;
 
         return true;
@@ -118,11 +128,22 @@ internal static class ImportUtil
             var indexpath = Path.Combine(path, "Identifier.txt");
 
             var filespath = Path.Combine(path, "Files");
-            var identifierpath = Path.Combine(filespath, "event_raid_identifier_1_3_0");
-            var encounterspath = Path.Combine(filespath, "raid_enemy_array_1_3_0");
-            var dropspath = Path.Combine(filespath, "fixed_reward_item_array_1_3_0");
-            var bonuspath = Path.Combine(filespath, "lottery_reward_item_array_1_3_0");
-            var prioritypath = Path.Combine(filespath, "raid_priority_array_1_3_0");
+            var identifierpath = Path.Combine(filespath, "event_raid_identifier_2_0_0");
+            var encounterspath = Path.Combine(filespath, "raid_enemy_array_2_0_0");
+            var dropspath = Path.Combine(filespath, "fixed_reward_item_array_2_0_0");
+            var bonuspath = Path.Combine(filespath, "lottery_reward_item_array_2_0_0");
+            var prioritypath = Path.Combine(filespath, "raid_priority_array_2_0_0");
+
+            if (!File.Exists(identifierpath))
+                identifierpath = Path.Combine(filespath, "event_raid_identifier_1_3_0");
+            if (!File.Exists(encounterspath))
+                encounterspath = Path.Combine(filespath, "raid_enemy_array_1_3_0");
+            if (!File.Exists(dropspath))
+                dropspath = Path.Combine(filespath, "fixed_reward_item_array_1_3_0");
+            if (!File.Exists(bonuspath))
+                bonuspath = Path.Combine(filespath, "lottery_reward_item_array_1_3_0");
+            if (!File.Exists(prioritypath))
+                prioritypath = Path.Combine(filespath, "raid_priority_array_1_3_0");
 
             if (!File.Exists(identifierpath))
                 identifierpath = Path.Combine(filespath, "event_raid_identifier");
