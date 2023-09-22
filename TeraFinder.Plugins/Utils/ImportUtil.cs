@@ -75,7 +75,7 @@ internal static class ImportUtil
             return false;
         if (!File.Exists($"{path}\\Files\\event_raid_identifier") &&
             !File.Exists($"{path}\\Files\\event_raid_identifier_1_3_0") &&
-            !!File.Exists($"{path}\\Files\\event_raid_identifier_2_0_0"))
+            !File.Exists($"{path}\\Files\\event_raid_identifier_2_0_0"))
             return false;
         if (!File.Exists($"{path}\\Files\\fixed_reward_item_array") && 
             !File.Exists($"{path}\\Files\\fixed_reward_item_array_1_3_0") &&
