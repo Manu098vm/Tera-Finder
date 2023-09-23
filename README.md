@@ -46,12 +46,13 @@ Alternatively, feel free to contact me on my [Discord Server](https://discord.gg
 * [Archit Date](https://github.com/architdate) for his C# port of the Lincoln's logic implemented in [RaidCrawler](https://github.com/LegoFigure11/RaidCrawler), on which my code is based on
 * [Lusamine](https://github.com/Lusamine) for the Key Block pointer taken from the disassembled game code for v1.2.0
 * [Leanny](https://github.com/Leanny) for his Sword/Shield [PKHeX Raid Plugin](https://github.com/Leanny/PKHeX_Raid_Plugin) which was of inspiration for my plugin
-* [santacrab2](https://github.com/santacrab2) for his contributions to make the searches lot faster
+* [santacrab2](https://github.com/santacrab2) for his contributions to make the searches lot faster and for the DLC Location Names
 * [Archit Date](https://github.com/architdate), [Lusamine](https://github.com/Lusamine), [santacrab2](https://github.com/santacrab2) for their SearchSaveKey implementation in [RaidCrawler](https://github.com/LegoFigure11/RaidCrawler/blob/f8e996aac4b134e6eb6231d539c345748fead490/RaidCrawler.Core/Connection/ConnectionWrapper.cs#L126)
 * [Zyro670](https://github.com/zyro670) and [santacrab2](https://github.com/santacrab2) for their help with the ram block reading/writing, specifically related to outbreaks
 * [olliz0r](https://github.com/olliz0r) and [berichan](https://github.com/berichan) for [sys-botbase](https://github.com/olliz0r/sys-botbase)
 * [fishguy6564](https://github.com/fishguy6564) and [Koi-3088](https://github.com/Koi-3088) for [usb-botbase](https://github.com/Koi-3088/USB-Botbase)
 * [kwsch](https://github.com/kwsch), [Lusamine](https://github.com/Lusamine), [LegoFigure11](https://github.com/LegoFigure11), [Archit Date](https://github.com/architdate), [SteveCookTU](https://github.com/SteveCookTU), [Lincoln-LM](https://github.com/Lincoln-LM), and all the contributors to the mentioned programs for their awesome researches
+* [kwsch](https://github.com/kwsch), Archit Date](https://github.com/architdate), [LegoFigure11](https://github.com/LegoFigure11) and [Lincoln-LM](https://github.com/Lincoln-LM) for the Coordinates dumps and map display [formulas](https://github.com/LegoFigure11/RaidCrawler/blob/d36475046c638fbc37fbeb0aaa001f3663273b9b/RaidCrawler.WinForms/MainWindow.cs#L1589)
 * GitHub API implementation provided by [Octokit](https://github.com/octokit/octokit.net), licensed under the MIT license
 
 ### Some related cool tools

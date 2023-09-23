@@ -117,6 +117,10 @@ public static class ImagesUtil
             _ => Properties.Resources.item_1862,
         };
 
+        // Formulas taken from RaidCrawler (GPL v3 License)
+        // Thx Lincoln, Lego and Archit!
+        // https://github.com/LegoFigure11/RaidCrawler/blob/d36475046c638fbc37fbeb0aaa001f3663273b9b/RaidCrawler.WinForms/MainWindow.cs#L1589
+
         var coordinates = new Point
         {
             X = (int)((((map switch { TeraRaidMapParent.Kitakami => 2.766970605475146, _ => 1 }) * x) + (map switch { TeraRaidMapParent.Kitakami => 2.072021484, _ => -248.08352352566726 })) * 512 / 5000),
