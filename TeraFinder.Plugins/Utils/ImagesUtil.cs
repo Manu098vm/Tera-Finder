@@ -87,7 +87,7 @@ public static class ImagesUtil
         else if (loc_available)
             pic.SetMapPoint(map, teratype, multipleden, x, y);
         else 
-            pic.SetMapPoint(map, teratype, "Missing Coordinates", missing: true);
+            pic.SetMapPoint(map, teratype, $"Missing Coordinates{Environment.NewLine}Area ID: {area}{Environment.NewLine}Den ID: {spawnpoint}", missing: true);
     }
 
     public static void SetMapPoint(this PictureBox pic, TeraRaidMapParent map, string multipleden, GameCoordinates coordinates, int teratype = 0) =>
