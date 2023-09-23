@@ -94,8 +94,8 @@ public partial class EditorForm : Form
         Progress = TeraUtil.GetProgress(SAV);
         foreach (var name in UpdateRaidNameList())
             cmbDens.Items.Add(name);
-        cmbMap.Items.Add(Strings["Plugin.Main"]);
-        cmbMap.Items.Add(Strings["Plugin.DLC1"]);
+        cmbMap.Items.Add($"{Strings["Plugin.MapPaldea"]} ({Strings["Plugin.Main"]})");
+        cmbMap.Items.Add($"{Strings["Plugin.MapKitakami"]} ({Strings["Plugin.DLC1"]})");
         cmbMap.SelectedIndex = 0;
         cmbDens.SelectedIndex = 0;
         btnSx.Enabled = false;
