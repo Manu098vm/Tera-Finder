@@ -10,7 +10,7 @@ public partial class EditorForm : Form
 {
     public SAV9SV SAV { get; set; } = null!;
     public IPKMView? PKMEditor { get; private set; } = null!;
-    private readonly Dictionary<string, float[]> DenLocations = null!;
+    private  Dictionary<string, float[]> DenLocations = null!;
     public GameProgress Progress { get; set; } = GameProgress.None;
     private readonly Image DefBackground = null!;
     private Size DefSize = new(0, 0);
@@ -57,7 +57,8 @@ public partial class EditorForm : Form
         TranslateDictionary(Language);
         TranslateCmbContent();
         this.TranslateInterface(Language);
-        InitLocations();
+        InitLocationNames();
+        GenerateDenLocations();
 
         if (dist is null)
         {
@@ -88,7 +89,6 @@ public partial class EditorForm : Form
         }
         Paldea = paldea is null ? TeraUtil.GetAllTeraEncounters(TeraRaidMapParent.Paldea) : paldea;
         Kitakami = kitakami is null ? TeraUtil.GetAllTeraEncounters(TeraRaidMapParent.Kitakami) : kitakami;
-        DenLocations = JsonSerializer.Deserialize<Dictionary<string, float[]>>(TeraUtil.GetDenLocations())!;
         DefBackground = pictureBox.BackgroundImage!;
         DefSize = pictureBox.Size;
         Progress = TeraUtil.GetProgress(SAV);
@@ -101,6 +101,9 @@ public partial class EditorForm : Form
         btnSx.Enabled = false;
         Connection = connection;
     }
+
+    private void GenerateDenLocations() =>
+        DenLocations = JsonSerializer.Deserialize<Dictionary<string, float[]>>(TeraUtil.GetDenLocations(CurrMap))!;
 
     private void GenerateDictionary()
     {
@@ -180,7 +183,7 @@ public partial class EditorForm : Form
         cmbContent.Items[3] = Strings["RaidContent.Event_Mighty"];
     }
 
-    private void InitLocations()
+    private void InitLocationNames()
     {
         PaldeaLocations = TeraUtil.AreaPaldea;
         PaldeaLocations[1] = Strings["AREASPA1"];
@@ -223,7 +226,7 @@ public partial class EditorForm : Form
         Loaded = false;
         
         CurrMap = (TeraRaidMapParent)cmbMap.SelectedIndex;
-
+        GenerateDenLocations();
         imgMap.BackgroundImage = CurrMap is TeraRaidMapParent.Paldea ? Properties.Resources.paldea : Properties.Resources.kitakami;
         imgMap.ResetMap();
 
@@ -429,8 +432,7 @@ public partial class EditorForm : Form
                     pictureBox.Size = DefSize;
                 }
 
-                imgMap.SetMapPoint(Strings["MultipleLocations"], rngres.TeraType, (int)raid.AreaID, (int)raid.SpawnPointID, 
-                    CurrMap is TeraRaidMapParent.Paldea ? DenLocations : new Dictionary<string, float[]>());
+                imgMap.SetMapPoint(Strings["MultipleLocations"], rngres.TeraType, (int)raid.AreaID, (int)raid.SpawnPointID, CurrMap, DenLocations);
 
                 btnRewards.Width = pictureBox.Image is not null ? pictureBox.Image.Width : pictureBox.BackgroundImage!.Width;
                 btnRewards.Visible = true;

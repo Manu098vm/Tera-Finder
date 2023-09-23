@@ -5,7 +5,8 @@ namespace TeraFinder.Core;
 
 public static class TeraUtil
 {
-    public static byte[] GetDenLocations() => Properties.Resources.den_locations;
+    public static byte[] GetDenLocations(TeraRaidMapParent map) => 
+        map is TeraRaidMapParent.Paldea ? Properties.Resources.paldea_locations : Properties.Resources.kitakami_locations;
 
     public static string? GetTextResource(string res)
     {

@@ -3793,16 +3793,6 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] den_locations {
-            get {
-                object obj = ResourceManager.GetObject("den_locations", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] encounter_gem_kitakami {
             get {
                 object obj = ResourceManager.GetObject("encounter_gem_kitakami", resourceCulture);
@@ -3816,6 +3806,16 @@ namespace TeraFinder.Core.Properties {
         internal static byte[] encounter_gem_paldea {
             get {
                 object obj = ResourceManager.GetObject("encounter_gem_paldea", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] kitakami_locations {
+            get {
+                object obj = ResourceManager.GetObject("kitakami_locations", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -4039,6 +4039,16 @@ namespace TeraFinder.Core.Properties {
         internal static string lang_zh2 {
             get {
                 return ResourceManager.GetString("lang_zh2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] paldea_locations {
+            get {
+                object obj = ResourceManager.GetObject("paldea_locations", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

@@ -9,6 +9,7 @@ public partial class OutbreakForm : Form
     public List<MassOutbreak> MassOutbreaks = new();
     public string Language = null!;
     private Dictionary<string, string> Strings = null!;
+    private TeraRaidMapParent CurrMap = TeraRaidMapParent.Paldea;
 
     private readonly ConnectionForm? Connection;
 
@@ -131,7 +132,7 @@ public partial class OutbreakForm : Form
         txtDummyZ.Text = $"{(outbreak.LocationDummy is not null ? outbreak.LocationDummy.Z : 0)}";
 
         if (outbreak.LocationCenter is not null)
-            imgMap.SetMapPoint("", outbreak.LocationCenter);
+            imgMap.SetMapPoint(CurrMap, "", outbreak.LocationCenter);
         else imgMap.ResetMap();
 
         Loaded = true;
@@ -417,7 +418,7 @@ public partial class OutbreakForm : Form
                 try
                 {
                     outbreak.LocationCenter.X = Convert.ToSingle(txtCenterX.Text);
-                    imgMap.SetMapPoint("", outbreak.LocationCenter);
+                    imgMap.SetMapPoint(CurrMap, "", outbreak.LocationCenter);
 
                     if (Connection is not null && Connection.IsConnected())
                     {
@@ -482,7 +483,7 @@ public partial class OutbreakForm : Form
                 try
                 {
                     outbreak.LocationCenter.Z = Convert.ToSingle(txtCenterZ.Text);
-                    imgMap.SetMapPoint("", outbreak.LocationCenter);
+                    imgMap.SetMapPoint(CurrMap, "", outbreak.LocationCenter);
 
                     if (Connection is not null && Connection.IsConnected())
                     {

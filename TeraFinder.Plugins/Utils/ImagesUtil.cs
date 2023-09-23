@@ -1,7 +1,6 @@
 ﻿using PKHeX.Core;
 using PKHeX.Drawing;
 using PKHeX.Drawing.PokeSprite;
-using System.Drawing;
 using TeraFinder.Core;
 
 namespace TeraFinder.Plugins;
@@ -67,7 +66,7 @@ public static class ImagesUtil
         return ImageUtil.LayerImage(image, icon, 0, 0, 0.7);
     }
 
-    public static void SetMapPoint(this PictureBox pic, string multipleden, int teratype, int area, int spawnpoint, Dictionary<string, float[]> locations)
+    public static void SetMapPoint(this PictureBox pic, string multipleden, int teratype, int area, int spawnpoint, TeraRaidMapParent map, Dictionary<string, float[]> locations)
     {
         var loc_available = locations.TryGetValue($"{area}-{spawnpoint}", out var location);
         var x = loc_available ? location![0] : 0;
@@ -77,23 +76,24 @@ public static class ImagesUtil
         var x2 = loc2_available ? location2![0] : 0;
         var y2 = loc2_available ? location2![2] : 0;
 
+        var loc3_available = locations.TryGetValue($"{area}-{spawnpoint}__", out var location3);
+        var x3 = loc3_available ? location3![0] : 0;
+        var y3 = loc3_available ? location3![2] : 0;
+
+        if (loc3_available)
+            pic.SetMapPoint(map, teratype, multipleden, x, y, x2, y2, x3, y3);
         if (loc2_available)
-            pic.SetMapPoint(teratype, multipleden, x, y, x2, y2);
+            pic.SetMapPoint(map, teratype, multipleden, x, y, x2, y2);
         else if (loc_available)
-            pic.SetMapPoint(teratype, multipleden, x, y);
+            pic.SetMapPoint(map, teratype, multipleden, x, y);
     }
 
-    public static void SetMapPoint(this PictureBox pic, string multipleden, GameCoordinates coordinates, int teratype = 0)
-    {
-        pic.SetMapPoint(teratype, multipleden, coordinates.X, coordinates.Z);
-    }
+    public static void SetMapPoint(this PictureBox pic, TeraRaidMapParent map, string multipleden, GameCoordinates coordinates, int teratype = 0) =>
+        pic.SetMapPoint(map, teratype, multipleden, coordinates.X, coordinates.Z);
 
-    private static void SetMapPoint(this PictureBox pic, int teratype, string multipleden, float x, float y, float x2 = 0, float y2 = 0)
+    private static void SetMapPoint(this PictureBox pic, TeraRaidMapParent map, int teratype, string multipleden, 
+        float x, float y, float x2 = 0, float y2 = 0, float x3 = 0, float y3 = 0)
     {
-        const int def_size = 570;
-        const int def_width = 52;
-        const int def_height = 5178;
-
         var crystal = (MoveType)teratype switch
         {
             MoveType.Normal => Properties.Resources.item_1862,
@@ -117,37 +117,41 @@ public static class ImagesUtil
             _ => Properties.Resources.item_1862,
         };
 
-        var width_scale = (float)pic.Width / def_size;
-        var height_scale = (float)pic.Height * 100 / def_size;
-        width_scale = pic.Width == def_size ? def_width : pic.Width < def_width ? def_width - width_scale : def_width + width_scale;
-        height_scale = pic.Height == def_size ? def_height : pic.Height < def_height ? def_height - height_scale : def_height + height_scale;
-
         var coordinates = new Point
         {
-            X = x != 0 ? (int)((x - width_scale) * pic.Width / 5000) : 0,
-            Y = y != 0 ? (int)((y + height_scale) * pic.Height / 5000) : 0,
+            X = (int)((((map switch { TeraRaidMapParent.Kitakami => 2.766970605475146, _ => 1 }) * x) + (map switch { TeraRaidMapParent.Kitakami => 2.072021484, _ => -248.08352352566726 })) * 512 / 5000),
+            Y = (int)((((map switch { TeraRaidMapParent.Kitakami => 2.5700782642623805, _ => 1 }) * y) + (map switch { TeraRaidMapParent.Kitakami => 5070.808599816581, _ => 5505.240018 })) * 512 / 5000),
         };
-
+       
         var coordinates2 = new Point
         {
-            X = x2 != 0 ? (int)((x2 - width_scale) * pic.Width / 5000) : 0,
-            Y = y2 != 0 ? (int)((y2 + height_scale) * pic.Height / 5000) : 0,
+            X = (int)((((map switch { TeraRaidMapParent.Kitakami => 2.766970605475146, _ => 1 }) * x2) + (map switch { TeraRaidMapParent.Kitakami => 2.072021484, _ => -248.08352352566726 })) * 512 / 5000),
+            Y = (int)((((map switch { TeraRaidMapParent.Kitakami => 2.5700782642623805, _ => 1 }) * y2) + (map switch { TeraRaidMapParent.Kitakami => 5070.808599816581, _ => 5505.240018 })) * 512 / 5000),
+        };
+
+        var coordinates3 = new Point
+        {
+            X = (int)((((map switch { TeraRaidMapParent.Kitakami => 2.766970605475146, _ => 1 }) * x3) + (map switch { TeraRaidMapParent.Kitakami => 2.072021484, _ => -248.08352352566726 })) * 512 / 5000),
+            Y = (int)((((map switch { TeraRaidMapParent.Kitakami => 2.5700782642623805, _ => 1 }) * y3) + (map switch { TeraRaidMapParent.Kitakami => 5070.808599816581, _ => 5505.240018 })) * 512 / 5000),
         };
 
         var pointer = new Bitmap(crystal, new Size(crystal.Width / 4, crystal.Height / 4));
-        var map = new Bitmap(pic.BackgroundImage!, new Size(pic.Width, pic.Height));
+        var mapImage = new Bitmap(pic.BackgroundImage!, new Size(pic.Width, pic.Height));
 
         if (coordinates.X != 0 && coordinates.Y != 0)
-            Graphics.FromImage(map).DrawImage(pointer, coordinates);
+            Graphics.FromImage(mapImage).DrawImage(pointer, coordinates);
 
         if (coordinates2.X != 0 && coordinates2.Y != 0)
-            Graphics.FromImage(map).DrawImage(pointer, coordinates2);
+            Graphics.FromImage(mapImage).DrawImage(pointer, coordinates2);
+
+        if (coordinates3.X != 0 && coordinates3.Y != 0)
+            Graphics.FromImage(mapImage).DrawImage(pointer, coordinates2);
 
         if (coordinates.X != 0 && coordinates.Y != 0 && coordinates2.X != 0 && coordinates2.Y != 0 && 
             coordinates.X != coordinates2.X && coordinates.Y != coordinates2.Y)
-            Graphics.FromImage(map).DrawString(multipleden, new Font("Arial", 14), new SolidBrush(Color.Black), new PointF(0, 0));
+            Graphics.FromImage(mapImage).DrawString(multipleden, new Font("Arial", 14), new SolidBrush(Color.Black), new PointF(0, 0));
 
-        pic.Image = map;
+        pic.Image = mapImage;
     }
 
     public static void ResetMap(this PictureBox pic)
