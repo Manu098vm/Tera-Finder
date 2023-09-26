@@ -66,35 +66,18 @@ public static class ImagesUtil
         return ImageUtil.LayerImage(image, icon, 0, 0, 0.7);
     }
 
-    public static void SetMapPoint(this PictureBox pic, string multipleden, int teratype, int area, int spawnpoint, TeraRaidMapParent map, Dictionary<string, float[]> locations)
+    public static void SetMapPoint(this PictureBox pic, int teratype, int area, int lotterygroup, int spawnpoint, TeraRaidMapParent map, Dictionary<string, float[]> locations)
     {
-        var loc_available = locations.TryGetValue($"{area}-{spawnpoint}", out var location);
+        var loc_available = locations.TryGetValue($"{area}-{lotterygroup}-{spawnpoint}", out var location);
         var x = loc_available ? location![0] : 0;
         var y = loc_available ? location![2] : 0;
-
-        var loc2_available = locations.TryGetValue($"{area}-{spawnpoint}_", out var location2);
-        var x2 = loc2_available ? location2![0] : 0;
-        var y2 = loc2_available ? location2![2] : 0;
-
-        var loc3_available = locations.TryGetValue($"{area}-{spawnpoint}__", out var location3);
-        var x3 = loc3_available ? location3![0] : 0;
-        var y3 = loc3_available ? location3![2] : 0;
-
-        if (loc3_available)
-            pic.SetMapPoint(map, teratype, multipleden, x, y, x2, y2, x3, y3);
-        if (loc2_available)
-            pic.SetMapPoint(map, teratype, multipleden, x, y, x2, y2);
-        else if (loc_available)
-            pic.SetMapPoint(map, teratype, multipleden, x, y);
-        else 
-            pic.SetMapPoint(map, teratype, $"Missing Coordinates{Environment.NewLine}Area ID: {area}{Environment.NewLine}Den ID: {spawnpoint}", missing: true);
+        pic.SetMapPoint(map, teratype, x, y);
     }
 
-    public static void SetMapPoint(this PictureBox pic, TeraRaidMapParent map, string multipleden, GameCoordinates coordinates, int teratype = 0) =>
-        pic.SetMapPoint(map, teratype, multipleden, coordinates.X, coordinates.Z);
+    public static void SetMapPoint(this PictureBox pic, TeraRaidMapParent map, GameCoordinates coordinates, int teratype = 0) =>
+        pic.SetMapPoint(map, teratype, coordinates.X, coordinates.Z);
 
-    private static void SetMapPoint(this PictureBox pic, TeraRaidMapParent map, int teratype, string message, 
-        float x = 0, float y = 0, float x2 = 0, float y2 = 0, float x3 = 0, float y3 = 0, bool missing = false)
+    private static void SetMapPoint(this PictureBox pic, TeraRaidMapParent map, int teratype, float x, float y)
     {
         var crystal = (MoveType)teratype switch
         {
@@ -118,50 +101,28 @@ public static class ImagesUtil
             MoveType.Fairy => Properties.Resources.item_1879,
             _ => Properties.Resources.item_1862,
         };
+        var pointer = new Bitmap(crystal, new Size(crystal.Width / 4, crystal.Height / 4));
+
+        var def = 512;
+        var width = pic.Image.Width;
+        var height = pic.Image.Height;
+
 
         // Formulas taken from RaidCrawler (GPL v3 License)
         // Thx Lincoln, Lego and Archit!
         // https://github.com/LegoFigure11/RaidCrawler/blob/d36475046c638fbc37fbeb0aaa001f3663273b9b/RaidCrawler.WinForms/MainWindow.cs#L1589
-
         var coordinates = new Point
         {
-            X = x != 0 ? (int)((((map switch { TeraRaidMapParent.Kitakami => 2.766970605475146, _ => 1 }) * x) + (map switch { TeraRaidMapParent.Kitakami => 2.072021484, _ => -248.08352352566726 })) * 512 / 5000) : 0,
-            Y = y != 0 ? (int)((((map switch { TeraRaidMapParent.Kitakami => 2.5700782642623805, _ => 1 }) * y) + (map switch { TeraRaidMapParent.Kitakami => 5070.808599816581, _ => 5505.240018 })) * 512 / 5000) : 0,
-        };
-       
-        var coordinates2 = new Point
-        {
-            X = x2 != 0 ? (int)((((map switch { TeraRaidMapParent.Kitakami => 2.766970605475146, _ => 1 }) * x2) + (map switch { TeraRaidMapParent.Kitakami => 2.072021484, _ => -248.08352352566726 })) * 512 / 5000) : 0,
-            Y = y2 != 0 ? (int)((((map switch { TeraRaidMapParent.Kitakami => 2.5700782642623805, _ => 1 }) * y2) + (map switch { TeraRaidMapParent.Kitakami => 5070.808599816581, _ => 5505.240018 })) * 512 / 5000) : 0,
+            X = (int)Normalize(width, ((((map switch { TeraRaidMapParent.Kitakami => 2.766970605475146, _ => 1 }) * x) + (map switch { TeraRaidMapParent.Kitakami => 2.072021484, _ => -248.08352352566726 })) * 512 / 5000) + pointer.Width * map switch { TeraRaidMapParent.Paldea => 0.5, _ => -1 }, def),
+            Y = (int)Normalize(height, ((((map switch { TeraRaidMapParent.Kitakami => 2.5700782642623805, _ => 1 }) * y) + (map switch { TeraRaidMapParent.Kitakami => 5070.808599816581, _ => 5505.240018 })) * 512 / 5000) - pointer.Width, def),
         };
 
-        var coordinates3 = new Point
-        {
-            X = x3 != 0 ? (int)((((map switch { TeraRaidMapParent.Kitakami => 2.766970605475146, _ => 1 }) * x3) + (map switch { TeraRaidMapParent.Kitakami => 2.072021484, _ => -248.08352352566726 })) * 512 / 5000) : 0,
-            Y = y3 != 0 ? (int)((((map switch { TeraRaidMapParent.Kitakami => 2.5700782642623805, _ => 1 }) * y3) + (map switch { TeraRaidMapParent.Kitakami => 5070.808599816581, _ => 5505.240018 })) * 512 / 5000) : 0,
-        };
-
-        var pointer = new Bitmap(crystal, new Size(crystal.Width / 4, crystal.Height / 4));
         var mapImage = new Bitmap(pic.BackgroundImage!, new Size(pic.Width, pic.Height));
-
-        if (coordinates.X != 0 && coordinates.Y != 0)
-            Graphics.FromImage(mapImage).DrawImage(pointer, coordinates);
-
-        if (coordinates2.X != 0 && coordinates2.Y != 0)
-            Graphics.FromImage(mapImage).DrawImage(pointer, coordinates2);
-
-        if (coordinates3.X != 0 && coordinates3.Y != 0)
-            Graphics.FromImage(mapImage).DrawImage(pointer, coordinates2);
-
-        if (coordinates.X != 0 && coordinates.Y != 0 && coordinates2.X != 0 && coordinates2.Y != 0 && 
-            coordinates.X != coordinates2.X && coordinates.Y != coordinates2.Y)
-            Graphics.FromImage(mapImage).DrawString(message, new Font("Arial", 14), new SolidBrush(Color.Black), new PointF(0, 0));
-
-        if (missing)
-            Graphics.FromImage(mapImage).DrawString(message, new Font("Arial", 14), new SolidBrush(Color.Black), new PointF(0, 0));
-
+        Graphics.FromImage(mapImage).DrawImage(pointer, coordinates);
         pic.Image = mapImage;
     }
+
+    private static double Normalize(double x, double y, double z) => x * y / z;
 
     public static void ResetMap(this PictureBox pic)
     {

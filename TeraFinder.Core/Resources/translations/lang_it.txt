@@ -245,7 +245,6 @@ ExecutorConnected=Executor connesso con successo:
 DisconnectionSuccess=Dispositivo disconnesso.
 ToolTipSyncOutbreaks=Sincronizza i dati delle Comparse Massicce dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
 ShinifiedAll=Tutti i Raid sono stati resi Shiny.
-MultipleLocations=Questo Raid può avere differenti posizioni.
 
 TeraShiny.Any=Qualsiasi
 TeraShiny.No=No

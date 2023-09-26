@@ -245,7 +245,6 @@ ExecutorConnected=框架連接成功:
 DisconnectionSuccess=終端已斷開
 ToolTipSyncOutbreaks=同步遠程終端的寶可夢大量出現數據。可能需要相當長的時間。
 ShinifiedAll=所有太晶洞窟异色已经生成。
-MultipleLocations=This Raid Den may have multiple locations.
 
 TeraShiny.Any=任意
 TeraShiny.No=否

@@ -245,7 +245,6 @@ ExecutorConnected=Executor succesfully connected:
 DisconnectionSuccess=Device disconnected.
 ToolTipSyncOutbreaks=Syncronize Outbreaks data from the remote device. Might require a sgnificant amount of time.
 ShinifiedAll=All raids have been Shinified.
-MultipleLocations=This Raid Den may have multiple locations.
 
 TeraShiny.Any=Any
 TeraShiny.No=No

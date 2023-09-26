@@ -245,7 +245,6 @@ ExecutorConnected=성공적으로 연결되었습니다
 DisconnectionSuccess=연결이 끊겼습니다
 ToolTipSyncOutbreaks=스위치에서 대량발생 데이터를 동기화합니다. 상당한 시간이 소요될 수 있습니다.
 ShinifiedAll=All raids have been Shinified.
-MultipleLocations=This Raid Den may have multiple locations.
 
 TeraShiny.Any=모두
 TeraShiny.No=X

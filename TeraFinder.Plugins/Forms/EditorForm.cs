@@ -164,7 +164,6 @@ public partial class EditorForm : Form
             { "AREA1KW", "Kitakami Wilds" },
             { "ShinifyForm.lblValue", "Progress:" },
             { "ShinifiedAll", "All raids have been Shinified." },
-            { "MultipleLocations", "This Raid Den may have multiple locations." },
             { "Plugin.MapPaldea", "Paldea" },
             { "Plugin.MapKitakami", "Kitakami" },
             { "Plugin.Main", "Main" },
@@ -432,7 +431,7 @@ public partial class EditorForm : Form
                     pictureBox.Size = DefSize;
                 }
 
-                imgMap.SetMapPoint(Strings["MultipleLocations"], rngres.TeraType, (int)raid.AreaID, (int)raid.SpawnPointID, CurrMap, DenLocations);
+                imgMap.SetMapPoint(rngres.TeraType, (int)raid.AreaID, (int)raid.LotteryGroup, (int)raid.SpawnPointID, CurrMap, DenLocations);
 
                 btnRewards.Width = pictureBox.Image is not null ? pictureBox.Image.Width : pictureBox.BackgroundImage!.Width;
                 btnRewards.Visible = true;

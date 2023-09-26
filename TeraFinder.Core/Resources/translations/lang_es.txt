@@ -245,7 +245,6 @@ ExecutorConnected=Ejecutor conectado con éxito:
 DisconnectionSuccess=Dispositivo desconectado.
 ToolTipSyncOutbreaks=Sincronizar datos de Aparición Masiva desde dispositivo remoto. Puede requerir una considerable cantidad de tiempo.
 ShinifiedAll=Ahora todas las raids son Variocolor.
-MultipleLocations=Esta Teraincursión puede tener varias ubicaciones.
 
 TeraShiny.Any=Cualquiera
 TeraShiny.No=No
