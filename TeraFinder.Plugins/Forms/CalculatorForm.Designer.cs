@@ -159,7 +159,7 @@ partial class CalculatorForm
         showresults.Margin = new Padding(3, 4, 3, 4);
         showresults.Name = "showresults";
         showresults.Size = new Size(160, 24);
-        showresults.TabIndex = 9;
+        showresults.TabIndex = 4;
         showresults.Text = "Show All Results (?)";
         showresults.UseVisualStyleBackColor = true;
         // 
@@ -171,7 +171,7 @@ partial class CalculatorForm
         numFrames.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
         numFrames.Name = "numFrames";
         numFrames.Size = new Size(174, 27);
-        numFrames.TabIndex = 8;
+        numFrames.TabIndex = 2;
         numFrames.Value = new decimal(new int[] { 100000, 0, 0, 0 });
         // 
         // btnSearch
@@ -221,7 +221,7 @@ partial class CalculatorForm
         cmbContent.Margin = new Padding(3, 4, 3, 4);
         cmbContent.Name = "cmbContent";
         cmbContent.Size = new Size(174, 28);
-        cmbContent.TabIndex = 1;
+        cmbContent.TabIndex = 3;
         cmbContent.SelectedIndexChanged += cmbContent_IndexChanged;
         // 
         // lblSeed
@@ -317,7 +317,7 @@ partial class CalculatorForm
         grpFilters.Name = "grpFilters";
         grpFilters.Padding = new Padding(3, 4, 3, 4);
         grpFilters.Size = new Size(811, 245);
-        grpFilters.TabIndex = 4;
+        grpFilters.TabIndex = 3;
         grpFilters.TabStop = false;
         grpFilters.Text = "Filters";
         // 
@@ -337,7 +337,7 @@ partial class CalculatorForm
         numScaleMax.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
         numScaleMax.Name = "numScaleMax";
         numScaleMax.Size = new Size(55, 27);
-        numScaleMax.TabIndex = 38;
+        numScaleMax.TabIndex = 31;
         numScaleMax.Value = new decimal(new int[] { 255, 0, 0, 0 });
         // 
         // numScaleMin
@@ -347,7 +347,7 @@ partial class CalculatorForm
         numScaleMin.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
         numScaleMin.Name = "numScaleMin";
         numScaleMin.Size = new Size(55, 27);
-        numScaleMin.TabIndex = 36;
+        numScaleMin.TabIndex = 30;
         // 
         // lblScale
         // 
@@ -366,7 +366,7 @@ partial class CalculatorForm
         cmbEC.Margin = new Padding(3, 4, 3, 4);
         cmbEC.Name = "cmbEC";
         cmbEC.Size = new Size(194, 28);
-        cmbEC.TabIndex = 34;
+        cmbEC.TabIndex = 25;
         // 
         // lblEC
         // 
@@ -385,7 +385,7 @@ partial class CalculatorForm
         cmbNature.Margin = new Padding(3, 4, 3, 4);
         cmbNature.Name = "cmbNature";
         cmbNature.Size = new Size(143, 28);
-        cmbNature.TabIndex = 32;
+        cmbNature.TabIndex = 27;
         // 
         // btnReset
         // 
@@ -393,7 +393,7 @@ partial class CalculatorForm
         btnReset.Margin = new Padding(3, 4, 3, 4);
         btnReset.Name = "btnReset";
         btnReset.Size = new Size(140, 36);
-        btnReset.TabIndex = 31;
+        btnReset.TabIndex = 32;
         btnReset.Text = "Reset Filters";
         btnReset.UseVisualStyleBackColor = true;
         btnReset.Click += btnReset_Click;
@@ -406,7 +406,7 @@ partial class CalculatorForm
         cmbTeraType.Margin = new Padding(3, 4, 3, 4);
         cmbTeraType.Name = "cmbTeraType";
         cmbTeraType.Size = new Size(194, 28);
-        cmbTeraType.TabIndex = 30;
+        cmbTeraType.TabIndex = 24;
         // 
         // cmbSpecies
         // 
@@ -416,7 +416,7 @@ partial class CalculatorForm
         cmbSpecies.Margin = new Padding(3, 4, 3, 4);
         cmbSpecies.Name = "cmbSpecies";
         cmbSpecies.Size = new Size(194, 28);
-        cmbSpecies.TabIndex = 29;
+        cmbSpecies.TabIndex = 23;
         // 
         // cmbStars
         // 
@@ -426,7 +426,7 @@ partial class CalculatorForm
         cmbStars.Margin = new Padding(3, 4, 3, 4);
         cmbStars.Name = "cmbStars";
         cmbStars.Size = new Size(194, 28);
-        cmbStars.TabIndex = 28;
+        cmbStars.TabIndex = 22;
         cmbStars.SelectedIndexChanged += cmbStars_IndexChanged;
         // 
         // btnApply
@@ -435,7 +435,7 @@ partial class CalculatorForm
         btnApply.Margin = new Padding(3, 4, 3, 4);
         btnApply.Name = "btnApply";
         btnApply.Size = new Size(143, 36);
-        btnApply.TabIndex = 25;
+        btnApply.TabIndex = 33;
         btnApply.Text = "Apply Filters";
         btnApply.UseVisualStyleBackColor = true;
         btnApply.Click += btnApply_Click;
@@ -448,7 +448,7 @@ partial class CalculatorForm
         cmbShiny.Margin = new Padding(3, 4, 3, 4);
         cmbShiny.Name = "cmbShiny";
         cmbShiny.Size = new Size(143, 28);
-        cmbShiny.TabIndex = 24;
+        cmbShiny.TabIndex = 29;
         // 
         // cmbGender
         // 
@@ -458,7 +458,7 @@ partial class CalculatorForm
         cmbGender.Margin = new Padding(3, 4, 3, 4);
         cmbGender.Name = "cmbGender";
         cmbGender.Size = new Size(143, 28);
-        cmbGender.TabIndex = 23;
+        cmbGender.TabIndex = 28;
         // 
         // lblShiny
         // 
@@ -531,7 +531,7 @@ partial class CalculatorForm
         cmbAbility.Margin = new Padding(3, 4, 3, 4);
         cmbAbility.Name = "cmbAbility";
         cmbAbility.Size = new Size(143, 28);
-        cmbAbility.TabIndex = 23;
+        cmbAbility.TabIndex = 26;
         // 
         // label12
         // 
@@ -621,7 +621,7 @@ partial class CalculatorForm
         nAtkMin.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nAtkMin.Name = "nAtkMin";
         nAtkMin.Size = new Size(55, 27);
-        nAtkMin.TabIndex = 9;
+        nAtkMin.TabIndex = 12;
         // 
         // lblMinIv
         // 
@@ -639,7 +639,7 @@ partial class CalculatorForm
         nAtkMax.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nAtkMax.Name = "nAtkMax";
         nAtkMax.Size = new Size(55, 27);
-        nAtkMax.TabIndex = 8;
+        nAtkMax.TabIndex = 13;
         // 
         // nDefMin
         // 
@@ -648,7 +648,7 @@ partial class CalculatorForm
         nDefMin.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nDefMin.Name = "nDefMin";
         nDefMin.Size = new Size(55, 27);
-        nDefMin.TabIndex = 7;
+        nDefMin.TabIndex = 14;
         // 
         // nSpaMin
         // 
@@ -657,7 +657,7 @@ partial class CalculatorForm
         nSpaMin.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nSpaMin.Name = "nSpaMin";
         nSpaMin.Size = new Size(55, 27);
-        nSpaMin.TabIndex = 6;
+        nSpaMin.TabIndex = 16;
         // 
         // lblSpe
         // 
@@ -675,7 +675,7 @@ partial class CalculatorForm
         nSpdMin.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nSpdMin.Name = "nSpdMin";
         nSpdMin.Size = new Size(55, 27);
-        nSpdMin.TabIndex = 5;
+        nSpdMin.TabIndex = 18;
         // 
         // lblSpd
         // 
@@ -729,7 +729,7 @@ partial class CalculatorForm
         nSpeMin.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nSpeMin.Name = "nSpeMin";
         nSpeMin.Size = new Size(55, 27);
-        nSpeMin.TabIndex = 4;
+        nSpeMin.TabIndex = 20;
         // 
         // nDefMax
         // 
@@ -738,7 +738,7 @@ partial class CalculatorForm
         nDefMax.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nDefMax.Name = "nDefMax";
         nDefMax.Size = new Size(55, 27);
-        nDefMax.TabIndex = 3;
+        nDefMax.TabIndex = 15;
         // 
         // nSpaMax
         // 
@@ -747,7 +747,7 @@ partial class CalculatorForm
         nSpaMax.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nSpaMax.Name = "nSpaMax";
         nSpaMax.Size = new Size(55, 27);
-        nSpaMax.TabIndex = 2;
+        nSpaMax.TabIndex = 17;
         // 
         // nSpdMax
         // 
@@ -756,7 +756,7 @@ partial class CalculatorForm
         nSpdMax.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nSpdMax.Name = "nSpdMax";
         nSpdMax.Size = new Size(55, 27);
-        nSpdMax.TabIndex = 1;
+        nSpdMax.TabIndex = 19;
         // 
         // nSpeMax
         // 
@@ -765,7 +765,7 @@ partial class CalculatorForm
         nSpeMax.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
         nSpeMax.Name = "nSpeMax";
         nSpeMax.Size = new Size(55, 27);
-        nSpeMax.TabIndex = 0;
+        nSpeMax.TabIndex = 21;
         // 
         // dataGrid
         // 
@@ -782,7 +782,7 @@ partial class CalculatorForm
         dataGrid.RowHeadersWidth = 51;
         dataGrid.RowTemplate.Height = 29;
         dataGrid.Size = new Size(1466, 541);
-        dataGrid.TabIndex = 5;
+        dataGrid.TabIndex = 34;
         dataGrid.MouseUp += dataGrid_MouseUp;
         // 
         // grpGameInfo
@@ -801,7 +801,7 @@ partial class CalculatorForm
         grpGameInfo.Name = "grpGameInfo";
         grpGameInfo.Padding = new Padding(3, 4, 3, 4);
         grpGameInfo.Size = new Size(307, 245);
-        grpGameInfo.TabIndex = 7;
+        grpGameInfo.TabIndex = 2;
         grpGameInfo.TabStop = false;
         grpGameInfo.Text = "Game Info";
         // 
@@ -811,7 +811,7 @@ partial class CalculatorForm
         txtSID.Margin = new Padding(3, 4, 3, 4);
         txtSID.Name = "txtSID";
         txtSID.Size = new Size(174, 27);
-        txtSID.TabIndex = 11;
+        txtSID.TabIndex = 9;
         txtSID.KeyPress += txtID_KeyPress;
         // 
         // lblSID
@@ -829,7 +829,7 @@ partial class CalculatorForm
         txtTID.Margin = new Padding(3, 4, 3, 4);
         txtTID.Name = "txtTID";
         txtTID.Size = new Size(174, 27);
-        txtTID.TabIndex = 9;
+        txtTID.TabIndex = 8;
         txtTID.KeyPress += txtID_KeyPress;
         // 
         // lblTID
@@ -858,7 +858,7 @@ partial class CalculatorForm
         cmbGame.Margin = new Padding(3, 4, 3, 4);
         cmbGame.Name = "cmbGame";
         cmbGame.Size = new Size(174, 28);
-        cmbGame.TabIndex = 0;
+        cmbGame.TabIndex = 6;
         // 
         // toolTip
         // 
@@ -933,7 +933,7 @@ partial class CalculatorForm
         cmbMap.Location = new Point(119, 33);
         cmbMap.Name = "cmbMap";
         cmbMap.Size = new Size(174, 28);
-        cmbMap.TabIndex = 10;
+        cmbMap.TabIndex = 0;
         // 
         // CalculatorForm
         // 
