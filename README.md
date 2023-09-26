@@ -52,7 +52,7 @@ Alternatively, feel free to contact me on my [Discord Server](https://discord.gg
 * [olliz0r](https://github.com/olliz0r) and [berichan](https://github.com/berichan) for [sys-botbase](https://github.com/olliz0r/sys-botbase)
 * [fishguy6564](https://github.com/fishguy6564) and [Koi-3088](https://github.com/Koi-3088) for [usb-botbase](https://github.com/Koi-3088/USB-Botbase)
 * [kwsch](https://github.com/kwsch), [Lusamine](https://github.com/Lusamine), [LegoFigure11](https://github.com/LegoFigure11), [Archit Date](https://github.com/architdate), [SteveCookTU](https://github.com/SteveCookTU), [Lincoln-LM](https://github.com/Lincoln-LM), and all the contributors to the mentioned programs for their awesome researches
-* [kwsch](https://github.com/kwsch), [Archit Date](https://github.com/architdate), [LegoFigure11](https://github.com/LegoFigure11) and [Lincoln-LM](https://github.com/Lincoln-LM) for the Coordinates dumps and map display [formulas](https://github.com/LegoFigure11/RaidCrawler/blob/d36475046c638fbc37fbeb0aaa001f3663273b9b/RaidCrawler.WinForms/MainWindow.cs#L1589)
+* [kwsch](https://github.com/kwsch), [Archit Date](https://github.com/architdate), [LegoFigure11](https://github.com/LegoFigure11), [Lusamine](https://github.com/Lusamine) and [Lincoln-LM](https://github.com/Lincoln-LM) for the Coordinates dumps and map display [formulas](https://github.com/LegoFigure11/RaidCrawler/blob/d36475046c638fbc37fbeb0aaa001f3663273b9b/RaidCrawler.WinForms/MainWindow.cs#L1589)
 * GitHub API implementation provided by [Octokit](https://github.com/octokit/octokit.net), licensed under the MIT license
 
 ### Some related cool tools
