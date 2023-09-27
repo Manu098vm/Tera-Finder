@@ -30,6 +30,7 @@ public class MassOutbreak
     protected int ID;
     protected SAV9SV SAV = null!;
     protected sbyte AmountAvailable { get => GetAmountAvailable(); set => SetAmountAvailable(value); }
+    protected string LocationMap { get; set; }
 
     public GameCoordinates? LocationCenter { get; private set; }
     public GameCoordinates? LocationDummy { get; private set; }
@@ -40,12 +41,13 @@ public class MassOutbreak
     public int NumKO { get => GetNumKO(); set => SetNumKO(value); }
     public int MaxSpawns { get => GetMaxSpawns(); set => SetMaxSpawns(value); }
 
-    public MassOutbreak(SAV9SV sav, int id)
+    public MassOutbreak(SAV9SV sav, int id, TeraRaidMapParent map)
     {
         ID = id;
         SAV = sav;
+        LocationMap = map switch { TeraRaidMapParent.Kitakami => "DLC1", _ => "Main" };
 
-        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{ID}CenterPos")!.GetValue(new DataBlock())!;
+        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{ID}{LocationMap}CenterPos")!.GetValue(new DataBlock())!;
         var block = sav.Accessor.GetBlockSafe(blockInfo.Key);
 
         if (block.Type is SCTypeCode.Array)
@@ -53,10 +55,10 @@ public class MassOutbreak
         else
             LocationCenter = null;
 
-        blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{ID}DummyPos")!.GetValue(new DataBlock())!;
+        blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{ID}{LocationMap}DummyPos")!.GetValue(new DataBlock())!;
         block = sav.Accessor.GetBlockSafe(blockInfo.Key);
 
-        if(block.Type is SCTypeCode.Array)
+        if (block.Type is SCTypeCode.Array)
             LocationDummy = new GameCoordinates(block);
         else
             LocationDummy = null;
@@ -99,7 +101,8 @@ public class MassOutbreak
 
     public sbyte GetAmountAvailable()
     {
-        var block = SAV.Accessor.GetBlockSafe(Blocks.KMassOutbreakNumActive.Key);
+        var info = LocationMap switch { "DLC1" => Blocks.KOutbreakDLC1NumActive, _ => Blocks.KOutbreakMainNumActive };
+        var block = SAV.Accessor.GetBlockSafe(info.Key);
 
         if (block.Type is SCTypeCode.SByte)
             return (sbyte)block.GetValue();
@@ -109,7 +112,8 @@ public class MassOutbreak
 
     private void SetAmountAvailable(sbyte value)
     {
-        var block = SAV.Accessor.GetBlockSafe(Blocks.KMassOutbreakNumActive.Key);
+        var info = LocationMap switch { "DLC1" => Blocks.KOutbreakDLC1NumActive, _ => Blocks.KOutbreakMainNumActive };
+        var block = SAV.Accessor.GetBlockSafe(info.Key);
 
         if (block.Type is SCTypeCode.SByte)
             block.ChangeData((new byte[] { (byte)value }).AsSpan());
@@ -130,7 +134,7 @@ public class MassOutbreak
 
     private bool GetFound()
     {
-        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{ID}Found")!.GetValue(new DataBlock())!;
+        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{ID}{LocationMap}Found")!.GetValue(new DataBlock())!;
         var block = SAV.Accessor.FindOrDefault(blockInfo.Key);
 
         if (block.Type.IsBoolean() && block.Type is SCTypeCode.Bool2)
@@ -141,7 +145,7 @@ public class MassOutbreak
 
     private void SetFound(bool value)
     {
-        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{ID}Found")!.GetValue(new DataBlock())!; ;
+        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{ID}{LocationMap}Found")!.GetValue(new DataBlock())!; ;
         var block = SAV.Accessor.FindOrDefault(blockInfo.Key);
 
         if (block.Type.IsBoolean())
@@ -155,7 +159,7 @@ public class MassOutbreak
 
     private uint GetSpecies()
     {
-        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{ID}Species")!.GetValue(new DataBlock())!;
+        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{ID}{LocationMap}Species")!.GetValue(new DataBlock())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
 
         if (block.Type is SCTypeCode.UInt32)
@@ -166,7 +170,7 @@ public class MassOutbreak
 
     private void SetSpecies(uint value)
     {
-        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{ID}Species")!.GetValue(new DataBlock())!; ;
+        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{ID}{LocationMap}Species")!.GetValue(new DataBlock())!; ;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
 
         if(block.Type is SCTypeCode.UInt32)
@@ -175,7 +179,7 @@ public class MassOutbreak
 
     private byte GetForm()
     {
-        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{ID}Form")!.GetValue(new DataBlock())!;
+        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{ID}{LocationMap}Form")!.GetValue(new DataBlock())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
 
         if (block.Type is SCTypeCode.Byte or SCTypeCode.SByte)
@@ -186,7 +190,7 @@ public class MassOutbreak
 
     private void SetForm(byte value)
     {
-        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{ID}Form")!.GetValue(new DataBlock())!;
+        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{ID}{LocationMap}Form")!.GetValue(new DataBlock())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
         
         if (block.Type is SCTypeCode.Byte or SCTypeCode.SByte)
@@ -195,7 +199,7 @@ public class MassOutbreak
 
     private int GetNumKO()
     {
-        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{ID}NumKOed")!.GetValue(new DataBlock())!;
+        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{ID}{LocationMap}NumKOed")!.GetValue(new DataBlock())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
 
         if (block.Type is SCTypeCode.Int32)
@@ -206,7 +210,7 @@ public class MassOutbreak
 
     private void SetNumKO(int value)
     {
-        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{ID}NumKOed")!.GetValue(new DataBlock())!;
+        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{ID}{LocationMap}NumKOed")!.GetValue(new DataBlock())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
 
         if (block.Type is SCTypeCode.Int32)
@@ -215,7 +219,7 @@ public class MassOutbreak
 
     private int GetMaxSpawns()
     {
-        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{ID}TotalSpawns")!.GetValue(new DataBlock())!;
+        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{ID}{LocationMap}TotalSpawns")!.GetValue(new DataBlock())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
 
         if (block.Type is SCTypeCode.Int32)
@@ -226,7 +230,7 @@ public class MassOutbreak
 
     private void SetMaxSpawns(int value)
     {
-        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KMassOutbreak0{ID}TotalSpawns")!.GetValue(new DataBlock())!;
+        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{ID}{LocationMap}TotalSpawns")!.GetValue(new DataBlock())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
 
         if (block.Type is SCTypeCode.Int32)

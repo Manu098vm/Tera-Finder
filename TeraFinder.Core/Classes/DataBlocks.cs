@@ -49,10 +49,20 @@ public static class Blocks
         Size = 0x68,
     };
 
-    public static readonly DataBlock KMassOutbreakNumActive = new()
+    public static readonly DataBlock KOutbreakMainNumActive = new()
     {
-        Name = "KMassOutbreakNumActive",
+        Name = "KOutbreakMainNumActive",
         Key = 0x6C375C8A,
+        Type = SCTypeCode.SByte,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 0x01,
+    };
+
+    public static readonly DataBlock KOutbreakDLC1NumActive = new()
+    {
+        Name = "KOutbreakDLC1NumActive",
+        Key = 0xBD7C2A04,
         Type = SCTypeCode.SByte,
         Pointer = SaveBlockKeyPointer,
         IsEncrypted = true,
@@ -175,9 +185,9 @@ public static class Blocks
     #endregion
 
     #region Outbreak1
-    public static readonly DataBlock KMassOutbreak01CenterPos = new()
+    public static readonly DataBlock KOutbreak01MainCenterPos = new()
     {
-        Name = "KMassOutbreak01CenterPos",
+        Name = "KOutbreak01MainCenterPos",
         Key = 0x2ED42F4D,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -185,9 +195,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak01DummyPos = new()
+    public static readonly DataBlock KOutbreak01MainDummyPos = new()
     {
-        Name = "KMassOutbreak01DummyPos",
+        Name = "KOutbreak01MainDummyPos",
         Key = 0x4A13BE7C,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -195,9 +205,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak01Species = new()
+    public static readonly DataBlock KOutbreak01MainSpecies = new()
     {
-        Name = "KMassOutbreak01Species",
+        Name = "KOutbreak01MainSpecies",
         Key = 0x76A2F996,
         Type = SCTypeCode.UInt32,
         Pointer = SaveBlockKeyPointer,
@@ -205,9 +215,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak01Form = new()
+    public static readonly DataBlock KOutbreak01MainForm = new()
     {
-        Name = "KMassOutbreak01Form",
+        Name = "KOutbreak01MainForm",
         Key = 0x29B4615D,
         Type = SCTypeCode.Byte,
         Pointer = SaveBlockKeyPointer,
@@ -215,9 +225,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak01Found = new()
+    public static readonly DataBlock KOutbreak01MainFound = new()
     {
-        Name = "KMassOutbreak01Found",
+        Name = "KOutbreak01MainFound",
         Key = 0x7E203623,
         Type = SCTypeCode.Bool1,
         Pointer = SaveBlockKeyPointer,
@@ -225,9 +235,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak01NumKOed = new()
+    public static readonly DataBlock KOutbreak01MainNumKOed = new()
     {
-        Name = "KMassOutbreak01NumKOed",
+        Name = "KOutbreak01MainNumKOed",
         Key = 0x4B16FBC2,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer,
@@ -235,9 +245,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak01TotalSpawns = new()
+    public static readonly DataBlock KOutbreak01MainTotalSpawns = new()
     {
-        Name = "KMassOutbreak01TotalSpawns",
+        Name = "KOutbreak01MainTotalSpawns",
         Key = 0xB7DC495A,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer,
@@ -247,9 +257,9 @@ public static class Blocks
     #endregion
 
     #region Outbreak2
-    public static readonly DataBlock KMassOutbreak02CenterPos = new()
+    public static readonly DataBlock KOutbreak02MainCenterPos = new()
     {
-        Name = "KMassOutbreak02CenterPos",
+        Name = "KOutbreak02MainCenterPos",
         Key = 0x2ED5F198,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -257,9 +267,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak02DummyPos = new()
+    public static readonly DataBlock KOutbreak02MainDummyPos = new()
     {
-        Name = "KMassOutbreak02DummyPos",
+        Name = "KOutbreak02MainDummyPos",
         Key = 0x4A118F71,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer, 
@@ -267,9 +277,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak02Species = new()
+    public static readonly DataBlock KOutbreak02MainSpecies = new()
     {
-        Name = "KMassOutbreak02Species",
+        Name = "KOutbreak02MainSpecies",
         Key = 0x76A0BCF3,
         Type = SCTypeCode.UInt32,
         Pointer = SaveBlockKeyPointer,
@@ -277,9 +287,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak02Form = new()
+    public static readonly DataBlock KOutbreak02MainForm = new()
     {
-        Name = "KMassOutbreak02Form",
+        Name = "KOutbreak02MainForm",
         Key = 0x29B84368,
         Type = SCTypeCode.Byte,
         Pointer = SaveBlockKeyPointer,
@@ -287,9 +297,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak02Found = new()
+    public static readonly DataBlock KOutbreak02MainFound = new()
     {
-        Name = "KMassOutbreak02Found",
+        Name = "KOutbreak02MainFound",
         Key = 0x7E22DF86,
         Type = SCTypeCode.Bool1,
         Pointer = SaveBlockKeyPointer,
@@ -297,9 +307,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak02NumKOed = new()
+    public static readonly DataBlock KOutbreak02MainNumKOed = new()
     {
-        Name = "KMassOutbreak02NumKOed",
+        Name = "KOutbreak02MainNumKOed",
         Key = 0x4B14BF1F,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer,
@@ -307,9 +317,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak02TotalSpawns = new()
+    public static readonly DataBlock KOutbreak02MainTotalSpawns = new()
     {
-        Name = "KMassOutbreak02TotalSpawns",
+        Name = "KOutbreak02MainTotalSpawns",
         Key = 0xB7DA0CB7,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer,
@@ -319,9 +329,9 @@ public static class Blocks
     #endregion
 
     #region Outbreak3
-    public static readonly DataBlock KMassOutbreak03CenterPos = new()
+    public static readonly DataBlock KOutbreak03MainCenterPos = new()
     {
-        Name = "KMassOutbreak03CenterPos",
+        Name = "KOutbreak03MainCenterPos",
         Key = 0x2ECE09D3,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -329,9 +339,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak03DummyPos = new()
+    public static readonly DataBlock KOutbreak03MainDummyPos = new()
     {
-        Name = "KMassOutbreak03DummyPos",
+        Name = "KOutbreak03MainDummyPos",
         Key = 0x4A0E135A,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -339,9 +349,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak03Species = new()
+    public static readonly DataBlock KOutbreak03MainSpecies = new()
     {
-        Name = "KMassOutbreak03Species",
+        Name = "KOutbreak03MainSpecies",
         Key = 0x76A97E38,
         Type = SCTypeCode.UInt32,
         Pointer = SaveBlockKeyPointer,
@@ -349,9 +359,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak03Form = new()
+    public static readonly DataBlock KOutbreak03MainForm = new()
     {
-        Name = "KMassOutbreak03Form",
+        Name = "KOutbreak03MainForm",
         Key = 0x29AF8223,
         Type = SCTypeCode.Byte,
         Pointer = SaveBlockKeyPointer,
@@ -359,9 +369,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak03Found = new()
+    public static readonly DataBlock KOutbreak03MainFound = new()
     {
-        Name = "KMassOutbreak03Found",
+        Name = "KOutbreak03MainFound",
         Key = 0x7E25155D,
         Type = SCTypeCode.Bool1,
         Pointer = SaveBlockKeyPointer,
@@ -369,9 +379,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak03NumKOed = new()
+    public static readonly DataBlock KOutbreak03MainNumKOed = new()
     {
-        Name = "KMassOutbreak03NumKOed",
+        Name = "KOutbreak03MainNumKOed",
         Key = 0x4B1CA6E4,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer,
@@ -379,9 +389,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak03TotalSpawns = new()
+    public static readonly DataBlock KOutbreak03MainTotalSpawns = new()
     {
-        Name = "KMassOutbreak03TotalSpawns",
+        Name = "KOutbreak03MainTotalSpawns",
         Key = 0xB7E1F47C,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer, 
@@ -391,9 +401,9 @@ public static class Blocks
     #endregion
 
     #region Outbreak4
-    public static readonly DataBlock KMassOutbreak04CenterPos = new()
+    public static readonly DataBlock KOutbreak04MainCenterPos = new()
     {
-        Name = "KMassOutbreak04CenterPos",
+        Name = "KOutbreak04MainCenterPos",
         Key = 0x2ED04676,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -401,9 +411,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak04DummyPos = new()
+    public static readonly DataBlock KOutbreak04MainDummyPos = new()
     {
-        Name = "KMassOutbreak04DummyPos",
+        Name = "KOutbreak04MainDummyPos",
         Key = 0x4A0BD6B7,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -411,9 +421,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak04Species = new()
+    public static readonly DataBlock KOutbreak04MainSpecies = new()
     {
-        Name = "KMassOutbreak04Species",
+        Name = "KOutbreak04MainSpecies",
         Key = 0x76A6E26D,
         Type = SCTypeCode.UInt32,
         Pointer = SaveBlockKeyPointer,
@@ -421,9 +431,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak04Form = new()
+    public static readonly DataBlock KOutbreak04MainForm = new()
     {
-        Name = "KMassOutbreak04Form",
+        Name = "KOutbreak04MainForm",
         Key = 0x29B22B86,
         Type = SCTypeCode.Byte,
         Pointer = SaveBlockKeyPointer,
@@ -431,9 +441,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak04Found = new()
+    public static readonly DataBlock KOutbreak04MainFound = new()
     {
-        Name = "KMassOutbreak04Found",
+        Name = "KOutbreak04MainFound",
         Key = 0x7E28F768,
         Type = SCTypeCode.Bool1,
         Pointer = SaveBlockKeyPointer,
@@ -441,9 +451,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak04NumKOed = new()
+    public static readonly DataBlock KOutbreak04MainNumKOed = new()
     {
-        Name = "KMassOutbreak04NumKOed",
+        Name = "KOutbreak04MainNumKOed",
         Key = 0x4B1A77D9,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer, 
@@ -451,9 +461,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak04TotalSpawns = new()
+    public static readonly DataBlock KOutbreak04MainTotalSpawns = new()
     {
-        Name = "KMassOutbreak04TotalSpawns",
+        Name = "KOutbreak04MainTotalSpawns",
         Key = 0xB7DFC571,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer,
@@ -463,9 +473,9 @@ public static class Blocks
     #endregion
 
     #region Outbreak5
-    public static readonly DataBlock KMassOutbreak05CenterPos = new()
+    public static readonly DataBlock KOutbreak05MainCenterPos = new()
     {
-        Name = "KMassOutbreak05CenterPos",
+        Name = "KOutbreak05MainCenterPos",
         Key = 0x2EC78531,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -473,9 +483,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak05DummyPos = new()
+    public static readonly DataBlock KOutbreak05MainDummyPos = new()
     {
-        Name = "KMassOutbreak05DummyPos",
+        Name = "KOutbreak05MainDummyPos",
         Key = 0x4A1FFBD8,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -483,9 +493,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak05Species = new()
+    public static readonly DataBlock KOutbreak05MainSpecies = new()
     {
-        Name = "KMassOutbreak05Species",
+        Name = "KOutbreak05MainSpecies",
         Key = 0x76986F3A,
         Type = SCTypeCode.UInt32,
         Pointer = SaveBlockKeyPointer,
@@ -493,9 +503,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak05Form = new()
+    public static readonly DataBlock KOutbreak05MainForm = new()
     {
-        Name = "KMassOutbreak05Form",
+        Name = "KOutbreak05MainForm",
         Key = 0x29A9D701,
         Type = SCTypeCode.Byte,
         Pointer = SaveBlockKeyPointer,
@@ -503,9 +513,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak05Found = new()
+    public static readonly DataBlock KOutbreak05MainFound = new()
     {
-        Name = "KMassOutbreak05Found",
+        Name = "KOutbreak05MainFound",
         Key = 0x7E13F8C7,
         Type = SCTypeCode.Bool1,
         Pointer = SaveBlockKeyPointer,
@@ -513,9 +523,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak05NumKOed = new()
+    public static readonly DataBlock KOutbreak05MainNumKOed = new()
     {
-        Name = "KMassOutbreak05NumKOed",
+        Name = "KOutbreak05MainNumKOed",
         Key = 0x4B23391E,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer,
@@ -523,9 +533,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak05TotalSpawns = new()
+    public static readonly DataBlock KOutbreak05MainTotalSpawns = new()
     {
-        Name = "KMassOutbreak05TotalSpawns",
+        Name = "KOutbreak05MainTotalSpawns",
         Key = 0xB7E886B6,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer,
@@ -535,9 +545,9 @@ public static class Blocks
     #endregion
 
     #region Outbreak6
-    public static readonly DataBlock KMassOutbreak06CenterPos = new()
+    public static readonly DataBlock KOutbreak06MainCenterPos = new()
     {
-        Name = "KMassOutbreak06CenterPos",
+        Name = "KOutbreak06MainCenterPos",
         Key = 0x2ECB673C,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -545,9 +555,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak06DummyPos = new()
+    public static readonly DataBlock KOutbreak06MainDummyPos = new()
     {
-        Name = "KMassOutbreak06DummyPos",
+        Name = "KOutbreak06MainDummyPos",
         Key = 0x4A1C868D,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -555,9 +565,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak06Species = new()
+    public static readonly DataBlock KOutbreak06MainSpecies = new()
     {
-        Name = "KMassOutbreak06Species",
+        Name = "KOutbreak06MainSpecies",
         Key = 0x76947F97,
         Type = SCTypeCode.UInt32,
         Pointer = SaveBlockKeyPointer,
@@ -565,9 +575,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak06Form = new()
+    public static readonly DataBlock KOutbreak06MainForm = new()
     {
-        Name = "KMassOutbreak06Form",
+        Name = "KOutbreak06MainForm",
         Key = 0x29AB994C,
         Type = SCTypeCode.Byte,
         Pointer = SaveBlockKeyPointer,
@@ -575,9 +585,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak06Found = new()
+    public static readonly DataBlock KOutbreak06MainFound = new()
     {
-        Name = "KMassOutbreak06Found",
+        Name = "KOutbreak06MainFound",
         Key = 0x7E16A22A,
         Type = SCTypeCode.Bool1,
         Pointer = SaveBlockKeyPointer,
@@ -585,9 +595,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak06NumKOed = new()
+    public static readonly DataBlock KOutbreak06MainNumKOed = new()
     {
-        Name = "KMassOutbreak06NumKOed",
+        Name = "KOutbreak06MainNumKOed",
         Key = 0x4B208FBB,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer,
@@ -595,9 +605,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak06TotalSpawns = new()
+    public static readonly DataBlock KOutbreak06MainTotalSpawns = new()
     {
-        Name = "KMassOutbreak06TotalSpawns",
+        Name = "KOutbreak06MainTotalSpawns",
         Key = 0xB7E49713,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer,
@@ -607,9 +617,9 @@ public static class Blocks
     #endregion
 
     #region Outbreak7
-    public static readonly DataBlock KMassOutbreak07CenterPos = new()
+    public static readonly DataBlock KOutbreak07MainCenterPos = new()
     {
-        Name = "KMassOutbreak07CenterPos",
+        Name = "KOutbreak07MainCenterPos",
         Key = 0x2EC1CC77,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -617,9 +627,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak07DummyPos = new()
+    public static readonly DataBlock KOutbreak07MainDummyPos = new()
     {
-        Name = "KMassOutbreak07DummyPos",
+        Name = "KOutbreak07MainDummyPos",
         Key = 0x4A1A50B6,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -627,9 +637,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak07Species = new()
+    public static readonly DataBlock KOutbreak07MainSpecies = new()
     {
-        Name = "KMassOutbreak07Species",
+        Name = "KOutbreak07MainSpecies",
         Key = 0x769D40DC,
         Type = SCTypeCode.UInt32,
         Pointer = SaveBlockKeyPointer,
@@ -637,9 +647,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak07Form = new()
+    public static readonly DataBlock KOutbreak07MainForm = new()
     {
-        Name = "KMassOutbreak07Form",
+        Name = "KOutbreak07MainForm",
         Key = 0x29A344C7,
         Type = SCTypeCode.Byte,
         Pointer = SaveBlockKeyPointer,
@@ -647,9 +657,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak07Found = new()
+    public static readonly DataBlock KOutbreak07MainFound = new()
     {
-        Name = "KMassOutbreak07Found",
+        Name = "KOutbreak07MainFound",
         Key = 0x7E1A8B01,
         Type = SCTypeCode.Bool1,
         Pointer = SaveBlockKeyPointer,
@@ -657,9 +667,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak07NumKOed = new()
+    public static readonly DataBlock KOutbreak07MainNumKOed = new()
     {
-        Name = "KMassOutbreak07NumKOed",
+        Name = "KOutbreak07MainNumKOed",
         Key = 0x4B28E440,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer, 
@@ -667,9 +677,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak07TotalSpawns = new()
+    public static readonly DataBlock KOutbreak07MainTotalSpawns = new()
     {
-        Name = "KMassOutbreak07TotalSpawns",
+        Name = "KOutbreak07MainTotalSpawns",
         Key = 0xB7EE31D8,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer,
@@ -679,9 +689,9 @@ public static class Blocks
     #endregion
 
     #region Outbreak8
-    public static readonly DataBlock KMassOutbreak08CenterPos = new()
+    public static readonly DataBlock KOutbreak08MainCenterPos = new()
     {
-        Name = "KMassOutbreak08CenterPos",
+        Name = "KOutbreak08MainCenterPos",
         Key = 0x2EC5BC1A,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -689,9 +699,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak08DummyPos = new()
+    public static readonly DataBlock KOutbreak08MainDummyPos = new()
     {
-        Name = "KMassOutbreak08DummyPos",
+        Name = "KOutbreak08MainDummyPos",
         Key = 0x4A166113,
         Type = SCTypeCode.Array,
         Pointer = SaveBlockKeyPointer,
@@ -699,9 +709,9 @@ public static class Blocks
         Size = 12,
     };
 
-    public static readonly DataBlock KMassOutbreak08Species = new()
+    public static readonly DataBlock KOutbreak08MainSpecies = new()
     {
-        Name = "KMassOutbreak08Species",
+        Name = "KOutbreak08MainSpecies",
         Key = 0x769B11D1,
         Type = SCTypeCode.UInt32,
         Pointer = SaveBlockKeyPointer,
@@ -709,9 +719,9 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak08Form = new()
+    public static readonly DataBlock KOutbreak08MainForm = new()
     {
-        Name = "KMassOutbreak08Form",
+        Name = "KOutbreak08MainForm",
         Key = 0x29A5EE2A,
         Type = SCTypeCode.Byte,
         Pointer = SaveBlockKeyPointer,
@@ -719,9 +729,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak08Found = new()
+    public static readonly DataBlock KOutbreak08MainFound = new()
     {
-        Name = "KMassOutbreak08Found",
+        Name = "KOutbreak08MainFound",
         Key = 0x7E1C4D4C,
         Type = SCTypeCode.Bool1,
         Pointer = SaveBlockKeyPointer,
@@ -729,9 +739,9 @@ public static class Blocks
         Size = 1,
     };
 
-    public static readonly DataBlock KMassOutbreak08NumKOed = new()
+    public static readonly DataBlock KOutbreak08MainNumKOed = new()
     {
-        Name = "KMassOutbreak08NumKOed",
+        Name = "KOutbreak08MainNumKOed",
         Key = 0x4B256EF5,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer,
@@ -739,10 +749,298 @@ public static class Blocks
         Size = 4,
     };
 
-    public static readonly DataBlock KMassOutbreak08TotalSpawns = new()
+    public static readonly DataBlock KOutbreak08MainTotalSpawns = new()
     {
-        Name = "KMassOutbreak08TotalSpawns",
+        Name = "KOutbreak08MainTotalSpawns",
         Key = 0xB7EABC8D,
+        Type = SCTypeCode.Int32,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 4,
+    };
+    #endregion
+
+    #region Outbreak01DLC1
+    public static readonly DataBlock KOutbreak01DLC1CenterPos = new()
+    {
+        Name = "KOutbreak01DLC1CenterPos",
+        Key = 0x411A0C07,
+        Type = SCTypeCode.Array,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 12,
+    };
+
+    public static readonly DataBlock KOutbreak01DLC1DummyPos = new()
+    {
+        Name = "KOutbreak01DLC1DummyPos",
+        Key = 0x632EFBFE,
+        Type = SCTypeCode.Array,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 12,
+    };
+
+    public static readonly DataBlock KOutbreak01DLC1Species = new()
+    {
+        Name = "KOutbreak01DLC1Species",
+        Key = 0x37E55F64,
+        Type = SCTypeCode.UInt32,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 4,
+    };
+
+    public static readonly DataBlock KOutbreak01DLC1Form = new()
+    {
+        Name = "KOutbreak01DLC1Form",
+        Key = 0x69A930AB,
+        Type = SCTypeCode.Byte,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 1,
+    };
+
+    public static readonly DataBlock KOutbreak01DLC1Found = new()
+    {
+        Name = "KOutbreak01DLC1Found",
+        Key = 0x7B688081,
+        Type = SCTypeCode.Bool1,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 1,
+    };
+
+    public static readonly DataBlock KOutbreak01DLC1NumKOed = new()
+    {
+        Name = "KOutbreak01DLC1NumKOed",
+        Key = 0xB29D7978,
+        Type = SCTypeCode.Int32,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 4,
+    };
+
+    public static readonly DataBlock KOutbreak01DLC1TotalSpawns = new()
+    {
+        Name = "KOutbreak01DLC1TotalSpawns",
+        Key = 0x9E0CEC77,
+        Type = SCTypeCode.Int32,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 4,
+    };
+    #endregion
+
+    #region Outbreak02DLC1
+    public static readonly DataBlock KOutbreak02DLC1CenterPos = new()
+    {
+        Name = "KOutbreak02DLC1CenterPos",
+        Key = 0x411CB56A,
+        Type = SCTypeCode.Array,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 12,
+    };
+
+    public static readonly DataBlock KOutbreak02DLC1DummyPos = new()
+    {
+        Name = "KOutbreak02DLC1DummyPos",
+        Key = 0x632D2C1B,
+        Type = SCTypeCode.Array,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 12,
+    };
+
+    public static readonly DataBlock KOutbreak02DLC1Species = new()
+    {
+        Name = "KOutbreak02DLC1Species",
+        Key = 0x37E33059,
+        Type = SCTypeCode.UInt32,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 4,
+    };
+
+    public static readonly DataBlock KOutbreak02DLC1Form = new()
+    {
+        Name = "KOutbreak02DLC1Form",
+        Key = 0x69AD204E,
+        Type = SCTypeCode.Byte,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 1,
+    };
+
+    public static readonly DataBlock KOutbreak02DLC1Found = new()
+    {
+        Name = "KOutbreak02DLC1Found",
+        Key = 0x7B6A42CC,
+        Type = SCTypeCode.Bool1,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 1,
+    };
+
+    public static readonly DataBlock KOutbreak02DLC1NumKOed = new()
+    {
+        Name = "KOutbreak02DLC1NumKOed",
+        Key = 0xB29ADDAD,
+        Type = SCTypeCode.Int32,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 4,
+    };
+
+    public static readonly DataBlock KOutbreak02DLC1TotalSpawns = new()
+    {
+        Name = "KOutbreak02DLC1TotalSpawns",
+        Key = 0x9E10DC1A,
+        Type = SCTypeCode.Int32,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 4,
+    };
+    #endregion
+
+    #region Outbreak03DLC1
+    public static readonly DataBlock KOutbreak03DLC1CenterPos = new()
+    {
+        Name = "KOutbreak03DLC1CenterPos",
+        Key = 0x411EEB41,
+        Type = SCTypeCode.Array,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 12,
+    };
+
+    public static readonly DataBlock KOutbreak03DLC1DummyPos = new()
+    {
+        Name = "KOutbreak03DLC1DummyPos",
+        Key = 0x633580A0,
+        Type = SCTypeCode.Array,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 12,
+    };
+
+    public static readonly DataBlock KOutbreak03DLC1Species = new()
+    {
+        Name = "KOutbreak03DLC1Species",
+        Key = 0x37DFB442,
+        Type = SCTypeCode.UInt32,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 4,
+    };
+
+    public static readonly DataBlock KOutbreak03DLC1Form = new()
+    {
+        Name = "KOutbreak03DLC1Form",
+        Key = 0x69AEE965,
+        Type = SCTypeCode.Byte,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 1,
+    };
+
+    public static readonly DataBlock KOutbreak03DLC1Found = new()
+    {
+        Name = "KOutbreak03DLC1Found",
+        Key = 0x7B61EE47,
+        Type = SCTypeCode.Bool1,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 1,
+    };
+
+    public static readonly DataBlock KOutbreak03DLC1NumKOed = new()
+    {
+        Name = "KOutbreak03DLC1NumKOed",
+        Key = 0xB298A7D6,
+        Type = SCTypeCode.Int32,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 4,
+    };
+
+    public static readonly DataBlock KOutbreak03DLC1TotalSpawns = new()
+    {
+        Name = "KOutbreak03DLC1TotalSpawns",
+        Key = 0x9E12A531,
+        Type = SCTypeCode.Int32,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 4,
+    };
+    #endregion
+
+    #region Outbreak04DLC1
+    public static readonly DataBlock KOutbreak04DLC1CenterPos = new()
+    {
+        Name = "KOutbreak04DLC1CenterPos",
+        Key = 0x4122608C,
+        Type = SCTypeCode.Array,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 12,
+    };
+
+    public static readonly DataBlock KOutbreak04DLC1DummyPos = new()
+    {
+        Name = "KOutbreak04DLC1DummyPos",
+        Key = 0x6332E4D5,
+        Type = SCTypeCode.Array,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 12,
+    };
+
+    public static readonly DataBlock KOutbreak04DLC1Species = new()
+    {
+        Name = "KOutbreak04DLC1Species",
+        Key = 0x37DD779F,
+        Type = SCTypeCode.UInt32,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 4,
+    };
+
+    public static readonly DataBlock KOutbreak04DLC1Form = new()
+    {
+        Name = "KOutbreak04DLC1Form",
+        Key = 0x69B2CB70,
+        Type = SCTypeCode.Byte,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 1,
+    };
+
+    public static readonly DataBlock KOutbreak04DLC1Found = new()
+    {
+        Name = "KOutbreak04DLC1Found",
+        Key = 0x7B6497AA,
+        Type = SCTypeCode.Bool1,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 1,
+    };
+
+    public static readonly DataBlock KOutbreak04DLC1NumKOed = new()
+    {
+        Name = "KOutbreak04DLC1NumKOed",
+        Key = 0xB294B833,
+        Type = SCTypeCode.Int32,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 4,
+    };
+
+    public static readonly DataBlock KOutbreak04DLC1TotalSpawns = new()
+    {
+        Name = "KOutbreak04DLC1TotalSpawns",
+        Key = 0x9E16873C,
         Type = SCTypeCode.Int32,
         Pointer = SaveBlockKeyPointer,
         IsEncrypted = true,

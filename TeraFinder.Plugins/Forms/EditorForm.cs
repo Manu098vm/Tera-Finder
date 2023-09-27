@@ -431,7 +431,7 @@ public partial class EditorForm : Form
                     pictureBox.Size = DefSize;
                 }
 
-                imgMap.SetMapPoint(rngres.TeraType, (int)raid.AreaID, (int)raid.LotteryGroup, (int)raid.SpawnPointID, CurrMap, DenLocations);
+                imgMap.SetMapPoint((MoveType)rngres.TeraType, (int)raid.AreaID, (int)raid.LotteryGroup, (int)raid.SpawnPointID, CurrMap, DenLocations);
 
                 btnRewards.Width = pictureBox.Image is not null ? pictureBox.Image.Width : pictureBox.BackgroundImage!.Width;
                 btnRewards.Visible = true;
@@ -499,9 +499,14 @@ public partial class EditorForm : Form
         var names = new string[CurrMap is TeraRaidMapParent.Paldea ? 69 : 26];
         var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
         var raids = spawnList.GetAllRaids();
-        for (var i = 0; i < names.Length; i++)
-            names[i] = $"{Strings["EditorForm.CmbRaid"]} {i + 1} - {(CurrMap is TeraRaidMapParent.Paldea ? 
-                PaldeaLocations[raids[i].AreaID] : KitakamiLocations[raids[i].AreaID])} [{raids[i].SpawnPointID}]";
+        if (raids is not null && raids.Length >= names.Length)
+            for (var i = 0; i < names.Length; i++)
+                names[i] = $"{Strings["EditorForm.CmbRaid"]} {i + 1} - {(CurrMap is TeraRaidMapParent.Paldea ?
+                    PaldeaLocations[raids[i].AreaID] : KitakamiLocations[raids[i].AreaID])} [{raids[i].SpawnPointID}]";
+        else
+            for (var i = 0; i < names.Length; i++)
+                names[i] = $"{Strings["EditorForm.CmbRaid"]} {i + 1} - [---]";
+            
         return names;
     }
 

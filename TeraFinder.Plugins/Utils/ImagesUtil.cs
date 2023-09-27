@@ -56,7 +56,6 @@ public static class ImagesUtil
             int y = image.Height - icon.Height - 2;
             return ImageUtil.LayerImage(image, icon, x, y);
         }
-        
         return image;
     }
 
@@ -66,7 +65,7 @@ public static class ImagesUtil
         return ImageUtil.LayerImage(image, icon, 0, 0, 0.7);
     }
 
-    public static void SetMapPoint(this PictureBox pic, int teratype, int area, int lotterygroup, int spawnpoint, TeraRaidMapParent map, Dictionary<string, float[]> locations)
+    public static void SetMapPoint(this PictureBox pic, MoveType teratype, int area, int lotterygroup, int spawnpoint, TeraRaidMapParent map, Dictionary<string, float[]> locations)
     {
         var loc_available = locations.TryGetValue($"{area}-{lotterygroup}-{spawnpoint}", out var location);
         var x = loc_available ? location![0] : 0;
@@ -74,10 +73,10 @@ public static class ImagesUtil
         pic.SetMapPoint(map, teratype, x, y);
     }
 
-    public static void SetMapPoint(this PictureBox pic, TeraRaidMapParent map, GameCoordinates coordinates, int teratype = 0) =>
+    public static void SetMapPoint(this PictureBox pic, TeraRaidMapParent map, GameCoordinates coordinates, MoveType teratype = 0) =>
         pic.SetMapPoint(map, teratype, coordinates.X, coordinates.Z);
 
-    private static void SetMapPoint(this PictureBox pic, TeraRaidMapParent map, int teratype, float x, float y)
+    private static void SetMapPoint(this PictureBox pic, TeraRaidMapParent map, MoveType teratype, float x, float y)
     {
         var crystal = (MoveType)teratype switch
         {
@@ -104,9 +103,8 @@ public static class ImagesUtil
         var pointer = new Bitmap(crystal, new Size(crystal.Width / 4, crystal.Height / 4));
 
         var def = 512;
-        var width = pic.Image.Width;
-        var height = pic.Image.Height;
-
+        var width = pic.Width;
+        var height = pic.Height;
 
         // Formulas taken from RaidCrawler (GPL v3 License)
         // Thx Lincoln, Lego and Archit!

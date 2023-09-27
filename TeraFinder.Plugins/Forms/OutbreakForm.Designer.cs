@@ -68,6 +68,8 @@ partial class OutbreakForm
         injectFromJsonToolStripMenuItem = new ToolStripMenuItem();
         saveFileDialog = new SaveFileDialog();
         openFileDialog = new OpenFileDialog();
+        label1 = new Label();
+        cmbMap = new ComboBox();
         grpMap.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)imgMap).BeginInit();
         ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
@@ -84,7 +86,7 @@ partial class OutbreakForm
         // grpMap
         // 
         grpMap.Controls.Add(imgMap);
-        grpMap.Location = new Point(371, 29);
+        grpMap.Location = new Point(373, 57);
         grpMap.Margin = new Padding(3, 4, 3, 4);
         grpMap.Name = "grpMap";
         grpMap.Padding = new Padding(3, 4, 3, 4);
@@ -154,7 +156,7 @@ partial class OutbreakForm
         grpPkmInfo.Controls.Add(lblForm);
         grpPkmInfo.Controls.Add(pictureBox);
         grpPkmInfo.Controls.Add(lblSpecies);
-        grpPkmInfo.Location = new Point(12, 70);
+        grpPkmInfo.Location = new Point(12, 84);
         grpPkmInfo.Name = "grpPkmInfo";
         grpPkmInfo.Size = new Size(355, 123);
         grpPkmInfo.TabIndex = 29;
@@ -201,9 +203,9 @@ partial class OutbreakForm
         // 
         grpLocation.Controls.Add(grpLocationDummy);
         grpLocation.Controls.Add(grpLocationCenter);
-        grpLocation.Location = new Point(12, 328);
+        grpLocation.Location = new Point(12, 342);
         grpLocation.Name = "grpLocation";
-        grpLocation.Size = new Size(355, 295);
+        grpLocation.Size = new Size(355, 310);
         grpLocation.TabIndex = 33;
         grpLocation.TabStop = false;
         grpLocation.Text = "Location Info";
@@ -216,7 +218,7 @@ partial class OutbreakForm
         grpLocationDummy.Controls.Add(txtDummyY);
         grpLocationDummy.Controls.Add(txtDummyX);
         grpLocationDummy.Controls.Add(lblDummyX);
-        grpLocationDummy.Location = new Point(6, 161);
+        grpLocationDummy.Location = new Point(6, 167);
         grpLocationDummy.Name = "grpLocationDummy";
         grpLocationDummy.Size = new Size(343, 129);
         grpLocationDummy.TabIndex = 34;
@@ -348,7 +350,7 @@ partial class OutbreakForm
         grpMassInfo.Controls.Add(numMaxSpawn);
         grpMassInfo.Controls.Add(lblKoSpawn);
         grpMassInfo.Controls.Add(lblTotalSpawn);
-        grpMassInfo.Location = new Point(12, 200);
+        grpMassInfo.Location = new Point(12, 214);
         grpMassInfo.Name = "grpMassInfo";
         grpMassInfo.Size = new Size(355, 123);
         grpMassInfo.TabIndex = 34;
@@ -459,11 +461,31 @@ partial class OutbreakForm
         openFileDialog.Filter = "Json file|*.json";
         openFileDialog.Title = "Load Outbreak Json";
         // 
+        // label1
+        // 
+        label1.AutoSize = true;
+        label1.Location = new Point(540, 40);
+        label1.Name = "label1";
+        label1.Size = new Size(103, 20);
+        label1.TabIndex = 37;
+        label1.Text = "Location Map:";
+        // 
+        // cmbMap
+        // 
+        cmbMap.FormattingEnabled = true;
+        cmbMap.Location = new Point(649, 37);
+        cmbMap.Name = "cmbMap";
+        cmbMap.Size = new Size(151, 28);
+        cmbMap.TabIndex = 36;
+        cmbMap.SelectedIndexChanged += cmbMap_IndexChanged;
+        // 
         // OutbreakForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(962, 631);
+        ClientSize = new Size(962, 661);
+        Controls.Add(label1);
+        Controls.Add(cmbMap);
         Controls.Add(grpMassInfo);
         Controls.Add(grpLocation);
         Controls.Add(grpPkmInfo);
@@ -539,4 +561,6 @@ partial class OutbreakForm
     private ToolStripMenuItem injectFromJsonToolStripMenuItem;
     private SaveFileDialog saveFileDialog;
     private OpenFileDialog openFileDialog;
+    private Label label1;
+    private ComboBox cmbMap;
 }

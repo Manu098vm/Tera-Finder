@@ -39,8 +39,9 @@ partial class ConnectionForm
         btnConnect = new Button();
         toolTip = new ToolTip(components);
         btnDisconnect = new Button();
-        chkOutbreaks = new CheckBox();
+        chkOutbreaksMain = new CheckBox();
         progressBar = new ProgressBar();
+        chkOutbreaksDLC = new CheckBox();
         grpDevice.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)numPort).BeginInit();
         SuspendLayout();
@@ -53,7 +54,7 @@ partial class ConnectionForm
         grpDevice.Controls.Add(lblAddress);
         grpDevice.Controls.Add(radioWiFi);
         grpDevice.Controls.Add(txtAddress);
-        grpDevice.Location = new Point(12, 12);
+        grpDevice.Location = new Point(10, 12);
         grpDevice.Name = "grpDevice";
         grpDevice.Size = new Size(356, 109);
         grpDevice.TabIndex = 0;
@@ -122,7 +123,7 @@ partial class ConnectionForm
         // 
         // btnConnect
         // 
-        btnConnect.Location = new Point(12, 157);
+        btnConnect.Location = new Point(10, 187);
         btnConnect.Name = "btnConnect";
         btnConnect.Size = new Size(356, 52);
         btnConnect.TabIndex = 1;
@@ -141,7 +142,7 @@ partial class ConnectionForm
         // btnDisconnect
         // 
         btnDisconnect.Enabled = false;
-        btnDisconnect.Location = new Point(12, 213);
+        btnDisconnect.Location = new Point(10, 243);
         btnDisconnect.Name = "btnDisconnect";
         btnDisconnect.Size = new Size(356, 52);
         btnDisconnect.TabIndex = 3;
@@ -149,30 +150,41 @@ partial class ConnectionForm
         btnDisconnect.UseVisualStyleBackColor = true;
         btnDisconnect.Click += btnDisconnect_Click;
         // 
-        // chkOutbreaks
+        // chkOutbreaksMain
         // 
-        chkOutbreaks.AutoSize = true;
-        chkOutbreaks.Location = new Point(12, 127);
-        chkOutbreaks.Name = "chkOutbreaks";
-        chkOutbreaks.Size = new Size(265, 24);
-        chkOutbreaks.TabIndex = 4;
-        chkOutbreaks.Text = "Download Mass Outbreaks Data (?)";
-        chkOutbreaks.UseVisualStyleBackColor = true;
+        chkOutbreaksMain.AutoSize = true;
+        chkOutbreaksMain.Location = new Point(10, 127);
+        chkOutbreaksMain.Name = "chkOutbreaksMain";
+        chkOutbreaksMain.Size = new Size(302, 24);
+        chkOutbreaksMain.TabIndex = 4;
+        chkOutbreaksMain.Text = "Download Mass Outbreaks Main Data (?)";
+        chkOutbreaksMain.UseVisualStyleBackColor = true;
         // 
         // progressBar
         // 
-        progressBar.Location = new Point(12, 271);
+        progressBar.Location = new Point(10, 301);
         progressBar.Name = "progressBar";
         progressBar.Size = new Size(356, 22);
         progressBar.TabIndex = 5;
+        // 
+        // chkOutbreaksDLC
+        // 
+        chkOutbreaksDLC.AutoSize = true;
+        chkOutbreaksDLC.Location = new Point(10, 157);
+        chkOutbreaksDLC.Name = "chkOutbreaksDLC";
+        chkOutbreaksDLC.Size = new Size(295, 24);
+        chkOutbreaksDLC.TabIndex = 6;
+        chkOutbreaksDLC.Text = "Download Mass Outbreaks DLC Data (?)";
+        chkOutbreaksDLC.UseVisualStyleBackColor = true;
         // 
         // ConnectionForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(378, 298);
+        ClientSize = new Size(378, 331);
+        Controls.Add(chkOutbreaksDLC);
         Controls.Add(progressBar);
-        Controls.Add(chkOutbreaks);
+        Controls.Add(chkOutbreaksMain);
         Controls.Add(btnDisconnect);
         Controls.Add(btnConnect);
         Controls.Add(grpDevice);
@@ -200,6 +212,7 @@ partial class ConnectionForm
     private NumericUpDown numPort;
     private ToolTip toolTip;
     private Button btnDisconnect;
-    private CheckBox chkOutbreaks;
+    private CheckBox chkOutbreaksMain;
     private ProgressBar progressBar;
+    private CheckBox chkOutbreaksDLC;
 }
