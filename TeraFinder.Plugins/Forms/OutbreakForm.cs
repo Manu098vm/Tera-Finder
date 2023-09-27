@@ -161,8 +161,6 @@ public partial class OutbreakForm : Form
         txtDummyY.Text = $"{(outbreak.LocationDummy is not null ? outbreak.LocationDummy.Y : 0)}";
         txtDummyZ.Text = $"{(outbreak.LocationDummy is not null ? outbreak.LocationDummy.Z : 0)}";
 
-        if (imgMap.Image is null)
-            imgMap.ResetMap();
         if (outbreak.LocationCenter is not null)
             imgMap.SetMapPoint(CurrMap, outbreak.LocationCenter, (MoveType)PersonalTable.SV.GetFormEntry((ushort)outbreak.Species, outbreak.Form).Type1);
         else
