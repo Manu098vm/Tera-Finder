@@ -153,7 +153,8 @@ ConnectionForm.radioWiFi=Wi-Fi
 ConnectionForm.radioUSB=USB
 ConnectionForm.lblAddress=IP地址:
 ConnectionForm.lblPort=端口:
-ConnectionForm.chkOutbreaks=从远程设备下载宝可梦大量出现数据 (?)
+ConnectionForm.chkOutbreaksMain=从远程设备下载宝可梦大量出现数据 (Main) (?)
+ConnectionForm.chkOutbreaksDLC=从远程设备下载宝可梦大量出现数据 (DLC) (?)
 ConnectionForm.btnConnect=连接
 ConnectionForm.btnDisconnect=断开
 
@@ -246,7 +247,8 @@ ConnectionFailed=无法连接
 ConnectionFailedAux=请尝试在游戏中保存并重新启动游戏。
 ExecutorConnected=框架连接成功:
 DisconnectionSuccess=设备已断开
-ToolTipSyncOutbreaks=同步远程设备的宝可梦大量出现数据。可能需要相当长的时间。
+ToolTipSyncOutbreaksMain=同步远程设备的宝可梦大量出现数据。可能需要相当长的时间 (帕底亚)。
+ToolTipSyncOutbreaksDLC1=同步远程设备的宝可梦大量出现数据。可能需要相当长的时间 (北上乡)。
 ShinifiedAll=所有太晶洞窟异色已经生成。
 
 TeraShiny.Any=任意

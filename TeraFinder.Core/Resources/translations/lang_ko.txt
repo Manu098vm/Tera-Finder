@@ -151,7 +151,8 @@ ConnectionForm.radioWiFi=Wi-Fi
 ConnectionForm.radioUSB=USB
 ConnectionForm.lblAddress=IP주소:
 ConnectionForm.lblPort=포트:
-ConnectionForm.chkOutbreaks=대량발생 데이터 다운로드 (?)
+ConnectionForm.chkOutbreaksMain=대량발생 데이터 다운로드 (Main) (?)
+ConnectionForm.chkOutbreaksDLC=대량발생 데이터 다운로드 (DLC) (?)
 ConnectionForm.btnConnect=연결
 ConnectionForm.btnDisconnect=연결 끊기
 
@@ -243,7 +244,8 @@ ConnectionFailed=연결이 되지않았습니다
 ConnectionFailedAux=게임을 저장하고 다시 켜주세요.
 ExecutorConnected=성공적으로 연결되었습니다
 DisconnectionSuccess=연결이 끊겼습니다
-ToolTipSyncOutbreaks=스위치에서 대량발생 데이터를 동기화합니다. 상당한 시간이 소요될 수 있습니다.
+ToolTipSyncOutbreaksMain=스위치에서 대량발생 데이터를 동기화합니다. 상당한 시간이 소요될 수 있습니다 (Paldea).
+ToolTipSyncOutbreaksDLC1=스위치에서 대량발생 데이터를 동기화합니다. 상당한 시간이 소요될 수 있습니다 (Kitakami).
 ShinifiedAll=All raids have been Shinified.
 
 TeraShiny.Any=모두

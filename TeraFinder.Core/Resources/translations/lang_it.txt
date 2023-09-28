@@ -151,7 +151,8 @@ ConnectionForm.radioWiFi=Wi-Fi
 ConnectionForm.radioUSB=USB
 ConnectionForm.lblAddress=Indirizzo:
 ConnectionForm.lblPort=Porta:
-ConnectionForm.chkOutbreaks=Scarica i dati delle Comparse Massicce (?)
+ConnectionForm.chkOutbreaksMain=Scarica i dati Base delle Comparse Massicce (?)
+ConnectionForm.chkOutbreaksDLC=Scarica i dati DLC delle Comparse Massicce (?)
 ConnectionForm.btnConnect=Connetti
 ConnectionForm.btnDisconnect=Disconnetti
 
@@ -243,7 +244,8 @@ ConnectionFailed=Impossibile connettersi.
 ConnectionFailedAux=Per favore salva il gioco, riavvialo e riprova.
 ExecutorConnected=Executor connesso con successo:
 DisconnectionSuccess=Dispositivo disconnesso.
-ToolTipSyncOutbreaks=Sincronizza i dati delle Comparse Massicce dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
+ToolTipSyncOutbreaksMain=Sincronizza i dati delle Comparse Massicce (Paldea) dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
+ToolTipSyncOutbreaksDLC1=Sincronizza i dati delle Comparse Massicce (Nordivia) dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
 ShinifiedAll=Tutti i Raid sono stati resi Shiny.
 
 TeraShiny.Any=Qualsiasi

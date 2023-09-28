@@ -3,6 +3,7 @@
 public enum ScarletExclusives : ushort
 {
     //TaurosBlazeBreed = 128,
+    Gligar = 207,
     Larvitar = 246,
     Pupitar = 247,
     Tyranitar = 248,
@@ -10,6 +11,7 @@ public enum ScarletExclusives : ushort
     Drifblim = 426,
     Stunky = 434,
     Skuntank = 435,
+    Gliscor = 472,
     Deino = 633,
     Zweilous = 634,
     Hydreigon = 635,
@@ -17,6 +19,7 @@ public enum ScarletExclusives : ushort
     Dragalge = 691,
     Oranguru = 765,
     Stonjourner = 784,
+    Cramorant = 845,
     Armarouge = 936,
     GreatTusk = 984,
     ScreamTail = 985,
@@ -32,16 +35,19 @@ public enum ScarletExclusives : ushort
 public enum VioletExclusives : ushort
 {
     //TaurosAquaBreed = 128,
+    Aipom = 190,
     Misdreavus = 200,
     Gulpin = 316,
     Swalot = 317,
     Bagon = 371,
     Shelgon = 372,
     Salamence = 373,
+    Ambipom = 424,
     Mismagius = 429,
     Clauncher = 692,
     Clawitzer = 693,
     Passimian = 766,
+    Morpeko = 877,
     Dreepy = 885,
     Drakloak = 886,
     Dragapult = 887,

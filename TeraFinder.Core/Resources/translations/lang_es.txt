@@ -151,7 +151,8 @@ ConnectionForm.radioWiFi=Wi-Fi
 ConnectionForm.radioUSB=USB
 ConnectionForm.lblAddress=Dirección:
 ConnectionForm.lblPort=Puerto:
-ConnectionForm.chkOutbreaks=Descargar Apariciones Masivas del dispositivo remoto (?)
+ConnectionForm.chkOutbreaksMain=Descargar Bàsicos Apariciones Masivas (?)
+ConnectionForm.chkOutbreaksDLC=Descargar DLC Apariciones Masivas (?)
 ConnectionForm.btnConnect=Conectar
 ConnectionForm.btnDisconnect=Desconectar
 
@@ -243,7 +244,8 @@ ConnectionFailed=No se pudo conectar.
 ConnectionFailedAux=Por favor, intenta guardar dentro del juego e intenta de nuevo.
 ExecutorConnected=Ejecutor conectado con éxito:
 DisconnectionSuccess=Dispositivo desconectado.
-ToolTipSyncOutbreaks=Sincronizar datos de Aparición Masiva desde dispositivo remoto. Puede requerir una considerable cantidad de tiempo.
+ToolTipSyncOutbreaksMain=Sincronizar datos de Aparición Masiva (Paldea) desde dispositivo remoto. Puede requerir una considerable cantidad de tiempo.
+ToolTipSyncOutbreaksDLC1=Sincronizar datos de Aparición Masiva (Noroteo) desde dispositivo remoto. Puede requerir una considerable cantidad de tiempo.
 ShinifiedAll=Ahora todas las raids son Variocolor.
 
 TeraShiny.Any=Cualquiera
