@@ -255,7 +255,7 @@ public partial class EditorForm : Form
             btnDx.Enabled = true;
 
         var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-        var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[32]);
+        var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
         chkLP.Checked = raid.IsClaimedLeaguePoints;
         chkActive.Checked = raid.IsEnabled;
 
@@ -282,7 +282,7 @@ public partial class EditorForm : Form
         if (Loaded)
         {
             var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-            var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[32]);
+            var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
             if (chkActive.Checked)
             {
                 raid.IsEnabled = true;
@@ -302,7 +302,7 @@ public partial class EditorForm : Form
         if (Loaded)
         {
             var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-            var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[32]);
+            var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
             if (chkLP.Checked)
             {
                 raid.IsClaimedLeaguePoints = true;
@@ -321,7 +321,7 @@ public partial class EditorForm : Form
         if (Loaded)
         {
             var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-            var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[32]);
+            var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
             raid.Content = (TeraRaidContentType)cmbContent.SelectedIndex;
             Task.Run(UpdateRemote).Wait();
             UpdatePKMInfo(raid);
@@ -342,7 +342,7 @@ public partial class EditorForm : Form
             if (!txtSeed.Text.Equals(""))
             {
                 var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-                var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[32]);
+                var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
                 try
                 {
                     var seed = Convert.ToUInt32(txtSeed.Text, 16);
@@ -573,6 +573,128 @@ public partial class EditorForm : Form
             var form = new RewardListForm(Language, lvl0, lvl1, lvl2, lvl3);
             form.Show();
         }
+    }
+
+    private void btnShinifyCurrent_Click(object sender, EventArgs e)
+    {
+        var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
+        var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
+
+        var seed = raid.Seed;
+        var content = (RaidContent)raid.Content;
+        var groupid = TeraUtil.GetDeliveryGroupID(SAV, Progress, content, content is RaidContent.Event_Mighty ? Mighty : Dist, spawnList, cmbDens.SelectedIndex);
+        var progress = content is RaidContent.Black ? (GameProgress)6 : Progress;
+        var originalEncounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, SAV,
+            TeraUtil.GetStars(seed, progress), CurrMap is TeraRaidMapParent.Paldea ? Paldea! : Kitakami!, CurrMap) :
+            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, SAV, progress, Dist!, groupid);
+
+        if (originalEncounter is null)
+            return;
+
+        if (originalEncounter.IsDistribution)
+        {
+            var canBeShiny = false;
+            foreach (var enc in content is RaidContent.Event ? Dist! : Mighty!)
+            {
+                if (enc.Index != groupid)
+                    continue;
+
+                if (enc.Species != originalEncounter.Species || enc.Form != originalEncounter.Form)
+                    continue;
+
+                if (enc.Shiny is not Shiny.Never)
+                {
+                    canBeShiny = true;
+                    break;
+                }
+            }
+
+            if (!canBeShiny)
+                return;
+        }
+
+        for (uint i = 0; i <= 0xFFFFFFFF; i++)
+        {
+            var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, SAV,
+                TeraUtil.GetStars(seed, progress), CurrMap is TeraRaidMapParent.Paldea ? Paldea! : Kitakami!, CurrMap) :
+            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, SAV, progress, Dist!, groupid);
+            var rngres = encounter is not null && (encounter.Species == originalEncounter.Species && encounter.Form == originalEncounter.Form) ?
+                TeraUtil.CalcRNG(seed, SAV.TrainerTID7, SAV.TrainerSID7, content, encounter, groupid) : null;
+
+            var isShiny = rngres is not null && rngres.Shiny >= TeraShiny.Yes;
+
+            if (!isShiny)
+                seed++;
+            else
+            {
+                seed = rngres!.Seed;
+                break;
+            }
+        }
+
+        raid.Seed = seed;
+        raid.IsEnabled = true;
+        raid.IsClaimedLeaguePoints = false;
+        cmbDens_IndexChanged(this, new EventArgs());
+        Task.Run(UpdateRemote).Wait();
+        SystemSounds.Asterisk.Play();
+    }
+
+    private void btnRandomizeCurrent_Click(object sender, EventArgs e)
+    {
+        var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
+        var raid = spawnList.GetAllRaids().Length > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
+
+        var seed = raid.Seed;
+        var content = (RaidContent)raid.Content;
+        var groupid = TeraUtil.GetDeliveryGroupID(SAV, Progress, content, content is RaidContent.Event_Mighty ? Mighty : Dist, spawnList, cmbDens.SelectedIndex);
+        var progress = content is RaidContent.Black ? (GameProgress)6 : Progress;
+        var originalEncounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, SAV,
+            TeraUtil.GetStars(seed, progress), CurrMap is TeraRaidMapParent.Paldea ? Paldea! : Kitakami!, CurrMap) :
+            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, SAV, progress, Dist!, groupid);
+
+        if (originalEncounter is null)
+            return;
+
+        var xoro = new Xoroshiro128Plus(seed);
+        seed = (uint)(xoro.Next() & 0xFFFFFFFF);
+
+        raid.Seed = seed;
+        raid.IsEnabled = true;
+        raid.IsClaimedLeaguePoints = false;
+        cmbDens_IndexChanged(this, new EventArgs());
+        Task.Run(UpdateRemote).Wait();
+        SystemSounds.Asterisk.Play();
+    }
+
+    private void btnRandomizeAll_Click(object sender, EventArgs e)
+    {
+        var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
+
+        foreach (var raid in spawnList.GetAllRaids())
+        {
+            var seed = raid.Seed;
+            var content = (RaidContent)raid.Content;
+            var groupid = TeraUtil.GetDeliveryGroupID(SAV, Progress, content, content is RaidContent.Event_Mighty ? Mighty : Dist, spawnList, cmbDens.SelectedIndex);
+            var progress = content is RaidContent.Black ? (GameProgress)6 : Progress;
+            var originalEncounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, SAV,
+                TeraUtil.GetStars(seed, progress), CurrMap is TeraRaidMapParent.Paldea ? Paldea! : Kitakami!, CurrMap) :
+                content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, SAV, progress, Dist!, groupid);
+
+            if (originalEncounter is null)
+                continue;
+
+            var xoro = new Xoroshiro128Plus(seed);
+            seed = (uint)(xoro.Next() & 0xFFFFFFFF);
+
+            raid.Seed = seed;
+            raid.IsEnabled = true;
+            raid.IsClaimedLeaguePoints = false;
+        }
+
+        cmbDens_IndexChanged(this, new EventArgs());
+        Task.Run(UpdateRemote).Wait();
+        SystemSounds.Asterisk.Play();
     }
 
     private void BtnShinifyAllRaids_Click(object sender, EventArgs e) => ShinifyRaids(false);

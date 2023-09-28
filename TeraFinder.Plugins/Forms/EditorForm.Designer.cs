@@ -80,6 +80,9 @@ partial class EditorForm
         btnShinifyAllEncounters = new ToolStripMenuItem();
         cmbMap = new ComboBox();
         lblMap = new Label();
+        btnShinifyCurrent = new ToolStripMenuItem();
+        btnRandomizeCurrent = new ToolStripMenuItem();
+        btnRandomizeAll = new ToolStripMenuItem();
         GrpRaidInfo.SuspendLayout();
         grpPkmInfo.SuspendLayout();
         grpMoves.SuspendLayout();
@@ -591,7 +594,7 @@ partial class EditorForm
         // 
         // toolsToolStripMenuItem
         // 
-        toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { btnShinifyAll, btnShinifyAllEncounters });
+        toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { btnShinifyCurrent, btnShinifyAll, btnShinifyAllEncounters, btnRandomizeCurrent, btnRandomizeAll });
         toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
         toolsToolStripMenuItem.Size = new Size(58, 24);
         toolsToolStripMenuItem.Text = "Tools";
@@ -627,6 +630,27 @@ partial class EditorForm
         lblMap.Size = new Size(103, 20);
         lblMap.TabIndex = 26;
         lblMap.Text = "Location Map:";
+        // 
+        // btnShinifyCurrent
+        // 
+        btnShinifyCurrent.Name = "btnShinifyCurrent";
+        btnShinifyCurrent.Size = new Size(344, 26);
+        btnShinifyCurrent.Text = "Shinify Current Raid";
+        btnShinifyCurrent.Click += btnShinifyCurrent_Click;
+        // 
+        // btnRandomizeCurrent
+        // 
+        btnRandomizeCurrent.Name = "btnRandomizeCurrent";
+        btnRandomizeCurrent.Size = new Size(344, 26);
+        btnRandomizeCurrent.Text = "Randomize Current Raid";
+        btnRandomizeCurrent.Click += btnRandomizeCurrent_Click;
+        // 
+        // btnRandomizeAll
+        // 
+        btnRandomizeAll.Name = "btnRandomizeAll";
+        btnRandomizeAll.Size = new Size(344, 26);
+        btnRandomizeAll.Text = "Randomize All Raids";
+        btnRandomizeAll.Click += btnRandomizeAll_Click;
         // 
         // EditorForm
         // 
@@ -719,4 +743,7 @@ partial class EditorForm
     private ToolStripMenuItem btnShinifyAllEncounters;
     private ComboBox cmbMap;
     private Label lblMap;
+    private ToolStripMenuItem btnShinifyCurrent;
+    private ToolStripMenuItem btnRandomizeCurrent;
+    private ToolStripMenuItem btnRandomizeAll;
 }
