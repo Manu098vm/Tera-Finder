@@ -232,6 +232,10 @@ public partial class EditorForm : Form
         cmbDens.Items.Clear();
         foreach (var name in UpdateRaidNameList())
             cmbDens.Items.Add(name);
+
+        if (cmbDens.Items.Count == 0)
+            cmbDens.Items.Add($"");
+
         cmbDens.SelectedIndex = 0;
 
         Loaded = true;
@@ -251,7 +255,7 @@ public partial class EditorForm : Form
             btnDx.Enabled = true;
 
         var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-        var raid = spawnList.GetRaid(cmbDens.SelectedIndex);
+        var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[32]);
         chkLP.Checked = raid.IsClaimedLeaguePoints;
         chkActive.Checked = raid.IsEnabled;
 
@@ -278,7 +282,7 @@ public partial class EditorForm : Form
         if (Loaded)
         {
             var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-            var raid = spawnList.GetRaid(cmbDens.SelectedIndex);
+            var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[32]);
             if (chkActive.Checked)
             {
                 raid.IsEnabled = true;
@@ -298,7 +302,7 @@ public partial class EditorForm : Form
         if (Loaded)
         {
             var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-            var raid = spawnList.GetRaid(cmbDens.SelectedIndex);
+            var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[32]);
             if (chkLP.Checked)
             {
                 raid.IsClaimedLeaguePoints = true;
@@ -317,7 +321,7 @@ public partial class EditorForm : Form
         if (Loaded)
         {
             var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-            var raid = spawnList.GetRaid(cmbDens.SelectedIndex);
+            var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[32]);
             raid.Content = (TeraRaidContentType)cmbContent.SelectedIndex;
             Task.Run(UpdateRemote).Wait();
             UpdatePKMInfo(raid);
@@ -338,7 +342,7 @@ public partial class EditorForm : Form
             if (!txtSeed.Text.Equals(""))
             {
                 var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-                var raid = spawnList.GetRaid(cmbDens.SelectedIndex);
+                var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[32]);
                 try
                 {
                     var seed = Convert.ToUInt32(txtSeed.Text, 16);
@@ -579,8 +583,8 @@ public partial class EditorForm : Form
         var progressWindow = new ShinifyForm(0, Strings["ShinifyForm.lblValue"]);
 
         var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-        var raidCount = spawnList.GetAllRaids().Count(raid => raid.IsEnabled == true);
         var raidList = spawnList.GetAllRaids();
+        var raidCount = raidList.Count(raid => raid.IsEnabled == true);
         foreach (var iterator in raidList.Select((value, i) => new { i, value }))
         {
             var raid = iterator.value;
