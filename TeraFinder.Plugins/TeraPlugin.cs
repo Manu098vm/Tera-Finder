@@ -202,7 +202,7 @@ public class TeraPlugin : IPlugin
 
     public void LaunchEditor()
     {
-        new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
+        new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).ShowDialog();
     }
 
     public void LaunchCalculator()
