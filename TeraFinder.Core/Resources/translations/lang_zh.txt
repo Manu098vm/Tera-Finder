@@ -55,6 +55,7 @@ OutbreakForm.DeviceDisconnected=设备已断开连接。
 OutbreakForm.ErrorParsing=解析错误:
 OutbreakForm.LoadDefault=是否加载 {species} 的默认合法数据？
 OutbreakForm.SpeciesExclusive={species} 是 {game} 限定的!
+OutbreakForm.label1=定位图:
 
 CalculatorForm=太晶洞窟计算器
 CalculatorForm.lblSeed=Seed:
