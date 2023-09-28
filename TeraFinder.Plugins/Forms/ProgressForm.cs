@@ -23,8 +23,10 @@ public partial class ProgressForm : Form
 
         cmbProgress.SelectedIndex = (int)TeraUtil.GetProgress(sav);
         var raid7 = sav.RaidSevenStar.GetAllRaids();
-        foreach (var raid in raid7) {
-            if (raid.Identifier > 0) {
+        foreach (var raid in raid7)
+        {
+            if (raid.Identifier > 0)
+            {
                 var name = $"{raid.Identifier}";
                 cmbMightyIndex.Items.Add(name);
                 Raids.Add(raid);
@@ -272,10 +274,6 @@ public partial class ProgressForm : Form
             raid.Captured = true;
         else
             raid.Captured = false;
-        if (chkDefeated.Checked)
-            raid.Defeated = true;
-        else
-            raid.Defeated = false;
 
         if (Connection is not null && Connection.IsConnected())
         {
@@ -293,7 +291,7 @@ public partial class ProgressForm : Form
                 }
             }
         }
-     
+
         MessageBox.Show(Strings["MsgSuccess"]);
     }
 
@@ -304,9 +302,5 @@ public partial class ProgressForm : Form
             chkCaptured.Checked = true;
         else
             chkCaptured.Checked = false;
-        if (raid.Defeated)
-            chkDefeated.Checked = true;
-        else
-            chkDefeated.Checked = false;
     }
 }
