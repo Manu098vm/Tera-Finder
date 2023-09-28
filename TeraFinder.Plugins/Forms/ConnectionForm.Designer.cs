@@ -37,11 +37,12 @@ partial class ConnectionForm
         radioWiFi = new RadioButton();
         txtAddress = new TextBox();
         btnConnect = new Button();
-        toolTip = new ToolTip(components);
+        toolTipOutbreakMain = new ToolTip(components);
         btnDisconnect = new Button();
         chkOutbreaksMain = new CheckBox();
         progressBar = new ProgressBar();
         chkOutbreaksDLC = new CheckBox();
+        toolTipOutbreakDLC1 = new ToolTip(components);
         grpDevice.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)numPort).BeginInit();
         SuspendLayout();
@@ -131,13 +132,18 @@ partial class ConnectionForm
         btnConnect.UseVisualStyleBackColor = true;
         btnConnect.Click += btnConnect_Click;
         // 
-        // toolTip
+        // toolTipOutbreakMain
         // 
-        toolTip.AutoPopDelay = 10000;
-        toolTip.InitialDelay = 500;
-        toolTip.IsBalloon = true;
-        toolTip.ReshowDelay = 100;
-        toolTip.ToolTipTitle = "Mass Outbreaks Data";
+        toolTipOutbreakMain.AutoPopDelay = 10000;
+        toolTipOutbreakMain.InitialDelay = 500;
+        toolTipOutbreakMain.IsBalloon = true;
+        toolTipOutbreakMain.ReshowDelay = 100;
+        toolTipOutbreakMain.ToolTipTitle = "Mass Outbreaks Data";
+        toolTipOutbreakDLC1.AutoPopDelay = 10000;
+        toolTipOutbreakDLC1.InitialDelay = 500;
+        toolTipOutbreakDLC1.IsBalloon = true;
+        toolTipOutbreakDLC1.ReshowDelay = 100;
+        toolTipOutbreakDLC1.ToolTipTitle = "Mass Outbreaks Data";
         // 
         // btnDisconnect
         // 
@@ -210,9 +216,10 @@ partial class ConnectionForm
     private TextBox txtAddress;
     private Button btnConnect;
     private NumericUpDown numPort;
-    private ToolTip toolTip;
+    private ToolTip toolTipOutbreakMain;
     private Button btnDisconnect;
     private CheckBox chkOutbreaksMain;
     private ProgressBar progressBar;
     private CheckBox chkOutbreaksDLC;
+    private ToolTip toolTipOutbreakDLC1;
 }

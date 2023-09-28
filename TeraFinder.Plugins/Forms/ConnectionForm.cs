@@ -28,7 +28,8 @@ public partial class ConnectionForm : Form
         if (Settings.Default.protocol)
             radioUSB.Checked = true;
 
-        toolTip.SetToolTip(chkOutbreaksMain, Strings["ToolTipSyncOutbreaks"]);
+        toolTipOutbreakMain.SetToolTip(chkOutbreaksMain, Strings["ToolTipSyncOutbreaksMain"]);
+        toolTipOutbreakDLC1.SetToolTip(chkOutbreaksDLC, Strings["ToolTipSyncOutbreaksDLC1"]);
     }
 
     private void GenerateDictionary()
@@ -44,7 +45,8 @@ public partial class ConnectionForm : Form
             { "ConnectionFailedAux", "Please try saving in-game and reboot the game." },
             { "ExecutorConnected", "Executor succesfully connected:" },
             { "DisconnectionSuccess", "Device disconnected." },
-            { "ToolTipSyncOutbreaks", "Syncronize Outbreaks data from the remote device. Might require a sgnificant amount of time." }
+            { "ToolTipSyncOutbreaksMain", "Syncronize Paldea Outbreaks data from the remote device. Might require a sgnificant amount of time." },
+            { "ToolTipSyncOutbreaksDLC1", "Syncronize Kitakami Outbreaks data from the remote device. Might require a sgnificant amount of time." },
         };
     }
 
