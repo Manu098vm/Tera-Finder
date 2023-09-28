@@ -524,7 +524,7 @@ public partial class EditorForm : Form
             calcform.NotLinkedSearch = false;
         }
 
-        calcform.Show();
+        calcform.ShowDialog();
     }
 
     private void btnOpenRewardCalculator_Click(object sender, EventArgs e)
@@ -537,7 +537,7 @@ public partial class EditorForm : Form
             calcform.NotLinkedSearch = false;
         }
 
-        calcform.Show();
+        calcform.ShowDialog();
     }
 
     private void btnDx_Click(object sender, EventArgs e)
@@ -571,7 +571,7 @@ public partial class EditorForm : Form
                 CurrEncount.IsDistribution ? DistFixedRewards : TeraFixedRewards, CurrEncount.IsDistribution ? DistLotteryRewards : TeraLotteryRewards, 3);
 
             var form = new RewardListForm(Language, lvl0, lvl1, lvl2, lvl3);
-            form.Show();
+            form.ShowDialog();
         }
     }
 
