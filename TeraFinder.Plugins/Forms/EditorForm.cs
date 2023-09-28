@@ -579,19 +579,20 @@ public partial class EditorForm : Form
         var progressWindow = new ShinifyForm(0, Strings["ShinifyForm.lblValue"]);
 
         var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
+        var raidCount = spawnList.GetAllRaids().Count(raid => raid.IsEnabled == true);
         var raidList = spawnList.GetAllRaids();
         foreach (var iterator in raidList.Select((value, i) => new { i, value }))
         {
             var raid = iterator.value;
             var index = iterator.i;
 
-            if (index > 69)
+            if (index > raidCount)
                 break;
 
             if (raid.AreaID == 0)
                 continue;
 
-            var currProgress = (index * 100) / 69;
+            var currProgress = (index * 100) / raidCount;
             progressWindow.UpdateComputedValue(currProgress);
 
             var seed = raid.Seed;
