@@ -194,6 +194,7 @@ EditorForm.btnOpenRewardCalculator=보상 계산기
 EditorForm.LblLvl=Lvl.
 EditorForm.CmbRaid=레이드
 EditorForm.lblMap=Location Map:
+EditorForm.toolTipMoves=Extra Raid Moves:
 
 ShinifyForm.lblValue=Progress:
 

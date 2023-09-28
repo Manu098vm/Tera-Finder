@@ -194,6 +194,7 @@ EditorForm.btnOpenRewardCalculator=奖励计算器
 EditorForm.LblLvl=等级:
 EditorForm.CmbRaid=太晶洞窟
 EditorForm.lblMap=定位图:
+EditorForm.toolTipMoves=Extra Raid Moves:
 
 ShinifyForm.lblValue=进程:
 

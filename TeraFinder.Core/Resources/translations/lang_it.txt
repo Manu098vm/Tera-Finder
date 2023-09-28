@@ -194,6 +194,7 @@ EditorForm.btnOpenRewardCalculator=Calcolatore Ricompense
 EditorForm.LblLvl=Lvl.
 EditorForm.CmbRaid=Raid
 EditorForm.lblMap=Mappa:
+EditorForm.toolTipMoves=Mosse Extra da Raid:
 
 ShinifyForm.lblValue=Progress:
 

@@ -28,6 +28,7 @@ partial class EditorForm
     /// </summary>
     private void InitializeComponent()
     {
+        components = new System.ComponentModel.Container();
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditorForm));
         cmbDens = new ComboBox();
         GrpRaidInfo = new GroupBox();
@@ -74,22 +75,23 @@ partial class EditorForm
         btnOpenRewardCalculator = new Button();
         imgMap = new PictureBox();
         grpMap = new GroupBox();
-        menuStrip1 = new MenuStrip();
+        menuStrip = new MenuStrip();
         toolsToolStripMenuItem = new ToolStripMenuItem();
+        btnShinifyCurrent = new ToolStripMenuItem();
         btnShinifyAll = new ToolStripMenuItem();
         btnShinifyAllEncounters = new ToolStripMenuItem();
-        cmbMap = new ComboBox();
-        lblMap = new Label();
-        btnShinifyCurrent = new ToolStripMenuItem();
         btnRandomizeCurrent = new ToolStripMenuItem();
         btnRandomizeAll = new ToolStripMenuItem();
+        cmbMap = new ComboBox();
+        lblMap = new Label();
+        toolTipMoves = new ToolTip(components);
         GrpRaidInfo.SuspendLayout();
         grpPkmInfo.SuspendLayout();
         grpMoves.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
         ((System.ComponentModel.ISupportInitialize)imgMap).BeginInit();
         grpMap.SuspendLayout();
-        menuStrip1.SuspendLayout();
+        menuStrip.SuspendLayout();
         SuspendLayout();
         // 
         // cmbDens
@@ -580,17 +582,17 @@ partial class EditorForm
         grpMap.TabIndex = 23;
         grpMap.TabStop = false;
         // 
-        // menuStrip1
+        // menuStrip
         // 
-        menuStrip1.BackColor = SystemColors.ButtonFace;
-        menuStrip1.ImageScalingSize = new Size(20, 20);
-        menuStrip1.Items.AddRange(new ToolStripItem[] { toolsToolStripMenuItem });
-        menuStrip1.Location = new Point(0, 0);
-        menuStrip1.Name = "menuStrip1";
-        menuStrip1.Padding = new Padding(7, 2, 0, 2);
-        menuStrip1.Size = new Size(1001, 28);
-        menuStrip1.TabIndex = 24;
-        menuStrip1.Text = "menuStrip1";
+        menuStrip.BackColor = SystemColors.ButtonFace;
+        menuStrip.ImageScalingSize = new Size(20, 20);
+        menuStrip.Items.AddRange(new ToolStripItem[] { toolsToolStripMenuItem });
+        menuStrip.Location = new Point(0, 0);
+        menuStrip.Name = "menuStrip";
+        menuStrip.Padding = new Padding(7, 2, 0, 2);
+        menuStrip.Size = new Size(1001, 28);
+        menuStrip.TabIndex = 24;
+        menuStrip.Text = "menuStrip1";
         // 
         // toolsToolStripMenuItem
         // 
@@ -598,6 +600,13 @@ partial class EditorForm
         toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
         toolsToolStripMenuItem.Size = new Size(58, 24);
         toolsToolStripMenuItem.Text = "Tools";
+        // 
+        // btnShinifyCurrent
+        // 
+        btnShinifyCurrent.Name = "btnShinifyCurrent";
+        btnShinifyCurrent.Size = new Size(344, 26);
+        btnShinifyCurrent.Text = "Shinify Current Raid";
+        btnShinifyCurrent.Click += btnShinifyCurrent_Click;
         // 
         // btnShinifyAll
         // 
@@ -612,6 +621,20 @@ partial class EditorForm
         btnShinifyAllEncounters.Size = new Size(344, 26);
         btnShinifyAllEncounters.Text = "Shinify All Raids (Keep Encounters)";
         btnShinifyAllEncounters.Click += BtnShinyAllEncounters_Click;
+        // 
+        // btnRandomizeCurrent
+        // 
+        btnRandomizeCurrent.Name = "btnRandomizeCurrent";
+        btnRandomizeCurrent.Size = new Size(344, 26);
+        btnRandomizeCurrent.Text = "Randomize Current Raid";
+        btnRandomizeCurrent.Click += btnRandomizeCurrent_Click;
+        // 
+        // btnRandomizeAll
+        // 
+        btnRandomizeAll.Name = "btnRandomizeAll";
+        btnRandomizeAll.Size = new Size(344, 26);
+        btnRandomizeAll.Text = "Randomize All Raids";
+        btnRandomizeAll.Click += btnRandomizeAll_Click;
         // 
         // cmbMap
         // 
@@ -631,27 +654,6 @@ partial class EditorForm
         lblMap.TabIndex = 26;
         lblMap.Text = "Location Map:";
         // 
-        // btnShinifyCurrent
-        // 
-        btnShinifyCurrent.Name = "btnShinifyCurrent";
-        btnShinifyCurrent.Size = new Size(344, 26);
-        btnShinifyCurrent.Text = "Shinify Current Raid";
-        btnShinifyCurrent.Click += btnShinifyCurrent_Click;
-        // 
-        // btnRandomizeCurrent
-        // 
-        btnRandomizeCurrent.Name = "btnRandomizeCurrent";
-        btnRandomizeCurrent.Size = new Size(344, 26);
-        btnRandomizeCurrent.Text = "Randomize Current Raid";
-        btnRandomizeCurrent.Click += btnRandomizeCurrent_Click;
-        // 
-        // btnRandomizeAll
-        // 
-        btnRandomizeAll.Name = "btnRandomizeAll";
-        btnRandomizeAll.Size = new Size(344, 26);
-        btnRandomizeAll.Text = "Randomize All Raids";
-        btnRandomizeAll.Click += btnRandomizeAll_Click;
-        // 
         // EditorForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
@@ -667,9 +669,9 @@ partial class EditorForm
         Controls.Add(btnOpenCalculator);
         Controls.Add(grpPkmInfo);
         Controls.Add(GrpRaidInfo);
-        Controls.Add(menuStrip1);
+        Controls.Add(menuStrip);
         Icon = (Icon)resources.GetObject("$this.Icon");
-        MainMenuStrip = menuStrip1;
+        MainMenuStrip = menuStrip;
         Margin = new Padding(3, 4, 3, 4);
         MaximizeBox = false;
         MinimizeBox = false;
@@ -685,8 +687,8 @@ partial class EditorForm
         ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
         ((System.ComponentModel.ISupportInitialize)imgMap).EndInit();
         grpMap.ResumeLayout(false);
-        menuStrip1.ResumeLayout(false);
-        menuStrip1.PerformLayout();
+        menuStrip.ResumeLayout(false);
+        menuStrip.PerformLayout();
         ResumeLayout(false);
         PerformLayout();
     }
@@ -737,7 +739,7 @@ partial class EditorForm
     private Label lblScale;
     private GroupBox grpMap;
     private Label lblIndex;
-    private MenuStrip menuStrip1;
+    private MenuStrip menuStrip;
     private ToolStripMenuItem toolsToolStripMenuItem;
     private ToolStripMenuItem btnShinifyAll;
     private ToolStripMenuItem btnShinifyAllEncounters;
@@ -746,4 +748,5 @@ partial class EditorForm
     private ToolStripMenuItem btnShinifyCurrent;
     private ToolStripMenuItem btnRandomizeCurrent;
     private ToolStripMenuItem btnRandomizeAll;
+    private ToolTip toolTipMoves;
 }

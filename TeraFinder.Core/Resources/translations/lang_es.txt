@@ -194,6 +194,7 @@ EditorForm.btnOpenRewardCalculator=Calculadora Recompensas
 EditorForm.LblLvl=Nvl.
 EditorForm.CmbRaid=Teraincursión
 EditorForm.lblMap=Location Map:
+EditorForm.toolTipMoves=Extra Raid Moves:
 
 ShinifyForm.lblValue=Progreso:
 

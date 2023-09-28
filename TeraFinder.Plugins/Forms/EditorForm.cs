@@ -169,6 +169,7 @@ public partial class EditorForm : Form
             { "Plugin.Main", "Main" },
             { "Plugin.DLC1", "DLC1" },
             { "Plugin.DLC2", "DLC2" },
+            { "EditorForm.toolTipMoves", "Extra Raid Moves:" },
         };
     }
 
@@ -445,6 +446,15 @@ public partial class EditorForm : Form
 
                 SetStarSymbols(rngres.Stars);
                 SetLevelLabel(rngres.Level);
+
+                var movestring = $"{Strings["EditorForm.toolTipMoves"]}";
+                if (encounter.ExtraMoves.ExtraMoveList.Count > 0)
+                    foreach (var extramove in encounter.ExtraMoves.ExtraMoveList)
+                        movestring += $"{Environment.NewLine}- {moves[(ushort)extramove]}";
+                else
+                    movestring += $"{Environment.NewLine}- {moves[0]}";
+                toolTipMoves.SetToolTip(grpMoves, movestring);
+
                 return;
             }
         }
@@ -478,6 +488,9 @@ public partial class EditorForm : Form
         CurrTera = null;
         SetStarSymbols();
         SetLevelLabel();
+
+        var extramoves = $"{Strings["EditorForm.toolTipMoves"]}{Environment.NewLine}- {GameInfo.GetStrings(Language).movelist[0]}";
+        toolTipMoves.SetToolTip(grpMoves, extramoves);
     }
 
     private void SetStarSymbols(int stars = 0)
