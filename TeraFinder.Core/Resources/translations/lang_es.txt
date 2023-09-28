@@ -55,6 +55,7 @@ OutbreakForm.DeviceDisconnected=Dispositivo desconectado.
 OutbreakForm.ErrorParsing=Error al analizar:
 OutbreakForm.LoadDefault=¿Cargar datos legales por defecto para {species}?
 OutbreakForm.SpeciesExclusive=¡{species} es exclusivo de {game}!
+OutbreakForm.lblMap=Location Map:
 
 CalculatorForm=Calculadora de Teraincursiones
 CalculatorForm.lblSeed=Seed:
@@ -96,6 +97,7 @@ CalculatorForm.btnSavePk9=Guardar Resultado Seleccionado como PK9
 CalculatorForm.btnToPkmEditor=Enviar Resultado Seleccionado a PKM Editor
 CalculatorForm.btnSendToEditor=Enviar Resultado Seleccionado a Raid Editor
 CalculatorForm.lblEventct=Índice Evento:
+CalculatorForm.lblMap=Location:
 
 RewardCalcForm=Calculadora de Recompensas
 RewardCalcForm.grpFilters=Filtros
@@ -125,6 +127,7 @@ RewardCalcForm.btnSaveAllTxt=Guardar resultados como TXT
 RewardCalcForm.btnSaveSelectedTxt=Guardar resultados seleccionados como TXT
 RewardCalcForm.btnSendSelectedRaid=Enviar Resultado Seleccionado a Raid Editor
 RewardCalcForm.lblEventCt=Índice Evento:
+RewardCalcForm.lblMap=Location:
 
 CheckerForm=Inspector de Seeds
 CheckerForm.lblTID=TID:
@@ -190,6 +193,8 @@ EditorForm.btnOpenCalculator=Calculadora Teraincursiones
 EditorForm.btnOpenRewardCalculator=Calculadora Recompensas
 EditorForm.LblLvl=Nvl.
 EditorForm.CmbRaid=Teraincursión
+EditorForm.lblMap=Location Map:
+
 ShinifyForm.lblValue=Progreso:
 
 ProgressForm=Editor de Flags

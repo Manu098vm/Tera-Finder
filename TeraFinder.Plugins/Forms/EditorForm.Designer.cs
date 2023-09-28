@@ -79,7 +79,7 @@ partial class EditorForm
         btnShinifyAll = new ToolStripMenuItem();
         btnShinifyAllEncounters = new ToolStripMenuItem();
         cmbMap = new ComboBox();
-        label1 = new Label();
+        lblMap = new Label();
         GrpRaidInfo.SuspendLayout();
         grpPkmInfo.SuspendLayout();
         grpMoves.SuspendLayout();
@@ -619,21 +619,21 @@ partial class EditorForm
         cmbMap.TabIndex = 25;
         cmbMap.SelectedIndexChanged += cmbMap_IndexChanged;
         // 
-        // label1
+        // lblMap
         // 
-        label1.AutoSize = true;
-        label1.Location = new Point(565, 37);
-        label1.Name = "label1";
-        label1.Size = new Size(103, 20);
-        label1.TabIndex = 26;
-        label1.Text = "Location Map:";
+        lblMap.AutoSize = true;
+        lblMap.Location = new Point(565, 37);
+        lblMap.Name = "lblMap";
+        lblMap.Size = new Size(103, 20);
+        lblMap.TabIndex = 26;
+        lblMap.Text = "Location Map:";
         // 
         // EditorForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1001, 656);
-        Controls.Add(label1);
+        Controls.Add(lblMap);
         Controls.Add(cmbMap);
         Controls.Add(grpMap);
         Controls.Add(cmbDens);
@@ -718,5 +718,5 @@ partial class EditorForm
     private ToolStripMenuItem btnShinifyAll;
     private ToolStripMenuItem btnShinifyAllEncounters;
     private ComboBox cmbMap;
-    private Label label1;
+    private Label lblMap;
 }

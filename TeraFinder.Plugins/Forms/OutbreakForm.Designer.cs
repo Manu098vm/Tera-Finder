@@ -68,7 +68,7 @@ partial class OutbreakForm
         injectFromJsonToolStripMenuItem = new ToolStripMenuItem();
         saveFileDialog = new SaveFileDialog();
         openFileDialog = new OpenFileDialog();
-        label1 = new Label();
+        lblMap = new Label();
         cmbMap = new ComboBox();
         grpMap.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)imgMap).BeginInit();
@@ -461,14 +461,14 @@ partial class OutbreakForm
         openFileDialog.Filter = "Json file|*.json";
         openFileDialog.Title = "Load Outbreak Json";
         // 
-        // label1
+        // lblMap
         // 
-        label1.AutoSize = true;
-        label1.Location = new Point(540, 40);
-        label1.Name = "label1";
-        label1.Size = new Size(103, 20);
-        label1.TabIndex = 37;
-        label1.Text = "Location Map:";
+        lblMap.AutoSize = true;
+        lblMap.Location = new Point(540, 40);
+        lblMap.Name = "lblMap";
+        lblMap.Size = new Size(103, 20);
+        lblMap.TabIndex = 37;
+        lblMap.Text = "Location Map:";
         // 
         // cmbMap
         // 
@@ -484,7 +484,7 @@ partial class OutbreakForm
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(962, 661);
-        Controls.Add(label1);
+        Controls.Add(lblMap);
         Controls.Add(cmbMap);
         Controls.Add(grpMassInfo);
         Controls.Add(grpLocation);
@@ -561,6 +561,6 @@ partial class OutbreakForm
     private ToolStripMenuItem injectFromJsonToolStripMenuItem;
     private SaveFileDialog saveFileDialog;
     private OpenFileDialog openFileDialog;
-    private Label label1;
+    private Label lblMap;
     private ComboBox cmbMap;
 }

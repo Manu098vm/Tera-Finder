@@ -54,7 +54,8 @@ OutBreakForm.MassOutbreakName=大量出現
 OutbreakForm.DeviceDisconnected=終端已斷開連接。
 OutbreakForm.ErrorParsing=解析錯誤:
 OutbreakForm.LoadDefault=是否加載 {species} 的默認合法數據？
-OutbreakForm.SpeciesExclusive={species} 是{game} 限定的!
+OutbreakForm.SpeciesExclusive={species} 是 {game} 限定的!
+OutbreakForm.lblMap=定位图:
 
 CalculatorForm=太晶洞窟計算器
 CalculatorForm.lblSeed=Seed:
@@ -96,6 +97,7 @@ CalculatorForm.btnSavePk9=將所選結果另存為PK9
 CalculatorForm.btnToPkmEditor=將所選結果發送到PKM編輯器
 CalculatorForm.btnSendToEditor=將所選結果發送到Raid編輯器
 CalculatorForm.lblEventct=活動索引:
+CalculatorForm.lblMap=地图:
 
 RewardCalcForm=獎勵計算器
 RewardCalcForm.grpFilters=篩選器
@@ -125,6 +127,7 @@ RewardCalcForm.btnSaveAllTxt=將所有結果轉儲為TXT
 RewardCalcForm.btnSaveSelectedTxt=將所選結果轉儲為TXT
 RewardCalcForm.btnSendSelectedRaid=將所選結果發送到Raid編輯器
 RewardCalcForm.lblEventCt=活動索引:
+RewardCalcForm.lblMap=地图:
 
 CheckerForm=Seed檢索器
 CheckerForm.lblTID=表ID:
@@ -190,6 +193,8 @@ EditorForm.btnOpenCalculator=太晶洞窟計算器
 EditorForm.btnOpenRewardCalculator=獎勵計算器
 EditorForm.LblLvl=等級:
 EditorForm.CmbRaid=太晶洞窟
+EditorForm.lblMap=定位图:
+
 ShinifyForm.lblValue=Progress:
 
 ProgressForm=太晶洞窟解鎖進度編輯器

@@ -55,6 +55,7 @@ OutBreakForm.MassOutbreakName=Comparsa Massiccia
 OutbreakForm.DeviceDisconnected=Dispositivo disconnesso.
 OutbreakForm.ErrorParsing=Errore durante il parsing:
 OutbreakForm.LoadDefault=Vuoi caricare i dati legali di default per {species}?
+OutbreakForm.lblMap=Mappa:
 
 CalculatorForm=Calcolatore Raid
 CalculatorForm.lblSeed=Seed:
@@ -96,6 +97,7 @@ CalculatorForm.btnSavePk9=Salva il risultato selezionato come PK9
 CalculatorForm.btnToPkmEditor=Invia il risultato selezionato al PKM Editor
 CalculatorForm.btnSendToEditor=Invia il risultato selezionato al Raid Editor
 CalculatorForm.lblEventct=Indice Evento:
+CalculatorForm.lblMap=Mappa:
 
 RewardCalcForm=Calcolatore Ricompense
 RewardCalcForm.grpFilters=Filtri
@@ -125,6 +127,7 @@ RewardCalcForm.btnSaveAllTxt=Salva tutti i risultati come TXT
 RewardCalcForm.btnSaveSelectedTxt=Salva i risultati selezionati come TXT
 RewardCalcForm.btnSendSelectedRaid=Invia il risultato selezionato al Raid Editor
 RewardCalcForm.lblEventCt=Indice Evento:
+RewardCalcForm.lblMap=Mappa:
 
 CheckerForm=Controllo Seed
 CheckerForm.lblTID=TID:
@@ -190,6 +193,8 @@ EditorForm.btnOpenCalculator=Calcolatore Raid
 EditorForm.btnOpenRewardCalculator=Calcolatore Ricompense
 EditorForm.LblLvl=Lvl.
 EditorForm.CmbRaid=Raid
+EditorForm.lblMap=Mappa:
+
 ShinifyForm.lblValue=Progress:
 
 ProgressForm=Flag Editor

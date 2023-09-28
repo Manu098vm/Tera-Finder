@@ -112,8 +112,10 @@ partial class RewardCalcForm
         cmbGame = new ComboBox();
         lblGame = new Label();
         grpSettings = new GroupBox();
+        lblMap = new Label();
         cmbBoost = new ComboBox();
         cmbContent = new ComboBox();
+        cmbMap = new ComboBox();
         numMaxCalc = new NumericUpDown();
         lblSandwich = new Label();
         lblContent = new Label();
@@ -130,8 +132,6 @@ partial class RewardCalcForm
         btnSaveAllTxt = new ToolStripMenuItem();
         btnSaveSelectedTxt = new ToolStripMenuItem();
         btnSendSelectedRaid = new ToolStripMenuItem();
-        label21 = new Label();
-        cmbMap = new ComboBox();
         grpFilters.SuspendLayout();
         grpEncounter.SuspendLayout();
         grpItems.SuspendLayout();
@@ -994,7 +994,7 @@ partial class RewardCalcForm
         // 
         // grpSettings
         // 
-        grpSettings.Controls.Add(label21);
+        grpSettings.Controls.Add(lblMap);
         grpSettings.Controls.Add(cmbBoost);
         grpSettings.Controls.Add(cmbContent);
         grpSettings.Controls.Add(cmbMap);
@@ -1012,6 +1012,15 @@ partial class RewardCalcForm
         grpSettings.TabIndex = 22;
         grpSettings.TabStop = false;
         grpSettings.Text = "Raid Settings";
+        // 
+        // lblMap
+        // 
+        lblMap.AutoSize = true;
+        lblMap.Location = new Point(30, 32);
+        lblMap.Name = "lblMap";
+        lblMap.Size = new Size(69, 20);
+        lblMap.TabIndex = 27;
+        lblMap.Text = "Location:";
         // 
         // cmbBoost
         // 
@@ -1032,6 +1041,14 @@ partial class RewardCalcForm
         cmbContent.Name = "cmbContent";
         cmbContent.Size = new Size(129, 28);
         cmbContent.TabIndex = 24;
+        // 
+        // cmbMap
+        // 
+        cmbMap.FormattingEnabled = true;
+        cmbMap.Location = new Point(105, 29);
+        cmbMap.Name = "cmbMap";
+        cmbMap.Size = new Size(129, 28);
+        cmbMap.TabIndex = 28;
         // 
         // numMaxCalc
         // 
@@ -1189,23 +1206,6 @@ partial class RewardCalcForm
         btnSendSelectedRaid.Text = "Send Selected Result to Raid Editor";
         btnSendSelectedRaid.Click += btnSendSelectedRaid_Click;
         // 
-        // label21
-        // 
-        label21.AutoSize = true;
-        label21.Location = new Point(30, 32);
-        label21.Name = "label21";
-        label21.Size = new Size(69, 20);
-        label21.TabIndex = 27;
-        label21.Text = "Location:";
-        // 
-        // cmbMap
-        // 
-        cmbMap.FormattingEnabled = true;
-        cmbMap.Location = new Point(105, 29);
-        cmbMap.Name = "cmbMap";
-        cmbMap.Size = new Size(129, 28);
-        cmbMap.TabIndex = 28;
-        // 
         // RewardCalcForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1361,6 +1361,6 @@ partial class RewardCalcForm
     private Label lblSpecies;
     private CheckBox chkShiny;
     private Label lblFound;
-    private Label label21;
+    private Label lblMap;
     private ComboBox cmbMap;
 }

@@ -55,6 +55,7 @@ OutbreakForm.DeviceDisconnected=연결이 끊겼습니다.
 OutbreakForm.ErrorParsing=분석 중 오류가 발생했습니다:
 OutbreakForm.LoadDefault=적법성이 맞는 기본 포켓몬 데이터를 불러오시겠습니까?
 OutbreakForm.SpeciesExclusive={species} is a {game} exclusive!
+OutbreakForm.lblMap=Location Map:
 
 CalculatorForm=레이드 계산기
 CalculatorForm.lblSeed=시드:
@@ -96,6 +97,7 @@ CalculatorForm.btnSavePk9=선택한 결과를 PK9로 저장
 CalculatorForm.btnToPkmEditor=PKHeX로 선택한 결과 보내기
 CalculatorForm.btnSendToEditor=레이드 편집기로 선택한 결과 보내기
 CalculatorForm.lblEventct=이벤트 값:
+CalculatorForm.lblMap=Location:
 
 RewardCalcForm=보상 계산기
 RewardCalcForm.grpFilters=필터
@@ -125,6 +127,7 @@ RewardCalcForm.btnSaveAllTxt=모든 결과를 TXT로 저장
 RewardCalcForm.btnSaveSelectedTxt=선택한 결과를 TXT로 저장
 RewardCalcForm.btnSendSelectedRaid=레이드 편집기로 선택한 결과 보내기
 RewardCalcForm.lblEventCt=이벤트 값:
+RewardCalcForm.lblMap=Location:
 
 CheckerForm=시드체크
 CheckerForm.lblTID=TID:
@@ -190,6 +193,8 @@ EditorForm.btnOpenCalculator=레이드 계산기
 EditorForm.btnOpenRewardCalculator=보상 계산기
 EditorForm.LblLvl=Lvl.
 EditorForm.CmbRaid=레이드
+EditorForm.lblMap=Location Map:
+
 ShinifyForm.lblValue=Progress:
 
 ProgressForm=플래그 편집기
