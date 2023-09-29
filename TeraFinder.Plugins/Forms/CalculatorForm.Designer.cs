@@ -31,6 +31,8 @@ partial class CalculatorForm
         components = new System.ComponentModel.Container();
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalculatorForm));
         grpRaidDetails = new GroupBox();
+        lblMap = new Label();
+        cmbMap = new ComboBox();
         showresults = new CheckBox();
         numFrames = new NumericUpDown();
         btnSearch = new Button();
@@ -107,8 +109,6 @@ partial class CalculatorForm
         btnSavePk9 = new ToolStripMenuItem();
         btnToPkmEditor = new ToolStripMenuItem();
         btnSendToEditor = new ToolStripMenuItem();
-        label2 = new Label();
-        cmbMap = new ComboBox();
         grpRaidDetails.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)numFrames).BeginInit();
         grpFilters.SuspendLayout();
@@ -133,7 +133,7 @@ partial class CalculatorForm
         // 
         // grpRaidDetails
         // 
-        grpRaidDetails.Controls.Add(label2);
+        grpRaidDetails.Controls.Add(lblMap);
         grpRaidDetails.Controls.Add(cmbMap);
         grpRaidDetails.Controls.Add(showresults);
         grpRaidDetails.Controls.Add(numFrames);
@@ -151,6 +151,23 @@ partial class CalculatorForm
         grpRaidDetails.TabIndex = 0;
         grpRaidDetails.TabStop = false;
         grpRaidDetails.Text = "Raid Settings";
+        // 
+        // lblMap
+        // 
+        lblMap.AutoSize = true;
+        lblMap.Location = new Point(16, 36);
+        lblMap.Name = "lblMap";
+        lblMap.Size = new Size(69, 20);
+        lblMap.TabIndex = 10;
+        lblMap.Text = "Location:";
+        // 
+        // cmbMap
+        // 
+        cmbMap.FormattingEnabled = true;
+        cmbMap.Location = new Point(119, 33);
+        cmbMap.Name = "cmbMap";
+        cmbMap.Size = new Size(174, 28);
+        cmbMap.TabIndex = 0;
         // 
         // showresults
         // 
@@ -918,23 +935,6 @@ partial class CalculatorForm
         btnSendToEditor.Text = "Send Selected Result to Raid Editor";
         btnSendToEditor.Click += btnSendToEditor_Click;
         // 
-        // label2
-        // 
-        label2.AutoSize = true;
-        label2.Location = new Point(16, 36);
-        label2.Name = "label2";
-        label2.Size = new Size(69, 20);
-        label2.TabIndex = 10;
-        label2.Text = "Location:";
-        // 
-        // cmbMap
-        // 
-        cmbMap.FormattingEnabled = true;
-        cmbMap.Location = new Point(119, 33);
-        cmbMap.Name = "cmbMap";
-        cmbMap.Size = new Size(174, 28);
-        cmbMap.TabIndex = 0;
-        // 
         // CalculatorForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1054,6 +1054,6 @@ partial class CalculatorForm
     public ComboBox cmbGame;
     private ToolStripMenuItem btnViewRewards;
     private Label lblFound;
-    private Label label2;
+    private Label lblMap;
     private ComboBox cmbMap;
 }

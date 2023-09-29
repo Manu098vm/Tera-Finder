@@ -7,7 +7,7 @@ namespace TeraFinder.Plugins;
 
 public class TeraPlugin : IPlugin
 {
-    public const string Version = "2.5.0";
+    public const string Version = "2.7.0";
     private bool UpdatePrompted = false;
 
     public string Name => nameof(TeraFinder);
@@ -170,11 +170,11 @@ public class TeraPlugin : IPlugin
         Plugin.DropDownItems.Add(Flags);
         Plugin.DropDownItems.Add(Events);
         Connect.Click += (s, e) => LaunchConnector();
-        Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
+        Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).ShowDialog();
         Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
-        Flags.Click += (s, e) => new ProgressForm(SAV, Language,Connection).Show();
-        Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV, Language).Show();
-        Outbreaks.Click += (s, e) => new OutbreakForm(SAV, Language, Connection).Show();
+        Flags.Click += (s, e) => new ProgressForm(SAV, Language,Connection).ShowDialog();
+        Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV, Language).ShowDialog();
+        Outbreaks.Click += (s, e) => new OutbreakForm(SAV, Language, Connection).ShowDialog();
         tools.DropDownItems.Add(Plugin);
     }
 
@@ -202,19 +202,19 @@ public class TeraPlugin : IPlugin
 
     public void LaunchEditor()
     {
-        new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
+        new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).ShowDialog();
     }
 
     public void LaunchCalculator()
     {
         var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
-        new CalculatorForm(editor).Show();
+        new CalculatorForm(editor).ShowDialog();
     }
 
     public void LaunchRewardCalculator()
     {
         var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
-        new RewardCalcForm(editor).Show();
+        new RewardCalcForm(editor).ShowDialog();
     }
 
     public void LaunchImporter()
@@ -224,17 +224,17 @@ public class TeraPlugin : IPlugin
 
     public void LaunchGameEditor()
     {
-        new ProgressForm(SAV, Language,Connection).Show();
+        new ProgressForm(SAV, Language,Connection).ShowDialog();
     }
 
     public void LaunchFinder()
     {
-        new CheckerForm(new PK9 { TrainerTID7 = SAV.TrainerTID7, TrainerSID7 = SAV.TrainerSID7 }, SAV, Language).Show();
+        new CheckerForm(new PK9 { TrainerTID7 = SAV.TrainerTID7, TrainerSID7 = SAV.TrainerSID7 }, SAV, Language).ShowDialog();
     }
 
     public void LaunchMassOutbreakEditor()
     {
-        new OutbreakForm(SAV, Language, Connection).Show();
+        new OutbreakForm(SAV, Language, Connection).ShowDialog();
     }
 
     public ConnectionForm LaunchConnector(Form? parent = null)

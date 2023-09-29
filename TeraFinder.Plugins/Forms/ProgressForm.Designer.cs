@@ -28,123 +28,104 @@ partial class ProgressForm
     /// </summary>
     private void InitializeComponent()
     {
-        this.cmbProgress = new System.Windows.Forms.ComboBox();
-        this.btnApplyProgress = new System.Windows.Forms.Button();
-        this.grpGameProgress = new System.Windows.Forms.GroupBox();
-        this.grpRaidMighty = new System.Windows.Forms.GroupBox();
-        this.btnApplyRaid7 = new System.Windows.Forms.Button();
-        this.chkDefeated = new System.Windows.Forms.CheckBox();
-        this.chkCaptured = new System.Windows.Forms.CheckBox();
-        this.cmbMightyIndex = new System.Windows.Forms.ComboBox();
-        this.grpGameProgress.SuspendLayout();
-        this.grpRaidMighty.SuspendLayout();
-        this.SuspendLayout();
+        cmbProgress = new ComboBox();
+        btnApplyProgress = new Button();
+        grpGameProgress = new GroupBox();
+        grpRaidMighty = new GroupBox();
+        btnApplyRaid7 = new Button();
+        chkCaptured = new CheckBox();
+        cmbMightyIndex = new ComboBox();
+        grpGameProgress.SuspendLayout();
+        grpRaidMighty.SuspendLayout();
+        SuspendLayout();
         // 
         // cmbProgress
         // 
-        this.cmbProgress.FormattingEnabled = true;
-        this.cmbProgress.Items.AddRange(new object[] {
-        "Beginning",
-        "UnlockedTeraRaids",
-        "Unlocked3Stars",
-        "Unlocked4Stars",
-        "Unlocked5Stars",
-        "Unlocked6Stars"});
-        this.cmbProgress.Location = new System.Drawing.Point(8, 32);
-        this.cmbProgress.Name = "cmbProgress";
-        this.cmbProgress.Size = new System.Drawing.Size(203, 28);
-        this.cmbProgress.TabIndex = 1;
+        cmbProgress.FormattingEnabled = true;
+        cmbProgress.Items.AddRange(new object[] { "Beginning", "UnlockedTeraRaids", "Unlocked3Stars", "Unlocked4Stars", "Unlocked5Stars", "Unlocked6Stars" });
+        cmbProgress.Location = new Point(8, 32);
+        cmbProgress.Name = "cmbProgress";
+        cmbProgress.Size = new Size(203, 28);
+        cmbProgress.TabIndex = 1;
         // 
         // btnApplyProgress
         // 
-        this.btnApplyProgress.Location = new System.Drawing.Point(7, 68);
-        this.btnApplyProgress.Name = "btnApplyProgress";
-        this.btnApplyProgress.Size = new System.Drawing.Size(203, 43);
-        this.btnApplyProgress.TabIndex = 3;
-        this.btnApplyProgress.Text = "Apply";
-        this.btnApplyProgress.UseVisualStyleBackColor = true;
-        this.btnApplyProgress.Click += new System.EventHandler(this.btnApplyProgress_Click);
+        btnApplyProgress.Location = new Point(7, 68);
+        btnApplyProgress.Name = "btnApplyProgress";
+        btnApplyProgress.Size = new Size(203, 43);
+        btnApplyProgress.TabIndex = 3;
+        btnApplyProgress.Text = "Apply";
+        btnApplyProgress.UseVisualStyleBackColor = true;
+        btnApplyProgress.Click += btnApplyProgress_Click;
         // 
         // grpGameProgress
         // 
-        this.grpGameProgress.Controls.Add(this.btnApplyProgress);
-        this.grpGameProgress.Controls.Add(this.cmbProgress);
-        this.grpGameProgress.Location = new System.Drawing.Point(11, 1);
-        this.grpGameProgress.Name = "grpGameProgress";
-        this.grpGameProgress.Size = new System.Drawing.Size(217, 123);
-        this.grpGameProgress.TabIndex = 4;
-        this.grpGameProgress.TabStop = false;
-        this.grpGameProgress.Text = "Current Game Progress:";
+        grpGameProgress.Controls.Add(btnApplyProgress);
+        grpGameProgress.Controls.Add(cmbProgress);
+        grpGameProgress.Location = new Point(11, 1);
+        grpGameProgress.Name = "grpGameProgress";
+        grpGameProgress.Size = new Size(217, 123);
+        grpGameProgress.TabIndex = 4;
+        grpGameProgress.TabStop = false;
+        grpGameProgress.Text = "Current Game Progress:";
         // 
         // grpRaidMighty
         // 
-        this.grpRaidMighty.Controls.Add(this.btnApplyRaid7);
-        this.grpRaidMighty.Controls.Add(this.chkDefeated);
-        this.grpRaidMighty.Controls.Add(this.chkCaptured);
-        this.grpRaidMighty.Controls.Add(this.cmbMightyIndex);
-        this.grpRaidMighty.Location = new System.Drawing.Point(11, 129);
-        this.grpRaidMighty.Name = "grpRaidMighty";
-        this.grpRaidMighty.Size = new System.Drawing.Size(217, 139);
-        this.grpRaidMighty.TabIndex = 5;
-        this.grpRaidMighty.TabStop = false;
-        this.grpRaidMighty.Text = "Re-Catch Mighty Entity";
+        grpRaidMighty.Controls.Add(btnApplyRaid7);
+        grpRaidMighty.Controls.Add(chkCaptured);
+        grpRaidMighty.Controls.Add(cmbMightyIndex);
+        grpRaidMighty.Location = new Point(11, 129);
+        grpRaidMighty.Name = "grpRaidMighty";
+        grpRaidMighty.Size = new Size(217, 139);
+        grpRaidMighty.TabIndex = 5;
+        grpRaidMighty.TabStop = false;
+        grpRaidMighty.Text = "Re-Catch Mighty Entity";
         // 
         // btnApplyRaid7
         // 
-        this.btnApplyRaid7.Location = new System.Drawing.Point(8, 91);
-        this.btnApplyRaid7.Name = "btnApplyRaid7";
-        this.btnApplyRaid7.Size = new System.Drawing.Size(202, 43);
-        this.btnApplyRaid7.TabIndex = 9;
-        this.btnApplyRaid7.Text = "Apply";
-        this.btnApplyRaid7.UseVisualStyleBackColor = true;
-        this.btnApplyRaid7.Click += new System.EventHandler(this.btnApplyRaid7_Click);
-        // 
-        // chkDefeated
-        // 
-        this.chkDefeated.AutoSize = true;
-        this.chkDefeated.Location = new System.Drawing.Point(119, 63);
-        this.chkDefeated.Name = "chkDefeated";
-        this.chkDefeated.Size = new System.Drawing.Size(93, 24);
-        this.chkDefeated.TabIndex = 8;
-        this.chkDefeated.Text = "Defeated";
-        this.chkDefeated.UseVisualStyleBackColor = true;
+        btnApplyRaid7.Location = new Point(8, 91);
+        btnApplyRaid7.Name = "btnApplyRaid7";
+        btnApplyRaid7.Size = new Size(202, 43);
+        btnApplyRaid7.TabIndex = 9;
+        btnApplyRaid7.Text = "Apply";
+        btnApplyRaid7.UseVisualStyleBackColor = true;
+        btnApplyRaid7.Click += btnApplyRaid7_Click;
         // 
         // chkCaptured
         // 
-        this.chkCaptured.AutoSize = true;
-        this.chkCaptured.Location = new System.Drawing.Point(15, 63);
-        this.chkCaptured.Name = "chkCaptured";
-        this.chkCaptured.Size = new System.Drawing.Size(92, 24);
-        this.chkCaptured.TabIndex = 7;
-        this.chkCaptured.Text = "Captured";
-        this.chkCaptured.UseVisualStyleBackColor = true;
+        chkCaptured.AutoSize = true;
+        chkCaptured.Location = new Point(58, 61);
+        chkCaptured.Name = "chkCaptured";
+        chkCaptured.Size = new Size(92, 24);
+        chkCaptured.TabIndex = 7;
+        chkCaptured.Text = "Captured";
+        chkCaptured.UseVisualStyleBackColor = true;
         // 
         // cmbMightyIndex
         // 
-        this.cmbMightyIndex.FormattingEnabled = true;
-        this.cmbMightyIndex.Location = new System.Drawing.Point(8, 27);
-        this.cmbMightyIndex.Name = "cmbMightyIndex";
-        this.cmbMightyIndex.Size = new System.Drawing.Size(203, 28);
-        this.cmbMightyIndex.TabIndex = 6;
-        this.cmbMightyIndex.SelectedIndexChanged += new System.EventHandler(this.cmbMightyIndex_IndexChanged);
+        cmbMightyIndex.FormattingEnabled = true;
+        cmbMightyIndex.Location = new Point(8, 27);
+        cmbMightyIndex.Name = "cmbMightyIndex";
+        cmbMightyIndex.Size = new Size(203, 28);
+        cmbMightyIndex.TabIndex = 6;
+        cmbMightyIndex.SelectedIndexChanged += cmbMightyIndex_IndexChanged;
         // 
         // ProgressForm
         // 
-        this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        this.ClientSize = new System.Drawing.Size(235, 275);
-        this.Controls.Add(this.grpRaidMighty);
-        this.Controls.Add(this.grpGameProgress);
-        this.MaximizeBox = false;
-        this.MinimizeBox = false;
-        this.Name = "ProgressForm";
-        this.ShowIcon = false;
-        this.Text = "Flag Editor";
-        this.grpGameProgress.ResumeLayout(false);
-        this.grpRaidMighty.ResumeLayout(false);
-        this.grpRaidMighty.PerformLayout();
-        this.ResumeLayout(false);
-
+        AutoScaleDimensions = new SizeF(8F, 20F);
+        AutoScaleMode = AutoScaleMode.Font;
+        ClientSize = new Size(235, 275);
+        Controls.Add(grpRaidMighty);
+        Controls.Add(grpGameProgress);
+        MaximizeBox = false;
+        MinimizeBox = false;
+        Name = "ProgressForm";
+        ShowIcon = false;
+        Text = "Flag Editor";
+        grpGameProgress.ResumeLayout(false);
+        grpRaidMighty.ResumeLayout(false);
+        grpRaidMighty.PerformLayout();
+        ResumeLayout(false);
     }
 
     #endregion
@@ -153,7 +134,6 @@ partial class ProgressForm
     private GroupBox grpGameProgress;
     private GroupBox grpRaidMighty;
     private Button btnApplyRaid7;
-    private CheckBox chkDefeated;
     private CheckBox chkCaptured;
     private ComboBox cmbMightyIndex;
 }

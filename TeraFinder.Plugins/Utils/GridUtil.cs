@@ -257,7 +257,7 @@ public static class GridUtil
                         encounter!.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards, encounter!.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards, 3);
 
                     var form = new RewardListForm(f.Editor.Language, lvl0, lvl1, lvl2, lvl3);
-                    form.Show();
+                    form.ShowDialog();
                 }
                 catch (Exception ex)
                 {

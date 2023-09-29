@@ -55,6 +55,7 @@ OutbreakForm.DeviceDisconnected=Device disconnected.
 OutbreakForm.ErrorParsing=Error while parsing:
 OutbreakForm.LoadDefault=Do you want to load default legal data for {species}?
 OutbreakForm.SpeciesExclusive={species} is a {game} exclusive!
+OutbreakForm.lblMap=Location Map:
 
 CalculatorForm=Raid Calculator
 CalculatorForm.lblSeed=Seed:
@@ -96,6 +97,7 @@ CalculatorForm.btnSavePk9=Save Selected Result as PK9
 CalculatorForm.btnToPkmEditor=Send Selected Result to PKM Editor
 CalculatorForm.btnSendToEditor=Send Selected Result to Raid Editor
 CalculatorForm.lblEventct=Event Index:
+CalculatorForm.lblMap=Location:
 
 RewardCalcForm=Reward Calculator
 RewardCalcForm.grpFilters=Filters
@@ -125,6 +127,7 @@ RewardCalcForm.btnSaveAllTxt=Save All Results as TXT
 RewardCalcForm.btnSaveSelectedTxt=Save Selected Results as TXT
 RewardCalcForm.btnSendSelectedRaid=Send Selected Result to Raid Editor
 RewardCalcForm.lblEventCt=Event Index:
+RewardCalcForm.lblMap=Location:
 
 CheckerForm=Seed Checker
 CheckerForm.lblTID=TID:
@@ -190,6 +193,9 @@ EditorForm.btnOpenCalculator=Raid Calculator
 EditorForm.btnOpenRewardCalculator=Reward Calculator
 EditorForm.LblLvl=Lvl.
 EditorForm.CmbRaid=Raid
+EditorForm.lblMap=Location Map:
+EditorForm.toolTipMoves=Extra Raid Moves:
+
 ShinifyForm.lblValue=Progress:
 
 ProgressForm=Flag Editor
