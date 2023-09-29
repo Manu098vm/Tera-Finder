@@ -186,7 +186,8 @@ public static class TeraUtil
         var game = (GameVersion)sav.Game;
 
         var encounters = content is RaidContent.Event ? GetSAVDistEncounters(sav)[0] : content is RaidContent.Event_Mighty ? GetSAVDistEncounters(sav)[1] :
-            EncounterRaid9.GetEncounters(EncounterTera9.GetArray(Properties.Resources.encounter_gem_paldea, map));
+            map is TeraRaidMapParent.Paldea ? EncounterRaid9.GetEncounters(EncounterTera9.GetArray(Properties.Resources.encounter_gem_paldea, map)) :
+            EncounterRaid9.GetEncounters(EncounterTera9.GetArray(Properties.Resources.encounter_gem_kitakami, map));
 
         foreach (var encounter in encounters)
         {
