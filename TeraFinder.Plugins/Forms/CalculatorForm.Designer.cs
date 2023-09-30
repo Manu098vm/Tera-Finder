@@ -168,6 +168,7 @@ partial class CalculatorForm
         cmbMap.Name = "cmbMap";
         cmbMap.Size = new Size(174, 28);
         cmbMap.TabIndex = 0;
+        cmbMap.SelectedIndexChanged += cmbMap_IndexChanged;
         // 
         // showresults
         // 

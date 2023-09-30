@@ -537,7 +537,7 @@ public partial class EditorForm : Form
             calcform.NotLinkedSearch = false;
         }
 
-        calcform.ShowDialog();
+        calcform.Show();
     }
 
     private void btnOpenRewardCalculator_Click(object sender, EventArgs e)
@@ -550,7 +550,7 @@ public partial class EditorForm : Form
             calcform.NotLinkedSearch = false;
         }
 
-        calcform.ShowDialog();
+        calcform.Show();
     }
 
     private void btnDx_Click(object sender, EventArgs e)

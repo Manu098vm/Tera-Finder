@@ -196,6 +196,15 @@ public partial class CalculatorForm : Form
         return false;
     }
 
+    private void cmbMap_IndexChanged(object sender, EventArgs e)
+    {
+        var species = TeraUtil.GetAvailableSpecies((SAV9SV)Editor.SAV, Editor.Language, GetStars(), (RaidContent)cmbContent.SelectedIndex, (TeraRaidMapParent)cmbMap.SelectedIndex);
+        cmbSpecies.Items.Clear();
+        cmbSpecies.Items.Add(Strings["Any"]);
+        cmbSpecies.Items.AddRange(species.ToArray());
+        cmbSpecies.SelectedIndex = 0;
+    }
+
     private void cmbContent_IndexChanged(object sender, EventArgs e)
     {
         var stars = TranslatedStars();
@@ -306,13 +315,15 @@ public partial class CalculatorForm : Form
         var res = new ushort[2];
         if (!str.Equals(Strings["Any"]))
         {
-            int charLocation = str.IndexOf("-", StringComparison.Ordinal);
+            //Jangmo-o, Hakamo-o and Kommo-o special cases
+            var charLocation = str.IndexOf("-", StringComparison.Ordinal);
+            var isForm = charLocation > 0 && !str.ToLower().EndsWith("-o");
 
-            if (charLocation == -1)
+            if (!isForm)
             {
                 var species = Editor.Language.ToLower().Equals("en") ? str :
                     GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, str)];
-                res[0] = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty));
+                res[0] = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty).Replace("-",string.Empty));
             }
             else
             {

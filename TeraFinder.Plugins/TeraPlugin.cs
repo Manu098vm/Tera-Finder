@@ -170,7 +170,7 @@ public class TeraPlugin : IPlugin
         Plugin.DropDownItems.Add(Flags);
         Plugin.DropDownItems.Add(Events);
         Connect.Click += (s, e) => LaunchConnector();
-        Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).ShowDialog();
+        Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
         Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
         Flags.Click += (s, e) => new ProgressForm(SAV, Language,Connection).ShowDialog();
         Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV, Language).ShowDialog();
