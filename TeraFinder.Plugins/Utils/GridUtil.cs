@@ -1,5 +1,7 @@
 ﻿using NLog;
+using Octokit;
 using PKHeX.Core;
+using System.Runtime.CompilerServices;
 using System.Text;
 using TeraFinder.Core;
 
@@ -417,6 +419,20 @@ public static class GridUtil
         {
             MessageBox.Show(strings["GridUtil.NoData"]);
         }
+    }
+
+    public static void CopySeed(this DataGridView dataGrid, string language)
+    {
+        var strings = GenerateDictionary(language);
+        var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
+        var count = selectedRows.Count();
+
+        if (count == 1)
+            try { Clipboard.SetText(selectedRows.ElementAt(0).Cells[0].Value.ToString()!); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+        else
+            MessageBox.Show(strings["GridUtil.RowsExceeded"]);
     }
 
     private static GameProgress GetProgress(uint seed, int groupid, DataGridViewRow row, CalculatorForm f, TeraRaidMapParent map)

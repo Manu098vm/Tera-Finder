@@ -98,6 +98,7 @@ CalculatorForm.btnToPkmEditor=Send Selected Result to PKM Editor
 CalculatorForm.btnSendToEditor=Send Selected Result to Raid Editor
 CalculatorForm.lblEventct=Event Index:
 CalculatorForm.lblMap=Location:
+CalculatorForm.btnCopySeed=Copy Seed
 
 RewardCalcForm=Reward Calculator
 RewardCalcForm.grpFilters=Filters
@@ -128,6 +129,7 @@ RewardCalcForm.btnSaveSelectedTxt=Save Selected Results as TXT
 RewardCalcForm.btnSendSelectedRaid=Send Selected Result to Raid Editor
 RewardCalcForm.lblEventCt=Event Index:
 RewardCalcForm.lblMap=Location:
+RewardCalcForm.btnCopySeed=Copy Seed
 
 CheckerForm=Seed Checker
 CheckerForm.lblTID=TID:

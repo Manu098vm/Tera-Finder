@@ -98,6 +98,7 @@ CalculatorForm.btnToPkmEditor=将所选结果发送到PKM编辑器
 CalculatorForm.btnSendToEditor=将所选结果发送到Raid编辑器
 CalculatorForm.lblEventct=活动索引:
 CalculatorForm.lblMap=地图:
+CalculatorForm.btnCopySeed=Copy Seed
 
 RewardCalcForm=奖励计算器
 RewardCalcForm.grpFilters=筛选器
@@ -128,6 +129,7 @@ RewardCalcForm.btnSaveSelectedTxt=将所选结果保存为TXT
 RewardCalcForm.btnSendSelectedRaid=将所选结果发送到Raid编辑器
 RewardCalcForm.lblEventCt=活动索引:
 RewardCalcForm.lblMap=地图:
+RewardCalcForm.btnCopySeed=Copy Seed
 
 CheckerForm=Seed检索器
 CheckerForm.lblTID=表ID:
@@ -158,6 +160,7 @@ ConnectionForm.chkOutbreaksMain=从远程设备下载宝可梦大量出现数据
 ConnectionForm.chkOutbreaksDLC=从远程设备下载宝可梦大量出现数据 (DLC) (?)
 ConnectionForm.btnConnect=连接
 ConnectionForm.btnDisconnect=断开
+
 EditorForm=太晶洞窟编辑器
 EditorForm.toolsToolStripMenuItem=工具
 EditorForm.btnShinifyCurrent=异色当前洞窟

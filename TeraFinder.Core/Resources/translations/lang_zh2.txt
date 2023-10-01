@@ -98,6 +98,7 @@ CalculatorForm.btnToPkmEditor=將所選結果發送到PKM編輯器
 CalculatorForm.btnSendToEditor=將所選結果發送到Raid編輯器
 CalculatorForm.lblEventct=活動索引:
 CalculatorForm.lblMap=地图:
+CalculatorForm.btnCopySeed=Copy Seed
 
 RewardCalcForm=獎勵計算器
 RewardCalcForm.grpFilters=篩選器
@@ -128,6 +129,7 @@ RewardCalcForm.btnSaveSelectedTxt=將所選結果轉儲為TXT
 RewardCalcForm.btnSendSelectedRaid=將所選結果發送到Raid編輯器
 RewardCalcForm.lblEventCt=活動索引:
 RewardCalcForm.lblMap=地图:
+RewardCalcForm.btnCopySeed=Copy Seed
 
 CheckerForm=Seed檢索器
 CheckerForm.lblTID=表ID:

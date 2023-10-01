@@ -132,6 +132,7 @@ partial class RewardCalcForm
         btnSaveAllTxt = new ToolStripMenuItem();
         btnSaveSelectedTxt = new ToolStripMenuItem();
         btnSendSelectedRaid = new ToolStripMenuItem();
+        btnCopySeed = new ToolStripMenuItem();
         grpFilters.SuspendLayout();
         grpEncounter.SuspendLayout();
         grpItems.SuspendLayout();
@@ -1181,9 +1182,9 @@ partial class RewardCalcForm
         // contextMenuStrip
         // 
         contextMenuStrip.ImageScalingSize = new Size(20, 20);
-        contextMenuStrip.Items.AddRange(new ToolStripItem[] { btnSaveAllTxt, btnSaveSelectedTxt, btnSendSelectedRaid });
+        contextMenuStrip.Items.AddRange(new ToolStripItem[] { btnSaveAllTxt, btnSaveSelectedTxt, btnSendSelectedRaid, btnCopySeed });
         contextMenuStrip.Name = "contextMenuStrip";
-        contextMenuStrip.Size = new Size(313, 76);
+        contextMenuStrip.Size = new Size(313, 128);
         // 
         // btnSaveAllTxt
         // 
@@ -1205,6 +1206,13 @@ partial class RewardCalcForm
         btnSendSelectedRaid.Size = new Size(312, 24);
         btnSendSelectedRaid.Text = "Send Selected Result to Raid Editor";
         btnSendSelectedRaid.Click += btnSendSelectedRaid_Click;
+        // 
+        // btnCopySeed
+        // 
+        btnCopySeed.Name = "btnCopySeed";
+        btnCopySeed.Size = new Size(312, 24);
+        btnCopySeed.Text = "Copy Seed";
+        btnCopySeed.Click += btnCopySeed_Click;
         // 
         // RewardCalcForm
         // 
@@ -1363,4 +1371,5 @@ partial class RewardCalcForm
     private Label lblFound;
     private Label lblMap;
     private ComboBox cmbMap;
+    private ToolStripMenuItem btnCopySeed;
 }

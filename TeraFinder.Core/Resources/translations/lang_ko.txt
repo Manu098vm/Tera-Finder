@@ -98,6 +98,7 @@ CalculatorForm.btnToPkmEditor=PKHeX로 선택한 결과 보내기
 CalculatorForm.btnSendToEditor=레이드 편집기로 선택한 결과 보내기
 CalculatorForm.lblEventct=이벤트 값:
 CalculatorForm.lblMap=Location:
+CalculatorForm.btnCopySeed=Copy Seed
 
 RewardCalcForm=보상 계산기
 RewardCalcForm.grpFilters=필터
@@ -128,6 +129,7 @@ RewardCalcForm.btnSaveSelectedTxt=선택한 결과를 TXT로 저장
 RewardCalcForm.btnSendSelectedRaid=레이드 편집기로 선택한 결과 보내기
 RewardCalcForm.lblEventCt=이벤트 값:
 RewardCalcForm.lblMap=Location:
+RewardCalcForm.btnCopySeed=Copy Seed
 
 CheckerForm=시드체크
 CheckerForm.lblTID=TID:

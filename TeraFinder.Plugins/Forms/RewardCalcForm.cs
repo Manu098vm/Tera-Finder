@@ -128,6 +128,7 @@ public partial class RewardCalcForm : Form
             { "RewardCalcForm.btnSaveAllTxt", "Save All Results as TXT" },
             { "RewardCalcForm.btnSaveSelectedTxt", "Save Selected Results as TXT" },
             { "RewardCalcForm.btnSendSelectedRaid", "Send Selected Result to Raid Editor" },
+            { "RewardCalcForm.btnCopySeed", "Copy Seed" },
             { "Plugin.MapPaldea", "Paldea" },
             { "Plugin.MapKitakami", "Kitakami" },
         };
@@ -166,6 +167,7 @@ public partial class RewardCalcForm : Form
         btnSaveAllTxt.Text = Strings["RewardCalcForm.btnSaveAllTxt"];
         btnSaveSelectedTxt.Text = Strings["RewardCalcForm.btnSaveSelectedTxt"];
         btnSendSelectedRaid.Text = Strings["RewardCalcForm.btnSendSelectedRaid"];
+        btnCopySeed.Text = Strings["RewardCalcForm.btnCopySeed"];
     }
 
     private void TranslateCmbGame()
@@ -549,4 +551,6 @@ public partial class RewardCalcForm : Form
     private void btnSaveSelectedTxt_Click(object sender, EventArgs e) => dataGrid.SaveSelectedTxt(Editor.Language);
 
     private void btnSendSelectedRaid_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this, Editor.Language, (TeraRaidMapParent)cmbMap.SelectedIndex);
+
+    private void btnCopySeed_Click(object sender, EventArgs e) => dataGrid.CopySeed(Editor.Language);
 }

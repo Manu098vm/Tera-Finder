@@ -98,6 +98,7 @@ CalculatorForm.btnToPkmEditor=Enviar Resultado Seleccionado a PKM Editor
 CalculatorForm.btnSendToEditor=Enviar Resultado Seleccionado a Raid Editor
 CalculatorForm.lblEventct=Índice Evento:
 CalculatorForm.lblMap=Location:
+CalculatorForm.btnCopySeed=Copy Seed
 
 RewardCalcForm=Calculadora de Recompensas
 RewardCalcForm.grpFilters=Filtros
@@ -128,6 +129,7 @@ RewardCalcForm.btnSaveSelectedTxt=Guardar resultados seleccionados como TXT
 RewardCalcForm.btnSendSelectedRaid=Enviar Resultado Seleccionado a Raid Editor
 RewardCalcForm.lblEventCt=Índice Evento:
 RewardCalcForm.lblMap=Location:
+RewardCalcForm.btnCopySeed=Copy Seed
 
 CheckerForm=Inspector de Seeds
 CheckerForm.lblTID=TID:

@@ -139,6 +139,7 @@ public partial class CalculatorForm : Form
             { "CalculatorForm.btnSavePk9", "Save Selected Result as PK9" },
             { "CalculatorForm.btnToPkmEditor", "Send Selected Result to PKM Editor" },
             { "CalculatorForm.btnSendToEditor", "Send Selected Result to Raid Editor" },
+            { "CalculatorForm.btnCopySeed", "Copy Seed" },
             { "Plugin.MapPaldea", "Paldea" },
             { "Plugin.MapKitakami", "Kitakami" },
         };
@@ -181,6 +182,7 @@ public partial class CalculatorForm : Form
         btnSavePk9.Text = Strings["CalculatorForm.btnSavePk9"];
         btnToPkmEditor.Text = Strings["CalculatorForm.btnToPkmEditor"];
         btnSendToEditor.Text = Strings["CalculatorForm.btnSendToEditor"];
+        btnCopySeed.Text = Strings["CalculatorForm.btnCopySeed"];
     }
 
     private void TranslateCmbGame()
@@ -699,4 +701,6 @@ public partial class CalculatorForm : Form
     private void btnSavePk9_Click(object sender, EventArgs e) => dataGrid.SaveSelectedPk9(this, Editor.Language, (TeraRaidMapParent)cmbMap.SelectedIndex);
 
     private void btnViewRewards_Click(object sender, EventArgs e) => dataGrid.ViewRewards(this, Editor.Language, (TeraRaidMapParent)cmbMap.SelectedIndex);
+
+    private void btnCopySeed_Click(object sender, EventArgs e) => dataGrid.CopySeed(Editor.Language);
 }
