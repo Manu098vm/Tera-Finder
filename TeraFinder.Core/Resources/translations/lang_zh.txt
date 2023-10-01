@@ -158,11 +158,13 @@ ConnectionForm.chkOutbreaksMain=从远程设备下载宝可梦大量出现数据
 ConnectionForm.chkOutbreaksDLC=从远程设备下载宝可梦大量出现数据 (DLC) (?)
 ConnectionForm.btnConnect=连接
 ConnectionForm.btnDisconnect=断开
-
 EditorForm=太晶洞窟编辑器
 EditorForm.toolsToolStripMenuItem=工具
-EditorForm.btnShinifyAll=异色所有太晶洞窟(只保留原有异色遭遇)
-EditorForm.btnShinifyAllEncounters=异色所有太晶洞窟(原有非异色遭遇变更成异色)
+EditorForm.btnShinifyCurrent=异色当前洞窟
+EditorForm.btnShinifyAll=异色所有洞窟(随机遭遇)
+EditorForm.btnShinifyAllEncounters=异色所有洞窟(保留遭遇)
+EditorForm.btnRandomizeCurrent=随机化当前洞窟
+EditorForm.btnRandomizeAll=随机化所有洞窟
 EditorForm.GrpRaidInfo=太晶洞窟信息
 EditorForm.lblSeed=Seed:
 EditorForm.lblContent=洞窟类型:
@@ -194,7 +196,7 @@ EditorForm.btnOpenRewardCalculator=奖励计算器
 EditorForm.LblLvl=等级:
 EditorForm.CmbRaid=太晶洞窟
 EditorForm.lblMap=定位图:
-EditorForm.toolTipMoves=Extra Raid Moves:
+EditorForm.toolTipMoves=额外的团战技能:
 
 ShinifyForm.lblValue=进程:
 
