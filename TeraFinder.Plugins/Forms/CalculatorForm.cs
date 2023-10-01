@@ -323,13 +323,13 @@ public partial class CalculatorForm : Form
             {
                 var species = Editor.Language.ToLower().Equals("en") ? str :
                     GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, str)];
-                res[0] = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty).Replace("-",string.Empty));
+                res[0] = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty).Replace("-", string.Empty));
             }
             else
             {
                 var species = Editor.Language.ToLower().Equals("en") ? str[..charLocation] :
                     GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, str[..charLocation])];
-                res[0] = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty));
+                res[0] = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty).Replace("-", string.Empty));
                 res[1] = ShowdownParsing.GetFormFromString(str.AsSpan()[(charLocation + 1)..], GameInfo.GetStrings(Editor.Language), res[0], EntityContext.Gen9);
             }
         }
