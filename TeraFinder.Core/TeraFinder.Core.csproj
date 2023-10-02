@@ -35,7 +35,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FlatSharp.Runtime" Version="7.2.3" />
+		<PackageReference Include="FlatSharp.Runtime" Version="7.3.0" />
 		<PackageReference Include="PKHeX.Core" Version="23.9.25" />
 	</ItemGroup>
 
@@ -49,8 +49,14 @@
 		<Reference Include="pkNX.Structures.FlatBuffers">
 			<HintPath>deps\pkNX.Structures.FlatBuffers.dll</HintPath>
 		</Reference>
-		<Reference Include="pkNX.Structures.FlatBuffers.SV">
-			<HintPath>deps\pkNX.Structures.FlatBuffers.SV.dll</HintPath>
+		<Reference Include="pkNX.Structures.FlatBuffers.SV.Raid">
+			<HintPath>deps\pkNX.Structures.FlatBuffers.SV.Raid.dll</HintPath>
+		</Reference>
+		<Reference Include="pkNX.Structures.FlatBuffers.SV.Shared">
+			<HintPath>deps\pkNX.Structures.FlatBuffers.SV.Shared.dll</HintPath>
+		</Reference>
+		<Reference Include="pkNX.Structures.FlatBuffers.SV.Personal">
+			<HintPath>deps\pkNX.Structures.FlatBuffers.SV.Personal.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 
