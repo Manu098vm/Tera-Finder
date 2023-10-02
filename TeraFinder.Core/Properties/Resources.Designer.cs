@@ -4083,6 +4083,16 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] dlc1_190 {
+            get {
+                object obj = ResourceManager.GetObject("dlc1_190", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] dlc1_193 {
             get {
                 object obj = ResourceManager.GetObject("dlc1_193", resourceCulture);
@@ -5303,6 +5313,16 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] dlc1_783 {
+            get {
+                object obj = ResourceManager.GetObject("dlc1_783", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] dlc1_819 {
             get {
                 object obj = ResourceManager.GetObject("dlc1_819", resourceCulture);
@@ -5476,6 +5496,26 @@ namespace TeraFinder.Core.Properties {
         internal static byte[] dlc1_876_1 {
             get {
                 object obj = ResourceManager.GetObject("dlc1_876_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc1_877 {
+            get {
+                object obj = ResourceManager.GetObject("dlc1_877", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc1_877_0 {
+            get {
+                object obj = ResourceManager.GetObject("dlc1_877_0", resourceCulture);
                 return ((byte[])(obj));
             }
         }
