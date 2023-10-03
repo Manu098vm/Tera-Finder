@@ -58,6 +58,9 @@
 		<Reference Include="pkNX.Structures.FlatBuffers.SV.Personal">
 			<HintPath>deps\pkNX.Structures.FlatBuffers.SV.Personal.dll</HintPath>
 		</Reference>
+		<Reference Include="pkNX.Structures.FlatBuffers.SV.World">
+			<HintPath>deps\pkNX.Structures.FlatBuffers.SV.World.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 
 	<ItemGroup>

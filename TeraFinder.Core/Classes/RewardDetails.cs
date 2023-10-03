@@ -19,7 +19,6 @@ public class Reward
         else if (RewardUtil.IsTM(ItemID))
             return $"{RewardUtil.GetNameTM(ItemID, itemnames, GameInfo.GetStrings(language).movelist, PersonalDumperSV.TMIndexes)} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
 
-
         itemnames ??= GameInfo.GetStrings(language).itemlist;
 
         return $"{itemnames[ItemID]} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";

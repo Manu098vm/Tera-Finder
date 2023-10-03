@@ -221,7 +221,7 @@ ImportNews.Title=Open Poké Portal News Zip file or Folder
 ImportNews.Filter=All files
 ImportNews.FolderSelection=Folder Selection
 ImportNews.InvalidSelection=Invalid file(s). Aborted.
-ImportNews.Success=Succesfully imported Raid Event
+ImportNews.Success=Succesfully imported Event
 ImportNews.Error=Import error! Is the provided file valid?
 
 GameVersionSV=ScVi

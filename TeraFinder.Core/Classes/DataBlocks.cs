@@ -1047,4 +1047,56 @@ public static class Blocks
         Size = 4,
     };
     #endregion
+
+    #region KBCATOutbreaks
+    public static readonly DataBlock KBCATOutbreakZonesPaldea = new()
+    {
+        Name = "KBCATOutbreakZonesPaldea",
+        Key = 0x3FDC5DFF,
+        Type = SCTypeCode.Object,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 0x300,
+    };
+
+    public static readonly DataBlock KBCATOutbreakZonesKitakami = new()
+    {
+        Name = "KBCATOutbreakZonesKitakami",
+        Key = 0xF9F156A3,
+        Type = SCTypeCode.Object,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 0x300,
+    };
+
+    public static readonly DataBlock KBCATOutbreakZonesBlueberry = new()
+    {
+        Name = "KBCATOutbreakZonesBlueberry",
+        Key = 0x1B45E41C,
+        Type = SCTypeCode.Object,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 0x300,
+    };
+
+    public static readonly DataBlock KBCATOutbreakPokeData = new()
+    {
+        Name = "KBCATOutbreakPokeData",
+        Key = 0x6C1A131B,
+        Type = SCTypeCode.Object,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 0xE18,
+    };
+
+    public static readonly DataBlock KBCATOutbreakEnabled = new()
+    {
+        Name = "KBCATOutbreakEnabled",
+        Key = 0x61552076,
+        Type = SCTypeCode.Bool2,
+        Pointer = SaveBlockKeyPointer,
+        IsEncrypted = true,
+        Size = 0x01,
+    };
+    #endregion
 }

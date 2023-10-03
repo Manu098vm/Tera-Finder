@@ -15,7 +15,8 @@ internal static class ImportUtil
                                 string path = "",
                                 bool plugin = false)
     {
-        var valid = false;
+        var isRaid = false;
+        var isOutbreak = false;
         var zip = false;
 
         if (sav is not SAV9SV)
@@ -54,11 +55,16 @@ internal static class ImportUtil
             }
 
         if (Directory.Exists(path))
-            if (IsValidFolder(path))
-                valid = true;
+            if (IsValidFolderRaid(path))
+                isRaid = true;
+            else if (IsValidFolderOutbreak(path))
+                isOutbreak = true;
 
-        if (valid)
-            return FinalizeImport(path, sav, zip, ref dist, ref mighty, ref distFixedRewards, ref distLotteryRewards, strings);
+        if (isRaid)
+            return FinalizeImportRaid(path, sav, zip, ref dist, ref mighty, ref distFixedRewards, ref distLotteryRewards, strings);
+
+        if (isOutbreak)
+            return FinalizeImportOutbreak(path, sav, zip, strings);
 
         if (plugin || zip)
         {
@@ -69,7 +75,7 @@ internal static class ImportUtil
         return false;
     }
 
-    private static bool IsValidFolder(string path)
+    private static bool IsValidFolderRaid(string path)
     {
         if (!File.Exists($"{path}\\Identifier.txt"))
             return false;
@@ -97,6 +103,23 @@ internal static class ImportUtil
         return true;
     }
 
+    private static bool IsValidFolderOutbreak(string path)
+    {
+        if (!File.Exists($"{path}\\Identifier.txt"))
+            return false;
+
+        if (!File.Exists($"{path}\\Files\\pokedata_array_2_0_0"))
+            return false;
+
+        if (!File.Exists($"{path}\\Files\\zone_main_array_2_0_0"))
+            return false;
+
+        if (!File.Exists($"{path}\\Files\\zone_su1_array_2_0_0"))
+            return false;
+
+        return true;
+    }
+
     private static void DeleteFilesAndDirectory(string targetDir)
     {
         string[] files = Directory.GetFiles(targetDir);
@@ -114,7 +137,7 @@ internal static class ImportUtil
         Directory.Delete(targetDir, false);
     }
 
-    private static bool FinalizeImport(string path, 
+    private static bool FinalizeImportRaid(string path, 
                                       SaveFile sv, 
                                       bool zip,
                                       ref EncounterRaid9[]? dist,
@@ -217,6 +240,58 @@ internal static class ImportUtil
         }
     }
 
+    private static bool FinalizeImportOutbreak(string path,
+                                  SaveFile sv,
+                                  bool zip,
+                                  Dictionary<string, string> strings)
+    {
+        try
+        {
+            var indexpath = Path.Combine(path, "Identifier.txt");
+
+            var filespath = Path.Combine(path, "Files");
+            var pokedatapath = Path.Combine(filespath, "pokedata_array_2_0_0");
+            var paldeazonepath = Path.Combine(filespath, "zone_main_array_2_0_0");
+            var kitakamizonepath = Path.Combine(filespath, "zone_su1_array_2_0_0");
+
+            var index = File.ReadAllText(indexpath);
+            var pokeDataBlock = File.ReadAllBytes(pokedatapath);
+            var paldeaZoneBlock = File.ReadAllBytes(paldeazonepath);
+            var kitakamiZoneBlock = File.ReadAllBytes(kitakamizonepath);
+
+            if (zip) DeleteFilesAndDirectory(path);
+
+            var sav = (SAV9SV)sv;
+
+            var KBCATOutbreakPokeData = sav.Accessor.FindOrDefault(Blocks.KBCATOutbreakPokeData.Key);
+            var KBCATOutbreakZonesPaldea = sav.Accessor.FindOrDefault(Blocks.KBCATOutbreakZonesPaldea.Key);
+            var KBCATOutbreakZonesKitakami = sav.Accessor.FindOrDefault(Blocks.KBCATOutbreakZonesKitakami.Key);
+            var KBCATOutbreakEnabled = sav.Accessor.FindOrDefault(Blocks.KBCATOutbreakEnabled.Key);
+
+            if (KBCATOutbreakPokeData.Type is not SCTypeCode.None)
+                KBCATOutbreakPokeData.ChangeData(pokeDataBlock);
+
+            if (KBCATOutbreakZonesPaldea.Type is not SCTypeCode.None)
+                KBCATOutbreakZonesPaldea.ChangeData(paldeaZoneBlock);
+
+            if (KBCATOutbreakZonesKitakami.Type is not SCTypeCode.None)
+                KBCATOutbreakZonesKitakami.ChangeData(kitakamiZoneBlock);
+
+            if (KBCATOutbreakEnabled.Type is not SCTypeCode.Bool2 && KBCATOutbreakEnabled.Type is not SCTypeCode.None)
+                KBCATOutbreakEnabled.ChangeBooleanType(SCTypeCode.Bool2);
+
+            if (KBCATOutbreakPokeData is not null && KBCATOutbreakPokeData.Type is not SCTypeCode.None)
+                MessageBox.Show($"{strings["ImportNews.Success"]} [{index}]!");
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"{strings["ImportNews.Error"]}\n{ex}");
+            return false;
+        }
+    }
+
     private static Dictionary<string, string> GenerateDictionary()
     {
         var strings = new Dictionary<string, string>
@@ -225,7 +300,7 @@ internal static class ImportUtil
             { "ImportNews.Filter", "All files" },
             { "ImportNews.FolderSelection", "Folder Selection" },
             { "ImportNews.InvalidSelection", "Invalid file(s). Aborted." },
-            { "ImportNews.Success", "Succesfully imported Raid Event" },
+            { "ImportNews.Success", "Succesfully imported Event" },
             { "ImportNews.Error", "Import error! Is the provided file valid?" },
         };
         return strings;
