@@ -35,8 +35,6 @@ public class EncounterRaid9 : IEncounterable, IEncounterConvertible<PK9>, ITeraR
     public int EggLocation => ((dynamic)Encounter).EggLocation;
     public Ball FixedBall => ((dynamic)Encounter).FixedBall;
 
-    public bool CanBeEncountered(uint seed) => Encounter.CanBeEncountered(seed);
-
     public uint Identifier => GetIdentifier(); 
     public int Item => GetItem(); 
     public Nature Nature => GetNature(); 
@@ -48,6 +46,10 @@ public class EncounterRaid9 : IEncounterable, IEncounterConvertible<PK9>, ITeraR
     public ushort RandRateMinScarlet => GetRandRateMinScarlet(); 
     public ushort RandRateMinViolet => GetRandRateMinViolet();
     public ExtraMoves ExtraMoves => GetExtraMoves();
+    public bool CanBeEncounteredScarlet => GetCanBeEncountered(GameVersion.SL);
+    public bool CanBeEncounteredViolet => GetCanBeEncountered(GameVersion.VL);
+
+    public bool CanBeEncountered(uint seed) => Encounter.CanBeEncountered(seed);
 
     public static EncounterRaid9[] GetEncounters(ITeraRaid9[] encounters)
     {
@@ -164,5 +166,25 @@ public class EncounterRaid9 : IEncounterable, IEncounterConvertible<PK9>, ITeraR
             return new();
 
         return ((dynamic)Encounter).ExtraMoves;
+    }
+
+    private bool GetCanBeEncountered(GameVersion version)
+    {
+        if (Encounter is PKHeX.Core.EncounterTera9 or EncounterTera9)
+            return version switch { GameVersion.SL => ((dynamic)Encounter).IsAvailableHostScarlet, _ => ((dynamic)Encounter).IsAvailableHostViolet, };
+
+        if (Encounter is PKHeX.Core.EncounterDist9 or PKHeX.Core.EncounterMight9 or EncounterDist9 or EncounterMight9)
+        {
+            for (var progress = 0; progress <= 3; progress++) 
+            {
+                var maxRate = version switch { GameVersion.SL => GetRandRateTotalScarlet(progress), _ => GetRandRateTotalViolet(progress) };
+                var minRate = version switch { GameVersion.SL => GetRandRateMinScarlet(progress), _ => GetRandRateMinViolet(progress) };
+
+                if (minRate >= 0 && maxRate > 0)
+                    return true;
+            }
+        }
+
+        return false;
     }
 }

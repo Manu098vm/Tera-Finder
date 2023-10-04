@@ -207,14 +207,6 @@ public static class EventUtil
             list.Add(bin);
     }
 
-    public static void SerializeTeraFinder(this RaidEnemyInfo encounter, BinaryWriter bw)
-    {
-        bw.Write((uint)encounter.No);
-        bw.Write(encounter.DropTableFix);
-        bw.Write(encounter.DropTableRandom);
-        bw.Write((uint)encounter.BossPokePara.Item);
-    }
-
     private static readonly int[][] StageStars =
     {
         new [] { 1, 2 },

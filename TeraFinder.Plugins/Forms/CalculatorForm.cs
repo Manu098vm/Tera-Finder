@@ -94,6 +94,8 @@ public partial class CalculatorForm : Form
         TranslateCmbGame();
         TranslateCmbContent();
 
+        toolTip.SetToolTip(showresults, Strings["ToolTipAllResults"]);
+
         dataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
         dataGrid.RowHeadersVisible = false;
     }
@@ -200,7 +202,7 @@ public partial class CalculatorForm : Form
 
     private void cmbMap_IndexChanged(object sender, EventArgs e)
     {
-        var species = TeraUtil.GetAvailableSpecies((SAV9SV)Editor.SAV, Editor.Language, GetStars(), (RaidContent)cmbContent.SelectedIndex, (TeraRaidMapParent)cmbMap.SelectedIndex);
+        var species = TeraUtil.GetAvailableSpecies(Editor.SAV, NameList, FormList, TypeList, Strings, GetStars(), (RaidContent)cmbContent.SelectedIndex, (TeraRaidMapParent)cmbMap.SelectedIndex);
         cmbSpecies.Items.Clear();
         cmbSpecies.Items.Add(Strings["Any"]);
         cmbSpecies.Items.AddRange(species.ToArray());
@@ -232,7 +234,7 @@ public partial class CalculatorForm : Form
         sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
         sav.TrainerSID7 = Convert.ToUInt32(txtSID.Text, 10);
         sav.Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV;
-        var species = TeraUtil.GetAvailableSpecies((SAV9SV)sav, Editor.Language, GetStars(), (RaidContent)cmbContent.SelectedIndex, (TeraRaidMapParent)cmbMap.SelectedIndex);
+        var species = TeraUtil.GetAvailableSpecies((SAV9SV)sav, NameList, FormList, TypeList, Strings, GetStars(), (RaidContent)cmbContent.SelectedIndex, (TeraRaidMapParent)cmbMap.SelectedIndex);
         cmbSpecies.Items.Clear();
         cmbSpecies.Items.Add(Strings["Any"]);
         cmbSpecies.Items.AddRange(species.ToArray());
@@ -315,6 +317,8 @@ public partial class CalculatorForm : Form
     private ushort[] GetSpeciesAndForm(string str)
     {
         var res = new ushort[2];
+
+        str = str.Replace($" ({Strings["GameVersionSL"]})", string.Empty).Replace($" ({Strings["GameVersionVL"]})", string.Empty);
         if (!str.Equals(Strings["Any"]))
         {
             //Jangmo-o, Hakamo-o and Kommo-o special cases
@@ -480,6 +484,12 @@ public partial class CalculatorForm : Form
             if (txtSID.Text.Equals(""))
             {
                 txtSID.Focus();
+                return;
+            }
+            if ((cmbSpecies.Text.Contains(Strings["GameVersionSL"]) && cmbGame.SelectedIndex == 1) || 
+                (cmbSpecies.Text.Contains(Strings["GameVersionVL"]) && cmbGame.SelectedIndex == 0))
+            {
+                cmbSpecies.Focus();
                 return;
             }
             try

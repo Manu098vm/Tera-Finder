@@ -180,7 +180,7 @@ public static class TeraUtil
         };
     }
 
-    public static List<string> GetAvailableSpecies(SAV9SV sav, string language, int stars, RaidContent content, TeraRaidMapParent map)
+    public static List<string> GetAvailableSpecies(SAV9SV sav, string[] species, string[] forms, string[] types, Dictionary<string, string> plugins,int stars, RaidContent content, TeraRaidMapParent map)
     {
         List<string> list = new();
         var game = (GameVersion)sav.Game;
@@ -193,9 +193,15 @@ public static class TeraUtil
         {
             if (encounter.Species > 0 && (encounter.Version is GameVersion.SV || encounter.Version == game) && (stars == 0 || encounter.Stars == stars))
             {
-                var forms = FormConverter.GetFormList(encounter.Species, GameInfo.GetStrings(language).Types, GameInfo.GetStrings(language).forms, GameInfo.GenderSymbolASCII, EntityContext.Gen9);
-                var names = GameInfo.GetStrings(language).Species;
-                var str = $"{names[encounter.Species]}{(forms.Length > 1 ? $"-{forms[encounter.Form]}" : "")}";
+                var formlist = FormConverter.GetFormList(encounter.Species, types, forms, GameInfo.GenderSymbolASCII, EntityContext.Gen9);
+                var str = $"{species[encounter.Species]}{(formlist.Length > 1 ? $"-{formlist[encounter.Form]}" : "")}";
+
+                if (!encounter.CanBeEncounteredScarlet)
+                    str += $" ({plugins["GameVersionVL"]})";
+
+                if (!encounter.CanBeEncounteredViolet)
+                    str += $" ({plugins["GameVersionSL"]})";
+
                 if (!list.Contains(str))
                     list.Add(str);
             }
