@@ -8,7 +8,7 @@ Both a standalone program and a PKHeX plugin are available for use.
 * [Connection to Remote Device](https://github.com/Manu098vm/Tera-Finder/wiki/Connect-To-Remote-Device)
 * [View & Edit Mass Outbreaks](https://github.com/Manu098vm/Tera-Finder/wiki/Mass-Outbreak-Viewer-&-Editor)
 * [View & Edit Raids](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Viewer-&-Editor)
-* [Import Poké Portal News in Zip/Folder formats](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Event---Pok%C3%A9-Portal-News-Importer)
+* [Import Poké Portal News (Raid and Mass Outbreak Events) in Zip/Folder formats](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-and-Mass-Outbreak-Events-%E2%80%90-Pok%C3%A9-Portal-News-Importer)
 * [Reverse a Pokémon into its origin Seed to check legality](https://github.com/Manu098vm/Tera-Finder/wiki/Seed-Checker)
 * [Calculate RNG seeds that results in a Pokémon with given details](https://github.com/Manu098vm/Tera-Finder/wiki/Raid-Calculator)
 * [Calculate RNG seeds that results in a Raid with wanted rewards](https://github.com/Manu098vm/Tera-Finder/wiki/Reward-Calculator)
