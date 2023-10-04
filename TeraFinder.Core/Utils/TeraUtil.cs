@@ -180,7 +180,7 @@ public static class TeraUtil
         };
     }
 
-    public static List<string> GetAvailableSpecies(SAV9SV sav, string[] species, string[] forms, string[] types, Dictionary<string, string> plugins,int stars, RaidContent content, TeraRaidMapParent map)
+    public static List<string> GetAvailableSpecies(SAV9SV sav, string[] species, string[] forms, string[] types, Dictionary<string, string> plugins, int stars, RaidContent content, TeraRaidMapParent map)
     {
         List<string> list = new();
         var game = (GameVersion)sav.Game;
@@ -191,7 +191,7 @@ public static class TeraUtil
 
         foreach (var encounter in encounters)
         {
-            if (encounter.Species > 0 && (encounter.Version is GameVersion.SV || encounter.Version == game) && (stars == 0 || encounter.Stars == stars))
+            if (encounter.Species > 0 && (encounter.Version is GameVersion.SV || encounter.Version == game) && ((stars == 0 && encounter.Stars != 6) || encounter.Stars == stars))
             {
                 var formlist = FormConverter.GetFormList(encounter.Species, types, forms, GameInfo.GenderSymbolASCII, EntityContext.Gen9);
                 var str = $"{species[encounter.Species]}{(formlist.Length > 1 ? $"-{formlist[encounter.Form]}" : "")}";
