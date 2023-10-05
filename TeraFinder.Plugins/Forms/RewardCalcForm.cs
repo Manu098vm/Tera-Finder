@@ -293,6 +293,7 @@ public partial class RewardCalcForm : Form
         chkAllResults.Enabled = false;
         txtSeed.Enabled = false;
         numMaxCalc.Enabled = false;
+        cmbMap.Enabled = false;
     }
 
     private void EnableControls(bool enableProfile = false)
@@ -304,6 +305,7 @@ public partial class RewardCalcForm : Form
         chkAllResults.Enabled = true;
         txtSeed.Enabled = true;
         numMaxCalc.Enabled = true;
+        cmbMap.Enabled = true;
     }
 
     private void UpdateLabel()

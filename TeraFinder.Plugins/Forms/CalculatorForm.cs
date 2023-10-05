@@ -429,6 +429,7 @@ public partial class CalculatorForm : Form
         showresults.Enabled = false;
         txtSeed.Enabled = false;
         numFrames.Enabled = false;
+        cmbMap.Enabled = false;
     }
 
     private void EnableControls(bool enableProfile = false)
@@ -439,6 +440,7 @@ public partial class CalculatorForm : Form
         showresults.Enabled = true;
         txtSeed.Enabled = true;
         numFrames.Enabled = true;
+        cmbMap.Enabled = true;
     }
 
     private void UpdateLabel()
