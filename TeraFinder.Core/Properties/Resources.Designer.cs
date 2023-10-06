@@ -4703,6 +4703,16 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] dlc1_437 {
+            get {
+                object obj = ResourceManager.GetObject("dlc1_437", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] dlc1_438 {
             get {
                 object obj = ResourceManager.GetObject("dlc1_438", resourceCulture);
@@ -5781,7 +5791,7 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.TeraViewer=Visualizza e Modifica Raid
         ///Plugin.SeedChecker=Controlla Seed
         ///Plugin.FlagEditor=Modifica Flags di Gioco
-        ///Plugin.NewsImporter=Importa Raid Evento
+        ///Plugin.NewsImporter=Importa Evento Poke Portale
         ///Plugin.OutbreakViewer=Visualizza e Modifica Comparse Massicce
         ///Plugin.MapPaldea=Paldea
         ///Plugin.MapKitakami=Nordivia
@@ -5790,7 +5800,7 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=St [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.remoteConnectToolStripMen [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_it {
             get {
