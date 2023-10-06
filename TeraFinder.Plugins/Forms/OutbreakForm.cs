@@ -54,8 +54,10 @@ public partial class OutbreakForm : Form
 
         cmbSpecies.Items.AddRange(SpeciesList);
         cmbMap.Items.Add($"{Strings["Plugin.MapPaldea"]} ({Strings["Plugin.Main"]})");
-        cmbMap.Items.Add($"{Strings["Plugin.MapKitakami"]} ({Strings["Plugin.DLC1"]})");
+        if (SAV.SaveRevision > 0)
+          cmbMap.Items.Add($"{Strings["Plugin.MapKitakami"]} ({Strings["Plugin.DLC1"]})");
         cmbMap.SelectedIndex = 0;
+        cmbMap.Enabled = cmbMap.Items.Count > 1;
 
         Connection = connection;
 
