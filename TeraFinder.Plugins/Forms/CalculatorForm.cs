@@ -581,7 +581,7 @@ public partial class CalculatorForm : Form
             if (token.IsCancellationRequested)
                 break;
 
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 var nthreads = (uint)numFrames.Value < 1000 ? 1 : Environment.ProcessorCount;
                 var gridresults = new List<GridEntry>[nthreads];
@@ -642,6 +642,8 @@ public partial class CalculatorForm : Form
                 }
 
                 resetEvent.WaitOne();
+
+                await Task.Delay(0_300).ConfigureAwait(false);
 
                 for (var i = 0; i < nthreads; i++)
                 {

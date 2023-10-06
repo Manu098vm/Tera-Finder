@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System.Diagnostics;
 using System.Windows.Forms;
 using TeraFinder.Core;
 
@@ -362,7 +363,7 @@ public partial class RewardCalcForm : Form
 
             CreateFilter();
             if (Filter is not null && Filter.NeedAccurate())
-                chkAccurateSearch.Checked = true;
+                chkAccurateSearch.Checked = true;            
 
             var sav = (SAV9SV)Editor.SAV.Clone();
             sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
@@ -431,7 +432,7 @@ public partial class RewardCalcForm : Form
             if (token.IsCancellationRequested)
                 break;
 
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 var nthreads = (uint)numMaxCalc.Value < 1000 ? 1 : Environment.ProcessorCount;
                 var gridresults = new List<RewardGridEntry>[nthreads];
@@ -492,6 +493,8 @@ public partial class RewardCalcForm : Form
                 }
 
                 resetEvent.WaitOne();
+
+                await Task.Delay(0_300).ConfigureAwait(false);
 
                 for (var i = 0; i < nthreads; i++)
                 {
