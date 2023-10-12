@@ -214,7 +214,7 @@ public static class RewardUtil
             Species.Pincurchin => 2091,
             Species.Snom or Species.Frosmoth => 2092,
             Species.Impidimp or Species.Morgrem or Species.Grimmsnarl => 2093,
-            Species.Applin or Species.Flapple or Species.Appletun => 2094,
+            Species.Applin or Species.Flapple or Species.Appletun or Species.Dipplin => 2094,
             Species.Sinistea or Species.Polteageist => 2095,
             Species.Hatenna or Species.Hattrem or Species.Hatterene => 2096,
             Species.Stonjourner => 2097,
