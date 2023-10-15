@@ -86,8 +86,8 @@ public static class Blocks
         Name = "KBCATEventRaidIdentifier",
         Key = 0x37B99B4D,
         Type = SCTypeCode.Object,
-        Pointer = SaveBlockKeyPointer,
-        IsEncrypted = true,
+        Pointer = new long[] { 0x46457C0, 0x08, 0x288, 0xE300 },
+        IsEncrypted = false,
         Size = 0x04,
     };
 
