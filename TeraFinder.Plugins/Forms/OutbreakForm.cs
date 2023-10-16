@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System.Configuration;
 using TeraFinder.Core;
 
 namespace TeraFinder.Plugins;
@@ -23,6 +24,8 @@ public partial class OutbreakForm : Form
     private readonly string[] TypesList = null!;
     private readonly string[] GenderList = null!;
     private readonly string[] GameList = null!;
+    private readonly string[] PaldeaSpeciesList = null!;
+    private readonly string[] KitakamiSpeciesList = null!;
 
     public OutbreakForm(SAV9SV sav, string language, ConnectionForm? connection)
     {
@@ -52,7 +55,10 @@ public partial class OutbreakForm : Form
             cmbOutbreaks.Items[i] = $"{Strings["OutBreakForm.MassOutbreakName"]} {i + 1} - " +
                 $"{SpeciesList[SpeciesConverter.GetNational9((ushort)MassOutbreaksMain[i].Species)]}";
 
-        cmbSpecies.Items.AddRange(SpeciesList);
+        PaldeaSpeciesList = Enum.GetValues(typeof(PaldeaSpeciesOb)).Cast<ushort>().Select(p => SpeciesList[p]).ToArray();
+        KitakamiSpeciesList = Enum.GetValues(typeof(KitakamiSpeciesOb)).Cast<ushort>().Select(k => SpeciesList[k]).ToArray();
+
+        cmbSpecies.Items.AddRange(PaldeaSpeciesList);
         cmbMap.Items.Add($"{Strings["Plugin.MapPaldea"]} ({Strings["Plugin.Main"]})");
         if (SAV.SaveRevision > 0)
           cmbMap.Items.Add($"{Strings["Plugin.MapKitakami"]} ({Strings["Plugin.DLC1"]})");
@@ -88,8 +94,10 @@ public partial class OutbreakForm : Form
     {
         SuspendLayout();
         Enabled = false;
+
         if (Importing)
-            cmbSpecies.SelectedIndex = SpeciesConverter.GetNational9((ushort)outbreak.Species);
+            cmbSpecies.SelectedIndex = Array.IndexOf((CurrMap is TeraRaidMapParent.Paldea ? PaldeaSpeciesList : KitakamiSpeciesList), SpeciesList[SpeciesConverter.GetNational9((ushort)outbreak.Species)]);
+
         numMaxSpawn.Value = outbreak.MaxSpawns;
         numKO.Value = 0;
         txtCenterX.Text = $"{outbreak.CenterX}";
@@ -121,6 +129,11 @@ public partial class OutbreakForm : Form
         foreach (var (i, outbreak) in massOutbreaks.Select((el, i) => (i, el)))
             cmbOutbreaks.Items.Add($"{Strings["OutBreakForm.MassOutbreakName"]} {i + 1} - " +
                 $"{SpeciesList[SpeciesConverter.GetNational9((ushort)outbreak.Species)]}");
+
+        var species = CurrMap is TeraRaidMapParent.Paldea ? PaldeaSpeciesList : KitakamiSpeciesList;
+        cmbSpecies.Items.Clear();
+        cmbSpecies.Items.AddRange(species);
+
         cmbOutbreaks.SelectedIndex = 0;
 
         Loaded = true;
@@ -144,8 +157,8 @@ public partial class OutbreakForm : Form
         var outbreak = massOutbreaks[cmbOutbreaks.SelectedIndex];
 
         var species = SpeciesConverter.GetNational9((ushort)outbreak.Species);
-        if (species != cmbSpecies.SelectedIndex)
-            cmbSpecies.SelectedIndex = species;
+        if (!SpeciesList[species].Equals(cmbSpecies.Text))
+            cmbSpecies.SelectedIndex = Array.IndexOf((CurrMap is TeraRaidMapParent.Paldea ? PaldeaSpeciesList : KitakamiSpeciesList), SpeciesList[SpeciesConverter.GetNational9((ushort)outbreak.Species)]);
         else
             cmbSpecies_IndexChanged(this, EventArgs.Empty);
 
@@ -177,7 +190,7 @@ public partial class OutbreakForm : Form
         var massOutbreaks = CurrMap is TeraRaidMapParent.Paldea ? MassOutbreaksMain : MassOutbreaksDLC1;
         var outbreak = massOutbreaks[cmbOutbreaks.SelectedIndex];
         var toExpect = outbreak.Species;
-        var species = (ushort)cmbSpecies.SelectedIndex;
+        var species = (ushort)Array.IndexOf(SpeciesList, CurrMap is TeraRaidMapParent.Paldea ? cmbSpecies.Text : cmbSpecies.Text);
         var formlist = FormConverter.GetFormList(species, TypesList, FormsList, GenderList, EntityContext.Gen9);
         if (formlist.Length == 0 || (formlist.Length == 1 && formlist[0].Equals("")))
             cmbForm.Items.Add("---");
