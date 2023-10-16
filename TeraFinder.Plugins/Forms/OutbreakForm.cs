@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using System.Configuration;
 using TeraFinder.Core;
 
 namespace TeraFinder.Plugins;
