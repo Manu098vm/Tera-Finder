@@ -205,10 +205,6 @@
             btnStartEditor.UseVisualStyleBackColor = true;
             btnStartEditor.Click += btnStartEditor_Click;
             // 
-            // openFileDialog
-            // 
-            openFileDialog.FileName = "openFileDialog";
-            // 
             // menuStrip1
             // 
             menuStrip1.BackColor = SystemColors.Control;
