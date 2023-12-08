@@ -28,7 +28,7 @@ jobs:
     - name: Install .NET Core
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
 
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.1
@@ -54,8 +54,8 @@ jobs:
       run: |
         $NuGetPackageFolder = Join-Path -Path $env:USERPROFILE -ChildPath ".nuget\packages\pkhex.core"
         $LatestVersion = (Get-ChildItem $NuGetPackageFolder | Sort-Object -Property LastWriteTime -Descending)[0].Name
-        $PkhexCoreDllSource = Join-Path -Path $env:GITHUB_WORKSPACE -ChildPath "PKHeX/PKHeX.Core/bin/Release/net7.0/PKHeX.Core.dll"
-        $PkhexCoreDllDest = Join-Path -Path $NuGetPackageFolder -ChildPath "$LatestVersion/lib/net7.0/PKHeX.Core.dll"
+        $PkhexCoreDllSource = Join-Path -Path $env:GITHUB_WORKSPACE -ChildPath "PKHeX/PKHeX.Core/bin/Release/net8.0/PKHeX.Core.dll"
+        $PkhexCoreDllDest = Join-Path -Path $NuGetPackageFolder -ChildPath "$LatestVersion/lib/net8.0/PKHeX.Core.dll"
         Copy-Item -Path $PkhexCoreDllSource -Destination $PkhexCoreDllDest  
 
     - name: Execute unit tests
@@ -81,6 +81,6 @@ jobs:
         name: TeraFinder.Plugins
         path: |
           TeraFinder.Plugins/bin
-          !TeraFinder.Plugins/bin/Release/net7.0-windows/PKHeX.Core.dll
-          !TeraFinder.Plugins/bin/Release/net7.0-windows/PKHeX.Drawing.dll
-          !TeraFinder.Plugins/bin/Release/net7.0-windows/PKHeX.Drawing.PokeSprite.dll
+          !TeraFinder.Plugins/bin/Release/net8.0-windows7.0/PKHeX.Core.dll
+          !TeraFinder.Plugins/bin/Release/net8.0-windows7.0/PKHeX.Drawing.dll
+          !TeraFinder.Plugins/bin/Release/net8.0-windows7.0/PKHeX.Drawing.PokeSprite.dll
