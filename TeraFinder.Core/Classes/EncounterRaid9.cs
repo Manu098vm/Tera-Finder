@@ -98,7 +98,7 @@ public class EncounterRaid9 : IEncounterable, IEncounterConvertible<PK9>, ITeraR
 
     private Nature GetNature()
     {
-        if (Encounter is EncounterMight9 or PKHeX.Core.EncounterMight9)
+        if (Encounter is not EncounterTera9)
             return ((dynamic)Encounter).Nature;
 
         return Nature.Random;

@@ -24,12 +24,12 @@ public static class EventUtil
             var opt = new JsonSerializerOptions { WriteIndented = true };
             var drops = JsonSerializer.Serialize(tableDrops, opt);
             var lottery = JsonSerializer.Serialize(tableBonus, opt);
-            return new string[2] { drops, lottery };
+            return [drops, lottery];
         }
 
         var drops_def = Encoding.UTF8.GetString(Properties.Resources.raid_fixed_reward_item_array);
         var lottery_def = Encoding.UTF8.GetString(Properties.Resources.raid_lottery_reward_item_array);
-        return new string[2] { drops_def, lottery_def };
+        return [drops_def, lottery_def];
     }
 
     public static byte[][] GetEventEncounterDataFromSAV(PKHeX.Core.SAV9SV sav)
@@ -209,9 +209,9 @@ public static class EventUtil
 
     private static readonly int[][] StageStars =
     {
-        new [] { 1, 2 },
-        new [] { 1, 2, 3 },
-        new [] { 1, 2, 3, 4 },
-        new [] { 3, 4, 5, 6, 7 },
+        [1, 2],
+        [1, 2, 3],
+        [1, 2, 3, 4],
+        [3, 4, 5, 6, 7],
     };
 }
