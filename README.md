@@ -24,7 +24,7 @@ Powered by [PKHeX](https://github.com/kwsch/PKHeX), [pkNX](https://github.com/kw
 * Check out the [Wiki](https://github.com/Manu098vm/Tera-Finder/wiki) for guides and details.
 
 ### Building
-You can use any C# 11 & .NET 7.0 compatible IDE such as Visual Studio to compile this program.
+You can use any C# 12 & .NET 8.0 compatible IDE such as Visual Studio to compile this program.
 
 Select either Debug or Release and click Build -> Build Solution.
 
