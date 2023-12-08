@@ -5,7 +5,7 @@ using static System.Buffers.Binary.BinaryPrimitives;
 //Extension of https://github.com/kwsch/PKHeX/blob/master/PKHeX.Core/Legality/Encounters/EncounterStatic/EncounterDist9.cs
 namespace TeraFinder.Core;
 
-public sealed record EncounterDist9 : IEncounterable, IEncounterConvertible<PK9>, ITeraRaid9, IMoveset, IFlawlessIVCount, IFixedGender
+public sealed record EncounterDist9 : IEncounterable, IEncounterConvertible<PK9>, ITeraRaid9, IMoveset, IFlawlessIVCount, IFixedGender, IFixedNature
 {
     //TeraFinder Serialization
     public uint Identifier { get; private init; }
@@ -31,6 +31,7 @@ public sealed record EncounterDist9 : IEncounterable, IEncounterConvertible<PK9>
     public required AbilityPermission Ability { get; init; }
     public required byte FlawlessIVCount { get; init; }
     public required Shiny Shiny { get; init; }
+    public required Nature Nature { get; init; }
     public required byte Level { get; init; }
     public required Moveset Moves { get; init; }
     public required IndividualValueSet IVs { get; init; }
@@ -224,7 +225,7 @@ public sealed record EncounterDist9 : IEncounterable, IEncounterConvertible<PK9>
         RandRate3TotalScarlet = ReadUInt16LittleEndian(data[(WeightStart + (sizeof(ushort) * 14))..]),
         RandRate3TotalViolet = ReadUInt16LittleEndian(data[(WeightStart + (sizeof(ushort) * 15))..]),
 
-        // 0x34 reserved
+        Nature = (Nature)data[0x34],
         IVs = new IndividualValueSet((sbyte)data[0x35], (sbyte)data[0x36], (sbyte)data[0x37], (sbyte)data[0x38], (sbyte)data[0x39], (sbyte)data[0x3A], (IndividualValueSetType)data[0x3B]),
         ScaleType = (SizeType9)data[0x3C],
         Scale = data[0x3D],
@@ -288,7 +289,7 @@ public sealed record EncounterDist9 : IEncounterable, IEncounterConvertible<PK9>
         var pi = PersonalTable.SV.GetFormEntry(Species, Form);
         var param = new GenerateParam9(Species, pi.Gender, FlawlessIVCount, rollCount,
             undefinedSize, undefinedSize, ScaleType, Scale,
-            Ability, Shiny, IVs: IVs);
+            Ability, Shiny, IVs: IVs, Nature: Nature);
 
         var init = Util.Rand.Rand64();
         var success = this.TryApply32(pk, init, param, criteria);
