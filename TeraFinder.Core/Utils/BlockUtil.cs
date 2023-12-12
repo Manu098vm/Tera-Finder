@@ -1,34 +1,24 @@
 ﻿using PKHeX.Core;
 using System.Reflection;
-using System.Runtime.Serialization;
 
 namespace TeraFinder.Core;
 
 public static class BlockUtil
 {
-    public static SCBlock CreateObjectBlock(uint key, ReadOnlySpan<byte> data)
+    private static SCBlock CreateBlock(uint key, SCTypeCode dummy, ReadOnlySpan<byte> data)
     {
-        var block = (SCBlock)FormatterServices.GetUninitializedObject(typeof(SCBlock));
-        var keyInfo = typeof(SCBlock).GetField("Key", BindingFlags.Instance | BindingFlags.Public)!;
-        keyInfo.SetValue(block, key);
-        var typeInfo = typeof(SCBlock).GetProperty("Type")!;
-        typeInfo.SetValue(block, SCTypeCode.Object);
-        var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
-        dataInfo.SetValue(block, data.ToArray());
-        return block;
+        Type type = typeof(SCBlock);
+        var instance = type.Assembly.CreateInstance(
+            type.FullName!, false,
+            BindingFlags.Instance | BindingFlags.NonPublic,
+            null, [key, dummy, data.ToArray()], null, null
+        );
+        return (SCBlock)instance!;
     }
 
-    public static SCBlock CreateDummyBlock(uint key, SCTypeCode dummy)
-    {
-        var block = (SCBlock)FormatterServices.GetUninitializedObject(typeof(SCBlock));
-        var keyInfo = typeof(SCBlock).GetField("Key", BindingFlags.Instance | BindingFlags.Public)!;
-        keyInfo.SetValue(block, key);
-        var typeInfo = typeof(SCBlock).GetProperty("Type")!;
-        typeInfo.SetValue(block, dummy);
-        var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
-        dataInfo.SetValue(block, Array.Empty<byte>());
-        return block;
-    }
+    public static SCBlock CreateObjectBlock(uint key, ReadOnlySpan<byte> data) => CreateBlock(key, SCTypeCode.Object, data);
+
+    public static SCBlock CreateDummyBlock(uint key, SCTypeCode dummy) => CreateBlock(key, dummy, Array.Empty<byte>());
 
     public static void AddBlockToFakeSAV(SAV9SV sav, SCBlock block)
     {
