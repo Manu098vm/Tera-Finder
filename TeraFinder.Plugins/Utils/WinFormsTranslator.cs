@@ -7,7 +7,7 @@ namespace TeraFinder.Plugins;
 
 public static class WinFormsTranslator
 {
-    private static readonly Dictionary<string, TranslationContext> Context = new();
+    private static readonly Dictionary<string, TranslationContext> Context = [];
     public static void TranslateInterface(this Control form, string lang) => TranslateForm(form, GetContext(lang));
     public static Dictionary<string, string> TranslateInnerStrings(this Dictionary<string, string> strings, string lang) => TranslateStrings(strings, GetContext(lang));
 
@@ -179,7 +179,7 @@ public sealed class TranslationContext
     public bool AddNew { private get; set; }
     public bool RemoveUsedKeys { private get; set; }
     public const char Separator = '=';
-    private readonly Dictionary<string, string> Translation = new();
+    private readonly Dictionary<string, string> Translation = [];
     public IReadOnlyDictionary<string, string> Lookup => Translation;
 
     public TranslationContext(ReadOnlySpan<string> content, char separator = Separator)

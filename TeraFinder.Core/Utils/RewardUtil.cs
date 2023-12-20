@@ -5,8 +5,8 @@ namespace TeraFinder.Core;
 
 public static class RewardUtil
 {
-    public static readonly string[] TeraShard = new string[] { "テラピ", "Tera Shard", "Téra-Éclat", "Teralite", "Tera-Stück", "Teralito", "테라피스", "晶碎块", "晶碎塊" };
-    public static readonly string[] Material = new string[] { "おとしもの", "Material", "Échantillons", "Materiali", "Materialentasche", "Materiales", "掉落物", "掉落物", "掉落物" };
+    public static readonly string[] TeraShard = ["テラピ", "Tera Shard", "Téra-Éclat", "Teralite", "Tera-Stück", "Teralito", "테라피스", "晶碎块", "晶碎塊"];
+    public static readonly string[] Material = ["おとしもの", "Material", "Échantillons", "Materiali", "Materialentasche", "Materiales", "掉落物", "掉落物", "掉落物"];
 
     public static Dictionary<ulong, List<Reward>>[] GetTeraRewardsTables()
     {
@@ -14,7 +14,7 @@ public static class RewardUtil
         var lottery = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidLotteryRewardItemArray>(Properties.Resources.raid_lottery_reward_item_array)!;
         var fixedTable = GetFixedTable(drops.Table);
         var lotteryTable = GetLotteryTable(lottery.Table);
-        return new Dictionary<ulong, List<Reward>>[] { fixedTable, lotteryTable };
+        return [fixedTable, lotteryTable];
     }
 
     public static Dictionary<ulong, List<Reward>>[] GetDistRewardsTables(SAV9SV sav)
@@ -24,7 +24,7 @@ public static class RewardUtil
         var lottery = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidLotteryRewardItemArray>(rewards[1])!;
         var fixedTable = GetFixedTable(drops.Table);
         var lotteryTable = GetLotteryTable(lottery.Table);
-        return new Dictionary<ulong, List<Reward>>[] { fixedTable, lotteryTable };
+        return [fixedTable, lotteryTable];
     }
 
     public static bool IsTM(int item) => item switch
@@ -389,15 +389,15 @@ public static class RewardUtil
     }
 
     private static readonly int[][] RewardSlots =
-{
-        new [] { 4, 5, 6, 7, 8 },
-        new [] { 4, 5, 6, 7, 8 },
-        new [] { 5, 6, 7, 8, 9 },
-        new [] { 5, 6, 7, 8, 9 },
-        new [] { 6, 7, 8, 9, 10 },
-        new [] { 7, 8, 9, 10, 11 },
-        new [] { 7, 8, 9, 10, 11 },
-    };
+    [
+        [4, 5, 6, 7, 8],
+        [4, 5, 6, 7, 8],
+        [5, 6, 7, 8, 9],
+        [5, 6, 7, 8, 9],
+        [6, 7, 8, 9, 10],
+        [7, 8, 9, 10, 11],
+        [7, 8, 9, 10, 11],
+    ];
 
     private static int GetRewardCount(ulong random, int stars)
     {

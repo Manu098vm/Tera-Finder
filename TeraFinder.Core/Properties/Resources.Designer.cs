@@ -3933,6 +3933,16 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] blueberry_locations {
+            get {
+                object obj = ResourceManager.GetObject("blueberry_locations", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] dlc1_1012 {
             get {
                 object obj = ResourceManager.GetObject("dlc1_1012", resourceCulture);
@@ -5683,6 +5693,166 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] dlc2_113 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_113", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_235 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_235", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_479 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_479", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_479_0 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_479_0", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_529 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_529", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_559 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_559", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_586 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_586", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_586_0 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_586_0", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_667 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_667", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_668 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_668", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_678_1 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_678_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_739 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_739", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_74_1 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_74_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_774 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_774", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_774_2 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_774_2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] encounter_gem_blueberry {
+            get {
+                object obj = ResourceManager.GetObject("encounter_gem_blueberry", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] encounter_gem_kitakami {
             get {
                 object obj = ResourceManager.GetObject("encounter_gem_kitakami", resourceCulture);
@@ -5744,13 +5914,13 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
         ///Plugin.MapPaldea=Paldea
         ///Plugin.MapKitakami=Kitakami
+        ///Plugin.MapBlueberry=Blueberry
         ///Plugin.Main=Main
         ///Plugin.DLC1=DLC1
         ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=Tools
-        ///TeraFinderForm.btnRemoteCo [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.remoteConnectToolStripMenuItem=To [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_en {
             get {

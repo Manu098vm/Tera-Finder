@@ -1,6 +1,4 @@
 ﻿using PKHeX.Core;
-using System.Diagnostics;
-using System.Windows.Forms;
 using TeraFinder.Core;
 
 namespace TeraFinder.Plugins;
@@ -8,7 +6,7 @@ namespace TeraFinder.Plugins;
 public partial class RewardCalcForm : Form
 {
     public EditorForm Editor = null!;
-    private readonly List<RewardDetails> CalculatedList = new();
+    private readonly List<RewardDetails> CalculatedList = [];
     private RewardFilter? Filter = null;
     public string[] SpeciesNames = null!;
     public string[] ShinyNames = null!;
@@ -32,7 +30,7 @@ public partial class RewardCalcForm : Form
         if (Application.OpenForms.OfType<EditorForm>().FirstOrDefault() is null)
             contextMenuStrip.Items.Remove(btnSendSelectedRaid);
 
-        ShinyNames = new string[] { Strings["TeraShiny.Any"], Strings["TeraShiny.No"], Strings["TeraShiny.Yes"], Strings["TeraShiny.Star"], Strings["TeraShiny.Square"] };
+        ShinyNames = [Strings["TeraShiny.Any"], Strings["TeraShiny.No"], Strings["TeraShiny.Yes"], Strings["TeraShiny.Star"], Strings["TeraShiny.Square"]];
         SpeciesNames = GameInfo.GetStrings(editor.Language).specieslist;
         cmbSpecies.Items[0] = Strings["Any"];
         cmbSpecies.Items.AddRange(SpeciesNames[1..]);
@@ -74,6 +72,7 @@ public partial class RewardCalcForm : Form
         cmbMap.Items.Clear();
         cmbMap.Items.Add(Strings["Plugin.MapPaldea"]);
         cmbMap.Items.Add(Strings["Plugin.MapKitakami"]);
+        cmbMap.Items.Add(Strings["Plugin.MapBlueberry"]);
         cmbMap.SelectedIndex = (int)Editor.CurrMap;
 
         toolTip.SetToolTip(chkAccurateSearch, Strings["ToolTipAccurate"]);
@@ -132,6 +131,7 @@ public partial class RewardCalcForm : Form
             { "RewardCalcForm.btnCopySeed", "Copy Seed" },
             { "Plugin.MapPaldea", "Paldea" },
             { "Plugin.MapKitakami", "Kitakami" },
+            { "Plugin.MapBlueberry", "Blueberry" },
         };
     }
 
@@ -259,7 +259,7 @@ public partial class RewardCalcForm : Form
 
         var filter = new RewardFilter
         {
-            FilterRewards = itemlist.ToArray(),
+            FilterRewards = [.. itemlist],
             Species = (ushort)cmbSpecies.SelectedIndex,
             Stars = cmbStars.SelectedIndex,
             Shiny = chkShiny.Checked ? TeraShiny.Yes : TeraShiny.Any,
@@ -513,7 +513,7 @@ public partial class RewardCalcForm : Form
     {
         var seed = (uint)(Seed & 0xFFFFFFFF);
         var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav,
-            TeraUtil.GetStars(seed, progress), map is TeraRaidMapParent.Paldea ? Editor.Paldea! : Editor.Kitakami!, map) :
+            TeraUtil.GetStars(seed, progress), map switch { TeraRaidMapParent.Paldea => Editor.Paldea!, TeraRaidMapParent.Kitakami => Editor.Kitakami!, _ => Editor.Blueberry! }, map) :
             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Dist!, groupid);
 
         if (encounter is null)

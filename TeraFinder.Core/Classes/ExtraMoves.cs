@@ -15,7 +15,7 @@ public class ExtraMoves
 
     public ExtraMoves(ushort extra1 = 0, ushort extra2 = 0, ushort extra3 = 0, ushort extra4 = 0, ushort extra5 = 0, ushort extra6 = 0)
     {
-        ExtraMoveList = new HashSet<Move>();
+        ExtraMoveList = [];
         if (extra1 != 0)
             ExtraMoveList.Add((Move)extra1);
         if (extra2 != 0)

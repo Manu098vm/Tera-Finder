@@ -6,7 +6,7 @@ namespace TeraFinder.Plugins;
 public partial class CalculatorForm : Form
 {
     public EditorForm Editor = null!;
-    private readonly List<TeraDetails> CalculatedList = new();
+    private readonly List<TeraDetails> CalculatedList = [];
     private TeraFilter? Filter = null;
     private CancellationTokenSource Token = new();
 
@@ -45,9 +45,9 @@ public partial class CalculatorForm : Form
         NatureList = GameInfo.GetStrings(Editor.Language).natures;
         MoveList = GameInfo.GetStrings(Editor.Language).movelist;
         TypeList = GameInfo.GetStrings(Editor.Language).types;
-        GenderListAscii = GameInfo.GenderSymbolASCII.ToArray();
-        GenderListUnicode = GameInfo.GenderSymbolUnicode.ToArray();
-        ShinyList = new string[] { Strings["TeraShiny.Any"], Strings["TeraShiny.No"], Strings["TeraShiny.Yes"], Strings["TeraShiny.Star"], Strings["TeraShiny.Square"] };
+        GenderListAscii = [.. GameInfo.GenderSymbolASCII];
+        GenderListUnicode = [.. GameInfo.GenderSymbolUnicode];
+        ShinyList = [Strings["TeraShiny.Any"], Strings["TeraShiny.No"], Strings["TeraShiny.Yes"], Strings["TeraShiny.Star"], Strings["TeraShiny.Square"]];
 
         var progress = (int)(Editor.Progress == GameProgress.None ? 0 : Editor.Progress);
         cmbProgress.SelectedIndex = progress;
@@ -69,6 +69,7 @@ public partial class CalculatorForm : Form
         cmbMap.Items.Clear();
         cmbMap.Items.Add(Strings["Plugin.MapPaldea"]);
         cmbMap.Items.Add(Strings["Plugin.MapKitakami"]);
+        cmbMap.Items.Add(Strings["Plugin.MapBlueberry"]);
 
         cmbMap.SelectedIndex = (int)Editor.CurrMap;
         cmbSpecies.SelectedIndex = 0;
@@ -144,6 +145,7 @@ public partial class CalculatorForm : Form
             { "CalculatorForm.btnCopySeed", "Copy Seed" },
             { "Plugin.MapPaldea", "Paldea" },
             { "Plugin.MapKitakami", "Kitakami" },
+            { "Plugin.MapBlueberry", "Blueberry" },
         };
     }
 
@@ -205,7 +207,7 @@ public partial class CalculatorForm : Form
         var species = TeraUtil.GetAvailableSpecies(Editor.SAV, NameList, FormList, TypeList, Strings, GetStars(), (RaidContent)cmbContent.SelectedIndex, (TeraRaidMapParent)cmbMap.SelectedIndex);
         cmbSpecies.Items.Clear();
         cmbSpecies.Items.Add(Strings["Any"]);
-        cmbSpecies.Items.AddRange(species.ToArray());
+        cmbSpecies.Items.AddRange([..species]);
         cmbSpecies.SelectedIndex = 0;
     }
 
@@ -213,13 +215,13 @@ public partial class CalculatorForm : Form
     {
         var stars = TranslatedStars();
         if (cmbContent.SelectedIndex == 0)
-            stars = new string[] { stars[0], stars[1], stars[2], stars[3], stars[4], stars[5] };
+            stars = [stars[0], stars[1], stars[2], stars[3], stars[4], stars[5]];
         if (cmbContent.SelectedIndex == 1)
-            stars = new string[] { stars[6] };
+            stars = [stars[6]];
         if (cmbContent.SelectedIndex == 2)
-            stars = new string[] { stars[0], stars[1], stars[2], stars[3], stars[4], stars[5] };
+            stars = [stars[0], stars[1], stars[2], stars[3], stars[4], stars[5]];
         if (cmbContent.SelectedIndex == 3)
-            stars = new string[] { stars[7] };
+            stars = [stars[7]];
 
         cmbStars.Items.Clear();
         cmbStars.Items.AddRange(stars);
@@ -237,7 +239,7 @@ public partial class CalculatorForm : Form
         var species = TeraUtil.GetAvailableSpecies((SAV9SV)sav, NameList, FormList, TypeList, Strings, GetStars(), (RaidContent)cmbContent.SelectedIndex, (TeraRaidMapParent)cmbMap.SelectedIndex);
         cmbSpecies.Items.Clear();
         cmbSpecies.Items.Add(Strings["Any"]);
-        cmbSpecies.Items.AddRange(species.ToArray());
+        cmbSpecies.Items.AddRange([..species]);
         cmbSpecies.SelectedIndex = 0;
     }
 
@@ -322,7 +324,7 @@ public partial class CalculatorForm : Form
         if (!str.Equals(Strings["Any"]))
         {
             //Jangmo-o, Hakamo-o and Kommo-o special cases
-            var charLocation = str.IndexOf("-", StringComparison.Ordinal);
+            var charLocation = str.IndexOf('-');
             var isForm = charLocation > 0 && !str.ToLower().EndsWith("-o");
 
             if (!isForm)
@@ -662,7 +664,7 @@ public partial class CalculatorForm : Form
     {
         var seed = (uint)(Seed & 0xFFFFFFFF);
         var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav,
-            TeraUtil.GetStars(seed, progress), map is TeraRaidMapParent.Paldea ? Editor.Paldea! : Editor.Kitakami!, map) :
+            TeraUtil.GetStars(seed, progress), map switch { TeraRaidMapParent.Paldea => Editor.Paldea!, TeraRaidMapParent.Kitakami => Editor.Kitakami!, _ => Editor.Blueberry! }, map) :
             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Mighty!, groupid) :
             TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Dist!, groupid);
 
@@ -693,7 +695,7 @@ public partial class CalculatorForm : Form
         return res;
     }
 
-    private readonly static string[] TeraStars = new string[] {
+    private readonly static string[] TeraStars = [
         "Any",
         "1S ☆",
         "2S ☆☆",
@@ -702,7 +704,7 @@ public partial class CalculatorForm : Form
         "5S ☆☆☆☆☆",
         "6S ☆☆☆☆☆☆",
         "7S ☆☆☆☆☆☆☆",
-    };
+    ];
 
     private void btnSaveAll_Click(object sender, EventArgs e) => dataGrid.SaveAllTxt(Editor.Language);
 

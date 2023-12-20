@@ -19,7 +19,7 @@ public partial class ProgressForm : Form
         this.TranslateInterface(language);
 
         SAV = sav;
-        Raids = new();
+        Raids = [];
 
         cmbProgress.SelectedIndex = (int)TeraUtil.GetProgress(sav);
         var raid7 = sav.RaidSevenStar.GetAllRaids();

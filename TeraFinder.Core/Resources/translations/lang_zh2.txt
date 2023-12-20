@@ -7,6 +7,7 @@ Plugin.NewsImporter=導入寶可夢入口站新聞
 Plugin.OutbreakViewer=大量出現查看/編輯
 Plugin.MapPaldea=Paldea
 Plugin.MapKitakami=Kitakami
+Plugin.MapBlueberry=Blueberry
 Plugin.Main=Main
 Plugin.DLC1=DLC1
 Plugin.DLC2=DLC2
@@ -156,8 +157,9 @@ ConnectionForm.radioWiFi=Wi-Fi
 ConnectionForm.radioUSB=USB
 ConnectionForm.lblAddress=IP地址:
 ConnectionForm.lblPort=端口:
-ConnectionForm.chkOutbreaksMain=從遠程終端下載寶可夢大量出現數據 (Main) (?)
-ConnectionForm.chkOutbreaksDLC=從遠程終端下載寶可夢大量出現數據 (DLC) (?)
+ConnectionForm.chkOutbreaksMain=從遠程終端下載寶可夢大量出現數據 (Paldea) (?)
+ConnectionForm.chkOutbreaksDLC=從遠程終端下載寶可夢大量出現數據 (Kitakami) (?)
+ConnectionForm.chkOutbreaksDLC2=從遠程終端下載寶可夢大量出現數據 (Blueberry) (?)
 ConnectionForm.btnConnect=連接
 ConnectionForm.btnDisconnect=斷開
 
@@ -257,6 +259,7 @@ ExecutorConnected=框架連接成功:
 DisconnectionSuccess=終端已斷開
 ToolTipSyncOutbreaksMain=同步遠程終端的寶可夢大量出現數據。可能需要相當長的時間 (Paldea)。
 ToolTipSyncOutbreaksDLC1=同步遠程終端的寶可夢大量出現數據。可能需要相當長的時間 (Kitakami)。
+ToolTipSyncOutbreaksDLC2=同步遠程終端的寶可夢大量出現數據。可能需要相當長的時間 (Blueberry)。
 ShinifiedAll=所有太晶洞窟异色已经生成。
 
 TeraShiny.Any=任意
@@ -320,6 +323,11 @@ AREA1MC=Mossfell Confluence
 AREA1FG=Fellhorn Gorge
 AREA1PB=Paradise Barrens
 AREA1KW=Kitakami Wilds
+
+AREA2SV=Savannna Biome
+AREA2CO=Coastal Biome
+AREA2CA=Canyon Biome
+AREA2PO=Polar Biome
 
 Update.Popup=有可用更新
 Update.Message=Tera Finder更新可用。是否要下載最新版本？

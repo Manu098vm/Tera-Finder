@@ -7,6 +7,7 @@ Plugin.NewsImporter=Importa Evento Poke Portale
 Plugin.OutbreakViewer=Visualizza e Modifica Comparse Massicce
 Plugin.MapPaldea=Paldea
 Plugin.MapKitakami=Nordivia
+Plugin.MapBlueberry=Mirtillo
 Plugin.Main=Main
 Plugin.DLC1=DLC1
 Plugin.DLC2=DLC2
@@ -156,8 +157,9 @@ ConnectionForm.radioWiFi=Wi-Fi
 ConnectionForm.radioUSB=USB
 ConnectionForm.lblAddress=Indirizzo:
 ConnectionForm.lblPort=Porta:
-ConnectionForm.chkOutbreaksMain=Scarica i dati Base delle Comparse Massicce (?)
-ConnectionForm.chkOutbreaksDLC=Scarica i dati DLC delle Comparse Massicce (?)
+ConnectionForm.chkOutbreaksMain=Scarica i dati delle Comparse Massicce di Paldea (?)
+ConnectionForm.chkOutbreaksDLC=Scarica i dati delle Comparse Massicce di Nordivia (?)
+ConnectionForm.chkOutbreaksDLC2=Scarica i dati delle Comparse Massice dell'Is. Mirtillo (?)
 ConnectionForm.btnConnect=Connetti
 ConnectionForm.btnDisconnect=Disconnetti
 
@@ -257,6 +259,7 @@ ExecutorConnected=Executor connesso con successo:
 DisconnectionSuccess=Dispositivo disconnesso.
 ToolTipSyncOutbreaksMain=Sincronizza i dati delle Comparse Massicce (Paldea) dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
 ToolTipSyncOutbreaksDLC1=Sincronizza i dati delle Comparse Massicce (Nordivia) dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
+ToolTipSyncOutbreaksDLC2=Sincronizza i dati delle Comparse Massicce (Is. Mirtillo) dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
 ShinifiedAll=Tutti i Raid sono stati resi Shiny.
 
 TeraShiny.Any=Qualsiasi
@@ -320,6 +323,11 @@ AREA1MC=Piana Duefiumi
 AREA1FG=Canyon del Corno
 AREA1PB=Landa Paradisiaca
 AREA1KW=Terre Primeve di Nordivia
+
+AREA2SV=Settore Savana
+AREA2CO=Settore Costa
+AREA2CA=Settore Canyon
+AREA2PO=Settore Ghiacciai
 
 Update.Popup=Aggiornamento disponibile
 Update.Message=Un aggiornamento per Tera Finder è disponibile. Vuoi scaricare l'ultima release?

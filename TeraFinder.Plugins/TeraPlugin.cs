@@ -7,7 +7,7 @@ namespace TeraFinder.Plugins;
 
 public class TeraPlugin : IPlugin
 {
-    public const string Version = "2.8.2";
+    public const string Version = "3.0.0";
     private bool UpdatePrompted = false;
 
     public string Name => nameof(TeraFinder);
@@ -22,6 +22,7 @@ public class TeraPlugin : IPlugin
 
     public EncounterRaid9[]? Paldea = null;
     public EncounterRaid9[]? Kitakami = null;
+    public EncounterRaid9[]? Blueberry = null;
     public EncounterRaid9[]? Dist = null;
     public EncounterRaid9[]? Mighty = null;
     public Dictionary<ulong, List<Reward>>? TeraFixedRewards = null;
@@ -90,6 +91,7 @@ public class TeraPlugin : IPlugin
         var eventsrewards = RewardUtil.GetDistRewardsTables(SAV);
         Paldea = TeraUtil.GetAllTeraEncounters(TeraRaidMapParent.Paldea);
         Kitakami = TeraUtil.GetAllTeraEncounters(TeraRaidMapParent.Kitakami);
+        Blueberry = TeraUtil.GetAllTeraEncounters(TeraRaidMapParent.Blueberry);
         Dist = events[0];
         Mighty = events[1];
         TeraFixedRewards = terarewards[0];
@@ -157,7 +159,7 @@ public class TeraPlugin : IPlugin
     {
         var items = menuStrip.Items;
         if (items.Find("Menu_Tools", false)[0] is not ToolStripDropDownItem tools)
-            throw new ArgumentException(nameof(menuStrip));
+            throw new ArgumentException(null, nameof(menuStrip));
         AddPluginControl(tools);
     }
 
@@ -170,7 +172,7 @@ public class TeraPlugin : IPlugin
         Plugin.DropDownItems.Add(Flags);
         Plugin.DropDownItems.Add(Events);
         Connect.Click += (s, e) => LaunchConnector();
-        Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
+        Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Blueberry, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
         Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
         Flags.Click += (s, e) => new ProgressForm(SAV, Language,Connection).ShowDialog();
         Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV, Language).ShowDialog();
@@ -202,18 +204,18 @@ public class TeraPlugin : IPlugin
 
     public void LaunchEditor()
     {
-        new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).ShowDialog();
+        new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Blueberry, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).ShowDialog();
     }
 
     public void LaunchCalculator()
     {
-        var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
+        var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Blueberry, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
         new CalculatorForm(editor).ShowDialog();
     }
 
     public void LaunchRewardCalculator()
     {
-        var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
+        var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Blueberry, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
         new RewardCalcForm(editor).ShowDialog();
     }
 

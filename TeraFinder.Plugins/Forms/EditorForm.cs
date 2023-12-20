@@ -18,6 +18,8 @@ public partial class EditorForm : Form
     private Dictionary<string, string> Strings = null!;
     private string[] PaldeaLocations = null!;
     private string[] KitakamiLocations = null!;
+    private string[] BlueberryLocations = null!;
+
     private ConnectionForm? Connection = null;
 
     public TeraRaidMapParent CurrMap = TeraRaidMapParent.Paldea;
@@ -25,6 +27,7 @@ public partial class EditorForm : Form
     public string Language = null!;
     public EncounterRaid9[]? Paldea = null;
     public EncounterRaid9[]? Kitakami = null;
+    public EncounterRaid9[]? Blueberry = null;
     public EncounterRaid9[]? Dist = null;
     public EncounterRaid9[]? Mighty = null;
     public Dictionary<ulong, List<Reward>>? TeraFixedRewards = null;
@@ -40,6 +43,7 @@ public partial class EditorForm : Form
         string language,
         EncounterRaid9[]? paldea,
         EncounterRaid9[]? kitakami,
+        EncounterRaid9[]? blueberry,
         EncounterRaid9[]? dist,
         EncounterRaid9[]? mighty,
         Dictionary<ulong, List<Reward>>? terafixed,
@@ -89,6 +93,7 @@ public partial class EditorForm : Form
         }
         Paldea = paldea is null ? TeraUtil.GetAllTeraEncounters(TeraRaidMapParent.Paldea) : paldea;
         Kitakami = kitakami is null ? TeraUtil.GetAllTeraEncounters(TeraRaidMapParent.Kitakami) : kitakami;
+        Blueberry = blueberry is null ? TeraUtil.GetAllTeraEncounters(TeraRaidMapParent.Blueberry) : blueberry;
         DefBackground = pictureBox.BackgroundImage!;
         DefSize = pictureBox.Size;
         Progress = TeraUtil.GetProgress(SAV);
@@ -97,6 +102,8 @@ public partial class EditorForm : Form
         cmbMap.Items.Add($"{Strings["Plugin.MapPaldea"]} ({Strings["Plugin.Main"]})");
         if (SAV.SaveRevision > 0)
           cmbMap.Items.Add($"{Strings["Plugin.MapKitakami"]} ({Strings["Plugin.DLC1"]})");
+        if (SAV.SaveRevision > 1)
+            cmbMap.Items.Add($"{Strings["Plugin.MapBlueberry"]} ({Strings["Plugin.DLC2"]})");
         cmbMap.SelectedIndex = 0;
         cmbMap.Enabled = cmbMap.Items.Count > 1;
         cmbDens.SelectedIndex = 0;
@@ -164,10 +171,15 @@ public partial class EditorForm : Form
             { "AREA1FG", "Fellhorn Gorge" },
             { "AREA1PB", "Paradise Barrens" },
             { "AREA1KW", "Kitakami Wilds" },
+            { "AREA2SV", "Savannna Biome" },
+            { "AREA2CO", "Coastal Biome" },
+            { "AREA2CA", "Canyon Biome" },
+            { "AREA2PO", "Polar Biome" },
             { "ShinifyForm.lblValue", "Progress:" },
             { "ShinifiedAll", "All raids have been Shinified." },
             { "Plugin.MapPaldea", "Paldea" },
             { "Plugin.MapKitakami", "Kitakami" },
+            { "Plugin.MapBlueberry", "Blueberry" },
             { "Plugin.Main", "Main" },
             { "Plugin.DLC1", "DLC1" },
             { "Plugin.DLC2", "DLC2" },
@@ -221,6 +233,16 @@ public partial class EditorForm : Form
         KitakamiLocations[9] = Strings["AREA1FG"];
         KitakamiLocations[10] = Strings["AREA1PB"];
         KitakamiLocations[11] = Strings["AREA1KW"];
+
+        BlueberryLocations = TeraUtil.AreaBlueberry;
+        BlueberryLocations[1] = Strings["AREA2SV"];
+        BlueberryLocations[2] = Strings["AREA2CO"];
+        BlueberryLocations[3] = Strings["AREA2CA"];
+        BlueberryLocations[4] = Strings["AREA2PO"];
+        BlueberryLocations[5] = Strings["AREA2SV"];
+        BlueberryLocations[6] = Strings["AREA2CO"];
+        BlueberryLocations[7] = Strings["AREA2CA"];
+        BlueberryLocations[8] = Strings["AREA2PO"];
     }
 
     private void cmbMap_IndexChanged(object sender, EventArgs e)
@@ -229,7 +251,12 @@ public partial class EditorForm : Form
 
         CurrMap = (TeraRaidMapParent)cmbMap.SelectedIndex;
         GenerateDenLocations();
-        imgMap.BackgroundImage = CurrMap is TeraRaidMapParent.Paldea ? Properties.Resources.paldea : Properties.Resources.kitakami;
+        imgMap.BackgroundImage = CurrMap switch 
+            { 
+                TeraRaidMapParent.Paldea => Properties.Resources.paldea, 
+                TeraRaidMapParent.Kitakami => Properties.Resources.kitakami, 
+                _ => Properties.Resources.blueberry 
+            };
         imgMap.ResetMap();
 
         cmbDens.Items.Clear();
@@ -257,8 +284,8 @@ public partial class EditorForm : Form
         else
             btnDx.Enabled = true;
 
-        var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-        var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
+        var spawnList = CurrMap switch { TeraRaidMapParent.Paldea => SAV.RaidPaldea, TeraRaidMapParent.Kitakami => SAV.RaidKitakami, _ => SAV.RaidBlueberry };
+        var raid = spawnList.GetAllRaids().Length > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
         chkLP.Checked = raid.IsClaimedLeaguePoints;
         chkActive.Checked = raid.IsEnabled;
 
@@ -284,8 +311,8 @@ public partial class EditorForm : Form
     {
         if (Loaded)
         {
-            var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-            var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
+            var spawnList = CurrMap switch { TeraRaidMapParent.Paldea => SAV.RaidPaldea, TeraRaidMapParent.Kitakami => SAV.RaidKitakami, _ => SAV.RaidBlueberry };
+            var raid = spawnList.GetAllRaids().Length > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
             if (chkActive.Checked)
             {
                 raid.IsEnabled = true;
@@ -304,8 +331,13 @@ public partial class EditorForm : Form
     {
         if (Loaded)
         {
-            var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-            var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
+            var spawnList = CurrMap switch
+            {
+                TeraRaidMapParent.Paldea => SAV.RaidPaldea,
+                TeraRaidMapParent.Kitakami => SAV.RaidKitakami,
+                _ => SAV.RaidBlueberry
+            };
+            var raid = spawnList.GetAllRaids().Length > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
             if (chkLP.Checked)
             {
                 raid.IsClaimedLeaguePoints = true;
@@ -323,8 +355,13 @@ public partial class EditorForm : Form
     {
         if (Loaded)
         {
-            var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-            var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
+            var spawnList = CurrMap switch
+            {
+                TeraRaidMapParent.Paldea => SAV.RaidPaldea,
+                TeraRaidMapParent.Kitakami => SAV.RaidKitakami,
+                _ => SAV.RaidBlueberry
+            };
+            var raid = spawnList.GetAllRaids().Length > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
             raid.Content = (TeraRaidContentType)cmbContent.SelectedIndex;
             Task.Run(UpdateRemote).Wait();
             UpdatePKMInfo(raid);
@@ -344,8 +381,13 @@ public partial class EditorForm : Form
         {
             if (!txtSeed.Text.Equals(""))
             {
-                var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-                var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
+                var spawnList = CurrMap switch
+                {
+                    TeraRaidMapParent.Paldea => SAV.RaidPaldea,
+                    TeraRaidMapParent.Kitakami => SAV.RaidKitakami,
+                    _ => SAV.RaidBlueberry
+                };
+                var raid = spawnList.GetAllRaids().Length > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
                 try
                 {
                     var seed = Convert.ToUInt32(txtSeed.Text, 16);
@@ -364,7 +406,7 @@ public partial class EditorForm : Form
         {
             if (Connection is not null && Connection.IsConnected())
             {
-                var block = CurrMap is TeraRaidMapParent.Paldea ? Blocks.KTeraRaidPaldea : Blocks.KTeraRaidKitakami;
+                var block = CurrMap is TeraRaidMapParent.Paldea ? Blocks.KTeraRaidPaldea : Blocks.KTeraRaidDLC;
                 var savBlock = SAV.Accessor.FindOrDefault(block.Key)!;
                 await Connection.Executor.WriteBlock(savBlock.Data, block, new CancellationToken()).ConfigureAwait(false);
             }
@@ -386,11 +428,10 @@ public partial class EditorForm : Form
         {
             var content = (RaidContent)cmbContent.SelectedIndex;
             var groupid = TeraUtil.GetDeliveryGroupID(SAV, Progress, content, content is RaidContent.Event_Mighty ? Mighty : Dist,
-                CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami, cmbDens.SelectedIndex);
+                CurrMap switch { TeraRaidMapParent.Paldea => SAV.RaidPaldea, TeraRaidMapParent.Kitakami => SAV.RaidKitakami, _ => SAV.RaidBlueberry }, cmbDens.SelectedIndex);
             var progress = raid.Content is TeraRaidContentType.Black6 ? GameProgress.None : Progress;
-
             var encounter = cmbContent.SelectedIndex < 2 ? TeraUtil.GetTeraEncounter(raid.Seed, SAV,
-                TeraUtil.GetStars(raid.Seed, progress), CurrMap is TeraRaidMapParent.Paldea ? Paldea! : Kitakami!, CurrMap) :
+                TeraUtil.GetStars(raid.Seed, progress), CurrMap switch { TeraRaidMapParent.Paldea => Paldea!, TeraRaidMapParent.Kitakami => Kitakami!, _ => Blueberry! }, CurrMap) :
                 raid.Content is TeraRaidContentType.Might7 ? TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Mighty!, groupid) :
                 TeraUtil.GetDistEncounter(raid.Seed, SAV, progress, Dist!, groupid);
 
@@ -429,9 +470,7 @@ public partial class EditorForm : Form
                 pictureBox.BackgroundImage = null;
                 pictureBox.Image = GetRaidResultSprite(rngres, raid.IsEnabled, encounter.Item);
                 if (pictureBox.Image is not null)
-                {
                     pictureBox.Size = pictureBox.Image.Size;
-                }
                 else
                 {
                     pictureBox.BackgroundImage = DefBackground;
@@ -515,13 +554,18 @@ public partial class EditorForm : Form
 
     private string[] UpdateRaidNameList()
     {
-        var names = new string[CurrMap is TeraRaidMapParent.Paldea ? 69 : 26];
-        var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
+        var names = new string[CurrMap switch { TeraRaidMapParent.Paldea => 69, TeraRaidMapParent.Kitakami => 26, _ => 24 }];
+        var spawnList = CurrMap switch
+        {
+            TeraRaidMapParent.Paldea => SAV.RaidPaldea,
+            TeraRaidMapParent.Kitakami => SAV.RaidKitakami,
+            _ => SAV.RaidBlueberry
+        };
         var raids = spawnList.GetAllRaids();
         if (raids is not null && raids.Length >= names.Length)
             for (var i = 0; i < names.Length; i++)
-                names[i] = $"{Strings["EditorForm.CmbRaid"]} {i + 1} - {(CurrMap is TeraRaidMapParent.Paldea ?
-                    PaldeaLocations[raids[i].AreaID] : KitakamiLocations[raids[i].AreaID])} [{raids[i].SpawnPointID}]";
+                names[i] = $"{Strings["EditorForm.CmbRaid"]} {i + 1} - {CurrMap switch { TeraRaidMapParent.Paldea => PaldeaLocations[raids[i].AreaID],
+                    TeraRaidMapParent.Kitakami => KitakamiLocations[raids[i].AreaID], _ => BlueberryLocations[raids[i].AreaID] }} [{raids[i].SpawnPointID}]";
         else
             for (var i = 0; i < names.Length; i++)
                 names[i] = $"{Strings["EditorForm.CmbRaid"]} {i + 1} - [---]";
@@ -592,15 +636,20 @@ public partial class EditorForm : Form
 
     private void btnShinifyCurrent_Click(object sender, EventArgs e)
     {
-        var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
-        var raid = spawnList.GetAllRaids().Count() > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
+        var spawnList = CurrMap switch
+        {
+            TeraRaidMapParent.Paldea => SAV.RaidPaldea,
+            TeraRaidMapParent.Kitakami => SAV.RaidKitakami,
+            _ => SAV.RaidBlueberry
+        };
+        var raid = spawnList.GetAllRaids().Length > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
 
         var seed = raid.Seed;
         var content = (RaidContent)raid.Content;
         var groupid = TeraUtil.GetDeliveryGroupID(SAV, Progress, content, content is RaidContent.Event_Mighty ? Mighty : Dist, spawnList, cmbDens.SelectedIndex);
         var progress = content is RaidContent.Black ? (GameProgress)6 : Progress;
         var originalEncounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, SAV,
-            TeraUtil.GetStars(seed, progress), CurrMap is TeraRaidMapParent.Paldea ? Paldea! : Kitakami!, CurrMap) :
+            TeraUtil.GetStars(seed, progress), CurrMap switch { TeraRaidMapParent.Paldea => Paldea!, TeraRaidMapParent.Kitakami => Kitakami!, _ => Blueberry! }, CurrMap) :
             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, SAV, progress, Dist!, groupid);
 
         if (originalEncounter is null)
@@ -631,7 +680,12 @@ public partial class EditorForm : Form
         for (uint i = 0; i <= 0xFFFFFFFF; i++)
         {
             var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, SAV,
-                TeraUtil.GetStars(seed, progress), CurrMap is TeraRaidMapParent.Paldea ? Paldea! : Kitakami!, CurrMap) :
+                TeraUtil.GetStars(seed, progress), CurrMap switch
+                {
+                    TeraRaidMapParent.Paldea => Paldea!,
+                    TeraRaidMapParent.Kitakami => Kitakami!,
+                    _ => Blueberry!
+                }, CurrMap) :
             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, SAV, progress, Dist!, groupid);
             var rngres = encounter is not null && (encounter.Species == originalEncounter.Species && encounter.Form == originalEncounter.Form) ?
                 TeraUtil.CalcRNG(seed, SAV.TrainerTID7, SAV.TrainerSID7, content, encounter, groupid) : null;
@@ -657,7 +711,12 @@ public partial class EditorForm : Form
 
     private void btnRandomizeCurrent_Click(object sender, EventArgs e)
     {
-        var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
+        var spawnList = CurrMap switch
+        {
+            TeraRaidMapParent.Paldea => SAV.RaidPaldea,
+            TeraRaidMapParent.Kitakami => SAV.RaidKitakami,
+            _ => SAV.RaidBlueberry
+        };
         var raid = spawnList.GetAllRaids().Length > 1 ? spawnList.GetRaid(cmbDens.SelectedIndex) : new TeraRaidDetail(new byte[TeraRaidDetail.SIZE]);
 
         var seed = raid.Seed;
@@ -665,7 +724,12 @@ public partial class EditorForm : Form
         var groupid = TeraUtil.GetDeliveryGroupID(SAV, Progress, content, content is RaidContent.Event_Mighty ? Mighty : Dist, spawnList, cmbDens.SelectedIndex);
         var progress = content is RaidContent.Black ? (GameProgress)6 : Progress;
         var originalEncounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, SAV,
-            TeraUtil.GetStars(seed, progress), CurrMap is TeraRaidMapParent.Paldea ? Paldea! : Kitakami!, CurrMap) :
+            TeraUtil.GetStars(seed, progress), CurrMap switch
+            {
+                TeraRaidMapParent.Paldea => Paldea!,
+                TeraRaidMapParent.Kitakami => Kitakami!,
+                _ => Blueberry!
+            }, CurrMap) :
             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, SAV, progress, Dist!, groupid);
 
         if (originalEncounter is null)
@@ -684,7 +748,12 @@ public partial class EditorForm : Form
 
     private void btnRandomizeAll_Click(object sender, EventArgs e)
     {
-        var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
+        var spawnList = CurrMap switch
+        {
+            TeraRaidMapParent.Paldea => SAV.RaidPaldea,
+            TeraRaidMapParent.Kitakami => SAV.RaidKitakami,
+            _ => SAV.RaidBlueberry
+        };
 
         foreach (var raid in spawnList.GetAllRaids())
         {
@@ -693,7 +762,12 @@ public partial class EditorForm : Form
             var groupid = TeraUtil.GetDeliveryGroupID(SAV, Progress, content, content is RaidContent.Event_Mighty ? Mighty : Dist, spawnList, cmbDens.SelectedIndex);
             var progress = content is RaidContent.Black ? (GameProgress)6 : Progress;
             var originalEncounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, SAV,
-                TeraUtil.GetStars(seed, progress), CurrMap is TeraRaidMapParent.Paldea ? Paldea! : Kitakami!, CurrMap) :
+                TeraUtil.GetStars(seed, progress), CurrMap switch
+                {
+                    TeraRaidMapParent.Paldea => Paldea!,
+                    TeraRaidMapParent.Kitakami => Kitakami!,
+                    _ => Blueberry!
+                }, CurrMap) :
                 content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, SAV, progress, Dist!, groupid);
 
             if (originalEncounter is null)
@@ -719,7 +793,12 @@ public partial class EditorForm : Form
     {
         var progressWindow = new ShinifyForm(0, Strings["ShinifyForm.lblValue"]);
 
-        var spawnList = CurrMap is TeraRaidMapParent.Paldea ? SAV.RaidPaldea : SAV.RaidKitakami;
+        var spawnList = CurrMap switch
+        {
+            TeraRaidMapParent.Paldea => SAV.RaidPaldea,
+            TeraRaidMapParent.Kitakami => SAV.RaidKitakami,
+            _ => SAV.RaidBlueberry
+        };
         var raidList = spawnList.GetAllRaids();
         var raidCount = raidList.Count(raid => raid.IsEnabled == true);
         foreach (var iterator in raidList.Select((value, i) => new { i, value }))
@@ -741,7 +820,12 @@ public partial class EditorForm : Form
             var groupid = TeraUtil.GetDeliveryGroupID(SAV, Progress, content, content is RaidContent.Event_Mighty ? Mighty : Dist, spawnList, index);
             var progress = content is RaidContent.Black ? (GameProgress)6 : Progress;
             var originalEncounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, SAV,
-                TeraUtil.GetStars(seed, progress), CurrMap is TeraRaidMapParent.Paldea ? Paldea! : Kitakami!, CurrMap) :
+                TeraUtil.GetStars(seed, progress), CurrMap switch
+                {
+                    TeraRaidMapParent.Paldea => Paldea!,
+                    TeraRaidMapParent.Kitakami => Kitakami!,
+                    _ => Blueberry!
+                }, CurrMap) :
                 content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, SAV, progress, Dist!, groupid);
 
             if (originalEncounter is null)
@@ -789,7 +873,12 @@ public partial class EditorForm : Form
                     for (ulong j = initialFrame; j <= maxFrame && !token.IsCancellationRequested; j++)
                     {
                         var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(tseed, SAV,
-                            TeraUtil.GetStars(tseed, progress), CurrMap is TeraRaidMapParent.Paldea ? Paldea! : Kitakami!, CurrMap) :
+                            TeraUtil.GetStars(tseed, progress), CurrMap switch
+                            {
+                                TeraRaidMapParent.Paldea => Paldea!,
+                                TeraRaidMapParent.Kitakami => Kitakami!,
+                                _ => Blueberry!
+                            }, CurrMap) :
                             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(tseed, SAV, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(tseed, SAV, progress, Dist!, groupid);
 
                         var rngres = encounter is not null && (!keepEncounter || (encounter.Species == originalEncounter.Species && encounter.Form == originalEncounter.Form)) ?

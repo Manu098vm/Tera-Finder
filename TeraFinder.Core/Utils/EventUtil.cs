@@ -77,7 +77,7 @@ public static class EventUtil
             AddToList(items, type2list, RaidSerializationFormat.Distribution);
         }
 
-        res = new byte[][] { type2list.SelectMany(z => z).ToArray(), type3list.SelectMany(z => z).ToArray() };
+        res = [[..type2list.SelectMany(z => z)], [..type3list.SelectMany(z => z)]];
         return res;
     }
 
@@ -176,7 +176,7 @@ public static class EventUtil
         }
     }
 
-    private static void TryAddToPickle(RaidEnemyInfo enc, ICollection<byte[]> list, RaidSerializationFormat format,
+    private static void TryAddToPickle(RaidEnemyInfo enc, List<byte[]> list, RaidSerializationFormat format,
         ReadOnlySpan<ushort> totalS, ReadOnlySpan<ushort> totalV, ReadOnlySpan<ushort> minS, ReadOnlySpan<ushort> minV)
     {
         using var ms = new MemoryStream();
@@ -208,10 +208,10 @@ public static class EventUtil
     }
 
     private static readonly int[][] StageStars =
-    {
+    [
         [1, 2],
         [1, 2, 3],
         [1, 2, 3, 4],
         [3, 4, 5, 6, 7],
-    };
+    ];
 }

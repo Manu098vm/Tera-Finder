@@ -5,15 +5,13 @@ using static System.Buffers.Binary.BinaryPrimitives;
 
 namespace TeraFinder.Core;
 
-public class GameCoordinates
+public class GameCoordinates(SCBlock coordinates)
 {
-    private SCBlock Coordinates = null!;
+    private readonly SCBlock Coordinates = coordinates;
 
     public float X { get => ReadSingleLittleEndian(Coordinates.Data.AsSpan()); set => SetX(value); }
     public float Y { get => ReadSingleLittleEndian(Coordinates.Data.AsSpan()[4..]); set => SetY(value); }
     public float Z { get => ReadSingleLittleEndian(Coordinates.Data.AsSpan()[8..]); set => SetZ(value); }
-
-    public GameCoordinates(SCBlock coordinates) => Coordinates = coordinates;
 
     private void SetX(float x) => SetCoordinates(0, x);
     private void SetY(float y) => SetCoordinates(4, y);
@@ -45,7 +43,7 @@ public class MassOutbreak
     {
         ID = id;
         SAV = sav;
-        LocationMap = map switch { TeraRaidMapParent.Kitakami => "DLC1", _ => "Main" };
+        LocationMap = map switch { TeraRaidMapParent.Kitakami => "DLC1", TeraRaidMapParent.Blueberry => "DLC2", _ => "Main" };
 
         var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{ID}{LocationMap}CenterPos")!.GetValue(new DataBlock())!;
         var block = sav.Accessor.GetBlockSafe(blockInfo.Key);
@@ -72,8 +70,8 @@ public class MassOutbreak
         if (LocationCenter is not null && LocationDummy is not null)
         {
             var json = "{\n" +
-                "\t\"LocationCenter\": \"" + BitConverter.ToString(LocationCenter.GetCoordinates().ToArray()).Replace("-", string.Empty) + "\",\n" +
-                "\t\"LocationDummy\": \"" + BitConverter.ToString(LocationDummy.GetCoordinates().ToArray()).Replace("-", string.Empty) + "\",\n" +
+                "\t\"LocationCenter\": \"" + BitConverter.ToString([..LocationCenter.GetCoordinates()]).Replace("-", string.Empty) + "\",\n" +
+                "\t\"LocationDummy\": \"" + BitConverter.ToString([..LocationDummy.GetCoordinates()]).Replace("-", string.Empty) + "\",\n" +
                 "\t\"Species\": " + SpeciesConverter.GetNational9((ushort)Species) + ",\n" +
                 "\t\"Form\": " + Form + ",\n" +
                 "\t\"MaxSpawns\": " + MaxSpawns + "\n" +
@@ -101,7 +99,7 @@ public class MassOutbreak
 
     public sbyte GetAmountAvailable()
     {
-        var info = LocationMap switch { "DLC1" => Blocks.KOutbreakDLC1NumActive, _ => Blocks.KOutbreakMainNumActive };
+        var info = LocationMap switch { "DLC1" => Blocks.KOutbreakDLC1NumActive, "DLC2" => Blocks.KOutbreakDLC2NumActive, _ => Blocks.KOutbreakMainNumActive };
         var block = SAV.Accessor.GetBlockSafe(info.Key);
 
         if (block.Type is SCTypeCode.SByte)
@@ -112,7 +110,7 @@ public class MassOutbreak
 
     private void SetAmountAvailable(sbyte value)
     {
-        var info = LocationMap switch { "DLC1" => Blocks.KOutbreakDLC1NumActive, _ => Blocks.KOutbreakMainNumActive };
+        var info = LocationMap switch { "DLC1" => Blocks.KOutbreakDLC1NumActive, "DLC2" => Blocks.KOutbreakDLC2NumActive, _ => Blocks.KOutbreakMainNumActive };
         var block = SAV.Accessor.GetBlockSafe(info.Key);
 
         if (block.Type is SCTypeCode.SByte)
@@ -238,13 +236,13 @@ public class MassOutbreak
     }
 }
 
-public class FakeOutbreak
+public class FakeOutbreak(MassOutbreak outbreak)
 {
-    private byte[] LocationCenter { get; set; }
-    private byte[] LocationDummy { get; set; }
-    public uint Species { get; private set; }
-    public byte Form { get; private set; }
-    public int MaxSpawns { get; private set; }
+    private byte[] LocationCenter { get; set; } = [..outbreak.LocationCenter!.GetCoordinates()];
+    private byte[] LocationDummy { get; set; } = [..outbreak.LocationDummy!.GetCoordinates()];
+    public uint Species { get; private set; } = outbreak.Species;
+    public byte Form { get; private set; } = outbreak.Form;
+    public int MaxSpawns { get; private set; } = outbreak.MaxSpawns;
 
     public float CenterX { get => ReadSingleLittleEndian(LocationCenter.AsSpan()); }
     public float CenterY { get => ReadSingleLittleEndian(LocationCenter.AsSpan()[4..]); }
@@ -253,15 +251,6 @@ public class FakeOutbreak
     public float DummyX { get => ReadSingleLittleEndian(LocationDummy.AsSpan()); }
     public float DummyY { get => ReadSingleLittleEndian(LocationDummy.AsSpan()[4..]); }
     public float DummyZ { get => ReadSingleLittleEndian(LocationDummy.AsSpan()[8..]); }
-
-    public FakeOutbreak(MassOutbreak outbreak)
-    {
-        LocationCenter = outbreak.LocationCenter!.GetCoordinates().ToArray();
-        LocationDummy = outbreak.LocationDummy!.GetCoordinates().ToArray();
-        Species = outbreak.Species;
-        Form = outbreak.Form;
-        MaxSpawns = outbreak.MaxSpawns;
-    }
 
     public void RestoreFromJson(string json)
     {

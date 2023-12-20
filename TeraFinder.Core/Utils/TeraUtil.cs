@@ -5,8 +5,12 @@ namespace TeraFinder.Core;
 
 public static class TeraUtil
 {
-    public static byte[] GetDenLocations(TeraRaidMapParent map) => 
-        map is TeraRaidMapParent.Paldea ? Properties.Resources.paldea_locations : Properties.Resources.kitakami_locations;
+    public static byte[] GetDenLocations(TeraRaidMapParent map) => map switch
+    {
+        TeraRaidMapParent.Paldea => Properties.Resources.paldea_locations,
+        TeraRaidMapParent.Kitakami => Properties.Resources.kitakami_locations,
+        _ => Properties.Resources.blueberry_locations
+    };
 
     public static string? GetTextResource(string res)
     {
@@ -14,7 +18,7 @@ public static class TeraUtil
         if (res.Contains("lang"))
             return (string?)obj;
         else if (obj is null) return null;
-        return UTF8Encoding.UTF8.GetString((byte[]) obj);
+        return Encoding.UTF8.GetString((byte[]) obj);
     }
 
     public static PK9 GenerateTeraEntity(SAV9SV sav, EncounterRaid9 encounter, RaidContent content, uint seed, uint tid, uint sid, int groupid)
@@ -182,19 +186,23 @@ public static class TeraUtil
 
     public static List<string> GetAvailableSpecies(SAV9SV sav, string[] species, string[] forms, string[] types, Dictionary<string, string> plugins, int stars, RaidContent content, TeraRaidMapParent map)
     {
-        List<string> list = new();
+        List<string> list = [];
         var game = (GameVersion)sav.Game;
 
         var encounters = content is RaidContent.Event ? GetSAVDistEncounters(sav)[0] : content is RaidContent.Event_Mighty ? GetSAVDistEncounters(sav)[1] :
-            map is TeraRaidMapParent.Paldea ? EncounterRaid9.GetEncounters(EncounterTera9.GetArray(Properties.Resources.encounter_gem_paldea, map)) :
-            EncounterRaid9.GetEncounters(EncounterTera9.GetArray(Properties.Resources.encounter_gem_kitakami, map));
+            EncounterRaid9.GetEncounters(EncounterTera9.GetArray(map switch
+            {
+                TeraRaidMapParent.Paldea => Properties.Resources.encounter_gem_paldea,
+                TeraRaidMapParent.Kitakami => Properties.Resources.encounter_gem_kitakami,
+                _ => Properties.Resources.encounter_gem_blueberry
+            }, map));
 
         foreach (var encounter in encounters)
         {
             if (encounter.Species > 0 && (encounter.Version is GameVersion.SV || encounter.Version == game) && ((stars == 0 && encounter.Stars != 6) || encounter.Stars == stars))
             {
                 var formlist = FormConverter.GetFormList(encounter.Species, types, forms, GameInfo.GenderSymbolASCII, EntityContext.Gen9);
-                var str = $"{species[encounter.Species]}{(formlist.Length > 1 ? $"-{formlist[encounter.Form]}" : "")}";
+                var str = $"{species[encounter.Species]}{(formlist.Length > 1 ? $"-{(encounter.Species is (ushort)Species.Minior ? $"{encounter.Form}" : $"{formlist[encounter.Form]}")}" : "")}";
 
                 if (!encounter.CanBeEncounteredScarlet)
                     str += $" ({plugins["GameVersionVL"]})";
@@ -210,14 +218,18 @@ public static class TeraUtil
     }
 
     public static EncounterRaid9[] GetAllTeraEncounters(TeraRaidMapParent map) => 
-        EncounterRaid9.GetEncounters(EncounterTera9.GetArray(map is TeraRaidMapParent.Paldea ?
-            Properties.Resources.encounter_gem_paldea : Properties.Resources.encounter_gem_kitakami, map));
+        EncounterRaid9.GetEncounters(EncounterTera9.GetArray(map switch
+        {
+            TeraRaidMapParent.Paldea => Properties.Resources.encounter_gem_paldea,
+            TeraRaidMapParent.Kitakami => Properties.Resources.encounter_gem_kitakami,
+            _ => Properties.Resources.encounter_gem_blueberry
+        }, map));
 
     public static EncounterRaid9[][] GetAllDistEncounters()
     {
         var dist = EncounterRaid9.GetEncounters(PKHeX.Core.EncounterDist9.GetArray(Util.GetBinaryResource("encounter_dist_paldea.pkl")));
         var mighty = EncounterRaid9.GetEncounters(PKHeX.Core.EncounterMight9.GetArray(Util.GetBinaryResource("encounter_might_paldea.pkl")));
-        return new EncounterRaid9[][] { dist, mighty };
+        return [dist, mighty];
     }
 
     public static EncounterRaid9[][] GetSAVDistEncounters(SAV9SV sav)
@@ -227,14 +239,14 @@ public static class TeraUtil
             var events = EventUtil.GetEventEncounterDataFromSAV(sav);
             var dist = EncounterRaid9.GetEncounters(EncounterDist9.GetArray(events[0]));
             var mighty = EncounterRaid9.GetEncounters(EncounterMight9.GetArray(events[1]));
-            return new EncounterRaid9[][] { dist, mighty };
+            return [dist, mighty];
         }
         catch
         {
             const int encSize = EncounterDist9.SerializedSize;
             var dist = EncounterRaid9.GetEncounters(EncounterDist9.GetArray(new byte[encSize]));
             var might = EncounterRaid9.GetEncounters(EncounterMight9.GetArray(new byte[encSize]));
-            return new EncounterRaid9[][] { dist, might };
+            return [dist, might];
         }
     }
 
@@ -422,7 +434,7 @@ public static class TeraUtil
     //From https://github.com/LegoFigure11/RaidCrawler/blob/main/Structures/Areas.cs
     //GPL v3 License
     //Thanks LegoFigure11!
-    public static string[] AreaPaldea = new string[] {
+    public static string[] AreaPaldea = [
         "",
         "South Province (Area 1)",
         "", // Unused
@@ -446,10 +458,10 @@ public static class TeraUtil
         "North Province (Area 3)",
         "North Province (Area 1)",
         "North Province (Area 2)",
-    };
+    ];
 
     //Thanks santacrab2!
-    public static string[] AreaKitakami = new string[] {
+    public static string[] AreaKitakami = [
         "",
         "Kitakami Road",
         "Apple Hills",
@@ -462,5 +474,21 @@ public static class TeraUtil
         "Fellhorn Gorge",
         "Paradise Barrens",
         "Kitakami Wilds",
-    };
+    ];
+
+    //From https://github.com/LegoFigure11/RaidCrawler/blob/main/Structures/Areas.cs
+    //GPL v3 License
+    //Thanks LegoFigure11!
+    public static string[] AreaBlueberry =
+    [
+        "",
+        "Savannna Biome",
+        "Coastal Biome",
+        "Canyon Biome",
+        "Polar Biome",
+        "Savanna Biome",
+        "Coastal Biome",
+        "Canyon Biome",
+        "Polar Biome",
+    ];
 }

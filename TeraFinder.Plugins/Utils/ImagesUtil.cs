@@ -59,7 +59,7 @@ public static class ImagesUtil
         return image;
     }
 
-    private static Image LayerOverImageShiny(Image image, Shiny shiny)
+    private static Bitmap LayerOverImageShiny(Image image, Shiny shiny)
     {
         var icon = shiny is Shiny.AlwaysSquare ? PKHeX.Drawing.PokeSprite.Properties.Resources.rare_icon_2 : PKHeX.Drawing.PokeSprite.Properties.Resources.rare_icon;
         return ImageUtil.LayerImage(image, icon, 0, 0, 0.7);
@@ -78,7 +78,7 @@ public static class ImagesUtil
 
     private static void SetMapPoint(this PictureBox pic, TeraRaidMapParent map, MoveType teratype, float x, float y)
     {
-        var crystal = (MoveType)teratype switch
+        var crystal = teratype switch
         {
             MoveType.Normal => Properties.Resources.item_1862,
             MoveType.Fighting => Properties.Resources.item_1868,
@@ -111,8 +111,8 @@ public static class ImagesUtil
         // https://github.com/LegoFigure11/RaidCrawler/blob/d36475046c638fbc37fbeb0aaa001f3663273b9b/RaidCrawler.WinForms/MainWindow.cs#L1589
         var coordinates = new Point
         {
-            X = (int)Normalize(width, ((((map switch { TeraRaidMapParent.Kitakami => 2.766970605475146, _ => 1 }) * x) + (map switch { TeraRaidMapParent.Kitakami => 2.072021484, _ => -248.08352352566726 })) * 512 / 5000) + pointer.Width * map switch { TeraRaidMapParent.Paldea => 0.5, _ => -1 }, def),
-            Y = (int)Normalize(height, ((((map switch { TeraRaidMapParent.Kitakami => 2.5700782642623805, _ => 1 }) * y) + (map switch { TeraRaidMapParent.Kitakami => 5070.808599816581, _ => 5505.240018 })) * 512 / 5000) - pointer.Width, def),
+            X = (int)Normalize(width, ((((map switch { TeraRaidMapParent.Kitakami => 2.766970605475146, TeraRaidMapParent.Blueberry => 0.2566504136675, _ => 1 }) * x) + (map switch { TeraRaidMapParent.Kitakami => 2.072021484, TeraRaidMapParent.Blueberry => 0.893932258207, _ => -248.08352352566726 })) * (map is not TeraRaidMapParent.Blueberry ? 512 : 1) / (map is not TeraRaidMapParent.Blueberry ? 5000 : 1)) + pointer.Width * map switch { TeraRaidMapParent.Paldea => 0.5, _ => -1 }, def),
+            Y = (int)Normalize(height, ((((map switch { TeraRaidMapParent.Kitakami => 2.5700782642623805, TeraRaidMapParent.Blueberry => 0.2559781068906, _ => 1 }) * y) + (map switch { TeraRaidMapParent.Kitakami => 5070.808599816581, TeraRaidMapParent.Blueberry => 511.5361519625, _ => 5505.240018 })) * (map is not TeraRaidMapParent.Blueberry ? 512 : 1) / (map is not TeraRaidMapParent.Blueberry ? 5000 : 1)) - pointer.Width, def),
         };
 
         var mapImage = new Bitmap(pic.BackgroundImage!, new Size(pic.Width, pic.Height));

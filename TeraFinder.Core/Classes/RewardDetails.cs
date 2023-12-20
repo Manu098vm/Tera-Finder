@@ -216,7 +216,7 @@ public class RewardGridEntry
             EventIndex!,
             Calcs!,
         };
-        return list.ToArray();
+        return [.. list];
     }
 }
 

@@ -36,7 +36,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="FlatSharp.Runtime" Version="7.4.0" />
-		<PackageReference Include="PKHeX.Core" Version="23.10.12" />
+		<PackageReference Include="PKHeX.Core" Version="23.12.19" />
 	</ItemGroup>
 
 	<ItemGroup>

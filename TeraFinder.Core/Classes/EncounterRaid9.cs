@@ -2,11 +2,9 @@
 
 namespace TeraFinder.Core;
 
-public class EncounterRaid9 : IEncounterable, IEncounterConvertible<PK9>, ITeraRaid9, IMoveset, IFlawlessIVCount, IFixedGender
+public class EncounterRaid9(ITeraRaid9 encounter) : IEncounterable, IEncounterConvertible<PK9>, ITeraRaid9, IMoveset, IFlawlessIVCount, IFixedGender
 {
-    protected ITeraRaid9 Encounter { get; set; } = null!;
-
-    public EncounterRaid9(ITeraRaid9 encounter) => Encounter = encounter;
+    protected ITeraRaid9 Encounter { get; set; } = encounter;
 
     public bool IsDistribution => Encounter.IsDistribution;
     public byte Index => Encounter.Index;
@@ -56,7 +54,7 @@ public class EncounterRaid9 : IEncounterable, IEncounterConvertible<PK9>, ITeraR
         var res = new List<EncounterRaid9>();
         foreach (var encounter in encounters)
             res.Add(new EncounterRaid9(encounter));
-        return res.ToArray();
+        return [.. res];
     }
 
     PKM IEncounterConvertible.ConvertToPKM(ITrainerInfo tr, EncounterCriteria criteria) => ConvertToPKM(tr, criteria);

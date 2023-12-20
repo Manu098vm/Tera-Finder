@@ -84,7 +84,7 @@ public class TeraDetails
     public string GetName(string[] namelist, string[] typelist ,string[] formlist, string[] genderlist)
     {
         var forms = FormConverter.GetFormList(Species, typelist, formlist, genderlist, EntityContext.Gen9);
-        return $"{namelist[Species]}{(forms.Length > 1 ? $"-{forms[Form]}" : "")}";
+        return $"{namelist[Species]}{(forms.Length > 1 ? $"-{(Species is (ushort)PKHeX.Core.Species.Minior ? $"{Form}" : $"{forms[Form]}")}" : "")}";
     }
 
     private string GetAbilityName(string[] abilitylist)

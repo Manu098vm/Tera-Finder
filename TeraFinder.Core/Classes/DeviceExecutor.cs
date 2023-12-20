@@ -13,7 +13,7 @@ public class DeviceState : BotState<RoutineType, SwitchConnectionConfig>
     public override void Resume() => NextRoutineType = InitialRoutine;
 }
 
-public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
+public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState>(cfg)
 {
     public const decimal BotbaseVersion = 2.3m;
 
@@ -23,8 +23,6 @@ public class DeviceExecutor : SwitchRoutineExecutor<DeviceState>
     private const string VioletID = "01008F6008C5E000";
 
     private ulong KeyBlockAddress = 0;
-
-    public DeviceExecutor(DeviceState cfg) : base(cfg) { }
 
     public override string GetSummary()
     {

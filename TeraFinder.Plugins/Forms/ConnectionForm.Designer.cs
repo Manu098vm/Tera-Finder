@@ -43,6 +43,8 @@ partial class ConnectionForm
         progressBar = new ProgressBar();
         chkOutbreaksDLC = new CheckBox();
         toolTipOutbreakDLC1 = new ToolTip(components);
+        chkOutbreaksDLC2 = new CheckBox();
+        toolTipOutbreakDLC2 = new ToolTip(components);
         grpDevice.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)numPort).BeginInit();
         SuspendLayout();
@@ -57,7 +59,7 @@ partial class ConnectionForm
         grpDevice.Controls.Add(txtAddress);
         grpDevice.Location = new Point(10, 12);
         grpDevice.Name = "grpDevice";
-        grpDevice.Size = new Size(356, 109);
+        grpDevice.Size = new Size(403, 109);
         grpDevice.TabIndex = 0;
         grpDevice.TabStop = false;
         grpDevice.Text = "Connection";
@@ -124,9 +126,9 @@ partial class ConnectionForm
         // 
         // btnConnect
         // 
-        btnConnect.Location = new Point(10, 187);
+        btnConnect.Location = new Point(10, 217);
         btnConnect.Name = "btnConnect";
-        btnConnect.Size = new Size(356, 52);
+        btnConnect.Size = new Size(403, 52);
         btnConnect.TabIndex = 1;
         btnConnect.Text = "Connect";
         btnConnect.UseVisualStyleBackColor = true;
@@ -139,18 +141,13 @@ partial class ConnectionForm
         toolTipOutbreakMain.IsBalloon = true;
         toolTipOutbreakMain.ReshowDelay = 100;
         toolTipOutbreakMain.ToolTipTitle = "Mass Outbreaks Data";
-        toolTipOutbreakDLC1.AutoPopDelay = 10000;
-        toolTipOutbreakDLC1.InitialDelay = 500;
-        toolTipOutbreakDLC1.IsBalloon = true;
-        toolTipOutbreakDLC1.ReshowDelay = 100;
-        toolTipOutbreakDLC1.ToolTipTitle = "Mass Outbreaks Data";
         // 
         // btnDisconnect
         // 
         btnDisconnect.Enabled = false;
-        btnDisconnect.Location = new Point(10, 243);
+        btnDisconnect.Location = new Point(10, 273);
         btnDisconnect.Name = "btnDisconnect";
-        btnDisconnect.Size = new Size(356, 52);
+        btnDisconnect.Size = new Size(403, 52);
         btnDisconnect.TabIndex = 3;
         btnDisconnect.Text = "Disconnect";
         btnDisconnect.UseVisualStyleBackColor = true;
@@ -161,16 +158,16 @@ partial class ConnectionForm
         chkOutbreaksMain.AutoSize = true;
         chkOutbreaksMain.Location = new Point(10, 127);
         chkOutbreaksMain.Name = "chkOutbreaksMain";
-        chkOutbreaksMain.Size = new Size(302, 24);
+        chkOutbreaksMain.Size = new Size(313, 24);
         chkOutbreaksMain.TabIndex = 4;
-        chkOutbreaksMain.Text = "Download Mass Outbreaks Main Data (?)";
+        chkOutbreaksMain.Text = "Download Mass Outbreaks Paldea Data (?)";
         chkOutbreaksMain.UseVisualStyleBackColor = true;
         // 
         // progressBar
         // 
-        progressBar.Location = new Point(10, 301);
+        progressBar.Location = new Point(10, 331);
         progressBar.Name = "progressBar";
-        progressBar.Size = new Size(356, 22);
+        progressBar.Size = new Size(403, 22);
         progressBar.TabIndex = 5;
         // 
         // chkOutbreaksDLC
@@ -178,16 +175,43 @@ partial class ConnectionForm
         chkOutbreaksDLC.AutoSize = true;
         chkOutbreaksDLC.Location = new Point(10, 157);
         chkOutbreaksDLC.Name = "chkOutbreaksDLC";
-        chkOutbreaksDLC.Size = new Size(295, 24);
+        chkOutbreaksDLC.Size = new Size(327, 24);
         chkOutbreaksDLC.TabIndex = 6;
-        chkOutbreaksDLC.Text = "Download Mass Outbreaks DLC Data (?)";
+        chkOutbreaksDLC.Text = "Download Mass Outbreaks Kitakami Data (?)";
         chkOutbreaksDLC.UseVisualStyleBackColor = true;
+        // 
+        // toolTipOutbreakDLC1
+        // 
+        toolTipOutbreakDLC1.AutoPopDelay = 10000;
+        toolTipOutbreakDLC1.InitialDelay = 500;
+        toolTipOutbreakDLC1.IsBalloon = true;
+        toolTipOutbreakDLC1.ReshowDelay = 100;
+        toolTipOutbreakDLC1.ToolTipTitle = "Mass Outbreaks Data";
+        // 
+        // chkOutbreaksDLC2
+        // 
+        chkOutbreaksDLC2.AutoSize = true;
+        chkOutbreaksDLC2.Location = new Point(10, 187);
+        chkOutbreaksDLC2.Name = "chkOutbreaksDLC2";
+        chkOutbreaksDLC2.Size = new Size(332, 24);
+        chkOutbreaksDLC2.TabIndex = 7;
+        chkOutbreaksDLC2.Text = "Download Mass Outbreaks Blueberry Data (?)";
+        chkOutbreaksDLC2.UseVisualStyleBackColor = true;
+        // 
+        // toolTipOutbreakDLC2
+        // 
+        toolTipOutbreakDLC2.AutoPopDelay = 10000;
+        toolTipOutbreakDLC2.InitialDelay = 500;
+        toolTipOutbreakDLC2.IsBalloon = true;
+        toolTipOutbreakDLC2.ReshowDelay = 100;
+        toolTipOutbreakDLC2.ToolTipTitle = "Mass Outbreaks Data";
         // 
         // ConnectionForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(378, 331);
+        ClientSize = new Size(425, 359);
+        Controls.Add(chkOutbreaksDLC2);
         Controls.Add(chkOutbreaksDLC);
         Controls.Add(progressBar);
         Controls.Add(chkOutbreaksMain);
@@ -222,4 +246,6 @@ partial class ConnectionForm
     private ProgressBar progressBar;
     private CheckBox chkOutbreaksDLC;
     private ToolTip toolTipOutbreakDLC1;
+    private CheckBox chkOutbreaksDLC2;
+    private ToolTip toolTipOutbreakDLC2;
 }

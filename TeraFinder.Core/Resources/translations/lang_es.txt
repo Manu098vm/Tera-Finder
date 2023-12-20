@@ -7,6 +7,7 @@ Plugin.NewsImporter=Importar Noticias Poképortal
 Plugin.OutbreakViewer=Visor/Editor de Apariciones Masivas
 Plugin.MapPaldea=Paldea
 Plugin.MapKitakami=Noroteo
+Plugin.MapBlueberry=Arándano
 Plugin.Main=Main
 Plugin.DLC1=DLC1
 Plugin.DLC2=DLC2
@@ -156,8 +157,9 @@ ConnectionForm.radioWiFi=Wi-Fi
 ConnectionForm.radioUSB=USB
 ConnectionForm.lblAddress=Dirección:
 ConnectionForm.lblPort=Puerto:
-ConnectionForm.chkOutbreaksMain=Descargar Bàsicos Apariciones Masivas (?)
-ConnectionForm.chkOutbreaksDLC=Descargar DLC Apariciones Masivas (?)
+ConnectionForm.chkOutbreaksMain=Descargar Paldea Apariciones Masivas (?)
+ConnectionForm.chkOutbreaksDLC=Descargar Noroteo Apariciones Masivas (?)
+ConnectionForm.chkOutbreaksDLC2=Descargar Arándano Apariciones Masivas (?)
 ConnectionForm.btnConnect=Conectar
 ConnectionForm.btnDisconnect=Desconectar
 
@@ -257,6 +259,7 @@ ExecutorConnected=Ejecutor conectado con éxito:
 DisconnectionSuccess=Dispositivo desconectado.
 ToolTipSyncOutbreaksMain=Sincronizar datos de Aparición Masiva (Paldea) desde dispositivo remoto. Puede requerir una considerable cantidad de tiempo.
 ToolTipSyncOutbreaksDLC1=Sincronizar datos de Aparición Masiva (Noroteo) desde dispositivo remoto. Puede requerir una considerable cantidad de tiempo.
+ToolTipSyncOutbreaksDLC2=Sincronizar datos de Aparición Masiva (Arándano) desde dispositivo remoto. Puede requerir una considerable cantidad de tiempo.
 ShinifiedAll=Ahora todas las raids son Variocolor.
 
 TeraShiny.Any=Cualquiera
@@ -320,6 +323,11 @@ AREA1MC=Ribera Confluencia
 AREA1FG=Desfiladero del Cuerno
 AREA1PB=Elíseo Baldío
 AREA1KW=Campos Prístinos de Noroteo
+
+AREA2SV=Área Árida
+AREA2CO=Área Costera
+AREA2CA=Área Escarpada
+AREA2PO=Área Polar
 
 Update.Popup=Actualización disponible
 Update.Message=Una actualización para Tera Finder está disponible. ¿Quieres descargar la última versión?

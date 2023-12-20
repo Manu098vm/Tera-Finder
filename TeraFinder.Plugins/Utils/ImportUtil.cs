@@ -81,23 +81,28 @@ internal static class ImportUtil
             return false;
         if (!File.Exists($"{path}\\Files\\event_raid_identifier") &&
             !File.Exists($"{path}\\Files\\event_raid_identifier_1_3_0") &&
-            !File.Exists($"{path}\\Files\\event_raid_identifier_2_0_0"))
+            !File.Exists($"{path}\\Files\\event_raid_identifier_2_0_0") &&
+            !File.Exists($"{path}\\Files\\event_raid_identifier_3_0_0"))
             return false;
         if (!File.Exists($"{path}\\Files\\fixed_reward_item_array") && 
             !File.Exists($"{path}\\Files\\fixed_reward_item_array_1_3_0") &&
-            !File.Exists($"{path}\\Files\\fixed_reward_item_array_2_0_0"))
+            !File.Exists($"{path}\\Files\\fixed_reward_item_array_2_0_0") &&
+            !File.Exists($"{path}\\Files\\fixed_reward_item_array_3_0_0"))
             return false;
         if (!File.Exists($"{path}\\Files\\lottery_reward_item_array") && 
             !File.Exists($"{path}\\Files\\lottery_reward_item_array_1_3_0") &&
-            !File.Exists($"{path}\\Files\\lottery_reward_item_array_2_0_0"))
+            !File.Exists($"{path}\\Files\\lottery_reward_item_array_2_0_0") &&
+            !File.Exists($"{path}\\Files\\lottery_reward_item_array_3_0_0"))
             return false;
         if (!File.Exists($"{path}\\Files\\raid_enemy_array") && 
             !File.Exists($"{path}\\Files\\raid_enemy_array_1_3_0") &&
-            !File.Exists($"{path}\\Files\\raid_enemy_array_2_0_0"))
+            !File.Exists($"{path}\\Files\\raid_enemy_array_2_0_0") &&
+            !File.Exists($"{path}\\Files\\raid_enemy_array_3_0_0"))
             return false;
         if (!File.Exists($"{path}\\Files\\raid_priority_array") && 
             !File.Exists($"{path}\\Files\\raid_priority_array_1_3_0") &&
-            !File.Exists($"{path}\\Files\\raid_priority_array_2_0_0"))
+            !File.Exists($"{path}\\Files\\raid_priority_array_2_0_0") &&
+            !File.Exists($"{path}\\Files\\raid_priority_array_3_0_0"))
             return false;
 
         return true;
@@ -108,15 +113,20 @@ internal static class ImportUtil
         if (!File.Exists($"{path}\\Identifier.txt"))
             return false;
 
-        if (!File.Exists($"{path}\\Files\\pokedata_array_2_0_0"))
+        if (!File.Exists($"{path}\\Files\\pokedata_array_2_0_0") &&
+            !File.Exists($"{path}\\Files\\pokedata_array_3_0_0"))
             return false;
 
-        if (!File.Exists($"{path}\\Files\\zone_main_array_2_0_0"))
+        if (!File.Exists($"{path}\\Files\\zone_main_array_2_0_0") &&
+            !File.Exists($"{path}\\Files\\zone_main_array_3_0_0"))
             return false;
 
-        if (!File.Exists($"{path}\\Files\\zone_su1_array_2_0_0"))
+        //Outbreaks BCAT was released during the 2.0.0
+        if (!File.Exists($"{path}\\Files\\zone_su1_array_2_0_0") &&
+            !File.Exists($"{path}\\Files\\zone_su1_array_3_0_0"))
             return false;
 
+        //2.0.0 events do not have zone_su2_array
         return true;
     }
 
@@ -151,11 +161,22 @@ internal static class ImportUtil
             var indexpath = Path.Combine(path, "Identifier.txt");
 
             var filespath = Path.Combine(path, "Files");
-            var identifierpath = Path.Combine(filespath, "event_raid_identifier_2_0_0");
-            var encounterspath = Path.Combine(filespath, "raid_enemy_array_2_0_0");
-            var dropspath = Path.Combine(filespath, "fixed_reward_item_array_2_0_0");
-            var bonuspath = Path.Combine(filespath, "lottery_reward_item_array_2_0_0");
-            var prioritypath = Path.Combine(filespath, "raid_priority_array_2_0_0");
+            var identifierpath = Path.Combine(filespath, "event_raid_identifier_3_0_0");
+            var encounterspath = Path.Combine(filespath, "raid_enemy_array_3_0_0");
+            var dropspath = Path.Combine(filespath, "fixed_reward_item_array_3_0_0");
+            var bonuspath = Path.Combine(filespath, "lottery_reward_item_array_3_0_0");
+            var prioritypath = Path.Combine(filespath, "raid_priority_array_3_0_0");
+
+            if (!File.Exists(identifierpath))
+                identifierpath = Path.Combine(filespath, "event_raid_identifier_2_0_0");
+            if (!File.Exists(encounterspath))
+                encounterspath = Path.Combine(filespath, "raid_enemy_array_2_0_0");
+            if (!File.Exists(dropspath))
+                dropspath = Path.Combine(filespath, "fixed_reward_item_array_2_0_0");
+            if (!File.Exists(bonuspath))
+                bonuspath = Path.Combine(filespath, "lottery_reward_item_array_2_0_0");
+            if (!File.Exists(prioritypath))
+                prioritypath = Path.Combine(filespath, "raid_priority_array_2_0_0");
 
             if (!File.Exists(identifierpath))
                 identifierpath = Path.Combine(filespath, "event_raid_identifier_1_3_0");
@@ -250,14 +271,25 @@ internal static class ImportUtil
             var indexpath = Path.Combine(path, "Identifier.txt");
 
             var filespath = Path.Combine(path, "Files");
-            var pokedatapath = Path.Combine(filespath, "pokedata_array_2_0_0");
-            var paldeazonepath = Path.Combine(filespath, "zone_main_array_2_0_0");
-            var kitakamizonepath = Path.Combine(filespath, "zone_su1_array_2_0_0");
+            var pokedatapath = Path.Combine(filespath, "pokedata_array_3_0_0");
+            var paldeazonepath = Path.Combine(filespath, "zone_main_array_3_0_0");
+            var kitakamizonepath = Path.Combine(filespath, "zone_su1_array_3_0_0");
+            var blueberryzonepath = Path.Combine(filespath, "zone_su2_array_3_0_0");
+
+            if (!File.Exists(pokedatapath))
+                pokedatapath = Path.Combine(filespath, "pokedata_array_2_0_0");
+            if (!File.Exists(paldeazonepath))
+                paldeazonepath = Path.Combine(filespath, "raid_enemy_array_2_0_0");
+            if (!File.Exists(kitakamizonepath))
+                kitakamizonepath = Path.Combine(filespath, "fixed_reward_item_array_2_0_0");
+
+            var isBlueberry = File.Exists(blueberryzonepath);
 
             var index = File.ReadAllText(indexpath);
             var pokeDataBlock = File.ReadAllBytes(pokedatapath);
             var paldeaZoneBlock = File.ReadAllBytes(paldeazonepath);
             var kitakamiZoneBlock = File.ReadAllBytes(kitakamizonepath);
+            byte[]? blueberryZoneBlock = isBlueberry ? File.ReadAllBytes(blueberryzonepath) : null;
 
             if (zip) DeleteFilesAndDirectory(path);
 
@@ -266,6 +298,7 @@ internal static class ImportUtil
             var KBCATOutbreakPokeData = sav.Accessor.FindOrDefault(Blocks.KBCATOutbreakPokeData.Key);
             var KBCATOutbreakZonesPaldea = sav.Accessor.FindOrDefault(Blocks.KBCATOutbreakZonesPaldea.Key);
             var KBCATOutbreakZonesKitakami = sav.Accessor.FindOrDefault(Blocks.KBCATOutbreakZonesKitakami.Key);
+            var KBCATOutbreakZonesBlueberry = sav.Accessor.FindOrDefault(Blocks.KBCATOutbreakZonesBlueberry.Key);
             var KBCATOutbreakEnabled = sav.Accessor.FindOrDefault(Blocks.KBCATOutbreakEnabled.Key);
 
             if (KBCATOutbreakPokeData.Type is not SCTypeCode.None)
@@ -276,6 +309,9 @@ internal static class ImportUtil
 
             if (KBCATOutbreakZonesKitakami.Type is not SCTypeCode.None)
                 KBCATOutbreakZonesKitakami.ChangeData(kitakamiZoneBlock);
+
+            if (isBlueberry && KBCATOutbreakZonesBlueberry.Type is not SCTypeCode.None)
+                KBCATOutbreakZonesBlueberry.ChangeData(blueberryZoneBlock);
 
             if (KBCATOutbreakEnabled.Type is not SCTypeCode.Bool2 && KBCATOutbreakEnabled.Type is not SCTypeCode.None)
                 KBCATOutbreakEnabled.ChangeBooleanType(SCTypeCode.Bool2);
