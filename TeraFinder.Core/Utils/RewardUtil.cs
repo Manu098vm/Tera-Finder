@@ -36,13 +36,17 @@ public static class RewardUtil
         _ => false,
     };
 
-    public static string GetNameTM(int item, ReadOnlySpan<string> items, ReadOnlySpan<string> moves, ReadOnlySpan<ushort> tm) => item switch
+    public static string GetNameTM(int item, ReadOnlySpan<string> items, ReadOnlySpan<string> moves)
     {
-        >= 328 and <= 419 => $"{items[item]} {moves[tm[001 + item - 328]]}", // TM001 to TM092, skip TM000 Mega Punch
-        618 or 619 or 620 => $"{items[item]} {moves[tm[093 + item - 618]]}", // TM093 to TM095
-        690 or 691 or 692 or 693 => $"{items[item]} {moves[tm[096 + item - 690]]}", // TM096 to TM099
-        _ => $"{items[item]} {moves[tm[100 + item - 2160]]}", // TM100 to TM229
-    };
+        var tm = pkNX.Structures.FlatBuffers.SV.PersonalDumperSV.TMIndexes;
+        return item switch
+        {
+            >= 328 and <= 419 => $"{items[item]} {moves[tm[001 + item - 328]]}", // TM001 to TM092, skip TM000 Mega Punch
+            618 or 619 or 620 => $"{items[item]} {moves[tm[093 + item - 618]]}", // TM093 to TM095
+            690 or 691 or 692 or 693 => $"{items[item]} {moves[tm[096 + item - 690]]}", // TM096 to TM099
+            _ => $"{items[item]} {moves[tm[100 + item - 2160]]}", // TM100 to TM229
+        };
+    }
 
     private static int GetTeraShard(MoveType type)
     {
@@ -303,9 +307,50 @@ public static class RewardUtil
             Species.Morpeko => 2477,
             Species.Poltchageist or Species.Sinistcha => 2478,
 
+            Species.Oddish or Species.Gloom or Species.Vileplume or Species.Bellossom => 2484,
+            Species.Tentacool or Species.Tentacruel => 2485,
+            Species.Doduo or Species.Dodrio => 2486,
+            Species.Seel or Species.Dewgong => 2487,
+            Species.Exeggcute or Species.Exeggutor => 2488,
+            Species.Tyrogue or Species.Hitmonlee or Species.Hitmonchan or Species.Hitmontop => 2489,
+            Species.Rhyhorn or Species.Rhydon or Species.Rhyperior => 2490,
+            Species.Horsea or Species.Seadra or Species.Kingdra => 2491,
+            Species.Elekid or Species.Electabuzz or Species.Electivire => 2492,
+            Species.Magby or Species.Magmar or Species.Magmortar => 2493,
+            Species.Lapras => 2494,
+            Species.Porygon or Species.Porygon2 or Species.PorygonZ => 2495,
+            Species.Chinchou or Species.Lanturn => 2496,
+            Species.Snubbull or Species.Granbull => 2497,
+            Species.Skarmory => 2498,
+            Species.Smeargle => 2499,
+            Species.Plusle => 2500,
+            Species.Minun => 2501,
+            Species.Trapinch or Species.Vibrava or Species.Flygon => 2502,
+            Species.Beldum or Species.Metang or Species.Metagross => 2503,
+            Species.Cranidos or Species.Rampardos => 2504,
+            Species.Shieldon or Species.Bastiodon => 2505,
+            Species.Blitzle or Species.Zebstrika => 2506,
+            Species.Drilbur or Species.Excadrill => 2507,
+            Species.Cottonee or Species.Whimsicott => 2508,
+            Species.Scraggy or Species.Scrafty => 2509,
+            Species.Minccino or Species.Cinccino => 2510,
+            Species.Solosis or Species.Duosion or Species.Reuniclus => 2511,
+            Species.Joltik or Species.Galvantula => 2512,
+            Species.Golett or Species.Golurk => 2513,
+            Species.Espurr or Species.Meowstic => 2514,
+            Species.Inkay or Species.Malamar => 2515,
+            Species.Pikipek or Species.Trumbeak or Species.Toucannon => 2516,
+            Species.Dewpider or Species.Araquanid => 2517,
+            Species.Comfey => 2518,
+            Species.Minior => 2519,
+            Species.Milcery => 2520,
+            Species.Duraludon or Species.Archaludon => 2521,
+
             Species.GreatTusk or Species.ScreamTail or Species.BruteBonnet or Species.FlutterMane or Species.SlitherWing
-            or Species.RoaringMoon or Species.WalkingWake or Species.IronTreads or Species.IronBundle or Species.IronHands
-            or Species.IronJugulis or Species.IronMoth or Species.IronThorns or Species.IronValiant or Species.IronLeaves => 0,
+            or Species.RoaringMoon or Species.WalkingWake or Species.GougingFire or Species.RagingBolt => 0,
+
+            Species.IronTreads or Species.IronBundle or Species.IronHands or Species.IronJugulis or Species.IronMoth 
+            or Species.IronThorns or Species.IronValiant or Species.IronLeaves or Species.IronBoulder or Species.IronCrown => 0,
 
             _ => ushort.MaxValue,
         };

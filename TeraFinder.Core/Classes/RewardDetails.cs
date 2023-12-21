@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using pkNX.Structures.FlatBuffers.SV;
 
 namespace TeraFinder.Core;
 
@@ -17,7 +16,7 @@ public class Reward
         else if(ItemID == ushort.MaxValue-1)
             return $"{RewardUtil.TeraShard[GameLanguage.GetLanguageIndex(language)]} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
         else if (RewardUtil.IsTM(ItemID))
-            return $"{RewardUtil.GetNameTM(ItemID, itemnames, GameInfo.GetStrings(language).movelist, PersonalDumperSV.TMIndexes)} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
+            return $"{RewardUtil.GetNameTM(ItemID, itemnames, GameInfo.GetStrings(language).movelist)} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
 
         itemnames ??= GameInfo.GetStrings(language).itemlist;
 
