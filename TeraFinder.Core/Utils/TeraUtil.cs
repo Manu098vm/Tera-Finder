@@ -202,7 +202,7 @@ public static class TeraUtil
             if (encounter.Species > 0 && (encounter.Version is GameVersion.SV || encounter.Version == game) && ((stars == 0 && encounter.Stars != 6) || encounter.Stars == stars))
             {
                 var formlist = FormConverter.GetFormList(encounter.Species, types, forms, GameInfo.GenderSymbolASCII, EntityContext.Gen9);
-                var str = $"{species[encounter.Species]}{(formlist.Length > 1 ? $"-{(encounter.Species is (ushort)Species.Minior ? $"{encounter.Form}" : $"{formlist[encounter.Form]}")}" : "")}";
+                var str = $"{species[encounter.Species]}{(formlist.Length > 1 ? $"-{$"{formlist[encounter.Form]}"}" : "")}";
 
                 if (!encounter.CanBeEncounteredScarlet)
                     str += $" ({plugins["GameVersionVL"]})";

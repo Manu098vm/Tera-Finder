@@ -323,9 +323,8 @@ public partial class CalculatorForm : Form
         str = str.Replace($" ({Strings["GameVersionSL"]})", string.Empty).Replace($" ({Strings["GameVersionVL"]})", string.Empty);
         if (!str.Equals(Strings["Any"]))
         {
-            //Jangmo-o, Hakamo-o and Kommo-o special cases
-            var charLocation = str.IndexOf('-');
-            var isForm = charLocation > 0 && !str.ToLower().EndsWith("-o");
+            var formLocation = str.IndexOf('-');
+            var isForm = Array.IndexOf(NameList, str) == -1 && formLocation > 0;
 
             if (!isForm)
             {
@@ -335,10 +334,10 @@ public partial class CalculatorForm : Form
             }
             else
             {
-                var species = Editor.Language.ToLower().Equals("en") ? str[..charLocation] :
-                    GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, str[..charLocation])];
+                var species = Editor.Language.ToLower().Equals("en") ? str[..formLocation] :
+                    GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, str[..formLocation])];
                 res[0] = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty).Replace("-", string.Empty));
-                res[1] = ShowdownParsing.GetFormFromString(str.AsSpan()[(charLocation + 1)..], GameInfo.GetStrings(Editor.Language), res[0], EntityContext.Gen9);
+                res[1] = ShowdownParsing.GetFormFromString(str.AsSpan()[(formLocation + 1)..], GameInfo.GetStrings(Editor.Language), res[0], EntityContext.Gen9);
             }
         }
         return res;
