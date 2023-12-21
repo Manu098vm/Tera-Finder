@@ -655,11 +655,38 @@
   <data name="dlc1_983" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\Kitakami\dlc1-983.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="dlc2_102" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-102.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dlc2_111" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-111.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="dlc2_113" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\Blueberry\dlc2-113.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="dlc2_117" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-117.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dlc2_158" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-158.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="dlc2_235" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\Blueberry\dlc2-235.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dlc2_252" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-252.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dlc2_255" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-255.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dlc2_258" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-258.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dlc2_370" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-370.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dlc2_387" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-387.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="dlc2_479" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\Blueberry\dlc2-479.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -672,6 +699,9 @@
   </data>
   <data name="dlc2_559" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\Blueberry\dlc2-559.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dlc2_577" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-577.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="dlc2_586" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\Blueberry\dlc2-586.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -688,6 +718,15 @@
   <data name="dlc2_678_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\Blueberry\dlc2-678-1.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="dlc2_686" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-686.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dlc2_722" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-722.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dlc2_725" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-725.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="dlc2_739" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\Blueberry\dlc2-739.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -699,6 +738,9 @@
   </data>
   <data name="dlc2_774_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbreaks_default\Blueberry\dlc2-774-2.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dlc2_84" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbreaks_default\Blueberry\dlc2-84.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="encounter_gem_blueberry" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\raid_default\encounter_gem_blueberry.pkl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
