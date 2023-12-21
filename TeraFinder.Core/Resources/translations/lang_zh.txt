@@ -7,7 +7,7 @@ Plugin.NewsImporter=导入宝可梦入口站新闻
 Plugin.OutbreakViewer=大量出现查看/编辑
 Plugin.MapPaldea=帕底亚
 Plugin.MapKitakami=北上乡
-Plugin.MapBlueberry=Blueberry
+Plugin.MapBlueberry=蓝莓学院
 Plugin.Main=Main
 Plugin.DLC1=DLC1
 Plugin.DLC2=DLC2
@@ -159,7 +159,7 @@ ConnectionForm.lblAddress=IP地址:
 ConnectionForm.lblPort=端口:
 ConnectionForm.chkOutbreaksMain=从远程设备下载宝可梦大量出现数据 (帕底亚) (?)
 ConnectionForm.chkOutbreaksDLC=从远程设备下载宝可梦大量出现数据 (北上乡) (?)
-ConnectionForm.chkOutbreaksDLC2=从远程设备下载宝可梦大量出现数据 (Blueberry) (?)
+ConnectionForm.chkOutbreaksDLC2=从远程设备下载宝可梦大量出现数据 (蓝莓学院) (?)
 ConnectionForm.btnConnect=连接
 ConnectionForm.btnDisconnect=断开
 
@@ -259,7 +259,7 @@ ExecutorConnected=框架连接成功:
 DisconnectionSuccess=设备已断开
 ToolTipSyncOutbreaksMain=同步远程设备的宝可梦大量出现数据。可能需要相当长的时间 (帕底亚)。
 ToolTipSyncOutbreaksDLC1=同步远程设备的宝可梦大量出现数据。可能需要相当长的时间 (北上乡)。
-ToolTipSyncOutbreaksDLC2=同步远程设备的宝可梦大量出现数据。可能需要相当长的时间 (Blueberry)。
+ToolTipSyncOutbreaksDLC2=同步远程设备的宝可梦大量出现数据。可能需要相当长的时间 (蓝莓学院)。
 ShinifiedAll=所有太晶洞窟异色已经生成。
 
 TeraShiny.Any=任意
@@ -324,10 +324,10 @@ AREA1FG=鬼角峡谷
 AREA1PB=乐土荒地
 AREA1KW=北上原生区
 
-AREA2SV=Savannna Biome
-AREA2CO=Coastal Biome
-AREA2CA=Canyon Biome
-AREA2PO=Polar Biome
+AREA2SV=草原区
+AREA2CO=海岸区
+AREA2CA=峡谷区
+AREA2PO=极地区
 
 Update.Popup=有可用更新
 Update.Message=Tera Finder更新可用。是否要下载最新版本？
