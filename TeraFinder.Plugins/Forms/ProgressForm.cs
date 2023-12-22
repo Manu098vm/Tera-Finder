@@ -279,7 +279,7 @@ public partial class ProgressForm : Form
         {
             try
             {
-                await Connection.Executor.WriteBlock(SAV.RaidSevenStar.Data, Blocks.RaidSevenStar, CancellationToken.None).ConfigureAwait(false);
+                await Connection.Executor.WriteBlock(SAV.RaidSevenStar.Captured.Data, Blocks.KSevenStarRaidsCapture, CancellationToken.None).ConfigureAwait(false);
             }
             catch
             {

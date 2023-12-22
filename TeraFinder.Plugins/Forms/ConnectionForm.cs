@@ -139,8 +139,8 @@ public partial class ConnectionForm : Form
             UpdateProgress(CurrentProgress++, MaxProgress);
             ProgressForm.EditProgress(SAV, progress);
             await DownloadEventData(token).ConfigureAwait(false);
-            var raidSevenStar = SAV.Accessor.FindOrDefault(Blocks.RaidSevenStar.Key);
-            raidSevenStar.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.RaidSevenStar, token).ConfigureAwait(false));
+            var raidSevenStar = SAV.Accessor.FindOrDefault(Blocks.KSevenStarRaidsCapture.Key);
+            raidSevenStar.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.KSevenStarRaidsCapture, token).ConfigureAwait(false));
             UpdateProgress(CurrentProgress++, MaxProgress);
             if (chkOutbreaksMain.Checked) await DownloadOutbreaksMainData(token).ConfigureAwait(false);
             if (chkOutbreaksDLC.Checked) await DownloadOutbreaksDLCData(token).ConfigureAwait(false);

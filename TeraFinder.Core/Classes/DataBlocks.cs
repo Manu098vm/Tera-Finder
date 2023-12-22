@@ -49,9 +49,9 @@ public static class Blocks
         Size = 0xC90,
     };
 
-    public static readonly DataBlock RaidSevenStar = new()
+    public static readonly DataBlock KSevenStarRaidsCapture = new()
     {
-        Name = "RaidSevenStar",
+        Name = "KSevenStarRaidsCapture",
         Key = 0x8B14392F,
         Type = SCTypeCode.Object,
         Pointer = new long[] { 0x47350D8, 0x1C0, 0x88, 0x25E8 },
