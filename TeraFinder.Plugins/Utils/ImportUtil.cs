@@ -48,7 +48,9 @@ internal static class ImportUtil
         if (File.Exists(path))
             if (Path.GetExtension(path).Equals(".zip"))
             {
-                var tmp = $"{Path.GetDirectoryName(path)}\\tmp";
+                var tmp = Path.Combine(Path.GetDirectoryName(path)!,"tmp");
+                if (Directory.Exists(tmp))
+                    DeleteFilesAndDirectory(tmp);
                 ZipFile.ExtractToDirectory(path, tmp);
                 path = tmp;
                 zip = true;
