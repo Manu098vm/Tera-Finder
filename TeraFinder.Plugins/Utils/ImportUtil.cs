@@ -281,9 +281,9 @@ internal static class ImportUtil
             if (!File.Exists(pokedatapath))
                 pokedatapath = Path.Combine(filespath, "pokedata_array_2_0_0");
             if (!File.Exists(paldeazonepath))
-                paldeazonepath = Path.Combine(filespath, "raid_enemy_array_2_0_0");
+                paldeazonepath = Path.Combine(filespath, "zone_main_array_2_0_0");
             if (!File.Exists(kitakamizonepath))
-                kitakamizonepath = Path.Combine(filespath, "fixed_reward_item_array_2_0_0");
+                kitakamizonepath = Path.Combine(filespath, "zone_su1_array_2_0_0");
 
             var isBlueberry = File.Exists(blueberryzonepath);
 
