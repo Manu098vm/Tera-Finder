@@ -67,7 +67,7 @@ public class TeraPlugin : IPlugin
                     var dic = new Dictionary<string, string> { { "CheckerForm", "" } }.TranslateInnerStrings(Language);
                     var calcSeed = new ToolStripMenuItem(dic["CheckerForm"]) { Image = Properties.Resources.icon.ToBitmap() };
                     menuVSD.Items.Insert(menuVSD.Items.Count, calcSeed);
-                    calcSeed.Click += (s, e) => new CheckerForm(pk, sav, Language).ShowDialog();
+                    calcSeed.Click += (s, e) => new CheckerForm(pk, Language).ShowDialog();
                     menuVSD.Closing += (s, e) => menuVSD.Items.Remove(calcSeed);
                 }
             }
@@ -175,7 +175,7 @@ public class TeraPlugin : IPlugin
         Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Blueberry, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
         Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
         Flags.Click += (s, e) => new ProgressForm(SAV, Language,Connection).ShowDialog();
-        Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), SAV, Language).ShowDialog();
+        Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), Language).ShowDialog();
         Outbreaks.Click += (s, e) => new OutbreakForm(SAV, Language, Connection).ShowDialog();
         tools.DropDownItems.Add(Plugin);
     }
@@ -231,7 +231,7 @@ public class TeraPlugin : IPlugin
 
     public void LaunchFinder()
     {
-        new CheckerForm(new PK9 { TrainerTID7 = SAV.TrainerTID7, TrainerSID7 = SAV.TrainerSID7 }, SAV, Language).ShowDialog();
+        new CheckerForm(new PK9 { TrainerTID7 = SAV.TrainerTID7, TrainerSID7 = SAV.TrainerSID7 }, Language).ShowDialog();
     }
 
     public void LaunchMassOutbreakEditor()

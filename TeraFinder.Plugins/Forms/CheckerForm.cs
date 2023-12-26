@@ -6,10 +6,9 @@ namespace TeraFinder.Plugins;
 public partial class CheckerForm : Form
 {
     private readonly PK9 PKM = null!;
-    private readonly SAV9SV SAV;
     private Dictionary<string, string> Strings = null!;
 
-    public CheckerForm(PKM pk, SAV9SV sav, string language)
+    public CheckerForm(PKM pk, string language)
     {
         InitializeComponent();
         GenerateDictionary();
@@ -26,7 +25,6 @@ public partial class CheckerForm : Form
         cmbTera.Items.Clear();
         cmbTera.Items.AddRange(types);
 
-        SAV = sav;
         PKM = (PK9)pk;
         txtTid.Text = $"{PKM.TrainerTID7}";
         txtSid.Text = $"{PKM.TrainerSID7}";
@@ -114,19 +112,117 @@ public partial class CheckerForm : Form
         };
 
         var seed = Tera9RNG.GetOriginalSeed(pk);
-        var legality = new LegalityAnalysis(pk);
 
-        if (legality.Valid)
+        //Standard & Black Raids Check
+        for (var map = TeraRaidMapParent.Paldea; map <= TeraRaidMapParent.Blueberry; map++)
         {
-            if (legality.EncounterMatch is PKHeX.Core.EncounterDist9)
-                txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Event"]})";
-            else if (legality.EncounterMatch is PKHeX.Core.EncounterMight9)
-                txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Event_Mighty"]})";
-            else
-                txtSeed.Text = (byte)((dynamic)legality.EncounterMatch).Stars == 6 ?
-                    $"{seed:X8} ({Strings["RaidContent.Black"]})" : $"{seed:X8} ({Strings["RaidContent.Standard"]})";
+            var encounters = TeraUtil.GetAllTeraEncounters(map);
+            for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.None; progress++)
+            {
+                for (var version = GameVersion.SL; version <= GameVersion.VL; version++)
+                {
+                    var encounter = TeraUtil.GetTeraEncounter(seed, version, TeraUtil.GetStars(seed, progress), encounters, map);
+                    if (encounter is not null)
+                    {
+                        var rng = TeraUtil.CalcRNG(seed, pk.TrainerTID7, pk.TrainerSID7, progress is not GameProgress.None ?
+                            RaidContent.Standard : RaidContent.Black, encounter, 0);
+
+                        if (CompareResult(pk, rng))
+                        {
+                            SetReultText(seed, encounter);
+                            return;
+                        }
+                    }
+                }
+            }
         }
-        else
-            txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Invalid"]})";
+
+        //Events & Events Mighty Raids Check
+        for (var content = RaidContent.Event; content <= RaidContent.Event_Mighty; content++)
+        {
+            var dist = TeraUtil.GetAllDistEncounters(content);
+            for (var progress = GameProgress.UnlockedTeraRaids; progress < GameProgress.None; progress++)
+            {
+                for (var version = GameVersion.SL; version <= GameVersion.VL; version++) {
+                    for (var groupid = 0; groupid < 10; groupid++)
+                    {
+                        var encounters = TeraUtil.FilterDistEncounters(seed, version, progress, dist, groupid, species);
+                        foreach (var encounter in encounters) {
+
+                            if (encounter is not null)
+                            {
+                                var rng = TeraUtil.CalcRNG(seed, pk.TrainerTID7, pk.TrainerSID7, content, encounter, groupid);
+
+                                if (CompareResult(pk, rng))
+                                {
+                                    SetReultText(seed, encounter);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        SetReultText(seed);
+    }
+
+    private static bool CompareResult (PK9 pkm, TeraDetails rng)
+    {
+        if (pkm.Species != rng.Species)
+            return false;
+        if (pkm.EncryptionConstant != rng.EC)
+            return false;
+        if (pkm.PID != rng.PID)
+            return false;
+        if (pkm.IV_HP != rng.HP)
+            return false;
+        if (pkm.IV_ATK != rng.ATK)
+            return false;
+        if (pkm.IV_DEF != rng.DEF)
+            return false;
+        if (pkm.IV_SPA != rng.SPA)
+            return false;
+        if (pkm.IV_SPD != rng.SPD)
+            return false;
+        if (pkm.IV_SPE != rng.SPE)
+            return false;
+        if (pkm.Nature != rng.Nature)
+            return false;
+        if ((sbyte)pkm.TeraTypeOriginal != rng.TeraType)
+            return false;
+        if (pkm.HeightScalar != rng.Height &&
+            pkm.HeightScalar != rng.Scale)
+            return false;
+        if (pkm.WeightScalar != rng.Weight)
+            return false;
+        if (pkm.Scale != rng.Scale)
+            return false;
+
+        return true;
+    }
+
+    private void SetReultText (uint seed, EncounterRaid9? enc = null)
+    {
+        if (enc is not null)
+        {
+            var type = enc.GetEncounterType();
+            var isBlack = enc.Stars >= 6;
+
+            if (type == typeof(Core.EncounterTera9) && !isBlack)
+                txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Standard"]})";
+            else if (type == typeof(Core.EncounterTera9) && isBlack)
+                txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Black"]})";
+            else if (type == typeof(PKHeX.Core.EncounterDist9))
+                txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Event"]})";
+            else if (type == typeof(PKHeX.Core.EncounterMight9))
+                txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Event_Mighty"]})";
+
+            return;
+        }
+
+        txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Invalid"]})";
+        return;
+
     }
 }

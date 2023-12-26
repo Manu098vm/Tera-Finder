@@ -165,15 +165,15 @@ public static class GridUtil
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
                     sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
 
-                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress),
+                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress),
                         map switch 
                         { 
                             TeraRaidMapParent.Paldea => f.Editor.Paldea!, 
                             TeraRaidMapParent.Kitakami => f.Editor.Kitakami!, 
                             _ => f.Editor.Blueberry! 
                         }, map) :
-                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, groupid) :
-                        TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, groupid);
+                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!, groupid) :
+                        TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!, groupid);
 
                     var res = TeraUtil.GenerateTeraEntity(sav, encounter!, content, seed, tid, sid, groupid);
                     var la = new LegalityAnalysis(res);
@@ -247,15 +247,15 @@ public static class GridUtil
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
                     sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
 
-                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), 
+                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
                         map switch
                         {
                             TeraRaidMapParent.Paldea => f.Editor.Paldea!,
                             TeraRaidMapParent.Kitakami => f.Editor.Kitakami!,
                             _ => f.Editor.Blueberry!
                         }, map) :
-                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
-                        TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
+                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!) :
+                        TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!);
 
                     var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter!, groupid);
 
@@ -394,15 +394,15 @@ public static class GridUtil
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
                     sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
 
-                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), 
+                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
                         map switch
                         {
                             TeraRaidMapParent.Paldea => f.Editor.Paldea!,
                             TeraRaidMapParent.Kitakami => f.Editor.Kitakami!,
                             _ => f.Editor.Blueberry!
                         }, map) :
-                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!, groupid) :
-                        TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!, groupid);
+                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!, groupid) :
+                        TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!, groupid);
 
                     var res = TeraUtil.GenerateTeraEntity(sav, encounter!, content, seed, tid, sid, groupid);
                     var la = new LegalityAnalysis(res);
@@ -460,15 +460,15 @@ public static class GridUtil
                 {
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
                     sav.Game = (int)game;
-                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), 
+                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
                         map switch
                         {
                             TeraRaidMapParent.Paldea => f.Editor.Paldea!,
                             TeraRaidMapParent.Kitakami => f.Editor.Kitakami!,
                             _ => f.Editor.Blueberry!
                         }, map) :
-                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
-                        TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
+                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!) :
+                        TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!);
 
                     if (encounter is not null)
                     {
@@ -504,15 +504,15 @@ public static class GridUtil
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
                     sav.Game = (int)game;
 
-                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), 
+                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
                         map switch
                         {
                             TeraRaidMapParent.Paldea => f.Editor.Paldea!,
                             TeraRaidMapParent.Kitakami => f.Editor.Kitakami!,
                             _ => f.Editor.Blueberry!
                         }, map) :
-                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
-                        TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
+                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!) :
+                        TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!);
 
                     if (encounter is not null)
                     {
@@ -555,15 +555,15 @@ public static class GridUtil
                         var sav = (SAV9SV)f.Editor.SAV.Clone();
                         sav.Game = (int)game;
 
-                        var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), 
+                        var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
                             map switch
                             {
                                 TeraRaidMapParent.Paldea => f.Editor.Paldea!,
                                 TeraRaidMapParent.Kitakami => f.Editor.Kitakami!,
                                 _ => f.Editor.Blueberry!
                             }, map) :
-                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
-                            TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
+                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!) :
+                            TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!);
 
                         if (encounter is not null)
                         {
@@ -625,15 +625,15 @@ public static class GridUtil
                 {
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
                     sav.Game = (int)game;
-                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav, TeraUtil.GetStars(seed, progress), 
+                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
                         map switch
                         {
                             TeraRaidMapParent.Paldea => f.Editor.Paldea!,
                             TeraRaidMapParent.Kitakami => f.Editor.Kitakami!,
                             _ => f.Editor.Blueberry!
                         }, map) :
-                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Mighty!) :
-                        TeraUtil.GetDistEncounter(seed, sav, progress, f.Editor.Dist!);
+                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!) :
+                        TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!);
 
                     if (encounter is not null)
                     {

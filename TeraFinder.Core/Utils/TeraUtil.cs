@@ -225,12 +225,13 @@ public static class TeraUtil
             _ => Properties.Resources.encounter_gem_blueberry
         }, map));
 
-    public static EncounterRaid9[][] GetAllDistEncounters()
-    {
-        var dist = EncounterRaid9.GetEncounters(PKHeX.Core.EncounterDist9.GetArray(Util.GetBinaryResource("encounter_dist_paldea.pkl")));
-        var mighty = EncounterRaid9.GetEncounters(PKHeX.Core.EncounterMight9.GetArray(Util.GetBinaryResource("encounter_might_paldea.pkl")));
-        return [dist, mighty];
-    }
+    public static EncounterRaid9[] GetAllDistEncounters(RaidContent type) =>
+        type switch
+        {
+            RaidContent.Event => EncounterRaid9.GetEncounters(PKHeX.Core.EncounterDist9.GetArray(Util.GetBinaryResource("encounter_dist_paldea.pkl"))),
+            RaidContent.Event_Mighty => EncounterRaid9.GetEncounters(PKHeX.Core.EncounterMight9.GetArray(Util.GetBinaryResource("encounter_might_paldea.pkl"))),
+            _ => throw new ArgumentException("Invalid RaidContent type"),
+        };
 
     public static EncounterRaid9[][] GetSAVDistEncounters(SAV9SV sav)
     {
@@ -250,9 +251,8 @@ public static class TeraUtil
         }
     }
 
-    public static EncounterRaid9? GetTeraEncounter(uint seed, SAV9SV sav, int stars, EncounterRaid9[] encounters, TeraRaidMapParent map)
+    public static EncounterRaid9? GetTeraEncounter(uint seed, GameVersion game, int stars, EncounterRaid9[] encounters, TeraRaidMapParent map)
     {
-        var game = (GameVersion)sav.Game;
         var xoro = new Xoroshiro128Plus(seed);
         if (stars < 6) xoro.NextInt(100);
         var max = game is GameVersion.SL ? EncounterTera9.GetRateTotalSL(stars, map) : EncounterTera9.GetRateTotalVL(stars, map);
@@ -266,9 +266,8 @@ public static class TeraUtil
         return null;
     }
 
-    public static EncounterRaid9? GetDistEncounter(uint seed, SAV9SV sav, GameProgress progress, EncounterRaid9[] encounters, int groupid = -2)
+    public static EncounterRaid9? GetDistEncounter(uint seed, GameVersion game, GameProgress progress, EncounterRaid9[] encounters, int groupid = -2)
     {
-        var game = (GameVersion)sav.Game;
         var p = progress switch
         {
             GameProgress.Unlocked6Stars or GameProgress.Unlocked5Stars => 3,
@@ -293,6 +292,36 @@ public static class TeraUtil
             }
         }
         return null;
+    }
+
+    public static EncounterRaid9[] FilterDistEncounters(uint seed, GameVersion version, GameProgress progress, EncounterRaid9[] encounters, int groupid, ushort species)
+    {
+        var res = new List<EncounterRaid9>();
+        var p = progress switch
+        {
+            GameProgress.Unlocked6Stars or GameProgress.Unlocked5Stars => 3,
+            GameProgress.Unlocked4Stars => 2,
+            GameProgress.Unlocked3Stars => 1,
+            _ => 0,
+        };
+
+        foreach (var encounter in encounters)
+        {
+            if (encounter.Species != species || encounter.Index != groupid)
+                continue;
+            var max = version is GameVersion.SL ? encounter.GetRandRateTotalScarlet(p) : encounter.GetRandRateTotalViolet(p);
+            var min = version is GameVersion.SL ? encounter.GetRandRateMinScarlet(p) : encounter.GetRandRateMinViolet(p);
+            if (min >= 0 && max > 0)
+            {
+                var xoro = new Xoroshiro128Plus(seed);
+                xoro.NextInt(100);
+                var rateRand = xoro.NextInt(max);
+                if ((uint)(rateRand - min) < encounter.RandRate)
+                    res.Add(encounter);
+            }
+        }
+
+        return [..res];
     }
 
     public static byte GetGender(EncounterRaid9 enc, bool isMighty)

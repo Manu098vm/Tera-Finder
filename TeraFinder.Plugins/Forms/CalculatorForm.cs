@@ -662,10 +662,10 @@ public partial class CalculatorForm : Form
     private TeraDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, ulong calc, int groupid, TeraRaidMapParent map)
     {
         var seed = (uint)(Seed & 0xFFFFFFFF);
-        var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav,
+        var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav.Version,
             TeraUtil.GetStars(seed, progress), map switch { TeraRaidMapParent.Paldea => Editor.Paldea!, TeraRaidMapParent.Kitakami => Editor.Kitakami!, _ => Editor.Blueberry! }, map) :
-            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Mighty!, groupid) :
-            TeraUtil.GetDistEncounter(seed, sav, progress, Editor.Dist!, groupid);
+            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, Editor.Mighty!, groupid) :
+            TeraUtil.GetDistEncounter(seed, sav.Version, progress, Editor.Dist!, groupid);
 
         if (encounter is null)
             return null;
