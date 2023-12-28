@@ -314,7 +314,7 @@ public class TeraPlugin : IPlugin
 
     public uint GetOutbreakEventIdentifier()
     {
-        var enableBlock = SAV.Accessor.FindOrDefault(Blocks.KBCATOutbreakZonesPaldea.Key);
+        var enableBlock = SAV.Accessor.FindOrDefault(Blocks.KBCATOutbreakEnabled.Key);
         if (enableBlock.Type == SCTypeCode.None || enableBlock.Type == SCTypeCode.Bool1)
             return 0;
         var pokeDataBlock = SAV.Accessor.FindOrDefault(Blocks.KBCATOutbreakPokeData.Key);
