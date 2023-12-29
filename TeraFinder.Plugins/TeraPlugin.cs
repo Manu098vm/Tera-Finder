@@ -1,4 +1,6 @@
 ﻿using PKHeX.Core;
+using pkNX.Structures.FlatBuffers;
+using pkNX.Structures.FlatBuffers.SV;
 using TeraFinder.Core;
 using System.Buffers.Binary;
 using System.Reflection;
@@ -81,7 +83,7 @@ public class TeraPlugin : IPlugin
         else
             SAV = new SAV9SV
             {
-                Game = (int)GameVersion.SL,
+                Game = (int)PKHeX.Core.GameVersion.SL,
                 OT = defaultOT,
                 Language = (int)GetLanguageID(language is not null ? language : Language),
             };
@@ -281,7 +283,7 @@ public class TeraPlugin : IPlugin
 
     public void NotifySaveLoaded()
     {
-        Language = GameInfo.CurrentLanguage;
+        Language = PKHeX.Core.GameInfo.CurrentLanguage;
         TranslatePlugins();
         if (SaveFileEditor.SAV is SAV9SV sav)
         {
@@ -295,12 +297,12 @@ public class TeraPlugin : IPlugin
     public string GetSavName()
     {
         var ot = SAV.OT;
-        var game = (GameVersion)SAV.Game;
+        var game = (PKHeX.Core.GameVersion)SAV.Game;
         var tid = (int)SAV.TrainerTID7;
         return $"{game} - {ot} ({tid}) - {Language.ToUpper()}";
     }
 
-    public uint GetEventIdentifier()
+    public uint GetRaidEventIdentifier()
     {
         var block = SAV.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
         var data = block.Data;
@@ -308,6 +310,16 @@ public class TeraPlugin : IPlugin
             return BinaryPrimitives.ReadUInt32LittleEndian(data);
 
         return 0;
+    }
+
+    public uint GetOutbreakEventIdentifier()
+    {
+        var enableBlock = SAV.Accessor.FindOrDefault(Blocks.KBCATOutbreakEnabled.Key);
+        if (enableBlock.Type == SCTypeCode.None || enableBlock.Type == SCTypeCode.Bool1)
+            return 0;
+        var pokeDataBlock = SAV.Accessor.FindOrDefault(Blocks.KBCATOutbreakPokeData.Key);
+        var tablePokeData = FlatBufferConverter.DeserializeFrom<DeliveryOutbreakPokeDataArray>(pokeDataBlock.Data);
+        return tablePokeData.Table[0].ID > 0 ? uint.Parse($"{tablePokeData.Table[0].ID}"[..8]) : 0;
     }
 
     public bool TryLoadFile(string filePath) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, path:filePath);

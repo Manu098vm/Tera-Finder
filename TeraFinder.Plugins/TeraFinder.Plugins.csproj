@@ -66,6 +66,24 @@
 		<Reference Include="SysBot.Base">
 			<HintPath>..\TeraFinder.Core\deps\SysBot.Base.dll</HintPath>
 		</Reference>
+		<Reference Include="pkNX.Structures">
+			<HintPath>..\TeraFinder.Core\deps\pkNX.Structures.dll</HintPath>
+		</Reference>
+		<Reference Include="pkNX.Structures.FlatBuffers">
+			<HintPath>..\TeraFinder.Core\deps\pkNX.Structures.FlatBuffers.dll</HintPath>
+		</Reference>
+		<Reference Include="pkNX.Structures.FlatBuffers.SV.Personal">
+			<HintPath>..\TeraFinder.Core\deps\pkNX.Structures.FlatBuffers.SV.Personal.dll</HintPath>
+		</Reference>
+		<Reference Include="pkNX.Structures.FlatBuffers.SV.Raid">
+			<HintPath>..\TeraFinder.Core\deps\pkNX.Structures.FlatBuffers.SV.Raid.dll</HintPath>
+		</Reference>
+		<Reference Include="pkNX.Structures.FlatBuffers.SV.Shared">
+			<HintPath>..\TeraFinder.Core\deps\pkNX.Structures.FlatBuffers.SV.Shared.dll</HintPath>
+		</Reference>
+		<Reference Include="pkNX.Structures.FlatBuffers.SV.World">
+			<HintPath>..\TeraFinder.Core\deps\pkNX.Structures.FlatBuffers.SV.World.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 
 	<ItemGroup>

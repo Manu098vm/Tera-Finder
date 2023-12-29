@@ -62,27 +62,31 @@
             grpSAV.Controls.Add(txtSAV);
             grpSAV.Controls.Add(btnLoad);
             grpSAV.Controls.Add(btnExport);
-            grpSAV.Location = new Point(12, 43);
+            grpSAV.Location = new Point(10, 32);
+            grpSAV.Margin = new Padding(3, 2, 3, 2);
             grpSAV.Name = "grpSAV";
-            grpSAV.Size = new Size(463, 123);
+            grpSAV.Padding = new Padding(3, 2, 3, 2);
+            grpSAV.Size = new Size(405, 92);
             grpSAV.TabIndex = 0;
             grpSAV.TabStop = false;
             grpSAV.Text = "Save File";
             // 
             // txtSAV
             // 
-            txtSAV.Location = new Point(90, 73);
+            txtSAV.Location = new Point(79, 55);
+            txtSAV.Margin = new Padding(3, 2, 3, 2);
             txtSAV.Name = "txtSAV";
             txtSAV.ReadOnly = true;
-            txtSAV.Size = new Size(281, 27);
+            txtSAV.Size = new Size(246, 23);
             txtSAV.TabIndex = 4;
             txtSAV.TextAlign = HorizontalAlignment.Center;
             // 
             // btnLoad
             // 
-            btnLoad.Location = new Point(90, 32);
+            btnLoad.Location = new Point(79, 24);
+            btnLoad.Margin = new Padding(3, 2, 3, 2);
             btnLoad.Name = "btnLoad";
-            btnLoad.Size = new Size(137, 35);
+            btnLoad.Size = new Size(120, 26);
             btnLoad.TabIndex = 2;
             btnLoad.Text = "Load Save File";
             btnLoad.UseVisualStyleBackColor = true;
@@ -90,9 +94,10 @@
             // 
             // btnExport
             // 
-            btnExport.Location = new Point(233, 32);
+            btnExport.Location = new Point(204, 24);
+            btnExport.Margin = new Padding(3, 2, 3, 2);
             btnExport.Name = "btnExport";
-            btnExport.Size = new Size(137, 35);
+            btnExport.Size = new Size(120, 26);
             btnExport.TabIndex = 3;
             btnExport.Text = "Export Save File";
             btnExport.UseVisualStyleBackColor = true;
@@ -102,9 +107,11 @@
             // 
             grpTools.Controls.Add(grpStaticTools);
             grpTools.Controls.Add(grpSavTools);
-            grpTools.Location = new Point(12, 171);
+            grpTools.Location = new Point(10, 128);
+            grpTools.Margin = new Padding(3, 2, 3, 2);
             grpTools.Name = "grpTools";
-            grpTools.Size = new Size(463, 331);
+            grpTools.Padding = new Padding(3, 2, 3, 2);
+            grpTools.Size = new Size(405, 248);
             grpTools.TabIndex = 1;
             grpTools.TabStop = false;
             grpTools.Text = "Tools";
@@ -114,19 +121,20 @@
             grpStaticTools.Controls.Add(btnStartRewardCalc);
             grpStaticTools.Controls.Add(btnStartCalculator);
             grpStaticTools.Controls.Add(btnStartFinder);
-            grpStaticTools.Location = new Point(6, 198);
+            grpStaticTools.Location = new Point(5, 148);
+            grpStaticTools.Margin = new Padding(3, 2, 3, 2);
             grpStaticTools.Name = "grpStaticTools";
-            grpStaticTools.Size = new Size(451, 125);
+            grpStaticTools.Padding = new Padding(3, 2, 3, 2);
+            grpStaticTools.Size = new Size(395, 94);
             grpStaticTools.TabIndex = 3;
             grpStaticTools.TabStop = false;
             grpStaticTools.Text = "Standalone Tools";
             // 
             // btnStartRewardCalc
             // 
-            btnStartRewardCalc.Location = new Point(304, 43);
-            btnStartRewardCalc.Margin = new Padding(3, 4, 3, 4);
+            btnStartRewardCalc.Location = new Point(266, 32);
             btnStartRewardCalc.Name = "btnStartRewardCalc";
-            btnStartRewardCalc.Size = new Size(137, 53);
+            btnStartRewardCalc.Size = new Size(120, 40);
             btnStartRewardCalc.TabIndex = 7;
             btnStartRewardCalc.Text = "Reward Calculator";
             btnStartRewardCalc.UseVisualStyleBackColor = true;
@@ -134,9 +142,10 @@
             // 
             // btnStartCalculator
             // 
-            btnStartCalculator.Location = new Point(160, 43);
+            btnStartCalculator.Location = new Point(140, 32);
+            btnStartCalculator.Margin = new Padding(3, 2, 3, 2);
             btnStartCalculator.Name = "btnStartCalculator";
-            btnStartCalculator.Size = new Size(137, 53);
+            btnStartCalculator.Size = new Size(120, 40);
             btnStartCalculator.TabIndex = 2;
             btnStartCalculator.Text = "Raid Calculator";
             btnStartCalculator.UseVisualStyleBackColor = true;
@@ -144,9 +153,10 @@
             // 
             // btnStartFinder
             // 
-            btnStartFinder.Location = new Point(16, 43);
+            btnStartFinder.Location = new Point(14, 32);
+            btnStartFinder.Margin = new Padding(3, 2, 3, 2);
             btnStartFinder.Name = "btnStartFinder";
-            btnStartFinder.Size = new Size(137, 53);
+            btnStartFinder.Size = new Size(120, 40);
             btnStartFinder.TabIndex = 6;
             btnStartFinder.Text = "Seed Checker";
             btnStartFinder.UseVisualStyleBackColor = true;
@@ -158,18 +168,21 @@
             grpSavTools.Controls.Add(btnEditGame);
             grpSavTools.Controls.Add(btnImportNews);
             grpSavTools.Controls.Add(btnStartEditor);
-            grpSavTools.Location = new Point(6, 27);
+            grpSavTools.Location = new Point(5, 20);
+            grpSavTools.Margin = new Padding(3, 2, 3, 2);
             grpSavTools.Name = "grpSavTools";
-            grpSavTools.Size = new Size(451, 165);
+            grpSavTools.Padding = new Padding(3, 2, 3, 2);
+            grpSavTools.Size = new Size(395, 124);
             grpSavTools.TabIndex = 2;
             grpSavTools.TabStop = false;
             grpSavTools.Text = "SAV Tools";
             // 
             // btnEditOutbreaks
             // 
-            btnEditOutbreaks.Location = new Point(230, 99);
+            btnEditOutbreaks.Location = new Point(201, 74);
+            btnEditOutbreaks.Margin = new Padding(3, 2, 3, 2);
             btnEditOutbreaks.Name = "btnEditOutbreaks";
-            btnEditOutbreaks.Size = new Size(215, 53);
+            btnEditOutbreaks.Size = new Size(188, 40);
             btnEditOutbreaks.TabIndex = 6;
             btnEditOutbreaks.Text = "Mass Outbreak Viewer/Editor";
             btnEditOutbreaks.UseVisualStyleBackColor = true;
@@ -177,9 +190,10 @@
             // 
             // btnEditGame
             // 
-            btnEditGame.Location = new Point(230, 40);
+            btnEditGame.Location = new Point(201, 30);
+            btnEditGame.Margin = new Padding(3, 2, 3, 2);
             btnEditGame.Name = "btnEditGame";
-            btnEditGame.Size = new Size(215, 53);
+            btnEditGame.Size = new Size(188, 40);
             btnEditGame.TabIndex = 4;
             btnEditGame.Text = "Edit Game Flags";
             btnEditGame.UseVisualStyleBackColor = true;
@@ -187,9 +201,10 @@
             // 
             // btnImportNews
             // 
-            btnImportNews.Location = new Point(6, 40);
+            btnImportNews.Location = new Point(5, 30);
+            btnImportNews.Margin = new Padding(3, 2, 3, 2);
             btnImportNews.Name = "btnImportNews";
-            btnImportNews.Size = new Size(215, 53);
+            btnImportNews.Size = new Size(188, 40);
             btnImportNews.TabIndex = 3;
             btnImportNews.Text = "Import Poké Portal News";
             btnImportNews.UseVisualStyleBackColor = true;
@@ -197,9 +212,10 @@
             // 
             // btnStartEditor
             // 
-            btnStartEditor.Location = new Point(6, 99);
+            btnStartEditor.Location = new Point(5, 74);
+            btnStartEditor.Margin = new Padding(3, 2, 3, 2);
             btnStartEditor.Name = "btnStartEditor";
-            btnStartEditor.Size = new Size(215, 53);
+            btnStartEditor.Size = new Size(188, 40);
             btnStartEditor.TabIndex = 5;
             btnStartEditor.Text = "Raid Viewer/Editor";
             btnStartEditor.UseVisualStyleBackColor = true;
@@ -212,7 +228,8 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { remoteConnectToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(487, 28);
+            menuStrip1.Padding = new Padding(5, 2, 0, 2);
+            menuStrip1.Size = new Size(426, 24);
             menuStrip1.TabIndex = 2;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -220,13 +237,13 @@
             // 
             remoteConnectToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { btnRemoteConnect, languageToolStrip });
             remoteConnectToolStripMenuItem.Name = "remoteConnectToolStripMenuItem";
-            remoteConnectToolStripMenuItem.Size = new Size(58, 24);
+            remoteConnectToolStripMenuItem.Size = new Size(46, 20);
             remoteConnectToolStripMenuItem.Text = "Tools";
             // 
             // btnRemoteConnect
             // 
             btnRemoteConnect.Name = "btnRemoteConnect";
-            btnRemoteConnect.Size = new Size(271, 26);
+            btnRemoteConnect.Size = new Size(216, 22);
             btnRemoteConnect.Text = "Connect To Remote Device";
             btnRemoteConnect.Click += btnRemoteConnect_Click;
             // 
@@ -234,24 +251,24 @@
             // 
             languageToolStrip.DropDownItems.AddRange(new ToolStripItem[] { cmbLanguage });
             languageToolStrip.Name = "languageToolStrip";
-            languageToolStrip.Size = new Size(271, 26);
+            languageToolStrip.Size = new Size(216, 22);
             languageToolStrip.Text = "Default Language";
             // 
             // cmbLanguage
             // 
             cmbLanguage.Items.AddRange(new object[] { "日本語", "English", "Français", "Italiano", "Deutsch", "Español", "한국어", "简体中文", "繁體中文" });
             cmbLanguage.Name = "cmbLanguage";
-            cmbLanguage.Size = new Size(121, 28);
+            cmbLanguage.Size = new Size(121, 23);
             cmbLanguage.SelectedIndexChanged += LanguageChanged;
             // 
             // lblEvent
             // 
             lblEvent.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblEvent.AutoSize = true;
-            lblEvent.Location = new Point(232, 20);
+            lblEvent.Location = new Point(91, 15);
             lblEvent.Name = "lblEvent";
             lblEvent.RightToLeft = RightToLeft.No;
-            lblEvent.Size = new Size(243, 20);
+            lblEvent.Size = new Size(193, 15);
             lblEvent.TabIndex = 3;
             lblEvent.Text = "Poké Portal News Event: [00000000]";
             lblEvent.TextAlign = ContentAlignment.TopRight;
@@ -259,15 +276,16 @@
             // TeraFinderForm
             // 
             AllowDrop = true;
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(487, 507);
+            ClientSize = new Size(426, 380);
             Controls.Add(lblEvent);
             Controls.Add(grpTools);
             Controls.Add(grpSAV);
             Controls.Add(menuStrip1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "TeraFinderForm";
