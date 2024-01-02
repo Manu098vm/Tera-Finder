@@ -324,7 +324,7 @@ public static class TeraUtil
         return [..res];
     }
 
-    public static byte GetGender(EncounterRaid9 enc, bool isMighty)
+    private static byte GetGender(EncounterRaid9 enc, bool isMighty)
     {
         if (isMighty)
         {
