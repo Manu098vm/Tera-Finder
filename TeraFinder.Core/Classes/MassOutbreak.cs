@@ -7,7 +7,7 @@ namespace TeraFinder.Core;
 
 public class GameCoordinates(SCBlock coordinates)
 {
-    private readonly SCBlock Coordinates = coordinates;
+    protected readonly SCBlock Coordinates = coordinates;
 
     public float X { get => ReadSingleLittleEndian(Coordinates.Data.AsSpan()); set => SetX(value); }
     public float Y { get => ReadSingleLittleEndian(Coordinates.Data.AsSpan()[4..]); set => SetY(value); }
