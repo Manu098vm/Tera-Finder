@@ -6223,6 +6223,16 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] dlc2_334 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_334", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] dlc2_335 {
             get {
                 object obj = ResourceManager.GetObject("dlc2_335", resourceCulture);
@@ -6346,6 +6356,16 @@ namespace TeraFinder.Core.Properties {
         internal static byte[] dlc2_408 {
             get {
                 object obj = ResourceManager.GetObject("dlc2_408", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_410 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_410", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -6666,6 +6686,16 @@ namespace TeraFinder.Core.Properties {
         internal static byte[] dlc2_574 {
             get {
                 object obj = ResourceManager.GetObject("dlc2_574", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_575 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_575", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -7233,6 +7263,26 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] dlc2_741 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_741", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_741_2 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_741_2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] dlc2_75 {
             get {
                 object obj = ResourceManager.GetObject("dlc2_75", resourceCulture);
@@ -7356,6 +7406,16 @@ namespace TeraFinder.Core.Properties {
         internal static byte[] dlc2_774_6 {
             get {
                 object obj = ResourceManager.GetObject("dlc2_774_6", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_779 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_779", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -7646,7 +7706,7 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=To [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.remoteConnectToolS [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_de {
             get {
@@ -7670,7 +7730,7 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=To [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.remoteConnectToolS [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_en {
             get {
@@ -7694,7 +7754,7 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteC [rest of string was truncated]&quot;;.
+        ///TeraFin [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_es {
             get {
@@ -7718,7 +7778,7 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=T [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.remoteConnectTool [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_fr {
             get {
@@ -7742,7 +7802,7 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConn [rest of string was truncated]&quot;;.
+        ///TeraFinder [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_it {
             get {
@@ -7766,7 +7826,7 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=To [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.remoteConnectToolS [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_ja {
             get {
@@ -7792,8 +7852,7 @@ namespace TeraFinder.Core.Properties {
         ///TeraFinderForm=테라 파인더 
         ///TeraFinderForm.remoteConnectToolStripMenuItem=도구
         ///TeraFinderForm.btnRemoteConnect=스위치에 연결
-        ///TeraFinderForm.languageToolStrip=언어
-        ///TeraFinderFo [rest of string was truncated]&quot;;.
+        ///TeraFinderForm.languageToolStri [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_ko {
             get {
@@ -7847,7 +7906,7 @@ namespace TeraFinder.Core.Properties {
         ///TeraFinderForm.remoteConnectToolStripMenuItem=工具
         ///TeraFinderForm.btnRemoteConnect=遠程連接
         ///TeraFinderForm.languageToolStrip=語言設置
-        ///TeraFinderForm.grpSAV=储 [rest of string was truncated]&quot;;.
+        ///TeraF [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_zh2 {
             get {
