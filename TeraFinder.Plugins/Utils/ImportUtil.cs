@@ -316,7 +316,10 @@ internal static class ImportUtil
                 KBCATOutbreakZonesBlueberry.ChangeData(blueberryZoneBlock);
 
             if (KBCATOutbreakEnabled.Type is not SCTypeCode.Bool2 && KBCATOutbreakEnabled.Type is not SCTypeCode.None)
-                KBCATOutbreakEnabled.ChangeBooleanType(SCTypeCode.Bool2);
+                if (int.TryParse(index, out var identifier) && identifier > 0)
+                    KBCATOutbreakEnabled.ChangeBooleanType(SCTypeCode.Bool2);
+                else
+                    KBCATOutbreakEnabled.ChangeBooleanType(SCTypeCode.Bool1);
 
             if (KBCATOutbreakPokeData is not null && KBCATOutbreakPokeData.Type is not SCTypeCode.None)
                 MessageBox.Show($"{strings["ImportNews.Success"]} [{index}]!");
