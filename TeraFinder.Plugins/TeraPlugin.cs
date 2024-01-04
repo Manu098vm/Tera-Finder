@@ -37,8 +37,11 @@ public class TeraPlugin : IPlugin
     private readonly ToolStripMenuItem Editor = new("Tera Raid Viewer/Editor");
     private readonly ToolStripMenuItem Finder = new("Tera Raid Seed Checker");
     private readonly ToolStripMenuItem Flags = new("Edit Game Flags");
-    private readonly ToolStripMenuItem Events = new("Import Poké Portal News");
     private readonly ToolStripMenuItem Outbreaks = new("Mass Outbreak Viewer/Editor");
+    private readonly ToolStripMenuItem Events = new("Import Poké Portal News");
+    private readonly ToolStripMenuItem ImportNews = new("Import from files...");
+    private readonly ToolStripMenuItem NullRaid = new("Import Empty (Null) Raid Event");
+    private readonly ToolStripMenuItem NullOutbreak = new("Import Empty (Null) Outbreak Event");
 
     public void Initialize(params object[] args)
     {
@@ -172,10 +175,15 @@ public class TeraPlugin : IPlugin
         Plugin.DropDownItems.Add(Outbreaks);
         Plugin.DropDownItems.Add(Finder);
         Plugin.DropDownItems.Add(Flags);
+        Events.DropDownItems.Add(ImportNews);
+        Events.DropDownItems.Add(NullRaid);
+        Events.DropDownItems.Add(NullOutbreak);
         Plugin.DropDownItems.Add(Events);
         Connect.Click += (s, e) => LaunchConnector();
         Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Blueberry, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
-        Events.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
+        ImportNews.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
+        NullRaid.Click += (s, e) => LaunchRaidNullImporter();
+        NullOutbreak.Click += (s, e) => LaunchOutbreakNullImporter();
         Flags.Click += (s, e) => new ProgressForm(SAV, Language,Connection).ShowDialog();
         Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), Language).ShowDialog();
         Outbreaks.Click += (s, e) => new OutbreakForm(SAV, Language, Connection).ShowDialog();
@@ -192,7 +200,10 @@ public class TeraPlugin : IPlugin
             { "Plugin.SeedChecker", "Tera Raid Seed Checker" },
             { "Plugin.FlagEditor", "Edit Game Flags" },
             { "Plugin.NewsImporter", "Import Poké Portal News" },
-            { "Plugin.OutbreakViewer", "Mass Outbreak Viewer/Editor"}
+            { "Plugin.OutbreakViewer", "Mass Outbreak Viewer/Editor" },
+            { "Plugin.ImportNews", "Import from files..." },
+            { "Plugin.OutbreakNull", "Import Empty (Null) Outbreak Event" },
+            { "Plugin.RaidNull", "Import Empty (Null) Raid Event" },
         }.TranslateInnerStrings(Language);
 
         Plugin.Text = dic["Plugin.TeraFinderPlugin"];
@@ -202,6 +213,9 @@ public class TeraPlugin : IPlugin
         Flags.Text = dic["Plugin.FlagEditor"];
         Events.Text = dic["Plugin.NewsImporter"];
         Outbreaks.Text = dic["Plugin.OutbreakViewer"];
+        ImportNews.Text = dic["Plugin.ImportNews"];
+        NullOutbreak.Text = dic["Plugin.OutbreakNull"];
+        NullRaid.Text = dic["Plugin.RaidNull"];
     }
 
     public void LaunchEditor()
@@ -224,6 +238,19 @@ public class TeraPlugin : IPlugin
     public void LaunchImporter()
     {
         ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
+    }
+
+    public void LaunchRaidNullImporter()
+    {
+        ImportUtil.FinalizeImportRaid(SAV, Properties.Resources.event_raid_identifier, Properties.Resources.fixed_reward_item_array,
+            Properties.Resources.lottery_reward_item_array, Properties.Resources.raid_enemy_array, Properties.Resources.raid_priority_array, "0",
+            ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, ImportUtil.GenerateDictionary().TranslateInnerStrings(Language));
+    }
+
+    public void LaunchOutbreakNullImporter()
+    {
+        ImportUtil.FinalizeImportOutbreak(SAV, SAV.SaveRevision >= 2, Properties.Resources.pokedata_array_3_0_0, Properties.Resources.zone_main_array_3_0_0,
+            Properties.Resources.zone_su1_array_3_0_0, Properties.Resources.zone_su2_array_3_0_0, "0", ImportUtil.GenerateDictionary().TranslateInnerStrings(Language));
     }
 
     public void LaunchGameEditor()

@@ -81,6 +81,26 @@ namespace TeraFinder.Plugins.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] event_raid_identifier {
+            get {
+                object obj = ResourceManager.GetObject("event_raid_identifier", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] fixed_reward_item_array {
+            get {
+                object obj = ResourceManager.GetObject("fixed_reward_item_array", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon icon {
@@ -281,12 +301,82 @@ namespace TeraFinder.Plugins.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] lottery_reward_item_array {
+            get {
+                object obj = ResourceManager.GetObject("lottery_reward_item_array", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap paldea {
             get {
                 object obj = ResourceManager.GetObject("paldea", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] pokedata_array_3_0_0 {
+            get {
+                object obj = ResourceManager.GetObject("pokedata_array_3_0_0", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] raid_enemy_array {
+            get {
+                object obj = ResourceManager.GetObject("raid_enemy_array", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] raid_priority_array {
+            get {
+                object obj = ResourceManager.GetObject("raid_priority_array", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] zone_main_array_3_0_0 {
+            get {
+                object obj = ResourceManager.GetObject("zone_main_array_3_0_0", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] zone_su1_array_3_0_0 {
+            get {
+                object obj = ResourceManager.GetObject("zone_su1_array_3_0_0", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] zone_su2_array_3_0_0 {
+            get {
+                object obj = ResourceManager.GetObject("zone_su2_array_3_0_0", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

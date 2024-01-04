@@ -6,7 +6,7 @@ namespace TeraFinder.Plugins;
 
 internal static class ImportUtil
 {
-    public static bool ImportNews(SaveFile sav, 
+    public static bool ImportNews(SAV9SV sav, 
                                 ref EncounterRaid9[]? dist,
                                 ref EncounterRaid9[]? mighty,
                                 ref Dictionary<ulong, List<Reward>>? distFixedRewards,
@@ -18,9 +18,6 @@ internal static class ImportUtil
         var isRaid = false;
         var isOutbreak = false;
         var zip = false;
-
-        if (sav is not SAV9SV)
-            return false;
 
         var strings = GenerateDictionary().TranslateInnerStrings(language);
 
@@ -63,10 +60,10 @@ internal static class ImportUtil
                 isOutbreak = true;
 
         if (isRaid)
-            return FinalizeImportRaid(path, sav, zip, ref dist, ref mighty, ref distFixedRewards, ref distLotteryRewards, strings);
+            return ImportRaidFiles(path, sav, zip, ref dist, ref mighty, ref distFixedRewards, ref distLotteryRewards, strings);
 
         if (isOutbreak)
-            return FinalizeImportOutbreak(path, sav, zip, strings);
+            return ImportOutbreakFiles(path, sav, zip, strings);
 
         if (plugin || zip)
         {
@@ -149,8 +146,8 @@ internal static class ImportUtil
         Directory.Delete(targetDir, false);
     }
 
-    private static bool FinalizeImportRaid(string path, 
-                                      SaveFile sv, 
+    private static bool ImportRaidFiles(string path, 
+                                      SAV9SV sav, 
                                       bool zip,
                                       ref EncounterRaid9[]? dist,
                                       ref EncounterRaid9[]? mighty,
@@ -158,6 +155,13 @@ internal static class ImportUtil
                                       ref Dictionary<ulong, List<Reward>>? distLotteryRewards,
                                       Dictionary<string, string> strings)
     {
+        string index;
+        byte[] identifierBlock;
+        byte[] rewardItemBlock;
+        byte[] lotteryItemBlock;
+        byte[] raidEnemyBlock;
+        byte[] raidPriorityBlock;
+
         try
         {
             var indexpath = Path.Combine(path, "Identifier.txt");
@@ -202,17 +206,46 @@ internal static class ImportUtil
             if (!File.Exists(prioritypath))
                 prioritypath = Path.Combine(filespath, "raid_priority_array");
 
-            var index = File.ReadAllText(indexpath);
-            var identifierBlock = File.ReadAllBytes(identifierpath);
-            var rewardItemBlock = File.ReadAllBytes(dropspath);
-            var lotteryItemBlock = File.ReadAllBytes(bonuspath);
-            var raidEnemyBlock = File.ReadAllBytes(encounterspath);
-            var raidPriorityBlock = File.ReadAllBytes(prioritypath);
+            index = File.ReadAllText(indexpath);
+            identifierBlock = File.ReadAllBytes(identifierpath);
+            rewardItemBlock = File.ReadAllBytes(dropspath);
+            lotteryItemBlock = File.ReadAllBytes(bonuspath);
+            raidEnemyBlock = File.ReadAllBytes(encounterspath);
+            raidPriorityBlock = File.ReadAllBytes(prioritypath);
 
             if (zip) DeleteFilesAndDirectory(path);
 
-            var sav = (SAV9SV)sv;
+            var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
+            var KBCATFixedRewardItemArray = sav.Accessor.FindOrDefault(Blocks.KBCATFixedRewardItemArray.Key);
+            var KBCATLotteryRewardItemArray = sav.Accessor.FindOrDefault(Blocks.KBCATLotteryRewardItemArray.Key);
+            var KBCATRaidEnemyArray = sav.Accessor.FindOrDefault(Blocks.KBCATRaidEnemyArray.Key);
+            var KBCATRaidPriorityArray = sav.Accessor.FindOrDefault(Blocks.KBCATRaidPriorityArray.Key);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"{strings["ImportNews.Error"]}\n{ex}");
+            return false;
+        }
 
+        return FinalizeImportRaid(sav, identifierBlock, rewardItemBlock, lotteryItemBlock, raidEnemyBlock, raidPriorityBlock, index, ref dist, ref mighty, ref distFixedRewards, ref distLotteryRewards, strings);
+    }
+
+
+    public static bool FinalizeImportRaid(SAV9SV sav,
+                                      byte[] identifierBlock,
+                                      byte[] rewardItemBlock,
+                                      byte[] lotteryItemBlock,
+                                      byte[] raidEnemyBlock,
+                                      byte[] raidPriorityBlock,
+                                      string index,
+                                      ref EncounterRaid9[]? dist,
+                                      ref EncounterRaid9[]? mighty,
+                                      ref Dictionary<ulong, List<Reward>>? distFixedRewards,
+                                      ref Dictionary<ulong, List<Reward>>? distLotteryRewards,
+                                      Dictionary<string, string> strings)
+    {
+        try
+        {
             var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
             var KBCATFixedRewardItemArray = sav.Accessor.FindOrDefault(Blocks.KBCATFixedRewardItemArray.Key);
             var KBCATLotteryRewardItemArray = sav.Accessor.FindOrDefault(Blocks.KBCATLotteryRewardItemArray.Key);
@@ -263,11 +296,18 @@ internal static class ImportUtil
         }
     }
 
-    private static bool FinalizeImportOutbreak(string path,
-                                  SaveFile sv,
+    private static bool ImportOutbreakFiles(string path,
+                                  SAV9SV sav,
                                   bool zip,
                                   Dictionary<string, string> strings)
     {
+        bool isBlueberry;
+        string index;
+        byte[] pokeDataBlock;
+        byte[] paldeaZoneBlock;
+        byte[] kitakamiZoneBlock;
+        byte[] blueberryZoneBlock;
+
         try
         {
             var indexpath = Path.Combine(path, "Identifier.txt");
@@ -285,18 +325,36 @@ internal static class ImportUtil
             if (!File.Exists(kitakamizonepath))
                 kitakamizonepath = Path.Combine(filespath, "zone_su1_array_2_0_0");
 
-            var isBlueberry = File.Exists(blueberryzonepath);
+            isBlueberry = File.Exists(blueberryzonepath);
 
-            var index = File.ReadAllText(indexpath);
-            var pokeDataBlock = File.ReadAllBytes(pokedatapath);
-            var paldeaZoneBlock = File.ReadAllBytes(paldeazonepath);
-            var kitakamiZoneBlock = File.ReadAllBytes(kitakamizonepath);
-            byte[]? blueberryZoneBlock = isBlueberry ? File.ReadAllBytes(blueberryzonepath) : null;
+            index = File.ReadAllText(indexpath);
+            pokeDataBlock = File.ReadAllBytes(pokedatapath);
+            paldeaZoneBlock = File.ReadAllBytes(paldeazonepath);
+            kitakamiZoneBlock = File.ReadAllBytes(kitakamizonepath);
+            blueberryZoneBlock = isBlueberry ? File.ReadAllBytes(blueberryzonepath) : new byte[0];
 
             if (zip) DeleteFilesAndDirectory(path);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"{strings["ImportNews.Error"]}\n{ex}");
+            return false;
+        }
 
-            var sav = (SAV9SV)sv;
+        return FinalizeImportOutbreak(sav, isBlueberry, pokeDataBlock, paldeaZoneBlock, kitakamiZoneBlock, blueberryZoneBlock, index, strings);
+    }
 
+    public static bool FinalizeImportOutbreak(SAV9SV sav,
+                              bool isBlueberry,
+                              byte[] pokeDataBlock,
+                              byte[] paldeaZoneBlock,
+                              byte[] kitakamiZoneBlock,
+                              byte[] blueberryZoneBlock,
+                              string index,
+                              Dictionary<string, string> strings)
+    {
+        try
+        {
             var KBCATOutbreakPokeData = sav.Accessor.FindOrDefault(Blocks.KBCATOutbreakPokeData.Key);
             var KBCATOutbreakZonesPaldea = sav.Accessor.FindOrDefault(Blocks.KBCATOutbreakZonesPaldea.Key);
             var KBCATOutbreakZonesKitakami = sav.Accessor.FindOrDefault(Blocks.KBCATOutbreakZonesKitakami.Key);
@@ -316,10 +374,7 @@ internal static class ImportUtil
                 KBCATOutbreakZonesBlueberry.ChangeData(blueberryZoneBlock);
 
             if (KBCATOutbreakEnabled.Type is not SCTypeCode.Bool2 && KBCATOutbreakEnabled.Type is not SCTypeCode.None)
-                if (int.TryParse(index, out var identifier) && identifier > 0)
-                    KBCATOutbreakEnabled.ChangeBooleanType(SCTypeCode.Bool2);
-                else
-                    KBCATOutbreakEnabled.ChangeBooleanType(SCTypeCode.Bool1);
+                KBCATOutbreakEnabled.ChangeBooleanType(SCTypeCode.Bool2);
 
             if (KBCATOutbreakPokeData is not null && KBCATOutbreakPokeData.Type is not SCTypeCode.None)
                 MessageBox.Show($"{strings["ImportNews.Success"]} [{index}]!");
@@ -333,7 +388,7 @@ internal static class ImportUtil
         }
     }
 
-    private static Dictionary<string, string> GenerateDictionary()
+    public static Dictionary<string, string> GenerateDictionary()
     {
         var strings = new Dictionary<string, string>
         {
