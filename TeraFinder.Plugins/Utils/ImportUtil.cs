@@ -331,7 +331,7 @@ internal static class ImportUtil
             pokeDataBlock = File.ReadAllBytes(pokedatapath);
             paldeaZoneBlock = File.ReadAllBytes(paldeazonepath);
             kitakamiZoneBlock = File.ReadAllBytes(kitakamizonepath);
-            blueberryZoneBlock = isBlueberry ? File.ReadAllBytes(blueberryzonepath) : new byte[0];
+            blueberryZoneBlock = isBlueberry ? File.ReadAllBytes(blueberryzonepath) : [];
 
             if (zip) DeleteFilesAndDirectory(path);
         }

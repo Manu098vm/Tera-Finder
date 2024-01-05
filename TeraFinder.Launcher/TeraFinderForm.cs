@@ -254,5 +254,17 @@ namespace TeraFinder.Launcher
                 this.ResumeLayout();
             }
         }
+
+        private void ImportNullRaid_Click(object sender, EventArgs e)
+        {
+            Plugin.LaunchRaidNullImporter();
+            UpdateEventLabel();
+        }
+
+        private void ImportNullOutbreak_Click(object sender, EventArgs e)
+        {
+            Plugin.LaunchOutbreakNullImporter();
+            UpdateEventLabel();
+        }
     }
 }
