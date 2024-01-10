@@ -86,7 +86,7 @@ public class TeraPlugin : IPlugin
         else
             SAV = new SAV9SV
             {
-                Game = (int)PKHeX.Core.GameVersion.SL,
+                Game = (int)GameVersion.SL,
                 OT = defaultOT,
                 Language = (int)GetLanguageID(language is not null ? language : Language),
             };
@@ -310,7 +310,7 @@ public class TeraPlugin : IPlugin
 
     public void NotifySaveLoaded()
     {
-        Language = PKHeX.Core.GameInfo.CurrentLanguage;
+        Language = GameInfo.CurrentLanguage;
         TranslatePlugins();
         if (SaveFileEditor.SAV is SAV9SV sav)
         {
@@ -321,10 +321,16 @@ public class TeraPlugin : IPlugin
             DisablePlugins();
     }
 
+    public void NotifyDisplayLanguageChanged(string language)
+    {
+        Language = language;
+        TranslatePlugins();
+    }
+
     public string GetSavName()
     {
         var ot = SAV.OT;
-        var game = (PKHeX.Core.GameVersion)SAV.Game;
+        var game = (GameVersion)SAV.Game;
         var tid = (int)SAV.TrainerTID7;
         return $"{game} - {ot} ({tid}) - {Language.ToUpper()}";
     }
