@@ -6173,6 +6173,16 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] dlc2_323 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_323", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] dlc2_324 {
             get {
                 object obj = ResourceManager.GetObject("dlc2_324", resourceCulture);
@@ -6536,6 +6546,26 @@ namespace TeraFinder.Core.Properties {
         internal static byte[] dlc2_501 {
             get {
                 object obj = ResourceManager.GetObject("dlc2_501", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_51 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_51", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dlc2_51_1 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_51_1", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -7697,16 +7727,13 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.SeedChecker=Tera Raid Seed Checker
         ///Plugin.FlagEditor=Edit Game Flags
         ///Plugin.NewsImporter=Import Poké Portal News
+        ///Plugin.ImportNews=Import from files...
+        ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
+        ///Plugin.RaidNull=Import Empty (Null) Raid Event
         ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
         ///Plugin.MapPaldea=Paldea
         ///Plugin.MapKitakami=Kitakami
-        ///Plugin.MapBlueberry=Blueberry
-        ///Plugin.Main=Main
-        ///Plugin.DLC1=DLC1
-        ///Plugin.DLC2=DLC2
-        ///
-        ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolS [rest of string was truncated]&quot;;.
+        ///Plugi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_de {
             get {
@@ -7721,16 +7748,13 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.SeedChecker=Tera Raid Seed Checker
         ///Plugin.FlagEditor=Edit Game Flags
         ///Plugin.NewsImporter=Import Poké Portal News
+        ///Plugin.ImportNews=Import from files...
+        ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
+        ///Plugin.RaidNull=Import Empty (Null) Raid Event
         ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
         ///Plugin.MapPaldea=Paldea
         ///Plugin.MapKitakami=Kitakami
-        ///Plugin.MapBlueberry=Blueberry
-        ///Plugin.Main=Main
-        ///Plugin.DLC1=DLC1
-        ///Plugin.DLC2=DLC2
-        ///
-        ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolS [rest of string was truncated]&quot;;.
+        ///Plugi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_en {
             get {
@@ -7745,16 +7769,12 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.SeedChecker=Inspector de Seeds
         ///Plugin.FlagEditor=Edita Flags del Juego
         ///Plugin.NewsImporter=Importar Noticias Poképortal
+        ///Plugin.ImportNews=Import from files...
+        ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
+        ///Plugin.RaidNull=Import Empty (Null) Raid Event
         ///Plugin.OutbreakViewer=Visor/Editor de Apariciones Masivas
         ///Plugin.MapPaldea=Paldea
-        ///Plugin.MapKitakami=Noroteo
-        ///Plugin.MapBlueberry=Arándano
-        ///Plugin.Main=Main
-        ///Plugin.DLC1=DLC1
-        ///Plugin.DLC2=DLC2
-        ///
-        ///TeraFinderForm=Tera Finder 
-        ///TeraFin [rest of string was truncated]&quot;;.
+        ///Plugin [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_es {
             get {
@@ -7769,16 +7789,13 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.SeedChecker=Tera Raid Seed Checker
         ///Plugin.FlagEditor=Edit Game Flags
         ///Plugin.NewsImporter=Import Poké Portal News
+        ///Plugin.ImportNews=Import from files...
+        ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
+        ///Plugin.RaidNull=Import Empty (Null) Raid Event
         ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
         ///Plugin.MapPaldea=Paldea
         ///Plugin.MapKitakami=Septentria
-        ///Plugin.MapBlueberry=Myrtille
-        ///Plugin.Main=Main
-        ///Plugin.DLC1=DLC1
-        ///Plugin.DLC2=DLC2
-        ///
-        ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectTool [rest of string was truncated]&quot;;.
+        ///Plu [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_fr {
             get {
@@ -7793,16 +7810,11 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.SeedChecker=Controlla Seed
         ///Plugin.FlagEditor=Modifica Flags di Gioco
         ///Plugin.NewsImporter=Importa Evento Poke Portale
+        ///Plugin.ImportNews=Importa da file...
+        ///Plugin.OutbreakNull=Importa l&apos;evento vuoto (Null) per le Comparse Massicce
+        ///Plugin.RaidNull=Importa l&apos;evento vuoto (Null) per i Raid
         ///Plugin.OutbreakViewer=Visualizza e Modifica Comparse Massicce
-        ///Plugin.MapPaldea=Paldea
-        ///Plugin.MapKitakami=Nordivia
-        ///Plugin.MapBlueberry=Mirtillo
-        ///Plugin.Main=Main
-        ///Plugin.DLC1=DLC1
-        ///Plugin.DLC2=DLC2
-        ///
-        ///TeraFinderForm=Tera Finder 
-        ///TeraFinder [rest of string was truncated]&quot;;.
+        ///Plugin. [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_it {
             get {
@@ -7817,16 +7829,13 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.SeedChecker=Tera Raid Seed Checker
         ///Plugin.FlagEditor=Edit Game Flags
         ///Plugin.NewsImporter=Import Poké Portal News
+        ///Plugin.ImportNews=Import from files...
+        ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
+        ///Plugin.RaidNull=Import Empty (Null) Raid Event
         ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
         ///Plugin.MapPaldea=Paldea
         ///Plugin.MapKitakami=Kitakami
-        ///Plugin.MapBlueberry=Blueberry
-        ///Plugin.Main=Main
-        ///Plugin.DLC1=DLC1
-        ///Plugin.DLC2=DLC2
-        ///
-        ///TeraFinderForm=Tera Finder 
-        ///TeraFinderForm.remoteConnectToolS [rest of string was truncated]&quot;;.
+        ///Plugi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_ja {
             get {
@@ -7841,6 +7850,9 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.SeedChecker=테라 레이드 시드체크
         ///Plugin.FlagEditor=게임 플래그 편집
         ///Plugin.NewsImporter=포켓포털 뉴스 불러오기
+        ///Plugin.ImportNews=Import from files...
+        ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
+        ///Plugin.RaidNull=Import Empty (Null) Raid Event
         ///Plugin.OutbreakViewer=대량발생 보기/편집
         ///Plugin.MapPaldea=Paldea
         ///Plugin.MapKitakami=Kitakami
@@ -7849,10 +7861,7 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.DLC1=DLC1
         ///Plugin.DLC2=DLC2
         ///
-        ///TeraFinderForm=테라 파인더 
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=도구
-        ///TeraFinderForm.btnRemoteConnect=스위치에 연결
-        ///TeraFinderForm.languageToolStri [rest of string was truncated]&quot;;.
+        ///Te [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_ko {
             get {
@@ -7867,6 +7876,9 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.SeedChecker=太晶洞窟Seed检索
         ///Plugin.FlagEditor=编辑太晶洞窟解锁进度
         ///Plugin.NewsImporter=导入宝可梦入口站新闻
+        ///Plugin.ImportNews=导入文件
+        ///Plugin.OutbreakNull=清除现有大量出现
+        ///Plugin.RaidNull=清除现有活动团战
         ///Plugin.OutbreakViewer=大量出现查看/编辑
         ///Plugin.MapPaldea=帕底亚
         ///Plugin.MapKitakami=北上乡
@@ -7877,9 +7889,7 @@ namespace TeraFinder.Core.Properties {
         ///
         ///TeraFinderForm=太晶洞窟搜索
         ///TeraFinderForm.remoteConnectToolStripMenuItem=工具
-        ///TeraFinderForm.btnRemoteConnect=远程连接
-        ///TeraFinderForm.languageToolStrip=语言设置
-        ///TeraFinderForm.grp [rest of string was truncated]&quot;;.
+        ///TeraFinderForm. [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_zh {
             get {
@@ -7894,6 +7904,9 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.SeedChecker=太晶洞窟Seed檢索
         ///Plugin.FlagEditor=編輯太晶洞窟解鎖進度
         ///Plugin.NewsImporter=導入寶可夢入口站新聞
+        ///Plugin.ImportNews=Import from files...
+        ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
+        ///Plugin.RaidNull=Import Empty (Null) Raid Event
         ///Plugin.OutbreakViewer=大量出現查看/編輯
         ///Plugin.MapPaldea=Paldea
         ///Plugin.MapKitakami=Kitakami
@@ -7902,11 +7915,7 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.DLC1=DLC1
         ///Plugin.DLC2=DLC2
         ///
-        ///TeraFinderForm=太晶洞窟搜索
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=工具
-        ///TeraFinderForm.btnRemoteConnect=遠程連接
-        ///TeraFinderForm.languageToolStrip=語言設置
-        ///TeraF [rest of string was truncated]&quot;;.
+        ///TeraFinderF [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_zh2 {
             get {
