@@ -220,17 +220,17 @@ public class GridEntry
 /// <summary>
 /// Toggles the marking at a given index.
 /// </summary>
-/// <param name="encounterFilter">check for Stars and Species.</param>
-/// <param name="ivFilter">check for IVs</param>
-/// /// <param name="statFilter">check for TeraType, Ability, Nature, Gender.</param>
-/// <param name="auxFilter">check for EC and Scale</param>
+/// <param name="isEncounterFilter">check for Stars and Species.</param>
+/// <param name="isIvFilter">check for IVs</param>
+/// /// <param name="isStatFilter">check for TeraType, Ability, Nature, Gender.</param>
+/// <param name="isAuxFilter">check for EC and Scale</param>
 /// <returns>Current marking value</returns>
-public class TeraFilter(bool encounterFilter, bool ivFilter, bool statFilter, bool auxFilter)
+public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilter, bool isAuxFilter)
 {
-    protected bool EncounterFilter { get; set; } = encounterFilter;
-    protected bool IVFilter { get; set; } = ivFilter;
-    protected bool StatFilter { get; set; } = statFilter;
-    protected bool AuxFilter { get; set; } = auxFilter;
+    protected bool EncounterFilter { get; set; } = isEncounterFilter;
+    protected bool IVFilter { get; set; } = isIvFilter;
+    protected bool StatFilter { get; set; } = isStatFilter;
+    protected bool AuxFilter { get; set; } = isAuxFilter;
 
     public bool IsFormFilter { get; set; }
 
