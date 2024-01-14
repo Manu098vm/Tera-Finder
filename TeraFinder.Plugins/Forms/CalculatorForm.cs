@@ -373,7 +373,18 @@ public partial class CalculatorForm : Form
 
     private void CreateFilter()
     {
-        var filter = new TeraFilter
+        var stars = GetStars();
+        var speciesForm = GetSpeciesAndForm();
+        var teraType = (sbyte)(cmbTeraType.SelectedIndex - 1);
+        var gender = GetGender();
+
+        var encounterFilter = speciesForm[0] > 0 || stars > 0;
+        var ivFilter = nHpMin.Value > 0 || nAtkMin.Value > 0 || nDefMin.Value > 0 || nSpaMin.Value > 0 || nSpdMin.Value > 0 || nSpeMin.Value > 0 || numScaleMin.Value > 0 ||
+            nHpMax.Value < 31 || nAtkMax.Value < 31 || nDefMax.Value < 31 || nSpaMax.Value < 31 || nSpdMax.Value < 31 || nSpeMax.Value < 31;
+        var statFilter = teraType != -1 || cmbAbility.SelectedIndex != 0 || cmbNature.SelectedIndex != 25 || gender is not Gender.Random;
+        var auxFilter = numScaleMin.Value > 0 || numScaleMax.Value < 255 || cmbEC.SelectedIndex == 1;
+
+        var filter = new TeraFilter(encounterFilter, ivFilter, statFilter, auxFilter)
         {
             MinHP = (int)nHpMin.Value,
             MaxHP = (int)nHpMax.Value,
@@ -389,16 +400,17 @@ public partial class CalculatorForm : Form
             MaxSpe = (int)nSpeMax.Value,
             MinScale = (int)numScaleMin.Value,
             MaxScale = (int)numScaleMax.Value,
-            Stars = GetStars(),
-            Species = GetSpeciesAndForm()[0],
-            Form = GetSpeciesAndForm()[1],
-            TeraType = (sbyte)(cmbTeraType.SelectedIndex - 1),
+            Stars = stars,
+            Species = speciesForm[0],
+            Form = speciesForm[1],
+            TeraType = teraType,
             AbilityNumber = cmbAbility.SelectedIndex,
             Nature = (byte)cmbNature.SelectedIndex,
-            Gender = GetGender(),
+            Gender = gender,
             Shiny = (TeraShiny)cmbShiny.SelectedIndex,
+
             AltEC = cmbEC.SelectedIndex == 1,
-            CheckForm = cmbSpecies.SelectedIndex > 0,
+            IsFormFilter = speciesForm[1] > 0,
         };
 
         var isblack = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black or RaidContent.Event_Mighty;
@@ -577,6 +589,9 @@ public partial class CalculatorForm : Form
         else
             possibleGroups.Add(index);
 
+        var stopwatch = new System.Diagnostics.Stopwatch();
+        stopwatch.Start();
+
         foreach (var group in possibleGroups)
         {
             if (token.IsCancellationRequested)
@@ -643,6 +658,8 @@ public partial class CalculatorForm : Form
                 }
 
                 resetEvent.WaitOne();
+
+                MessageBox.Show($"{Strings["ActionSearch"]} {Strings["Found"]} {CalculatedList.Count} {Strings["True"]}\nTime Elapsed: {stopwatch.Elapsed}");
 
                 await Task.Delay(0_300).ConfigureAwait(false);
 

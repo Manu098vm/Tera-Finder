@@ -217,8 +217,23 @@ public class GridEntry
     }
 }
 
-public class TeraFilter
+/// <summary>
+/// Toggles the marking at a given index.
+/// </summary>
+/// <param name="encounterFilter">check for Stars and Species.</param>
+/// <param name="ivFilter">check for IVs</param>
+/// /// <param name="statFilter">check for TeraType, Ability, Nature, Gender.</param>
+/// <param name="auxFilter">check for EC and Scale</param>
+/// <returns>Current marking value</returns>
+public class TeraFilter(bool encounterFilter, bool ivFilter, bool statFilter, bool auxFilter)
 {
+    protected bool EncounterFilter { get; set; } = encounterFilter;
+    protected bool IVFilter { get; set; } = ivFilter;
+    protected bool StatFilter { get; set; } = statFilter;
+    protected bool AuxFilter { get; set; } = auxFilter;
+
+    public bool IsFormFilter { get; set; }
+
     public int MinHP { get; set; }
     public int MaxHP { get; set; }
     public int MinAtk { get; set; }
@@ -242,51 +257,87 @@ public class TeraFilter
     public Gender Gender { get; set; }
     public TeraShiny Shiny { get; set; }
     public bool AltEC { get; set; }
-    public bool CheckForm { get; set; }
 
     public bool IsFilterMatch(TeraDetails res)
     {
-        if (!(MinHP <= res.HP && res.HP <= MaxHP))
-            return false;
-        if (!(MinAtk <= res.ATK && res.ATK <= MaxAtk))
-            return false;
-        if (!(MinDef <= res.DEF && res.DEF <= MaxDef))
-            return false;
-        if (!(MinSpa <= res.SPA && res.SPA <= MaxSpa))
-            return false;
-        if (!(MinSpd <= res.SPD && res.SPD <= MaxSpd))
-            return false;
-        if (!(MinSpe <= res.SPE && res.SPE <= MaxSpe))
-            return false;
-        if (!(MinScale <= res.Scale && res.Scale <= MaxScale))
-            return false;
+        if (EncounterFilter)
+        {
+            if (Species != 0)
+                if (Species != res.Species)
+                return false;
 
-        if (Stars != 0 && Stars != res.Stars)
-            return false;
+            if (Stars != 0)
+                if(Stars != res.Stars)
+                return false;
 
-        if (Species != 0 && Species != res.Species)
-            return false;
-        if (CheckForm && Form != res.Form)
-            return false;
+            if (IsFormFilter)
+                if (Form != res.Form)
+                    return false;
+        }
 
-        if (TeraType != -1 && TeraType != res.TeraType)
-            return false;
-        if (AbilityNumber != 0 && AbilityNumber != res.GetAbilityNumber())
-            return false;
-        if(Nature != 25 && Nature != res.Nature)
-            return false;
-        if (Gender != Gender.Random && Gender != res.Gender)
-            return false;
+        if (IVFilter)
+        {
+            if (!(MinHP <= res.HP && res.HP <= MaxHP))
+                return false;
+            if (!(MinAtk <= res.ATK && res.ATK <= MaxAtk))
+                return false;
+            if (!(MinDef <= res.DEF && res.DEF <= MaxDef))
+                return false;
+            if (!(MinSpa <= res.SPA && res.SPA <= MaxSpa))
+                return false;
+            if (!(MinSpd <= res.SPD && res.SPD <= MaxSpd))
+                return false;
+            if (!(MinSpe <= res.SPE && res.SPE <= MaxSpe))
+                return false;
+        }
 
-        if (Shiny is TeraShiny.No && res.Shiny >= TeraShiny.Yes)
-            return false;
-        if (Shiny is TeraShiny.Yes && res.Shiny < TeraShiny.Yes)
-            return false;
-        if (Shiny > TeraShiny.Yes && Shiny != res.Shiny)
-            return false;
+        if (StatFilter)
+        {
+            if (TeraType != -1)
+                if (TeraType != res.TeraType)
+                    return false;
 
-        if (AltEC && res.EC % 100 != 0)
-            return false;
+            if (AbilityNumber != 0)
+                if (AbilityNumber != res.GetAbilityNumber())
+                    return false;
+
+            if (Nature != 25)
+                if (Nature != res.Nature)
+                    return false;
+
+            if (Gender != Gender.Random)
+                if (Gender != res.Gender)
+                    return false;
+        }
+
+        if (Shiny is > TeraShiny.Any)
+        {
+            if (Shiny is TeraShiny.No)
+            {
+                if (res.Shiny >= TeraShiny.Yes)
+                    return false;
+            }
+            else if (Shiny is TeraShiny.Yes)
+            {
+                if (res.Shiny < TeraShiny.Yes)
+                    return false;
+            }
+            else if (Shiny > TeraShiny.Yes)
+            {
+                if (Shiny != res.Shiny)
+                    return false;
+            }
+        }
+
+        if (AuxFilter)
+        {
+            if (AltEC)
+                if (res.EC % 100 != 0)
+                    return false;
+
+            if (!(MinScale <= res.Scale && res.Scale <= MaxScale))
+                return false;
+        }
 
         return true;
     }
