@@ -224,7 +224,6 @@ public class GridEntry
 /// <param name="isIvFilter">check for IVs</param>
 /// /// <param name="isStatFilter">check for TeraType, Ability, Nature, Gender.</param>
 /// <param name="isAuxFilter">check for EC and Scale</param>
-/// <returns>Current marking value</returns>
 public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilter, bool isAuxFilter)
 {
     protected bool EncounterFilter { get; set; } = isEncounterFilter;
