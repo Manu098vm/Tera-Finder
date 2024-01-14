@@ -249,6 +249,8 @@ public partial class RewardCalcForm : Form
             }
         }
 
+        var encounterFilter = cmbSpecies.SelectedIndex > 0 || cmbStars.SelectedIndex > 0;
+
         var itemlist = new List<Reward>();
         foreach (var item in items)
         {
@@ -257,13 +259,12 @@ public partial class RewardCalcForm : Form
             else itemlist.Add(new Reward { ItemID = item.ItemID, Amount = item.Amount });
         }
 
-        var filter = new RewardFilter
+        var filter = new RewardFilter(encounterFilter, anyherba)
         {
             FilterRewards = [.. itemlist],
             Species = (ushort)cmbSpecies.SelectedIndex,
             Stars = cmbStars.SelectedIndex,
             Shiny = chkShiny.Checked ? TeraShiny.Yes : TeraShiny.Any,
-            AnyHerba = anyherba,
         };
 
         if (Filter is null && filter.IsFilterNull())
