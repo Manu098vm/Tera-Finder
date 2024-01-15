@@ -1,6 +1,5 @@
 using PKHeX.Core;
 using System.Buffers.Binary;
-using System.Diagnostics.CodeAnalysis;
 using static PKHeX.Core.AbilityPermission;
 
 //Extension of https://github.com/kwsch/PKHeX/blob/master/PKHeX.Core/Legality/Encounters/EncounterStatic/EncounterTera9.cs
