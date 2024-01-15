@@ -1,5 +1,6 @@
 using PKHeX.Core;
 using System.Buffers.Binary;
+using System.Diagnostics.CodeAnalysis;
 using static PKHeX.Core.AbilityPermission;
 
 //Extension of https://github.com/kwsch/PKHeX/blob/master/PKHeX.Core/Legality/Encounters/EncounterStatic/EncounterTera9.cs
@@ -8,14 +9,18 @@ namespace TeraFinder.Core;
 /// <summary>
 /// Generation 9 Tera Raid Encounter
 /// </summary>
-public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>, ITeraRaid9, IMoveset, IFlawlessIVCount, IFixedGender
+public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>, ITeraRaid9, IExtendedTeraRaid9, IMoveset, IFlawlessIVCount, IFixedGender
 {
     //TeraFinder Serialization
     public uint Identifier { get; private init; }
     public ulong FixedRewardHash { get; private init; }
     public ulong LotteryRewardHash { get; private init; }
     public int Item { get; private init; }
-    public required ExtraMoves ExtraMoves { get; init; } 
+    public required ExtraMoves ExtraMoves { get; init; }
+    public required Nature Nature { get; init; }
+    public required SizeType9 ScaleType { get; init; }
+    public required byte Scale { get; init; }
+    public required IndividualValueSet IVs { get; init; }
 
     //PKHeX Serialization
     public int Generation => 9;
@@ -132,6 +137,11 @@ public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>
         _ => 0,
     };
 
+    public ushort GetRandRateTotalScarlet(int stage) => 0;
+    public ushort GetRandRateTotalViolet(int stage) => 0;
+    public ushort GetRandRateMinScarlet(int stage) => (ushort)RandRateMinScarlet;
+    public ushort GetRandRateMinViolet(int stage) => (ushort)RandRateMinViolet;
+
     public static EncounterTera9[] GetArray(ReadOnlySpan<byte> data, TeraRaidMapParent map)
     {
         var count = data.Length / SerializedSize;
@@ -173,7 +183,10 @@ public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>
             BinaryPrimitives.ReadUInt16LittleEndian(data[0x36..]),
             BinaryPrimitives.ReadUInt16LittleEndian(data[0x38..]),
             BinaryPrimitives.ReadUInt16LittleEndian(data[0x3A..])),
-
+        IVs = default,
+        Nature = Nature.Random,
+        ScaleType = SizeType9.RANDOM,
+        Scale = 0,
         Map = map,
     };
 
