@@ -437,7 +437,7 @@ public partial class EditorForm : Form
 
             if (encounter is not null)
             {
-                var rngres = TeraUtil.CalcRNG(raid.Seed, SAV.TrainerTID7, SAV.TrainerSID7, (RaidContent)raid.Content, encounter, groupid);
+                var rngres = TeraUtil.CalcRNG(raid.Seed, SAV.ID32, (RaidContent)raid.Content, encounter, groupid);
 
                 var species = GameInfo.GetStrings(Language).specieslist;
                 var types = GameInfo.GetStrings(Language).types;
@@ -688,7 +688,7 @@ public partial class EditorForm : Form
                 }, CurrMap) :
             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, SAV.Version, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, SAV.Version, progress, Dist!, groupid);
             var rngres = encounter is not null && (encounter.Species == originalEncounter.Species && encounter.Form == originalEncounter.Form) ?
-                TeraUtil.CalcRNG(seed, SAV.TrainerTID7, SAV.TrainerSID7, content, encounter, groupid) : null;
+                TeraUtil.CalcRNG(seed, SAV.ID32, content, encounter, groupid) : null;
 
             var isShiny = rngres is not null && rngres.Shiny >= TeraShiny.Yes;
 
@@ -882,7 +882,7 @@ public partial class EditorForm : Form
                             content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(tseed, SAV.Version, progress, Mighty!, groupid) : TeraUtil.GetDistEncounter(tseed, SAV.Version, progress, Dist!, groupid);
 
                         var rngres = encounter is not null && (!keepEncounter || (encounter.Species == originalEncounter.Species && encounter.Form == originalEncounter.Form)) ?
-                            TeraUtil.CalcRNG(tseed, SAV.TrainerTID7, SAV.TrainerSID7, content, encounter, groupid) : null;
+                            TeraUtil.CalcRNG(tseed, SAV.ID32, content, encounter, groupid) : null;
 
                         var isShiny = rngres is not null && rngres.Shiny >= TeraShiny.Yes;
 

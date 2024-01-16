@@ -124,7 +124,7 @@ public partial class CheckerForm : Form
                     var encounter = TeraUtil.GetTeraEncounter(seed, version, TeraUtil.GetStars(seed, progress), encounters, map);
                     if (encounter is not null)
                     {
-                        var rng = TeraUtil.CalcRNG(seed, pk.TrainerTID7, pk.TrainerSID7, progress is not GameProgress.None ?
+                        var rng = TeraUtil.CalcRNG(seed, pk.ID32, progress is not GameProgress.None ?
                             RaidContent.Standard : RaidContent.Black, encounter, 0);
 
                         if (CompareResult(pk, rng))
@@ -151,7 +151,7 @@ public partial class CheckerForm : Form
 
                             if (encounter is not null)
                             {
-                                var rng = TeraUtil.CalcRNG(seed, pk.TrainerTID7, pk.TrainerSID7, content, encounter, groupid);
+                                var rng = TeraUtil.CalcRNG(seed, pk.ID32, content, encounter, groupid);
 
                                 if (CompareResult(pk, rng))
                                 {

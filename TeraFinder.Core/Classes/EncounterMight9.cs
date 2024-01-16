@@ -4,7 +4,7 @@ using static System.Buffers.Binary.BinaryPrimitives;
 namespace TeraFinder.Core;
 
 //Extension of https://github.com/kwsch/PKHeX/blob/master/PKHeX.Core/Legality/Encounters/EncounterStatic/EncounterMight9.cs
-public sealed record EncounterMight9 : IEncounterable, IEncounterConvertible<PK9>, ITeraRaid9, IMoveset, IFlawlessIVCount, IFixedGender
+public sealed record EncounterMight9 : IEncounterable, IEncounterConvertible<PK9>, ITeraRaid9, IExtendedTeraRaid9, IMoveset, IFlawlessIVCount, IFixedGender
 {
     //TeraFinder Serialization
     public uint Identifier { get; private init; }

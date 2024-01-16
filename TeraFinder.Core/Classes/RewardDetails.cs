@@ -219,35 +219,48 @@ public class RewardGridEntry
     }
 }
 
-public class RewardFilter
+/// <summary>
+/// Toggles the marking at a given index.
+/// </summary>
+/// <param name="isEncounterFilter">check for Stars and Species.</param>
+/// <param name="isAnyHerbaFilter">check for Any Herba Mystica.</param>
+public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
 {
+    protected bool EncounterFilter { get; set; } = isEncounterFilter;
+    protected bool HerbaFilter { get; set; } = isAnyHerbaFilter;
+
     public Reward[]? FilterRewards { get; set; }
     public ushort Species { get; set; }
     public int Stars { get; set; }
     public TeraShiny Shiny { get; set; }
-    public bool AnyHerba { get; set; }
 
     public bool IsFilterMatch(RewardDetails res)
     {
-        if (Stars > 0 && Stars != res.Stars)
-            return false;
+        if (EncounterFilter)
+        {
+            if (Species > 0)
+                if (Species != res.Species)
+                    return false;
 
-        if (Species > 0 && Species != res.Species)
-            return false;
+            if (Stars > 0)
+                if (Stars != res.Stars)
+                    return false;
+        }
 
-        if (Shiny > TeraShiny.No && res.Shiny < TeraShiny.Yes)
-            return false;
+        if (Shiny > TeraShiny.No)
+            if (res.Shiny < TeraShiny.Yes)
+                return false;
 
         if (FilterRewards is not null && FilterRewards.Length > 0)
         {
             var itemlist = new List<Reward>();
             foreach (var item in res.Rewards!)
             {
-                var index = AnyHerba && item.IsHerba() ? itemlist.FindIndex(i => i.ItemID == ushort.MaxValue-2) : itemlist.FindIndex(i => i.ItemID == item.ItemID);
+                var index = HerbaFilter && item.IsHerba() ? itemlist.FindIndex(i => i.ItemID == ushort.MaxValue-2) : itemlist.FindIndex(i => i.ItemID == item.ItemID);
                 if (index >= 0)
                     itemlist[index].Amount += item.Amount;
                 else
-                    itemlist.Add(new Reward { ItemID = AnyHerba && item.IsHerba() ? ushort.MaxValue-2 : item.ItemID, Amount = item.Amount });
+                    itemlist.Add(new Reward { ItemID = HerbaFilter && item.IsHerba() ? ushort.MaxValue-2 : item.ItemID, Amount = item.Amount });
             }
 
             var match = 0;

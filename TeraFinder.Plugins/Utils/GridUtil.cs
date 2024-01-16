@@ -175,7 +175,7 @@ public static class GridUtil
                         content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!, groupid) :
                         TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!, groupid);
 
-                    var res = TeraUtil.GenerateTeraEntity(sav, encounter!, content, seed, tid, sid, groupid);
+                    var res = TeraUtil.GenerateTeraEntity(sav, encounter!, content, seed, TeraUtil.GetID32(tid, sid), groupid);
                     var la = new LegalityAnalysis(res);
 
                     if (!la.Valid)
@@ -257,7 +257,7 @@ public static class GridUtil
                         content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!) :
                         TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!);
 
-                    var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter!, groupid);
+                    var rngres = TeraUtil.CalcRNG(seed, TeraUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10)), content, encounter!, groupid);
 
                     var lvl0 = RewardUtil.GetRewardList(rngres, encounter!.FixedRewardHash, encounter!.LotteryRewardHash,
                         encounter!.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards, encounter!.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards, 0);
@@ -404,7 +404,7 @@ public static class GridUtil
                         content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!, groupid) :
                         TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!, groupid);
 
-                    var res = TeraUtil.GenerateTeraEntity(sav, encounter!, content, seed, tid, sid, groupid);
+                    var res = TeraUtil.GenerateTeraEntity(sav, encounter!, content, seed, TeraUtil.GetID32(tid, sid), groupid);
                     var la = new LegalityAnalysis(res);
 
                     if (!la.Valid)
@@ -472,7 +472,7 @@ public static class GridUtil
 
                     if (encounter is not null)
                     {
-                        var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter, groupid);
+                        var rngres = TeraUtil.CalcRNG(seed, TeraUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10)), content, encounter, groupid);
                         var success = true;
 
                         if (rngres != null)
@@ -516,7 +516,7 @@ public static class GridUtil
 
                     if (encounter is not null)
                     {
-                        var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter, groupid);
+                        var rngres = TeraUtil.CalcRNG(seed, TeraUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10)), content, encounter, groupid);
                         var success = true;
 
                         if (rngres != null)
@@ -575,7 +575,7 @@ public static class GridUtil
 
                             if (accuratesearch)
                             {
-                                var det = TeraUtil.CalcRNG(seed, sav.TrainerTID7, sav.TrainerSID7, content, encounter, groupid);
+                                var det = TeraUtil.CalcRNG(seed, sav.ID32, content, encounter, groupid);
                                 list = RewardUtil.GetRewardList(det, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
                                 shiny = det.Shiny;
                             }
@@ -637,7 +637,7 @@ public static class GridUtil
 
                     if (encounter is not null)
                     {
-                        var rngres = TeraUtil.CalcRNG(seed, Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10), content, encounter, groupid);
+                        var rngres = TeraUtil.CalcRNG(seed, TeraUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10)), content, encounter, groupid);
                         var success = true;
 
                         if (rngres != null)
