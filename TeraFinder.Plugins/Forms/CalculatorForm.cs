@@ -687,7 +687,7 @@ public partial class CalculatorForm : Form
         if (encounter is null)
             return null;
 
-        return TeraUtil.CalcRNG(seed, sav.TrainerTID7, sav.TrainerSID7, content, encounter, groupid, calc);
+        return TeraUtil.CalcRNG(seed, sav.ID32, content, encounter, groupid, calc);
     }
 
     private void dataGrid_MouseUp(object sender, MouseEventArgs e)

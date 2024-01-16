@@ -528,7 +528,7 @@ public partial class RewardCalcForm : Form
 
         if (accuratesearch)
         {
-            var det = TeraUtil.CalcRNG(seed, sav.TrainerTID7, sav.TrainerSID7, content, encounter, groupid, calc);
+            var det = TeraUtil.CalcRNG(seed, sav.ID32, content, encounter, groupid, calc);
             list = RewardUtil.GetRewardList(det, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist, boost);
             shiny = det.Shiny;
         }

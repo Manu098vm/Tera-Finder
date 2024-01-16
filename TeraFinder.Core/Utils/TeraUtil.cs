@@ -21,10 +21,14 @@ public static class TeraUtil
         return Encoding.UTF8.GetString((byte[]) obj);
     }
 
-    public static PK9 GenerateTeraEntity(SAV9SV sav, EncounterRaid9 encounter, RaidContent content, uint seed, uint tid, uint sid, int groupid)
+    public static uint GetID32(uint tid7, uint sid7) => (uint)(tid7 + ((ulong)sid7 * 1000000));
+    public static ushort GetTID16(uint id32) => (ushort)(id32 & 0xFFFF);
+    public static ushort GetSID16(uint id32) => (ushort)(id32 >> 16);
+
+    public static PK9 GenerateTeraEntity(SAV9SV sav, EncounterRaid9 encounter, RaidContent content, uint seed, uint id32, int groupid)
     {
         var template = new PK9(Properties.Resources.template);
-        var rngres = CalcRNG(seed, tid, sid, content, encounter, groupid);
+        var rngres = CalcRNG(seed, id32, content, encounter, groupid);
         template.Species = rngres.Species;
         template.Form = rngres.Form;
         if (rngres.Stars == 7) template.RibbonMarkMightiest = true;
@@ -34,8 +38,7 @@ public static class TeraUtil
         template.Obedience_Level = (byte)rngres.Level;
         template.TeraTypeOriginal = (MoveType)rngres.TeraType;
         template.EncryptionConstant = rngres.EC;
-        template.TrainerTID7 = tid;
-        template.TrainerSID7 = sid;
+        template.ID32 = id32;
         template.Version = sav.Game;
         template.Language = (byte)sav.Language;
         template.HT_Name = sav.OT;
@@ -127,12 +130,6 @@ public static class TeraUtil
             return GameProgress.UnlockedTeraRaids;
 
         return GameProgress.Beginning;
-    }
-
-    public static MoveType GetType(uint seed)
-    {
-        var xoro = new Xoroshiro128Plus(seed);
-        return (MoveType)xoro.NextInt(18);
     }
 
     public static int GetStars(uint seed, GameProgress progress)
@@ -339,8 +336,24 @@ public static class TeraUtil
         return PersonalTable.SV.GetFormEntry(enc.Species, enc.Form).Gender;
     }
 
-    public static TeraDetails CalcRNG(uint seed, uint tid, uint sid, RaidContent content, EncounterRaid9 encounter, int groupid, ulong calc = 0)
+    public static TeraDetails CalcRNG(uint seed, uint id32, RaidContent content, EncounterRaid9 encounter, int groupid, ulong calc = 0)
     {
+        var rngres = new TeraDetails
+        {
+            Seed = seed,
+            Stars = encounter.Stars,
+            Species = encounter.Species,
+            Level = encounter.Level,
+            Form = encounter.Form,
+            TeraType = (sbyte)Tera9RNG.GetTeraType(seed, encounter.TeraType, encounter.Species, encounter.Form),
+            Move1 = encounter.Moves.Move1,
+            Move2 = encounter.Moves.Move2,
+            Move3 = encounter.Moves.Move3,
+            Move4 = encounter.Moves.Move4,
+            EventIndex = (byte)groupid,
+            Calcs = calc,
+        };
+
         var param = new GenerateParam9
         {
             Species = encounter.Species,
@@ -357,49 +370,9 @@ public static class TeraUtil
             IVs = encounter.IVs,
         };
 
-        var pkm = new PK9
-        {
-            Species = encounter.Species,
-            Form = encounter.Form,
-            TrainerTID7 = tid,
-            TrainerSID7 = sid,
-            TeraTypeOriginal = (MoveType)Tera9RNG.GetTeraType(seed, encounter.TeraType, encounter.Species, encounter.Form),
-        };
+        Encounter9RNG.GenerateData(rngres, param, id32, seed);
 
-        Encounter9RNG.GenerateData(pkm, param, EncounterCriteria.Unrestricted, seed);
-        var shiny = pkm.IsShiny ? (pkm.ShinyXor == 0 ? TeraShiny.Square : TeraShiny.Star) : TeraShiny.No;
-
-        var result = new TeraDetails
-        {
-            Seed = seed,
-            Stars = encounter.Stars,
-            Species = encounter.Species,
-            Level = encounter.Level,
-            Form = encounter.Form,
-            TeraType = (sbyte)pkm.TeraTypeOriginal,
-            EC = pkm.EncryptionConstant,
-            PID = pkm.PID,
-            HP = pkm.IV_HP,
-            ATK = pkm.IV_ATK,
-            DEF = pkm.IV_DEF,
-            SPA = pkm.IV_SPA,
-            SPD = pkm.IV_SPD,
-            SPE = pkm.IV_SPE,
-            Ability = pkm.Ability,
-            Nature = (byte)pkm.Nature,
-            Gender = (Gender)pkm.Gender,
-            Shiny = shiny,
-            Height = pkm.HeightScalar,
-            Weight = pkm.WeightScalar,
-            Scale = pkm.Scale,
-            Move1 = encounter.Moves.Move1,
-            Move2 = encounter.Moves.Move2,
-            Move3 = encounter.Moves.Move3,
-            Move4 = encounter.Moves.Move4,
-            EventIndex = (byte)groupid,
-            Calcs = calc,
-        };
-        return result;
+        return rngres;
     }
 
     public static int GetDeliveryGroupID(SAV9SV sav, GameProgress progress, RaidContent content, EncounterRaid9[]? Dist, RaidSpawnList9 raids, int currRaid = -1)
