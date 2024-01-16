@@ -589,9 +589,6 @@ public partial class CalculatorForm : Form
         else
             possibleGroups.Add(index);
 
-        var stopwatch = new System.Diagnostics.Stopwatch();
-        stopwatch.Start();
-
         foreach (var group in possibleGroups)
         {
             if (token.IsCancellationRequested)
@@ -658,8 +655,6 @@ public partial class CalculatorForm : Form
                 }
 
                 resetEvent.WaitOne();
-
-                MessageBox.Show($"{Strings["ActionSearch"]} {Strings["Found"]} {CalculatedList.Count} {Strings["True"]}\nTime Elapsed: {stopwatch.Elapsed}");
 
                 await Task.Delay(0_300).ConfigureAwait(false);
 
