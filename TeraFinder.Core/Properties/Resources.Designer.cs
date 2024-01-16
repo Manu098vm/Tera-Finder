@@ -6403,6 +6403,16 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] dlc2_440 {
+            get {
+                object obj = ResourceManager.GetObject("dlc2_440", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] dlc2_45 {
             get {
                 object obj = ResourceManager.GetObject("dlc2_45", resourceCulture);
