@@ -38,6 +38,8 @@ public class EncounterRaid9(ITeraRaid9 encounter) : IEncounterable, IEncounterCo
     public int Location => Encounterable.Location;
     public int EggLocation => Encounterable.EggLocation;
     public Ball FixedBall => Encounterable.FixedBall;
+    public TeraRaidMapParent Map => GetEncounterMap();
+    public RaidContent Content => GetRaidContent();
 
     public uint Identifier => GetIdentifier(); 
     public int Item => GetItem(); 
@@ -188,5 +190,25 @@ public class EncounterRaid9(ITeraRaid9 encounter) : IEncounterable, IEncounterCo
         }
 
         return false;
+    }
+
+    private TeraRaidMapParent GetEncounterMap() =>
+        EncounterRaid switch
+        {
+            EncounterTera9 tera9 => tera9.Map,
+            PKHeX.Core.EncounterTera9 tera9 => tera9.Map,
+            _ => TeraRaidMapParent.Paldea,
+        };
+
+    private RaidContent GetRaidContent()
+    {
+        if (Stars == 7)
+            return RaidContent.Event_Mighty;
+        if (IsDistribution)
+            return RaidContent.Event;
+        if (Stars == 6)
+            return RaidContent.Black;
+
+        return RaidContent.Standard;
     }
 }
