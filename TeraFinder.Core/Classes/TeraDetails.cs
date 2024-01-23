@@ -2,7 +2,7 @@
 
 namespace TeraFinder.Core;
 
-public class TeraDetails
+public class TeraDetails : IRaidDetails
 {
     public uint Seed { get; set; }
     public TeraShiny Shiny { get; set; }

@@ -62,11 +62,11 @@ public class Reward
     public bool IsHerba() => ItemID >= 1904 && ItemID <= 1908;
 }
 
-public class RewardDetails
+public class RewardDetails : IRaidDetails
 {
     public uint Seed { get; set; }
     public List<Reward>? Rewards {get; set;}
-    public uint Species { get; set; }
+    public ushort Species { get; set; }
     public int Stars { get; set; }
     public TeraShiny Shiny { get; set; }
     public byte EventIndex { get; set; }
