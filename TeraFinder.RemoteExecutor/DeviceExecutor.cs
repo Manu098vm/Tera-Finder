@@ -1,9 +1,16 @@
 ﻿using PKHeX.Core;
+using TeraFinder.Core;
 using SysBot.Base;
 using System.Globalization;
 using static System.Buffers.Binary.BinaryPrimitives;
 
-namespace TeraFinder.Core;
+namespace TeraFinder.RemoteExecutor;
+
+public enum RoutineType
+{
+    None,
+    ReadWrite,
+}
 
 public class DeviceState : BotState<RoutineType, SwitchConnectionConfig>
 {
@@ -18,7 +25,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
     public const decimal BotbaseVersion = 2.3m;
 
     //Game Infos
-    private const string VersionNumber = "3.0.0";
+    private const string VersionNumber = "3.0.1";
     private const string ScarletID = "0100A3D008C5C000";
     private const string VioletID = "01008F6008C5E000";
 
@@ -120,22 +127,22 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
 
-        var Unlocked6Stars = await ReadEncryptedBlockBool(Blocks.KUnlockedRaidDifficulty6, token).ConfigureAwait(false);
+        var Unlocked6Stars = await ReadEncryptedBlockBool(BlockDefinitions.KUnlockedRaidDifficulty6, token).ConfigureAwait(false);
 
         if (Unlocked6Stars)
             return GameProgress.Unlocked6Stars;
 
-        var Unlocked5Stars = await ReadEncryptedBlockBool(Blocks.KUnlockedRaidDifficulty5, token).ConfigureAwait(false);
+        var Unlocked5Stars = await ReadEncryptedBlockBool(BlockDefinitions.KUnlockedRaidDifficulty5, token).ConfigureAwait(false);
 
         if (Unlocked5Stars)
             return GameProgress.Unlocked5Stars;
 
-        var Unlocked4Stars = await ReadEncryptedBlockBool(Blocks.KUnlockedRaidDifficulty4, token).ConfigureAwait(false);
+        var Unlocked4Stars = await ReadEncryptedBlockBool(BlockDefinitions.KUnlockedRaidDifficulty4, token).ConfigureAwait(false);
 
         if (Unlocked4Stars)
             return GameProgress.Unlocked4Stars;
 
-        var Unlocked3Stars = await ReadEncryptedBlockBool(Blocks.KUnlockedRaidDifficulty3, token).ConfigureAwait(false);
+        var Unlocked3Stars = await ReadEncryptedBlockBool(BlockDefinitions.KUnlockedRaidDifficulty3, token).ConfigureAwait(false);
 
         if (Unlocked3Stars)
             return GameProgress.Unlocked3Stars;
@@ -143,7 +150,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         return GameProgress.UnlockedTeraRaids;
     }
 
-    public async Task<bool> WriteBlock(object data, DataBlock block, CancellationToken token, object? toExpect = default)
+    public async Task<bool> WriteBlock(object data, BlockDefinition block, CancellationToken token, object? toExpect = default)
     {
         if (block.IsEncrypted)
             return await WriteEncryptedBlockSafe(block, toExpect, data, token).ConfigureAwait(false);
@@ -152,7 +159,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
     }
 
     //Thanks santacrab2 & Zyro670 for the help with the following code
-    public async Task<object?> ReadBlock(DataBlock block, CancellationToken token)
+    public async Task<object?> ReadBlock(BlockDefinition block, CancellationToken token)
     {
         if (block.IsEncrypted)
             return await ReadEncryptedBlock(block, token).ConfigureAwait(false);
@@ -160,7 +167,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
             return await ReadDecryptedBlock(block, token).ConfigureAwait(false);
     }
 
-    private async Task<bool> WriteDecryptedBlock(byte[] data, DataBlock block, CancellationToken token)
+    private async Task<bool> WriteDecryptedBlock(byte[] data, BlockDefinition block, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
@@ -173,7 +180,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         return true;
     }
 
-    private async Task<byte[]> ReadDecryptedBlock(DataBlock block, CancellationToken token)
+    private async Task<byte[]> ReadDecryptedBlock(BlockDefinition block, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
@@ -184,7 +191,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         return data;
     }
 
-    private async Task<bool> WriteEncryptedBlockSafe(DataBlock block, object? toExpect, object toWrite, CancellationToken token)
+    private async Task<bool> WriteEncryptedBlockSafe(BlockDefinition block, object? toExpect, object toWrite, CancellationToken token)
     {
         if (toExpect == default || toWrite == default)
             return false;
@@ -201,7 +208,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         };
     }
     
-    private async Task<object?> ReadEncryptedBlock(DataBlock block, CancellationToken token)
+    private async Task<object?> ReadEncryptedBlock(BlockDefinition block, CancellationToken token)
     {
         return block.Type switch
         {
@@ -215,7 +222,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         };
     }
 
-    private async Task<bool> WriteEncryptedBlockUint(DataBlock block, uint valueToExpect ,uint valueToInject, CancellationToken token)
+    private async Task<bool> WriteEncryptedBlockUint(BlockDefinition block, uint valueToExpect ,uint valueToInject, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
@@ -239,13 +246,13 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         return true;
     }
 
-    private async Task<uint> ReadEncryptedBlockUint(DataBlock block, CancellationToken token)
+    private async Task<uint> ReadEncryptedBlockUint(BlockDefinition block, CancellationToken token)
     {
         var header = await ReadEncryptedBlockHeader(block, token).ConfigureAwait(false);
         return ReadUInt32LittleEndian(header.AsSpan()[1..]);
     }
 
-    private async Task<bool> WriteEncryptedBlockInt32(DataBlock block, int valueToExpect, int valueToInject, CancellationToken token)
+    private async Task<bool> WriteEncryptedBlockInt32(BlockDefinition block, int valueToExpect, int valueToInject, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
@@ -269,13 +276,13 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         return true;
     }
 
-    private async Task<int> ReadEncryptedBlockInt32(DataBlock block, CancellationToken token)
+    private async Task<int> ReadEncryptedBlockInt32(BlockDefinition block, CancellationToken token)
     {
         var header = await ReadEncryptedBlockHeader(block, token).ConfigureAwait(false);
         return ReadInt32LittleEndian(header.AsSpan()[1..]);
     }
 
-    private async Task<bool> WriteEncryptedBlockByte(DataBlock block, byte valueToExpect, byte valueToInject, CancellationToken token)
+    private async Task<bool> WriteEncryptedBlockByte(BlockDefinition block, byte valueToExpect, byte valueToInject, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
@@ -299,13 +306,13 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         return true;
     }
 
-    private async Task<byte> ReadEncryptedBlockByte(DataBlock block, CancellationToken token)
+    private async Task<byte> ReadEncryptedBlockByte(BlockDefinition block, CancellationToken token)
     {
         var header = await ReadEncryptedBlockHeader(block, token).ConfigureAwait(false);
         return header[1];
     }
 
-    private async Task<bool> WriteEncryptedBlockArray(DataBlock block, byte[] arrayToExpect, byte[] arrayToInject, CancellationToken token)
+    private async Task<bool> WriteEncryptedBlockArray(BlockDefinition block, byte[] arrayToExpect, byte[] arrayToInject, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
@@ -329,7 +336,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         return true;
     }
 
-    private async Task<byte[]?> ReadEncryptedBlockArray(DataBlock block, CancellationToken token)
+    private async Task<byte[]?> ReadEncryptedBlockArray(BlockDefinition block, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
@@ -342,7 +349,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         return data[6..];
     }
 
-    private async Task<byte[]> ReadEncryptedBlockHeader(DataBlock block, CancellationToken token)
+    private async Task<byte[]> ReadEncryptedBlockHeader(BlockDefinition block, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
@@ -355,7 +362,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         return header;
     }
 
-    private async Task<bool> WriteEncryptedBlockBool(DataBlock block, bool valueToExpect, bool valueToInject, CancellationToken token)
+    private async Task<bool> WriteEncryptedBlockBool(BlockDefinition block, bool valueToExpect, bool valueToInject, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
@@ -382,7 +389,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
     //Thanks to Lincoln-LM (original scblock code) and Architdate (ported C# reference code)!!
     //https://github.com/Lincoln-LM/sv-live-map/blob/e0f4a30c72ef81f1dc175dae74e2fd3d63b0e881/sv_live_map_core/nxreader/raid_reader.py#L168
     //https://github.com/LegoFigure11/RaidCrawler/blob/2e1832ae89e5ac39dcc25ccf2ae911ef0f634580/MainWindow.cs#L199
-    private async Task<byte[]?> ReadEncryptedBlockObject(DataBlock block, CancellationToken token)
+    private async Task<byte[]?> ReadEncryptedBlockObject(BlockDefinition block, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
@@ -398,7 +405,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         return res;
     }
 
-    public async Task<bool> WriteEncryptedBlockObject(DataBlock block, byte[] valueToExpect, byte[] valueToInject, CancellationToken token)
+    public async Task<bool> WriteEncryptedBlockObject(BlockDefinition block, byte[] valueToExpect, byte[] valueToInject, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
@@ -422,7 +429,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
         return true;
     }
 
-    private async Task<bool> ReadEncryptedBlockBool(DataBlock block, CancellationToken token)
+    private async Task<bool> ReadEncryptedBlockBool(BlockDefinition block, CancellationToken token)
     {
         if (Config.Connection.Protocol is SwitchProtocol.WiFi && !Connection.Connected)
             throw new InvalidOperationException("No remote connection");
@@ -437,7 +444,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
 
     //Thanks Architdate & Santacrab2!
     //https://github.com/LegoFigure11/RaidCrawler/blob/f8e996aac4b134e6eb6231d539c345748fead490/RaidCrawler.Core/Connection/ConnectionWrapper.cs#L126
-    private async Task<ulong> GetBlockAddress(DataBlock block, CancellationToken token, bool prepareAddress = true)
+    private async Task<ulong> GetBlockAddress(BlockDefinition block, CancellationToken token, bool prepareAddress = true)
     {
         if (KeyBlockAddress == 0)
             KeyBlockAddress = await SwitchConnection.PointerAll(block.Pointer!, token).ConfigureAwait(false);

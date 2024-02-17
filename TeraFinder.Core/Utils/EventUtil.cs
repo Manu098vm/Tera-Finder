@@ -1,45 +1,61 @@
 ﻿using System.Data;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using PKHeX.Core;
 using pkNX.Structures;
 using pkNX.Structures.FlatBuffers.SV;
 
-//Most of functions here are taken from pkNX
-//https://github.com/kwsch/pkNX/blob/master/pkNX.WinForms/Dumping/TeraRaidRipper.cs
-//GPL v3 Licence
 namespace TeraFinder.Core;
 
 public static class EventUtil
 {
-    public static string[] GetEventItemDataFromSAV(PKHeX.Core.SAV9SV sav)
+    public static EventProgress GetEventStageFromProgress(GameProgress progress) => progress switch
     {
-        //Read from save file block flatbuffer
-        var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
-        if (KBCATEventRaidIdentifier.Type is not PKHeX.Core.SCTypeCode.None && BitConverter.ToUInt32(KBCATEventRaidIdentifier.Data) > 0)
+        GameProgress.Unlocked6Stars or GameProgress.Unlocked5Stars => EventProgress.Stage3,
+        GameProgress.Unlocked4Stars => EventProgress.Stage2,
+        GameProgress.Unlocked3Stars => EventProgress.Stage1,
+        _ => EventProgress.Stage0,
+    };
+
+    public static (EncounterEventTF9[] dist, EncounterEventTF9[] mighty)
+        GetCurrentEventEncounters(SAV9SV sav, (Dictionary<ulong, List<Reward>> fixedRewards, Dictionary<ulong, List<Reward>> lotteryRewards) rewards)
+    {
+        try
         {
-            var KBCATFixedRewardItemArray = sav.Accessor.FindOrDefault(Blocks.KBCATFixedRewardItemArray.Key).Data;
-            var KBCATLotteryRewardItemArray = sav.Accessor.FindOrDefault(Blocks.KBCATLotteryRewardItemArray.Key).Data;
+            (var distData, var mightyData) = GetEventEncounterData(sav);
+            return (EncounterEventTF9.GetArray(distData, rewards.fixedRewards, rewards.lotteryRewards), EncounterEventTF9.GetArray(mightyData, rewards.fixedRewards, rewards.lotteryRewards));
+        }
+        catch { }
+        return ([], []);
+    }
+
+    public static (string distRewards, string mightyRewards) GetCurrentEventRewards(SAV9SV sav)
+    {
+        var KBCATEventRaidIdentifier = sav.Accessor.FindOrDefault(BlockDefinitions.KBCATEventRaidIdentifier.Key);
+        if (KBCATEventRaidIdentifier.Type is not SCTypeCode.None && BitConverter.ToUInt32(KBCATEventRaidIdentifier.Data) > 0)
+        {
+            var KBCATFixedRewardItemArray = sav.Accessor.FindOrDefault(BlockDefinitions.KBCATFixedRewardItemArray.Key).Data;
+            var KBCATLotteryRewardItemArray = sav.Accessor.FindOrDefault(BlockDefinitions.KBCATLotteryRewardItemArray.Key).Data;
             var tableDrops = pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidFixedRewardItemArray>(KBCATFixedRewardItemArray);
             var tableBonus = pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidLotteryRewardItemArray>(KBCATLotteryRewardItemArray);
             var opt = new JsonSerializerOptions { WriteIndented = true };
             var drops = JsonSerializer.Serialize(tableDrops, opt);
             var lottery = JsonSerializer.Serialize(tableBonus, opt);
-            return [drops, lottery];
+            return (drops, lottery);
         }
 
         var drops_def = Encoding.UTF8.GetString(Properties.Resources.raid_fixed_reward_item_array);
         var lottery_def = Encoding.UTF8.GetString(Properties.Resources.raid_lottery_reward_item_array);
-        return [drops_def, lottery_def];
+        return (drops_def, lottery_def);
     }
 
-    public static byte[][] GetEventEncounterDataFromSAV(PKHeX.Core.SAV9SV sav)
+    private static (byte[] distData, byte[] mightyData) GetEventEncounterData(SAV9SV sav)
     {
-        byte[][] res = null!;
         var type2list = new List<byte[]>();
         var type3list = new List<byte[]>();
 
-        var KBCATRaidEnemyArray = sav.Accessor.FindOrDefault(Blocks.KBCATRaidEnemyArray.Key).Data;
-
+        var KBCATRaidEnemyArray = sav.Accessor.FindOrDefault(BlockDefinitions.KBCATRaidEnemyArray.Key).Data;
         var tableEncounters = pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidEnemyTableArray>(KBCATRaidEnemyArray);
 
         var byGroupID = tableEncounters.Table
@@ -77,23 +93,16 @@ public static class EventUtil
             AddToList(items, type2list, RaidSerializationFormat.Distribution);
         }
 
-        res = [[..type2list.SelectMany(z => z)], [..type3list.SelectMany(z => z)]];
-        return res;
+        return ([..type2list.SelectMany(z => z)], [..type3list.SelectMany(z => z)]);
     }
 
-    public static DeliveryRaidPriority? GetDeliveryPriority(PKHeX.Core.SAV9SV sav)
+    public static DeliveryRaidPriority? GetEventDeliveryPriority(SAV9SV sav)
     {
-        var KBCATRaidPriorityArray = sav.Accessor.FindOrDefault(Blocks.KBCATRaidPriorityArray.Key);
-        if (KBCATRaidPriorityArray.Type is not PKHeX.Core.SCTypeCode.None && KBCATRaidPriorityArray.Data.Length > 0)
+        var KBCATRaidPriorityArray = sav.Accessor.FindOrDefault(BlockDefinitions.KBCATRaidPriorityArray.Key);
+        if (KBCATRaidPriorityArray.Type is not SCTypeCode.None && KBCATRaidPriorityArray.Data.Length > 0)
         {
-            try
-            {
-                return pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidPriorityArray>(KBCATRaidPriorityArray.Data).Table.First();
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            try { return pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidPriorityArray>(KBCATRaidPriorityArray.Data).Table.First(); }
+            catch { }
         }
         return null;
     }
@@ -214,4 +223,54 @@ public static class EventUtil
         [1, 2, 3, 4],
         [3, 4, 5, 6, 7],
     ];
+
+    public static byte GetDeliveryGroupID(IEventRaid9[] encounters, SAV9SV sav, EventProgress progress, RaidSpawnList9 raids, int currRaid)
+    {
+        var possibleGroups = new HashSet<int>();
+
+        foreach (var enc in encounters)
+            if ((sav.Game is (int)PKHeX.Core.GameVersion.SL && enc.GetRandRateTotalScarlet(progress) > 0) ||
+                (sav.Game is (int)PKHeX.Core.GameVersion.VL && enc.GetRandRateTotalViolet(progress) > 0))
+                    possibleGroups.Add(enc.Index);
+
+        var eventCount = GetEventCount(raids, ++currRaid);
+
+        var priority = GetEventDeliveryPriority(sav);
+        var groupid = priority is not null ? GetDeliveryGroupID(eventCount, priority.GroupID.Groups, possibleGroups) : (byte)0;
+
+        return groupid;
+    }
+
+    private static int GetEventCount(RaidSpawnList9 raids, int selected)
+    {
+        var count = 0;
+        for (var i = 0; i < selected; i++)
+            if (raids.GetRaid(i).Content >= TeraRaidContentType.Distribution)
+                count++;
+        return count;
+    }
+
+    //From https://github.com/LegoFigure11/RaidCrawler/blob/7e764a9a5c0aa74270b3679083c813471abc55d6/Structures/TeraDistribution.cs#L145
+    //GPL v3 License
+    //Thanks LegoFigure11 & architade!
+    private static byte GetDeliveryGroupID(int eventct, GroupSet ids, HashSet<int> possible_groups)
+    {
+        if (eventct > -1 && possible_groups.Count > 0)
+        {
+            var cts = new int[10];
+            for (var i = 0; i < ids.Groups_Length; i++)
+                cts[i] = GroupSet.Groups_Item(ref ids, i);
+
+            for (int i = 0; i < cts.Length; i++)
+            {
+                var ct = cts[i];
+                if (!possible_groups.Contains(i + 1))
+                    continue;
+                if (eventct <= ct)
+                    return (byte)(i + 1);
+                eventct -= ct;
+            }
+        }
+        return 0;
+    }
 }

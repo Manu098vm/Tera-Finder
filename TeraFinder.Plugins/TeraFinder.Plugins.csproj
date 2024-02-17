@@ -64,7 +64,7 @@
 			<HintPath>Resources\deps\PKHeX.Drawing.PokeSprite.dll</HintPath>
 		</Reference>
 		<Reference Include="SysBot.Base">
-			<HintPath>..\TeraFinder.Core\deps\SysBot.Base.dll</HintPath>
+			<HintPath>..\TeraFinder.RemoteExecutor\deps\SysBot.Base.dll</HintPath>
 		</Reference>
 		<Reference Include="pkNX.Structures">
 			<HintPath>..\TeraFinder.Core\deps\pkNX.Structures.dll</HintPath>
@@ -111,6 +111,7 @@
 			<Private>True</Private>
 			<CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
 		</ProjectReference>
+		<ProjectReference Include="..\TeraFinder.RemoteExecutor\TeraFinder.RemoteExecutor.csproj" />
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' == 'Windows_NT'">

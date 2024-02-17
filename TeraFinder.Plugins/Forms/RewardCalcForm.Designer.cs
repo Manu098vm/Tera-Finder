@@ -46,10 +46,6 @@ partial class RewardCalcForm
         comboBox14 = new ComboBox();
         comboBox15 = new ComboBox();
         comboBox16 = new ComboBox();
-        comboBox17 = new ComboBox();
-        comboBox18 = new ComboBox();
-        comboBox19 = new ComboBox();
-        comboBox20 = new ComboBox();
         grpFilters = new GroupBox();
         grpEncounter = new GroupBox();
         chkShiny = new CheckBox();
@@ -58,7 +54,6 @@ partial class RewardCalcForm
         cmbSpecies = new ComboBox();
         lblSpecies = new Label();
         btnApply = new Button();
-        chkAccurateSearch = new CheckBox();
         grpItems = new GroupBox();
         label1 = new Label();
         label2 = new Label();
@@ -76,14 +71,6 @@ partial class RewardCalcForm
         label14 = new Label();
         label15 = new Label();
         label16 = new Label();
-        label17 = new Label();
-        label18 = new Label();
-        label19 = new Label();
-        label20 = new Label();
-        numericUpDown20 = new NumericUpDown();
-        numericUpDown19 = new NumericUpDown();
-        numericUpDown18 = new NumericUpDown();
-        numericUpDown17 = new NumericUpDown();
         numericUpDown16 = new NumericUpDown();
         numericUpDown15 = new NumericUpDown();
         numericUpDown14 = new NumericUpDown();
@@ -136,10 +123,6 @@ partial class RewardCalcForm
         grpFilters.SuspendLayout();
         grpEncounter.SuspendLayout();
         grpItems.SuspendLayout();
-        ((System.ComponentModel.ISupportInitialize)numericUpDown20).BeginInit();
-        ((System.ComponentModel.ISupportInitialize)numericUpDown19).BeginInit();
-        ((System.ComponentModel.ISupportInitialize)numericUpDown18).BeginInit();
-        ((System.ComponentModel.ISupportInitialize)numericUpDown17).BeginInit();
         ((System.ComponentModel.ISupportInitialize)numericUpDown16).BeginInit();
         ((System.ComponentModel.ISupportInitialize)numericUpDown15).BeginInit();
         ((System.ComponentModel.ISupportInitialize)numericUpDown14).BeginInit();
@@ -308,54 +291,17 @@ partial class RewardCalcForm
         comboBox16.Size = new Size(219, 28);
         comboBox16.TabIndex = 15;
         // 
-        // comboBox17
-        // 
-        comboBox17.FormattingEnabled = true;
-        comboBox17.Location = new Point(7, 600);
-        comboBox17.Margin = new Padding(3, 4, 3, 4);
-        comboBox17.Name = "comboBox17";
-        comboBox17.Size = new Size(219, 28);
-        comboBox17.TabIndex = 16;
-        // 
-        // comboBox18
-        // 
-        comboBox18.FormattingEnabled = true;
-        comboBox18.Location = new Point(7, 636);
-        comboBox18.Margin = new Padding(3, 4, 3, 4);
-        comboBox18.Name = "comboBox18";
-        comboBox18.Size = new Size(219, 28);
-        comboBox18.TabIndex = 17;
-        // 
-        // comboBox19
-        // 
-        comboBox19.FormattingEnabled = true;
-        comboBox19.Location = new Point(7, 672);
-        comboBox19.Margin = new Padding(3, 4, 3, 4);
-        comboBox19.Name = "comboBox19";
-        comboBox19.Size = new Size(219, 28);
-        comboBox19.TabIndex = 18;
-        // 
-        // comboBox20
-        // 
-        comboBox20.FormattingEnabled = true;
-        comboBox20.Location = new Point(7, 708);
-        comboBox20.Margin = new Padding(3, 4, 3, 4);
-        comboBox20.Name = "comboBox20";
-        comboBox20.Size = new Size(219, 28);
-        comboBox20.TabIndex = 19;
-        // 
         // grpFilters
         // 
         grpFilters.Controls.Add(grpEncounter);
         grpFilters.Controls.Add(btnApply);
-        grpFilters.Controls.Add(chkAccurateSearch);
         grpFilters.Controls.Add(grpItems);
         grpFilters.Controls.Add(btnReset);
         grpFilters.Location = new Point(14, 12);
         grpFilters.Margin = new Padding(3, 4, 3, 4);
         grpFilters.Name = "grpFilters";
         grpFilters.Padding = new Padding(3, 4, 3, 4);
-        grpFilters.Size = new Size(343, 949);
+        grpFilters.Size = new Size(343, 810);
         grpFilters.TabIndex = 20;
         grpFilters.TabStop = false;
         grpFilters.Text = "Filters";
@@ -367,11 +313,11 @@ partial class RewardCalcForm
         grpEncounter.Controls.Add(lblStars);
         grpEncounter.Controls.Add(cmbSpecies);
         grpEncounter.Controls.Add(lblSpecies);
-        grpEncounter.Location = new Point(7, 60);
+        grpEncounter.Location = new Point(7, 28);
         grpEncounter.Margin = new Padding(3, 4, 3, 4);
         grpEncounter.Name = "grpEncounter";
         grpEncounter.Padding = new Padding(3, 4, 3, 4);
-        grpEncounter.Size = new Size(330, 96);
+        grpEncounter.Size = new Size(330, 122);
         grpEncounter.TabIndex = 25;
         grpEncounter.TabStop = false;
         grpEncounter.Text = "Encounter";
@@ -379,7 +325,7 @@ partial class RewardCalcForm
         // chkShiny
         // 
         chkShiny.AutoSize = true;
-        chkShiny.Location = new Point(191, 64);
+        chkShiny.Location = new Point(191, 80);
         chkShiny.Margin = new Padding(3, 4, 3, 4);
         chkShiny.Name = "chkShiny";
         chkShiny.Size = new Size(100, 24);
@@ -391,7 +337,7 @@ partial class RewardCalcForm
         // 
         cmbStars.FormattingEnabled = true;
         cmbStars.Items.AddRange(new object[] { "Any", "1☆", "2☆", "3☆", "4☆", "5☆", "6☆", "7☆" });
-        cmbStars.Location = new Point(104, 60);
+        cmbStars.Location = new Point(104, 76);
         cmbStars.Margin = new Padding(3, 4, 3, 4);
         cmbStars.Name = "cmbStars";
         cmbStars.Size = new Size(65, 28);
@@ -400,8 +346,8 @@ partial class RewardCalcForm
         // lblStars
         // 
         lblStars.AutoSize = true;
-        lblStars.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-        lblStars.Location = new Point(19, 63);
+        lblStars.Font = new Font("Segoe UI", 9F);
+        lblStars.Location = new Point(19, 79);
         lblStars.Name = "lblStars";
         lblStars.Size = new Size(44, 20);
         lblStars.TabIndex = 2;
@@ -411,7 +357,7 @@ partial class RewardCalcForm
         // 
         cmbSpecies.FormattingEnabled = true;
         cmbSpecies.Items.AddRange(new object[] { "Any" });
-        cmbSpecies.Location = new Point(104, 26);
+        cmbSpecies.Location = new Point(104, 40);
         cmbSpecies.Margin = new Padding(3, 4, 3, 4);
         cmbSpecies.Name = "cmbSpecies";
         cmbSpecies.Size = new Size(187, 28);
@@ -420,7 +366,7 @@ partial class RewardCalcForm
         // lblSpecies
         // 
         lblSpecies.AutoSize = true;
-        lblSpecies.Location = new Point(19, 29);
+        lblSpecies.Location = new Point(19, 43);
         lblSpecies.Name = "lblSpecies";
         lblSpecies.Size = new Size(62, 20);
         lblSpecies.TabIndex = 0;
@@ -428,7 +374,7 @@ partial class RewardCalcForm
         // 
         // btnApply
         // 
-        btnApply.Location = new Point(181, 900);
+        btnApply.Location = new Point(180, 763);
         btnApply.Margin = new Padding(3, 4, 3, 4);
         btnApply.Name = "btnApply";
         btnApply.Size = new Size(157, 41);
@@ -436,17 +382,6 @@ partial class RewardCalcForm
         btnApply.Text = "Apply Filters";
         btnApply.UseVisualStyleBackColor = true;
         btnApply.Click += btnApply_Click;
-        // 
-        // chkAccurateSearch
-        // 
-        chkAccurateSearch.AutoSize = true;
-        chkAccurateSearch.Location = new Point(75, 31);
-        chkAccurateSearch.Margin = new Padding(3, 4, 3, 4);
-        chkAccurateSearch.Name = "chkAccurateSearch";
-        chkAccurateSearch.Size = new Size(158, 24);
-        chkAccurateSearch.TabIndex = 21;
-        chkAccurateSearch.Text = "Accurate Search (?)";
-        chkAccurateSearch.UseVisualStyleBackColor = true;
         // 
         // grpItems
         // 
@@ -466,14 +401,6 @@ partial class RewardCalcForm
         grpItems.Controls.Add(label14);
         grpItems.Controls.Add(label15);
         grpItems.Controls.Add(label16);
-        grpItems.Controls.Add(label17);
-        grpItems.Controls.Add(label18);
-        grpItems.Controls.Add(label19);
-        grpItems.Controls.Add(label20);
-        grpItems.Controls.Add(numericUpDown20);
-        grpItems.Controls.Add(numericUpDown19);
-        grpItems.Controls.Add(numericUpDown18);
-        grpItems.Controls.Add(numericUpDown17);
         grpItems.Controls.Add(numericUpDown16);
         grpItems.Controls.Add(numericUpDown15);
         grpItems.Controls.Add(numericUpDown14);
@@ -490,18 +417,14 @@ partial class RewardCalcForm
         grpItems.Controls.Add(numericUpDown3);
         grpItems.Controls.Add(numericUpDown2);
         grpItems.Controls.Add(numericUpDown1);
-        grpItems.Controls.Add(comboBox20);
         grpItems.Controls.Add(comboBox1);
         grpItems.Controls.Add(comboBox10);
-        grpItems.Controls.Add(comboBox19);
         grpItems.Controls.Add(comboBox11);
         grpItems.Controls.Add(comboBox2);
         grpItems.Controls.Add(comboBox9);
-        grpItems.Controls.Add(comboBox18);
         grpItems.Controls.Add(comboBox12);
         grpItems.Controls.Add(comboBox3);
         grpItems.Controls.Add(comboBox8);
-        grpItems.Controls.Add(comboBox17);
         grpItems.Controls.Add(comboBox13);
         grpItems.Controls.Add(comboBox4);
         grpItems.Controls.Add(comboBox7);
@@ -514,7 +437,7 @@ partial class RewardCalcForm
         grpItems.Margin = new Padding(3, 4, 3, 4);
         grpItems.Name = "grpItems";
         grpItems.Padding = new Padding(3, 4, 3, 4);
-        grpItems.Size = new Size(331, 741);
+        grpItems.Size = new Size(331, 599);
         grpItems.TabIndex = 21;
         grpItems.TabStop = false;
         grpItems.Text = "Items";
@@ -663,78 +586,6 @@ partial class RewardCalcForm
         label16.TabIndex = 36;
         label16.Text = ">=";
         // 
-        // label17
-        // 
-        label17.AutoSize = true;
-        label17.Location = new Point(235, 604);
-        label17.Name = "label17";
-        label17.Size = new Size(29, 20);
-        label17.TabIndex = 37;
-        label17.Text = ">=";
-        // 
-        // label18
-        // 
-        label18.AutoSize = true;
-        label18.Location = new Point(235, 640);
-        label18.Name = "label18";
-        label18.Size = new Size(29, 20);
-        label18.TabIndex = 38;
-        label18.Text = ">=";
-        // 
-        // label19
-        // 
-        label19.AutoSize = true;
-        label19.Location = new Point(235, 675);
-        label19.Name = "label19";
-        label19.Size = new Size(29, 20);
-        label19.TabIndex = 39;
-        label19.Text = ">=";
-        // 
-        // label20
-        // 
-        label20.AutoSize = true;
-        label20.Location = new Point(235, 712);
-        label20.Name = "label20";
-        label20.Size = new Size(29, 20);
-        label20.TabIndex = 40;
-        label20.Text = ">=";
-        // 
-        // numericUpDown20
-        // 
-        numericUpDown20.Location = new Point(264, 708);
-        numericUpDown20.Margin = new Padding(3, 4, 3, 4);
-        numericUpDown20.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-        numericUpDown20.Name = "numericUpDown20";
-        numericUpDown20.Size = new Size(51, 27);
-        numericUpDown20.TabIndex = 39;
-        // 
-        // numericUpDown19
-        // 
-        numericUpDown19.Location = new Point(264, 672);
-        numericUpDown19.Margin = new Padding(3, 4, 3, 4);
-        numericUpDown19.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-        numericUpDown19.Name = "numericUpDown19";
-        numericUpDown19.Size = new Size(51, 27);
-        numericUpDown19.TabIndex = 38;
-        // 
-        // numericUpDown18
-        // 
-        numericUpDown18.Location = new Point(264, 636);
-        numericUpDown18.Margin = new Padding(3, 4, 3, 4);
-        numericUpDown18.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-        numericUpDown18.Name = "numericUpDown18";
-        numericUpDown18.Size = new Size(51, 27);
-        numericUpDown18.TabIndex = 37;
-        // 
-        // numericUpDown17
-        // 
-        numericUpDown17.Location = new Point(264, 600);
-        numericUpDown17.Margin = new Padding(3, 4, 3, 4);
-        numericUpDown17.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-        numericUpDown17.Name = "numericUpDown17";
-        numericUpDown17.Size = new Size(51, 27);
-        numericUpDown17.TabIndex = 36;
-        // 
         // numericUpDown16
         // 
         numericUpDown16.Location = new Point(264, 564);
@@ -881,7 +732,7 @@ partial class RewardCalcForm
         // 
         // btnReset
         // 
-        btnReset.Location = new Point(7, 900);
+        btnReset.Location = new Point(6, 763);
         btnReset.Margin = new Padding(3, 4, 3, 4);
         btnReset.Name = "btnReset";
         btnReset.Size = new Size(157, 41);
@@ -1167,7 +1018,7 @@ partial class RewardCalcForm
         dataGrid.ReadOnly = true;
         dataGrid.RowHeadersWidth = 51;
         dataGrid.RowTemplate.Height = 25;
-        dataGrid.Size = new Size(1165, 716);
+        dataGrid.Size = new Size(1165, 577);
         dataGrid.TabIndex = 23;
         dataGrid.MouseUp += dataGrid_MouseUp;
         // 
@@ -1184,7 +1035,7 @@ partial class RewardCalcForm
         contextMenuStrip.ImageScalingSize = new Size(20, 20);
         contextMenuStrip.Items.AddRange(new ToolStripItem[] { btnSaveAllTxt, btnSaveSelectedTxt, btnSendSelectedRaid, btnCopySeed });
         contextMenuStrip.Name = "contextMenuStrip";
-        contextMenuStrip.Size = new Size(313, 128);
+        contextMenuStrip.Size = new Size(313, 100);
         // 
         // btnSaveAllTxt
         // 
@@ -1218,7 +1069,7 @@ partial class RewardCalcForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(1540, 964);
+        ClientSize = new Size(1540, 827);
         Controls.Add(dataGrid);
         Controls.Add(grpSearch);
         Controls.Add(grpSettings);
@@ -1230,15 +1081,10 @@ partial class RewardCalcForm
         Text = "Reward Calculator";
         FormClosing += Form_FormClosing;
         grpFilters.ResumeLayout(false);
-        grpFilters.PerformLayout();
         grpEncounter.ResumeLayout(false);
         grpEncounter.PerformLayout();
         grpItems.ResumeLayout(false);
         grpItems.PerformLayout();
-        ((System.ComponentModel.ISupportInitialize)numericUpDown20).EndInit();
-        ((System.ComponentModel.ISupportInitialize)numericUpDown19).EndInit();
-        ((System.ComponentModel.ISupportInitialize)numericUpDown18).EndInit();
-        ((System.ComponentModel.ISupportInitialize)numericUpDown17).EndInit();
         ((System.ComponentModel.ISupportInitialize)numericUpDown16).EndInit();
         ((System.ComponentModel.ISupportInitialize)numericUpDown15).EndInit();
         ((System.ComponentModel.ISupportInitialize)numericUpDown14).EndInit();
@@ -1285,10 +1131,6 @@ partial class RewardCalcForm
     private ComboBox comboBox14;
     private ComboBox comboBox15;
     private ComboBox comboBox16;
-    private ComboBox comboBox17;
-    private ComboBox comboBox18;
-    private ComboBox comboBox19;
-    private ComboBox comboBox20;
     private GroupBox grpFilters;
     private GroupBox grpItems;
     private ToolTip toolTip;
@@ -1308,14 +1150,6 @@ partial class RewardCalcForm
     private Label label14;
     private Label label15;
     private Label label16;
-    private Label label17;
-    private Label label18;
-    private Label label19;
-    private Label label20;
-    private NumericUpDown numericUpDown20;
-    private NumericUpDown numericUpDown19;
-    private NumericUpDown numericUpDown18;
-    private NumericUpDown numericUpDown17;
     private NumericUpDown numericUpDown16;
     private NumericUpDown numericUpDown15;
     private NumericUpDown numericUpDown14;
@@ -1360,7 +1194,6 @@ partial class RewardCalcForm
     private ToolStripMenuItem btnSendSelectedRaid;
     public TextBox txtSID;
     public TextBox txtTID;
-    public CheckBox chkAccurateSearch;
     public ComboBox cmbContent;
     private GroupBox grpEncounter;
     private ComboBox cmbStars;

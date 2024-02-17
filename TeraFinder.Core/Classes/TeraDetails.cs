@@ -2,7 +2,7 @@
 
 namespace TeraFinder.Core;
 
-public class TeraDetails : IRaidDetails
+public struct TeraDetails() : IRaidDetails
 {
     public uint Seed { get; set; }
     public TeraShiny Shiny { get; set; }
@@ -10,7 +10,7 @@ public class TeraDetails : IRaidDetails
     public ushort Species { get; set; }
     public byte Form { get; set; }
     public int Level { get; set; }
-    public sbyte TeraType { get; set; }
+    public byte TeraType { get; set; }
     public uint EC { get; set; }
     public uint PID { get; set; }
     public int HP { get; set; }
@@ -20,6 +20,7 @@ public class TeraDetails : IRaidDetails
     public int SPD { get; set; }
     public int SPE { get; set; }
     public int Ability { get; set; }
+    public int AbilityNumber { get; set; }
     public byte Nature { get; set; }
     public Gender Gender { get; set; }
     public byte Height { get; set; }
@@ -32,19 +33,7 @@ public class TeraDetails : IRaidDetails
     public byte EventIndex { get; set; }
     public ulong Calcs { get; set; }
 
-
-    public int GetAbilityNumber()
-    {
-        var entry = PersonalTable.SV.GetFormEntry(Species, Form);
-        if (Ability == entry.Ability1)
-            return 1;
-        else if (Ability == entry.Ability2)
-            return 2;
-        //else if (Ability == entry.AbilityH)
-            return 3;
-    }
-
-    public string[] GetStrings(string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlistascii, string[] genderlistunicode, string[] shinies)
+    public readonly string[] GetStrings(string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlistascii, string[] genderlistunicode, string[] shinies)
     {
         var list = new string[26];
         list[0] = ($"{Seed:X8}");
@@ -76,25 +65,24 @@ public class TeraDetails : IRaidDetails
         return list;
     }
 
-    private string GetShiny(string[] shinies)
+    private readonly string GetShiny(string[] shinies)
     {
         return shinies[(int)Shiny];
     }
 
-    public string GetName(string[] namelist, string[] typelist ,string[] formlist, string[] genderlist)
+    public readonly string GetName(string[] namelist, string[] typelist ,string[] formlist, string[] genderlist)
     {
         var forms = FormConverter.GetFormList(Species, typelist, formlist, genderlist, EntityContext.Gen9);
         return $"{namelist[Species]}{(forms.Length > 1 ? $"-{forms[Form]}" : "")}";
     }
 
-    private string GetAbilityName(string[] abilitylist)
+    private readonly string GetAbilityName(string[] abilitylist)
     {
-        var num = GetAbilityNumber();
-        return $"{abilitylist[Ability]} ({(num == 3 ? "H" : num)})";
+        return $"{abilitylist[Ability]} ({(AbilityNumber == 4 ? "H" : AbilityNumber)})";
     }
 }
 
-public class GridEntry
+public struct GridEntry
 {
     public string? Seed { get; private set; }
     public string? Shiny { get; private set; }
@@ -184,7 +172,7 @@ public class GridEntry
         Calcs = str[25];
     }
 
-    public string[] GetStrings()
+    public readonly string[] GetStrings()
     {
         var list = new string[26];
         list[0] = ($"{Seed}");
@@ -218,7 +206,7 @@ public class GridEntry
 }
 
 /// <summary>
-/// Toggles the marking at a given index.
+/// Check if a TeraDetails matches the filter.
 /// </summary>
 /// <param name="isEncounterFilter">check for Stars and Species.</param>
 /// <param name="isIvFilter">check for IVs</param>
@@ -226,10 +214,10 @@ public class GridEntry
 /// <param name="isAuxFilter">check for EC and Scale</param>
 public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilter, bool isAuxFilter)
 {
-    protected bool EncounterFilter { get; set; } = isEncounterFilter;
-    protected bool IVFilter { get; set; } = isIvFilter;
-    protected bool StatFilter { get; set; } = isStatFilter;
-    protected bool AuxFilter { get; set; } = isAuxFilter;
+    public bool EncounterFilter { get; init; } = isEncounterFilter;
+    protected bool IVFilter { get; init; } = isIvFilter;
+    protected bool StatFilter { get; init; } = isStatFilter;
+    protected bool AuxFilter { get; init; } = isAuxFilter;
 
     public bool IsFormFilter { get; set; }
 
@@ -297,7 +285,7 @@ public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilt
                     return false;
 
             if (AbilityNumber != 0)
-                if (AbilityNumber != res.GetAbilityNumber())
+                if (AbilityNumber != res.AbilityNumber)
                     return false;
 
             if (Nature != 25)
@@ -309,14 +297,9 @@ public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilt
                     return false;
         }
 
-        if (Shiny is > TeraShiny.Any)
+        if (Shiny > TeraShiny.Any)
         {
-            if (Shiny is TeraShiny.No)
-            {
-                if (res.Shiny >= TeraShiny.Yes)
-                    return false;
-            }
-            else if (Shiny is TeraShiny.Yes)
+            if (Shiny is TeraShiny.Yes)
             {
                 if (res.Shiny < TeraShiny.Yes)
                     return false;
@@ -324,6 +307,11 @@ public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilt
             else if (Shiny > TeraShiny.Yes)
             {
                 if (Shiny != res.Shiny)
+                    return false;
+            }
+            else if (Shiny is TeraShiny.No)
+            {
+                if (res.Shiny >= TeraShiny.Yes)
                     return false;
             }
         }
@@ -340,6 +328,76 @@ public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilt
 
         return true;
     }
+
+    public bool IsEncounterMatch(EncounterRaidTF9 res)
+    {
+        if (EncounterFilter)
+        {
+            if (Species != 0)
+                if (Species != res.Species)
+                    return false;
+
+            if (Stars != 0)
+                if (Stars != res.Stars)
+                    return false;
+
+            if (IsFormFilter)
+                if (Form != res.Form)
+                    return false;
+        }
+
+        return true;
+    }
+
+    public bool IsShinyMatch(TeraShiny res)
+    {
+        if (Shiny > TeraShiny.Any)
+        {
+            if (Shiny is TeraShiny.Yes && res < TeraShiny.Yes)
+                return false;
+            else if (Shiny > TeraShiny.Yes && Shiny != res)
+                return false;
+        }
+        return true;
+    }
+
+    public bool IsIVMatch(ReadOnlySpan<int> res)
+    {
+        if (IVFilter)
+        {
+            if (!(MinHP <= res[0] && res[0] <= MaxHP))
+                return false;
+            if (!(MinAtk <= res[1] && res[1] <= MaxAtk))
+                return false;
+            if (!(MinDef <= res[2] && res[2] <= MaxDef))
+                return false;
+            if (!(MinSpa <= res[3] && res[3] <= MaxSpa))
+                return false;
+            if (!(MinSpd <= res[4] && res[4] <= MaxSpd))
+                return false;
+            if (!(MinSpe <= res[5] && res[5] <= MaxSpe))
+                return false;
+        }
+        return true;
+    }
+
+    public bool IsTeraMatch(byte res) => 
+        TeraType == -1 || TeraType == res;
+
+    public bool IsECMatch(uint res) =>
+        !(AltEC && res % 100 != 0);
+
+    public bool IsAbilityMatch(int res) => 
+        AbilityNumber == 0 || AbilityNumber == res;
+
+    public bool IsNatureMatch(int res) =>
+        Nature == 25 || Nature == res;
+
+    public bool IsGenderMatch(Gender res) => 
+        Gender == Gender.Random || Gender == res;
+
+    public bool IsScaleMatch(int res) => 
+        MinScale <= res && res <= MaxScale;
 
     public bool IsFilterNull(bool isblack)
     {

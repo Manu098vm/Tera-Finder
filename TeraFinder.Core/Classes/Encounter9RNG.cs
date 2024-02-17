@@ -4,27 +4,35 @@ namespace TeraFinder.Core;
 
 //Tera Finder Adaptations of the Encounter9RNG class from PKHeX
 //https://github.com/kwsch/PKHeX/blob/master/PKHeX.Core/Legality/RNG/Methods/Gen9/Encounter9RNG.cs
-public static class Encounter9RNG
+public static class EncounterTF9RNG
 {
-    private static readonly PersonalTable9SV Table = PersonalTable.SV;
-
-    public static bool GenerateData(TeraDetails pk, in GenerateParam9 enc, uint id32, in ulong seed)
+    public static bool GenerateData(this EncounterRaidTF9 encounter, TeraFilter filter, uint seed, uint id32, byte groupid, ulong calc, out TeraDetails? result)
     {
-        var criteria = EncounterCriteria.Unrestricted;
+        result = null;
+        var tera = Tera9RNG.GetTeraType(seed, encounter.TeraType, encounter.Species, encounter.Form);
+        if (!filter.IsTeraMatch(tera))
+            return false;
+
         var rand = new Xoroshiro128Plus(seed);
-        pk.EC = (uint)rand.NextInt(uint.MaxValue);
-        pk.PID = GetAdaptedPID(ref rand, pk, id32, enc);
+
+        var ec = (uint)rand.NextInt(uint.MaxValue);
+        if (!filter.IsECMatch(ec))
+            return false;
+
+        var pid = GetAdaptedPID(ref rand, encounter, id32, out var shiny);
+        if (!filter.IsShinyMatch(shiny))
+            return false;
 
         const int UNSET = -1;
         const int MAX = 31;
         Span<int> ivs = [UNSET, UNSET, UNSET, UNSET, UNSET, UNSET];
-        if (enc.IVs.IsSpecified)
+        if (encounter.IVs.IsSpecified)
         {
-            enc.IVs.CopyToSpeedLast(ivs);
+            encounter.IVs.CopyToSpeedLast(ivs);
         }
         else
         {
-            for (int i = 0; i < enc.FlawlessIVs; i++)
+            for (int i = 0; i < encounter.FlawlessIVCount; i++)
             {
                 int index;
                 do { index = (int)rand.NextInt(6); }
@@ -39,98 +47,217 @@ public static class Encounter9RNG
                 ivs[i] = (int)rand.NextInt(MAX + 1);
         }
 
-        if (!criteria.IsIVsCompatibleSpeedLast(ivs, 9))
+        if (!filter.IsIVMatch(ivs))
             return false;
 
-        pk.HP = ivs[0];
-        pk.ATK = ivs[1];
-        pk.DEF = ivs[2];
-        pk.SPA = ivs[3];
-        pk.SPD = ivs[4];
-        pk.SPE = ivs[5];
-
-        int abil = enc.Ability switch
+        int abilNum = encounter.Ability switch
         {
             AbilityPermission.Any12H => (int)rand.NextInt(3) << 1,
             AbilityPermission.Any12 => (int)rand.NextInt(2) << 1,
-            _ => (int)enc.Ability,
+            _ => (int)encounter.Ability,
         };
 
-        pk.RefreshAbility(abil >> 1);
+        if (!filter.IsAbilityMatch(abilNum))
+            return false;
+        
+        var abil = GetRefreshedAbility(encounter.Personal, abilNum >> 1);
 
-        var gender_ratio = enc.GenderRatio;
-        pk.Gender = gender_ratio switch
+        var gender = encounter.GenderRatio switch
         {
             PersonalInfo.RatioMagicGenderless => Gender.Genderless,
             PersonalInfo.RatioMagicFemale => Gender.Female,
             PersonalInfo.RatioMagicMale => Gender.Male,
-            _ => GetGender(gender_ratio, rand.NextInt(100)),
-        }; ;
+            _ => GetGender(encounter.GenderRatio, rand.NextInt(100)),
+        };
 
-        byte nature = enc.Nature != Nature.Random ? (byte)enc.Nature : enc.Species == (int)Species.Toxtricity
-                ? ToxtricityUtil.GetRandomNature(ref rand, pk.Form)
-                : (byte)rand.NextInt(25);
-        if (criteria.Nature != Nature.Random && nature != (int)criteria.Nature)
+        if (!filter.IsGenderMatch(gender))
             return false;
-        pk.Nature = nature;
 
-        pk.Height = enc.Height != 0 ? enc.Height : (byte)(rand.NextInt(0x81) + rand.NextInt(0x80));
-        pk.Weight = enc.Weight != 0 ? enc.Weight : (byte)(rand.NextInt(0x81) + rand.NextInt(0x80));
-        pk.Scale = enc.ScaleType.GetSizeValue(enc.Scale, ref rand);
+        byte nature = encounter.Nature != Nature.Random ? (byte)encounter.Nature : encounter.Species == (int)Species.Toxtricity
+                ? ToxtricityUtil.GetRandomNature(ref rand, encounter.Form)
+                : (byte)rand.NextInt(25);
+        
+        if (!filter.IsNatureMatch(nature))
+            return false;
+
+        var height = (byte)(rand.NextInt(0x81) + rand.NextInt(0x80));
+        var weight = (byte)(rand.NextInt(0x81) + rand.NextInt(0x80));
+        var scale = encounter.ScaleType.GetSizeValue(encounter.Scale, ref rand);
+
+        if (!filter.IsScaleMatch(scale))
+            return false;
+
+        result = new TeraDetails()
+        {
+            Seed = seed,
+            Shiny = shiny,
+            Stars = encounter.Stars,
+            Species = encounter.Species,
+            Form = encounter.Form,
+            Level = encounter.Level,
+            TeraType = tera,
+            EC = ec,
+            PID = pid,
+            HP = ivs[0],
+            ATK = ivs[1],
+            DEF = ivs[2],
+            SPA = ivs[3],
+            SPD = ivs[4],
+            SPE = ivs[5],
+            Ability = abil,
+            AbilityNumber = abilNum == 0 ? 1 : abilNum,
+            Nature = nature,
+            Gender = gender,
+            Height = height,
+            Weight = weight,
+            Scale = scale,
+            Move1 = encounter.Moves.Move1,
+            Move2 = encounter.Moves.Move2,
+            Move3 = encounter.Moves.Move3,
+            Move4 = encounter.Moves.Move4,
+            EventIndex = groupid,
+            Calcs = calc,
+        };
+
         return true;
     }
 
-    private static uint GetAdaptedPID(ref Xoroshiro128Plus rand, TeraDetails pk, uint id32, in GenerateParam9 enc)
+    public static TeraDetails GenerateData(this EncounterRaidTF9 encounter, uint seed, uint id32, byte groupid = 0, ulong calc = 0)
+    {
+        var tera = Tera9RNG.GetTeraType(seed, encounter.TeraType, encounter.Species, encounter.Form);
+        var rand = new Xoroshiro128Plus(seed);
+        var ec = (uint)rand.NextInt(uint.MaxValue);
+        var pid = GetAdaptedPID(ref rand, encounter, id32, out var shiny);
+
+        const int UNSET = -1;
+        const int MAX = 31;
+        Span<int> ivs = [UNSET, UNSET, UNSET, UNSET, UNSET, UNSET];
+        if (encounter.IVs.IsSpecified)
+        {
+            encounter.IVs.CopyToSpeedLast(ivs);
+        }
+        else
+        {
+            for (int i = 0; i < encounter.FlawlessIVCount; i++)
+            {
+                int index;
+                do { index = (int)rand.NextInt(6); }
+                while (ivs[index] != UNSET);
+                ivs[index] = MAX;
+            }
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            if (ivs[i] == UNSET)
+                ivs[i] = (int)rand.NextInt(MAX + 1);
+        }
+
+        int abilNum = encounter.Ability switch
+        {
+            AbilityPermission.Any12H => (int)rand.NextInt(3) << 1,
+            AbilityPermission.Any12 => (int)rand.NextInt(2) << 1,
+            _ => (int)encounter.Ability,
+        };
+        
+        var abil = GetRefreshedAbility(encounter.Personal, abilNum >> 1);
+
+        var gender = encounter.GenderRatio switch
+        {
+            PersonalInfo.RatioMagicGenderless => Gender.Genderless,
+            PersonalInfo.RatioMagicFemale => Gender.Female,
+            PersonalInfo.RatioMagicMale => Gender.Male,
+            _ => GetGender(encounter.GenderRatio, rand.NextInt(100)),
+        };
+
+        byte nature = encounter.Nature != Nature.Random ? (byte)encounter.Nature : encounter.Species == (int)Species.Toxtricity
+                ? ToxtricityUtil.GetRandomNature(ref rand, encounter.Form)
+                : (byte)rand.NextInt(25);
+
+        var height = (byte)(rand.NextInt(0x81) + rand.NextInt(0x80));
+        var weight = (byte)(rand.NextInt(0x81) + rand.NextInt(0x80));
+        var scale = encounter.ScaleType.GetSizeValue(encounter.Scale, ref rand);
+
+        return new TeraDetails()
+        {
+            Seed = seed,
+            Shiny = shiny,
+            Stars = encounter.Stars,
+            Species = encounter.Species,
+            Form = encounter.Form,
+            Level = encounter.Level,
+            TeraType = tera,
+            EC = ec,
+            PID = pid,
+            HP = ivs[0],
+            ATK = ivs[1],
+            DEF = ivs[2],
+            SPA = ivs[3],
+            SPD = ivs[4],
+            SPE = ivs[5],
+            Ability = abil,
+            AbilityNumber = abilNum == 0 ? 1 : abilNum,
+            Nature = nature,
+            Gender = gender,
+            Height = height,
+            Weight = weight,
+            Scale = scale,
+            Move1 = encounter.Moves.Move1,
+            Move2 = encounter.Moves.Move2,
+            Move3 = encounter.Moves.Move3,
+            Move4 = encounter.Moves.Move4,
+            EventIndex = groupid,
+            Calcs = calc,
+        };
+    }
+
+    private static uint GetAdaptedPID(ref Xoroshiro128Plus rand, EncounterRaidTF9 encounter, uint id32, out TeraShiny shiny)
     {
         var fakeTID = (uint)rand.NextInt();
-        uint pid = (uint)rand.NextInt();
-        if (enc.Shiny == Shiny.Random) // let's decide if it's shiny or not!
+        var pid = (uint)rand.NextInt();
+
+        if (encounter.Shiny is Shiny.Random)
         {
-            int i = 1;
-            bool isShiny;
-            uint xor;
-            while (true)
+            var xor = ShinyUtil.GetShinyXor(pid, fakeTID);
+            if (xor < 16)
             {
-                xor = ShinyUtil.GetShinyXor(pid, fakeTID);
-                isShiny = xor < 16;
-                if (isShiny)
-                {
-                    if (xor != 0)
-                        xor = 1;
-                    break;
-                }
-                if (i >= enc.RollCount)
-                    break;
-                pid = (uint)rand.NextInt();
-                i++;
+                if (xor != 0) xor = 1;
+                ShinyUtil.ForceShinyState(true, ref pid, id32, xor);
+                shiny = xor == 0 ? TeraShiny.Square : TeraShiny.Star;
             }
-            ShinyUtil.ForceShinyState(isShiny, ref pid, id32, xor);
-            pk.Shiny = xor > 15 ? TeraShiny.No : xor == 0 ? TeraShiny.Square : TeraShiny.Star;
+            else
+            {
+                shiny = TeraShiny.No;
+            }
         }
-        else if (enc.Shiny == Shiny.Always)
+        else if (encounter.Shiny is Shiny.Always)
         {
             var tid = (ushort)fakeTID;
             var sid = (ushort)(fakeTID >> 16);
-            if (!ShinyUtil.GetIsShiny(fakeTID, pid)) // battled
+            var xor = ShinyUtil.GetShinyXor(pid, fakeTID);
+            if (xor > 16)
                 pid = ShinyUtil.GetShinyPID(tid, sid, pid, 0);
-            if (!ShinyUtil.GetIsShiny(id32, pid)) // captured
-                pid = ShinyUtil.GetShinyPID(TeraUtil.GetTID16(id32), TeraUtil.GetSID16(id32), pid, ShinyUtil.GetShinyXor(pid, fakeTID) == 0 ? 0u : 1u);
+            if (!ShinyUtil.GetIsShiny(id32, pid))
+                pid = ShinyUtil.GetShinyPID(tid, sid, pid, xor == 0 ? 0u : 1u);
+            shiny = xor == 0 ? TeraShiny.Square : TeraShiny.Star;
         }
-        else // Never
+        else
         {
-            if (ShinyUtil.GetIsShiny(fakeTID, pid)) // battled
+            if (ShinyUtil.GetIsShiny(fakeTID, pid))
                 pid ^= 0x1000_0000;
-            if (ShinyUtil.GetIsShiny(id32, pid)) // captured
+            if (ShinyUtil.GetIsShiny(id32, pid))
                 pid ^= 0x1000_0000;
+            shiny = TeraShiny.No;
         }
         return pid;
     }
 
-    private static void RefreshAbility(this TeraDetails pkm, int n)
+    private static int GetRefreshedAbility(PersonalInfo9SV info, int n)
     {
-        var pi = Table[pkm.Species, pkm.Form];
-        if ((uint)n < pi.AbilityCount)
-            pkm.Ability = pi.GetAbilityAtIndex(n);
+        if ((uint)n < info.AbilityCount)
+            n = info.GetAbilityAtIndex(n);
+
+        return n;
     }
 
     private static Gender GetGender(in int ratio, in ulong rand100) => ratio switch

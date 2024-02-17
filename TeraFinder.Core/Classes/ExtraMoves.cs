@@ -2,8 +2,12 @@
 
 namespace TeraFinder.Core;
 
-public class ExtraMoves
+/// <summary>
+/// Set of (up to) 6 moves that are in a HashSet of moves.
+/// </summary>
+public readonly record struct ExtraMoves
 {
+    public bool HasMoves => ExtraMove1 != 0;
     public HashSet<Move> ExtraMoveList { get; private init; }
 
     public Move ExtraMove1 { get => ExtraMoveList.Count > 0 ? ExtraMoveList.ElementAt(0) : Move.None; }

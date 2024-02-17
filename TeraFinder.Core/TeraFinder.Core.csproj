@@ -40,9 +40,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="SysBot.Base">
-			<HintPath>deps\SysBot.Base.dll</HintPath>
-		</Reference>
 		<Reference Include="pkNX.Structures">
 			<HintPath>deps\pkNX.Structures.dll</HintPath>
 		</Reference>

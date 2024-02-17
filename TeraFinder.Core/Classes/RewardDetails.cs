@@ -2,7 +2,7 @@
 
 namespace TeraFinder.Core;
 
-public class Reward
+public record Reward
 {
     public int ItemID { get; set; }
     public int Amount { get; set; }
@@ -11,11 +11,7 @@ public class Reward
 
     public string GetItemName(string[]? itemnames = null, string language = "en", bool quantity = false)
     {
-        if (ItemID == ushort.MaxValue)
-            return $"{RewardUtil.Material[GameLanguage.GetLanguageIndex(language)]} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
-        else if(ItemID == ushort.MaxValue-1)
-            return $"{RewardUtil.TeraShard[GameLanguage.GetLanguageIndex(language)]} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
-        else if (RewardUtil.IsTM(ItemID))
+        if (RewardUtil.IsTM(ItemID))
             return $"{RewardUtil.GetNameTM(ItemID, itemnames, GameInfo.GetStrings(language).movelist)} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
 
         itemnames ??= GameInfo.GetStrings(language).itemlist;
@@ -23,10 +19,8 @@ public class Reward
         return $"{itemnames[ItemID]} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
     }
 
-    private string GetClientOrHostString()
-    {
-        return $"{(Aux == 0 ? "" : Aux == 1 ? "(H)" : Aux == 2 ? "(C)" : Aux == 3 ? "(Once)" : "")}";
-    }
+    private string GetClientOrHostString() =>
+        $"{(Aux == 0 ? "" : Aux == 1 ? "(H)" : Aux == 2 ? "(C)" : Aux == 3 ? "(Once)" : "")}";
 
     public bool CompareItem(Reward item, bool greaterthan = false)
     {
@@ -62,17 +56,18 @@ public class Reward
     public bool IsHerba() => ItemID >= 1904 && ItemID <= 1908;
 }
 
-public class RewardDetails : IRaidDetails
+public struct RewardDetails : IRaidDetails
 {
     public uint Seed { get; set; }
     public List<Reward>? Rewards {get; set;}
     public ushort Species { get; set; }
     public int Stars { get; set; }
     public TeraShiny Shiny { get; set; }
+    public byte TeraType { get; set; }
     public byte EventIndex { get; set; }
     public ulong Calcs { get; set; }
 
-    public string[] GetStrings(string[] itemnames, string language)
+    public readonly string[] GetStrings(string[] itemnames, string language)
     {
         var list = new string[25];
         if(Rewards is not null)
@@ -82,7 +77,7 @@ public class RewardDetails : IRaidDetails
     }
 }
 
-public class RewardGridEntry
+public struct RewardGridEntry
 {
     public string? Seed { get; private set; }
     public string? Item1 { get; private set; }
@@ -181,7 +176,7 @@ public class RewardGridEntry
         Calcs = str[24];
     }
 
-    public string[] GetStrings()
+    public readonly string[] GetStrings()
     {
         var list = new List<string>
         {
@@ -220,30 +215,29 @@ public class RewardGridEntry
 }
 
 /// <summary>
-/// Toggles the marking at a given index.
+/// Check if a RewardDetails matches the filter.
 /// </summary>
 /// <param name="isEncounterFilter">check for Stars and Species.</param>
 /// <param name="isAnyHerbaFilter">check for Any Herba Mystica.</param>
 public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
 {
-    protected bool EncounterFilter { get; set; } = isEncounterFilter;
-    protected bool HerbaFilter { get; set; } = isAnyHerbaFilter;
+    public bool EncounterFilter { get; init; } = isEncounterFilter;
+    protected bool HerbaFilter { get; init; } = isAnyHerbaFilter;
 
     public Reward[]? FilterRewards { get; set; }
-    public ushort Species { get; set; }
-    public int Stars { get; set; }
+    public EncounterFilter? Encounter { get; set; }
     public TeraShiny Shiny { get; set; }
 
     public bool IsFilterMatch(RewardDetails res)
     {
         if (EncounterFilter)
         {
-            if (Species > 0)
-                if (Species != res.Species)
+            if (Encounter!.Species > 0)
+                if (Encounter.Species != res.Species)
                     return false;
 
-            if (Stars > 0)
-                if (Stars != res.Stars)
+            if (Encounter.Stars > 0)
+                if (Encounter.Stars != res.Stars)
                     return false;
         }
 
@@ -253,21 +247,28 @@ public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
 
         if (FilterRewards is not null && FilterRewards.Length > 0)
         {
-            var itemlist = new List<Reward>();
+            var itemlist = new Dictionary<int, int>();
             foreach (var item in res.Rewards!)
             {
-                var index = HerbaFilter && item.IsHerba() ? itemlist.FindIndex(i => i.ItemID == ushort.MaxValue-2) : itemlist.FindIndex(i => i.ItemID == item.ItemID);
-                if (index >= 0)
-                    itemlist[index].Amount += item.Amount;
+                var itemId = HerbaFilter && item.IsHerba() ? ushort.MaxValue - 2 : item.ItemID;
+                if (itemlist.ContainsKey(itemId))
+                {
+                    itemlist[itemId] += item.Amount;
+                }
                 else
-                    itemlist.Add(new Reward { ItemID = HerbaFilter && item.IsHerba() ? ushort.MaxValue-2 : item.ItemID, Amount = item.Amount });
+                {
+                    itemlist[itemId] = item.Amount;
+                }
             }
 
             var match = 0;
-            foreach (var item in itemlist)
-                foreach (var filter in FilterRewards!)
-                    if (item.CompareItem(filter, true))
-                        match++;
+            foreach (var filter in FilterRewards!)
+            {
+                if (itemlist.TryGetValue(filter.ItemID, out var amount) && amount >= filter.Amount)
+                {
+                    match++;
+                }
+            }
 
             return match >= FilterRewards!.Length;
         }
@@ -275,11 +276,27 @@ public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
         return true;
     }
 
+    public bool IsEncounterMatch(EncounterRaidTF9 encounter)
+    {
+        if (EncounterFilter)
+        {
+            if (Encounter!.Species > 0)
+                if (Encounter.Species != encounter.Species)
+                    return false;
+
+            if (Encounter.Stars > 0)
+                if (Encounter.Stars != encounter.Stars)
+                    return false;
+        }
+
+        return true;
+    }
+
     public bool IsFilterNull()
     {
-        if (FilterRewards is null && Species == 0 && Stars == 0 && Shiny is TeraShiny.Any)
+        if (FilterRewards is null && !EncounterFilter && Shiny is TeraShiny.Any)
             return true;
-        if(FilterRewards is not null && FilterRewards.Length <= 0 && Species == 0 && Stars == 0 && Shiny is TeraShiny.Any)
+        if(FilterRewards is not null && FilterRewards.Length <= 0 && !EncounterFilter && Shiny is TeraShiny.Any)
             return true;
 
         return false;
@@ -297,11 +314,21 @@ public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
                     return false;
         }
 
-        if (res.Species != Species)
-            return false;
+        if (EncounterFilter)
+        {
+            if (res.EncounterFilter)
+            {
+                if (res.Encounter!.Species != Encounter!.Species)
+                    return false;
 
-        if (res.Stars != Stars)
-            return false;
+                if (res.Encounter.Stars != Encounter.Stars)
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         if (res.Shiny != Shiny)
             return false;
@@ -322,4 +349,10 @@ public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
         }
         return false;
     }
+}
+
+public class EncounterFilter(ushort species, byte stars)
+{
+    public ushort Species { get; init; } = species;
+    public byte Stars { get; init; } = stars;
 }

@@ -1,6 +1,7 @@
 ﻿using PKHeX.Core;
-using TeraFinder.Core;
 using SysBot.Base;
+using TeraFinder.Core;
+using TeraFinder.RemoteExecutor;
 using TeraFinder.Plugins.Properties;
 using System.Buffers.Binary;
 
@@ -127,20 +128,20 @@ public partial class ConnectionForm : Form
             var version = await Executor.ReadGame(token).ConfigureAwait(false);
             UpdateProgress(CurrentProgress++, MaxProgress);
             SAV.Game = (int)version;
-            var mystatusblock = SAV.Accessor.FindOrDefault(Blocks.KMyStatus.Key);
-            mystatusblock.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.KMyStatus, token).ConfigureAwait(false));
+            var mystatusblock = SAV.Accessor.FindOrDefault(BlockDefinitions.KMyStatus.Key);
+            mystatusblock.ChangeData((byte[]?)await Executor.ReadBlock(BlockDefinitions.KMyStatus, token).ConfigureAwait(false));
             UpdateProgress(CurrentProgress++, MaxProgress);
-            var raidpaldeablock = SAV.Accessor.FindOrDefault(Blocks.KTeraRaidPaldea.Key);
-            raidpaldeablock.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.KTeraRaidPaldea, token).ConfigureAwait(false));
-            var raidkitakamiblock = SAV.Accessor.FindOrDefault(Blocks.KTeraRaidDLC.Key);
-            raidkitakamiblock.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.KTeraRaidDLC, token).ConfigureAwait(false));
+            var raidpaldeablock = SAV.Accessor.FindOrDefault(BlockDefinitions.KTeraRaidPaldea.Key);
+            raidpaldeablock.ChangeData((byte[]?)await Executor.ReadBlock(BlockDefinitions.KTeraRaidPaldea, token).ConfigureAwait(false));
+            var raidkitakamiblock = SAV.Accessor.FindOrDefault(BlockDefinitions.KTeraRaidDLC.Key);
+            raidkitakamiblock.ChangeData((byte[]?)await Executor.ReadBlock(BlockDefinitions.KTeraRaidDLC, token).ConfigureAwait(false));
             UpdateProgress(CurrentProgress++, MaxProgress);
             var progress = await Executor.ReadGameProgress(token).ConfigureAwait(false);
             UpdateProgress(CurrentProgress++, MaxProgress);
             ProgressForm.EditProgress(SAV, progress);
             await DownloadEventData(token).ConfigureAwait(false);
-            var raidSevenStar = SAV.Accessor.FindOrDefault(Blocks.KSevenStarRaidsCapture.Key);
-            raidSevenStar.ChangeData((byte[]?)await Executor.ReadBlock(Blocks.KSevenStarRaidsCapture, token).ConfigureAwait(false));
+            var raidSevenStar = SAV.Accessor.FindOrDefault(BlockDefinitions.KSevenStarRaidsCapture.Key);
+            raidSevenStar.ChangeData((byte[]?)await Executor.ReadBlock(BlockDefinitions.KSevenStarRaidsCapture, token).ConfigureAwait(false));
             UpdateProgress(CurrentProgress++, MaxProgress);
             if (chkOutbreaksMain.Checked) await DownloadOutbreaksMainData(token).ConfigureAwait(false);
             if (chkOutbreaksDLC.Checked) await DownloadOutbreaksDLCData(token).ConfigureAwait(false);
@@ -165,8 +166,8 @@ public partial class ConnectionForm : Form
 
     private async Task DownloadEventData(CancellationToken token)
     {
-        var KBCATEventRaidIdentifier = SAV.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
-        var raidIdentifierBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATEventRaidIdentifier, token).ConfigureAwait(false);
+        var KBCATEventRaidIdentifier = SAV.Accessor.FindOrDefault(BlockDefinitions.KBCATEventRaidIdentifier.Key);
+        var raidIdentifierBlock = (byte[]?)await Executor.ReadBlock(BlockDefinitions.KBCATEventRaidIdentifier, token).ConfigureAwait(false);
         var identifier = BinaryPrimitives.ReadUInt32LittleEndian(raidIdentifierBlock);
 
         if (KBCATEventRaidIdentifier.Type is not SCTypeCode.None)
@@ -179,8 +180,8 @@ public partial class ConnectionForm : Form
 
         if (identifier > 0)
         {
-            var KBCATFixedRewardItemArray = SAV.Accessor.FindOrDefault(Blocks.KBCATFixedRewardItemArray.Key);
-            var rewardItemBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATFixedRewardItemArray, token).ConfigureAwait(false);
+            var KBCATFixedRewardItemArray = SAV.Accessor.FindOrDefault(BlockDefinitions.KBCATFixedRewardItemArray.Key);
+            var rewardItemBlock = (byte[]?)await Executor.ReadBlock(BlockDefinitions.KBCATFixedRewardItemArray, token).ConfigureAwait(false);
 
             if (KBCATFixedRewardItemArray.Type is not SCTypeCode.None)
                 KBCATFixedRewardItemArray.ChangeData(rewardItemBlock);
@@ -192,8 +193,8 @@ public partial class ConnectionForm : Form
 
         if (identifier > 0)
         {
-            var KBCATLotteryRewardItemArray = SAV.Accessor.FindOrDefault(Blocks.KBCATLotteryRewardItemArray.Key);
-            var lotteryItemBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATLotteryRewardItemArray, token).ConfigureAwait(false);
+            var KBCATLotteryRewardItemArray = SAV.Accessor.FindOrDefault(BlockDefinitions.KBCATLotteryRewardItemArray.Key);
+            var lotteryItemBlock = (byte[]?)await Executor.ReadBlock(BlockDefinitions.KBCATLotteryRewardItemArray, token).ConfigureAwait(false);
 
             if (KBCATLotteryRewardItemArray.Type is not SCTypeCode.None)
                 KBCATLotteryRewardItemArray.ChangeData(lotteryItemBlock);
@@ -205,8 +206,8 @@ public partial class ConnectionForm : Form
 
         if (identifier > 0)
         {
-            var KBCATRaidEnemyArray = SAV.Accessor.FindOrDefault(Blocks.KBCATRaidEnemyArray.Key);
-            var raidEnemyBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATRaidEnemyArray, token).ConfigureAwait(false);
+            var KBCATRaidEnemyArray = SAV.Accessor.FindOrDefault(BlockDefinitions.KBCATRaidEnemyArray.Key);
+            var raidEnemyBlock = (byte[]?)await Executor.ReadBlock(BlockDefinitions.KBCATRaidEnemyArray, token).ConfigureAwait(false);
 
             if (KBCATRaidEnemyArray.Type is not SCTypeCode.None)
                 KBCATRaidEnemyArray.ChangeData(raidEnemyBlock);
@@ -218,8 +219,8 @@ public partial class ConnectionForm : Form
 
         if (identifier > 0)
         {
-            var KBCATRaidPriorityArray = SAV.Accessor.FindOrDefault(Blocks.KBCATRaidPriorityArray.Key);
-            var raidPriorityBlock = (byte[]?)await Executor.ReadBlock(Blocks.KBCATRaidPriorityArray, token).ConfigureAwait(false);
+            var KBCATRaidPriorityArray = SAV.Accessor.FindOrDefault(BlockDefinitions.KBCATRaidPriorityArray.Key);
+            var raidPriorityBlock = (byte[]?)await Executor.ReadBlock(BlockDefinitions.KBCATRaidPriorityArray, token).ConfigureAwait(false);
 
             if (KBCATRaidPriorityArray.Type is not SCTypeCode.None)
                 KBCATRaidPriorityArray.ChangeData(raidPriorityBlock);
@@ -233,19 +234,19 @@ public partial class ConnectionForm : Form
 
     private async Task DownloadOutbreaksMainData(CancellationToken token)
     {
-        var KMassOutbreakAmount = SAV.Accessor.FindOrDefault(Blocks.KOutbreakMainNumActive.Key);
-        var KMassOutbreakAmountData = (byte?)await Executor.ReadBlock(Blocks.KOutbreakMainNumActive, token).ConfigureAwait(false);
+        var KMassOutbreakAmount = SAV.Accessor.FindOrDefault(BlockDefinitions.KOutbreakMainNumActive.Key);
+        var KMassOutbreakAmountData = (byte?)await Executor.ReadBlock(BlockDefinitions.KOutbreakMainNumActive, token).ConfigureAwait(false);
 
         if (KMassOutbreakAmount.Type is not SCTypeCode.None)
             KMassOutbreakAmount.ChangeData((new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
         else
-            BlockUtil.EditBlock(KMassOutbreakAmount, Blocks.KOutbreakMainNumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
+            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakMainNumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
 
         UpdateProgress(CurrentProgress++, MaxProgress);
 
         for (var i = 1; i <= 8; i++)
         {
-            var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}MainCenterPos")!.GetValue(new DataBlock())!;
+            var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}MainCenterPos")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakCenterPos = SAV.Accessor.FindOrDefault(blockInfo.Key);
             var KMassOutbreakCenterPosData = (byte[]?)await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false);
 
@@ -256,7 +257,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}MainDummyPos")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}MainDummyPos")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakDummyPos = SAV.Accessor.FindOrDefault(blockInfo.Key);
             var KMassOutbreakDummyPosData = (byte[]?)await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false);
 
@@ -267,7 +268,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}MainSpecies")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}MainSpecies")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakSpecies = SAV.Accessor.FindOrDefault(blockInfo.Key);
             var KMassOutbreakSpeciesData = (uint)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
 
@@ -278,7 +279,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}MainForm")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}MainForm")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakForm = SAV.Accessor.FindOrDefault(blockInfo.Key);
             var KMassOutbreakFormData = (byte)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
 
@@ -289,7 +290,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}MainFound")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}MainFound")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakFound = SAV.Accessor.FindOrDefault(blockInfo.Key);
             var KMassOutbreakFoundData = (bool)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
 
@@ -303,7 +304,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}MainNumKOed")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}MainNumKOed")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakNumKOed = SAV.Accessor.FindOrDefault(blockInfo.Key);
             var KMassOutbreakNumKOedData = (int)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
 
@@ -314,7 +315,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}MainTotalSpawns")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}MainTotalSpawns")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakTotalSpawns = SAV.Accessor.FindOrDefault(blockInfo.Key);
             var KMassOutbreakTotalSpawnsData = (int)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!;
 
@@ -329,21 +330,21 @@ public partial class ConnectionForm : Form
 
     private async Task DownloadOutbreaksDLCData(CancellationToken token)
     {
-        var KMassOutbreakAmount = SAV.Accessor.FindOrDefault(Blocks.KOutbreakDLC1NumActive.Key);
+        var KMassOutbreakAmount = SAV.Accessor.FindOrDefault(BlockDefinitions.KOutbreakDLC1NumActive.Key);
         byte? KMassOutbreakAmountData;
-        try { KMassOutbreakAmountData = (byte?)await Executor.ReadBlock(Blocks.KOutbreakDLC1NumActive, token).ConfigureAwait(false); }
+        try { KMassOutbreakAmountData = (byte?)await Executor.ReadBlock(BlockDefinitions.KOutbreakDLC1NumActive, token).ConfigureAwait(false); }
         catch (ArgumentOutOfRangeException) { KMassOutbreakAmountData = 0; }
 
         if (KMassOutbreakAmount.Type is not SCTypeCode.None)
             KMassOutbreakAmount.ChangeData((new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
         else
-            BlockUtil.EditBlock(KMassOutbreakAmount, Blocks.KOutbreakDLC1NumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
+            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakDLC1NumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
 
         UpdateProgress(CurrentProgress++, MaxProgress);
 
         for (var i = 1; i <= 4; i++)
         {
-            var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC1CenterPos")!.GetValue(new DataBlock())!;
+            var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC1CenterPos")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakCenterPos = SAV.Accessor.FindOrDefault(blockInfo.Key);
             byte[]? KMassOutbreakCenterPosData;
             try { KMassOutbreakCenterPosData = (byte[]?)await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false); }
@@ -356,7 +357,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC1DummyPos")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC1DummyPos")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakDummyPos = SAV.Accessor.FindOrDefault(blockInfo.Key);
             byte[]? KMassOutbreakDummyPosData;
             try { KMassOutbreakDummyPosData = (byte[]?)await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false); }
@@ -369,7 +370,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC1Species")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC1Species")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakSpecies = SAV.Accessor.FindOrDefault(blockInfo.Key);
             uint KMassOutbreakSpeciesData;
             try { KMassOutbreakSpeciesData = (uint)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!; }
@@ -382,7 +383,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC1Form")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC1Form")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakForm = SAV.Accessor.FindOrDefault(blockInfo.Key);
             byte KMassOutbreakFormData;
             try { KMassOutbreakFormData = (byte)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!; }
@@ -395,7 +396,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC1Found")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC1Found")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakFound = SAV.Accessor.FindOrDefault(blockInfo.Key);
             bool KMassOutbreakFoundData;
             try { KMassOutbreakFoundData = (bool)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!; }
@@ -411,7 +412,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC1NumKOed")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC1NumKOed")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakNumKOed = SAV.Accessor.FindOrDefault(blockInfo.Key);
             int KMassOutbreakNumKOedData;
             try { KMassOutbreakNumKOedData = (int)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!; }
@@ -424,7 +425,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC1TotalSpawns")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC1TotalSpawns")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakTotalSpawns = SAV.Accessor.FindOrDefault(blockInfo.Key);
             int KMassOutbreakTotalSpawnsData;
             try { KMassOutbreakTotalSpawnsData = (int)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!; }
@@ -441,21 +442,21 @@ public partial class ConnectionForm : Form
 
     private async Task DownloadOutbreaksDLC2Data(CancellationToken token)
     {
-        var KMassOutbreakAmount = SAV.Accessor.FindOrDefault(Blocks.KOutbreakDLC2NumActive.Key);
+        var KMassOutbreakAmount = SAV.Accessor.FindOrDefault(BlockDefinitions.KOutbreakDLC2NumActive.Key);
         byte? KMassOutbreakAmountData;
-        try { KMassOutbreakAmountData = (byte?)await Executor.ReadBlock(Blocks.KOutbreakDLC2NumActive, token).ConfigureAwait(false); }
+        try { KMassOutbreakAmountData = (byte?)await Executor.ReadBlock(BlockDefinitions.KOutbreakDLC2NumActive, token).ConfigureAwait(false); }
         catch (ArgumentOutOfRangeException) { KMassOutbreakAmountData = 0; }
 
         if (KMassOutbreakAmount.Type is not SCTypeCode.None)
             KMassOutbreakAmount.ChangeData((new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
         else
-            BlockUtil.EditBlock(KMassOutbreakAmount, Blocks.KOutbreakDLC2NumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
+            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakDLC2NumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
 
         UpdateProgress(CurrentProgress++, MaxProgress);
 
         for (var i = 1; i <= 5; i++)
         {
-            var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC2CenterPos")!.GetValue(new DataBlock())!;
+            var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC2CenterPos")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakCenterPos = SAV.Accessor.FindOrDefault(blockInfo.Key);
             byte[]? KMassOutbreakCenterPosData;
             try { KMassOutbreakCenterPosData = (byte[]?)await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false); }
@@ -468,7 +469,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC2DummyPos")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC2DummyPos")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakDummyPos = SAV.Accessor.FindOrDefault(blockInfo.Key);
             byte[]? KMassOutbreakDummyPosData;
             try { KMassOutbreakDummyPosData = (byte[]?)await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false); }
@@ -481,7 +482,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC2Species")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC2Species")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakSpecies = SAV.Accessor.FindOrDefault(blockInfo.Key);
             uint KMassOutbreakSpeciesData;
             try { KMassOutbreakSpeciesData = (uint)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!; }
@@ -494,7 +495,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC2Form")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC2Form")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakForm = SAV.Accessor.FindOrDefault(blockInfo.Key);
             byte KMassOutbreakFormData;
             try { KMassOutbreakFormData = (byte)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!; }
@@ -507,7 +508,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC2Found")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC2Found")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakFound = SAV.Accessor.FindOrDefault(blockInfo.Key);
             bool KMassOutbreakFoundData;
             try { KMassOutbreakFoundData = (bool)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!; }
@@ -523,7 +524,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC2NumKOed")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC2NumKOed")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakNumKOed = SAV.Accessor.FindOrDefault(blockInfo.Key);
             int KMassOutbreakNumKOedData;
             try { KMassOutbreakNumKOedData = (int)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!; }
@@ -536,7 +537,7 @@ public partial class ConnectionForm : Form
 
             UpdateProgress(CurrentProgress++, MaxProgress);
 
-            blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{i}DLC2TotalSpawns")!.GetValue(new DataBlock())!;
+            blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{i}DLC2TotalSpawns")!.GetValue(new BlockDefinition())!;
             var KMassOutbreakTotalSpawns = SAV.Accessor.FindOrDefault(blockInfo.Key);
             int KMassOutbreakTotalSpawnsData;
             try { KMassOutbreakTotalSpawnsData = (int)(await Executor.ReadBlock(blockInfo, token).ConfigureAwait(false))!; }
