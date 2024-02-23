@@ -21,7 +21,7 @@ public struct TeraDetails() : IRaidDetails
     public int SPE { get; set; }
     public int Ability { get; set; }
     public int AbilityNumber { get; set; }
-    public byte Nature { get; set; }
+    public Nature Nature { get; set; }
     public Gender Gender { get; set; }
     public byte Height { get; set; }
     public byte Weight { get; set; }
@@ -51,7 +51,7 @@ public struct TeraDetails() : IRaidDetails
         list[12] = ($"{SPD}");
         list[13] = ($"{SPE}");
         list[14] = ($"{GetAbilityName(abilitylist)}");
-        list[15] = ($"{naturelist[Nature]}");
+        list[15] = ($"{naturelist[(byte)Nature]}");
         list[16] = ($"{genderlistunicode[(int)Gender]}");
         list[17] = ($"{Height}");
         list[18] = ($"{Weight}");
@@ -240,7 +240,7 @@ public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilt
     public int Form { get; set; }
     public sbyte TeraType { get; set; }
     public int AbilityNumber { get; set; }
-    public byte Nature { get; set; }
+    public Nature Nature { get; set; }
     public Gender Gender { get; set; }
     public TeraShiny Shiny { get; set; }
     public bool AltEC { get; set; }
@@ -288,7 +288,7 @@ public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilt
                 if (AbilityNumber != res.AbilityNumber)
                     return false;
 
-            if (Nature != 25)
+            if (Nature is not Nature.Random)
                 if (Nature != res.Nature)
                     return false;
 
@@ -390,8 +390,8 @@ public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilt
     public bool IsAbilityMatch(int res) => 
         AbilityNumber == 0 || AbilityNumber == res;
 
-    public bool IsNatureMatch(int res) =>
-        Nature == 25 || Nature == res;
+    public bool IsNatureMatch(Nature res) =>
+        Nature is Nature.Random || Nature == res;
 
     public bool IsGenderMatch(Gender res) => 
         Gender == Gender.Random || Gender == res;
@@ -435,13 +435,13 @@ public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilt
             return false;
         if (!(AbilityNumber == 0))
             return false;
-        if (!(Nature == 25))
+        if (Nature is not Nature.Random)
             return false;
-        if (!(Gender == Gender.Random))
+        if (Gender is not Gender.Random)
             return false;
-        if (!(Shiny == TeraShiny.Any))
+        if (Shiny is not TeraShiny.Any)
             return false;
-        if (!(AltEC == false))
+        if (AltEC)
             return false;
         if (!(MinScale == 0))
             return false;

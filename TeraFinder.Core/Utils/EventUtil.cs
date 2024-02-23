@@ -229,8 +229,8 @@ public static class EventUtil
         var possibleGroups = new HashSet<int>();
 
         foreach (var enc in encounters)
-            if ((sav.Game is (int)PKHeX.Core.GameVersion.SL && enc.GetRandRateTotalScarlet(progress) > 0) ||
-                (sav.Game is (int)PKHeX.Core.GameVersion.VL && enc.GetRandRateTotalViolet(progress) > 0))
+            if ((sav.Version is PKHeX.Core.GameVersion.SL && enc.GetRandRateTotalScarlet(progress) > 0) ||
+                (sav.Version is PKHeX.Core.GameVersion.VL && enc.GetRandRateTotalViolet(progress) > 0))
                     possibleGroups.Add(enc.Index);
 
         var eventCount = GetEventCount(raids, ++currRaid);

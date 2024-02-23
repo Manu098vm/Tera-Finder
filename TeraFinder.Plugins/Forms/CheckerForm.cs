@@ -55,7 +55,7 @@ public partial class CheckerForm : Form
         numSpD.Value = PKM.IV_SPD;
         numSpe.Value = PKM.IV_SPE;
         cmbSpecies.SelectedIndex = PKM.Species;
-        cmbNature.SelectedIndex = PKM.Nature;
+        cmbNature.SelectedIndex = (int)PKM.Nature;
         cmbTera.SelectedIndex = (int)PKM.TeraTypeOriginal;
         numHeight.Value = PKM.HeightScalar;
         numWeight.Value = PKM.WeightScalar;
@@ -112,7 +112,7 @@ public partial class CheckerForm : Form
         var spa = (int)numSpA.Value;
         var spd = (int)numSpD.Value;
         var spe = (int)numSpe.Value;
-        var nature = cmbNature.SelectedIndex;
+        var nature = (Nature)cmbNature.SelectedIndex;
         var tera = cmbTera.SelectedIndex;
         var height = (byte)numHeight.Value;
         var weight = (byte)numWeight.Value;

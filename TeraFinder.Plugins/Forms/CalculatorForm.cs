@@ -51,7 +51,7 @@ public partial class CalculatorForm : Form
 
         var progress = (int)Editor.Progress;
         cmbProgress.SelectedIndex = progress;
-        cmbGame.SelectedIndex = Editor.SAV.Game == (int)GameVersion.VL ? 1 : 0;
+        cmbGame.SelectedIndex = Editor.SAV.Version == GameVersion.VL ? 1 : 0;
         txtTID.Text = $"{Editor.SAV.TrainerTID7}";
         txtSID.Text = $"{Editor.SAV.TrainerSID7}";
         if (!IsBlankSAV()) grpGameInfo.Enabled = false;
@@ -255,7 +255,7 @@ public partial class CalculatorForm : Form
         var sav = Editor.SAV.Clone();
         sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
         sav.TrainerSID7 = Convert.ToUInt32(txtSID.Text, 10);
-        sav.Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV;
+        sav.Version = cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.SV;
 
         EncounterRaidTF9[] encs = GetCurrentEncounters();
         var species = EncounterRaidTF9.GetAvailableSpecies(encs, GetStars(), NameList, FormList, TypeList, Strings);
@@ -428,7 +428,7 @@ public partial class CalculatorForm : Form
             Form = speciesForm[1],
             TeraType = teraType,
             AbilityNumber = cmbAbility.SelectedIndex == 3 ? 4 : cmbAbility.SelectedIndex,
-            Nature = (byte)cmbNature.SelectedIndex,
+            Nature = (Nature)cmbNature.SelectedIndex,
             Gender = gender,
             Shiny = (TeraShiny)cmbShiny.SelectedIndex,
 
@@ -555,7 +555,7 @@ public partial class CalculatorForm : Form
             var sav = (SAV9SV)Editor.SAV.Clone();
             sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
             sav.TrainerSID7 = Convert.ToUInt32(txtSID.Text, 10);
-            sav.Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV;
+            sav.Version = cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.SV;
             var progress = (GameProgress)cmbProgress.SelectedIndex;
             var content = (RaidContent)cmbContent.SelectedIndex;
 

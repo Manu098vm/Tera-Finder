@@ -118,7 +118,7 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
     };
 
     //Generate a PK9 from a given seed
-    public bool GeneratePK9(uint seed, uint id32, int version, string ot_name, int ot_language, int ot_gender, out PK9? result, out LegalityAnalysis legality)
+    public bool GeneratePK9(uint seed, uint id32, GameVersion version, string ot_name, int ot_language, byte ot_gender, out PK9? result, out LegalityAnalysis legality)
     {
         result = null;
         var rngres = this.GenerateData(seed, id32);
@@ -127,17 +127,17 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
         {
             Species = Species,
             HeldItem = HeldItem,
-            Met_Level = Level,
+            MetLevel = Level,
             CurrentLevel = Level,
             Obedience_Level = Level,
             RibbonMarkMightiest = IsMighty,
             ID32 = id32,
             Version = version,
             Language = ot_language,
-            HT_Language = (byte)ot_language,
-            OT_Name = ot_name,
-            HT_Name = ot_name,
-            OT_Gender = ot_gender,
+            HandlingTrainerLanguage = (byte)ot_language,
+            OriginalTrainerName = ot_name,
+            HandlingTrainerName = ot_name,
+            OriginalTrainerGender = ot_gender,
             TeraTypeOriginal = (MoveType)rngres.TeraType,
             EncryptionConstant = rngres.EC,
             Form = rngres.Form,
@@ -148,7 +148,7 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
             IV_SPA = rngres.SPA,
             IV_SPD = rngres.SPD,
             IV_SPE = rngres.SPE,
-            Gender = (int)rngres.Gender,
+            Gender = (byte)rngres.Gender,
             Nature = rngres.Nature,
             StatNature = rngres.Nature,
             HeightScalar = rngres.Height,
@@ -175,7 +175,7 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
             var la_ot = legality.Results.Where(l => l.Identifier is CheckIdentifier.Trainer).FirstOrDefault();
             if ((LanguageID)result.Language is LanguageID.ChineseS or LanguageID.ChineseT or LanguageID.Korean or LanguageID.Japanese && !la_ot.Valid)
             {
-                result.OT_Name = "TF";
+                result.OriginalTrainerName = "TF";
                 result.RefreshChecksum();
                 changed = true;
             }

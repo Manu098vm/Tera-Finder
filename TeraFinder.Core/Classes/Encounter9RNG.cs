@@ -73,9 +73,9 @@ public static class EncounterTF9RNG
         if (!filter.IsGenderMatch(gender))
             return false;
 
-        byte nature = encounter.Nature != Nature.Random ? (byte)encounter.Nature : encounter.Species == (int)Species.Toxtricity
+        var nature = encounter.Nature != Nature.Random ? encounter.Nature : encounter.Species == (ushort)Species.Toxtricity
                 ? ToxtricityUtil.GetRandomNature(ref rand, encounter.Form)
-                : (byte)rand.NextInt(25);
+                : (Nature)rand.NextInt(25);
         
         if (!filter.IsNatureMatch(nature))
             return false;
@@ -170,9 +170,9 @@ public static class EncounterTF9RNG
             _ => GetGender(encounter.GenderRatio, rand.NextInt(100)),
         };
 
-        byte nature = encounter.Nature != Nature.Random ? (byte)encounter.Nature : encounter.Species == (int)Species.Toxtricity
+        var nature = encounter.Nature != Nature.Random ? encounter.Nature : encounter.Species == (ushort)Species.Toxtricity
                 ? ToxtricityUtil.GetRandomNature(ref rand, encounter.Form)
-                : (byte)rand.NextInt(25);
+                : (Nature)rand.NextInt(25);
 
         var height = (byte)(rand.NextInt(0x81) + rand.NextInt(0x80));
         var weight = (byte)(rand.NextInt(0x81) + rand.NextInt(0x80));

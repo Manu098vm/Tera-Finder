@@ -61,7 +61,7 @@ public partial class RewardCalcForm : Form
 
         var progress = (int)editor.Progress;
         cmbProgress.SelectedIndex = progress;
-        cmbGame.SelectedIndex = Editor.SAV.Game == (int)GameVersion.VL ? 1 : 0;
+        cmbGame.SelectedIndex = Editor.SAV.Version == GameVersion.VL ? 1 : 0;
         txtTID.Text = $"{Editor.SAV.TrainerTID7}";
         txtSID.Text = $"{Editor.SAV.TrainerSID7}";
         if (!IsBlankSAV()) grpProfile.Enabled = false;
@@ -383,7 +383,7 @@ public partial class RewardCalcForm : Form
             var sav = (SAV9SV)Editor.SAV.Clone();
             sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
             sav.TrainerSID7 = Convert.ToUInt32(txtSID.Text, 10);
-            sav.Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV;
+            sav.Version = cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.SV;
             var progress = (GameProgress)cmbProgress.SelectedIndex;
             var content = (RaidContent)cmbContent.SelectedIndex;
             var boost = cmbBoost.SelectedIndex;

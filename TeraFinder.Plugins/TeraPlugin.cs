@@ -64,6 +64,8 @@ public class TeraPlugin : IPlugin
 
     private void AddCheckerToList()
     {
+        const ushort TeraLocation = 30024;
+
         if (Paldea is null || PaldeaBlack is null)
             (Paldea, PaldeaBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Paldea);
 
@@ -81,7 +83,7 @@ public class TeraPlugin : IPlugin
             if (SaveFileEditor.SAV is SAV9SV sav) {
                 var info = GetSenderInfo(ref s!);
                 var pk = info.Slot.Read(sav);
-                if (pk is PK9 pk9 && pk9.Met_Location == 30024)
+                if (pk is PK9 pk9 && pk9.MetLocation == TeraLocation)
                 {
                     var dic = new Dictionary<string, string> { { "CheckerForm", "" } }.TranslateInnerStrings(Language);
                     var calcSeed = new ToolStripMenuItem(dic["CheckerForm"]) { Image = Properties.Resources.icon.ToBitmap() };
@@ -100,7 +102,7 @@ public class TeraPlugin : IPlugin
         else
             SAV = new SAV9SV
             {
-                Game = (int)GameVersion.SL,
+                Version = GameVersion.SL,
                 OT = defaultOT,
                 Language = (int)GetLanguageID(language is not null ? language : Language),
             };
@@ -361,7 +363,7 @@ public class TeraPlugin : IPlugin
     public string GetSavName()
     {
         var ot = SAV.OT;
-        var game = (GameVersion)SAV.Game;
+        var game = SAV.Version;
         var tid = (int)SAV.TrainerTID7;
         return $"{game} - {ot} ({tid}) - {Language.ToUpper()}";
     }

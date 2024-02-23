@@ -438,7 +438,7 @@ public partial class EditorForm : Form
 
                 lblSpecies.Text = $"{Strings["EditorForm.lblSpecies"]} {result.Value.GetName(species, types, forms, genders)}";
                 lblTera.Text = $"{Strings["EditorForm.lblTera"]} {types[result.Value.TeraType]}";
-                lblNature.Text = $"{Strings["EditorForm.lblNature"]} {natures[result.Value.Nature]}";
+                lblNature.Text = $"{Strings["EditorForm.lblNature"]} {natures[(byte)result.Value.Nature]}";
                 lblAbility.Text = $"{Strings["EditorForm.lblAbility"]} {abilities[result.Value.Ability]}";
                 lblShiny.Text = $"{Strings["EditorForm.lblShiny"]} {result.Value.Shiny}";
                 lblGender.Text = $"{Strings["EditorForm.lblGender"]} {genders[(int)result.Value.Gender]}";
@@ -733,7 +733,7 @@ public partial class EditorForm : Form
             Form = encounter.Form,
             TeraType = -1,
             AbilityNumber = 0,
-            Nature = (byte)Nature.Random,
+            Nature = Nature.Random,
             Gender = Gender.Random,
             Shiny = forceShiny ? TeraShiny.Yes : TeraShiny.Any,
             AltEC = details.EC % 100 == 0,

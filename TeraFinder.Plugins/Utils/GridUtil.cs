@@ -162,7 +162,7 @@ public static class GridUtil
                     var encounters = f.Editor.GetCurrentEncounters(content, map);
                     if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, content, map, id32, groupid, 0, out var enc, out var result))
                     {
-                        if (!enc!.GeneratePK9(result!.Value.Seed, id32, (int)version, f.Editor.SAV.OT, f.Editor.SAV.Language, f.Editor.SAV.Gender, out var pk9, out var la))
+                        if (!enc!.GeneratePK9(result!.Value.Seed, id32, version, f.Editor.SAV.OT, f.Editor.SAV.Language, f.Editor.SAV.Gender, out var pk9, out var la))
                         {
                             var la_encounter = la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault();
                             if (content is RaidContent.Event or RaidContent.Event_Mighty)
@@ -371,7 +371,7 @@ public static class GridUtil
                     var encounters = f.Editor.GetCurrentEncounters(content, map);
                     if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, content, map, id32, groupid, 0, out var enc, out var result))
                     {
-                        if (!enc!.GeneratePK9(result!.Value.Seed, id32, (int)version, f.Editor.SAV.OT, f.Editor.SAV.Language, f.Editor.SAV.Gender, out var pk9, out var la))
+                        if (!enc!.GeneratePK9(result!.Value.Seed, id32, version, f.Editor.SAV.OT, f.Editor.SAV.Language, f.Editor.SAV.Gender, out var pk9, out var la))
                         {
                             var la_encounter = la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault();
                             if (content is RaidContent.Event or RaidContent.Event_Mighty)
