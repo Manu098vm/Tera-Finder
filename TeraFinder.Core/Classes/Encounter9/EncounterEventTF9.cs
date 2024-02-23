@@ -41,7 +41,7 @@ public sealed record EncounterEventTF9 : EncounterRaidTF9, IEventRaid9
 
             var max = game is GameVersion.SL ? enc.GetRandRateTotalScarlet(progress) : enc.GetRandRateTotalViolet(progress);
             var min = game is GameVersion.SL ? enc.GetRandRateMinScarlet(progress) : enc.GetRandRateMinViolet(progress);
-            if (min >= 0 && max > 0)
+            if (max > 0)
             {
                 var xoro = new Xoroshiro128Plus(seed);
                 xoro.NextInt(100);

@@ -106,8 +106,11 @@ public sealed record EncounterTeraTF9 : EncounterRaidTF9
 
         foreach (var encounter in encounters)
         {
+            if (stars != encounter.Stars)
+                continue;
+
             var min = game is GameVersion.SL ? encounter.RandRateMinScarlet : encounter.RandRateMinViolet;
-            if (encounter.Stars == stars && min >= 0 && (uint)(rateRand - min) < encounter.RandRate)
+            if ((uint)(rateRand - min) < encounter.RandRate)
                 return encounter;
         }
         return null;
