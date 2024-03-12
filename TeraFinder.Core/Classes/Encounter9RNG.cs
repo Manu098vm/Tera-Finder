@@ -67,12 +67,12 @@ public static class Encounter9RNG
             _ => GetGender(gender_ratio, rand.NextInt(100)),
         }; ;
 
-        byte nature = enc.Nature != Nature.Random ? (byte)enc.Nature : enc.Species == (int)Species.Toxtricity
+        var nature = enc.Nature != Nature.Random ? enc.Nature : enc.Species == (int)Species.Toxtricity
                 ? ToxtricityUtil.GetRandomNature(ref rand, pk.Form)
-                : (byte)rand.NextInt(25);
-        if (criteria.Nature != Nature.Random && nature != (int)criteria.Nature)
+                : (Nature)rand.NextInt(25);
+        if (criteria.Nature != Nature.Random && nature != criteria.Nature)
             return false;
-        pk.Nature = nature;
+        pk.Nature = (byte)(pk.StatNature = nature);
 
         pk.Height = enc.Height != 0 ? enc.Height : (byte)(rand.NextInt(0x81) + rand.NextInt(0x80));
         pk.Weight = enc.Weight != 0 ? enc.Weight : (byte)(rand.NextInt(0x81) + rand.NextInt(0x80));

@@ -25,7 +25,7 @@ public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>
     public int Generation => 9;
     public EntityContext Context => EntityContext.Gen9;
     public GameVersion Version => GameVersion.SV;
-    int ILocation.Location => Location;
+    ushort ILocation.Location => Location;
     public const ushort Location = Locations.TeraCavern9;
     public bool IsDistribution => Index != 0;
     public Ball FixedBall => Ball.None;
@@ -55,6 +55,10 @@ public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>
     public string LongName => Name;
     public byte LevelMin => Level;
     public byte LevelMax => Level;
+
+    byte IGeneration.Generation => throw new NotImplementedException();
+
+    ushort ILocation.EggLocation => throw new NotImplementedException();
 
     public bool CanBeEncountered(uint seed) => Tera9RNG.IsMatchStarChoice(seed, Stars, RandRate, RandRateMinScarlet, RandRateMinViolet, Map);
 
@@ -205,8 +209,8 @@ public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>
     public PK9 ConvertToPKM(ITrainerInfo tr) => ConvertToPKM(tr, EncounterCriteria.Unrestricted);
     public PK9 ConvertToPKM(ITrainerInfo tr, EncounterCriteria criteria)
     {
-        int lang = (int)Language.GetSafeLanguage(Generation, (LanguageID)tr.Language);
-        var version = this.GetCompatibleVersion((GameVersion)tr.Game);
+        int lang = (int)Language.GetSafeLanguage((byte)Generation, (LanguageID)tr.Language);
+        var version = this.GetCompatibleVersion(tr.Version);
         var pi = PersonalTable.SV[Species, Form];
         var pk = new PK9
         {
@@ -214,17 +218,17 @@ public sealed record EncounterTera9 : IEncounterable, IEncounterConvertible<PK9>
             Species = Species,
             Form = Form,
             CurrentLevel = LevelMin,
-            OT_Friendship = pi.BaseFriendship,
-            Met_Location = Location,
-            Met_Level = LevelMin,
+            OriginalTrainerFriendship = pi.BaseFriendship,
+            MetLocation = Location,
+            MetLevel = LevelMin,
             MetDate = EncounterDate.GetDateSwitch(),
-            Version = (byte)version,
+            Version = (GameVersion)(byte)version,
             Ball = (byte)Ball.Poke,
 
-            Nickname = SpeciesName.GetSpeciesNameGeneration(Species, lang, Generation),
+            Nickname = SpeciesName.GetSpeciesNameGeneration(Species, lang, (byte)Generation),
             Obedience_Level = LevelMin,
-            OT_Name = tr.OT,
-            OT_Gender = tr.Gender,
+            OriginalTrainerName = tr.OT,
+            OriginalTrainerGender = tr.Gender,
             ID32 = tr.ID32,
         };
         SetPINGA(pk, criteria, pi);

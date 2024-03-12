@@ -163,7 +163,7 @@ public static class GridUtil
                     var sid = Convert.ToUInt32(f.txtSID.Text, 10);
 
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
+                    sav.Version = (GameVersion)(int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
 
                     var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress),
                         map switch 
@@ -245,7 +245,7 @@ public static class GridUtil
                     var progress = GetProgress(seed, groupid, selectedRows.ElementAt(0), f, map);
 
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
+                    sav.Version = (GameVersion)(int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
 
                     var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
                         map switch
@@ -392,7 +392,7 @@ public static class GridUtil
                     var sid = Convert.ToUInt32(f.txtSID.Text, 10);
 
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Game = (int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
+                    sav.Version = (GameVersion)(int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
 
                     var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
                         map switch
@@ -459,7 +459,7 @@ public static class GridUtil
                 for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
                 {
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Game = (int)game;
+                    sav.Version = (GameVersion)(int)game;
                     var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
                         map switch
                         {
@@ -502,7 +502,7 @@ public static class GridUtil
                 for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
                 {
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Game = (int)game;
+                    sav.Version = (GameVersion)(int)game;
 
                     var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
                         map switch
@@ -553,7 +553,7 @@ public static class GridUtil
                     for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
                     {
                         var sav = (SAV9SV)f.Editor.SAV.Clone();
-                        sav.Game = (int)game;
+                        sav.Version = (GameVersion)(int)game;
 
                         var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
                             map switch
@@ -624,7 +624,7 @@ public static class GridUtil
                 for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
                 {
                     var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Game = (int)game;
+                    sav.Version = (GameVersion)(int)game;
                     var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
                         map switch
                         {
