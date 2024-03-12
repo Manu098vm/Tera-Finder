@@ -470,9 +470,4 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
 
     private async Task<ulong> PrepareAddress(ulong address, CancellationToken token) =>
         BitConverter.ToUInt64(await SwitchConnection.ReadBytesAbsoluteAsync(address + 8, 8, token).ConfigureAwait(false));
-
-    public Task WriteBlock(Span<byte> data, DataBlock kSevenStarRaidsCapture, CancellationToken none)
-    {
-        throw new NotImplementedException();
-    }
 }
