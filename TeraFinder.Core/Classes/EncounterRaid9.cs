@@ -55,6 +55,12 @@ public class EncounterRaid9(ITeraRaid9 encounter) : IEncounterable, IEncounterCo
     public bool CanBeEncounteredScarlet => GetCanBeEncountered(GameVersion.SL);
     public bool CanBeEncounteredViolet => GetCanBeEncountered(GameVersion.VL);
 
+    byte IGeneration.Generation => throw new NotImplementedException();
+
+    ushort ILocation.Location => throw new NotImplementedException();
+
+    ushort ILocation.EggLocation => throw new NotImplementedException();
+
     public Type GetEncounterType() => EncounterRaid.GetType();
     public bool CanBeEncountered(uint seed) => EncounterRaid.CanBeEncountered(seed);
 

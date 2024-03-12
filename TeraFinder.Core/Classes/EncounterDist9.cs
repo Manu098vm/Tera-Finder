@@ -15,7 +15,7 @@ public sealed record EncounterDist9 : IEncounterable, IEncounterConvertible<PK9>
     public required ExtraMoves ExtraMoves { get; init; }
 
     public int Generation => 9;
-    int ILocation.Location => Location;
+    ushort ILocation.Location => Location;
     public const ushort Location = Locations.TeraCavern9;
     public EntityContext Context => EntityContext.Gen9;
     public GameVersion Version => GameVersion.SV;
@@ -136,6 +136,10 @@ public sealed record EncounterDist9 : IEncounterable, IEncounterConvertible<PK9>
             return StageNone;
         }
     }
+
+    byte IGeneration.Generation => throw new NotImplementedException();
+
+    ushort ILocation.EggLocation => throw new NotImplementedException();
 
     public int GetProgressMaximum(uint seed)
     {
@@ -258,21 +262,21 @@ public sealed record EncounterDist9 : IEncounterable, IEncounterConvertible<PK9>
     public PK9 ConvertToPKM(ITrainerInfo tr) => ConvertToPKM(tr, EncounterCriteria.Unrestricted);
     public PK9 ConvertToPKM(ITrainerInfo tr, EncounterCriteria criteria)
     {
-        int lang = (int)Language.GetSafeLanguage(Generation, (LanguageID)tr.Language);
-        var version = this.GetCompatibleVersion((GameVersion)tr.Game);
+        byte lang = (byte)Language.GetSafeLanguage((byte)Generation, (LanguageID)tr.Language);
+        var version = this.GetCompatibleVersion(tr.Version);
         var pk = new PK9
         {
             Language = lang,
             Species = Species,
             Form = Form,
             CurrentLevel = LevelMin,
-            OT_Friendship = PersonalTable.SV[Species, Form].BaseFriendship,
-            Met_Location = Location,
-            Met_Level = LevelMin,
-            Version = (int)version,
+            OriginalTrainerFriendship = PersonalTable.SV[Species, Form].BaseFriendship,
+            MetLocation = Location,
+            MetLevel = LevelMin,
+            Version = (GameVersion)(int)version,
             Ball = (byte)Ball.Poke,
 
-            Nickname = SpeciesName.GetSpeciesNameGeneration(Species, lang, Generation),
+            Nickname = SpeciesName.GetSpeciesNameGeneration(Species, lang, (byte)Generation),
             Obedience_Level = LevelMin,
         };
         SetPINGA(pk, criteria);

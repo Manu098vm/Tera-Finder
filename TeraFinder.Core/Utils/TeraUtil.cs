@@ -33,18 +33,18 @@ public static class TeraUtil
         template.Form = rngres.Form;
         if (rngres.Stars == 7) template.RibbonMarkMightiest = true;
         template.MetDate = DateOnly.FromDateTime(DateTime.Now);
-        template.Met_Level = rngres.Level;
-        template.CurrentLevel = rngres.Level;
+        template.MetLevel = (byte)rngres.Level;
+        template.CurrentLevel = (byte)rngres.Level;
         template.Obedience_Level = (byte)rngres.Level;
         template.TeraTypeOriginal = (MoveType)rngres.TeraType;
         template.EncryptionConstant = rngres.EC;
         template.ID32 = id32;
-        template.Version = sav.Game;
+        template.Version = sav.Version;
         template.Language = (byte)sav.Language;
-        template.HT_Name = sav.OT;
-        template.HT_Language = (byte)sav.Language;
-        template.OT_Name = sav.OT;
-        template.OT_Gender = sav.Gender;
+        template.HandlingTrainerName = sav.OT;
+        template.HandlingTrainerLanguage = (byte)sav.Language;
+        template.OriginalTrainerName = sav.OT;
+        template.OriginalTrainerGender = sav.Gender;
         template.PID = rngres.PID;
         template.IV_HP = rngres.HP;
         template.IV_ATK = rngres.ATK;
@@ -54,9 +54,9 @@ public static class TeraUtil
         template.IV_SPE = rngres.SPE;
         template.Ability = rngres.Ability;
         template.AbilityNumber = rngres.GetAbilityNumber() == 3 ? 4 : rngres.GetAbilityNumber();
-        template.Nature = rngres.Nature;
-        template.StatNature = rngres.Nature;
-        template.Gender = (int)rngres.Gender;
+        template.Nature = (Nature)rngres.Nature;
+        template.StatNature = (Nature)rngres.Nature;
+        template.Gender = (byte)rngres.Gender;
         template.HeightScalar = rngres.Height;
         template.WeightScalar = rngres.Weight;
         template.Scale = rngres.Scale;
@@ -87,7 +87,7 @@ public static class TeraUtil
                     }
                 }
                 if ((LanguageID)template.Language is (LanguageID.ChineseS or LanguageID.ChineseT or LanguageID.Korean or LanguageID.Japanese) && !la_ot.Valid)
-                    template.OT_Name = "TF";
+                    template.OriginalTrainerName = "TF";
             }
         }
         catch (Exception ex) 
@@ -184,7 +184,7 @@ public static class TeraUtil
     public static List<string> GetAvailableSpecies(SAV9SV sav, string[] species, string[] forms, string[] types, Dictionary<string, string> plugins, int stars, RaidContent content, TeraRaidMapParent map)
     {
         List<string> list = [];
-        var game = (GameVersion)sav.Game;
+        var game = (GameVersion)sav.Version;
 
         var encounters = content is RaidContent.Event ? GetSAVDistEncounters(sav)[0] : content is RaidContent.Event_Mighty ? GetSAVDistEncounters(sav)[1] :
             EncounterRaid9.GetEncounters(EncounterTera9.GetArray(map switch
@@ -388,8 +388,8 @@ public static class TeraUtil
         var possibleGroups = new HashSet<int>();
         if (content is RaidContent.Event or RaidContent.Event_Mighty && Dist is not null)
             foreach (var enc in Dist)
-                if (((GameVersion)sav.Game is GameVersion.SL && enc.GetRandRateTotalScarlet(p) > 0) ||
-                    ((GameVersion)sav.Game is GameVersion.VL && enc.GetRandRateTotalViolet(p) > 0))
+                if (((GameVersion)sav.Version is GameVersion.SL && enc.GetRandRateTotalScarlet(p) > 0) ||
+                    ((GameVersion)sav.Version is GameVersion.VL && enc.GetRandRateTotalViolet(p) > 0))
                     possibleGroups.Add(enc.Index);
 
         var eventCount = content >= RaidContent.Event ? GetEventCount(raids, currRaid+1) : 0;

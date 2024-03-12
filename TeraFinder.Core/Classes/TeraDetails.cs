@@ -31,7 +31,7 @@ public class TeraDetails : IRaidDetails
     public ushort Move4 { get; set; }
     public byte EventIndex { get; set; }
     public ulong Calcs { get; set; }
-
+    public Nature StatNature { get; internal set; }
 
     public int GetAbilityNumber()
     {

@@ -67,7 +67,7 @@ public class TeraPlugin : IPlugin
             if (SaveFileEditor.SAV is SAV9SV sav) {
                 var info = GetSenderInfo(ref s!);
                 var pk = info.Slot.Read(sav);
-                if (pk is PK9 pk9 && pk9.Met_Location == 30024)
+                if (pk is PK9 pk9 && pk9.MetLocation == 30024)
                 {
                     var dic = new Dictionary<string, string> { { "CheckerForm", "" } }.TranslateInnerStrings(Language);
                     var calcSeed = new ToolStripMenuItem(dic["CheckerForm"]) { Image = Properties.Resources.icon.ToBitmap() };
@@ -86,7 +86,7 @@ public class TeraPlugin : IPlugin
         else
             SAV = new SAV9SV
             {
-                Game = (int)GameVersion.SL,
+                Version = (GameVersion)(int)GameVersion.SL,
                 OT = defaultOT,
                 Language = (int)GetLanguageID(language is not null ? language : Language),
             };
@@ -330,7 +330,7 @@ public class TeraPlugin : IPlugin
     public string GetSavName()
     {
         var ot = SAV.OT;
-        var game = (GameVersion)SAV.Game;
+        var game = (GameVersion)SAV.Version;
         var tid = (int)SAV.TrainerTID7;
         return $"{game} - {ot} ({tid}) - {Language.ToUpper()}";
     }
@@ -368,7 +368,7 @@ public class TeraPlugin : IPlugin
         Type contextMenuSAVType = ((dynamic)SaveFileEditor).menu.GetType();
         MethodInfo? getSenderInfoMethod = contextMenuSAVType.GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
             .SingleOrDefault(m => m.Name.Contains("GetSenderInfo"));
-        return (SlotViewInfo<PictureBox>)getSenderInfoMethod?.Invoke(null, new object[] { sender })!;
+        return (SlotViewInfo<PictureBox>)getSenderInfoMethod?.Invoke(null, [sender])!;
     }
 
     public bool ExportSAVDialog(int currentBox = 0)

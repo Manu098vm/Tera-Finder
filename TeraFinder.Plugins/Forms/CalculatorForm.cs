@@ -51,7 +51,7 @@ public partial class CalculatorForm : Form
 
         var progress = (int)(Editor.Progress == GameProgress.None ? 0 : Editor.Progress);
         cmbProgress.SelectedIndex = progress;
-        cmbGame.SelectedIndex = Editor.SAV.Game == (int)GameVersion.VL ? 1 : 0;
+        cmbGame.SelectedIndex = Editor.SAV.Version == GameVersion.VL ? 1 : 0;
         txtTID.Text = $"{Editor.SAV.TrainerTID7}";
         txtSID.Text = $"{Editor.SAV.TrainerSID7}";
         if (!IsBlankSAV()) grpGameInfo.Enabled = false;
@@ -235,7 +235,7 @@ public partial class CalculatorForm : Form
         var sav = Editor.SAV.Clone();
         sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
         sav.TrainerSID7 = Convert.ToUInt32(txtSID.Text, 10);
-        sav.Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV;
+        sav.Version = (GameVersion)(cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV);
         var species = TeraUtil.GetAvailableSpecies((SAV9SV)sav, NameList, FormList, TypeList, Strings, GetStars(), (RaidContent)cmbContent.SelectedIndex, (TeraRaidMapParent)cmbMap.SelectedIndex);
         cmbSpecies.Items.Clear();
         cmbSpecies.Items.Add(Strings["Any"]);
@@ -468,7 +468,7 @@ public partial class CalculatorForm : Form
                 }
                 catch (Exception)
                 {
-                    lblFound.Text = $"{Strings["Found"]} {CalculatedList.LongCount()}";
+                    lblFound.Text = $"{Strings["Found"]} {CalculatedList.Count}";
                 }
             else
                 lblFound.Text = $"{Strings["Found"]}  {(CalculatedList.Count > 0 ? Strings["True"] : Strings["False"])}";
@@ -532,7 +532,7 @@ public partial class CalculatorForm : Form
             var sav = (SAV9SV)Editor.SAV.Clone();
             sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
             sav.TrainerSID7 = Convert.ToUInt32(txtSID.Text, 10);
-            sav.Game = cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV;
+            sav.Version = (GameVersion)(cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV);
             var progress = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black ? GameProgress.None : (GameProgress)cmbProgress.SelectedIndex;
             var content = (RaidContent)cmbContent.SelectedIndex;
 

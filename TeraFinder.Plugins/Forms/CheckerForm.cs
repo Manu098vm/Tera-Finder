@@ -37,7 +37,7 @@ public partial class CheckerForm : Form
         numSpD.Value = PKM.IV_SPD;
         numSpe.Value = PKM.IV_SPE;
         cmbSpecies.SelectedIndex = PKM.Species;
-        cmbNature.SelectedIndex = PKM.Nature;
+        cmbNature.SelectedIndex = (int)PKM.Nature;
         cmbTera.SelectedIndex = (int)PKM.TeraTypeOriginal;
         numHeight.Value = PKM.HeightScalar;
         numWeight.Value = PKM.WeightScalar;
@@ -104,7 +104,7 @@ public partial class CheckerForm : Form
             IV_SPA = spa,
             IV_SPD = spd,
             IV_SPE = spe,
-            Nature = nature,
+            Nature = (Nature)nature,
             TeraTypeOriginal = (MoveType)tera,
             HeightScalar = height,
             WeightScalar = weight,
@@ -187,7 +187,7 @@ public partial class CheckerForm : Form
             return false;
         if (pkm.IV_SPE != rng.SPE)
             return false;
-        if (pkm.Nature != rng.Nature)
+        if ((int)pkm.Nature != rng.Nature)
             return false;
         if ((sbyte)pkm.TeraTypeOriginal != rng.TeraType)
             return false;
