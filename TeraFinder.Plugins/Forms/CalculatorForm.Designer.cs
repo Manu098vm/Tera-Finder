@@ -271,6 +271,7 @@ partial class CalculatorForm
         cmbProgress.Name = "cmbProgress";
         cmbProgress.Size = new Size(174, 28);
         cmbProgress.TabIndex = 7;
+        cmbProgress.SelectedIndexChanged += cmbProgress_IndexChanged;
         // 
         // lblProgress
         // 

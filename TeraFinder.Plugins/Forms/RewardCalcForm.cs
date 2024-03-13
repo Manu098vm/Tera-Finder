@@ -396,7 +396,7 @@ public partial class RewardCalcForm : Form
             }
             btnSearch.Text = Strings["ActionStop"];
             DisableControls();
-            ActiveForm!.Update();
+            //ActiveForm.Update();
 
             var sav = (SAV9SV)Editor.SAV.Clone();
             sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
@@ -428,10 +428,12 @@ public partial class RewardCalcForm : Form
                 if (!GridEntries.IsFinalized)
                     MessageBox.Show("Something went wrong: Result list isn't finalized.");
 #endif
-                if (GridEntries.Count == 0)
-                    await Task.Delay(0_300);
+                while (dataGrid.RowCount < GridEntries.Count)
+                {
+                    dataGrid.DataSource = null;
+                    dataGrid.DataSource = GridEntries;
+                }
 
-                dataGrid.DataSource = GridEntries;
                 stopwatch.Stop();
                 MessageBox.Show($"{stopwatch.Elapsed}");
 

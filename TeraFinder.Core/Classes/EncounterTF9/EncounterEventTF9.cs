@@ -39,14 +39,14 @@ public sealed record EncounterEventTF9 : EncounterRaidTF9, IEventRaid9
             if (enc.Index != groupid)
                 continue;
 
-            var max = game is GameVersion.SL ? enc.GetRandRateTotalScarlet(progress) : enc.GetRandRateTotalViolet(progress);
+            var max = game switch { GameVersion.VL => enc.GetRandRateTotalViolet(progress), _ => enc.GetRandRateTotalScarlet(progress) };
             if (max > 0)
             {
                 var xoro = new Xoroshiro128Plus(seed);
                 xoro.NextInt(100);
                 var rateRand = xoro.NextInt(max);
-                var min = game is GameVersion.SL ? enc.GetRandRateMinScarlet(progress) : enc.GetRandRateMinViolet(progress);
-                if ((uint)(rateRand - min) < enc.RandRate)
+                var min = game switch { GameVersion.VL => enc.GetRandRateMinViolet(progress), _ => enc.GetRandRateMinScarlet(progress) };
+                if ((rateRand - min) < enc.RandRate)
                     return enc;
             }
         }
@@ -262,5 +262,15 @@ public sealed record EncounterEventTF9 : EncounterRaidTF9, IEventRaid9
         }
 
         return false;
+    }
+
+    public static HashSet<int> GetPossibleEventStars(EncounterEventTF9[] encounters, EventProgress progress, GameVersion version)
+    {
+        var set = new HashSet<int>();
+        foreach (var enc in encounters)
+            if (version switch { GameVersion.VL => enc.GetRandRateTotalViolet(progress), _ => enc.GetRandRateTotalScarlet(progress) } > 0)
+                set.Add(enc.Stars);
+
+        return set;
     }
 }

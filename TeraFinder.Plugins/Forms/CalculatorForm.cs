@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System;
 using System.Collections.Concurrent;
 using TeraFinder.Core;
 
@@ -234,16 +235,46 @@ public partial class CalculatorForm : Form
         cmbSpecies.SelectedIndex = 0;
     }
 
-    private void cmbContent_IndexChanged(object sender, EventArgs e)
+    private void cmbContent_IndexChanged(object sender, EventArgs e) => UpdateCmbStars(sender, e);
+    private void cmbProgress_IndexChanged(object sender, EventArgs e) => UpdateCmbStars(sender, e);
+
+    private void UpdateCmbStars(object sender, EventArgs e)
     {
+        if (cmbContent.SelectedIndex == -1 || cmbProgress.SelectedIndex == -1 || cmbGame.SelectedIndex == -1)
+            return;
+
         var stars = TranslatedStars();
-        if (cmbContent.SelectedIndex == 0)
-            stars = [stars[1], stars[2], stars[3], stars[4], stars[5]];
-        if (cmbContent.SelectedIndex == 1)
+        if (cmbContent.SelectedIndex == 0 && cmbProgress.SelectedIndex == 1)
+            stars = [stars[1], stars[2]];
+        else if (cmbContent.SelectedIndex == 0 && cmbProgress.SelectedIndex == 2)
+            stars = [stars[1], stars[2], stars[3]];
+        else if (cmbContent.SelectedIndex == 0 && cmbProgress.SelectedIndex == 3)
+            stars = [stars[1], stars[2], stars[3], stars[4]];
+        else if (cmbContent.SelectedIndex == 0 && cmbProgress.SelectedIndex is 4 or 5)
+            stars = [stars[3], stars[4], stars[5]];
+
+        else if (cmbContent.SelectedIndex == 1)
             stars = [stars[6]];
-        if (cmbContent.SelectedIndex == 2)
-            stars = [stars[1], stars[2], stars[3], stars[4], stars[5]];
-        if (cmbContent.SelectedIndex == 3)
+
+        else if (cmbContent.SelectedIndex == 2)
+        {
+            var encounters = (EncounterEventTF9[])GetCurrentEncounters();
+            var eventProgress = EventUtil.GetEventStageFromProgress((GameProgress)cmbProgress.SelectedIndex);
+            var version = cmbGame.SelectedIndex == 1 ? GameVersion.SL : GameVersion.VL;
+
+            var possibleStars = EncounterEventTF9.GetPossibleEventStars(encounters, eventProgress, version);
+            var starsList = new List<string>();
+
+            foreach (var s in possibleStars)
+                starsList.Add(stars[s]);
+
+            if (starsList.Count > 0)
+                stars = [.. starsList];
+            else
+                stars = [stars[1], stars[2], stars[3], stars[4], stars[5]];
+        }
+
+        else if (cmbContent.SelectedIndex == 3)
             stars = [stars[7]];
 
         cmbStars.Items.Clear();
@@ -255,11 +286,6 @@ public partial class CalculatorForm : Form
 
     private void cmbStars_IndexChanged(object sender, EventArgs e)
     {
-        var sav = Editor.SAV.Clone();
-        sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
-        sav.TrainerSID7 = Convert.ToUInt32(txtSID.Text, 10);
-        sav.Version = cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.SV;
-
         EncounterRaidTF9[] encs = GetCurrentEncounters();
         var species = EncounterRaidTF9.GetAvailableSpecies(encs, GetStars(), NameList, FormList, TypeList, Strings);
 
@@ -566,7 +592,7 @@ public partial class CalculatorForm : Form
             }
             btnSearch.Text = Strings["ActionStop"];
             DisableControls();
-            ActiveForm!.Update();
+            //ActiveForm.Update();
 
             var sav = (SAV9SV)Editor.SAV.Clone();
             sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
@@ -597,10 +623,12 @@ public partial class CalculatorForm : Form
                 if (!GridEntries.IsFinalized)
                     MessageBox.Show("Something went wrong: Result list isn't finalized.");
 #endif
-                if (GridEntries.Count == 0)
-                    await Task.Delay(0_300);
+                while (dataGrid.RowCount < GridEntries.Count)
+                {
+                    dataGrid.DataSource = null;
+                    dataGrid.DataSource = GridEntries;
+                }
 
-                dataGrid.DataSource = GridEntries;
                 stopwatch.Stop();
                 MessageBox.Show($"{stopwatch.Elapsed}");
 
