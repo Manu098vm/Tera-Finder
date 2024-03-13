@@ -65,7 +65,6 @@ public struct RewardDetails : IRaidDetails
     public TeraShiny Shiny { get; set; }
     public byte TeraType { get; set; }
     public byte EventIndex { get; set; }
-    public ulong Calcs { get; set; }
 
     public readonly string[] GetStrings(string[] itemnames, string language)
     {
@@ -107,7 +106,6 @@ public struct RewardGridEntry
     public string? Item25 { get; private set; }
     public string? ExtraInfo { get; private set; }
     public string? EventIndex { get; private set; }
-    public string? Calcs { get; private set; }
 
     public RewardGridEntry(RewardDetails res, string[] itemnames, string[]speciesnames, string[] shinynames, string language)
     {
@@ -140,7 +138,6 @@ public struct RewardGridEntry
         Item25 = str[24];
         ExtraInfo = $"{speciesnames[res.Species]} ({res.Stars}☆) {(res.Shiny > TeraShiny.No ? $"({shinynames[(int)res.Shiny]})" : "")}";
         EventIndex = $"{res.EventIndex}";
-        Calcs = $"{res.Calcs}";
     }
 
     public RewardGridEntry(string[] str)
@@ -173,42 +170,42 @@ public struct RewardGridEntry
         Item25 = str[25];
         ExtraInfo = str[22];
         EventIndex = str[23];
-        Calcs = str[24];
     }
 
     public readonly string[] GetStrings()
     {
         var list = new List<string>
         {
-            Seed!,
-            Item1!,
-            Item2!,
-            Item3!,
-            Item4!,
-            Item5!,
-            Item6!,
-            Item7!,
-            Item8!,
-            Item9!,
-            Item10!,
-            Item11!,
-            Item12!,
-            Item13!,
-            Item14!,
-            Item15!,
-            Item16!,
-            Item17!,
-            Item18!,
-            Item19!,
-            Item20!,
-            Item21!,
-            Item22!,
-            Item23!,
-            Item24!,
-            Item25!,
-            ExtraInfo!,
-            EventIndex!,
-            Calcs!,
+#pragma warning disable CS8604
+            Seed,
+            Item1,
+            Item2,
+            Item3,
+            Item4,
+            Item5,
+            Item6,
+            Item7,
+            Item8,
+            Item9,
+            Item10,
+            Item11,
+            Item12,
+            Item13,
+            Item14,
+            Item15,
+            Item16,
+            Item17,
+            Item18,
+            Item19,
+            Item20,
+            Item21,
+            Item22,
+            Item23,
+            Item24,
+            Item25,
+            ExtraInfo,
+            EventIndex,
+#pragma warning restore CS8604
         };
         return [.. list];
     }

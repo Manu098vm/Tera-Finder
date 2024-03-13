@@ -424,7 +424,7 @@ public partial class EditorForm : Form
                 RaidContent.Event => Dist,
                 RaidContent.Event_Mighty => Mighty,
                 _ => throw new NotImplementedException(nameof(content)),
-            }, SAV.Version, Progress, content, CurrMap, SAV.ID32, groupid, 0, out var encounter, out var result);
+            }, SAV.Version, Progress, EventUtil.GetEventStageFromProgress(Progress), content, CurrMap, SAV.ID32, groupid, out var encounter, out var result);
                 
             if (success && encounter is not null && result is not null)
             {
@@ -680,7 +680,7 @@ public partial class EditorForm : Form
         if (!spawns.GetAllRaids().Any(raid => raid.IsEnabled))
             return;
 
-        for (var i = 0; i < spawns.GetAllRaids().Length; i++)
+        Parallel.For(0, spawns.GetAllRaids().Length, i =>
         {
             var raid = spawns.GetRaid(i);
             var content = (RaidContent)raid.Content;
@@ -689,11 +689,11 @@ public partial class EditorForm : Form
             var groupid = content >= RaidContent.Event ? EventUtil.GetDeliveryGroupID(content is RaidContent.Event ?
                 (EncounterEventTF9[])encounters : (EncounterEventTF9[])encounters, SAV, eventProgress, spawns, i) : (byte)0;
 
-            if (!EncounterRaidTF9.TryGenerateTeraDetails(raid.Seed, encounters, SAV.Version, Progress, content, CurrMap, SAV.ID32, groupid, 0, out var encounter, out var detail))
+            if (!EncounterRaidTF9.TryGenerateTeraDetails(raid.Seed, encounters, SAV.Version, Progress, eventProgress, content, CurrMap, SAV.ID32, groupid, out var encounter, out var detail))
                 return;
 
             ShinifyRaid(encounter, detail!.Value, raid, forceEncouner, forceShiny);
-        }
+        });
 
         cmbDens_IndexChanged(this, new EventArgs());
         Task.Run(UpdateRemote).Wait();
@@ -750,9 +750,10 @@ public partial class EditorForm : Form
         } : GetCurrentEncounters(encounter.ContentType, encounter.Map);
 
         for (uint i = 0; i <= 0xFFFFFFFF; i++)
-            if (EncounterRaidTF9.TryGenerateTeraDetails((uint)(xoro.Next() & 0xFFFFFFFF), encounters, filter,
-                SAV.Version, Progress, encounter.ContentType, encounter.Map, SAV.ID32, encounter.Index, i, out _, out res))
-                    break;
+            if (EncounterRaidTF9.TryGenerateTeraDetails((uint)(xoro.Next() & 0xFFFFFFFF), encounters, SAV.Version, Progress,
+                    EventUtil.GetEventStageFromProgress(Progress), encounter.ContentType, encounter.Map, SAV.ID32, encounter.Index, out _, out res))
+                    if (filter.IsFilterMatch(res!.Value))
+                        break;
 
         raid.Seed = res is not null ? res.Value.Seed : raid.Seed;
         raid.IsEnabled = true;

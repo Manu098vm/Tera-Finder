@@ -154,7 +154,7 @@ public partial class CheckerForm : Form
                         TeraRaidMapParent.Blueberry => Blueberry,
                         _ => throw new NotImplementedException(nameof(map)),
                     };
-                    if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, RaidContent.Standard, map, pk.ID32, 0, 0, out var encounter, out var result))
+                    if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, EventProgress.Stage0, RaidContent.Standard, map, pk.ID32, 0, out var encounter, out var result))
                     {
                         if (CompareResult(pk, result!.Value))
                         {
@@ -178,7 +178,7 @@ public partial class CheckerForm : Form
                     TeraRaidMapParent.Blueberry => BlueberryBlack,
                     _ => throw new NotImplementedException(nameof(map))
                 };
-                if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, GameProgress.Unlocked6Stars, RaidContent.Black, map, pk.ID32, 0, 0, out var encounter, out var result))
+                if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, GameProgress.Unlocked6Stars, EventProgress.Stage0, RaidContent.Black, map, pk.ID32, 0, out var encounter, out var result))
                 {
                     if (CompareResult(pk, result!.Value))
                     {
@@ -192,12 +192,13 @@ public partial class CheckerForm : Form
         //Events Raids Check
         for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.Unlocked6Stars; progress++)
         {
+            var eventProgress = EventUtil.GetEventStageFromProgress(progress);
             for (var version = GameVersion.SL; version <= GameVersion.VL; version++)
             {
-                for (byte groupid = 2; groupid < 10; groupid++) 
+                for (byte groupid = 0; groupid < 10; groupid++) 
                 {
-                    var encounters = SeedCheckerUtil.FilterDistEncounters(seed, Dist, version, EventUtil.GetEventStageFromProgress(progress), (ushort)Species.Gengar, groupid);
-                    if (encounters.Length > 0 && EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, RaidContent.Event, TeraRaidMapParent.Paldea, pk.ID32, 0, 0, out var encounter, out var result))
+                    var encounters = SeedCheckerUtil.FilterDistEncounters(seed, Dist, version, eventProgress, (ushort)Species.Gengar, groupid);
+                    if (encounters.Length > 0 && EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, eventProgress, RaidContent.Event, TeraRaidMapParent.Paldea, pk.ID32, groupid, out var encounter, out var result))
                     {
                         if (CompareResult(pk, result!.Value))
                         {
@@ -212,12 +213,13 @@ public partial class CheckerForm : Form
         //Mighty Raids Check
         for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.Unlocked6Stars; progress++)
         {
+            var eventProgress = EventUtil.GetEventStageFromProgress(progress);
             for (var version = GameVersion.SL; version <= GameVersion.VL; version++)
             {
                 for (byte groupid = 0; groupid < 10; groupid++)
                 {
-                    var encounters = SeedCheckerUtil.FilterDistEncounters(seed, Mighty, version, EventUtil.GetEventStageFromProgress(progress), species, groupid);
-                    if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, RaidContent.Event, TeraRaidMapParent.Paldea, pk.ID32, 0, 0, out var encounter, out var result))
+                    var encounters = SeedCheckerUtil.FilterDistEncounters(seed, Mighty, version, eventProgress, species, groupid);
+                    if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, eventProgress, RaidContent.Event, TeraRaidMapParent.Paldea, pk.ID32, groupid, out var encounter, out var result))
                     {
                         if (CompareResult(pk, result!.Value))
                         {

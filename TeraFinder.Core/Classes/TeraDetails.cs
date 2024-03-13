@@ -31,11 +31,10 @@ public struct TeraDetails() : IRaidDetails
     public ushort Move3 { get; set; }
     public ushort Move4 { get; set; }
     public byte EventIndex { get; set; }
-    public ulong Calcs { get; set; }
 
     public readonly string[] GetStrings(string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlistascii, string[] genderlistunicode, string[] shinies)
     {
-        var list = new string[26];
+        var list = new string[25];
         list[0] = ($"{Seed:X8}");
         list[1] = ($"{GetShiny(shinies)}");
         list[2] = ($"{Stars}");
@@ -61,7 +60,6 @@ public struct TeraDetails() : IRaidDetails
         list[22] = ($"{movelist[Move3]}");
         list[23] = ($"{movelist[Move4]}");
         list[24] = ($"{EventIndex}");
-        list[25] = ($"{Calcs}");
         return list;
     }
 
@@ -109,7 +107,6 @@ public struct GridEntry
     public string? Move3 { get; private set; }
     public string? Move4 { get; private set; }
     public string? EventIndex { get; private set; }
-    public string? Calcs { get; private set; }
 
     public GridEntry(TeraDetails res, string[] namelist, string[] abilitylist, string[] naturelist, string[] movelist, string[] typelist, string[] formlist, string[] genderlistascii, string[] genderlistunicode, string[] shinylist)
     {
@@ -139,7 +136,6 @@ public struct GridEntry
         Move3 = str[22];
         Move4 = str[23];
         EventIndex = str[24];
-        Calcs = str[25];
     }
 
     public GridEntry(string[] str)
@@ -169,12 +165,11 @@ public struct GridEntry
         Move3 = str[22];
         Move4 = str[23];
         EventIndex = str[24];
-        Calcs = str[25];
     }
 
     public readonly string[] GetStrings()
     {
-        var list = new string[26];
+        var list = new string[25];
         list[0] = ($"{Seed}");
         list[1] = ($"{Shiny}");
         list[2] = ($"{Stars}");
@@ -200,7 +195,6 @@ public struct GridEntry
         list[22] = ($"{Move3}");
         list[23] = ($"{Move4}");
         list[24] = ($"{EventIndex}");
-        list[25] = ($"{Calcs}");
         return list;
     }
 }
@@ -399,7 +393,7 @@ public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilt
     public bool IsScaleMatch(int res) => 
         MinScale <= res && res <= MaxScale;
 
-    public bool IsFilterNull(bool isblack)
+    public bool IsFilterNull()
     {
         if (!(MinHP == 0))
             return false;
@@ -425,7 +419,7 @@ public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilt
             return false;
         if (!(MaxSpe == 31))
             return false;
-        if (Stars != 0 && !isblack)
+        if (Stars != 0)
             return false;
         if (!(Species == 0))
             return false;
