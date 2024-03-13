@@ -31,7 +31,7 @@ public static class ImagesUtil
         if (!active && sprite is not null) sprite = ImageUtil.ToGrayscale(sprite);
 
         if(sprite is not null)
-            ImageUtil.BlendTransparentTo(sprite, TypeColor.GetTypeSpriteColor((byte)pkm.TeraType), 0xAF, 0x3740);
+            ImageUtil.BlendTransparentTo(sprite, TypeColor.GetTypeSpriteColor(pkm.TeraType), 0xAF, 0x3740);
 
         return sprite;
     }

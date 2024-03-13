@@ -440,7 +440,7 @@ partial class CalculatorForm
         // cmbStars
         // 
         cmbStars.FormattingEnabled = true;
-        cmbStars.Items.AddRange(new object[] { "Any", "1S ☆", "2S ☆☆", "3S ☆☆☆", "4S ☆☆☆☆", "5S ☆☆☆☆☆", "6S ☆☆☆☆☆☆", "7S ☆☆☆☆☆☆☆" });
+        cmbStars.Items.AddRange(new object[] { "1S ☆", "2S ☆☆", "3S ☆☆☆", "4S ☆☆☆☆", "5S ☆☆☆☆☆", "6S ☆☆☆☆☆☆", "7S ☆☆☆☆☆☆☆" });
         cmbStars.Location = new Point(341, 35);
         cmbStars.Margin = new Padding(3, 4, 3, 4);
         cmbStars.Name = "cmbStars";
@@ -799,7 +799,6 @@ partial class CalculatorForm
         dataGrid.ReadOnly = true;
         dataGrid.RowHeadersVisible = false;
         dataGrid.RowHeadersWidth = 51;
-        dataGrid.RowTemplate.Height = 29;
         dataGrid.Size = new Size(1466, 541);
         dataGrid.TabIndex = 34;
         dataGrid.MouseUp += dataGrid_MouseUp;
@@ -893,7 +892,7 @@ partial class CalculatorForm
         contextMenuStrip.ImageScalingSize = new Size(20, 20);
         contextMenuStrip.Items.AddRange(new ToolStripItem[] { btnViewRewards, btnSaveAll, btnSave, btnSavePk9, btnToPkmEditor, btnSendToEditor, btnCopySeed });
         contextMenuStrip.Name = "contextMenuStrip";
-        contextMenuStrip.Size = new Size(313, 200);
+        contextMenuStrip.Size = new Size(313, 172);
         // 
         // btnViewRewards
         // 

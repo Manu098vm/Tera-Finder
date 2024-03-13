@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System.Collections.Concurrent;
 using TeraFinder.Core;
 
 namespace TeraFinder.Plugins;
@@ -6,12 +7,14 @@ namespace TeraFinder.Plugins;
 public partial class RewardCalcForm : Form
 {
     public EditorForm Editor = null!;
-    private readonly List<RewardDetails> CalculatedList = [];
     private RewardFilter? Filter = null;
     public string[] SpeciesNames = null!;
     public string[] ShinyNames = null!;
     public string[] Items = null!;
     private CancellationTokenSource Token = new();
+
+    private readonly ConcurrentBag<RewardDetails> CalculatedList = [];
+    private readonly ConcurrentList<RewardGridEntry> GridEntries = [];
 
     private Dictionary<string, string> Strings = null!;
 
@@ -218,30 +221,37 @@ public partial class RewardCalcForm : Form
         _ => throw new NotImplementedException(nameof(cmbContent.SelectedIndex)),
     };
 
-    private void btnApply_Click(object sender, EventArgs e)
+    private async void btnApply_Click(object sender, EventArgs e)
     {
         lblFound.Visible = false;
         CreateFilter();
-
-        if (dataGrid.Rows.Count > 0)
+        if (!CalculatedList.IsEmpty)
         {
-            DialogResult d = MessageBox.Show(Strings["FiltersPopup"], Strings["FiltersApply"], MessageBoxButtons.YesNo);
-            if (d == DialogResult.Yes)
+            DialogResult dialogue = MessageBox.Show(Strings["FiltersPopup"], Strings["FiltersApply"], MessageBoxButtons.YesNo);
+            if (dialogue is DialogResult.Yes)
             {
-                var list = new List<RewardGridEntry>();
-                foreach (var c in CalculatedList)
-                    if (Filter is null || Filter.IsFilterMatch(c))
-                        list.Add(new RewardGridEntry(c, Items, SpeciesNames, ShinyNames, Editor.Language));
-                dataGrid.DataSource = list;
+                dataGrid.DataSource = null;
+                GridEntries.Clear();
+                await Task.Run(() =>
+                {
+                    Parallel.ForEach(CalculatedList, el =>
+                    {
+                        if (Filter is null || Filter.IsFilterMatch(el))
+                            GridEntries.Add(new RewardGridEntry(el, Items, SpeciesNames, ShinyNames, Editor.Language));
+                    });
+                });
+                GridEntries.FinalizeElements();
+                dataGrid.DataSource = GridEntries;
             }
         }
+        UpdateFoundLabel();
     }
 
     private void btnReset_Click(object sender, EventArgs e)
     {
         chkShiny.Checked = false;
         cmbSpecies.SelectedIndex = 0;
-        cmbStars.SelectedIndex = 0;
+        //cmbStars.SelectedIndex = 0;
         foreach (var cb in grpItems.Controls.OfType<ComboBox>())
             cb.SelectedIndex = 0;
         foreach (var num in grpItems.Controls.OfType<NumericUpDown>())
@@ -327,21 +337,21 @@ public partial class RewardCalcForm : Form
         cmbMap.Enabled = true;
     }
 
-    private void UpdateLabel()
+    private void UpdateFoundLabel()
     {
         if (Filter is not null && !Filter.IsFilterNull())
         {
             if (chkAllResults.Checked)
                 try
                 {
-                    lblFound.Text = $"{Strings["Found"]}: {CalculatedList.Count}";
+                    lblFound.Text = $"{Strings["Found"]}: {GridEntries.Count}";
                 }
                 catch (Exception)
                 {
-                    lblFound.Text = $"{Strings["Found"]}: {CalculatedList.LongCount()}";
+                    lblFound.Text = $"{Strings["Found"]}: {GridEntries.LongCount()}";
                 }
             else
-                lblFound.Text = $"{Strings["Found"]} : {(CalculatedList.Count > 0 ? Strings["True"] : Strings["False"])}";
+                lblFound.Text = $"{Strings["Found"]}: {(!GridEntries.IsEmpty ? Strings["True"] : Strings["False"])}";
             lblFound.Visible = true;
         }
         else
@@ -370,15 +380,23 @@ public partial class RewardCalcForm : Form
                 return;
             }
 
-            if (CalculatedList.Count > 0)
+            CreateFilter();
+            if (Filter is null || Filter.Encounter is null || !Filter.EncounterFilter || Filter.Encounter.Stars == 0)
             {
+                MessageBox.Show("No stars filter is set. Please select a stars filter.");
+                cmbStars.Focus();
+                return;
+            }
+
+            if (!CalculatedList.IsEmpty)
+            {
+                dataGrid.DataSource = null;
                 CalculatedList.Clear();
-                dataGrid.DataSource = new List<RewardGridEntry>();
+                GridEntries.Clear();
             }
             btnSearch.Text = Strings["ActionStop"];
             DisableControls();
             ActiveForm!.Update();
-            CreateFilter();      
 
             var sav = (SAV9SV)Editor.SAV.Clone();
             sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
@@ -391,7 +409,7 @@ public partial class RewardCalcForm : Form
             var index = (byte)CurrentViewedIndex;
             if (content >= RaidContent.Event && cmbSpecies.SelectedIndex != 0)
             {
-                foreach (var enc in (EncounterRaidTF9[])(content is RaidContent.Event ? Editor.Dist : Editor.Mighty))
+                foreach (var enc in content is RaidContent.Event ? Editor.Dist : Editor.Mighty)
                 {
                     if (enc.Species != species)
                         continue;
@@ -405,19 +423,27 @@ public partial class RewardCalcForm : Form
             {
                 var stopwatch = new System.Diagnostics.Stopwatch();
                 stopwatch.Start();
-                var griddata = await StartSearch(sav, progress, content, boost, index, (TeraRaidMapParent)cmbMap.SelectedIndex, Token);
+                await StartSearch(sav, progress, content, boost, index, (TeraRaidMapParent)cmbMap.SelectedIndex, Token);
+#if DEBUG
+                if (!GridEntries.IsFinalized)
+                    MessageBox.Show("Something went wrong: Result list isn't finalized.");
+#endif
+                if (GridEntries.Count == 0)
+                    await Task.Delay(0_300);
+
+                dataGrid.DataSource = GridEntries;
                 stopwatch.Stop();
                 MessageBox.Show($"{stopwatch.Elapsed}");
-                dataGrid.DataSource = griddata;
+
                 btnSearch.Text = Strings["ActionSearch"];
                 EnableControls(IsBlankSAV());
-                UpdateLabel();
+                UpdateFoundLabel();
             }
             catch (OperationCanceledException)
             {
                 btnSearch.Text = Strings["ActionSearch"];
                 EnableControls(IsBlankSAV());
-                UpdateLabel();
+                UpdateFoundLabel();
             }
         }
         else
@@ -425,17 +451,17 @@ public partial class RewardCalcForm : Form
             Token.Cancel();
             btnSearch.Text = Strings["ActionSearch"];
             EnableControls(IsBlankSAV());
-            UpdateLabel();
+            UpdateFoundLabel();
             return;
         }
     }
 
-    private async Task<List<RewardGridEntry>> StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, int boost, byte index, TeraRaidMapParent map, CancellationTokenSource token)
+    private async Task StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, int boost, byte index, TeraRaidMapParent map, CancellationTokenSource token)
     {
-        var gridList = new List<RewardGridEntry>();
         var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
         var lang = (LanguageID)Editor.SAV.Language;
 
+        var maxCalcs = (long)numMaxCalc.Value + 1;
         var indexSpecific = index != 0;
         var eventSpecific = content is RaidContent.Event or RaidContent.Event_Mighty;
         var encounters = GetCurrentEncounters();
@@ -447,102 +473,39 @@ public partial class RewardCalcForm : Form
         else
             possibleGroups.Add(index);
 
-        EncounterRaidTF9[] effective_encounters = Filter?.EncounterFilter is true ? content switch
+        EncounterRaidTF9[] effective_encounters = content switch
         {
-            RaidContent.Standard or RaidContent.Black => ((EncounterTeraTF9[])encounters).Where(Filter.IsEncounterMatch).ToArray(),
-            RaidContent.Event or RaidContent.Event_Mighty => ((EncounterEventTF9[])encounters).Where(Filter.IsEncounterMatch).ToArray(),
+            RaidContent.Standard or RaidContent.Black => ((EncounterTeraTF9[])encounters).Where(Filter!.IsEncounterMatch).ToArray(),
+            RaidContent.Event or RaidContent.Event_Mighty => ((EncounterEventTF9[])encounters).Where(Filter!.IsEncounterMatch).ToArray(),
             _ => throw new NotImplementedException(nameof(content)),
-        } : encounters;
+        };
 
-        foreach (var group in possibleGroups)
+        var romMaxRate = sav.Version is GameVersion.VL ? EncounterTera9.GetRateTotalVL(Filter.Encounter!.Stars, map) : EncounterTera9.GetRateTotalSL(Filter.Encounter!.Stars, map);
+        var eventProgress = EventUtil.GetEventStageFromProgress(progress);
+
+        await Task.Run(() =>
         {
-            if (token.IsCancellationRequested)
-                break;
-
-            await Task.Run(async () =>
+            foreach (var group in possibleGroups)
             {
-                var nthreads = (uint)numMaxCalc.Value < 1000 ? 1 : Environment.ProcessorCount;
-                var gridresults = new List<RewardGridEntry>[nthreads];
-                var calcresults = new List<RewardDetails>[nthreads];
-                var resetEvent = new ManualResetEvent(false);
-                var toProcess = nthreads;
-                var maxcalcs = (uint)numMaxCalc.Value;
-                var calcsperthread = maxcalcs / (uint)nthreads;
 
-                for (uint j = 0; j < nthreads; j++)
+                Parallel.For(0L, maxCalcs, (i, iterator) =>
                 {
-                    var n = j;
-                    var tseed = seed;
+                    if (token.IsCancellationRequested)
+                        iterator.Break();
 
-                    new Thread(delegate ()
+                    if (EncounterRaidTF9.TryGenerateRewardDetails((uint)i, effective_encounters, Filter, romMaxRate, sav.Version, progress, eventProgress, content, sav.ID32, group, boost, out _, out var result))
                     {
-                        var tmpgridlist = new List<RewardGridEntry>();
-                        var tmpcalclist = new List<RewardDetails>();
-
-                        var initialFrame = calcsperthread * n;
-                        var maxframe = n < nthreads - 1 ? calcsperthread * (n + 1) : maxcalcs;
-                        tseed += initialFrame;
-
-                        for (ulong i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
-                        {
-                            if (Filter is not null)
-                            {
-                                if (EncounterRaidTF9.TryGenerateRewardDetails(tseed, effective_encounters, Filter, sav.Version, progress, content, map, sav.ID32, group, i, boost, out var rngres, out var rewards))
-                                {
 #pragma warning disable CS8629
-                                    tmpgridlist.Add(new RewardGridEntry(rewards.Value, Items, SpeciesNames, ShinyNames, Editor.Language));
-                                    tmpcalclist.Add(rewards.Value);
+                        CalculatedList.Add(result.Value);
+                        GridEntries.Add(new RewardGridEntry(result.Value, Items, SpeciesNames, ShinyNames, Editor.Language));
 #pragma warning restore CS8629
-                                    if (!chkAllResults.Checked)
-                                    {
-                                        if (NotLinkedSearch || (!eventSpecific || (eventSpecific && indexSpecific)))
-                                        {
-                                            token.Cancel();
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            else if (Filter is null)
-                            {
-                                if (EncounterRaidTF9.TryGenerateRewardDetails(tseed, encounters, sav.Version, progress, content, map, sav.ID32, group, i, boost, out var rngres, out var rewards))
-                                {
-#pragma warning disable CS8629
-                                    tmpgridlist.Add(new RewardGridEntry(rewards.Value, Items, SpeciesNames, ShinyNames, Editor.Language));
-                                    tmpcalclist.Add(rewards.Value);
-#pragma warning restore CS8629
-                                }
-                            }
-
-                            if (token.IsCancellationRequested)
-                                break;
-
-                            tseed++;
-                        }
-
-                        gridresults[n] = tmpgridlist;
-                        calcresults[n] = tmpcalclist;
-
-                        if (Interlocked.Decrement(ref toProcess) == 0 || token.IsCancellationRequested)
-                            resetEvent.Set();
-                    }).Start();
-                }
-
-                resetEvent.WaitOne();
-
-                await Task.Delay(0_300).ConfigureAwait(false);
-
-                for (var i = 0; i < nthreads; i++)
-                {
-                    if (gridresults[i] is not null && gridresults[i].Count > 0)
-                        gridList.AddRange(gridresults[i]);
-                    if (calcresults[i] is not null && calcresults[i].Count > 0)
-                        CalculatedList.AddRange(calcresults[i]);
-                }
-            }, token.Token);
-        }
-
-        return gridList;
+                        if (!chkAllResults.Checked && (NotLinkedSearch || !eventSpecific || (eventSpecific && indexSpecific)))
+                            token.Cancel();
+                    }
+                });
+            }
+            GridEntries.FinalizeElements();
+        });
     }
 
     private void dataGrid_MouseUp(object sender, MouseEventArgs e)

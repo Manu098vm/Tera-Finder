@@ -153,14 +153,15 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var groupid = Convert.ToByte(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
+                    var groupid = Convert.ToByte(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 1].Value.ToString()!, 10);
                     var content = (RaidContent)f.cmbContent.SelectedIndex;
                     var progress = (GameProgress)f.cmbProgress.SelectedIndex;
+                    var eventProgress = EventUtil.GetEventStageFromProgress(progress);
                     var version = f.cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.VL;
                     var id32 = TidUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10));
 
                     var encounters = f.Editor.GetCurrentEncounters(content, map);
-                    if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, content, map, id32, groupid, 0, out var enc, out var result))
+                    if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, out var enc, out var result))
                     {
                         if (!enc!.GeneratePK9(result!.Value.Seed, id32, version, f.Editor.SAV.OT, f.Editor.SAV.Language, f.Editor.SAV.Gender, out var pk9, out var la))
                         {
@@ -225,17 +226,19 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var groupid = Convert.ToByte(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
+                    var groupid = Convert.ToByte(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 1].Value.ToString()!, 10);
                     var content = (RaidContent)f.cmbContent.SelectedIndex;
                     var progress = (GameProgress)f.cmbProgress.SelectedIndex;
+                    var eventProgress = EventUtil.GetEventStageFromProgress(progress);
                     var id32 = TidUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10));
                     var version = f.cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.VL;
 
                     var encounters = f.Editor.GetCurrentEncounters(content, map);
-                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, content, map, id32, groupid, 0, 0, out _, out var lvl0);
-                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, content, map, id32, groupid, 0, 1, out _, out var lvl1);
-                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, content, map, id32, groupid, 0, 2, out _, out var lvl2);
-                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, content, map, id32, groupid, 0, 3, out _, out var lvl3);
+                    
+                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, 0, out _, out var lvl0);
+                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, 1, out _, out var lvl1);
+                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, 2, out _, out var lvl2);
+                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, 3, out _, out var lvl3);
 
                     new RewardListForm(f.Editor.Language, lvl0!.Value.Rewards, lvl1!.Value.Rewards, lvl2!.Value.Rewards, lvl3!.Value.Rewards).ShowDialog();
                 }
@@ -267,7 +270,7 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var groupid = Convert.ToByte(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
+                    var groupid = Convert.ToByte(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 1].Value.ToString()!, 10);
                     var content = (RaidContent)f.cmbContent.SelectedIndex;
 
                     if (content is RaidContent.Event or RaidContent.Event_Mighty)
@@ -315,7 +318,7 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
+                    var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 1].Value.ToString()!, 10);
                     var content = (RaidContent)f.cmbContent.SelectedIndex;
 
                     if (content is RaidContent.Event or RaidContent.Event_Mighty)
@@ -362,14 +365,15 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var groupid = Convert.ToByte(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
+                    var groupid = Convert.ToByte(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 1].Value.ToString()!, 10);
                     var content = (RaidContent)f.cmbContent.SelectedIndex;
                     var progress = (GameProgress)f.cmbProgress.SelectedIndex;
+                    var eventProgress = EventUtil.GetEventStageFromProgress(progress);
                     var version = f.cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.VL;
                     var id32 = TidUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10));
 
                     var encounters = f.Editor.GetCurrentEncounters(content, map);
-                    if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, content, map, id32, groupid, 0, out var enc, out var result))
+                    if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, out var enc, out var result))
                     {
                         if (!enc!.GeneratePK9(result!.Value.Seed, id32, version, f.Editor.SAV.OT, f.Editor.SAV.Language, f.Editor.SAV.Gender, out var pk9, out var la))
                         {
