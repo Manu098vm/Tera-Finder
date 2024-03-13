@@ -129,7 +129,11 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
             HeldItem = HeldItem,
             MetLevel = Level,
             CurrentLevel = Level,
+#if USE_PKHEX_MASTER
+            ObedienceLevel = Level,
+#else
             Obedience_Level = Level,
+#endif
             RibbonMarkMightiest = IsMighty,
             ID32 = id32,
             Version = version,
