@@ -2,7 +2,6 @@
 
 namespace TeraFinder.Core;
 
-#pragma warning disable CS8604
 public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
 {
     public required PersonalInfo9SV Personal { get; init; }
@@ -50,7 +49,7 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
         encounter = content switch
         {
             RaidContent.Standard or RaidContent.Black => EncounterTeraTF9.GetEncounterFromSeed(seed, encounters, version, progress, content, map),
-            RaidContent.Event or RaidContent.Event_Mighty => EncounterEventTF9.GetEncounterFromSeed(seed, (EncounterEventTF9[])encounters, version, eventProgress, groupid),
+            RaidContent.Event or RaidContent.Event_Mighty => EncounterEventTF9.GetEncounterFromSeed(seed, encounters as EncounterEventTF9[], version, eventProgress, groupid),
             _ => throw new ArgumentOutOfRangeException(nameof(content)),
         };
 
@@ -209,16 +208,17 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
     }
 
     //Get the encounter names from a pool of encounters
-    public static List<string> GetAvailableSpecies(EncounterRaidTF9[] encounters, byte stars, string[] speciesNames, string[] formsNames, string[] typesNames, Dictionary<string, string> pluginStrings)
+    public static HashSet<string> GetAvailableSpecies(EncounterRaidTF9[] encounters, byte stars, string[] speciesNames, string[] formsNames, string[] typesNames, Dictionary<string, string> pluginStrings)
     {
-        List<string> list = [];
+        HashSet<string> list = [];
         foreach (var encounter in encounters)
         {
             if (stars != 0 && encounter.Stars != stars)
                 continue;
 
             var formlist = FormConverter.GetFormList(encounter.Species, typesNames, formsNames, GameInfo.GenderSymbolASCII, EntityContext.Gen9);
-            var str = $"{speciesNames[encounter.Species]}{(formlist.Length > 1 ? $"-{$"{formlist[encounter.Form]}"}" : "")}";
+            var str = $"{speciesNames[encounter.Species]}{(formlist.Length > 1 ? $"-{$"{formlist[encounter.Form]}"}" : "")}" +
+                $"{(encounter.Index > 0 ? $" ({encounter.Index})" : "")}";
 
             if (!encounter.CanBeEncounteredScarlet)
                 str += $" ({pluginStrings["GameVersionVL"]})";
@@ -226,10 +226,8 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
             if (!encounter.CanBeEncounteredViolet)
                 str += $" ({pluginStrings["GameVersionSL"]})";
 
-            if (!list.Contains(str))
-                list.Add(str);
+            list.Add(str);
         }
         return list;
     }
 }
-#pragma warning restore CS8604

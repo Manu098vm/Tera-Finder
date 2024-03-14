@@ -22,12 +22,12 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DebugType>embedded</DebugType>
-		<NoWarn>1701;1702;IDE1006</NoWarn>
+		<NoWarn>1701,1702,IDE1006,IDE0042,CA1829,CA2211,CS8629,CS8602</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<DebugType>embedded</DebugType>
-		<NoWarn>1701;1702;IDE1006</NoWarn>
+		<NoWarn>1701,1702,IDE1006,IDE0042,CA1829,CA2211,CS8629,CS8602</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using System;
 using System.Collections.Concurrent;
 using TeraFinder.Core;
 
@@ -25,9 +24,6 @@ public partial class CalculatorForm : Form
     public string[] GenderListAscii = null!;
     public string[] GenderListUnicode = null!;
     public string[] ShinyList = null!;
-
-    public int CurrentViewedIndex = 0;
-    public bool NotLinkedSearch = true;
 
     public CalculatorForm(EditorForm editor)
     {
@@ -265,7 +261,7 @@ public partial class CalculatorForm : Form
             var possibleStars = EncounterEventTF9.GetPossibleEventStars(encounters, eventProgress, version);
             var starsList = new List<string>();
 
-            foreach (var s in possibleStars)
+            foreach (var s in possibleStars.OrderBy(star => star))
                 starsList.Add(stars[s]);
 
             if (starsList.Count > 0)
@@ -299,8 +295,8 @@ public partial class CalculatorForm : Form
     {
         if (cmbSpecies.SelectedIndex > 0)
         {
-            var entity = GetSpeciesAndForm();
-            var entry = PersonalTable.SV.GetFormEntry(entity[0], (byte)entity[1]);
+            var entity = GetSpeciesFormIndex();
+            var entry = PersonalTable.SV.GetFormEntry(entity.species, entity.form);
             cmbAbility.Items.Clear();
             cmbAbility.Items.Add(Strings["Any"]);
             cmbAbility.Items.Add($"{AbilityList[entry.Ability1]} (1)");
@@ -366,33 +362,37 @@ public partial class CalculatorForm : Form
             return (byte)char.GetNumericValue(cmbStars.Text[0]);
     }
 
-    private ushort[] GetSpeciesAndForm() => GetSpeciesAndForm(cmbSpecies.Text);
+    private (ushort species, byte form, byte index) GetSpeciesFormIndex() => GetSpeciesFormIndex(cmbSpecies.Text);
 
-    private ushort[] GetSpeciesAndForm(string str)
+    private (ushort species, byte form, byte index) GetSpeciesFormIndex(string str)
     {
-        var res = new ushort[2];
-
+        (ushort species, byte form, byte index) result = (0, 0, 0);
         str = str.Replace($" ({Strings["GameVersionSL"]})", string.Empty).Replace($" ({Strings["GameVersionVL"]})", string.Empty);
         if (!str.Equals(Strings["Any"]))
         {
             var formLocation = str.IndexOf('-');
             var isForm = Array.IndexOf(NameList, str) == -1 && formLocation > 0;
 
+            if (byte.TryParse(str[^2].ToString(), out var index) && str[^1] == ')')
+            {
+                result.index = index;
+                str = str[..^4];
+            }
             if (!isForm)
             {
                 var species = Editor.Language.ToLower().Equals("en") ? str :
                     GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, str)];
-                res[0] = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty).Replace("-", string.Empty));
+                result.species = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty).Replace("-", string.Empty));
             }
             else
             {
                 var species = Editor.Language.ToLower().Equals("en") ? str[..formLocation] :
                     GameInfo.GetStrings("en").specieslist[Array.IndexOf(NameList, str[..formLocation])];
-                res[0] = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty).Replace("-", string.Empty));
-                res[1] = ShowdownParsing.GetFormFromString(str.AsSpan()[(formLocation + 1)..], GameInfo.GetStrings(Editor.Language), res[0], EntityContext.Gen9);
+                result.species = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty).Replace("-", string.Empty));
+                result.form = ShowdownParsing.GetFormFromString(str.AsSpan()[(formLocation + 1)..], GameInfo.GetStrings(Editor.Language), result.species, EntityContext.Gen9);
             }
         }
-        return res;
+        return result;
     }
 
     private Gender GetGender()
@@ -434,11 +434,11 @@ public partial class CalculatorForm : Form
     private void CreateFilter()
     {
         var stars = GetStars();
-        var speciesForm = GetSpeciesAndForm();
+        var entity = GetSpeciesFormIndex();
         var teraType = (sbyte)(cmbTeraType.SelectedIndex - 1);
         var gender = GetGender();
 
-        var encounterFilter = speciesForm[0] > 0 || stars > 0;
+        var encounterFilter = entity.species > 0 || stars > 0;
         var ivFilter = nHpMin.Value > 0 || nAtkMin.Value > 0 || nDefMin.Value > 0 || nSpaMin.Value > 0 || nSpdMin.Value > 0 || nSpeMin.Value > 0 || numScaleMin.Value > 0 ||
             nHpMax.Value < 31 || nAtkMax.Value < 31 || nDefMax.Value < 31 || nSpaMax.Value < 31 || nSpdMax.Value < 31 || nSpeMax.Value < 31;
         var statFilter = teraType != -1 || cmbAbility.SelectedIndex != 0 || cmbNature.SelectedIndex != 25 || gender is not Gender.Random;
@@ -461,8 +461,8 @@ public partial class CalculatorForm : Form
             MinScale = (int)numScaleMin.Value,
             MaxScale = (int)numScaleMax.Value,
             Stars = stars,
-            Species = speciesForm[0],
-            Form = speciesForm[1],
+            Species = entity.species,
+            Form = entity.form,
             TeraType = teraType,
             AbilityNumber = cmbAbility.SelectedIndex == 3 ? 4 : cmbAbility.SelectedIndex,
             Nature = (Nature)cmbNature.SelectedIndex,
@@ -470,7 +470,7 @@ public partial class CalculatorForm : Form
             Shiny = (TeraShiny)cmbShiny.SelectedIndex,
 
             AltEC = cmbEC.SelectedIndex == 1,
-            IsFormFilter = speciesForm[1] > 0,
+            IsFormFilter = entity.form > 0,
         };
 
         if (Filter is null && filter.IsFilterNull())
@@ -537,8 +537,7 @@ public partial class CalculatorForm : Form
 
     public async void btnSearch_Click(object sender, EventArgs e)
     {
-        ushort species;
-        byte form;
+        (ushort species, byte form, byte index) entity;
 
         if (btnSearch.Text.Equals(Strings["ActionSearch"]))
         {
@@ -566,9 +565,7 @@ public partial class CalculatorForm : Form
             }
             try
             {
-                var f = GetSpeciesAndForm();
-                species = f[0];
-                form = (byte)f[1];
+                entity = GetSpeciesFormIndex();
             }
             catch (Exception)
             {
@@ -601,24 +598,11 @@ public partial class CalculatorForm : Form
             var progress = (GameProgress)cmbProgress.SelectedIndex;
             var content = (RaidContent)cmbContent.SelectedIndex;
 
-            var index = (byte)CurrentViewedIndex;
-            if (content >= RaidContent.Event && cmbSpecies.SelectedIndex != 0)
-            {
-                foreach (var enc in content is RaidContent.Event ? Editor.Dist : Editor.Mighty)
-                {
-                    if (enc.Species != species || enc.Form != form)
-                        continue;
-
-                    index = enc.Index;
-                    break;
-                }
-            }
-
             try
             {
                 var stopwatch = new System.Diagnostics.Stopwatch();
                 stopwatch.Start();
-                await StartSearch(sav, progress, content, index, (TeraRaidMapParent)cmbMap.SelectedIndex, Token);
+                await StartSearch(sav, progress, content, entity.index, (TeraRaidMapParent)cmbMap.SelectedIndex, Token);
 #if DEBUG
                 if (!GridEntries.IsFinalized)
                     MessageBox.Show("Something went wrong: Result list isn't finalized.");
@@ -657,44 +641,40 @@ public partial class CalculatorForm : Form
     {
         var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
 
-        var maxCalcs = (long)numFrames.Value+1;
-        var indexSpecific = index != 0;
-        var eventSpecific = content is RaidContent.Event or RaidContent.Event_Mighty;
         var encounters = GetCurrentEncounters();
 
         var possibleGroups = new HashSet<byte>();
-        if (!indexSpecific && eventSpecific)
-            foreach (var enc in encounters)
+        if (index == 0 && content is RaidContent.Event or RaidContent.Event_Mighty)
+            foreach (var enc in encounters.Where(Filter.IsEncounterMatch))
                 possibleGroups.Add(enc.Index);
         else
             possibleGroups.Add(index);
-
-        EncounterRaidTF9[] effective_encounters = content switch
-        {
-            RaidContent.Standard or RaidContent.Black => ((EncounterTeraTF9[])encounters).Where(Filter!.IsEncounterMatch).ToArray(),
-            RaidContent.Event or RaidContent.Event_Mighty => ((EncounterEventTF9[])encounters).Where(Filter!.IsEncounterMatch).ToArray(),
-            _ => throw new NotImplementedException(nameof(content)),
-        };
-
-        var romMaxRate = sav.Version is GameVersion.VL ? EncounterTera9.GetRateTotalVL(Filter.Stars, map) : EncounterTera9.GetRateTotalSL(Filter.Stars, map);
-        var eventProgress = EventUtil.GetEventStageFromProgress(progress);
 
         await Task.Run(() =>
         {
             foreach (var group in possibleGroups)
             {
-                Parallel.For(0L, maxCalcs, (i, iterator) =>
+                EncounterRaidTF9[] effective_encounters = content switch
+                {
+                    RaidContent.Standard or RaidContent.Black => ((EncounterTeraTF9[])encounters).Where(e => e.Index == group && Filter.IsEncounterMatch(e)).ToArray(),
+                    RaidContent.Event or RaidContent.Event_Mighty => ((EncounterEventTF9[])encounters).Where(e => e.Index == group && Filter.IsEncounterMatch(e)).ToArray(),
+                    _ => throw new NotImplementedException(nameof(content)),
+                };
+
+                var romMaxRate = sav.Version is GameVersion.VL ? EncounterTera9.GetRateTotalVL(Filter.Stars, map) : EncounterTera9.GetRateTotalSL(Filter.Stars, map);
+                var eventProgress = EventUtil.GetEventStageFromProgress(progress);
+
+                Parallel.For(0L, (long)numFrames.Value, (i, iterator) =>
                 {
                     if (token.IsCancellationRequested)
                         iterator.Break();
 
                     if (EncounterRaidTF9.TryGenerateTeraDetails((uint)i, effective_encounters, Filter, romMaxRate, sav.Version, progress, eventProgress, content, sav.ID32, group, out _, out var result))
                     {
-#pragma warning disable CS8629
                         CalculatedList.Add(result.Value);
                         GridEntries.Add(new GridEntry(result.Value, NameList, AbilityList, NatureList, MoveList, TypeList, FormList, GenderListAscii, GenderListUnicode, ShinyList));
-#pragma warning restore CS8629
-                        if (!showresults.Checked && (NotLinkedSearch || !eventSpecific || (eventSpecific && indexSpecific)))
+                        
+                        if (!showresults.Checked)
                             token.Cancel();
                     }
                 });

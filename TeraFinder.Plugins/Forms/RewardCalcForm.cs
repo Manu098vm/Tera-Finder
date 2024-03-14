@@ -1,5 +1,6 @@
 ﻿using PKHeX.Core;
 using System.Collections.Concurrent;
+using System.ComponentModel;
 using TeraFinder.Core;
 
 namespace TeraFinder.Plugins;
@@ -9,6 +10,8 @@ public partial class RewardCalcForm : Form
     public EditorForm Editor = null!;
     private RewardFilter? Filter = null;
     public string[] SpeciesNames = null!;
+    public string[] FormNames = null!;
+    public string[] TypeNames = null!;
     public string[] ShinyNames = null!;
     public string[] Items = null!;
     private CancellationTokenSource Token = new();
@@ -17,9 +20,6 @@ public partial class RewardCalcForm : Form
     private readonly ConcurrentList<RewardGridEntry> GridEntries = [];
 
     private Dictionary<string, string> Strings = null!;
-
-    public int CurrentViewedIndex = 0;
-    public bool NotLinkedSearch = true;
 
     public RewardCalcForm(EditorForm editor)
     {
@@ -35,6 +35,8 @@ public partial class RewardCalcForm : Form
 
         ShinyNames = [Strings["TeraShiny.Any"], Strings["TeraShiny.No"], Strings["TeraShiny.Yes"], Strings["TeraShiny.Star"], Strings["TeraShiny.Square"]];
         SpeciesNames = GameInfo.GetStrings(editor.Language).specieslist;
+        FormNames = GameInfo.GetStrings(Editor.Language).forms;
+        TypeNames = GameInfo.GetStrings(Editor.Language).types;
         cmbSpecies.Items[0] = Strings["Any"];
         cmbSpecies.Items.AddRange(SpeciesNames[1..]);
         cmbSpecies.SelectedIndex = 0;
@@ -200,6 +202,58 @@ public partial class RewardCalcForm : Form
         return false;
     }
 
+    private void cmbStars_IndexChanged(object sender, EventArgs e)
+    {
+        EncounterRaidTF9[] encs = GetCurrentEncounters();
+        var species = EncounterRaidTF9.GetAvailableSpecies(encs, GetStars(), SpeciesNames, FormNames, TypeNames, Strings);
+
+        cmbSpecies.Items.Clear();
+        cmbSpecies.Items.Add(Strings["Any"]);
+        cmbSpecies.Items.AddRange([.. species]);
+        cmbSpecies.SelectedIndex = 0;
+    }
+
+    private byte GetStars()
+    {
+        if (cmbStars.Text.Equals(Strings["Any"]))
+            return 0;
+        else
+            return (byte)char.GetNumericValue(cmbStars.Text[0]);
+    }
+
+    private (ushort species, byte form, byte index) GetSpeciesFormIndex() => GetSpeciesFormIndex(cmbSpecies.Text);
+
+    private (ushort species, byte form, byte index) GetSpeciesFormIndex(string str)
+    {
+        (ushort species, byte form, byte index) result = (0, 0, 0);
+        str = str.Replace($" ({Strings["GameVersionSL"]})", string.Empty).Replace($" ({Strings["GameVersionVL"]})", string.Empty);
+        if (!str.Equals(Strings["Any"]))
+        {
+            var formLocation = str.IndexOf('-');
+            var isForm = Array.IndexOf(SpeciesNames, str) == -1 && formLocation > 0;
+
+            if (byte.TryParse(str[^2].ToString(), out var index) && str[^1] == ')')
+            {
+                result.index = index;
+                str = str[..^4];
+            }
+            if (!isForm)
+            {
+                var species = Editor.Language.ToLower().Equals("en") ? str :
+                    GameInfo.GetStrings("en").specieslist[Array.IndexOf(SpeciesNames, str)];
+                result.species = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty).Replace("-", string.Empty));
+            }
+            else
+            {
+                var species = Editor.Language.ToLower().Equals("en") ? str[..formLocation] :
+                    GameInfo.GetStrings("en").specieslist[Array.IndexOf(SpeciesNames, str[..formLocation])];
+                result.species = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty).Replace("-", string.Empty));
+                result.form = ShowdownParsing.GetFormFromString(str.AsSpan()[(formLocation + 1)..], GameInfo.GetStrings(Editor.Language), result.species, EntityContext.Gen9);
+            }
+        }
+        return result;
+    }
+
     private EncounterRaidTF9[] GetCurrentEncounters() => (RaidContent)cmbContent.SelectedIndex switch
     {
         RaidContent.Standard => (TeraRaidMapParent)cmbMap.SelectedIndex switch
@@ -360,7 +414,8 @@ public partial class RewardCalcForm : Form
 
     private async void btnSearch_Click(object sender, EventArgs e)
     {
-        var species = (ushort)cmbSpecies.SelectedIndex;
+        (ushort species, byte form, byte index) entity;
+
         if (btnSearch.Text.Equals(Strings["ActionSearch"]))
         {
             Token = new();
@@ -377,6 +432,15 @@ public partial class RewardCalcForm : Form
             if (txtSID.Text.Equals(""))
             {
                 txtSID.Focus();
+                return;
+            }
+            try
+            {
+                entity = GetSpeciesFormIndex();
+            }
+            catch (Exception)
+            {
+                cmbSpecies.Focus();
                 return;
             }
 
@@ -406,24 +470,11 @@ public partial class RewardCalcForm : Form
             var content = (RaidContent)cmbContent.SelectedIndex;
             var boost = cmbBoost.SelectedIndex;
 
-            var index = (byte)CurrentViewedIndex;
-            if (content >= RaidContent.Event && cmbSpecies.SelectedIndex != 0)
-            {
-                foreach (var enc in content is RaidContent.Event ? Editor.Dist : Editor.Mighty)
-                {
-                    if (enc.Species != species)
-                        continue;
-
-                    index = enc.Index;
-                    break;
-                }
-            }
-
             try
             {
                 var stopwatch = new System.Diagnostics.Stopwatch();
                 stopwatch.Start();
-                await StartSearch(sav, progress, content, boost, index, (TeraRaidMapParent)cmbMap.SelectedIndex, Token);
+                await StartSearch(sav, progress, content, boost, entity.index, (TeraRaidMapParent)cmbMap.SelectedIndex, Token);
 #if DEBUG
                 if (!GridEntries.IsFinalized)
                     MessageBox.Show("Something went wrong: Result list isn't finalized.");
@@ -463,45 +514,40 @@ public partial class RewardCalcForm : Form
         var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
         var lang = (LanguageID)Editor.SAV.Language;
 
-        var maxCalcs = (long)numMaxCalc.Value + 1;
-        var indexSpecific = index != 0;
-        var eventSpecific = content is RaidContent.Event or RaidContent.Event_Mighty;
         var encounters = GetCurrentEncounters();
 
         var possibleGroups = new HashSet<byte>();
-        if (!indexSpecific && eventSpecific)
-            foreach (var enc in encounters)
+        if (index == 0 && content is RaidContent.Event or RaidContent.Event_Mighty)
+            foreach (var enc in encounters.Where(Filter.IsEncounterMatch))
                 possibleGroups.Add(enc.Index);
         else
             possibleGroups.Add(index);
-
-        EncounterRaidTF9[] effective_encounters = content switch
-        {
-            RaidContent.Standard or RaidContent.Black => ((EncounterTeraTF9[])encounters).Where(Filter!.IsEncounterMatch).ToArray(),
-            RaidContent.Event or RaidContent.Event_Mighty => ((EncounterEventTF9[])encounters).Where(Filter!.IsEncounterMatch).ToArray(),
-            _ => throw new NotImplementedException(nameof(content)),
-        };
-
-        var romMaxRate = sav.Version is GameVersion.VL ? EncounterTera9.GetRateTotalVL(Filter.Encounter!.Stars, map) : EncounterTera9.GetRateTotalSL(Filter.Encounter!.Stars, map);
-        var eventProgress = EventUtil.GetEventStageFromProgress(progress);
 
         await Task.Run(() =>
         {
             foreach (var group in possibleGroups)
             {
+                EncounterRaidTF9[] effective_encounters = content switch
+                {
+                    RaidContent.Standard or RaidContent.Black => ((EncounterTeraTF9[])encounters).Where(e => e.Index == group && Filter.IsEncounterMatch(e)).ToArray(),
+                    RaidContent.Event or RaidContent.Event_Mighty => ((EncounterEventTF9[])encounters).Where(e => e.Index == group && Filter.IsEncounterMatch(e)).ToArray(),
+                    _ => throw new NotImplementedException(nameof(content)),
+                };
 
-                Parallel.For(0L, maxCalcs, (i, iterator) =>
+                var romMaxRate = sav.Version is GameVersion.VL ? EncounterTera9.GetRateTotalVL(Filter.Encounter.Stars, map) : EncounterTera9.GetRateTotalSL(Filter.Encounter.Stars, map);
+                var eventProgress = EventUtil.GetEventStageFromProgress(progress);
+
+                Parallel.For(0L, (long)numMaxCalc.Value, (i, iterator) =>
                 {
                     if (token.IsCancellationRequested)
                         iterator.Break();
 
                     if (EncounterRaidTF9.TryGenerateRewardDetails((uint)i, effective_encounters, Filter, romMaxRate, sav.Version, progress, eventProgress, content, sav.ID32, group, boost, out _, out var result))
                     {
-#pragma warning disable CS8629
                         CalculatedList.Add(result.Value);
                         GridEntries.Add(new RewardGridEntry(result.Value, Items, SpeciesNames, ShinyNames, Editor.Language));
-#pragma warning restore CS8629
-                        if (!chkAllResults.Checked && (NotLinkedSearch || !eventSpecific || (eventSpecific && indexSpecific)))
+
+                        if (!chkAllResults.Checked)
                             token.Cancel();
                     }
                 });
