@@ -682,12 +682,6 @@ public partial class EditorForm : Form
         if (encounter is null)
             return;
 
-        if (encounter.Shiny is Shiny.Never)
-            return;
-
-        if (details.Shiny >= TeraShiny.Yes)
-            return;
-
         var filter = new TeraFilter(forceEncounter, false, false, false)
         {
             IsFormFilter = forceEncounter,
@@ -716,6 +710,15 @@ public partial class EditorForm : Form
             AltEC = details.EC % 100 == 0,
         };
 
+        if (filter.Shiny >= TeraShiny.Yes)
+        {
+            if (encounter.Shiny is Shiny.Never)
+                return;
+
+            if (details.Shiny >= TeraShiny.Yes)
+                return;
+        }
+
         TeraDetails? res = null;
         EncounterRaidTF9[] encounters = filter.EncounterFilter is true ? encounter.ContentType switch
         {
@@ -724,8 +727,9 @@ public partial class EditorForm : Form
             _ => throw new NotImplementedException(nameof(encounter.ContentType)),
         } : GetCurrentEncounters(encounter.ContentType, encounter.Map);
 
-        for (uint i = 0; (long)i <= 0xFFFFFFFF; i++)
-            if (EncounterRaidTF9.TryGenerateTeraDetails(i, encounters, SAV.Version, Progress,
+        var xoro = new Xoroshiro128Plus(details.Seed);
+        for (var i = details.Seed + 1; i != details.Seed + uint.MaxValue; i++)
+            if (EncounterRaidTF9.TryGenerateTeraDetails((uint)(xoro.Next() & uint.MaxValue), encounters, SAV.Version, Progress,
                     EventUtil.GetEventStageFromProgress(Progress), encounter.ContentType, encounter.Map, SAV.ID32, encounter.Index, out _, out res))
                     if (filter.IsFilterMatch(res!.Value))
                         break;
