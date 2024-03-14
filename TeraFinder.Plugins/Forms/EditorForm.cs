@@ -685,7 +685,7 @@ public partial class EditorForm : Form
         if (encounter.Shiny is Shiny.Never)
             return;
 
-        if (details.Shiny is TeraShiny.Yes)
+        if (details.Shiny >= TeraShiny.Yes)
             return;
 
         var filter = new TeraFilter(forceEncounter, false, false, false)
@@ -717,8 +717,6 @@ public partial class EditorForm : Form
         };
 
         TeraDetails? res = null;
-        var xoro = new Xoroshiro128Plus(details.Seed);
-
         EncounterRaidTF9[] encounters = filter.EncounterFilter is true ? encounter.ContentType switch
         {
             RaidContent.Standard or RaidContent.Black => ((EncounterTeraTF9[])GetCurrentEncounters(encounter.ContentType, encounter.Map)).Where(filter.IsEncounterMatch).ToArray(),
@@ -726,8 +724,8 @@ public partial class EditorForm : Form
             _ => throw new NotImplementedException(nameof(encounter.ContentType)),
         } : GetCurrentEncounters(encounter.ContentType, encounter.Map);
 
-        for (uint i = 0; i <= 0xFFFFFFFF; i++)
-            if (EncounterRaidTF9.TryGenerateTeraDetails((uint)(xoro.Next() & 0xFFFFFFFF), encounters, SAV.Version, Progress,
+        for (uint i = 0; (long)i <= 0xFFFFFFFF; i++)
+            if (EncounterRaidTF9.TryGenerateTeraDetails(i, encounters, SAV.Version, Progress,
                     EventUtil.GetEventStageFromProgress(Progress), encounter.ContentType, encounter.Map, SAV.ID32, encounter.Index, out _, out res))
                     if (filter.IsFilterMatch(res!.Value))
                         break;
