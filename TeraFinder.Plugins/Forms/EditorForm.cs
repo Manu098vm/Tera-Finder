@@ -731,7 +731,7 @@ public partial class EditorForm : Form
         for (var i = details.Seed + 1; i != details.Seed + uint.MaxValue; i++)
             if (EncounterRaidTF9.TryGenerateTeraDetails((uint)(xoro.Next() & uint.MaxValue), encounters, SAV.Version, Progress,
                     EventUtil.GetEventStageFromProgress(Progress), encounter.ContentType, encounter.Map, SAV.ID32, encounter.Index, out _, out res))
-                    if (filter.IsFilterMatch(res!.Value))
+                    if (filter.IsFilterMatch(res.Value))
                         break;
 
         raid.Seed = res is not null ? res.Value.Seed : raid.Seed;

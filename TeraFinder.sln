@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeraFinder.RemoteExecutor",
 		{34B925D5-E9EE-45CD-95C2-133D632D5DFD} = {34B925D5-E9EE-45CD-95C2-133D632D5DFD}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeraFinder.Tests", "TeraFinder.Tests\TeraFinder.Tests.csproj", "{0CB3C5C8-9A89-4C72-8AE3-3D047734C347}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{1F659D38-B5FC-4A04-B2CA-8942FDAB18E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F659D38-B5FC-4A04-B2CA-8942FDAB18E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F659D38-B5FC-4A04-B2CA-8942FDAB18E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CB3C5C8-9A89-4C72-8AE3-3D047734C347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CB3C5C8-9A89-4C72-8AE3-3D047734C347}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CB3C5C8-9A89-4C72-8AE3-3D047734C347}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CB3C5C8-9A89-4C72-8AE3-3D047734C347}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

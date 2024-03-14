@@ -134,12 +134,9 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
         return true;
     }
 
-    //Generate a PK9 from a given seed
-    public bool GeneratePK9(uint seed, uint id32, GameVersion version, string ot_name, int ot_language, byte ot_gender, out PK9? result, out LegalityAnalysis legality)
+    //Generate a PK9 from an RNG result
+    public bool GeneratePK9(TeraDetails rngResult, uint id32, GameVersion version, string ot_name, int ot_language, byte ot_gender, out PK9 result, out LegalityAnalysis legality)
     {
-        result = null;
-        var rngres = this.GenerateData(seed, id32);
-
         result = new PK9(Properties.Resources.template)
         {
             Species = Species,
@@ -155,28 +152,28 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
             OriginalTrainerName = ot_name,
             HandlingTrainerName = ot_name,
             OriginalTrainerGender = ot_gender,
-            TeraTypeOriginal = (MoveType)rngres.TeraType,
-            EncryptionConstant = rngres.EC,
-            Form = rngres.Form,
-            PID = rngres.PID,
-            IV_HP = rngres.HP,
-            IV_ATK = rngres.ATK,
-            IV_DEF = rngres.DEF,
-            IV_SPA = rngres.SPA,
-            IV_SPD = rngres.SPD,
-            IV_SPE = rngres.SPE,
-            Gender = (byte)rngres.Gender,
-            Nature = rngres.Nature,
-            StatNature = rngres.Nature,
-            HeightScalar = rngres.Height,
-            WeightScalar = rngres.Weight,
-            Scale = rngres.Scale,
-            Move1 = rngres.Move1,
-            Move2 = rngres.Move2,
-            Move3 = rngres.Move3,
-            Move4 = rngres.Move4,
-            Ability = rngres.Ability,
-            AbilityNumber = rngres.AbilityNumber,
+            TeraTypeOriginal = (MoveType)rngResult.TeraType,
+            EncryptionConstant = rngResult.EC,
+            Form = rngResult.Form,
+            PID = rngResult.PID,
+            IV_HP = rngResult.HP,
+            IV_ATK = rngResult.ATK,
+            IV_DEF = rngResult.DEF,
+            IV_SPA = rngResult.SPA,
+            IV_SPD = rngResult.SPD,
+            IV_SPE = rngResult.SPE,
+            Gender = (byte)rngResult.Gender,
+            Nature = rngResult.Nature,
+            StatNature = rngResult.Nature,
+            HeightScalar = rngResult.Height,
+            WeightScalar = rngResult.Weight,
+            Scale = rngResult.Scale,
+            Move1 = rngResult.Move1,
+            Move2 = rngResult.Move2,
+            Move3 = rngResult.Move3,
+            Move4 = rngResult.Move4,
+            Ability = rngResult.Ability,
+            AbilityNumber = rngResult.AbilityNumber,
             MetDate = DateOnly.FromDateTime(DateTime.Now),
         };
 

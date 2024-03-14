@@ -226,6 +226,7 @@ public static class EncounterTF9RNG
             }
             else
             {
+                ShinyUtil.ForceShinyState(false, ref pid, id32, xor);
                 shiny = TeraShiny.No;
             }
         }
