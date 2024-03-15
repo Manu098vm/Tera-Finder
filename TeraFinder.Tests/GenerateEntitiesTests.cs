@@ -1,7 +1,6 @@
 using Xunit;
 using PKHeX.Core;
 using TeraFinder.Core;
-using Xunit.Sdk;
 
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 #pragma warning disable CS8629 // Nullable value type may be null.
@@ -57,15 +56,13 @@ namespace TeraFinder.Tests
             encounters.GroupBy(e => e.Identifier).ToDictionary(g => g.Key, g => new HashSet<EncounterEventTF9>(g));
 
         private static bool ParallelizeGeneration(EncounterRaidTF9[] encounters, GameVersion version, RaidContent content, TeraRaidMapParent map = TeraRaidMapParent.Paldea, GameProgress progress = GameProgress.UnlockedTeraRaids, EventProgress eventProgress = EventProgress.Stage0, byte groupid = 0)
-        {
-            return Parallel.For(0L, uint.MaxValue, (seed, state) =>
+            => Parallel.For(0L, uint.MaxValue, (seed, state) =>
             {
                 if (!EncounterRaidTF9.TryGenerateTeraDetails((uint)seed, encounters, version, progress, eventProgress, content, map, 0, groupid, out var encounter, out var result))
                     state.Stop();
                 else if (!encounter.GeneratePK9(result.Value, 0, version, "test", 2, 0, out _, out _))
                     state.Stop();
             }).LowestBreakIteration is null;
-        }
     }
 }
 #pragma warning restore CS8629 // Nullable value type may be null.
