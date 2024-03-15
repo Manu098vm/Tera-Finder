@@ -9,6 +9,8 @@ namespace TeraFinder.Tests
 {
     public class GenerateEntitiesTests
     {
+        private const uint MaxTests = 0xFFFFF;
+
         [Fact]
         public void TestEncounterTeraTF9Standard()
         {
@@ -56,7 +58,7 @@ namespace TeraFinder.Tests
             encounters.GroupBy(e => e.Identifier).ToDictionary(g => g.Key, g => new HashSet<EncounterEventTF9>(g));
 
         private static bool ParallelizeGeneration(EncounterRaidTF9[] encounters, GameVersion version, RaidContent content, TeraRaidMapParent map = TeraRaidMapParent.Paldea, GameProgress progress = GameProgress.UnlockedTeraRaids, EventProgress eventProgress = EventProgress.Stage0, byte groupid = 0)
-            => Parallel.For(0L, uint.MaxValue, (seed, state) =>
+            => Parallel.For(0L, MaxTests, (seed, state) =>
             {
                 if (!EncounterRaidTF9.TryGenerateTeraDetails((uint)seed, encounters, version, progress, eventProgress, content, map, 0, groupid, out var encounter, out var result))
                     state.Stop();
