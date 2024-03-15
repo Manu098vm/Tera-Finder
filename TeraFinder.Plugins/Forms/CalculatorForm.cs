@@ -639,8 +639,6 @@ public partial class CalculatorForm : Form
 
     private async Task StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, byte index, TeraRaidMapParent map, CancellationTokenSource token)
     {
-        var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
-
         var encounters = GetCurrentEncounters();
 
         var possibleGroups = new HashSet<byte>();
@@ -664,7 +662,7 @@ public partial class CalculatorForm : Form
                 var romMaxRate = sav.Version is GameVersion.VL ? EncounterTera9.GetRateTotalVL(Filter.Stars, map) : EncounterTera9.GetRateTotalSL(Filter.Stars, map);
                 var eventProgress = EventUtil.GetEventStageFromProgress(progress);
 
-                var initialValue = uint.Parse(txtSeed.Text);
+                var initialValue = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
                 var maxValue = (long)initialValue + (uint)numFrames.Value;
 
                 Parallel.For(initialValue, maxValue, (seed, iterator) =>
