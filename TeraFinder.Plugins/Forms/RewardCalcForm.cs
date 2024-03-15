@@ -537,12 +537,15 @@ public partial class RewardCalcForm : Form
                 var romMaxRate = sav.Version is GameVersion.VL ? EncounterTera9.GetRateTotalVL(Filter.Encounter.Stars, map) : EncounterTera9.GetRateTotalSL(Filter.Encounter.Stars, map);
                 var eventProgress = EventUtil.GetEventStageFromProgress(progress);
 
-                Parallel.For(0L, (long)numMaxCalc.Value, (i, iterator) =>
+                var initialValue = uint.Parse(txtSeed.Text);
+                var maxValue = (long)initialValue + (uint)numMaxCalc.Value;
+
+                Parallel.For(initialValue, maxValue, (seed, iterator) =>
                 {
                     if (token.IsCancellationRequested)
                         iterator.Break();
 
-                    if (EncounterRaidTF9.TryGenerateRewardDetails((uint)i, effective_encounters, Filter, romMaxRate, sav.Version, progress, eventProgress, content, sav.ID32, group, boost, out _, out var result))
+                    if (EncounterRaidTF9.TryGenerateRewardDetails((uint)seed, effective_encounters, Filter, romMaxRate, sav.Version, progress, eventProgress, content, sav.ID32, group, boost, out _, out var result))
                     {
                         CalculatedList.Add(result.Value);
                         GridEntries.Add(new RewardGridEntry(result.Value, Items, SpeciesNames, ShinyNames, Editor.Language));

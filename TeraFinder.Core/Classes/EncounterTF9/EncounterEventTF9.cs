@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System;
 using static System.Buffers.Binary.BinaryPrimitives;
 
 namespace TeraFinder.Core;
@@ -46,7 +47,7 @@ public sealed record EncounterEventTF9 : EncounterRaidTF9, IEventRaid9
                 xoro.NextInt(100);
                 var rateRand = xoro.NextInt(max);
                 var min = game switch { GameVersion.VL => enc.GetRandRateMinViolet(progress), _ => enc.GetRandRateMinScarlet(progress) };
-                if ((rateRand - min) < enc.RandRate)
+                if ((uint)(rateRand - min) < enc.RandRate)
                     return enc;
             }
         }
@@ -171,16 +172,21 @@ public sealed record EncounterEventTF9 : EncounterRaidTF9, IEventRaid9
         _ => throw new ArgumentOutOfRangeException(nameof(b), b, null),
     };
 
-    private bool CanBeEncountered(GameVersion version)
+    public bool CanBeEncountered(GameVersion version)
     {
         for (var progress = EventProgress.Stage0; progress <= EventProgress.Stage3; progress++)
-        {
-            var maxRate = version switch { GameVersion.SL => GetRandRateTotalScarlet(progress), _ => GetRandRateTotalViolet(progress) };
-            var minRate = version switch { GameVersion.SL => GetRandRateMinScarlet(progress), _ => GetRandRateMinViolet(progress) };
-
-            if (minRate >= 0 && maxRate > 0)
+            if (CanBeEncounteredFromStage(progress, version))
                 return true;
-        }
+
+        return false;
+    }
+
+    public bool CanBeEncounteredFromStage(EventProgress progress, GameVersion version)
+    {
+        var maxRate = version switch { GameVersion.SL => GetRandRateTotalScarlet(progress), _ => GetRandRateTotalViolet(progress) };
+
+        if (maxRate > 0)
+            return true;
 
         return false;
     }

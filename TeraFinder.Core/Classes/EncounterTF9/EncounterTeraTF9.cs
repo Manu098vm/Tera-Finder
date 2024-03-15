@@ -109,7 +109,12 @@ public sealed record EncounterTeraTF9 : EncounterRaidTF9
             if (randStars != encounter.Stars)
                 continue;
 
-            if ((uint)(rateRand - (game is GameVersion.VL ? encounter.RandRateMinViolet : encounter.RandRateMinScarlet)) < encounter.RandRate)
+            var min = game is GameVersion.SL ? encounter.RandRateMinScarlet : encounter.RandRateMinViolet;
+
+            if (min < 0)
+                continue;
+
+            if ((uint)(rateRand - min) < encounter.RandRate)
                 return encounter;
         }
         return null;
@@ -128,6 +133,10 @@ public sealed record EncounterTeraTF9 : EncounterRaidTF9
                 continue;
 
             var min = game is GameVersion.SL ? encounter.RandRateMinScarlet : encounter.RandRateMinViolet;
+
+            if (min < 0)
+                continue;
+
             if ((uint)(rateRand - min) < encounter.RandRate)
                 return encounter;
         }

@@ -664,12 +664,15 @@ public partial class CalculatorForm : Form
                 var romMaxRate = sav.Version is GameVersion.VL ? EncounterTera9.GetRateTotalVL(Filter.Stars, map) : EncounterTera9.GetRateTotalSL(Filter.Stars, map);
                 var eventProgress = EventUtil.GetEventStageFromProgress(progress);
 
-                Parallel.For(0L, (long)numFrames.Value, (i, iterator) =>
+                var initialValue = uint.Parse(txtSeed.Text);
+                var maxValue = (long)initialValue + (uint)numFrames.Value;
+
+                Parallel.For(initialValue, maxValue, (seed, iterator) =>
                 {
                     if (token.IsCancellationRequested)
                         iterator.Break();
 
-                    if (EncounterRaidTF9.TryGenerateTeraDetails((uint)i, effective_encounters, Filter, romMaxRate, sav.Version, progress, eventProgress, content, sav.ID32, group, out _, out var result))
+                    if (EncounterRaidTF9.TryGenerateTeraDetails((uint)seed, effective_encounters, Filter, romMaxRate, sav.Version, progress, eventProgress, content, sav.ID32, group, out _, out var result))
                     {
                         CalculatedList.Add(result.Value);
                         GridEntries.Add(new GridEntry(result.Value, NameList, AbilityList, NatureList, MoveList, TypeList, FormList, GenderListAscii, GenderListUnicode, ShinyList));
