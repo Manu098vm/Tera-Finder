@@ -9,7 +9,7 @@ namespace TeraFinder.Tests
 {
     public class GenerateEntitiesWithFilters
     {
-        private const uint MaxTests = 0xFFFFF;
+        private const uint MaxTests = 0xFFFFFFFF;
 
         [Fact]
         public void TestEncounterTeraTF9StandardFilter()
@@ -25,7 +25,7 @@ namespace TeraFinder.Tests
                         var effective_encounters = encounters.Where(filter.IsEncounterMatch).ToArray();
 
                         for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.Unlocked6Stars; progress++)
-                            Assert.True(ParallelizeGeneration(encounters, filter, game, RaidContent.Standard, romTotal, progress));
+                            ParallelizeGeneration(effective_encounters, filter, game, RaidContent.Standard, romTotal, progress);
                     }
                 }
         }
@@ -42,7 +42,7 @@ namespace TeraFinder.Tests
                     var filter = new TeraFilter(true, false, false, false) { Stars = 6 };
                     var effective_encounters = encounters.Where(filter.IsEncounterMatch).ToArray();
 
-                    Assert.True(ParallelizeGeneration(encounters, filter, game, RaidContent.Black, romTotal, GameProgress.Unlocked6Stars));
+                    ParallelizeGeneration(effective_encounters, filter, game, RaidContent.Black, romTotal, GameProgress.Unlocked6Stars);
                 }
             }
         }
@@ -69,22 +69,23 @@ namespace TeraFinder.Tests
                                     var filter = new TeraFilter(true, false, false, false) { Stars = stars };
                                     var encounters = group.Value.Where(filter.IsEncounterMatch).ToArray();
 
-                                    Assert.True(ParallelizeGeneration(encounters, filter, game, content, eventProgress: stage, groupid: index));
+                                    ParallelizeGeneration(encounters, filter, game, content, eventProgress: stage, groupid: index);
                                 }
                             }
                         }
         }
 
         private static Dictionary<uint, HashSet<EncounterEventTF9>> GroupEventEncounters(EncounterEventTF9[] encounters) =>
-            encounters.GroupBy(e => e.Identifier).ToDictionary(g => g.Key, g => new HashSet<EncounterEventTF9>(g));
+            encounters.GroupBy(e => Convert.ToUInt32($"{e.Identifier}"[..^2], 10)).ToDictionary(g => g.Key, g => new HashSet<EncounterEventTF9>(g));
 
-        private static bool ParallelizeGeneration(EncounterRaidTF9[] encounters, TeraFilter filter, GameVersion version, RaidContent content, short rateTotal = 0, GameProgress progress = GameProgress.UnlockedTeraRaids, EventProgress eventProgress = EventProgress.Stage0, byte groupid = 0)
-            => Parallel.For(0L, MaxTests, (seed, state) =>
+        private static void ParallelizeGeneration(EncounterRaidTF9[] encounters, TeraFilter filter, GameVersion version, RaidContent content, short rateTotal = 0, GameProgress progress = GameProgress.UnlockedTeraRaids, EventProgress eventProgress = EventProgress.Stage0, byte groupid = 0)
+        {
+            Parallel.For(0L, MaxTests, (seed, state) =>
             {
                 if (EncounterRaidTF9.TryGenerateTeraDetails((uint)seed, encounters, filter, rateTotal, version, progress, eventProgress, content, 0, groupid, out var encounter, out var result))
-                    if (!encounter.GeneratePK9(result.Value, 0, version, "test", 2, 0, out _, out _))
-                        state.Stop();
-            }).LowestBreakIteration is null;
+                    Assert.True(encounter.GeneratePK9(result.Value, 0, version, "test", 2, 0, out _, out _));
+            });
+        }
     }
 }
 #pragma warning restore CS8629 // Nullable value type may be null.

@@ -122,7 +122,7 @@ public static class EncounterTF9RNG
         return true;
     }
 
-    public static TeraDetails GenerateData(this EncounterRaidTF9 encounter, in uint seed, in uint id32, in byte groupid = 0, in ulong calc = 0)
+    public static TeraDetails GenerateData(this EncounterRaidTF9 encounter, in uint seed, in uint id32, in byte groupid = 0)
     {
         var tera = Tera9RNG.GetTeraType(seed, encounter.TeraType, encounter.Species, encounter.Form);
         var rand = new Xoroshiro128Plus(seed);

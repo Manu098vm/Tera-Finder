@@ -143,7 +143,7 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
             HeldItem = HeldItem,
             MetLevel = Level,
             CurrentLevel = Level,
-            Obedience_Level = Level,
+            ObedienceLevel = Level,
             RibbonMarkMightiest = IsMighty,
             ID32 = id32,
             Version = version,
@@ -185,24 +185,27 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
         legality = new LegalityAnalysis(result);
         if (!legality.Valid)
         {
-            var changed = false;
+            //CHS, CHT, KOR and JPN have OT Name length restrictions
             var la_ot = legality.Results.Where(l => l.Identifier is CheckIdentifier.Trainer).FirstOrDefault();
-            if ((LanguageID)result.Language is LanguageID.ChineseS or LanguageID.ChineseT or LanguageID.Korean or LanguageID.Japanese && !la_ot.Valid)
+            if (la_ot.Judgement is Severity.Invalid && (LanguageID)result.Language is LanguageID.ChineseS or LanguageID.ChineseT or LanguageID.Korean or LanguageID.Japanese)
             {
                 result.OriginalTrainerName = "TF";
                 result.RefreshChecksum();
-                changed = true;
+                legality = new LegalityAnalysis(result);
             }
 
-            if (changed)
-                legality = new LegalityAnalysis(result);
-
+            //Seed 0xC4C200B6 produces equal EC and PID, which PKHeX flags as invalid
             if (!legality.Valid)
-                return false;
+            {
+                var la_ec = legality.Results.Where(l => l.Identifier is CheckIdentifier.EC).FirstOrDefault();
+                if (la_ec.Judgement is Severity.Invalid && rngResult.Seed == 0xC4C200B6)
+                    return true;
+            }
         }
 
-        return true;
+        return legality.Valid;
     }
+
 
     //Get the encounter names from a pool of encounters
     public static HashSet<string> GetAvailableSpecies(EncounterRaidTF9[] encounters, byte stars, string[] speciesNames, string[] formsNames, string[] typesNames, Dictionary<string, string> pluginStrings)
