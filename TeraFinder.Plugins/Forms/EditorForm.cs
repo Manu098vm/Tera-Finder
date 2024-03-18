@@ -402,19 +402,15 @@ public partial class EditorForm : Form
             var content = (RaidContent)cmbContent.SelectedIndex;
             var groupid = content switch
             {
-                RaidContent.Event or RaidContent.Event_Mighty => EventUtil.GetDeliveryGroupID(content switch
-                {
-                    RaidContent.Event => Dist,
-                    RaidContent.Event_Mighty => Mighty,
-                    _ => throw new NotImplementedException(nameof(content)),
-                }, SAV, EventUtil.GetEventStageFromProgress(Progress), CurrMap switch
-                {
-                    TeraRaidMapParent.Paldea => SAV.RaidPaldea,
-                    TeraRaidMapParent.Kitakami => SAV.RaidKitakami,
-                    TeraRaidMapParent.Blueberry => SAV.RaidBlueberry,
-                    _ => throw new NotImplementedException(nameof(CurrMap))
-                }, cmbDens.SelectedIndex),
-                _ => (byte)0,
+                RaidContent.Event or RaidContent.Event_Mighty => EventUtil.GetDeliveryGroupID([.. Dist, .. Mighty], 
+                    SAV, EventUtil.GetEventStageFromProgress(Progress), CurrMap switch
+                    {
+                        TeraRaidMapParent.Paldea => SAV.RaidPaldea,
+                        TeraRaidMapParent.Kitakami => SAV.RaidKitakami,
+                        TeraRaidMapParent.Blueberry => SAV.RaidBlueberry,
+                        _ => throw new NotImplementedException(nameof(CurrMap))
+                    }, cmbDens.SelectedIndex),
+                    _ => (byte)0,
             };
 
             var success = EncounterRaidTF9.TryGenerateTeraDetails(raid.Seed, content switch
