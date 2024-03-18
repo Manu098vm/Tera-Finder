@@ -1,6 +1,5 @@
 ﻿using PKHeX.Core;
 using System.Collections.Concurrent;
-using System.ComponentModel;
 using TeraFinder.Core;
 
 namespace TeraFinder.Plugins;
