@@ -105,7 +105,7 @@ public struct RewardGridEntry
     public string? Item25 { get; private set; }
     public string? EventIndex { get; private set; }
 
-    public RewardGridEntry(RewardDetails res, string[] itemnames, string[]speciesnames, string[] shinynames, string language)
+    public RewardGridEntry(RewardDetails res, string[] itemnames, string[]speciesnames, string[] shinynames, string[] typenames, string language)
     {
         var str = res.GetStrings(itemnames, language);
         Seed = $"{res.Seed:X8}";
@@ -134,8 +134,8 @@ public struct RewardGridEntry
         Item23 = str[22];
         Item24 = str[23];
         Item25 = str[24];
-        Info = $"{speciesnames[res.Species]} ({res.Stars}☆) {(res.Shiny > TeraShiny.No ? $"({shinynames[(int)res.Shiny]})" : "")}";
         EventIndex = $"{res.EventIndex}";
+        Info = $"{speciesnames[res.Species]} {res.Stars}☆ ({typenames[res.TeraType]}) {(res.Shiny > TeraShiny.No ? $"({shinynames[(int)res.Shiny]})" : "")}";
     }
 }
 

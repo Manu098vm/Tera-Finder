@@ -382,7 +382,7 @@ public partial class RewardCalcForm : Form
                     Parallel.ForEach(CalculatedList, el =>
                     {
                         if (Filter is null || Filter.IsFilterMatch(el))
-                            GridEntries.Add(new RewardGridEntry(el, Items, SpeciesNames, ShinyNames, Editor.Language));
+                            GridEntries.Add(new RewardGridEntry(el, Items, SpeciesNames, ShinyNames, TypeNames, Editor.Language));
                     });
                 });
                 GridEntries.FinalizeElements();
@@ -653,7 +653,7 @@ public partial class RewardCalcForm : Form
                         if (EncounterRaidTF9.TryGenerateRewardDetails((uint)seed, effective_encounters, Filter, romMaxRate, sav.Version, progress, eventProgress, content, sav.ID32, group, boost, out _, out var result))
                         {
                             CalculatedList.Add(result.Value);
-                            GridEntries.Add(new RewardGridEntry(result.Value, Items, SpeciesNames, ShinyNames, Editor.Language));
+                            GridEntries.Add(new RewardGridEntry(result.Value, Items, SpeciesNames, ShinyNames, TypeNames, Editor.Language));
 
                             if (!chkAllResults.Checked)
                                 token.Cancel();
