@@ -100,7 +100,7 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
             return false;
 
         teraRes = encounter.GenerateData(seed, id32, groupid);
-        var rewards = RewardUtil.GetCombinedRewardList(teraRes!.Value, encounter!.FixedRewards, encounter.LotteryRewards, boost);
+        var rewards = RewardUtil.GetCombinedRewardList(teraRes.Value, encounter.FixedRewards, encounter.LotteryRewards, boost);
         rewardRes = new RewardDetails { Seed = seed, Rewards = rewards, Species = encounter.Species, Stars = encounter.Stars, Shiny = teraRes.Value.Shiny, TeraType = teraRes.Value.TeraType, EventIndex = groupid };
 
         return true;
@@ -125,7 +125,7 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
             return false;
 
         teraRes = encounter.GenerateData(seed, id32, groupid);
-        var rewards = RewardUtil.GetCombinedRewardList(teraRes!.Value, encounter!.FixedRewards, encounter.LotteryRewards, boost);
+        var rewards = RewardUtil.GetCombinedRewardList(teraRes.Value, encounter.FixedRewards, encounter.LotteryRewards, boost);
         rewardRes = new RewardDetails { Seed = seed, Rewards = rewards, Species = encounter.Species, Stars = encounter.Stars, Shiny = teraRes.Value.Shiny, TeraType = teraRes.Value.TeraType, EventIndex = groupid };
 
         if (!filter.IsFilterMatch(rewardRes.Value))

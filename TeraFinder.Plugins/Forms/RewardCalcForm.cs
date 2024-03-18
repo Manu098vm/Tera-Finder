@@ -532,6 +532,12 @@ public partial class RewardCalcForm : Form
                 txtSID.Focus();
                 return;
             }
+            if ((cmbSpecies.Text.Contains(Strings["GameVersionSL"]) && cmbGame.SelectedIndex == 1) ||
+                (cmbSpecies.Text.Contains(Strings["GameVersionVL"]) && cmbGame.SelectedIndex == 0))
+            {
+                cmbSpecies.Focus();
+                return;
+            }
             try
             {
                 entity = GetSpeciesFormIndex();
