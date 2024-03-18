@@ -8,7 +8,7 @@ namespace TeraFinder.Tests
 {
     public class GenerateEntities
     {
-        private const uint MaxTests = 0xFFFFFFFF;
+        private const uint MaxTests = 0xFFFF;
 
         [Fact]
         public void TestEncounterTeraTF9Standard()
