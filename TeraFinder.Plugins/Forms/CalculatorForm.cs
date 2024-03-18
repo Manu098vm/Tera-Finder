@@ -90,6 +90,13 @@ public partial class CalculatorForm : Form
         nSpeMax.Value = 31;
         numScaleMax.Value = 255;
 
+        if (Editor.CurrEncount is { Stars: > 0 })
+        {
+            var index = cmbStars.Items.Cast<string>().ToList().FindIndex(stars => byte.TryParse($"{stars[0]}", out var res) && res == Editor.CurrEncount.Stars);
+            if (index != -1)
+                cmbStars.SelectedIndex = index;
+        }
+
         TranslateCmbProgress();
         TranslateCmbShiny();
         TranslateCmbGame();
