@@ -154,6 +154,7 @@ public partial class CalculatorForm : Form
             { "Plugin.MapKitakami", "Kitakami" },
             { "Plugin.MapBlueberry", "Blueberry" },
             { "CalculatorForm.lblTime", "T:" },
+            { "WarningNoEncounter", "" }
         };
     }
 
@@ -275,7 +276,7 @@ public partial class CalculatorForm : Form
             if (starsList.Count > 0)
                 stars = [.. starsList];
             else
-                stars = [stars[1], stars[2], stars[3], stars[4], stars[5]];
+                stars = [stars[0]];
         }
 
         else if (cmbContent.SelectedIndex == 3)
@@ -589,9 +590,9 @@ public partial class CalculatorForm : Form
             }
 
             CreateFilter();
-            if (Filter is null || !Filter.EncounterFilter || Filter.Stars == 0)
+            if (Filter is null || !Filter.EncounterFilter || Filter.Stars == 0 || GetCurrentEncounters().Length == 0)
             {
-                MessageBox.Show("No stars filter is set. Please select a stars filter.");
+                MessageBox.Show(Strings["WarningNoEncounter"]);
                 cmbStars.Focus();
                 return;
             }

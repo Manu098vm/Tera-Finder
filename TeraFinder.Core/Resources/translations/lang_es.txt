@@ -255,6 +255,7 @@ ActionSearch=Buscar
 ActionStop=Parar
 ToolTipAccurate=Forzar la calculadora a definir el Teratipo y variocolor de una seed dada, para así determinar con precisión el tipo de Teralitos e información extra. Esto hace las búsquedas un poco lentas.
 ToolTipAllResults=Deshabilitado - Detener cada hilo de búsqueda al primer resultado que coincida con los filtros.  Habilitado - Computa todos los resultados posibles hasta que el número en Max Calc sea alcanzado.  Se ignora si no hay ningún filtro establecido.
+WarningNoEncounter=No encounter available for the Game Progress and Stars selection.
 
 ActionConnect=Conectar
 ActionConnecting=Conectando...

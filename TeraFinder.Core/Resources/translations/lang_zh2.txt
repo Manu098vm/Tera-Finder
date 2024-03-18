@@ -255,6 +255,7 @@ ActionSearch=搜索
 ActionStop=停止
 ToolTipAccurate=從提供的Seed強製檢索指定寶可夢的太晶屬性和閃光，以便準確的指定太晶碎片種類和額外信息。 使搜索速度稍慢。
 ToolTipAllResults=禁用 - 在找到一個結果後停止搜索。 啟用 - 搜索所有可能的結果，直到達到最大搜索量。 如果未設置過濾器，則忽略。
+WarningNoEncounter=No encounter available for the Game Progress and Stars selection.
 
 ActionConnect=連接
 ActionConnecting=正在連接...

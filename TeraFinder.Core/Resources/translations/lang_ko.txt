@@ -255,6 +255,7 @@ ActionSearch=검색
 ActionStop=정지
 ToolTipAccurate=포켓몬의 테라타입과 이로치여부를 결정하고, 이를 통해 테라피스의 타입과 추가 정보를 정확하게 판단하도록 합니다. 검색 속도가 약간 느려집니다.
 ToolTipAllResults=체크x - 필터와 일치하는 첫 번째 결과에서 검색을 중지합니다. 체크o - 최대 계산값에 도달할 때까지 가능한 모든 결과를 계산합니다. 필터가 설정되지 않은 경우 무시됩니다.
+WarningNoEncounter=No encounter available for the Game Progress and Stars selection.
 
 ActionConnect=연결
 ActionConnecting=연결중

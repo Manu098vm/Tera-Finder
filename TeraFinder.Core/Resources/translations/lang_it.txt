@@ -255,6 +255,7 @@ ActionSearch=Cerca
 ActionStop=Stop
 ToolTipAccurate=Forza il calcolatore a determinare Tera Tipo e Shinyness, in modo da poter determinare accuratamente il tipo di Teralite e le Extra Info. Le ricerche saranno un po' più lente.
 ToolTipAllResults=Disabilitato - Ferma ogni thread al primo risultato trovato che corrisponda ai filtri.  Abilitato - Calcola tutti i possibili risultati fino a che non si raggiunge la quantità di Max Calc. Ignorato se nessun filtro è stato impostato.
+WarningNoEncounter=Nessun incontro disponibile per il Progresso e le Stelle selezionate.
 
 ActionConnect=Connetti
 ActionConnecting=Connessione...

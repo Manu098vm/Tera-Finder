@@ -231,6 +231,14 @@ public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
                     return false;
         }
 
+        if (FilterRewards?.Length > 0)
+        {
+            var encRewards = encounter.FixedRewards.Concat(encounter.LotteryRewards);
+            foreach (var reward in  FilterRewards)
+                if (!encRewards.Any(r => r.CompareItem(reward, true)))
+                    return false;
+        }
+
         return true;
     }
 
