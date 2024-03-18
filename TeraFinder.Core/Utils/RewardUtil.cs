@@ -11,7 +11,6 @@ public static class RewardUtil
         var list = new List<Reward>();
         list.AddRange(fixedRewards);
         list.AddRange(lotteryrng);
-        list.ReplaceShardReward((MoveType)rng.TeraType);
         return list;
     }
 
@@ -66,23 +65,21 @@ public static class RewardUtil
         }
     }
 
-    private static void ReplaceShardReward(this List<Reward> rewards, MoveType type)
+    public static bool IsHerbaMystica(int item) => item switch
     {
-        for (var i = 0; i < rewards.Count; i++)
-        {
-            switch (rewards[i].ItemID)
-            {
-                case >= 1862 and <= 1879:
-                case 65534:
-                    rewards[i].ItemID = GetTeraShard(type);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
+        ushort.MaxValue - 2 => true,
+        >= 1904 and <= 1908 => true,
+        _ => false,
+    };
 
-    private static int GetTeraShard(MoveType type)
+    public static bool IsTeraShard(int item) => item switch
+    {
+        ushort.MaxValue - 1 => true,
+        >= 1862 and <= 1879 => true,
+        _ => false,
+    };
+
+    public static int GetTeraShard(MoveType type)
     {
         return type switch
         {

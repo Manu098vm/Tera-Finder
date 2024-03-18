@@ -9,49 +9,42 @@ public record Reward
     public int Probability { get; set; }
     public int Aux { get; set; }
 
-    public string GetItemName(string[]? itemnames = null, string language = "en", bool quantity = false)
+    public string GetItemName(MoveType tera, string[]? itemnames = null, string language = "en", bool quantity = false)
     {
+        itemnames ??= GameInfo.GetStrings(language).itemlist;
+
         if (RewardUtil.IsTM(ItemID))
             return $"{RewardUtil.GetNameTM(ItemID, itemnames, GameInfo.GetStrings(language).movelist)} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
 
-        itemnames ??= GameInfo.GetStrings(language).itemlist;
+        if (RewardUtil.IsTeraShard(ItemID))
+            return $"{itemnames[RewardUtil.GetTeraShard(tera)]} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
 
         return $"{itemnames[ItemID]} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
     }
 
     private string GetClientOrHostString() =>
-        $"{(Aux == 0 ? "" : Aux == 1 ? "(H)" : Aux == 2 ? "(C)" : Aux == 3 ? "(Once)" : "")}";
+        $"{(Aux == 0 ? "" : Aux == 1 ? "(Host)" : Aux == 2 ? "(Guests)" : Aux == 3 ? "(Once)" : "")}";
 
-    public bool CompareItem(Reward item, bool greaterthan = false)
+    public bool CompareItem(Reward item)
     {
-        if (greaterthan && item.ItemID == ushort.MaxValue - 2)
-        {
-            if (ItemID == ushort.MaxValue-2 || (ItemID >= 1904 && ItemID <= 1908))
-                if (Amount >= item.Amount)
-                    return true;
-
-            return false;
-        }
-
         if (item.ItemID != ItemID)
             return false;
-        if (!greaterthan && item.Amount != Amount) 
-            return false;
-        if(greaterthan && Amount < item.Amount)
+        if (item.Amount != Amount) 
             return false;
 
         return true;
     }
 
-    public bool CompareEncounterItem(Reward item)
+    public bool CompareEncounterItemID(Reward item)
     {
-        if (item.ItemID == ushort.MaxValue - 2 && ItemID >= 1904 && ItemID <= 1908)
+        if (item.ItemID == ushort.MaxValue - 2 && RewardUtil.IsHerbaMystica(ItemID))
+            return true;
+
+        if (RewardUtil.IsTeraShard(item.ItemID) && RewardUtil.IsTeraShard(ItemID))
             return true;
 
         return item.ItemID == ItemID;
     }
-
-    public bool IsHerba() => ItemID >= 1904 && ItemID <= 1908;
 }
 
 public struct RewardDetails : IRaidDetails
@@ -64,12 +57,12 @@ public struct RewardDetails : IRaidDetails
     public byte TeraType { get; set; }
     public byte EventIndex { get; set; }
 
-    public readonly string[] GetStrings(string[] itemnames, string language)
+    public readonly string[] GetStrings(string[] itemnames, string language, MoveType tera)
     {
         var list = new string[25];
         if(Rewards is not null)
             for(var i = 0; i < Rewards.Count; i++)
-                list[i] = Rewards[i].GetItemName(itemnames, language, true);
+                list[i] = Rewards[i].GetItemName(tera, itemnames, language, true);
         return list;
     }
 }
@@ -107,7 +100,7 @@ public struct RewardGridEntry
 
     public RewardGridEntry(RewardDetails res, string[] itemnames, string[]speciesnames, string[] shinynames, string[] typenames, string language)
     {
-        var str = res.GetStrings(itemnames, language);
+        var str = res.GetStrings(itemnames, language, (MoveType)res.TeraType);
         Seed = $"{res.Seed:X8}";
         Item1 = str[0];
         Item2 = str[1];
@@ -185,32 +178,26 @@ public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
             }
         }
 
-        if (FilterRewards is not null && FilterRewards.Length > 0)
+        if (FilterRewards.Length > 0)
         {
             var itemlist = new Dictionary<int, int>();
-            foreach (var item in res.Rewards!)
+            foreach (var item in res.Rewards)
             {
-                var itemId = HerbaFilter && item.IsHerba() ? ushort.MaxValue - 2 : item.ItemID;
+                var itemId = HerbaFilter && RewardUtil.IsHerbaMystica(item.ItemID) ? ushort.MaxValue - 2 :
+                    RewardUtil.IsTeraShard(item.ItemID) ? RewardUtil.GetTeraShard((MoveType)res.TeraType) : item.ItemID;
+
                 if (itemlist.ContainsKey(itemId))
-                {
                     itemlist[itemId] += item.Amount;
-                }
                 else
-                {
                     itemlist[itemId] = item.Amount;
-                }
             }
 
             var match = 0;
-            foreach (var filter in FilterRewards!)
-            {
+            foreach (var filter in FilterRewards)
                 if (itemlist.TryGetValue(filter.ItemID, out var amount) && amount >= filter.Amount)
-                {
                     match++;
-                }
-            }
 
-            return match >= FilterRewards!.Length;
+            return match >= FilterRewards.Length;
         }
 
         return true;
@@ -220,7 +207,7 @@ public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
     {
         if (EncounterFilter)
         {
-            if (Encounter!.Species > 0)
+            if (Encounter.Species > 0)
                 if (Encounter.Species != encounter.Species)
                     return false;
 
@@ -229,11 +216,11 @@ public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
                     return false;
         }
 
-        if (FilterRewards?.Length > 0)
+        if (FilterRewards.Length > 0)
         {
             var encRewards = encounter.FixedRewards.Concat(encounter.LotteryRewards);
             foreach (var reward in  FilterRewards)
-                if (!encRewards.Any(r => r.CompareEncounterItem(reward)))
+                if (!encRewards.Any(r => r.CompareEncounterItemID(reward)))
                     return false;
         }
 

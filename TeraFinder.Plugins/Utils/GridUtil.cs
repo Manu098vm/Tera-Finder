@@ -235,12 +235,12 @@ public static class GridUtil
 
                     var encounters = f.Editor.GetCurrentEncounters(content, map);
                     
-                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, 0, out _, out var lvl0);
+                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, 0, out var rng, out var lvl0);
                     EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, 1, out _, out var lvl1);
                     EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, 2, out _, out var lvl2);
                     EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, 3, out _, out var lvl3);
 
-                    new RewardListForm(f.Editor.Language, lvl0!.Value.Rewards, lvl1!.Value.Rewards, lvl2!.Value.Rewards, lvl3!.Value.Rewards).ShowDialog();
+                    new RewardListForm(f.Editor.Language, (MoveType)rng.Value.TeraType, lvl0.Value.Rewards, lvl1.Value.Rewards, lvl2.Value.Rewards, lvl3.Value.Rewards).ShowDialog();
                 }
                 catch (Exception ex)
                 {

@@ -591,7 +591,7 @@ public partial class EditorForm : Form
             var lvl2 = RewardUtil.GetCombinedRewardList(CurrTera.Value, CurrEncount.FixedRewards, CurrEncount.LotteryRewards, 2);
             var lvl3 = RewardUtil.GetCombinedRewardList(CurrTera.Value, CurrEncount.FixedRewards, CurrEncount.LotteryRewards, 3);
 
-            var form = new RewardListForm(Language, lvl0, lvl1, lvl2, lvl3);
+            var form = new RewardListForm(Language, (MoveType)CurrTera.Value.TeraType, lvl0, lvl1, lvl2, lvl3);
             form.ShowDialog();
         }
     }
