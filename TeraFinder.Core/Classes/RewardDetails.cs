@@ -79,6 +79,7 @@ public struct RewardDetails : IRaidDetails
 public struct RewardGridEntry
 {
     public string? Seed { get; private set; }
+    public string? Info { get; private set; }
     public string? Item1 { get; private set; }
     public string? Item2 { get; private set; }
     public string? Item3 { get; private set; }
@@ -104,7 +105,6 @@ public struct RewardGridEntry
     public string? Item23 { get; private set; }
     public string? Item24 { get; private set; }
     public string? Item25 { get; private set; }
-    public string? ExtraInfo { get; private set; }
     public string? EventIndex { get; private set; }
 
     public RewardGridEntry(RewardDetails res, string[] itemnames, string[]speciesnames, string[] shinynames, string language)
@@ -136,76 +136,8 @@ public struct RewardGridEntry
         Item23 = str[22];
         Item24 = str[23];
         Item25 = str[24];
-        ExtraInfo = $"{speciesnames[res.Species]} ({res.Stars}☆) {(res.Shiny > TeraShiny.No ? $"({shinynames[(int)res.Shiny]})" : "")}";
+        Info = $"{speciesnames[res.Species]} ({res.Stars}☆) {(res.Shiny > TeraShiny.No ? $"({shinynames[(int)res.Shiny]})" : "")}";
         EventIndex = $"{res.EventIndex}";
-    }
-
-    public RewardGridEntry(string[] str)
-    {
-        Seed = str[0];
-        Item1 = str[1];
-        Item2 = str[2];
-        Item3 = str[3];
-        Item4 = str[4];
-        Item5 = str[5];
-        Item6 = str[6];
-        Item7 = str[7];
-        Item8 = str[8];
-        Item9 = str[9];
-        Item10 = str[10];
-        Item11 = str[11];
-        Item12 = str[12];
-        Item13 = str[13];
-        Item14 = str[14];
-        Item15 = str[15];
-        Item16 = str[16];
-        Item17 = str[17];
-        Item18 = str[18];
-        Item19 = str[19];
-        Item20 = str[20];
-        Item21 = str[21];
-        Item22 = str[22];
-        Item23 = str[23];
-        Item24 = str[24];
-        Item25 = str[25];
-        ExtraInfo = str[22];
-        EventIndex = str[23];
-    }
-
-    public readonly string[] GetStrings()
-    {
-        var list = new List<string>
-        {
-            Seed,
-            Item1,
-            Item2,
-            Item3,
-            Item4,
-            Item5,
-            Item6,
-            Item7,
-            Item8,
-            Item9,
-            Item10,
-            Item11,
-            Item12,
-            Item13,
-            Item14,
-            Item15,
-            Item16,
-            Item17,
-            Item18,
-            Item19,
-            Item20,
-            Item21,
-            Item22,
-            Item23,
-            Item24,
-            Item25,
-            ExtraInfo,
-            EventIndex,
-        };
-        return [.. list];
     }
 }
 
