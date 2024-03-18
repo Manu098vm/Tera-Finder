@@ -32,28 +32,6 @@ public sealed record EncounterEventTF9 : EncounterRaidTF9, IEventRaid9
 
     public override bool CanBeEncountered(uint seed) => (int)GetProgressMaximum(seed) != StageNone;
 
-    public static EncounterRaidTF9? GetEncounterFromSeed(uint seed, EncounterEventTF9[] encounters, GameVersion game, EventProgress progress, int groupid)
-    {
-        foreach (var enc in encounters)
-        {
-            if (enc.Index != groupid)
-                continue;
-
-            var max = game switch { GameVersion.VL => enc.GetRandRateTotalViolet(progress), _ => enc.GetRandRateTotalScarlet(progress) };
-            if (max > 0)
-            {
-                var xoro = new Xoroshiro128Plus(seed);
-                xoro.NextInt(100);
-                var rateRand = xoro.NextInt(max);
-                var min = game switch { GameVersion.VL => enc.GetRandRateMinViolet(progress), _ => enc.GetRandRateMinScarlet(progress) };
-                if ((uint)(rateRand - min) < enc.RandRate)
-                    return enc;
-            }
-        }
-
-        return null;
-    }
-
     public static EncounterEventTF9[] GetArray(ReadOnlySpan<byte> data, Dictionary<ulong, List<Reward>> fixedRewards, Dictionary<ulong, List<Reward>> lotteryRewards)
     {
         var count = data.Length / SerializedSize;
@@ -170,6 +148,28 @@ public sealed record EncounterEventTF9 : EncounterRaidTF9, IEventRaid9
         4 => AbilityPermission.OnlyHidden,
         _ => throw new ArgumentOutOfRangeException(nameof(b), b, null),
     };
+
+    public static EncounterRaidTF9? GetEncounterFromSeed(uint seed, EncounterEventTF9[] encounters, GameVersion game, EventProgress progress, int groupid)
+    {
+        foreach (var enc in encounters)
+        {
+            if (enc.Index != groupid)
+                continue;
+
+            var max = game switch { GameVersion.VL => enc.GetRandRateTotalViolet(progress), _ => enc.GetRandRateTotalScarlet(progress) };
+            if (max > 0)
+            {
+                var xoro = new Xoroshiro128Plus(seed);
+                xoro.NextInt(100);
+                var rateRand = xoro.NextInt(max);
+                var min = game switch { GameVersion.VL => enc.GetRandRateMinViolet(progress), _ => enc.GetRandRateMinScarlet(progress) };
+                if ((uint)(rateRand - min) < enc.RandRate)
+                    return enc;
+            }
+        }
+
+        return null;
+    }
 
     public bool CanBeEncountered(GameVersion version)
     {
