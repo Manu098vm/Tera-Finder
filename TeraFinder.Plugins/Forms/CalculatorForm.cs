@@ -678,23 +678,26 @@ public partial class CalculatorForm : Form
                 var romMaxRate = sav.Version is GameVersion.VL ? EncounterTera9.GetRateTotalVL(Filter.Stars, map) : EncounterTera9.GetRateTotalSL(Filter.Stars, map);
                 var eventProgress = EventUtil.GetEventStageFromProgress(progress);
 
-                var initialValue = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
-                var maxValue = (long)initialValue + (uint)numFrames.Value;
-
-                Parallel.For(initialValue, maxValue, (seed, iterator) =>
+                if (effective_encounters.Length > 0)
                 {
-                    if (token.IsCancellationRequested)
-                        iterator.Break();
+                    var initialValue = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
+                    var maxValue = (long)initialValue + (uint)numFrames.Value;
 
-                    if (EncounterRaidTF9.TryGenerateTeraDetails((uint)seed, effective_encounters, Filter, romMaxRate, sav.Version, progress, eventProgress, content, sav.ID32, group, out _, out var result))
+                    Parallel.For(initialValue, maxValue, (seed, iterator) =>
                     {
-                        CalculatedList.Add(result.Value);
-                        GridEntries.Add(new GridEntry(result.Value, NameList, AbilityList, NatureList, MoveList, TypeList, FormList, GenderListAscii, GenderListUnicode, ShinyList));
-                        
-                        if (!showresults.Checked)
-                            token.Cancel();
-                    }
-                });
+                        if (token.IsCancellationRequested)
+                            iterator.Break();
+
+                        if (EncounterRaidTF9.TryGenerateTeraDetails((uint)seed, effective_encounters, Filter, romMaxRate, sav.Version, progress, eventProgress, content, sav.ID32, group, out _, out var result))
+                        {
+                            CalculatedList.Add(result.Value);
+                            GridEntries.Add(new GridEntry(result.Value, NameList, AbilityList, NatureList, MoveList, TypeList, FormList, GenderListAscii, GenderListUnicode, ShinyList));
+
+                            if (!showresults.Checked)
+                                token.Cancel();
+                        }
+                    });
+                }
             }
             GridEntries.FinalizeElements();
         });

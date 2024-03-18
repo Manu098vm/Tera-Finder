@@ -640,23 +640,26 @@ public partial class RewardCalcForm : Form
                 var romMaxRate = sav.Version is GameVersion.VL ? EncounterTera9.GetRateTotalVL(Filter.Encounter.Stars, map) : EncounterTera9.GetRateTotalSL(Filter.Encounter.Stars, map);
                 var eventProgress = EventUtil.GetEventStageFromProgress(progress);
 
-                var initialValue = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
-                var maxValue = (long)initialValue + (uint)numMaxCalc.Value;
-
-                Parallel.For(initialValue, maxValue, (seed, iterator) =>
+                if (effective_encounters.Length > 0)
                 {
-                    if (token.IsCancellationRequested)
-                        iterator.Break();
+                    var initialValue = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
+                    var maxValue = (long)initialValue + (uint)numMaxCalc.Value;
 
-                    if (EncounterRaidTF9.TryGenerateRewardDetails((uint)seed, effective_encounters, Filter, romMaxRate, sav.Version, progress, eventProgress, content, sav.ID32, group, boost, out _, out var result))
+                    Parallel.For(initialValue, maxValue, (seed, iterator) =>
                     {
-                        CalculatedList.Add(result.Value);
-                        GridEntries.Add(new RewardGridEntry(result.Value, Items, SpeciesNames, ShinyNames, Editor.Language));
+                        if (token.IsCancellationRequested)
+                            iterator.Break();
 
-                        if (!chkAllResults.Checked)
-                            token.Cancel();
-                    }
-                });
+                        if (EncounterRaidTF9.TryGenerateRewardDetails((uint)seed, effective_encounters, Filter, romMaxRate, sav.Version, progress, eventProgress, content, sav.ID32, group, boost, out _, out var result))
+                        {
+                            CalculatedList.Add(result.Value);
+                            GridEntries.Add(new RewardGridEntry(result.Value, Items, SpeciesNames, ShinyNames, Editor.Language));
+
+                            if (!chkAllResults.Checked)
+                                token.Cancel();
+                        }
+                    });
+                }
             }
             GridEntries.FinalizeElements();
         });
