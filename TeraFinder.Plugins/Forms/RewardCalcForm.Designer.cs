@@ -347,7 +347,7 @@ partial class RewardCalcForm
         // 
         cmbStars.FormattingEnabled = true;
         cmbStars.Items.AddRange(new object[] { "Any", "1☆", "2☆", "3☆", "4☆", "5☆", "6☆", "7☆" });
-        cmbStars.Location = new Point(111, 95);
+        cmbStars.Location = new Point(111, 59);
         cmbStars.Margin = new Padding(3, 4, 3, 4);
         cmbStars.Name = "cmbStars";
         cmbStars.Size = new Size(187, 28);
@@ -358,7 +358,7 @@ partial class RewardCalcForm
         // 
         lblStars.AutoSize = true;
         lblStars.Font = new Font("Segoe UI", 9F);
-        lblStars.Location = new Point(26, 98);
+        lblStars.Location = new Point(26, 62);
         lblStars.Name = "lblStars";
         lblStars.Size = new Size(44, 20);
         lblStars.TabIndex = 2;
@@ -368,7 +368,7 @@ partial class RewardCalcForm
         // 
         cmbSpecies.FormattingEnabled = true;
         cmbSpecies.Items.AddRange(new object[] { "Any" });
-        cmbSpecies.Location = new Point(111, 59);
+        cmbSpecies.Location = new Point(111, 95);
         cmbSpecies.Margin = new Padding(3, 4, 3, 4);
         cmbSpecies.Name = "cmbSpecies";
         cmbSpecies.Size = new Size(187, 28);
@@ -377,7 +377,7 @@ partial class RewardCalcForm
         // lblSpecies
         // 
         lblSpecies.AutoSize = true;
-        lblSpecies.Location = new Point(26, 62);
+        lblSpecies.Location = new Point(26, 98);
         lblSpecies.Name = "lblSpecies";
         lblSpecies.Size = new Size(62, 20);
         lblSpecies.TabIndex = 0;
