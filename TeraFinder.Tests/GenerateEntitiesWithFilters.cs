@@ -4,7 +4,6 @@ using TeraFinder.Core;
 
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 #pragma warning disable CS8629 // Nullable value type may be null.
-
 namespace TeraFinder.Tests
 {
     public class GenerateEntitiesWithFilters

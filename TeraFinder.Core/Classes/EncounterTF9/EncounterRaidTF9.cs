@@ -198,11 +198,10 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
             if (!legality.Valid)
             {
                 var la_ec = legality.Results.Where(l => l.Identifier is CheckIdentifier.EC).FirstOrDefault();
-                if (la_ec.Judgement is Severity.Invalid && rngResult.Seed == 0xC4C200B6)
+                if (la_ec.Judgement is Severity.Invalid && rngResult.EC == rngResult.PID)
                     return true;
             }
         }
-
         return legality.Valid;
     }
 
