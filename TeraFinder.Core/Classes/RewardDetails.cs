@@ -51,16 +51,6 @@ public record Reward
         return item.ItemID == ItemID;
     }
 
-    public bool NeedAccurate()
-    {
-        return ItemID switch
-        {
-            >= 1862 and <= 1879 => true,
-            >= 1956 and <= 2159 => true,
-            _ => false,
-        };
-    }
-
     public bool IsHerba() => ItemID >= 1904 && ItemID <= 1908;
 }
 
@@ -292,20 +282,6 @@ public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
             return false;
 
         return true;
-    }
-
-    public bool NeedAccurate()
-    {
-        if (!IsFilterNull())
-        {
-            if (Shiny > TeraShiny.No)
-                return true;
-
-            foreach (var f in FilterRewards!)
-                if (f.NeedAccurate())
-                    return true;
-        }
-        return false;
     }
 }
 
