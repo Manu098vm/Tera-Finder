@@ -136,6 +136,7 @@ public partial class RewardCalcForm : Form
             { "Plugin.MapPaldea", "Paldea" },
             { "Plugin.MapKitakami", "Kitakami" },
             { "Plugin.MapBlueberry", "Blueberry" },
+            { "CalculatorForm.lblTime", "T:" },
         };
     }
 
@@ -377,6 +378,7 @@ public partial class RewardCalcForm : Form
         txtSeed.Enabled = false;
         numMaxCalc.Enabled = false;
         cmbMap.Enabled = false;
+        SetTimeText(false);
     }
 
     private void EnableControls(bool enableProfile = false)
@@ -410,6 +412,12 @@ public partial class RewardCalcForm : Form
         }
         else
             lblFound.Visible = false;
+    }
+
+    private void SetTimeText(bool visible, string time = "")
+    {
+        lblTime.Text = $"{Strings["CalculatorForm.lblTime"]} {time}";
+        lblTime.Visible = visible;
     }
 
     private async void btnSearch_Click(object sender, EventArgs e)
@@ -486,7 +494,7 @@ public partial class RewardCalcForm : Form
                 }
 
                 stopwatch.Stop();
-                MessageBox.Show($"{stopwatch.Elapsed}");
+                SetTimeText(true, $"{stopwatch.Elapsed}");
 
                 btnSearch.Text = Strings["ActionSearch"];
                 EnableControls(IsBlankSAV());

@@ -105,6 +105,7 @@ CalculatorForm.btnSendToEditor=将所选结果发送到Raid编辑器
 CalculatorForm.lblEventct=活动索引:
 CalculatorForm.lblMap=地图:
 CalculatorForm.btnCopySeed=复制Seed
+CalculatorForm.lblTime=T:
 
 RewardCalcForm=奖励计算器
 RewardCalcForm.grpFilters=筛选器
@@ -136,6 +137,7 @@ RewardCalcForm.btnSendSelectedRaid=将所选结果发送到Raid编辑器
 RewardCalcForm.lblEventCt=活动索引:
 RewardCalcForm.lblMap=地图:
 RewardCalcForm.btnCopySeed=复制Seed
+RewardCalcForm.lblTime=T:
 
 CheckerForm=Seed检索器
 CheckerForm.lblTID=表ID:

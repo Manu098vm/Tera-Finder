@@ -105,6 +105,7 @@ CalculatorForm.btnSendToEditor=Send Selected Result to Raid Editor
 CalculatorForm.lblEventct=Event Index:
 CalculatorForm.lblMap=Location:
 CalculatorForm.btnCopySeed=Copy Seed
+CalculatorForm.lblTime=T:
 
 RewardCalcForm=Reward Calculator
 RewardCalcForm.grpFilters=Filters
@@ -136,6 +137,7 @@ RewardCalcForm.btnSendSelectedRaid=Send Selected Result to Raid Editor
 RewardCalcForm.lblEventCt=Event Index:
 RewardCalcForm.lblMap=Location:
 RewardCalcForm.btnCopySeed=Copy Seed
+RewardCalcForm.lblTime=T:
 
 CheckerForm=Seed Checker
 CheckerForm.lblTID=TID:

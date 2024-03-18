@@ -105,6 +105,7 @@ CalculatorForm.btnSendToEditor=레이드 편집기로 선택한 결과 보내기
 CalculatorForm.lblEventct=이벤트 값:
 CalculatorForm.lblMap=Location:
 CalculatorForm.btnCopySeed=Copy Seed
+CalculatorForm.lblTime=T:
 
 RewardCalcForm=보상 계산기
 RewardCalcForm.grpFilters=필터
@@ -136,6 +137,7 @@ RewardCalcForm.btnSendSelectedRaid=레이드 편집기로 선택한 결과 보�
 RewardCalcForm.lblEventCt=이벤트 값:
 RewardCalcForm.lblMap=Location:
 RewardCalcForm.btnCopySeed=Copy Seed
+RewardCalcForm.lblTime=T:
 
 CheckerForm=시드체크
 CheckerForm.lblTID=TID:

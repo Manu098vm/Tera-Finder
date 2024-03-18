@@ -110,6 +110,7 @@ partial class RewardCalcForm
         lblCalcs = new Label();
         txtSeed = new TextBox();
         grpSearch = new GroupBox();
+        lblTime = new Label();
         lblFound = new Label();
         chkAllResults = new CheckBox();
         btnSearch = new Button();
@@ -961,6 +962,7 @@ partial class RewardCalcForm
         // 
         // grpSearch
         // 
+        grpSearch.Controls.Add(lblTime);
         grpSearch.Controls.Add(lblFound);
         grpSearch.Controls.Add(chkAllResults);
         grpSearch.Controls.Add(btnSearch);
@@ -972,6 +974,16 @@ partial class RewardCalcForm
         grpSearch.TabIndex = 24;
         grpSearch.TabStop = false;
         grpSearch.Text = "Search";
+        // 
+        // lblTime
+        // 
+        lblTime.AutoSize = true;
+        lblTime.Location = new Point(1001, 35);
+        lblTime.Name = "lblTime";
+        lblTime.Size = new Size(20, 20);
+        lblTime.TabIndex = 25;
+        lblTime.Text = "T:";
+        lblTime.Visible = false;
         // 
         // lblFound
         // 
@@ -1205,4 +1217,5 @@ partial class RewardCalcForm
     private Label lblMap;
     private ComboBox cmbMap;
     private ToolStripMenuItem btnCopySeed;
+    private Label lblTime;
 }
