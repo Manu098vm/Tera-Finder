@@ -150,7 +150,7 @@ public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
     {
         if (EncounterFilter)
         {
-            if (Encounter!.Species > 0)
+            if (Encounter.Species > 0)
                 if (Encounter.Species != res.Species)
                     return false;
 
