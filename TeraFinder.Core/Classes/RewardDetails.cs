@@ -176,7 +176,6 @@ public struct RewardGridEntry
     {
         var list = new List<string>
         {
-#pragma warning disable CS8604
             Seed,
             Item1,
             Item2,
@@ -205,7 +204,6 @@ public struct RewardGridEntry
             Item25,
             ExtraInfo,
             EventIndex,
-#pragma warning restore CS8604
         };
         return [.. list];
     }
@@ -238,9 +236,24 @@ public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
                     return false;
         }
 
-        if (Shiny > TeraShiny.No)
-            if (res.Shiny < TeraShiny.Yes)
-                return false;
+        if (Shiny > TeraShiny.Any)
+        {
+            if (Shiny is TeraShiny.Yes)
+            {
+                if (res.Shiny < TeraShiny.Yes)
+                    return false;
+            }
+            else if (Shiny > TeraShiny.Yes)
+            {
+                if (Shiny != res.Shiny)
+                    return false;
+            }
+            else if (Shiny is TeraShiny.No)
+            {
+                if (res.Shiny >= TeraShiny.Yes)
+                    return false;
+            }
+        }
 
         if (FilterRewards is not null && FilterRewards.Length > 0)
         {

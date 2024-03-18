@@ -14,8 +14,10 @@ public partial class RewardCalcForm : Form
     public string[] TypeNames = null!;
     public string[] ShinyNames = null!;
     public string[] Items = null!;
-    private CancellationTokenSource Token = new();
+    public string[] GenderListAscii = null!;
+    public string[] GenderListUnicode = null!;
 
+    private CancellationTokenSource Token = new();
     private readonly ConcurrentBag<RewardDetails> CalculatedList = [];
     private readonly ConcurrentList<RewardGridEntry> GridEntries = [];
 
@@ -37,6 +39,9 @@ public partial class RewardCalcForm : Form
         SpeciesNames = GameInfo.GetStrings(editor.Language).specieslist;
         FormNames = GameInfo.GetStrings(Editor.Language).forms;
         TypeNames = GameInfo.GetStrings(Editor.Language).types;
+        GenderListAscii = [.. GameInfo.GenderSymbolASCII];
+        GenderListUnicode = [.. GameInfo.GenderSymbolUnicode];
+
         cmbSpecies.Items[0] = Strings["Any"];
         cmbSpecies.Items.AddRange(SpeciesNames[1..]);
         cmbSpecies.SelectedIndex = 0;
@@ -51,10 +56,9 @@ public partial class RewardCalcForm : Form
         };
         cbitems.AddRange(Items[1..]);
 
-        var items = cbitems.ToArray();
         foreach (var cb in grpItems.Controls.OfType<ComboBox>())
         {
-            cb.Items.AddRange(items);
+            cb.Items.AddRange(cbitems.ToArray());
             cb.SelectedIndex = 0;
         }
 
@@ -70,6 +74,7 @@ public partial class RewardCalcForm : Form
         txtTID.Text = $"{Editor.SAV.TrainerTID7}";
         txtSID.Text = $"{Editor.SAV.TrainerSID7}";
         if (!IsBlankSAV()) grpProfile.Enabled = false;
+
         txtSeed.Text = Editor.txtSeed.Text;
         cmbContent.SelectedIndex = Editor.cmbContent.SelectedIndex;
         cmbBoost.SelectedIndex = 0;
@@ -78,11 +83,23 @@ public partial class RewardCalcForm : Form
         cmbMap.Items.Add(Strings["Plugin.MapPaldea"]);
         cmbMap.Items.Add(Strings["Plugin.MapKitakami"]);
         cmbMap.Items.Add(Strings["Plugin.MapBlueberry"]);
+
         cmbMap.SelectedIndex = (int)Editor.CurrMap;
+        cmbSpecies.SelectedIndex = 0;
+        cmbShiny.SelectedIndex = 0;
+
+        if (Editor.CurrEncount is { Stars: > 0 })
+        {
+            var index = cmbStars.Items.Cast<string>().ToList().FindIndex(stars => byte.TryParse($"{stars[0]}", out var res) && res == Editor.CurrEncount.Stars);
+            if (index != -1)
+                cmbStars.SelectedIndex = index;
+        }
+
 
         toolTip1.SetToolTip(chkAllResults, Strings["ToolTipAllResults"]);
 
         TranslateCmbProgress();
+        TranslateCmbShiny();
         TranslateCmbGame();
         TranslateCmbContent();
         TranslateCmbBoost();
@@ -96,6 +113,7 @@ public partial class RewardCalcForm : Form
         Strings = new Dictionary<string, string>
         {
             { "Any", "Any" },
+            { "StarsAbbreviation", "S" },
             { "AnyHerba", "Any Herba Mystica" },
             { "Found", "Found" },
             { "True", "True" },
@@ -141,6 +159,15 @@ public partial class RewardCalcForm : Form
     }
 
     private void TranslateDictionary(string language) => Strings = Strings.TranslateInnerStrings(language);
+
+    private void TranslateCmbShiny()
+    {
+        cmbShiny.Items[0] = Strings["TeraShiny.Any"];
+        cmbShiny.Items[1] = Strings["TeraShiny.No"];
+        cmbShiny.Items[2] = Strings["TeraShiny.Yes"];
+        cmbShiny.Items[3] = Strings["TeraShiny.Star"];
+        cmbShiny.Items[4] = Strings["TeraShiny.Square"];
+    }
 
     private void TranslateCmbProgress()
     {
@@ -203,15 +230,77 @@ public partial class RewardCalcForm : Form
         return false;
     }
 
-    private void cmbStars_IndexChanged(object sender, EventArgs e)
+    private void cmbMap_IndexChanged(object sender, EventArgs e)
     {
         EncounterRaidTF9[] encs = GetCurrentEncounters();
         var species = EncounterRaidTF9.GetAvailableSpecies(encs, GetStars(), SpeciesNames, FormNames, TypeNames, Strings);
-
         cmbSpecies.Items.Clear();
         cmbSpecies.Items.Add(Strings["Any"]);
         cmbSpecies.Items.AddRange([.. species]);
         cmbSpecies.SelectedIndex = 0;
+    }
+
+    private void cmbContent_IndexChanged(object sender, EventArgs e) => UpdateCmbStars(sender, e);
+    private void cmbProgress_IndexChanged(object sender, EventArgs e) => UpdateCmbStars(sender, e);
+
+    private void UpdateCmbStars(object sender, EventArgs e)
+    {
+        if (cmbContent.SelectedIndex == -1 || cmbProgress.SelectedIndex == -1 || cmbGame.SelectedIndex == -1)
+            return;
+
+        var stars = TranslatedStars();
+        if (cmbContent.SelectedIndex == 0 && cmbProgress.SelectedIndex == 1)
+            stars = [stars[1], stars[2]];
+        else if (cmbContent.SelectedIndex == 0 && cmbProgress.SelectedIndex == 2)
+            stars = [stars[1], stars[2], stars[3]];
+        else if (cmbContent.SelectedIndex == 0 && cmbProgress.SelectedIndex == 3)
+            stars = [stars[1], stars[2], stars[3], stars[4]];
+        else if (cmbContent.SelectedIndex == 0 && cmbProgress.SelectedIndex is 4 or 5)
+            stars = [stars[3], stars[4], stars[5]];
+
+        else if (cmbContent.SelectedIndex == 1)
+            stars = [stars[6]];
+
+        else if (cmbContent.SelectedIndex == 2)
+        {
+            var encounters = (EncounterEventTF9[])GetCurrentEncounters();
+            var eventProgress = EventUtil.GetEventStageFromProgress((GameProgress)cmbProgress.SelectedIndex);
+            var version = cmbGame.SelectedIndex == 1 ? GameVersion.SL : GameVersion.VL;
+
+            var possibleStars = EncounterEventTF9.GetPossibleEventStars(encounters, eventProgress, version);
+            var starsList = new List<string>();
+
+            foreach (var s in possibleStars.OrderBy(star => star))
+                starsList.Add(stars[s]);
+
+            if (starsList.Count > 0)
+                stars = [.. starsList];
+            else
+                stars = [stars[1], stars[2], stars[3], stars[4], stars[5]];
+        }
+
+        else if (cmbContent.SelectedIndex == 3)
+            stars = [stars[7]];
+
+        cmbStars.Items.Clear();
+        cmbStars.Items.AddRange(stars);
+        if (cmbStars.SelectedIndex == 0)
+            cmbStars_IndexChanged(sender, e);
+        cmbStars.SelectedIndex = 0;
+    }
+
+    private void cmbStars_IndexChanged(object sender, EventArgs e)
+    {
+        if (cmbContent.SelectedIndex != -1 && cmbMap.SelectedIndex != -1)
+        {
+            EncounterRaidTF9[] encs = GetCurrentEncounters();
+            var species = EncounterRaidTF9.GetAvailableSpecies(encs, GetStars(), SpeciesNames, FormNames, TypeNames, Strings);
+
+            cmbSpecies.Items.Clear();
+            cmbSpecies.Items.Add(Strings["Any"]);
+            cmbSpecies.Items.AddRange([.. species]);
+            cmbSpecies.SelectedIndex = 0;
+        }
     }
 
     private byte GetStars()
@@ -304,7 +393,7 @@ public partial class RewardCalcForm : Form
 
     private void btnReset_Click(object sender, EventArgs e)
     {
-        chkShiny.Checked = false;
+        cmbShiny.SelectedIndex = 0;
         cmbSpecies.SelectedIndex = 0;
         //cmbStars.SelectedIndex = 0;
         foreach (var cb in grpItems.Controls.OfType<ComboBox>())
@@ -316,10 +405,13 @@ public partial class RewardCalcForm : Form
     private void CreateFilter()
     {
         var items = new List<Reward>();
-        items.Clear();
 
+        var stars = GetStars();
+        var entity = GetSpeciesFormIndex();
+        var encounterFilter = entity.species > 0 || stars > 0;
         var anyherba = false;
         var nums = grpItems.Controls.OfType<NumericUpDown>();
+
         foreach (var cb in grpItems.Controls.OfType<ComboBox>())
         {
             if (cb.SelectedIndex > 0)
@@ -332,8 +424,6 @@ public partial class RewardCalcForm : Form
             }
         }
 
-        var encounterFilter = cmbSpecies.SelectedIndex > 0 || cmbStars.SelectedIndex > 0;
-
         var itemlist = new List<Reward>();
         foreach (var item in items)
         {
@@ -345,8 +435,8 @@ public partial class RewardCalcForm : Form
         var filter = new RewardFilter(encounterFilter, anyherba)
         {
             FilterRewards = [.. itemlist],
-            Shiny = chkShiny.Checked ? TeraShiny.Yes : TeraShiny.Any,
-            Encounter = new EncounterFilter((ushort)cmbSpecies.SelectedIndex, (byte)cmbStars.SelectedIndex),
+            Shiny = (TeraShiny)cmbShiny.SelectedIndex,
+            Encounter = new EncounterFilter(entity.species, stars),
         };
 
         if (Filter is null && filter.IsFilterNull())
@@ -576,6 +666,26 @@ public partial class RewardCalcForm : Form
             }
         }
     }
+
+    private string[] TranslatedStars()
+    {
+        var res = TeraStars;
+        res[0] = Strings["Any"];
+        for (var i = 0; i < res.Length; i++)
+            res[i] = res[i].Replace("S", Strings["StarsAbbreviation"]);
+        return res;
+    }
+
+    private readonly static string[] TeraStars = [
+        "Any",
+        "1S ☆",
+        "2S ☆☆",
+        "3S ☆☆☆",
+        "4S ☆☆☆☆",
+        "5S ☆☆☆☆☆",
+        "6S ☆☆☆☆☆☆",
+        "7S ☆☆☆☆☆☆☆",
+    ];
 
     private void btnSaveAllTxt_Click(object sender, EventArgs e) => dataGrid.SaveAllTxt(Editor.Language);
 

@@ -138,6 +138,7 @@ RewardCalcForm.lblEventCt=이벤트 값:
 RewardCalcForm.lblMap=Location:
 RewardCalcForm.btnCopySeed=Copy Seed
 RewardCalcForm.lblTime=T:
+RewardCalcForm.lblShiny=이로치:
 
 CheckerForm=시드체크
 CheckerForm.lblTID=TID:

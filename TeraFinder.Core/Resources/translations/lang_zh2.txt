@@ -138,6 +138,7 @@ RewardCalcForm.lblEventCt=活動索引:
 RewardCalcForm.lblMap=地图:
 RewardCalcForm.btnCopySeed=Copy Seed
 RewardCalcForm.lblTime=T:
+RewardCalcForm.lblShiny=閃光:
 
 CheckerForm=Seed檢索器
 CheckerForm.lblTID=表ID:

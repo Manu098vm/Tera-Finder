@@ -138,6 +138,7 @@ RewardCalcForm.lblEventCt=Indice Evento:
 RewardCalcForm.lblMap=Mappa:
 RewardCalcForm.btnCopySeed=Copia Seed
 RewardCalcForm.lblTime=T:
+RewardCalcForm.lblShiny=Shiny:
 
 CheckerForm=Controllo Seed
 CheckerForm.lblTID=TID:
