@@ -43,6 +43,14 @@ public record Reward
         return true;
     }
 
+    public bool CompareEncounterItem(Reward item)
+    {
+        if (item.ItemID == ushort.MaxValue - 2 && ItemID >= 1904 && ItemID <= 1908)
+            return true;
+
+        return item.ItemID == ItemID;
+    }
+
     public bool NeedAccurate()
     {
         return ItemID switch
@@ -235,7 +243,7 @@ public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
         {
             var encRewards = encounter.FixedRewards.Concat(encounter.LotteryRewards);
             foreach (var reward in  FilterRewards)
-                if (!encRewards.Any(r => r.CompareItem(reward, true)))
+                if (!encRewards.Any(r => r.CompareEncounterItem(reward)))
                     return false;
         }
 
