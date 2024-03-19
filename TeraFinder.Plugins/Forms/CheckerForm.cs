@@ -131,7 +131,7 @@ public partial class CheckerForm : Form
             IV_SPA = spa,
             IV_SPD = spd,
             IV_SPE = spe,
-            Nature = nature,
+            Nature = (Nature)nature,
             TeraTypeOriginal = (MoveType)tera,
             HeightScalar = height,
             WeightScalar = weight,
@@ -240,7 +240,7 @@ public partial class CheckerForm : Form
             return false;
         if (pkm.IV_SPE != rng.SPE)
             return false;
-        if (pkm.Nature != rng.Nature)
+        if ((int)pkm.Nature != rng.Nature)
             return false;
         if ((sbyte)pkm.TeraTypeOriginal != rng.TeraType)
             return false;
