@@ -37,6 +37,8 @@ public class TeraPlugin : IPlugin
     private readonly ToolStripMenuItem Plugin = new("Tera Finder Plugins");
     private readonly ToolStripMenuItem Connect = new("Connect to Remote Device");
     private readonly ToolStripMenuItem Editor = new("Tera Raid Viewer/Editor");
+    private readonly ToolStripMenuItem RaidCalculator = new("Raid Calculator");
+    private readonly ToolStripMenuItem RewardCalculator = new("Reward Calculator");
     private readonly ToolStripMenuItem Finder = new("Tera Raid Seed Checker");
     private readonly ToolStripMenuItem Flags = new("Edit Game Flags");
     private readonly ToolStripMenuItem Outbreaks = new("Mass Outbreak Viewer/Editor");
@@ -181,6 +183,8 @@ public class TeraPlugin : IPlugin
     {
         Plugin.DropDownItems.Add(Connect);
         Plugin.DropDownItems.Add(Editor);
+        Plugin.DropDownItems.Add(RaidCalculator);
+        Plugin.DropDownItems.Add(RewardCalculator);
         Plugin.DropDownItems.Add(Outbreaks);
         Plugin.DropDownItems.Add(Finder);
         Plugin.DropDownItems.Add(Flags);
@@ -190,6 +194,8 @@ public class TeraPlugin : IPlugin
         Plugin.DropDownItems.Add(Events);
         Connect.Click += (s, e) => LaunchConnector();
         Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Paldea, PaldeaBlack, Kitakami, KitakamiBlack, Blueberry, BlueberryBlack, Dist, Mighty, Connection).Show();
+        RaidCalculator.Click += (s, e) => LaunchCalculator(true);
+        RewardCalculator.Click += (s, e) => LaunchRewardCalculator(true);
         ImportNews.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, language: Language, plugin: true);
         NullRaid.Click += (s, e) => LaunchRaidNullImporter();
         NullOutbreak.Click += (s, e) => LaunchOutbreakNullImporter();
@@ -230,11 +236,15 @@ public class TeraPlugin : IPlugin
             { "Plugin.ImportNews", "Import from files..." },
             { "Plugin.OutbreakNull", "Import Empty (Null) Outbreak Event" },
             { "Plugin.RaidNull", "Import Empty (Null) Raid Event" },
+            { "Plugin.RaidCalculator", "Raid Calculator" },
+            { "Plugin.RewardCalculator", "Reward Calculator" },
         }.TranslateInnerStrings(Language);
 
         Plugin.Text = dic["Plugin.TeraFinderPlugin"];
         Connect.Text = dic["Plugin.ConnectRemote"];
         Editor.Text = dic["Plugin.TeraViewer"];
+        RaidCalculator.Text = dic["Plugin.RaidCalculator"];
+        RewardCalculator.Text = dic["Plugin.RewardCalculator"];
         Finder.Text = dic["Plugin.SeedChecker"];
         Flags.Text = dic["Plugin.FlagEditor"];
         Events.Text = dic["Plugin.NewsImporter"];
@@ -249,16 +259,22 @@ public class TeraPlugin : IPlugin
         new EditorForm(SAV, PKMEditor, Language, Paldea, PaldeaBlack, Kitakami, KitakamiBlack, Blueberry, BlueberryBlack, Dist, Mighty, Connection).ShowDialog();
     }
 
-    public void LaunchCalculator()
+    public void LaunchCalculator(bool plugin = false)
     {
         var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, PaldeaBlack, Kitakami, KitakamiBlack, Blueberry, BlueberryBlack, Dist, Mighty, Connection);
-        new CalculatorForm(editor).ShowDialog();
+        if (plugin)
+            new CalculatorForm(editor).Show();
+        else
+            new CalculatorForm(editor).ShowDialog();
     }
 
-    public void LaunchRewardCalculator()
+    public void LaunchRewardCalculator(bool plugin = false)
     {
         var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, PaldeaBlack, Kitakami, KitakamiBlack, Blueberry, BlueberryBlack, Dist, Mighty, Connection);
-        new RewardCalcForm(editor).ShowDialog();
+        if (plugin)
+            new RewardCalcForm(editor).Show();
+        else
+            new RewardCalcForm(editor).ShowDialog();
     }
 
     public void LaunchImporter()
