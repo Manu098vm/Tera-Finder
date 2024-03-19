@@ -28,11 +28,11 @@ public class TeraPlugin : IPlugin
     public EncounterTeraTF9[]? KitakamiBlack = null;
     public EncounterTeraTF9[]? Blueberry = null;
     public EncounterTeraTF9[]? BlueberryBlack = null;
-
     public EncounterEventTF9[]? Dist = null;
     public EncounterEventTF9[]? Mighty = null;
-    public EncounterEventTF9[]? AllDist = null;
-    public EncounterEventTF9[]? AllMighty = null;
+
+    public Dictionary<uint, HashSet<EncounterEventTF9>>? AllDist = null;
+    public Dictionary<uint, HashSet<EncounterEventTF9>>? AllMighty = null;
 
     private readonly ToolStripMenuItem Plugin = new("Tera Finder Plugins");
     private readonly ToolStripMenuItem Connect = new("Connect to Remote Device");
@@ -78,7 +78,11 @@ public class TeraPlugin : IPlugin
             (Blueberry, BlueberryBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Blueberry);
 
         if (AllDist is null || AllMighty is null)
-            (AllDist, AllMighty) = ResourcesUtil.GetAllEventEncounters();
+        {
+            var (dist, mighty) = ResourcesUtil.GetAllEventEncounters();
+            AllDist = SeedCheckerUtil.GroupEventEncounters(dist);
+            AllMighty = SeedCheckerUtil.GroupEventEncounters(mighty);
+        }
 
         var menuVSD = (ContextMenuStrip)((dynamic)SaveFileEditor).menu.mnuVSD;            
         menuVSD.Opening += (s, e) => {
@@ -217,7 +221,11 @@ public class TeraPlugin : IPlugin
             (Blueberry, BlueberryBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Blueberry);
 
         if (AllDist is null || AllMighty is null)
-            (AllDist, AllMighty) = ResourcesUtil.GetAllEventEncounters();
+        {
+            var (dist, mighty) = ResourcesUtil.GetAllEventEncounters();
+            AllDist = SeedCheckerUtil.GroupEventEncounters(dist);
+            AllMighty = SeedCheckerUtil.GroupEventEncounters(mighty);
+        }
 
         new CheckerForm(PKMEditor!.PreparePKM(), Language, Paldea, PaldeaBlack, Kitakami, KitakamiBlack, Blueberry, BlueberryBlack, AllDist, AllMighty).ShowDialog();
     }
@@ -312,7 +320,11 @@ public class TeraPlugin : IPlugin
             (Blueberry, BlueberryBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Blueberry);
 
         if (AllDist is null || AllMighty is null)
-            (AllDist, AllMighty) = ResourcesUtil.GetAllEventEncounters();
+        {
+            var (dist, mighty) = ResourcesUtil.GetAllEventEncounters();
+            AllDist = SeedCheckerUtil.GroupEventEncounters(dist);
+            AllMighty = SeedCheckerUtil.GroupEventEncounters(mighty);
+        }
 
         new CheckerForm(new PK9 { TrainerTID7 = SAV.TrainerTID7, TrainerSID7 = SAV.TrainerSID7 }, 
             Language, Paldea, PaldeaBlack, Kitakami, KitakamiBlack, Blueberry, BlueberryBlack, AllDist, AllMighty).ShowDialog();

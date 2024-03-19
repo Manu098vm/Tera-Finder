@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System;
 using TeraFinder.Core;
 
 namespace TeraFinder.Plugins;
@@ -15,8 +16,8 @@ public partial class CheckerForm : Form
     private readonly EncounterTeraTF9[] Blueberry = null!;
     private readonly EncounterTeraTF9[] BlueberryBlack = null!;
 
-    private readonly EncounterEventTF9[] Dist = null!;
-    private readonly EncounterEventTF9[] Mighty = null!;
+    private readonly Dictionary<uint, HashSet<EncounterEventTF9>> Dist = null!;
+    private readonly Dictionary<uint, HashSet<EncounterEventTF9>> Mighty = null!;
 
     public CheckerForm(PKM pk, string language,
                        EncounterTeraTF9[] paldea,
@@ -25,8 +26,8 @@ public partial class CheckerForm : Form
                        EncounterTeraTF9[] kitakamiblack,
                        EncounterTeraTF9[] blueberry,
                        EncounterTeraTF9[] blueberryblack,
-                       EncounterEventTF9[] dist,
-                       EncounterEventTF9[] mighty)
+                       Dictionary<uint, HashSet<EncounterEventTF9>> dist,
+                       Dictionary<uint, HashSet<EncounterEventTF9>> mighty)
     {
         InitializeComponent();
         GenerateDictionary();
@@ -190,48 +191,32 @@ public partial class CheckerForm : Form
         }
 
         //Events Raids Check
-        for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.Unlocked6Stars; progress++)
+        for (var content = RaidContent.Event; content <= RaidContent.Event_Mighty; content++)
         {
-            var eventProgress = EventUtil.GetEventStageFromProgress(progress);
-            for (var version = GameVersion.SL; version <= GameVersion.VL; version++)
+            foreach (var group in content is RaidContent.Event ? Dist : Mighty)
             {
-                for (byte groupid = 0; groupid < 10; groupid++) 
+                foreach (var index in new HashSet<byte>(group.Value.Select(enc => enc.Index)))
                 {
-                    var encounters = SeedCheckerUtil.FilterDistEncounters(seed, Dist, version, eventProgress, (ushort)Species.Gengar, groupid);
-                    if (encounters.Length > 0 && EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, eventProgress, RaidContent.Event, TeraRaidMapParent.Paldea, pk.ID32, groupid, out var encounter, out var result))
+                    for (var game = GameVersion.SL; game <= GameVersion.VL; ++game)
                     {
-                        if (CompareResult(pk, result!.Value))
+                        var possibleStages = new HashSet<EventProgress>(Enum.GetValues(typeof(EventProgress)).Cast<EventProgress>()
+                            .Where(progress => group.Value.Any(enc => enc.Index == index && enc.CanBeEncounteredFromStage(progress, game))));
+
+                        foreach (var stage in possibleStages)
                         {
-                            SetReultText(seed, encounter);
-                            return;
+                            if (EncounterRaidTF9.TryGenerateTeraDetails(seed, group.Value.ToArray(), game, GameProgress.UnlockedTeraRaids, stage, RaidContent.Event, TeraRaidMapParent.Paldea, pk.ID32, index, out var encounter, out var result))
+                            {
+                                if (CompareResult(pk, result!.Value))
+                                {
+                                    SetReultText(seed, encounter);
+                                    return;
+                                }
+                            }
                         }
                     }
-                }
+                } 
             }
         }
-
-        //Mighty Raids Check
-        for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.Unlocked6Stars; progress++)
-        {
-            var eventProgress = EventUtil.GetEventStageFromProgress(progress);
-            for (var version = GameVersion.SL; version <= GameVersion.VL; version++)
-            {
-                for (byte groupid = 0; groupid < 10; groupid++)
-                {
-                    var encounters = SeedCheckerUtil.FilterDistEncounters(seed, Mighty, version, eventProgress, species, groupid);
-                    if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, eventProgress, RaidContent.Event, TeraRaidMapParent.Paldea, pk.ID32, groupid, out var encounter, out var result))
-                    {
-                        if (CompareResult(pk, result!.Value))
-                        {
-                            SetReultText(seed, encounter);
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-
-        SetReultText(seed);
     }
 
     private static bool CompareResult (PK9 pkm, TeraDetails rng)
