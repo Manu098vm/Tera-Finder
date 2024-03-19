@@ -289,6 +289,7 @@
             MinimizeBox = false;
             Name = "TeraFinderForm";
             RightToLeft = RightToLeft.No;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Tera Finder ";
             EnabledChanged += FormEnabledChanged;
             DragDrop += FileDragDrop;
