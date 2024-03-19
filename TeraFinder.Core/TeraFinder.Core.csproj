@@ -25,6 +25,7 @@
 		<DebugType>embedded</DebugType>
 		<NoWarn>1701,1702,CA2211,CS8604,CS8629,CS8602</NoWarn>
 		<TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+		<DefineConstants>$(DefineConstants);USE_PKHEX_MASTER</DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>
