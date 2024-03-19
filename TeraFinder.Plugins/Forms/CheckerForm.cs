@@ -217,6 +217,8 @@ public partial class CheckerForm : Form
                 } 
             }
         }
+
+        SetReultText(seed);
     }
 
     private static bool CompareResult (PK9 pkm, TeraDetails rng)
