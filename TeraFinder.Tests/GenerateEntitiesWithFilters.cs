@@ -50,8 +50,8 @@ namespace TeraFinder.Tests
         public void TestEncounterEventTF9Filter()
         {
             var (eventsData, mightyData) = ResourcesUtil.GetAllEventEncounters();
-            var events = GroupEventEncounters(eventsData);
-            var mighty = GroupEventEncounters(mightyData);
+            var events = SeedCheckerUtil.GroupEventEncounters(eventsData);
+            var mighty = SeedCheckerUtil.GroupEventEncounters(mightyData);
 
             for (var content = RaidContent.Event; content <= RaidContent.Event_Mighty; content++)
                 foreach (var group in content is RaidContent.Event ? events : mighty)
@@ -74,17 +74,12 @@ namespace TeraFinder.Tests
                         }
         }
 
-        private static Dictionary<uint, HashSet<EncounterEventTF9>> GroupEventEncounters(EncounterEventTF9[] encounters) =>
-            encounters.GroupBy(e => Convert.ToUInt32($"{e.Identifier}"[..^2], 10)).ToDictionary(g => g.Key, g => new HashSet<EncounterEventTF9>(g));
-
-        private static void ParallelizeGeneration(EncounterRaidTF9[] encounters, TeraFilter filter, GameVersion version, RaidContent content, short rateTotal = 0, GameProgress progress = GameProgress.UnlockedTeraRaids, EventProgress eventProgress = EventProgress.Stage0, byte groupid = 0)
-        {
+        private static void ParallelizeGeneration(EncounterRaidTF9[] encounters, TeraFilter filter, GameVersion version, RaidContent content, short rateTotal = 0, GameProgress progress = GameProgress.UnlockedTeraRaids, EventProgress eventProgress = EventProgress.Stage0, byte groupid = 0) =>
             Parallel.For(0L, MaxTests, (seed, state) =>
             {
                 if (EncounterRaidTF9.TryGenerateTeraDetails((uint)seed, encounters, filter, rateTotal, version, progress, eventProgress, content, 0, groupid, out var encounter, out var result))
                     Assert.True(encounter.GeneratePK9(result.Value, 0, version, "test", 2, 0, out _, out _));
             });
-        }
     }
 }
 #pragma warning restore CS8629 // Nullable value type may be null.
