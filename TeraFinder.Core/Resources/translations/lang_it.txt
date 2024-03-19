@@ -8,6 +8,8 @@ Plugin.ImportNews=Importa da file...
 Plugin.OutbreakNull=Importa l'evento vuoto (Null) per le Comparse Massicce
 Plugin.RaidNull=Importa l'evento vuoto (Null) per i Raid
 Plugin.OutbreakViewer=Visualizza e Modifica Comparse Massicce
+Plugin.RaidCalculator=Calcolatore Raid
+Plugin.RewardCalculator=Calcolatore Ricompense
 Plugin.MapPaldea=Paldea
 Plugin.MapKitakami=Nordivia
 Plugin.MapBlueberry=Mirtillo
@@ -105,6 +107,7 @@ CalculatorForm.btnSendToEditor=Invia il risultato selezionato al Raid Editor
 CalculatorForm.lblEventct=Indice Evento:
 CalculatorForm.lblMap=Mappa:
 CalculatorForm.btnCopySeed=Copia Seed
+CalculatorForm.lblTime=T:
 
 RewardCalcForm=Calcolatore Ricompense
 RewardCalcForm.grpFilters=Filtri
@@ -136,6 +139,8 @@ RewardCalcForm.btnSendSelectedRaid=Invia il risultato selezionato al Raid Editor
 RewardCalcForm.lblEventCt=Indice Evento:
 RewardCalcForm.lblMap=Mappa:
 RewardCalcForm.btnCopySeed=Copia Seed
+RewardCalcForm.lblTime=T:
+RewardCalcForm.lblShiny=Shiny:
 
 CheckerForm=Controllo Seed
 CheckerForm.lblTID=TID:
@@ -252,6 +257,7 @@ ActionSearch=Cerca
 ActionStop=Stop
 ToolTipAccurate=Forza il calcolatore a determinare Tera Tipo e Shinyness, in modo da poter determinare accuratamente il tipo di Teralite e le Extra Info. Le ricerche saranno un po' più lente.
 ToolTipAllResults=Disabilitato - Ferma ogni thread al primo risultato trovato che corrisponda ai filtri.  Abilitato - Calcola tutti i possibili risultati fino a che non si raggiunge la quantità di Max Calc. Ignorato se nessun filtro è stato impostato.
+WarningNoEncounter=Nessun incontro disponibile per il Progresso e le Stelle selezionate.
 
 ActionConnect=Connetti
 ActionConnecting=Connessione...

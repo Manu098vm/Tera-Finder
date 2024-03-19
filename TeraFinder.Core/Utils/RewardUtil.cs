@@ -5,26 +5,28 @@ namespace TeraFinder.Core;
 
 public static class RewardUtil
 {
-    public static readonly string[] TeraShard = ["テラピ", "Tera Shard", "Téra-Éclat", "Teralite", "Tera-Stück", "Teralito", "테라피스", "晶碎块", "晶碎塊"];
-    public static readonly string[] Material = ["おとしもの", "Material", "Échantillons", "Materiali", "Materialentasche", "Materiales", "掉落物", "掉落物", "掉落物"];
-
-    public static Dictionary<ulong, List<Reward>>[] GetTeraRewardsTables()
+    public static List<Reward> GetCombinedRewardList(TeraDetails rng, List<Reward> fixedRewards, List<Reward> lotteryRewards, int boost = 0)
     {
-        var drops = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidFixedRewardItemArray>(Properties.Resources.raid_fixed_reward_item_array)!;
-        var lottery = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidLotteryRewardItemArray>(Properties.Resources.raid_lottery_reward_item_array)!;
-        var fixedTable = GetFixedTable(drops.Table);
-        var lotteryTable = GetLotteryTable(lottery.Table);
-        return [fixedTable, lotteryTable];
+        var lotteryrng = CalculateLotteryRNG(rng, lotteryRewards, boost);
+        var list = new List<Reward>();
+        list.AddRange(fixedRewards);
+        list.AddRange(lotteryrng);
+        return list;
     }
 
-    public static Dictionary<ulong, List<Reward>>[] GetDistRewardsTables(SAV9SV sav)
+    public static (Dictionary<ulong, List<Reward>> fixedRewardTable, Dictionary<ulong, List<Reward>> lotteryRewardTable) GetTeraRewardsTables()
     {
-        var rewards = EventUtil.GetEventItemDataFromSAV(sav);
-        var drops = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidFixedRewardItemArray>(rewards[0])!;
-        var lottery = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidLotteryRewardItemArray>(rewards[1])!;
-        var fixedTable = GetFixedTable(drops.Table);
-        var lotteryTable = GetLotteryTable(lottery.Table);
-        return [fixedTable, lotteryTable];
+        var drops = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidFixedRewardItemArray>(ResourcesUtil.GetFixedRewardsData())!;
+        var lottery = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidLotteryRewardItemArray>(ResourcesUtil.GetLotteryRewardsData())!;
+        return (GetFixedTable(drops.Table), GetLotteryTable(lottery.Table));
+    }
+
+    public static (Dictionary<ulong, List<Reward>> fixedDistRewardTable, Dictionary<ulong, List<Reward>> lotteryDistRewardTable) GetDistRewardsTables(SAV9SV sav)
+    {
+        var (distRewards, mightyRewards) = EventUtil.GetCurrentEventRewards(sav);
+        var drops = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidFixedRewardItemArray>(distRewards)!;
+        var lottery = JsonSerializer.Deserialize<pkNX.Structures.FlatBuffers.SV.DeliveryRaidLotteryRewardItemArray>(mightyRewards)!;
+        return (GetFixedTable(drops.Table), GetLotteryTable(lottery.Table));
     }
 
     public static bool IsTM(int item) => item switch
@@ -48,7 +50,36 @@ public static class RewardUtil
         };
     }
 
-    private static int GetTeraShard(MoveType type)
+    public static void ReplaceMaterialReward(this List<Reward> rewards, Species species)
+    {
+        for (var i = 0; i < rewards.Count; i++)
+        {
+            switch (rewards[i].ItemID)
+            {
+                case ushort.MaxValue:
+                    rewards[i].ItemID = GetMaterial(species);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public static bool IsHerbaMystica(int item) => item switch
+    {
+        ushort.MaxValue - 2 => true,
+        >= 1904 and <= 1908 => true,
+        _ => false,
+    };
+
+    public static bool IsTeraShard(int item) => item switch
+    {
+        ushort.MaxValue - 1 => true,
+        >= 1862 and <= 1879 => true,
+        _ => false,
+    };
+
+    public static int GetTeraShard(MoveType type)
     {
         return type switch
         {
@@ -70,7 +101,7 @@ public static class RewardUtil
             MoveType.Dragon => 1876,
             MoveType.Dark => 1877,
             MoveType.Fairy => 1879,
-            _ => ushort.MaxValue - 1,
+            _ => throw new NotImplementedException(nameof(type)),
         };
     }
 
@@ -352,82 +383,29 @@ public static class RewardUtil
             Species.IronTreads or Species.IronBundle or Species.IronHands or Species.IronJugulis or Species.IronMoth 
             or Species.IronThorns or Species.IronValiant or Species.IronLeaves or Species.IronBoulder or Species.IronCrown => 0,
 
-            _ => ushort.MaxValue,
+            _ => 0,
         };
     }
-
 
     //Slightly modified from https://github.com/LegoFigure11/RaidCrawler/blob/06a7f4c17fca74297d6199f37a171f2b480d40f0/Structures/RaidRewards.cs#L10
     //GPL v3 License
     //Thanks LegoFigure11 & Architdate!
-    public static List<Reward> GetRewardList(TeraDetails pkm, ulong fixedhash, ulong lotteryhash, Dictionary<ulong, List<Reward>>? fixedic = null, Dictionary<ulong, List<Reward>>? lotterydic = null, int boost = 0)
+    private static List<Reward> CalculateLotteryRNG(TeraDetails rng, List<Reward> lotterylist, int boost = 0)
     {
         var rewardlist = new List<Reward>();
-        var fixedlist = new List<Reward>();
-        var lotterylist = new List<Reward>();
-
-        var fixedexists = fixedic is not null && fixedic.TryGetValue(fixedhash, out fixedlist);
-        var lotteryexists = lotterydic is not null && lotterydic.TryGetValue(lotteryhash, out lotterylist);
-
-        if (fixedexists)
+        var xoro = new Xoroshiro128Plus(rng.Seed);
+        var amount = GetRewardCount(xoro.NextInt(100), rng.Stars) + boost;
+        for (var i = 0; i < amount; i++)
         {
-            foreach (var reward in fixedlist!)
+            var treshold = (int)xoro.NextInt((ulong)lotterylist[0].Aux);
+            foreach (var reward in lotterylist)
             {
-                rewardlist.Add(reward.ItemID == ushort.MaxValue ? new Reward { ItemID = GetMaterial((Species)pkm.Species), Amount = reward.Amount, Aux = reward.Aux } :
-                    reward.ItemID == ushort.MaxValue - 1 ? new Reward { ItemID = GetTeraShard((MoveType)pkm.TeraType), Amount = reward.Amount, Aux = reward.Aux } : reward);
-            }
-        }
-        if (lotteryexists)
-        {
-            var xoro = new Xoroshiro128Plus(pkm.Seed);
-            var amount = GetRewardCount(xoro.NextInt(100), pkm.Stars) + boost;
-            for (var i = 0; i < amount; i++)
-            {
-                var treshold = (int)xoro.NextInt((ulong)lotterylist!.ElementAt(0).Aux);
-                foreach (var reward in lotterylist!)
+                if (reward.Probability > treshold)
                 {
-                    if (reward.Probability > treshold)
-                    {
-                        rewardlist.Add(reward.ItemID == ushort.MaxValue ? new Reward { ItemID = GetMaterial((Species)pkm.Species), Amount = reward.Amount } :
-                            reward.ItemID == ushort.MaxValue - 1 ? new Reward { ItemID = GetTeraShard((MoveType)pkm.TeraType), Amount = reward.Amount } : reward);
-                        break;
-                    }
-                    treshold -= reward.Probability;
+                    rewardlist.Add(reward);
+                    break;
                 }
-            }
-        }
-        return rewardlist;
-    }
-
-    public static List<Reward> GetRewardList(uint seed, ushort species, int stars, ulong fixedhash, ulong lotteryhash, Dictionary<ulong, List<Reward>>? fixedic = null, Dictionary<ulong, List<Reward>>? lotterydic = null, int boost = 0)
-    {
-        var rewardlist = new List<Reward>();
-        var fixedlist = new List<Reward>();
-        var lotterylist = new List<Reward>();
-
-        var fixedexists = fixedic is not null && fixedic.TryGetValue(fixedhash, out fixedlist);
-        var lotteryexists = lotterydic is not null && lotterydic.TryGetValue(lotteryhash, out lotterylist);
-
-        if (fixedexists)
-            foreach (var reward in fixedlist!)
-                rewardlist.Add(reward.ItemID == ushort.MaxValue ? new Reward { ItemID = GetMaterial((Species)species), Amount = reward.Amount, Aux = reward.Aux } : reward);
-
-        if (lotteryexists)
-        {
-            var xoro = new Xoroshiro128Plus(seed);
-            var amount = GetRewardCount(xoro.NextInt(100), stars) + boost;
-            for (var i = 0; i < amount; i++)
-            {
-                var tres = (int)xoro.NextInt((ulong)lotterylist!.ElementAt(0).Aux);
-                foreach (var reward in lotterylist!)
-                {
-                    if (reward.Probability > tres)
-                    {
-                        rewardlist.Add(reward.ItemID == ushort.MaxValue ? new Reward { ItemID = GetMaterial((Species)species), Amount = reward.Amount } : reward);
-                        break;
-                    }
-                    tres -= reward.Probability;
-                }
+                treshold -= reward.Probability;
             }
         }
         return rewardlist;

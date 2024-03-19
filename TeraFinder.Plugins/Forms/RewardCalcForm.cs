@@ -1,4 +1,5 @@
 ﻿using PKHeX.Core;
+using System.Collections.Concurrent;
 using TeraFinder.Core;
 
 namespace TeraFinder.Plugins;
@@ -6,17 +7,20 @@ namespace TeraFinder.Plugins;
 public partial class RewardCalcForm : Form
 {
     public EditorForm Editor = null!;
-    private readonly List<RewardDetails> CalculatedList = [];
     private RewardFilter? Filter = null;
     public string[] SpeciesNames = null!;
+    public string[] FormNames = null!;
+    public string[] TypeNames = null!;
     public string[] ShinyNames = null!;
     public string[] Items = null!;
+    public string[] GenderListAscii = null!;
+    public string[] GenderListUnicode = null!;
+
     private CancellationTokenSource Token = new();
+    private readonly ConcurrentBag<RewardDetails> CalculatedList = [];
+    private readonly ConcurrentList<RewardGridEntry> GridEntries = [];
 
     private Dictionary<string, string> Strings = null!;
-
-    public int CurrentViewedIndex = 0;
-    public bool NotLinkedSearch = true;
 
     public RewardCalcForm(EditorForm editor)
     {
@@ -32,6 +36,11 @@ public partial class RewardCalcForm : Form
 
         ShinyNames = [Strings["TeraShiny.Any"], Strings["TeraShiny.No"], Strings["TeraShiny.Yes"], Strings["TeraShiny.Star"], Strings["TeraShiny.Square"]];
         SpeciesNames = GameInfo.GetStrings(editor.Language).specieslist;
+        FormNames = GameInfo.GetStrings(Editor.Language).forms;
+        TypeNames = GameInfo.GetStrings(Editor.Language).types;
+        GenderListAscii = [.. GameInfo.GenderSymbolASCII];
+        GenderListUnicode = [.. GameInfo.GenderSymbolUnicode];
+
         cmbSpecies.Items[0] = Strings["Any"];
         cmbSpecies.Items.AddRange(SpeciesNames[1..]);
         cmbSpecies.SelectedIndex = 0;
@@ -46,10 +55,9 @@ public partial class RewardCalcForm : Form
         };
         cbitems.AddRange(Items[1..]);
 
-        var items = cbitems.ToArray();
         foreach (var cb in grpItems.Controls.OfType<ComboBox>())
         {
-            cb.Items.AddRange(items);
+            cb.Items.AddRange(cbitems.ToArray());
             cb.SelectedIndex = 0;
         }
 
@@ -59,12 +67,13 @@ public partial class RewardCalcForm : Form
             num.Minimum = 1;
         }
 
-        var progress = (int)(Editor.Progress == GameProgress.None ? 0 : Editor.Progress);
+        var progress = (int)editor.Progress;
         cmbProgress.SelectedIndex = progress;
         cmbGame.SelectedIndex = Editor.SAV.Version == GameVersion.VL ? 1 : 0;
         txtTID.Text = $"{Editor.SAV.TrainerTID7}";
         txtSID.Text = $"{Editor.SAV.TrainerSID7}";
         if (!IsBlankSAV()) grpProfile.Enabled = false;
+
         txtSeed.Text = Editor.txtSeed.Text;
         cmbContent.SelectedIndex = Editor.cmbContent.SelectedIndex;
         cmbBoost.SelectedIndex = 0;
@@ -73,12 +82,23 @@ public partial class RewardCalcForm : Form
         cmbMap.Items.Add(Strings["Plugin.MapPaldea"]);
         cmbMap.Items.Add(Strings["Plugin.MapKitakami"]);
         cmbMap.Items.Add(Strings["Plugin.MapBlueberry"]);
-        cmbMap.SelectedIndex = (int)Editor.CurrMap;
 
-        toolTip.SetToolTip(chkAccurateSearch, Strings["ToolTipAccurate"]);
+        cmbMap.SelectedIndex = (int)Editor.CurrMap;
+        cmbSpecies.SelectedIndex = 0;
+        cmbShiny.SelectedIndex = 0;
+
+        if (Editor.CurrEncount is { Stars: > 0 })
+        {
+            var index = cmbStars.Items.Cast<string>().ToList().FindIndex(stars => byte.TryParse($"{stars[0]}", out var res) && res == Editor.CurrEncount.Stars);
+            if (index != -1)
+                cmbStars.SelectedIndex = index;
+        }
+
+
         toolTip1.SetToolTip(chkAllResults, Strings["ToolTipAllResults"]);
 
         TranslateCmbProgress();
+        TranslateCmbShiny();
         TranslateCmbGame();
         TranslateCmbContent();
         TranslateCmbBoost();
@@ -92,6 +112,7 @@ public partial class RewardCalcForm : Form
         Strings = new Dictionary<string, string>
         {
             { "Any", "Any" },
+            { "StarsAbbreviation", "S" },
             { "AnyHerba", "Any Herba Mystica" },
             { "Found", "Found" },
             { "True", "True" },
@@ -132,10 +153,21 @@ public partial class RewardCalcForm : Form
             { "Plugin.MapPaldea", "Paldea" },
             { "Plugin.MapKitakami", "Kitakami" },
             { "Plugin.MapBlueberry", "Blueberry" },
+            { "CalculatorForm.lblTime", "T:" },
+            { "WarningNoEncounter", "" },
         };
     }
 
     private void TranslateDictionary(string language) => Strings = Strings.TranslateInnerStrings(language);
+
+    private void TranslateCmbShiny()
+    {
+        cmbShiny.Items[0] = Strings["TeraShiny.Any"];
+        cmbShiny.Items[1] = Strings["TeraShiny.No"];
+        cmbShiny.Items[2] = Strings["TeraShiny.Yes"];
+        cmbShiny.Items[3] = Strings["TeraShiny.Star"];
+        cmbShiny.Items[4] = Strings["TeraShiny.Square"];
+    }
 
     private void TranslateCmbProgress()
     {
@@ -193,37 +225,177 @@ public partial class RewardCalcForm : Form
 
     private bool IsBlankSAV()
     {
-        if (Editor.Progress is GameProgress.Beginning or GameProgress.None)
+        if (Editor.Progress is GameProgress.Beginning)
             return true;
         return false;
     }
 
-    private void btnApply_Click(object sender, EventArgs e)
+    private void cmbMap_IndexChanged(object sender, EventArgs e)
+    {
+        EncounterRaidTF9[] encs = GetCurrentEncounters();
+        var species = EncounterRaidTF9.GetAvailableSpecies(encs, GetStars(), SpeciesNames, FormNames, TypeNames, Strings);
+        cmbSpecies.Items.Clear();
+        cmbSpecies.Items.Add(Strings["Any"]);
+        cmbSpecies.Items.AddRange([.. species]);
+        cmbSpecies.SelectedIndex = 0;
+    }
+
+    private void cmbContent_IndexChanged(object sender, EventArgs e) => UpdateCmbStars(sender, e);
+    private void cmbProgress_IndexChanged(object sender, EventArgs e) => UpdateCmbStars(sender, e);
+
+    private void UpdateCmbStars(object sender, EventArgs e)
+    {
+        if (cmbContent.SelectedIndex == -1 || cmbProgress.SelectedIndex == -1 || cmbGame.SelectedIndex == -1)
+            return;
+
+        var stars = TranslatedStars();
+        if (cmbContent.SelectedIndex == 0 && cmbProgress.SelectedIndex == 1)
+            stars = [stars[1], stars[2]];
+        else if (cmbContent.SelectedIndex == 0 && cmbProgress.SelectedIndex == 2)
+            stars = [stars[1], stars[2], stars[3]];
+        else if (cmbContent.SelectedIndex == 0 && cmbProgress.SelectedIndex == 3)
+            stars = [stars[1], stars[2], stars[3], stars[4]];
+        else if (cmbContent.SelectedIndex == 0 && cmbProgress.SelectedIndex is 4 or 5)
+            stars = [stars[3], stars[4], stars[5]];
+
+        else if (cmbContent.SelectedIndex == 1)
+            stars = [stars[6]];
+
+        else if (cmbContent.SelectedIndex == 2)
+        {
+            var encounters = (EncounterEventTF9[])GetCurrentEncounters();
+            var eventProgress = EventUtil.GetEventStageFromProgress((GameProgress)cmbProgress.SelectedIndex);
+            var version = cmbGame.SelectedIndex == 1 ? GameVersion.SL : GameVersion.VL;
+
+            var possibleStars = EncounterEventTF9.GetPossibleEventStars(encounters, eventProgress, version);
+            var starsList = new List<string>();
+
+            foreach (var s in possibleStars.OrderBy(star => star))
+                starsList.Add(stars[s]);
+
+            if (starsList.Count > 0)
+                stars = [.. starsList];
+            else
+                stars = [stars[0]];
+        }
+
+        else if (cmbContent.SelectedIndex == 3)
+            stars = [stars[7]];
+
+        cmbStars.Items.Clear();
+        cmbStars.Items.AddRange(stars);
+        if (cmbStars.SelectedIndex == 0)
+            cmbStars_IndexChanged(sender, e);
+        cmbStars.SelectedIndex = 0;
+    }
+
+    private void cmbStars_IndexChanged(object sender, EventArgs e)
+    {
+        if (cmbContent.SelectedIndex != -1 && cmbMap.SelectedIndex != -1)
+        {
+            EncounterRaidTF9[] encs = GetCurrentEncounters();
+            var species = EncounterRaidTF9.GetAvailableSpecies(encs, GetStars(), SpeciesNames, FormNames, TypeNames, Strings);
+
+            cmbSpecies.Items.Clear();
+            cmbSpecies.Items.Add(Strings["Any"]);
+            cmbSpecies.Items.AddRange([.. species]);
+            cmbSpecies.SelectedIndex = 0;
+        }
+    }
+
+    private byte GetStars()
+    {
+        if (cmbStars.Text.Equals(Strings["Any"]))
+            return 0;
+        else
+            return (byte)char.GetNumericValue(cmbStars.Text[0]);
+    }
+
+    private (ushort species, byte form, byte index) GetSpeciesFormIndex() => GetSpeciesFormIndex(cmbSpecies.Text);
+
+    private (ushort species, byte form, byte index) GetSpeciesFormIndex(string str)
+    {
+        (ushort species, byte form, byte index) result = (0, 0, 0);
+        str = str.Replace($" ({Strings["GameVersionSL"]})", string.Empty).Replace($" ({Strings["GameVersionVL"]})", string.Empty);
+        if (!str.Equals(Strings["Any"]))
+        {
+            var formLocation = str.IndexOf('-');
+            var isForm = Array.IndexOf(SpeciesNames, str) == -1 && formLocation > 0;
+
+            if (byte.TryParse(str[^2].ToString(), out var index) && str[^1] == ')')
+            {
+                result.index = index;
+                str = str[..^4];
+            }
+            if (!isForm)
+            {
+                var species = Editor.Language.ToLower().Equals("en") ? str :
+                    GameInfo.GetStrings("en").specieslist[Array.IndexOf(SpeciesNames, str)];
+                result.species = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty).Replace("-", string.Empty));
+            }
+            else
+            {
+                var species = Editor.Language.ToLower().Equals("en") ? str[..formLocation] :
+                    GameInfo.GetStrings("en").specieslist[Array.IndexOf(SpeciesNames, str[..formLocation])];
+                result.species = (ushort)Enum.Parse(typeof(Species), species.Replace(" ", string.Empty).Replace("-", string.Empty));
+                result.form = ShowdownParsing.GetFormFromString(str.AsSpan()[(formLocation + 1)..], GameInfo.GetStrings(Editor.Language), result.species, EntityContext.Gen9);
+            }
+        }
+        return result;
+    }
+
+    private EncounterRaidTF9[] GetCurrentEncounters() => (RaidContent)cmbContent.SelectedIndex switch
+    {
+        RaidContent.Standard => (TeraRaidMapParent)cmbMap.SelectedIndex switch
+        {
+            TeraRaidMapParent.Paldea => Editor.Paldea,
+            TeraRaidMapParent.Kitakami => Editor.Kitakami,
+            TeraRaidMapParent.Blueberry => Editor.Blueberry,
+            _ => throw new NotImplementedException(nameof(cmbMap.SelectedIndex)),
+        },
+        RaidContent.Black => (TeraRaidMapParent)cmbMap.SelectedIndex switch
+        {
+            TeraRaidMapParent.Paldea => Editor.PaldeaBlack,
+            TeraRaidMapParent.Kitakami => Editor.KitakamiBlack,
+            TeraRaidMapParent.Blueberry => Editor.BlueberryBlack,
+            _ => throw new NotImplementedException(nameof(cmbMap.SelectedIndex)),
+        },
+        RaidContent.Event => Editor.Dist,
+        RaidContent.Event_Mighty => Editor.Mighty,
+        _ => throw new NotImplementedException(nameof(cmbContent.SelectedIndex)),
+    };
+
+    private async void btnApply_Click(object sender, EventArgs e)
     {
         lblFound.Visible = false;
         CreateFilter();
-        if (Filter is not null && Filter.NeedAccurate())
-            chkAccurateSearch.Checked = true;
-        if (dataGrid.Rows.Count > 0)
+        if (!CalculatedList.IsEmpty)
         {
-            DialogResult d = MessageBox.Show(Strings["FiltersPopup"], Strings["FiltersApply"], MessageBoxButtons.YesNo);
-            if (d == DialogResult.Yes)
+            DialogResult dialogue = MessageBox.Show(Strings["FiltersPopup"], Strings["FiltersApply"], MessageBoxButtons.YesNo);
+            if (dialogue is DialogResult.Yes)
             {
-                var list = new List<RewardGridEntry>();
-                foreach (var c in CalculatedList)
-                    if (Filter is null || Filter.IsFilterMatch(c))
-                        list.Add(new RewardGridEntry(c, Items, SpeciesNames, ShinyNames, Editor.Language));
-                dataGrid.DataSource = list;
+                dataGrid.DataSource = null;
+                GridEntries.Clear();
+                await Task.Run(() =>
+                {
+                    Parallel.ForEach(CalculatedList, el =>
+                    {
+                        if (Filter is null || Filter.IsFilterMatch(el))
+                            GridEntries.Add(new RewardGridEntry(el, Items, SpeciesNames, ShinyNames, TypeNames, Editor.Language));
+                    });
+                });
+                GridEntries.FinalizeElements();
+                dataGrid.DataSource = GridEntries;
             }
         }
+        UpdateFoundLabel();
     }
 
     private void btnReset_Click(object sender, EventArgs e)
     {
-        chkAccurateSearch.Checked = false;
-        chkShiny.Checked = false;
+        cmbShiny.SelectedIndex = 0;
         cmbSpecies.SelectedIndex = 0;
-        cmbStars.SelectedIndex = 0;
+        //cmbStars.SelectedIndex = 0;
         foreach (var cb in grpItems.Controls.OfType<ComboBox>())
             cb.SelectedIndex = 0;
         foreach (var num in grpItems.Controls.OfType<NumericUpDown>())
@@ -233,10 +405,13 @@ public partial class RewardCalcForm : Form
     private void CreateFilter()
     {
         var items = new List<Reward>();
-        items.Clear();
 
+        var stars = GetStars();
+        var entity = GetSpeciesFormIndex();
+        var encounterFilter = entity.species > 0 || stars > 0;
         var anyherba = false;
         var nums = grpItems.Controls.OfType<NumericUpDown>();
+
         foreach (var cb in grpItems.Controls.OfType<ComboBox>())
         {
             if (cb.SelectedIndex > 0)
@@ -249,8 +424,6 @@ public partial class RewardCalcForm : Form
             }
         }
 
-        var encounterFilter = cmbSpecies.SelectedIndex > 0 || cmbStars.SelectedIndex > 0;
-
         var itemlist = new List<Reward>();
         foreach (var item in items)
         {
@@ -262,9 +435,8 @@ public partial class RewardCalcForm : Form
         var filter = new RewardFilter(encounterFilter, anyherba)
         {
             FilterRewards = [.. itemlist],
-            Species = (ushort)cmbSpecies.SelectedIndex,
-            Stars = cmbStars.SelectedIndex,
-            Shiny = chkShiny.Checked ? TeraShiny.Yes : TeraShiny.Any,
+            Shiny = (TeraShiny)cmbShiny.SelectedIndex,
+            Encounter = new EncounterFilter(entity.species, stars),
         };
 
         if (Filter is null && filter.IsFilterNull())
@@ -296,6 +468,7 @@ public partial class RewardCalcForm : Form
         txtSeed.Enabled = false;
         numMaxCalc.Enabled = false;
         cmbMap.Enabled = false;
+        SetTimeText(false);
     }
 
     private void EnableControls(bool enableProfile = false)
@@ -310,34 +483,41 @@ public partial class RewardCalcForm : Form
         cmbMap.Enabled = true;
     }
 
-    private void UpdateLabel()
+    private void UpdateFoundLabel()
     {
         if (Filter is not null && !Filter.IsFilterNull())
         {
             if (chkAllResults.Checked)
                 try
                 {
-                    lblFound.Text = $"{Strings["Found"]}: {CalculatedList.Count}";
+                    lblFound.Text = $"{Strings["Found"]}: {GridEntries.Count}";
                 }
                 catch (Exception)
                 {
-                    lblFound.Text = $"{Strings["Found"]}: {CalculatedList.Count}";
+                    lblFound.Text = $"{Strings["Found"]}: {GridEntries.LongCount()}";
                 }
             else
-                lblFound.Text = $"{Strings["Found"]} : {(CalculatedList.Count > 0 ? Strings["True"] : Strings["False"])}";
+                lblFound.Text = $"{Strings["Found"]}: {(!GridEntries.IsEmpty ? Strings["True"] : Strings["False"])}";
             lblFound.Visible = true;
         }
         else
             lblFound.Visible = false;
     }
 
+    private void SetTimeText(bool visible, string time = "")
+    {
+        lblTime.Text = $"{Strings["CalculatorForm.lblTime"]} {time}";
+        lblTime.Visible = visible;
+    }
+
     private async void btnSearch_Click(object sender, EventArgs e)
     {
-        var species = (ushort)cmbSpecies.SelectedIndex;
+        (ushort species, byte form, byte index) entity;
+
         if (btnSearch.Text.Equals(Strings["ActionSearch"]))
         {
             Token = new();
-            if (cmbProgress.SelectedIndex is (int)GameProgress.Beginning or (int)GameProgress.None)
+            if (cmbProgress.SelectedIndex is (int)GameProgress.Beginning)
             {
                 cmbProgress.Focus();
                 return;
@@ -352,54 +532,75 @@ public partial class RewardCalcForm : Form
                 txtSID.Focus();
                 return;
             }
-
-            if (CalculatedList.Count > 0)
+            if ((cmbSpecies.Text.Contains(Strings["GameVersionSL"]) && cmbGame.SelectedIndex == 1) ||
+                (cmbSpecies.Text.Contains(Strings["GameVersionVL"]) && cmbGame.SelectedIndex == 0))
             {
+                cmbSpecies.Focus();
+                return;
+            }
+            try
+            {
+                entity = GetSpeciesFormIndex();
+            }
+            catch (Exception)
+            {
+                cmbSpecies.Focus();
+                return;
+            }
+
+            CreateFilter();
+            if (Filter is null || Filter.Encounter is null || !Filter.EncounterFilter || Filter.Encounter.Stars == 0)
+            {
+                MessageBox.Show(Strings["WarningNoEncounter"]);
+                cmbStars.Focus();
+                return;
+            }
+
+            if (!CalculatedList.IsEmpty)
+            {
+                dataGrid.DataSource = null;
                 CalculatedList.Clear();
-                dataGrid.DataSource = new List<RewardGridEntry>();
+                GridEntries.Clear();
             }
             btnSearch.Text = Strings["ActionStop"];
             DisableControls();
-            ActiveForm!.Update();
-
-            CreateFilter();
-            if (Filter is not null && Filter.NeedAccurate())
-                chkAccurateSearch.Checked = true;            
+            //ActiveForm.Update();
 
             var sav = (SAV9SV)Editor.SAV.Clone();
             sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
             sav.TrainerSID7 = Convert.ToUInt32(txtSID.Text, 10);
-            sav.Version = (GameVersion)(cmbGame.SelectedIndex == 0 ? (int)GameVersion.SL : (int)GameVersion.SV);
-            var progress = (RaidContent)cmbContent.SelectedIndex is RaidContent.Black ? GameProgress.None : (GameProgress)cmbProgress.SelectedIndex;
+            sav.Version = cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.SV;
+            var progress = (GameProgress)cmbProgress.SelectedIndex;
             var content = (RaidContent)cmbContent.SelectedIndex;
             var boost = cmbBoost.SelectedIndex;
 
-            var index = (byte)CurrentViewedIndex;
-            if (content >= RaidContent.Event && cmbSpecies.SelectedIndex != 0)
-            {
-                foreach (var enc in content is RaidContent.Event ? Editor.Dist! : Editor.Mighty!)
-                {
-                    if (enc.Species != species)
-                        continue;
-
-                    index = enc.Index;
-                    break;
-                }
-            }
-
             try
             {
-                var griddata = await StartSearch(sav, progress, content, boost, index, (TeraRaidMapParent)cmbMap.SelectedIndex, Token);
-                dataGrid.DataSource = griddata;
+                var stopwatch = new System.Diagnostics.Stopwatch();
+                stopwatch.Start();
+                await StartSearch(sav, progress, content, boost, entity.index, (TeraRaidMapParent)cmbMap.SelectedIndex, Token);
+#if DEBUG
+                if (!GridEntries.IsFinalized)
+                    MessageBox.Show("Something went wrong: Result list isn't finalized.");
+#endif
+                while (dataGrid.RowCount < GridEntries.Count)
+                {
+                    dataGrid.DataSource = null;
+                    dataGrid.DataSource = GridEntries;
+                }
+
+                stopwatch.Stop();
+                SetTimeText(true, $"{stopwatch.Elapsed}");
+
                 btnSearch.Text = Strings["ActionSearch"];
                 EnableControls(IsBlankSAV());
-                UpdateLabel();
+                UpdateFoundLabel();
             }
             catch (OperationCanceledException)
             {
                 btnSearch.Text = Strings["ActionSearch"];
                 EnableControls(IsBlankSAV());
-                UpdateLabel();
+                UpdateFoundLabel();
             }
         }
         else
@@ -407,137 +608,60 @@ public partial class RewardCalcForm : Form
             Token.Cancel();
             btnSearch.Text = Strings["ActionSearch"];
             EnableControls(IsBlankSAV());
-            UpdateLabel();
+            UpdateFoundLabel();
             return;
         }
     }
 
-    private async Task<List<RewardGridEntry>> StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, int boost, int index, TeraRaidMapParent map, CancellationTokenSource token)
+    private async Task StartSearch(SAV9SV sav, GameProgress progress, RaidContent content, int boost, byte index, TeraRaidMapParent map, CancellationTokenSource token)
     {
-        var gridList = new List<RewardGridEntry>();
-        var seed = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
         var lang = (LanguageID)Editor.SAV.Language;
+        var encounters = GetCurrentEncounters();
 
-        var indexSpecific = index != 0;
-        var eventSpecific = content is RaidContent.Event or RaidContent.Event_Mighty;
-
-        var possibleGroups = new HashSet<int>();
-        if (!indexSpecific && eventSpecific)
-            foreach (var enc in content is RaidContent.Event ? Editor.Dist! : Editor.Mighty!)
+        var possibleGroups = new HashSet<byte>();
+        if (index == 0 && content is RaidContent.Event or RaidContent.Event_Mighty)
+            foreach (var enc in encounters.Where(Filter.IsEncounterMatch))
                 possibleGroups.Add(enc.Index);
         else
             possibleGroups.Add(index);
 
-        foreach (var group in possibleGroups)
+        await Task.Run(() =>
         {
-            if (token.IsCancellationRequested)
-                break;
-
-            await Task.Run(async () =>
+            foreach (var group in possibleGroups)
             {
-                var nthreads = (uint)numMaxCalc.Value < 1000 ? 1 : Environment.ProcessorCount;
-                var gridresults = new List<RewardGridEntry>[nthreads];
-                var calcresults = new List<RewardDetails>[nthreads];
-                var resetEvent = new ManualResetEvent(false);
-                var toProcess = nthreads;
-                var maxcalcs = (uint)numMaxCalc.Value;
-                var calcsperthread = maxcalcs / (uint)nthreads;
-
-                for (uint j = 0; j < nthreads; j++)
+                EncounterRaidTF9[] effective_encounters = content switch
                 {
-                    var n = j;
-                    var tseed = seed;
+                    RaidContent.Standard or RaidContent.Black => ((EncounterTeraTF9[])encounters).Where(e => e.Index == group && Filter.IsEncounterMatch(e)).ToArray(),
+                    RaidContent.Event or RaidContent.Event_Mighty => ((EncounterEventTF9[])encounters).Where(e => e.Index == group && Filter.IsEncounterMatch(e)).ToArray(),
+                    _ => throw new NotImplementedException(nameof(content)),
+                };
 
-                    new Thread(delegate ()
+                var romMaxRate = sav.Version is GameVersion.VL ? EncounterTera9.GetRateTotalVL(Filter.Encounter.Stars, map) : EncounterTera9.GetRateTotalSL(Filter.Encounter.Stars, map);
+                var eventProgress = EventUtil.GetEventStageFromProgress(progress);
+
+                if (effective_encounters.Length > 0)
+                {
+                    var initialValue = txtSeed.Text.Equals("") ? 0 : Convert.ToUInt32(txtSeed.Text, 16);
+                    var maxValue = (long)initialValue + (uint)numMaxCalc.Value;
+
+                    Parallel.For(initialValue, maxValue, (seed, iterator) =>
                     {
-                        var tmpgridlist = new List<RewardGridEntry>();
-                        var tmpcalclist = new List<RewardDetails>();
+                        if (token.IsCancellationRequested)
+                            iterator.Break();
 
-                        var initialFrame = calcsperthread * n;
-                        var maxframe = n < nthreads - 1 ? calcsperthread * (n + 1) : maxcalcs;
-                        tseed += initialFrame;
-
-                        for (ulong i = initialFrame; i <= maxframe && !token.IsCancellationRequested; i++)
+                        if (EncounterRaidTF9.TryGenerateRewardDetails((uint)seed, effective_encounters, Filter, romMaxRate, sav.Version, progress, eventProgress, content, sav.ID32, group, boost, out _, out var result))
                         {
-                            var res = CalcResult(tseed, progress, sav, content, i, chkAccurateSearch.Checked, boost, group, map);
-                            if (Filter is not null && res is not null && Filter.IsFilterMatch(res))
-                            {
-                                tmpgridlist.Add(new RewardGridEntry(res, Items, SpeciesNames, ShinyNames, Editor.Language));
-                                tmpcalclist.Add(res);
-                                if (!chkAllResults.Checked)
-                                {
-                                    if (NotLinkedSearch || (!eventSpecific || (eventSpecific && indexSpecific)))
-                                    {
-                                        token.Cancel();
-                                        break;
-                                    }
-                                }
-                            }
-                            else if (Filter is null && res is not null)
-                            {
-                                tmpgridlist.Add(new RewardGridEntry(res, Items, SpeciesNames, ShinyNames, Editor.Language));
-                                tmpcalclist.Add(res);
-                            }
+                            CalculatedList.Add(result.Value);
+                            GridEntries.Add(new RewardGridEntry(result.Value, Items, SpeciesNames, ShinyNames, TypeNames, Editor.Language));
 
-                            if (token.IsCancellationRequested)
-                                break;
-
-                            tseed++;
+                            if (!chkAllResults.Checked)
+                                token.Cancel();
                         }
-
-                        gridresults[n] = tmpgridlist;
-                        calcresults[n] = tmpcalclist;
-
-                        if (Interlocked.Decrement(ref toProcess) == 0 || token.IsCancellationRequested)
-                            resetEvent.Set();
-                    }).Start();
+                    });
                 }
-
-                resetEvent.WaitOne();
-
-                await Task.Delay(0_300).ConfigureAwait(false);
-
-                for (var i = 0; i < nthreads; i++)
-                {
-                    if (gridresults[i] is not null && gridresults[i].Count > 0)
-                        gridList.AddRange(gridresults[i]);
-                    if (calcresults[i] is not null && calcresults[i].Count > 0)
-                        CalculatedList.AddRange(calcresults[i]);
-                }
-            }, token.Token);
-        }
-
-        return gridList;
-    }
-
-    private RewardDetails? CalcResult(ulong Seed, GameProgress progress, SAV9SV sav, RaidContent content, ulong calc, bool accuratesearch, int boost, int groupid, TeraRaidMapParent map)
-    {
-        var seed = (uint)(Seed & 0xFFFFFFFF);
-        var encounter = content is RaidContent.Standard or RaidContent.Black ? TeraUtil.GetTeraEncounter(seed, sav.Version,
-            TeraUtil.GetStars(seed, progress), map switch { TeraRaidMapParent.Paldea => Editor.Paldea!, TeraRaidMapParent.Kitakami => Editor.Kitakami!, _ => Editor.Blueberry! }, map) :
-            content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, Editor.Mighty!, groupid) : TeraUtil.GetDistEncounter(seed, sav.Version, progress, Editor.Dist!, groupid);
-
-        if (encounter is null)
-            return null;
-
-        var fixedlist = encounter.IsDistribution ? Editor.DistFixedRewards : Editor.TeraFixedRewards;
-        var lotterylist = encounter.IsDistribution ? Editor.DistLotteryRewards : Editor.TeraLotteryRewards;
-
-        List<Reward> list;
-        TeraShiny shiny = TeraShiny.No;
-
-        if (accuratesearch)
-        {
-            var det = TeraUtil.CalcRNG(seed, sav.ID32, content, encounter, groupid, calc);
-            list = RewardUtil.GetRewardList(det, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist, boost);
-            shiny = det.Shiny;
-        }
-        else
-        {
-            list = RewardUtil.GetRewardList(seed, encounter.Species, encounter.Stars, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist, boost);
-        }
-
-        return new RewardDetails { Seed = seed, Rewards = list, Species = encounter.Species, Stars = encounter.Stars, Shiny = shiny, EventIndex = (byte)groupid, Calcs = calc };
+            }
+            GridEntries.FinalizeElements();
+        });
     }
 
     private void dataGrid_MouseUp(object sender, MouseEventArgs e)
@@ -552,11 +676,31 @@ public partial class RewardCalcForm : Form
         }
     }
 
+    private string[] TranslatedStars()
+    {
+        var res = TeraStars;
+        res[0] = Strings["Any"];
+        for (var i = 0; i < res.Length; i++)
+            res[i] = res[i].Replace("S", Strings["StarsAbbreviation"]);
+        return res;
+    }
+
+    private readonly static string[] TeraStars = [
+        "Any",
+        "1S ☆",
+        "2S ☆☆",
+        "3S ☆☆☆",
+        "4S ☆☆☆☆",
+        "5S ☆☆☆☆☆",
+        "6S ☆☆☆☆☆☆",
+        "7S ☆☆☆☆☆☆☆",
+    ];
+
     private void btnSaveAllTxt_Click(object sender, EventArgs e) => dataGrid.SaveAllTxt(Editor.Language);
 
     private void btnSaveSelectedTxt_Click(object sender, EventArgs e) => dataGrid.SaveSelectedTxt(Editor.Language);
 
-    private void btnSendSelectedRaid_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this, Editor.Language, (TeraRaidMapParent)cmbMap.SelectedIndex);
+    private void btnSendSelectedRaid_Click(object sender, EventArgs e) => dataGrid.SendSelectedRaidEditor(this, Editor.Language);
 
     private void btnCopySeed_Click(object sender, EventArgs e) => dataGrid.CopySeed(Editor.Language);
 }

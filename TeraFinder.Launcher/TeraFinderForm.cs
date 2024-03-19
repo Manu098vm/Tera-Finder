@@ -202,9 +202,9 @@ namespace TeraFinder.Launcher
             Plugin.LaunchCalculator();
         }
 
-        private void btnStartFinder_Click(object sender, EventArgs e)
+        private void btnStartSeedChecker_Click(object sender, EventArgs e)
         {
-            Plugin.LaunchFinder();
+            Plugin.LaunchSeedChecker();
         }
 
         private void btnStartRewardCalc_Click(object sender, EventArgs e)

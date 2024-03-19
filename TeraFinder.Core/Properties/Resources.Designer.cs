@@ -7693,9 +7693,9 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] encounter_gem_blueberry {
+        internal static byte[] encounter_dist_paldea {
             get {
-                object obj = ResourceManager.GetObject("encounter_gem_blueberry", resourceCulture);
+                object obj = ResourceManager.GetObject("encounter_dist_paldea", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -7703,9 +7703,9 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] encounter_gem_kitakami {
+        internal static byte[] encounter_gem_blueberry_black {
             get {
-                object obj = ResourceManager.GetObject("encounter_gem_kitakami", resourceCulture);
+                object obj = ResourceManager.GetObject("encounter_gem_blueberry_black", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -7713,9 +7713,59 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] encounter_gem_paldea {
+        internal static byte[] encounter_gem_blueberry_standard {
             get {
-                object obj = ResourceManager.GetObject("encounter_gem_paldea", resourceCulture);
+                object obj = ResourceManager.GetObject("encounter_gem_blueberry_standard", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] encounter_gem_kitakami_black {
+            get {
+                object obj = ResourceManager.GetObject("encounter_gem_kitakami_black", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] encounter_gem_kitakami_standard {
+            get {
+                object obj = ResourceManager.GetObject("encounter_gem_kitakami_standard", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] encounter_gem_paldea_black {
+            get {
+                object obj = ResourceManager.GetObject("encounter_gem_paldea_black", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] encounter_gem_paldea_standard {
+            get {
+                object obj = ResourceManager.GetObject("encounter_gem_paldea_standard", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] encounter_might_paldea {
+            get {
+                object obj = ResourceManager.GetObject("encounter_might_paldea", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -8,6 +8,8 @@ Plugin.ImportNews=导入文件
 Plugin.OutbreakNull=清除现有大量出现
 Plugin.RaidNull=清除现有活动团战
 Plugin.OutbreakViewer=大量出现查看/编辑
+Plugin.RaidCalculator=太晶洞窟计算器
+Plugin.RewardCalculator=奖励计算器
 Plugin.MapPaldea=帕底亚
 Plugin.MapKitakami=北上乡
 Plugin.MapBlueberry=蓝莓学院
@@ -105,6 +107,7 @@ CalculatorForm.btnSendToEditor=将所选结果发送到Raid编辑器
 CalculatorForm.lblEventct=活动索引:
 CalculatorForm.lblMap=地图:
 CalculatorForm.btnCopySeed=复制Seed
+CalculatorForm.lblTime=T:
 
 RewardCalcForm=奖励计算器
 RewardCalcForm.grpFilters=筛选器
@@ -136,6 +139,8 @@ RewardCalcForm.btnSendSelectedRaid=将所选结果发送到Raid编辑器
 RewardCalcForm.lblEventCt=活动索引:
 RewardCalcForm.lblMap=地图:
 RewardCalcForm.btnCopySeed=复制Seed
+RewardCalcForm.lblTime=T:
+RewardCalcForm.lblShiny=闪光:
 
 CheckerForm=Seed检索器
 CheckerForm.lblTID=表ID:
@@ -252,6 +257,7 @@ ActionSearch=搜索
 ActionStop=停止
 ToolTipAccurate=从提供的Seed强制检索指定宝可梦的太晶属性和闪光，以便准确的指定太晶碎片种类和额外信息。 使搜索速度稍慢。
 ToolTipAllResults=禁用 - 在找到一个结果后停止搜索。 启用 - 搜索所有可能的结果，直到达到最大搜索量。 如果未设置过滤器，则忽略。
+WarningNoEncounter=No encounter available for the Game Progress and Stars selection.
 
 ActionConnect=连接
 ActionConnecting=正在连接...

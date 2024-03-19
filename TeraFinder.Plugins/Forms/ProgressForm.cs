@@ -21,7 +21,7 @@ public partial class ProgressForm : Form
         SAV = sav;
         Raids = [];
 
-        cmbProgress.SelectedIndex = (int)TeraUtil.GetProgress(sav);
+        cmbProgress.SelectedIndex = (int)SavUtil.GetProgress(sav);
         var raid7 = sav.RaidSevenStar.GetAllRaids();
         foreach (var raid in raid7)
         {
@@ -106,46 +106,46 @@ public partial class ProgressForm : Form
 
         if (progress >= GameProgress.Unlocked3Stars)
         {
-            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty3, CancellationToken.None);
-            await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty3, CancellationToken.None, toexpect);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(BlockDefinitions.KUnlockedRaidDifficulty3, CancellationToken.None);
+            await Connection.Executor.WriteBlock(true, BlockDefinitions.KUnlockedRaidDifficulty3, CancellationToken.None, toexpect);
         }
         else
         {
-            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty3, CancellationToken.None);
-            await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty3, CancellationToken.None, toexpect);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(BlockDefinitions.KUnlockedRaidDifficulty3, CancellationToken.None);
+            await Connection.Executor.WriteBlock(false, BlockDefinitions.KUnlockedRaidDifficulty3, CancellationToken.None, toexpect);
         }
 
         if (progress >= GameProgress.Unlocked4Stars)
         {
-            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty4, CancellationToken.None);
-            await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty4, CancellationToken.None, toexpect);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(BlockDefinitions.KUnlockedRaidDifficulty4, CancellationToken.None);
+            await Connection.Executor.WriteBlock(true, BlockDefinitions.KUnlockedRaidDifficulty4, CancellationToken.None, toexpect);
         }
         else
         {
-            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty4, CancellationToken.None);
-            await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty4, CancellationToken.None, toexpect);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(BlockDefinitions.KUnlockedRaidDifficulty4, CancellationToken.None);
+            await Connection.Executor.WriteBlock(false, BlockDefinitions.KUnlockedRaidDifficulty4, CancellationToken.None, toexpect);
         }
 
         if (progress >= GameProgress.Unlocked5Stars)
         {
-            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty5, CancellationToken.None);
-            await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty5, CancellationToken.None, toexpect);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(BlockDefinitions.KUnlockedRaidDifficulty5, CancellationToken.None);
+            await Connection.Executor.WriteBlock(true, BlockDefinitions.KUnlockedRaidDifficulty5, CancellationToken.None, toexpect);
         }
         else
         {
-            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty5, CancellationToken.None);
-            await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty5, CancellationToken.None, toexpect);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(BlockDefinitions.KUnlockedRaidDifficulty5, CancellationToken.None);
+            await Connection.Executor.WriteBlock(false, BlockDefinitions.KUnlockedRaidDifficulty5, CancellationToken.None, toexpect);
         }
 
         if (progress >= GameProgress.Unlocked6Stars)
         {
-            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty6, CancellationToken.None);
-            await Connection.Executor.WriteBlock(true, Blocks.KUnlockedRaidDifficulty6, CancellationToken.None, toexpect);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(BlockDefinitions.KUnlockedRaidDifficulty6, CancellationToken.None);
+            await Connection.Executor.WriteBlock(true, BlockDefinitions.KUnlockedRaidDifficulty6, CancellationToken.None, toexpect);
         }
         else
         {
-            var toexpect = (bool?)await Connection.Executor.ReadBlock(Blocks.KUnlockedRaidDifficulty6, CancellationToken.None);
-            await Connection.Executor.WriteBlock(false, Blocks.KUnlockedRaidDifficulty6, CancellationToken.None, toexpect);
+            var toexpect = (bool?)await Connection.Executor.ReadBlock(BlockDefinitions.KUnlockedRaidDifficulty6, CancellationToken.None);
+            await Connection.Executor.WriteBlock(false, BlockDefinitions.KUnlockedRaidDifficulty6, CancellationToken.None, toexpect);
         }
     }
 
@@ -153,7 +153,7 @@ public partial class ProgressForm : Form
     {
         if (progress >= GameProgress.UnlockedTeraRaids)
         {
-            var dummy = Blocks.KUnlockedTeraRaidBattles;
+            var dummy = BlockDefinitions.KUnlockedTeraRaidBattles;
             var block = sav.Accessor.FindOrDefault(dummy.Key);
             if (block.Type is SCTypeCode.None)
             {
@@ -164,7 +164,7 @@ public partial class ProgressForm : Form
         }
         else
         {
-            var dummy = Blocks.KUnlockedTeraRaidBattles;
+            var dummy = BlockDefinitions.KUnlockedTeraRaidBattles;
             var block = sav.Accessor.FindOrDefault(dummy.Key);
             if (block.Type is SCTypeCode.None)
             {
@@ -176,7 +176,7 @@ public partial class ProgressForm : Form
 
         if (progress >= GameProgress.Unlocked3Stars)
         {
-            var dummy = Blocks.KUnlockedRaidDifficulty3;
+            var dummy = BlockDefinitions.KUnlockedRaidDifficulty3;
             var block = sav.Accessor.FindOrDefault(dummy.Key);
             if (block.Type is SCTypeCode.None)
             {
@@ -187,7 +187,7 @@ public partial class ProgressForm : Form
         }
         else
         {
-            var dummy = Blocks.KUnlockedRaidDifficulty3;
+            var dummy = BlockDefinitions.KUnlockedRaidDifficulty3;
             var block = sav.Accessor.FindOrDefault(dummy.Key);
             if (block.Type is SCTypeCode.None)
             {
@@ -199,7 +199,7 @@ public partial class ProgressForm : Form
 
         if (progress >= GameProgress.Unlocked4Stars)
         {
-            var dummy = Blocks.KUnlockedRaidDifficulty4;
+            var dummy = BlockDefinitions.KUnlockedRaidDifficulty4;
             var block = sav.Accessor.FindOrDefault(dummy.Key);
             if (block.Type is SCTypeCode.None)
             {
@@ -210,7 +210,7 @@ public partial class ProgressForm : Form
         }
         else
         {
-            var dummy = Blocks.KUnlockedRaidDifficulty4;
+            var dummy = BlockDefinitions.KUnlockedRaidDifficulty4;
             var block = sav.Accessor.FindOrDefault(dummy.Key);
             if (block.Type is SCTypeCode.None)
             {
@@ -222,7 +222,7 @@ public partial class ProgressForm : Form
 
         if (progress >= GameProgress.Unlocked5Stars)
         {
-            var dummy = Blocks.KUnlockedRaidDifficulty5;
+            var dummy = BlockDefinitions.KUnlockedRaidDifficulty5;
             var block = sav.Accessor.FindOrDefault(dummy.Key);
             if (block.Type is SCTypeCode.None)
             {
@@ -233,7 +233,7 @@ public partial class ProgressForm : Form
         }
         else
         {
-            var dummy = Blocks.KUnlockedRaidDifficulty5;
+            var dummy = BlockDefinitions.KUnlockedRaidDifficulty5;
             var block = sav.Accessor.FindOrDefault(dummy.Key);
             if (block.Type is SCTypeCode.None)
             {
@@ -245,7 +245,7 @@ public partial class ProgressForm : Form
 
         if (progress >= GameProgress.Unlocked6Stars)
         {
-            var dummy = Blocks.KUnlockedRaidDifficulty6;
+            var dummy = BlockDefinitions.KUnlockedRaidDifficulty6;
             var block = sav.Accessor.FindOrDefault(dummy.Key);
             if (block.Type is SCTypeCode.None)
             {
@@ -256,7 +256,7 @@ public partial class ProgressForm : Form
         }
         else
         {
-            var dummy = Blocks.KUnlockedRaidDifficulty6;
+            var dummy = BlockDefinitions.KUnlockedRaidDifficulty6;
             var block = sav.Accessor.FindOrDefault(dummy.Key);
             if (block.Type is SCTypeCode.None)
             {
@@ -279,7 +279,7 @@ public partial class ProgressForm : Form
         {
             try
             {
-                await Connection.Executor.WriteBlock(SAV.RaidSevenStar.Captured.Data.ToArray(), Blocks.KSevenStarRaidsCapture, CancellationToken.None).ConfigureAwait(false);
+                await Connection.Executor.WriteBlock(SAV.RaidSevenStar.Captured.Data.ToArray(), BlockDefinitions.KSevenStarRaidsCapture, CancellationToken.None).ConfigureAwait(false);
             }
             catch
             {

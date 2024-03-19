@@ -229,7 +229,7 @@ public partial class OutbreakForm : Form
                 if (!isExclusive)
                 {
                     var resourceName = $"{CurrMap switch { TeraRaidMapParent.Kitakami => "dlc1", TeraRaidMapParent.Blueberry => "dlc2", _ => "" }}_{species}";
-                    json = TeraUtil.GetTextResource(resourceName);
+                    json = ResourcesUtil.GetTextResource(resourceName);
                     if (json is not null && json.Length > 0)
                     {
                         var message = Strings["OutbreakForm.LoadDefault"].Replace("{species}", SpeciesList[species]);
@@ -273,7 +273,7 @@ public partial class OutbreakForm : Form
             {
                 var success = false;
                 var locationMap = CurrMap switch { TeraRaidMapParent.Kitakami => "DLC1", TeraRaidMapParent.Blueberry => "DLC2", _ => "Main" };
-                var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}Species")!.GetValue(new DataBlock())!;
+                var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}Species")!.GetValue(new BlockDefinition())!;
                 Task.Run(async () => { success = await Connection.Executor.WriteBlock(outbreak.Species, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                 if (!success)
@@ -312,7 +312,7 @@ public partial class OutbreakForm : Form
             var species = SpeciesConverter.GetNational9((ushort)outbreak.Species);
 
             var resourceName = $"{CurrMap switch { TeraRaidMapParent.Kitakami => "dlc1", TeraRaidMapParent.Blueberry => "dlc2", _ => "" }}_{species}_{cmbForm.SelectedIndex}";
-            var json = TeraUtil.GetTextResource(resourceName);
+            var json = ResourcesUtil.GetTextResource(resourceName);
             if (!Importing && json is not null)
             {
                 if (json is not null && json.Length > 0)
@@ -351,7 +351,7 @@ public partial class OutbreakForm : Form
             {
                 var success = false;
                 var locationMap = CurrMap switch { TeraRaidMapParent.Kitakami => "DLC1", TeraRaidMapParent.Blueberry => "DLC2", _ => "Main" };
-                var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}Form")!.GetValue(new DataBlock())!;
+                var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}Form")!.GetValue(new BlockDefinition())!;
                 Task.Run(async () => { success = await Connection.Executor.WriteBlock(outbreak.Form, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                 if (!success)
@@ -376,7 +376,7 @@ public partial class OutbreakForm : Form
             {
                 var success = false;
                 var locationMap = CurrMap switch { TeraRaidMapParent.Kitakami => "DLC1", TeraRaidMapParent.Blueberry => "DLC2", _ => "Main" };
-                var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}TotalSpawns")!.GetValue(new DataBlock())!;
+                var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}TotalSpawns")!.GetValue(new BlockDefinition())!;
                 Task.Run(async () => { success = await Connection.Executor.WriteBlock(outbreak.MaxSpawns, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                 if (!success)
@@ -401,7 +401,7 @@ public partial class OutbreakForm : Form
             {
                 var success = false;
                 var locationMap = CurrMap switch { TeraRaidMapParent.Kitakami => "DLC1", TeraRaidMapParent.Blueberry => "DLC2", _ => "Main" };
-                var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}NumKOed")!.GetValue(new DataBlock())!;
+                var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}NumKOed")!.GetValue(new BlockDefinition())!;
                 Task.Run(async () => { success = await Connection.Executor.WriteBlock(outbreak.NumKO, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                 if (!success)
@@ -430,7 +430,7 @@ public partial class OutbreakForm : Form
             {
                 var success = false;
                 var locationMap = CurrMap switch { TeraRaidMapParent.Kitakami => "DLC1", TeraRaidMapParent.Blueberry => "DLC2", _ => "Main" };
-                var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}Found")!.GetValue(new DataBlock())!;
+                var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}Found")!.GetValue(new BlockDefinition())!;
                 Task.Run(async () => { success = await Connection.Executor.WriteBlock(outbreak.Found, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                 if (!success)
@@ -472,7 +472,12 @@ public partial class OutbreakForm : Form
             {
                 var success = false;
                 var value = (byte)outbreak.GetAmountAvailable();
-                var blockInfo = CurrMap switch { TeraRaidMapParent.Kitakami => Blocks.KOutbreakDLC1NumActive, TeraRaidMapParent.Blueberry => Blocks.KOutbreakDLC2NumActive, _ => Blocks.KOutbreakMainNumActive };
+                var blockInfo = CurrMap switch
+                {
+                    TeraRaidMapParent.Kitakami => BlockDefinitions.KOutbreakDLC1NumActive,
+                    TeraRaidMapParent.Blueberry => BlockDefinitions.KOutbreakDLC2NumActive,
+                    _ => BlockDefinitions.KOutbreakMainNumActive,
+                };
                 Task.Run(async () => { success = await Connection.Executor.WriteBlock(value, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                 if (!success)
@@ -503,7 +508,7 @@ public partial class OutbreakForm : Form
                         var success = false;
                         var toInject = outbreak.LocationCenter.GetCoordinates().ToArray();
                         var locationMap = CurrMap switch { TeraRaidMapParent.Kitakami => "DLC1", TeraRaidMapParent.Blueberry => "DLC2", _ => "Main" };
-                        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}CenterPos")!.GetValue(new DataBlock())!;
+                        var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}CenterPos")!.GetValue(new BlockDefinition())!;
                         Task.Run(async () => { success = await Connection.Executor.WriteBlock(toInject, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                         if (!success)
@@ -538,7 +543,7 @@ public partial class OutbreakForm : Form
                         var success = false;
                         var toInject = outbreak.LocationCenter.GetCoordinates().ToArray();
                         var locationMap = CurrMap switch { TeraRaidMapParent.Kitakami => "DLC1", TeraRaidMapParent.Blueberry => "DLC2", _ => "Main" };
-                        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}CenterPos")!.GetValue(new DataBlock())!;
+                        var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}CenterPos")!.GetValue(new BlockDefinition())!;
                         Task.Run(async () => { success = await Connection.Executor.WriteBlock(toInject, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                         if (!success)
@@ -572,7 +577,7 @@ public partial class OutbreakForm : Form
                         var success = false;
                         var toInject = outbreak.LocationCenter.GetCoordinates().ToArray();
                         var locationMap = CurrMap switch { TeraRaidMapParent.Kitakami => "DLC1", TeraRaidMapParent.Blueberry => "DLC2", _ => "Main" };
-                        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}CenterPos")!.GetValue(new DataBlock())!;
+                        var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}CenterPos")!.GetValue(new BlockDefinition())!;
                         Task.Run(async () => { success = await Connection.Executor.WriteBlock(toInject, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                         if (!success)
@@ -607,7 +612,7 @@ public partial class OutbreakForm : Form
                         var success = false;
                         var toInject = outbreak.LocationDummy.GetCoordinates().ToArray();
                         var locationMap = CurrMap switch { TeraRaidMapParent.Kitakami => "DLC1", TeraRaidMapParent.Blueberry => "DLC2", _ => "Main" };
-                        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}DummyPos")!.GetValue(new DataBlock())!;
+                        var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}DummyPos")!.GetValue(new BlockDefinition())!;
                         Task.Run(async () => { success = await Connection.Executor.WriteBlock(toInject, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                         if (!success)
@@ -639,7 +644,7 @@ public partial class OutbreakForm : Form
                         var success = false;
                         var toInject = outbreak.LocationDummy.GetCoordinates().ToArray();
                         var locationMap = CurrMap switch { TeraRaidMapParent.Kitakami => "DLC1", TeraRaidMapParent.Blueberry => "DLC2", _ => "Main" };
-                        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}DummyPos")!.GetValue(new DataBlock())!;
+                        var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}DummyPos")!.GetValue(new BlockDefinition())!;
                         Task.Run(async () => { success = await Connection.Executor.WriteBlock(toInject, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                         if (!success)
@@ -671,7 +676,7 @@ public partial class OutbreakForm : Form
                         var success = false;
                         var toInject = outbreak.LocationDummy.GetCoordinates().ToArray();
                         var locationMap = CurrMap switch { TeraRaidMapParent.Kitakami => "DLC1", TeraRaidMapParent.Blueberry => "DLC2", _ => "Main" };
-                        var blockInfo = (DataBlock)typeof(Blocks).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}DummyPos")!.GetValue(new DataBlock())!;
+                        var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{cmbOutbreaks.SelectedIndex + 1}{locationMap}DummyPos")!.GetValue(new BlockDefinition())!;
                         Task.Run(async () => { success = await Connection.Executor.WriteBlock(toInject, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                         if (!success)

@@ -1,7 +1,4 @@
-﻿using NLog;
-using Octokit;
-using PKHeX.Core;
-using System.Runtime.CompilerServices;
+﻿using PKHeX.Core;
 using System.Text;
 using TeraFinder.Core;
 
@@ -156,59 +153,48 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
-                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f, map);
-                    var progress = GetProgress(seed, groupid, selectedRows.ElementAt(0), f, map);
-                    var tid = Convert.ToUInt32(f.txtTID.Text, 10);
-                    var sid = Convert.ToUInt32(f.txtSID.Text, 10);
+                    var groupid = Convert.ToByte(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 1].Value.ToString()!, 10);
+                    var content = (RaidContent)f.cmbContent.SelectedIndex;
+                    var progress = (GameProgress)f.cmbProgress.SelectedIndex;
+                    var eventProgress = EventUtil.GetEventStageFromProgress(progress);
+                    var version = f.cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.VL;
+                    var id32 = TidUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10));
 
-                    var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Version = (GameVersion)(int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
-
-                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress),
-                        map switch 
-                        { 
-                            TeraRaidMapParent.Paldea => f.Editor.Paldea!, 
-                            TeraRaidMapParent.Kitakami => f.Editor.Kitakami!, 
-                            _ => f.Editor.Blueberry! 
-                        }, map) :
-                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!, groupid) :
-                        TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!, groupid);
-
-                    var res = TeraUtil.GenerateTeraEntity(sav, encounter!, content, seed, TeraUtil.GetID32(tid, sid), groupid);
-                    var la = new LegalityAnalysis(res);
-
-                    if (!la.Valid)
+                    var encounters = f.Editor.GetCurrentEncounters(content, map);
+                    if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, out var enc, out var result))
                     {
-                        var la_encounter = la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault();
-                        if (content is RaidContent.Event or RaidContent.Event_Mighty)
-                            MessageBox.Show($"{strings["GridUtil.ErrorParsing"]}\n{strings["GridUtil.MissingData"]} [{encounter!.Identifier}].\n{strings["GridUtil.CheckWiki"]}");
-                        else
-                            MessageBox.Show($"{strings["GridUtil.ErrorParsing"]} {strings["GridUtil.Report"]}\n{la.Report()}");
-                        return;
-                    }
-
-                    var sfd = new SaveFileDialog
-                    {
-                        Filter = "PK9 (*.pk9)|*.pk9",
-                        FileName = $"{res.FileName}",
-                    };
-
-                    if (sfd.ShowDialog() == DialogResult.OK)
-                    {
-                        if (File.Exists(sfd.FileName))
+                        if (!enc.GeneratePK9(result.Value, id32, version, f.Editor.SAV.OT, f.Editor.SAV.Language, f.Editor.SAV.Gender, out var pk9, out var la))
                         {
-                            try
-                            {
-                                File.Delete(sfd.FileName);
-                            }
-                            catch (IOException ex)
-                            {
-                                MessageBox.Show(ex.Message);
-                            }
+                            var la_encounter = la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault();
+                            if (content is RaidContent.Event or RaidContent.Event_Mighty)
+                                MessageBox.Show($"{strings["GridUtil.ErrorParsing"]}\n{strings["GridUtil.MissingData"]} [{enc.Identifier}].\n{strings["GridUtil.CheckWiki"]}");
+                            else
+                                MessageBox.Show($"{strings["GridUtil.ErrorParsing"]} {strings["GridUtil.Report"]}\n{la.Report()}");
+                            return;
                         }
-                        File.WriteAllBytes(sfd.FileName, res.Data);
-                        MessageBox.Show($"{strings["GridUtil.Exported"]} {sfd.FileName}");
+
+                        var sfd = new SaveFileDialog
+                        {
+                            Filter = "PK9 (*.pk9)|*.pk9",
+                            FileName = $"{pk9!.FileName}",
+                        };
+
+                        if (sfd.ShowDialog() is DialogResult.OK)
+                        {
+                            if (File.Exists(sfd.FileName))
+                            {
+                                try
+                                {
+                                    File.Delete(sfd.FileName);
+                                }
+                                catch (IOException ex)
+                                {
+                                    MessageBox.Show(ex.Message);
+                                }
+                            }
+                            File.WriteAllBytes(sfd.FileName, pk9.Data);
+                            MessageBox.Show($"{strings["GridUtil.Exported"]} {sfd.FileName}");
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -240,36 +226,21 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
-                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f, map);
-                    var progress = GetProgress(seed, groupid, selectedRows.ElementAt(0), f, map);
+                    var groupid = Convert.ToByte(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 1].Value.ToString()!, 10);
+                    var content = (RaidContent)f.cmbContent.SelectedIndex;
+                    var progress = (GameProgress)f.cmbProgress.SelectedIndex;
+                    var eventProgress = EventUtil.GetEventStageFromProgress(progress);
+                    var id32 = TidUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10));
+                    var version = f.cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.VL;
 
-                    var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Version = (GameVersion)(int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
+                    var encounters = f.Editor.GetCurrentEncounters(content, map);
+                    
+                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, 0, out var rng, out var lvl0);
+                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, 1, out _, out var lvl1);
+                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, 2, out _, out var lvl2);
+                    EncounterRaidTF9.TryGenerateRewardDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, 3, out _, out var lvl3);
 
-                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
-                        map switch
-                        {
-                            TeraRaidMapParent.Paldea => f.Editor.Paldea!,
-                            TeraRaidMapParent.Kitakami => f.Editor.Kitakami!,
-                            _ => f.Editor.Blueberry!
-                        }, map) :
-                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!) :
-                        TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!);
-
-                    var rngres = TeraUtil.CalcRNG(seed, TeraUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10)), content, encounter!, groupid);
-
-                    var lvl0 = RewardUtil.GetRewardList(rngres, encounter!.FixedRewardHash, encounter!.LotteryRewardHash,
-                        encounter!.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards, encounter!.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards, 0);
-                    var lvl1 = RewardUtil.GetRewardList(rngres, encounter!.FixedRewardHash, encounter!.LotteryRewardHash,
-                        encounter!.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards, encounter!.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards, 1);
-                    var lvl2 = RewardUtil.GetRewardList(rngres, encounter!.FixedRewardHash, encounter!.LotteryRewardHash,
-                        encounter!.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards, encounter!.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards, 2);
-                    var lvl3 = RewardUtil.GetRewardList(rngres, encounter!.FixedRewardHash, encounter!.LotteryRewardHash,
-                        encounter!.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards, encounter!.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards, 3);
-
-                    var form = new RewardListForm(f.Editor.Language, lvl0, lvl1, lvl2, lvl3);
-                    form.ShowDialog();
+                    new RewardListForm(f.Editor.Language, (MoveType)rng.Value.TeraType, lvl0.Value.Rewards, lvl1.Value.Rewards, lvl2.Value.Rewards, lvl3.Value.Rewards).ShowDialog();
                 }
                 catch (Exception ex)
                 {
@@ -287,7 +258,7 @@ public static class GridUtil
         }
     }
 
-    public static void SendSelectedRaidEditor(this DataGridView dataGrid, CalculatorForm f, string language, TeraRaidMapParent map)
+    public static void SendSelectedRaidEditor(this DataGridView dataGrid, CalculatorForm f, string language)
     {
         var strings = GenerateDictionary(language);
         if (dataGrid.SelectedCells.Count > 0)
@@ -299,16 +270,21 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
-                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f, map);
+                    var groupid = Convert.ToByte(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 1].Value.ToString()!, 10);
+                    var content = (RaidContent)f.cmbContent.SelectedIndex;
 
                     if (content is RaidContent.Event or RaidContent.Event_Mighty)
                     {
-                        if (f.Editor.CurrTera!.EventIndex != groupid)
+                        if (f.Editor.CurrTera is not null)
                         {
-                            MessageBox.Show($"{strings["GridUtil.MismatchGroupID"].Replace("{editorIndex}", $"{f.Editor.CurrTera!.EventIndex}").Replace("{resultIndex}", $"{groupid}")}");
-                            return;
+                            var tera = f.Editor.CurrTera;
+                            if (tera.Value.EventIndex != groupid)
+                            {
+                                MessageBox.Show($"{strings["GridUtil.MismatchGroupID"].Replace("{editorIndex}", $"{tera.Value.EventIndex}").Replace("{resultIndex}", $"{groupid}")}");
+                                return;
+                            }
                         }
+                        
                     }
 
                     f.Editor.txtSeed.Text = $"{seed:X8}";
@@ -330,7 +306,7 @@ public static class GridUtil
         }
     }
 
-    public static void SendSelectedRaidEditor(this DataGridView dataGrid, RewardCalcForm f, string language, TeraRaidMapParent map)
+    public static void SendSelectedRaidEditor(this DataGridView dataGrid, RewardCalcForm f, string language)
     {
         var strings = GenerateDictionary(language);
         if (dataGrid.SelectedCells.Count > 0)
@@ -342,15 +318,19 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
-                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f, map);
+                    var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 1].Value.ToString()!, 10);
+                    var content = (RaidContent)f.cmbContent.SelectedIndex;
 
                     if (content is RaidContent.Event or RaidContent.Event_Mighty)
                     {
-                        if (f.Editor.CurrTera!.EventIndex != groupid)
+                        if (f.Editor.CurrTera is not null)
                         {
-                            MessageBox.Show($"{strings["GridUtil.MismatchGroupID"].Replace("{editorIndex}", $"{f.Editor.CurrTera!.EventIndex}").Replace("{resultIndex}", $"{groupid}")}");
-                            return;
+                            var tera = f.Editor.CurrTera;
+                            if (tera.Value.EventIndex != groupid)
+                            {
+                                MessageBox.Show($"{strings["GridUtil.MismatchGroupID"].Replace("{editorIndex}", $"{tera.Value.EventIndex}").Replace("{resultIndex}", $"{groupid}")}");
+                                return;
+                            }
                         }
                     }
 
@@ -385,39 +365,28 @@ public static class GridUtil
                 try
                 {
                     var seed = Convert.ToUInt32(selectedRows.ElementAt(0).Cells[0].Value.ToString()!, 16);
-                    var groupid = Convert.ToInt32(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 2].Value.ToString()!, 10);
-                    var content = GetContent(seed, groupid, selectedRows.ElementAt(0), f, map);
-                    var progress = GetProgress(seed, groupid, selectedRows.ElementAt(0), f, map);
-                    var tid = Convert.ToUInt32(f.txtTID.Text, 10);
-                    var sid = Convert.ToUInt32(f.txtSID.Text, 10);
+                    var groupid = Convert.ToByte(selectedRows.ElementAt(0).Cells[selectedRows.ElementAt(0).Cells.Count - 1].Value.ToString()!, 10);
+                    var content = (RaidContent)f.cmbContent.SelectedIndex;
+                    var progress = (GameProgress)f.cmbProgress.SelectedIndex;
+                    var eventProgress = EventUtil.GetEventStageFromProgress(progress);
+                    var version = f.cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.VL;
+                    var id32 = TidUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10));
 
-                    var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Version = (GameVersion)(int)GetGameVersion(seed, groupid, selectedRows.ElementAt(0), f, map);
-
-                    var encounter = (int)content < 2 ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
-                        map switch
-                        {
-                            TeraRaidMapParent.Paldea => f.Editor.Paldea!,
-                            TeraRaidMapParent.Kitakami => f.Editor.Kitakami!,
-                            _ => f.Editor.Blueberry!
-                        }, map) :
-                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!, groupid) :
-                        TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!, groupid);
-
-                    var res = TeraUtil.GenerateTeraEntity(sav, encounter!, content, seed, TeraUtil.GetID32(tid, sid), groupid);
-                    var la = new LegalityAnalysis(res);
-
-                    if (!la.Valid)
+                    var encounters = f.Editor.GetCurrentEncounters(content, map);
+                    if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, out var enc, out var result))
                     {
-                        var la_encounter = la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault();
-                        if (content is RaidContent.Event or RaidContent.Event_Mighty)
-                            MessageBox.Show($"{strings["GridUtil.ErrorParsing"]}\n{strings["GridUtil.MissingData"]} [{encounter!.Identifier}].\n{strings["GridUtil.CheckWiki"]}");
-                        else
-                            MessageBox.Show($"{strings["GridUtil.ErrorParsing"]} {strings["GridUtil.Report"]}\n{la.Report()}");
-                        return;
-                    }
+                        if (!enc.GeneratePK9(result.Value, id32, version, f.Editor.SAV.OT, f.Editor.SAV.Language, f.Editor.SAV.Gender, out var pk9, out var la))
+                        {
+                            var la_encounter = la.Results.Where(l => l.Identifier is CheckIdentifier.Encounter).FirstOrDefault();
+                            if (content is RaidContent.Event or RaidContent.Event_Mighty)
+                                MessageBox.Show($"{strings["GridUtil.ErrorParsing"]}\n{strings["GridUtil.MissingData"]} [{enc.Identifier}].\n{strings["GridUtil.CheckWiki"]}");
+                            else
+                                MessageBox.Show($"{strings["GridUtil.ErrorParsing"]} {strings["GridUtil.Report"]}\n{la.Report()}");
+                            return;
+                        }
 
-                    f.Editor.PKMEditor!.PopulateFields(res, true);
+                        f.Editor.PKMEditor!.PopulateFields(pk9!, true);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -448,222 +417,5 @@ public static class GridUtil
 
         else
             MessageBox.Show(strings["GridUtil.RowsExceeded"]);
-    }
-
-    private static GameProgress GetProgress(uint seed, int groupid, DataGridViewRow row, CalculatorForm f, TeraRaidMapParent map)
-    {
-        for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
-        {
-            for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.None; progress++)
-            {
-                for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
-                {
-                    var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Version = (GameVersion)(int)game;
-                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
-                        map switch
-                        {
-                            TeraRaidMapParent.Paldea => f.Editor.Paldea!,
-                            TeraRaidMapParent.Kitakami => f.Editor.Kitakami!,
-                            _ => f.Editor.Blueberry!
-                        }, map) :
-                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!) :
-                        TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!);
-
-                    if (encounter is not null)
-                    {
-                        var rngres = TeraUtil.CalcRNG(seed, TeraUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10)), content, encounter, groupid);
-                        var success = true;
-
-                        if (rngres != null)
-                        {
-                            var entry = rngres.GetStrings(f.NameList, f.AbilityList, f.NatureList, f.MoveList, f.TypeList, f.FormList, f.GenderListAscii, f.GenderListUnicode, f.ShinyList);
-                            var grid = new GridEntry(row.ConvertToString()).GetStrings();
-                            for (var i = 0; i < entry.Length - 1; i++)
-                                if (!entry[i].Equals(grid[i]))
-                                    success = false;
-                        }
-
-                        if (success)
-                            return progress;
-                    }
-                }
-            }
-        }
-        return (GameProgress)f.cmbProgress.SelectedIndex;
-    }
-
-    private static RaidContent GetContent(uint seed, int groupid, DataGridViewRow row, CalculatorForm f, TeraRaidMapParent map)
-    {
-        for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
-        {
-            for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.None; progress++)
-            {
-                for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
-                {
-                    var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Version = (GameVersion)(int)game;
-
-                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
-                        map switch
-                        {
-                            TeraRaidMapParent.Paldea => f.Editor.Paldea!,
-                            TeraRaidMapParent.Kitakami => f.Editor.Kitakami!,
-                            _ => f.Editor.Blueberry!
-                        }, map) :
-                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!) :
-                        TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!);
-
-                    if (encounter is not null)
-                    {
-                        var rngres = TeraUtil.CalcRNG(seed, TeraUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10)), content, encounter, groupid);
-                        var success = true;
-
-                        if (rngres != null)
-                        {
-                            var entry = rngres.GetStrings(f.NameList, f.AbilityList, f.NatureList, f.MoveList, f.TypeList, f.FormList, f.GenderListAscii, f.GenderListUnicode, f.ShinyList);
-                            var grid = new GridEntry(row.ConvertToString()).GetStrings();
-                            for (var i = 0; i < entry.Length - 1; i++)
-                                if (!entry[i].Equals(grid[i]))
-                                    success = false;
-                        }
-
-                        if (success)
-                        {
-                            var type = content;
-                            if (progress is GameProgress.None)
-                                type = RaidContent.Black;
-                            return type;
-                        }
-                    }
-                }
-            }
-        }
-        return (RaidContent)f.cmbContent.SelectedIndex;
-    }
-
-    private static RaidContent GetContent(uint seed, int groupid, DataGridViewRow row, RewardCalcForm f, TeraRaidMapParent map)
-    {
-        foreach (var accuratesearch in new[] { true, false })
-        {
-            for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
-            {
-                for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.None; progress++)
-                {
-                    for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
-                    {
-                        var sav = (SAV9SV)f.Editor.SAV.Clone();
-                        sav.Version = (GameVersion)(int)game;
-
-                        var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
-                            map switch
-                            {
-                                TeraRaidMapParent.Paldea => f.Editor.Paldea!,
-                                TeraRaidMapParent.Kitakami => f.Editor.Kitakami!,
-                                _ => f.Editor.Blueberry!
-                            }, map) :
-                        content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!) :
-                            TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!);
-
-                        if (encounter is not null)
-                        {
-                            var fixedlist = encounter.IsDistribution ? f.Editor.DistFixedRewards : f.Editor.TeraFixedRewards;
-                            var lotterylist = encounter.IsDistribution ? f.Editor.DistLotteryRewards : f.Editor.TeraLotteryRewards;
-
-                            List<Reward> list;
-                            TeraShiny shiny = TeraShiny.No;
-
-                            if (accuratesearch)
-                            {
-                                var det = TeraUtil.CalcRNG(seed, sav.ID32, content, encounter, groupid);
-                                list = RewardUtil.GetRewardList(det, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
-                                shiny = det.Shiny;
-                            }
-                            else
-                            {
-                                list = RewardUtil.GetRewardList(seed, encounter.Species, encounter.Stars, encounter.FixedRewardHash, encounter.LotteryRewardHash, fixedlist, lotterylist);
-                            }
-
-                            var rngres = new RewardDetails { Seed = seed, Rewards = list, Species = encounter.Species, Stars = encounter.Stars, Shiny = shiny, Calcs = 0 };
-                            var success = true;
-
-                            if (rngres != null)
-                            {
-                                var strlist = new List<string> { $"{seed:X8}" };
-                                foreach (var item in rngres.Rewards)
-                                    strlist.Add(item.GetItemName(f.Items, f.Editor.Language, true));
-
-                                var entry = strlist.ToArray();
-                                var grid = new RewardGridEntry(row.ConvertToString()).GetStrings();
-                                for (var i = 0; i < entry.Length - 1; i++)
-                                    if (!entry[i].Equals(grid[i]))
-                                        success = false;
-                            }
-
-                            if (success)
-                            {
-                                var type = content;
-                                if (progress is GameProgress.None)
-                                    type = RaidContent.Black;
-                                return type;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return (RaidContent)f.cmbContent.SelectedIndex;
-    }
-
-    private static GameVersion GetGameVersion(uint seed, int groupid, DataGridViewRow row, CalculatorForm f, TeraRaidMapParent map)
-    {
-        for (var content = RaidContent.Standard; content <= RaidContent.Event_Mighty; content++)
-        {
-            for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.None; progress++)
-            {
-                for (var game = GameVersion.SL; game <= GameVersion.VL; game++)
-                {
-                    var sav = (SAV9SV)f.Editor.SAV.Clone();
-                    sav.Version = (GameVersion)(int)game;
-                    var encounter = content < RaidContent.Event ? TeraUtil.GetTeraEncounter(seed, sav.Version, TeraUtil.GetStars(seed, progress), 
-                        map switch
-                        {
-                            TeraRaidMapParent.Paldea => f.Editor.Paldea!,
-                            TeraRaidMapParent.Kitakami => f.Editor.Kitakami!,
-                            _ => f.Editor.Blueberry!
-                        }, map) :
-                    content is RaidContent.Event_Mighty ? TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Mighty!) :
-                        TeraUtil.GetDistEncounter(seed, sav.Version, progress, f.Editor.Dist!);
-
-                    if (encounter is not null)
-                    {
-                        var rngres = TeraUtil.CalcRNG(seed, TeraUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10)), content, encounter, groupid);
-                        var success = true;
-
-                        if (rngres != null)
-                        {
-                            var entry = rngres.GetStrings(f.NameList, f.AbilityList, f.NatureList, f.MoveList, f.TypeList, f.FormList, f.GenderListAscii, f.GenderListUnicode, f.ShinyList);
-                            var grid = new GridEntry(row.ConvertToString()).GetStrings();
-                            for (var i = 0; i < entry.Length - 1; i++)
-                                if (!entry[i].Equals(grid[i]))
-                                    success = false;
-                        }
-
-                        if (success)
-                            return game;
-                    }
-                }
-            }
-        }
-        return f.cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.VL;
-    }
-
-    private static string[] ConvertToString(this DataGridViewRow row)
-    {
-        var cellcount = row.Cells.Count;
-        var output = new string[cellcount];
-        for (var i = 0; i < cellcount; i++)
-            output[i] = Convert.ToString(row.Cells[i].Value)!;
-        return output;
     }
 }

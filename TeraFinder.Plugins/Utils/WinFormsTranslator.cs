@@ -102,7 +102,7 @@ public static class WinFormsTranslator
             catch { /* In use? Just return the internal resource. */ }
         }
 
-        var txt = Core.TeraUtil.GetTextResource(file);
+        var txt = Core.ResourcesUtil.GetTextResource(file);
         return Util.LoadStringList(file, txt);
     }
 

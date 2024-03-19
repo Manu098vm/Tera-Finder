@@ -8,7 +8,25 @@ public partial class CheckerForm : Form
     private readonly PK9 PKM = null!;
     private Dictionary<string, string> Strings = null!;
 
-    public CheckerForm(PKM pk, string language)
+    private readonly EncounterTeraTF9[] Paldea = null!;
+    private readonly EncounterTeraTF9[] PaldeaBlack = null!;
+    private readonly EncounterTeraTF9[] Kitakami = null!;
+    private readonly EncounterTeraTF9[] KitakamiBlack = null!;
+    private readonly EncounterTeraTF9[] Blueberry = null!;
+    private readonly EncounterTeraTF9[] BlueberryBlack = null!;
+
+    private readonly Dictionary<uint, HashSet<EncounterEventTF9>> Dist = null!;
+    private readonly Dictionary<uint, HashSet<EncounterEventTF9>> Mighty = null!;
+
+    public CheckerForm(PKM pk, string language,
+                       EncounterTeraTF9[] paldea,
+                       EncounterTeraTF9[] paldeablack,
+                       EncounterTeraTF9[] kitakami,
+                       EncounterTeraTF9[] kitakamiblack,
+                       EncounterTeraTF9[] blueberry,
+                       EncounterTeraTF9[] blueberryblack,
+                       Dictionary<uint, HashSet<EncounterEventTF9>> dist,
+                       Dictionary<uint, HashSet<EncounterEventTF9>> mighty)
     {
         InitializeComponent();
         GenerateDictionary();
@@ -42,6 +60,15 @@ public partial class CheckerForm : Form
         numHeight.Value = PKM.HeightScalar;
         numWeight.Value = PKM.WeightScalar;
         numScale.Value = PKM.Scale;
+
+        Paldea = paldea;
+        PaldeaBlack = paldeablack;
+        Kitakami = kitakami;
+        KitakamiBlack = kitakamiblack;
+        Blueberry = blueberry;
+        BlueberryBlack = blueberryblack;
+        Dist = dist;
+        Mighty = mighty;
     }
 
     private void GenerateDictionary()
@@ -85,7 +112,7 @@ public partial class CheckerForm : Form
         var spa = (int)numSpA.Value;
         var spd = (int)numSpD.Value;
         var spe = (int)numSpe.Value;
-        var nature = cmbNature.SelectedIndex;
+        var nature = (Nature)cmbNature.SelectedIndex;
         var tera = cmbTera.SelectedIndex;
         var height = (byte)numHeight.Value;
         var weight = (byte)numWeight.Value;
@@ -104,7 +131,7 @@ public partial class CheckerForm : Form
             IV_SPA = spa,
             IV_SPD = spd,
             IV_SPE = spe,
-            Nature = (Nature)nature,
+            Nature = nature,
             TeraTypeOriginal = (MoveType)tera,
             HeightScalar = height,
             WeightScalar = weight,
@@ -113,21 +140,23 @@ public partial class CheckerForm : Form
 
         var seed = Tera9RNG.GetOriginalSeed(pk);
 
-        //Standard & Black Raids Check
+        //Standard Raids Check
         for (var map = TeraRaidMapParent.Paldea; map <= TeraRaidMapParent.Blueberry; map++)
         {
-            var encounters = TeraUtil.GetAllTeraEncounters(map);
-            for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.None; progress++)
+            for (var progress = GameProgress.UnlockedTeraRaids; progress <= GameProgress.Unlocked6Stars; progress++)
             {
                 for (var version = GameVersion.SL; version <= GameVersion.VL; version++)
                 {
-                    var encounter = TeraUtil.GetTeraEncounter(seed, version, TeraUtil.GetStars(seed, progress), encounters, map);
-                    if (encounter is not null)
+                    var encounters = map switch
                     {
-                        var rng = TeraUtil.CalcRNG(seed, pk.ID32, progress is not GameProgress.None ?
-                            RaidContent.Standard : RaidContent.Black, encounter, 0);
-
-                        if (CompareResult(pk, rng))
+                        TeraRaidMapParent.Paldea => Paldea,
+                        TeraRaidMapParent.Kitakami => Kitakami,
+                        TeraRaidMapParent.Blueberry => Blueberry,
+                        _ => throw new NotImplementedException(nameof(map)),
+                    };
+                    if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, EventProgress.Stage0, RaidContent.Standard, map, pk.ID32, 0, out var encounter, out var result))
+                    {
+                        if (CompareResult(pk, result!.Value))
                         {
                             SetReultText(seed, encounter);
                             return;
@@ -137,23 +166,46 @@ public partial class CheckerForm : Form
             }
         }
 
-        //Events & Events Mighty Raids Check
+        //Black Raids Check
+        for (var map = TeraRaidMapParent.Paldea; map <= TeraRaidMapParent.Blueberry; map++)
+        {
+            for (var version = GameVersion.SL; version <= GameVersion.VL; version++)
+            {
+                var encounters = map switch
+                {
+                    TeraRaidMapParent.Paldea => PaldeaBlack,
+                    TeraRaidMapParent.Kitakami => KitakamiBlack,
+                    TeraRaidMapParent.Blueberry => BlueberryBlack,
+                    _ => throw new NotImplementedException(nameof(map))
+                };
+                if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, GameProgress.Unlocked6Stars, EventProgress.Stage0, RaidContent.Black, map, pk.ID32, 0, out var encounter, out var result))
+                {
+                    if (CompareResult(pk, result!.Value))
+                    {
+                        SetReultText(seed, encounter);
+                        return;
+                    }
+                }
+            }
+        }
+
+        //Events Raids Check
         for (var content = RaidContent.Event; content <= RaidContent.Event_Mighty; content++)
         {
-            var dist = TeraUtil.GetAllDistEncounters(content);
-            for (var progress = GameProgress.UnlockedTeraRaids; progress < GameProgress.None; progress++)
+            foreach (var group in content is RaidContent.Event ? Dist : Mighty)
             {
-                for (var version = GameVersion.SL; version <= GameVersion.VL; version++) {
-                    for (var groupid = 0; groupid < 10; groupid++)
+                foreach (var index in new HashSet<byte>(group.Value.Select(enc => enc.Index)))
+                {
+                    for (var game = GameVersion.SL; game <= GameVersion.VL; ++game)
                     {
-                        var encounters = TeraUtil.FilterDistEncounters(seed, version, progress, dist, groupid, species);
-                        foreach (var encounter in encounters) {
+                        var possibleStages = new HashSet<EventProgress>(Enum.GetValues(typeof(EventProgress)).Cast<EventProgress>()
+                            .Where(progress => group.Value.Any(enc => enc.Index == index && enc.CanBeEncounteredFromStage(progress, game))));
 
-                            if (encounter is not null)
+                        foreach (var stage in possibleStages)
+                        {
+                            if (EncounterRaidTF9.TryGenerateTeraDetails(seed, group.Value.ToArray(), game, GameProgress.UnlockedTeraRaids, stage, RaidContent.Event, TeraRaidMapParent.Paldea, pk.ID32, index, out var encounter, out var result))
                             {
-                                var rng = TeraUtil.CalcRNG(seed, pk.ID32, content, encounter, groupid);
-
-                                if (CompareResult(pk, rng))
+                                if (CompareResult(pk, result!.Value))
                                 {
                                     SetReultText(seed, encounter);
                                     return;
@@ -161,9 +213,10 @@ public partial class CheckerForm : Form
                             }
                         }
                     }
-                }
+                } 
             }
         }
+
         SetReultText(seed);
     }
 
@@ -187,7 +240,7 @@ public partial class CheckerForm : Form
             return false;
         if (pkm.IV_SPE != rng.SPE)
             return false;
-        if ((int)pkm.Nature != rng.Nature)
+        if (pkm.Nature != rng.Nature)
             return false;
         if ((sbyte)pkm.TeraTypeOriginal != rng.TeraType)
             return false;
@@ -202,20 +255,17 @@ public partial class CheckerForm : Form
         return true;
     }
 
-    private void SetReultText (uint seed, EncounterRaid9? enc = null)
+    private void SetReultText (uint seed, EncounterRaidTF9? encounter = null)
     {
-        if (enc is not null)
+        if (encounter is not null)
         {
-            var type = enc.GetEncounterType();
-            var isBlack = enc.Stars >= 6;
-
-            if (type == typeof(Core.EncounterTera9) && !isBlack)
+            if (encounter.ContentType is RaidContent.Standard)
                 txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Standard"]})";
-            else if (type == typeof(Core.EncounterTera9) && isBlack)
+            else if (encounter.ContentType is RaidContent.Black)
                 txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Black"]})";
-            else if (type == typeof(PKHeX.Core.EncounterDist9))
+            else if (encounter.ContentType is RaidContent.Event)
                 txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Event"]})";
-            else if (type == typeof(PKHeX.Core.EncounterMight9))
+            else if (encounter.ContentType is RaidContent.Event_Mighty)
                 txtSeed.Text = $"{seed:X8} ({Strings["RaidContent.Event_Mighty"]})";
 
             return;

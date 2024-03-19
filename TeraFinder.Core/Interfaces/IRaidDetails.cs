@@ -6,5 +6,4 @@ public interface IRaidDetails
     ushort Species { get; }
     int Stars { get; }
     TeraShiny Shiny { get; }
-    ulong Calcs { get; }
 }

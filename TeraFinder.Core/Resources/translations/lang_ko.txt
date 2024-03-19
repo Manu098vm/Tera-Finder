@@ -8,6 +8,8 @@ Plugin.ImportNews=Import from files...
 Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
 Plugin.RaidNull=Import Empty (Null) Raid Event
 Plugin.OutbreakViewer=대량발생 보기/편집
+Plugin.RaidCalculator=레이드 계산기
+Plugin.RewardCalculator=보상 계산기
 Plugin.MapPaldea=Paldea
 Plugin.MapKitakami=Kitakami
 Plugin.MapBlueberry=Blueberry
@@ -105,6 +107,7 @@ CalculatorForm.btnSendToEditor=레이드 편집기로 선택한 결과 보내기
 CalculatorForm.lblEventct=이벤트 값:
 CalculatorForm.lblMap=Location:
 CalculatorForm.btnCopySeed=Copy Seed
+CalculatorForm.lblTime=T:
 
 RewardCalcForm=보상 계산기
 RewardCalcForm.grpFilters=필터
@@ -136,6 +139,8 @@ RewardCalcForm.btnSendSelectedRaid=레이드 편집기로 선택한 결과 보�
 RewardCalcForm.lblEventCt=이벤트 값:
 RewardCalcForm.lblMap=Location:
 RewardCalcForm.btnCopySeed=Copy Seed
+RewardCalcForm.lblTime=T:
+RewardCalcForm.lblShiny=이로치:
 
 CheckerForm=시드체크
 CheckerForm.lblTID=TID:
@@ -252,6 +257,7 @@ ActionSearch=검색
 ActionStop=정지
 ToolTipAccurate=포켓몬의 테라타입과 이로치여부를 결정하고, 이를 통해 테라피스의 타입과 추가 정보를 정확하게 판단하도록 합니다. 검색 속도가 약간 느려집니다.
 ToolTipAllResults=체크x - 필터와 일치하는 첫 번째 결과에서 검색을 중지합니다. 체크o - 최대 계산값에 도달할 때까지 가능한 모든 결과를 계산합니다. 필터가 설정되지 않은 경우 무시됩니다.
+WarningNoEncounter=No encounter available for the Game Progress and Stars selection.
 
 ActionConnect=연결
 ActionConnecting=연결중

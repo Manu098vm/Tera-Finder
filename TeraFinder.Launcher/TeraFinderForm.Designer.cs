@@ -152,7 +152,7 @@
             btnStartFinder.TabIndex = 6;
             btnStartFinder.Text = "Seed Checker";
             btnStartFinder.UseVisualStyleBackColor = true;
-            btnStartFinder.Click += btnStartFinder_Click;
+            btnStartFinder.Click += btnStartSeedChecker_Click;
             // 
             // grpSavTools
             // 
@@ -289,6 +289,7 @@
             MinimizeBox = false;
             Name = "TeraFinderForm";
             RightToLeft = RightToLeft.No;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Tera Finder ";
             EnabledChanged += FormEnabledChanged;
             DragDrop += FileDragDrop;

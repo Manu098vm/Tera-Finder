@@ -9,7 +9,7 @@ namespace TeraFinder.Plugins;
 
 public class TeraPlugin : IPlugin
 {
-    public const string Version = "3.1.0";
+    public const string Version = "4.0.0";
     private bool UpdatePrompted = false;
 
     public string Name => nameof(TeraFinder);
@@ -22,19 +22,23 @@ public class TeraPlugin : IPlugin
     public ConnectionForm? Connection = null;
     public string Language = Properties.Settings.Default.def_language;
 
-    public EncounterRaid9[]? Paldea = null;
-    public EncounterRaid9[]? Kitakami = null;
-    public EncounterRaid9[]? Blueberry = null;
-    public EncounterRaid9[]? Dist = null;
-    public EncounterRaid9[]? Mighty = null;
-    public Dictionary<ulong, List<Reward>>? TeraFixedRewards = null;
-    public Dictionary<ulong, List<Reward>>? TeraLotteryRewards = null;
-    public Dictionary<ulong, List<Reward>>? DistFixedRewards = null;
-    public Dictionary<ulong, List<Reward>>? DistLotteryRewards = null;
+    public EncounterTeraTF9[]? Paldea = null;
+    public EncounterTeraTF9[]? PaldeaBlack = null;
+    public EncounterTeraTF9[]? Kitakami = null;
+    public EncounterTeraTF9[]? KitakamiBlack = null;
+    public EncounterTeraTF9[]? Blueberry = null;
+    public EncounterTeraTF9[]? BlueberryBlack = null;
+    public EncounterEventTF9[]? Dist = null;
+    public EncounterEventTF9[]? Mighty = null;
+
+    public Dictionary<uint, HashSet<EncounterEventTF9>>? AllDist = null;
+    public Dictionary<uint, HashSet<EncounterEventTF9>>? AllMighty = null;
 
     private readonly ToolStripMenuItem Plugin = new("Tera Finder Plugins");
     private readonly ToolStripMenuItem Connect = new("Connect to Remote Device");
     private readonly ToolStripMenuItem Editor = new("Tera Raid Viewer/Editor");
+    private readonly ToolStripMenuItem RaidCalculator = new("Raid Calculator");
+    private readonly ToolStripMenuItem RewardCalculator = new("Reward Calculator");
     private readonly ToolStripMenuItem Finder = new("Tera Raid Seed Checker");
     private readonly ToolStripMenuItem Flags = new("Edit Game Flags");
     private readonly ToolStripMenuItem Outbreaks = new("Mass Outbreak Viewer/Editor");
@@ -62,17 +66,35 @@ public class TeraPlugin : IPlugin
 
     private void AddCheckerToList()
     {
+        const ushort TeraLocation = 30024;
+
+        if (Paldea is null || PaldeaBlack is null)
+            (Paldea, PaldeaBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Paldea);
+
+        if (Kitakami is null || KitakamiBlack is null)
+            (Kitakami, KitakamiBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Kitakami);
+
+        if (Blueberry is null || BlueberryBlack is null)
+            (Blueberry, BlueberryBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Blueberry);
+
+        if (AllDist is null || AllMighty is null)
+        {
+            var (dist, mighty) = ResourcesUtil.GetAllEventEncounters();
+            AllDist = SeedCheckerUtil.GroupEventEncounters(dist);
+            AllMighty = SeedCheckerUtil.GroupEventEncounters(mighty);
+        }
+
         var menuVSD = (ContextMenuStrip)((dynamic)SaveFileEditor).menu.mnuVSD;            
         menuVSD.Opening += (s, e) => {
             if (SaveFileEditor.SAV is SAV9SV sav) {
                 var info = GetSenderInfo(ref s!);
                 var pk = info.Slot.Read(sav);
-                if (pk is PK9 pk9 && pk9.MetLocation == 30024)
+                if (pk is PK9 pk9 && pk9.MetLocation == TeraLocation)
                 {
                     var dic = new Dictionary<string, string> { { "CheckerForm", "" } }.TranslateInnerStrings(Language);
                     var calcSeed = new ToolStripMenuItem(dic["CheckerForm"]) { Image = Properties.Resources.icon.ToBitmap() };
                     menuVSD.Items.Insert(menuVSD.Items.Count, calcSeed);
-                    calcSeed.Click += (s, e) => new CheckerForm(pk, Language).ShowDialog();
+                    calcSeed.Click += (s, e) => new CheckerForm(pk, Language, Paldea, PaldeaBlack, Kitakami, KitakamiBlack, Blueberry, BlueberryBlack, AllDist, AllMighty).ShowDialog();
                     menuVSD.Closing += (s, e) => menuVSD.Items.Remove(calcSeed);
                 }
             }
@@ -86,23 +108,16 @@ public class TeraPlugin : IPlugin
         else
             SAV = new SAV9SV
             {
-                Version = (GameVersion)(int)GameVersion.SL,
+                Version = GameVersion.SL,
                 OT = defaultOT,
                 Language = (int)GetLanguageID(language is not null ? language : Language),
             };
 
-        var events = TeraUtil.GetSAVDistEncounters(SAV);
-        var terarewards = RewardUtil.GetTeraRewardsTables();
-        var eventsrewards = RewardUtil.GetDistRewardsTables(SAV);
-        Paldea = TeraUtil.GetAllTeraEncounters(TeraRaidMapParent.Paldea);
-        Kitakami = TeraUtil.GetAllTeraEncounters(TeraRaidMapParent.Kitakami);
-        Blueberry = TeraUtil.GetAllTeraEncounters(TeraRaidMapParent.Blueberry);
-        Dist = events[0];
-        Mighty = events[1];
-        TeraFixedRewards = terarewards[0];
-        TeraLotteryRewards = terarewards[1];
-        DistFixedRewards = eventsrewards[0];
-        DistLotteryRewards = eventsrewards[1];
+        (Paldea, PaldeaBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Paldea);
+        (Kitakami, KitakamiBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Kitakami);
+        (Blueberry, BlueberryBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Blueberry);
+        (Dist, Mighty) = EventUtil.GetCurrentEventEncounters(SAV, RewardUtil.GetDistRewardsTables(SAV));
+
         Language = GetStringLanguage((LanguageID)SAV.Language);
 
         if (!UpdatePrompted)
@@ -172,6 +187,8 @@ public class TeraPlugin : IPlugin
     {
         Plugin.DropDownItems.Add(Connect);
         Plugin.DropDownItems.Add(Editor);
+        Plugin.DropDownItems.Add(RaidCalculator);
+        Plugin.DropDownItems.Add(RewardCalculator);
         Plugin.DropDownItems.Add(Outbreaks);
         Plugin.DropDownItems.Add(Finder);
         Plugin.DropDownItems.Add(Flags);
@@ -180,14 +197,37 @@ public class TeraPlugin : IPlugin
         Events.DropDownItems.Add(NullOutbreak);
         Plugin.DropDownItems.Add(Events);
         Connect.Click += (s, e) => LaunchConnector();
-        Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Blueberry, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).Show();
-        ImportNews.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
+        Editor.Click += (s, e) => new EditorForm(SAV, PKMEditor, Language, Paldea, PaldeaBlack, Kitakami, KitakamiBlack, Blueberry, BlueberryBlack, Dist, Mighty, Connection).Show();
+        RaidCalculator.Click += (s, e) => LaunchCalculator(true);
+        RewardCalculator.Click += (s, e) => LaunchRewardCalculator(true);
+        ImportNews.Click += (s, e) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, language: Language, plugin: true);
         NullRaid.Click += (s, e) => LaunchRaidNullImporter();
         NullOutbreak.Click += (s, e) => LaunchOutbreakNullImporter();
         Flags.Click += (s, e) => new ProgressForm(SAV, Language,Connection).ShowDialog();
-        Finder.Click += (s, e) => new CheckerForm(PKMEditor!.PreparePKM(), Language).ShowDialog();
+        Finder.Click += (s, e) => AddSeedCheckerPluginControl();
         Outbreaks.Click += (s, e) => new OutbreakForm(SAV, Language, Connection).ShowDialog();
         tools.DropDownItems.Add(Plugin);
+    }
+
+    private void AddSeedCheckerPluginControl()
+    {
+        if (Paldea is null || PaldeaBlack is null)
+            (Paldea, PaldeaBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Paldea);
+
+        if (Kitakami is null || KitakamiBlack is null)
+            (Kitakami, KitakamiBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Kitakami);
+
+        if (Blueberry is null || BlueberryBlack is null)
+            (Blueberry, BlueberryBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Blueberry);
+
+        if (AllDist is null || AllMighty is null)
+        {
+            var (dist, mighty) = ResourcesUtil.GetAllEventEncounters();
+            AllDist = SeedCheckerUtil.GroupEventEncounters(dist);
+            AllMighty = SeedCheckerUtil.GroupEventEncounters(mighty);
+        }
+
+        new CheckerForm(PKMEditor!.PreparePKM(), Language, Paldea, PaldeaBlack, Kitakami, KitakamiBlack, Blueberry, BlueberryBlack, AllDist, AllMighty).ShowDialog();
     }
 
     private void TranslatePlugins()
@@ -204,11 +244,15 @@ public class TeraPlugin : IPlugin
             { "Plugin.ImportNews", "Import from files..." },
             { "Plugin.OutbreakNull", "Import Empty (Null) Outbreak Event" },
             { "Plugin.RaidNull", "Import Empty (Null) Raid Event" },
+            { "Plugin.RaidCalculator", "Raid Calculator" },
+            { "Plugin.RewardCalculator", "Reward Calculator" },
         }.TranslateInnerStrings(Language);
 
         Plugin.Text = dic["Plugin.TeraFinderPlugin"];
         Connect.Text = dic["Plugin.ConnectRemote"];
         Editor.Text = dic["Plugin.TeraViewer"];
+        RaidCalculator.Text = dic["Plugin.RaidCalculator"];
+        RewardCalculator.Text = dic["Plugin.RewardCalculator"];
         Finder.Text = dic["Plugin.SeedChecker"];
         Flags.Text = dic["Plugin.FlagEditor"];
         Events.Text = dic["Plugin.NewsImporter"];
@@ -220,31 +264,37 @@ public class TeraPlugin : IPlugin
 
     public void LaunchEditor()
     {
-        new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Blueberry, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection).ShowDialog();
+        new EditorForm(SAV, PKMEditor, Language, Paldea, PaldeaBlack, Kitakami, KitakamiBlack, Blueberry, BlueberryBlack, Dist, Mighty, Connection).ShowDialog();
     }
 
-    public void LaunchCalculator()
+    public void LaunchCalculator(bool plugin = false)
     {
-        var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Blueberry, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
-        new CalculatorForm(editor).ShowDialog();
+        var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, PaldeaBlack, Kitakami, KitakamiBlack, Blueberry, BlueberryBlack, Dist, Mighty, Connection);
+        if (plugin)
+            new CalculatorForm(editor).Show();
+        else
+            new CalculatorForm(editor).ShowDialog();
     }
 
-    public void LaunchRewardCalculator()
+    public void LaunchRewardCalculator(bool plugin = false)
     {
-        var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, Kitakami, Blueberry, Dist, Mighty, TeraFixedRewards, TeraLotteryRewards, DistFixedRewards, DistLotteryRewards, Connection);
-        new RewardCalcForm(editor).ShowDialog();
+        var editor = new EditorForm(SAV, PKMEditor, Language, Paldea, PaldeaBlack, Kitakami, KitakamiBlack, Blueberry, BlueberryBlack, Dist, Mighty, Connection);
+        if (plugin)
+            new RewardCalcForm(editor).Show();
+        else
+            new RewardCalcForm(editor).ShowDialog();
     }
 
     public void LaunchImporter()
     {
-        ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, plugin: true);
+        ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, language: Language, plugin: true);
     }
 
     public void LaunchRaidNullImporter()
     {
         ImportUtil.FinalizeImportRaid(SAV, Properties.Resources.event_raid_identifier, Properties.Resources.fixed_reward_item_array,
             Properties.Resources.lottery_reward_item_array, Properties.Resources.raid_enemy_array, Properties.Resources.raid_priority_array, "0",
-            ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, ImportUtil.GenerateDictionary().TranslateInnerStrings(Language));
+            ref Dist, ref Mighty, ImportUtil.GenerateDictionary().TranslateInnerStrings(Language));
     }
 
     public void LaunchOutbreakNullImporter()
@@ -258,9 +308,26 @@ public class TeraPlugin : IPlugin
         new ProgressForm(SAV, Language,Connection).ShowDialog();
     }
 
-    public void LaunchFinder()
+    public void LaunchSeedChecker()
     {
-        new CheckerForm(new PK9 { TrainerTID7 = SAV.TrainerTID7, TrainerSID7 = SAV.TrainerSID7 }, Language).ShowDialog();
+        if (Paldea is null || PaldeaBlack is null)
+            (Paldea, PaldeaBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Paldea);
+
+        if (Kitakami is null || KitakamiBlack is null)
+            (Kitakami, KitakamiBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Kitakami);
+
+        if (Blueberry is null || BlueberryBlack is null)
+            (Blueberry, BlueberryBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Blueberry);
+
+        if (AllDist is null || AllMighty is null)
+        {
+            var (dist, mighty) = ResourcesUtil.GetAllEventEncounters();
+            AllDist = SeedCheckerUtil.GroupEventEncounters(dist);
+            AllMighty = SeedCheckerUtil.GroupEventEncounters(mighty);
+        }
+
+        new CheckerForm(new PK9 { TrainerTID7 = SAV.TrainerTID7, TrainerSID7 = SAV.TrainerSID7 }, 
+            Language, Paldea, PaldeaBlack, Kitakami, KitakamiBlack, Blueberry, BlueberryBlack, AllDist, AllMighty).ShowDialog();
     }
 
     public void LaunchMassOutbreakEditor()
@@ -286,13 +353,7 @@ public class TeraPlugin : IPlugin
         con.TranslateInterface(Language);
         con.FormClosing += (s, e) =>
         {
-            var events = TeraUtil.GetSAVDistEncounters(SAV);
-            var eventsrewards = RewardUtil.GetDistRewardsTables(SAV);
-            Dist = events[0];
-            Mighty = events[1];
-            DistFixedRewards = eventsrewards[0];
-            DistLotteryRewards = eventsrewards[1];
-
+            (Dist, Mighty) = EventUtil.GetCurrentEventEncounters(SAV, RewardUtil.GetDistRewardsTables(SAV));
             if (parent is not null)
             {
                 Language = GetStringLanguage((LanguageID)SAV.Language);
@@ -330,14 +391,14 @@ public class TeraPlugin : IPlugin
     public string GetSavName()
     {
         var ot = SAV.OT;
-        var game = (GameVersion)SAV.Version;
+        var game = SAV.Version;
         var tid = (int)SAV.TrainerTID7;
         return $"{game} - {ot} ({tid}) - {Language.ToUpper()}";
     }
 
     public uint GetRaidEventIdentifier()
     {
-        var block = SAV.Accessor.FindOrDefault(Blocks.KBCATEventRaidIdentifier.Key);
+        var block = SAV.Accessor.FindOrDefault(BlockDefinitions.KBCATEventRaidIdentifier.Key);
         var data = block.Data;
         if (data.Length > 0)
             return BinaryPrimitives.ReadUInt32LittleEndian(data);
@@ -347,15 +408,15 @@ public class TeraPlugin : IPlugin
 
     public uint GetOutbreakEventIdentifier()
     {
-        var enableBlock = SAV.Accessor.FindOrDefault(Blocks.KBCATOutbreakEnabled.Key);
+        var enableBlock = SAV.Accessor.FindOrDefault(BlockDefinitions.KBCATOutbreakEnabled.Key);
         if (enableBlock.Type == SCTypeCode.None || enableBlock.Type == SCTypeCode.Bool1)
             return 0;
-        var pokeDataBlock = SAV.Accessor.FindOrDefault(Blocks.KBCATOutbreakPokeData.Key);
+        var pokeDataBlock = SAV.Accessor.FindOrDefault(BlockDefinitions.KBCATOutbreakPokeData.Key);
         var tablePokeData = FlatBufferConverter.DeserializeFrom<DeliveryOutbreakPokeDataArray>(pokeDataBlock.Data);
         return tablePokeData.Table[0].ID > 0 ? uint.Parse($"{tablePokeData.Table[0].ID}"[..8]) : 0;
     }
 
-    public bool TryLoadFile(string filePath) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, ref DistFixedRewards, ref DistLotteryRewards, language: Language, path:filePath);
+    public bool TryLoadFile(string filePath) => ImportUtil.ImportNews(SAV, ref Dist, ref Mighty, language: Language, path:filePath);
 
     private void EnablePlugins() => Plugin.Enabled = true;
 
@@ -368,7 +429,7 @@ public class TeraPlugin : IPlugin
         Type contextMenuSAVType = ((dynamic)SaveFileEditor).menu.GetType();
         MethodInfo? getSenderInfoMethod = contextMenuSAVType.GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
             .SingleOrDefault(m => m.Name.Contains("GetSenderInfo"));
-        return (SlotViewInfo<PictureBox>)getSenderInfoMethod?.Invoke(null, [sender])!;
+        return (SlotViewInfo<PictureBox>)getSenderInfoMethod?.Invoke(null, new object[] { sender })!;
     }
 
     public bool ExportSAVDialog(int currentBox = 0)

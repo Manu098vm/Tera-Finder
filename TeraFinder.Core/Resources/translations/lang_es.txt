@@ -8,6 +8,8 @@ Plugin.ImportNews=Importar desde archivos...
 Plugin.OutbreakNull=Importar Apariciones Masivas Vacías (Evento Nulo)
 Plugin.RaidNull=Importar Teraincursión Vacía (Evento Nulo)
 Plugin.OutbreakViewer=Visor/Editor de Apariciones Masivas
+Plugin.RaidCalculator=Calcular Teraincursión
+Plugin.RewardCalculator=Calcular Recompensas
 Plugin.MapPaldea=Paldea
 Plugin.MapKitakami=Noroteo
 Plugin.MapBlueberry=Arándano
@@ -105,6 +107,7 @@ CalculatorForm.btnSendToEditor=Enviar Resultado Seleccionado a Raid Editor
 CalculatorForm.lblEventct=Índice Evento:
 CalculatorForm.lblMap=Ubicación:
 CalculatorForm.btnCopySeed=Copiar Seed
+CalculatorForm.lblTime=T:
 
 RewardCalcForm=Calculadora de Recompensas
 RewardCalcForm.grpFilters=Filtros
@@ -136,6 +139,8 @@ RewardCalcForm.btnSendSelectedRaid=Enviar Resultado Seleccionado a Raid Editor
 RewardCalcForm.lblEventCt=Índice Evento:
 RewardCalcForm.lblMap=Ubicación:
 RewardCalcForm.btnCopySeed=Copiar Seed
+RewardCalcForm.lblTime=T:
+RewardCalcForm.lblShiny=Variocolor:
 
 CheckerForm=Inspector de Seeds
 CheckerForm.lblTID=TID:
@@ -252,6 +257,7 @@ ActionSearch=Buscar
 ActionStop=Parar
 ToolTipAccurate=Forzar la calculadora a definir el Teratipo y variocolor de una seed dada, para así determinar con precisión el tipo de Teralitos e información extra. Esto hace las búsquedas un poco lentas.
 ToolTipAllResults=Deshabilitado - Detener cada hilo de búsqueda al primer resultado que coincida con los filtros.  Habilitado - Computa todos los resultados posibles hasta que el número en Max Calc sea alcanzado.  Se ignora si no hay ningún filtro establecido.
+WarningNoEncounter=No encounter available for the Game Progress and Stars selection.
 
 ActionConnect=Conectar
 ActionConnecting=Conectando...
