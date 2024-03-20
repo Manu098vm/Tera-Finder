@@ -2733,6 +2733,16 @@ namespace TeraFinder.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _770 {
+            get {
+                object obj = ResourceManager.GetObject("_770", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _775 {
             get {
                 object obj = ResourceManager.GetObject("_775", resourceCulture);
@@ -7791,9 +7801,8 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
         ///Plugin.RaidNull=Import Empty (Null) Raid Event
         ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
-        ///Plugin.MapPaldea=Paldea
-        ///Plugin.MapKitakami=Kitakami
-        ///Plugi [rest of string was truncated]&quot;;.
+        ///Plugin.RaidCalculator=Raid Calculator
+        ///Plugin.RewardCalcula [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_de {
             get {
@@ -7812,9 +7821,8 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
         ///Plugin.RaidNull=Import Empty (Null) Raid Event
         ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
-        ///Plugin.MapPaldea=Paldea
-        ///Plugin.MapKitakami=Kitakami
-        ///Plugi [rest of string was truncated]&quot;;.
+        ///Plugin.RaidCalculator=Raid Calculator
+        ///Plugin.RewardCalcula [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_en {
             get {
@@ -7829,12 +7837,10 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.SeedChecker=Inspector de Seeds
         ///Plugin.FlagEditor=Edita Flags del Juego
         ///Plugin.NewsImporter=Importar Noticias Poképortal
-        ///Plugin.ImportNews=Import from files...
-        ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
-        ///Plugin.RaidNull=Import Empty (Null) Raid Event
-        ///Plugin.OutbreakViewer=Visor/Editor de Apariciones Masivas
-        ///Plugin.MapPaldea=Paldea
-        ///Plugin [rest of string was truncated]&quot;;.
+        ///Plugin.ImportNews=Importar desde archivos...
+        ///Plugin.OutbreakNull=Importar Apariciones Masivas Vacías (Evento Nulo)
+        ///Plugin.RaidNull=Importar Teraincursión Vacía (Evento Nulo)
+        ///Plugin.OutbreakViewer=Visor/Editor de Apariciones Masivas [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_es {
             get {
@@ -7853,9 +7859,8 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
         ///Plugin.RaidNull=Import Empty (Null) Raid Event
         ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
-        ///Plugin.MapPaldea=Paldea
-        ///Plugin.MapKitakami=Septentria
-        ///Plu [rest of string was truncated]&quot;;.
+        ///Plugin.RaidCalculator=Raid Calculator
+        ///Plugin.RewardCalcula [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_fr {
             get {
@@ -7893,9 +7898,8 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
         ///Plugin.RaidNull=Import Empty (Null) Raid Event
         ///Plugin.OutbreakViewer=Mass Outbreak Viewer/Editor
-        ///Plugin.MapPaldea=Paldea
-        ///Plugin.MapKitakami=Kitakami
-        ///Plugi [rest of string was truncated]&quot;;.
+        ///Plugin.RaidCalculator=Raid Calculator
+        ///Plugin.RewardCalcula [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_ja {
             get {
@@ -7914,14 +7918,11 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
         ///Plugin.RaidNull=Import Empty (Null) Raid Event
         ///Plugin.OutbreakViewer=대량발생 보기/편집
+        ///Plugin.RaidCalculator=레이드 계산기
+        ///Plugin.RewardCalculator=보상 계산기
         ///Plugin.MapPaldea=Paldea
         ///Plugin.MapKitakami=Kitakami
-        ///Plugin.MapBlueberry=Blueberry
-        ///Plugin.Main=Main
-        ///Plugin.DLC1=DLC1
-        ///Plugin.DLC2=DLC2
-        ///
-        ///Te [rest of string was truncated]&quot;;.
+        ///Plugin.MapBlueberry=Bluebe [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_ko {
             get {
@@ -7940,6 +7941,8 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.OutbreakNull=清除现有大量出现
         ///Plugin.RaidNull=清除现有活动团战
         ///Plugin.OutbreakViewer=大量出现查看/编辑
+        ///Plugin.RaidCalculator=太晶洞窟计算器
+        ///Plugin.RewardCalculator=奖励计算器
         ///Plugin.MapPaldea=帕底亚
         ///Plugin.MapKitakami=北上乡
         ///Plugin.MapBlueberry=蓝莓学院
@@ -7948,8 +7951,7 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.DLC2=DLC2
         ///
         ///TeraFinderForm=太晶洞窟搜索
-        ///TeraFinderForm.remoteConnectToolStripMenuItem=工具
-        ///TeraFinderForm. [rest of string was truncated]&quot;;.
+        ///Ter [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_zh {
             get {
@@ -7968,14 +7970,12 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.OutbreakNull=Import Empty (Null) Outbreak Event
         ///Plugin.RaidNull=Import Empty (Null) Raid Event
         ///Plugin.OutbreakViewer=大量出現查看/編輯
+        ///Plugin.RaidCalculator=太晶洞窟計算器
+        ///Plugin.RewardCalculator=獎勵計算器
         ///Plugin.MapPaldea=Paldea
         ///Plugin.MapKitakami=Kitakami
         ///Plugin.MapBlueberry=Blueberry
-        ///Plugin.Main=Main
-        ///Plugin.DLC1=DLC1
-        ///Plugin.DLC2=DLC2
-        ///
-        ///TeraFinderF [rest of string was truncated]&quot;;.
+        ///Plugi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string lang_zh2 {
             get {
