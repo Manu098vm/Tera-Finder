@@ -438,6 +438,7 @@ partial class CalculatorForm
         cmbSpecies.Name = "cmbSpecies";
         cmbSpecies.Size = new Size(194, 28);
         cmbSpecies.TabIndex = 23;
+        cmbSpecies.SelectedIndexChanged += cmbSpecies_IndexChanged;
         // 
         // cmbStars
         // 

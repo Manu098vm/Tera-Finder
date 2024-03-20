@@ -278,7 +278,7 @@ public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilt
                 if (TeraType != res.TeraType)
                     return false;
 
-            if (AbilityNumber != 0)
+            if (AbilityNumber != -1)
                 if (AbilityNumber != res.AbilityNumber)
                     return false;
 
@@ -382,7 +382,7 @@ public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilt
         !(AltEC && res % 100 != 0);
 
     public bool IsAbilityMatch(int res) => 
-        AbilityNumber == 0 || AbilityNumber == res;
+        AbilityNumber == -1 || AbilityNumber == res;
 
     public bool IsNatureMatch(Nature res) =>
         Nature is Nature.Random || Nature == res;
@@ -427,7 +427,7 @@ public class TeraFilter(bool isEncounterFilter, bool isIvFilter, bool isStatFilt
             return false;
         if (!(TeraType == -1))
             return false;
-        if (!(AbilityNumber == 0))
+        if (!(AbilityNumber == -1))
             return false;
         if (Nature is not Nature.Random)
             return false;

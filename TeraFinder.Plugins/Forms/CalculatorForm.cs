@@ -404,15 +404,20 @@ public partial class CalculatorForm : Form
         return result;
     }
 
-    private Gender GetGender()
+    private int GetAbilityNumber() => cmbAbility.SelectedIndex switch
     {
-        return cmbGender.SelectedIndex switch
-        {
-            1 => Gender.Male,
-            2 => Gender.Female,
-            _ => Gender.Random,
-        };
-    }
+        1 => 0,
+        2 => 2,
+        3 => 4,
+        _ => -1,
+    };
+
+    private Gender GetGender() => cmbGender.SelectedIndex switch
+    {
+        1 => Gender.Male,
+        2 => Gender.Female,
+        _ => Gender.Random,
+    };
 
     private async void btnApply_Click(object sender, EventArgs e)
     {
@@ -445,6 +450,7 @@ public partial class CalculatorForm : Form
         var stars = GetStars();
         var entity = GetSpeciesFormIndex();
         var teraType = (sbyte)(cmbTeraType.SelectedIndex - 1);
+        var ability = GetAbilityNumber();
         var gender = GetGender();
 
         var encounterFilter = entity.species > 0 || stars > 0;
@@ -473,7 +479,7 @@ public partial class CalculatorForm : Form
             Species = entity.species,
             Form = entity.form,
             TeraType = teraType,
-            AbilityNumber = cmbAbility.SelectedIndex == 3 ? 4 : cmbAbility.SelectedIndex,
+            AbilityNumber = ability,
             Nature = (Nature)cmbNature.SelectedIndex,
             Gender = gender,
             Shiny = (TeraShiny)cmbShiny.SelectedIndex,
