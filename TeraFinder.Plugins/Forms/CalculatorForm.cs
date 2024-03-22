@@ -616,7 +616,7 @@ public partial class CalculatorForm : Form
             var sav = (SAV9SV)Editor.SAV.Clone();
             sav.TrainerTID7 = Convert.ToUInt32(txtTID.Text, 10);
             sav.TrainerSID7 = Convert.ToUInt32(txtSID.Text, 10);
-            sav.Version = cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.SV;
+            sav.Version = cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.VL;
             var progress = (GameProgress)cmbProgress.SelectedIndex;
             var content = (RaidContent)cmbContent.SelectedIndex;
 
