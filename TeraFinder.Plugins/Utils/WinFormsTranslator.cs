@@ -103,7 +103,7 @@ public static class WinFormsTranslator
         }
 
         var txt = Core.ResourcesUtil.GetTextResource(file);
-        return Util.LoadStringList(file, txt);
+        return Util.GetStringList(file, txt);
     }
 
     private static IEnumerable<object> GetTranslatableControls(Control f)
