@@ -1,4 +1,5 @@
 using PKHeX.Core;
+using System.Reflection;
 
 //Most of functions are taken from pkhex
 //https://github.com/kwsch/PKHeX/blob/master/PKHeX.WinForms/Util/WinFormsTranslator.cs
@@ -103,7 +104,8 @@ public static class WinFormsTranslator
         }
 
         var txt = Core.ResourcesUtil.GetTextResource(file);
-        return Util.GetStringList(file, txt);
+        return txt is not null ? (string[])typeof(Util).GetMethod("LoadStringList", 
+            BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, [file, txt ])! : [];
     }
 
     private static IEnumerable<object> GetTranslatableControls(Control f)
