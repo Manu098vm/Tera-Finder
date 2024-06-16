@@ -1,7 +1,3 @@
-using PKHeX.Core;
-using pkNX.Structures;
-using System.Reflection;
-
 //Most of functions are taken from pkhex
 //https://github.com/kwsch/PKHeX/blob/master/PKHeX.WinForms/Util/WinFormsTranslator.cs
 
