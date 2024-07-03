@@ -429,7 +429,7 @@ public class TeraPlugin : IPlugin
         Type contextMenuSAVType = ((dynamic)SaveFileEditor).menu.GetType();
         MethodInfo? getSenderInfoMethod = contextMenuSAVType.GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
             .SingleOrDefault(m => m.Name.Contains("GetSenderInfo"));
-        return (SlotViewInfo<PictureBox>)getSenderInfoMethod?.Invoke(null, new object[] { sender })!;
+        return (SlotViewInfo<PictureBox>)getSenderInfoMethod?.Invoke(null, [sender])!;
     }
 
     public bool ExportSAVDialog(int currentBox = 0)
