@@ -9,7 +9,7 @@ namespace TeraFinder.Plugins;
 
 public class TeraPlugin : IPlugin
 {
-    public const string Version = "4.0.3";
+    public const string Version = "4.0.4";
     private bool UpdatePrompted = false;
 
     public string Name => nameof(TeraFinder);
@@ -429,7 +429,7 @@ public class TeraPlugin : IPlugin
         Type contextMenuSAVType = ((dynamic)SaveFileEditor).menu.GetType();
         MethodInfo? getSenderInfoMethod = contextMenuSAVType.GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
             .SingleOrDefault(m => m.Name.Contains("GetSenderInfo"));
-        return (SlotViewInfo<PictureBox>)getSenderInfoMethod?.Invoke(null, new object[] { sender })!;
+        return (SlotViewInfo<PictureBox>)getSenderInfoMethod?.Invoke(null, [sender])!;
     }
 
     public bool ExportSAVDialog(int currentBox = 0)
