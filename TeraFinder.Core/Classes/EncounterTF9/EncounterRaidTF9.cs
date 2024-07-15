@@ -149,8 +149,8 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
             Version = version,
             Language = ot_language,
             HandlingTrainerLanguage = (byte)ot_language,
-            OriginalTrainerName = ot_name,
-            HandlingTrainerName = ot_name,
+            OriginalTrainerName = IsNonLatinIllegal(ot_language, ot_name) ? "TF" : ot_name,
+            HandlingTrainerName = IsNonLatinIllegal(ot_language, ot_name) ? "TF" : ot_name,
             OriginalTrainerGender = ot_gender,
             TeraTypeOriginal = (MoveType)rngResult.TeraType,
             EncryptionConstant = rngResult.EC,
@@ -185,25 +185,16 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
         legality = new LegalityAnalysis(result);
         if (!legality.Valid)
         {
-            //CHS, CHT, KOR and JPN have OT Name length restrictions
-            var la_ot = legality.Results.Where(l => l.Identifier is CheckIdentifier.Trainer).FirstOrDefault();
-            if (la_ot.Judgement is Severity.Invalid && (LanguageID)result.Language is LanguageID.ChineseS or LanguageID.ChineseT or LanguageID.Korean or LanguageID.Japanese)
-            {
-                result.OriginalTrainerName = "TF";
-                result.RefreshChecksum();
-                legality = new LegalityAnalysis(result);
-            }
-
             //Seed 0xC4C200B6 produces equal EC and PID, which PKHeX flags as invalid
-            if (!legality.Valid)
-            {
-                var la_ec = legality.Results.Where(l => l.Identifier is CheckIdentifier.EC).FirstOrDefault();
-                if (la_ec.Judgement is Severity.Invalid && rngResult.EC == rngResult.PID)
-                    return true;
-            }
+            var la_ec = legality.Results.Where(l => l.Identifier is CheckIdentifier.EC).FirstOrDefault();
+            if (la_ec.Judgement is Severity.Invalid && rngResult.EC == rngResult.PID)
+                return true;
         }
         return legality.Valid;
     }
+
+    private static bool IsNonLatinIllegal(int languageID, string name) => (((LanguageID)languageID is LanguageID.Japanese or 
+        LanguageID.ChineseS or LanguageID.ChineseT or LanguageID.Korean) && (name.Length >= 7));
 
 
     //Get the encounter names from a pool of encounters
