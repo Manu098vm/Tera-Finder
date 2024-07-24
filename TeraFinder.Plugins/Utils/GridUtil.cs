@@ -163,6 +163,7 @@ public static class GridUtil
                     var encounters = f.Editor.GetCurrentEncounters(content, map);
                     if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, out var enc, out var result))
                     {
+                        var checkActiveHandler = ParseSettings.Settings.Handler.CheckActiveHandler;
                         ParseSettings.Settings.Handler.CheckActiveHandler = false;
                         if (!enc.GeneratePK9(result.Value, id32, version, f.Editor.SAV.OT, f.Editor.SAV.Language, f.Editor.SAV.Gender, out var pk9, out var la))
                         {
@@ -171,6 +172,7 @@ public static class GridUtil
                                 MessageBox.Show($"{strings["GridUtil.ErrorParsing"]}\n{strings["GridUtil.MissingData"]} [{enc.Identifier}].\n{strings["GridUtil.CheckWiki"]}");
                             else
                                 MessageBox.Show($"{strings["GridUtil.ErrorParsing"]} {strings["GridUtil.Report"]}\n{la.Report()}");
+                            ParseSettings.Settings.Handler.CheckActiveHandler = checkActiveHandler;
                             return;
                         }
 
@@ -196,6 +198,8 @@ public static class GridUtil
                             File.WriteAllBytes(sfd.FileName, pk9.Data);
                             MessageBox.Show($"{strings["GridUtil.Exported"]} {sfd.FileName}");
                         }
+
+                        ParseSettings.Settings.Handler.CheckActiveHandler = checkActiveHandler;
                     }
                 }
                 catch (Exception ex)
