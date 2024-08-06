@@ -378,6 +378,9 @@ public static class GridUtil
                     var id32 = TidUtil.GetID32(Convert.ToUInt32(f.txtTID.Text, 10), Convert.ToUInt32(f.txtSID.Text, 10));
 
                     var encounters = f.Editor.GetCurrentEncounters(content, map);
+                    var checkActiveHandler = ParseSettings.Settings.Handler.CheckActiveHandler;
+                    ParseSettings.Settings.Handler.CheckActiveHandler = false;
+
                     if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, out var enc, out var result))
                     {
                         if (!enc.GeneratePK9(result.Value, id32, version, f.Editor.SAV.OT, f.Editor.SAV.Language, f.Editor.SAV.Gender, out var pk9, out var la))
@@ -387,9 +390,12 @@ public static class GridUtil
                                 MessageBox.Show($"{strings["GridUtil.ErrorParsing"]}\n{strings["GridUtil.MissingData"]} [{enc.Identifier}].\n{strings["GridUtil.CheckWiki"]}");
                             else
                                 MessageBox.Show($"{strings["GridUtil.ErrorParsing"]} {strings["GridUtil.Report"]}\n{la.Report()}");
+
+                            ParseSettings.Settings.Handler.CheckActiveHandler = checkActiveHandler;
                             return;
                         }
 
+                        ParseSettings.Settings.Handler.CheckActiveHandler = checkActiveHandler;
                         f.Editor.PKMEditor!.PopulateFields(pk9!, true);
                     }
                 }
