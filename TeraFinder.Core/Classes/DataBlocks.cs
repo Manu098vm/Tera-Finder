@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using System.Reflection;
 
 namespace TeraFinder.Core;
 
@@ -128,7 +127,7 @@ public static class BlockDefinitions
     };
     #endregion
 
-    #region DataBCAT
+    #region KBCATRaid
     public static readonly BlockDefinition KBCATEventRaidIdentifier = new()
     {
         Name = "KBCATEventRaidIdentifier",
@@ -232,7 +231,7 @@ public static class BlockDefinitions
     };
     #endregion
 
-    #region Outbreak1
+    #region Outbreak01
     public static readonly BlockDefinition KOutbreak01MainCenterPos = new()
     {
         Name = "KOutbreak01MainCenterPos",
@@ -303,8 +302,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
-    #region Outbreak2
+    #region Outbreak02
     public static readonly BlockDefinition KOutbreak02MainCenterPos = new()
     {
         Name = "KOutbreak02MainCenterPos",
@@ -375,8 +373,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
-    #region Outbreak3
+    #region Outbreak03
     public static readonly BlockDefinition KOutbreak03MainCenterPos = new()
     {
         Name = "KOutbreak03MainCenterPos",
@@ -447,8 +444,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
-    #region Outbreak4
+    #region Outbreak04
     public static readonly BlockDefinition KOutbreak04MainCenterPos = new()
     {
         Name = "KOutbreak04MainCenterPos",
@@ -519,8 +515,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
-    #region Outbreak5
+    #region Outbreak05
     public static readonly BlockDefinition KOutbreak05MainCenterPos = new()
     {
         Name = "KOutbreak05MainCenterPos",
@@ -591,8 +586,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
-    #region Outbreak6
+    #region Outbreak06
     public static readonly BlockDefinition KOutbreak06MainCenterPos = new()
     {
         Name = "KOutbreak06MainCenterPos",
@@ -663,8 +657,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
-    #region Outbreak7
+    #region Outbreak07
     public static readonly BlockDefinition KOutbreak07MainCenterPos = new()
     {
         Name = "KOutbreak07MainCenterPos",
@@ -735,8 +728,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
-    #region Outbreak8
+    #region Outbreak08
     public static readonly BlockDefinition KOutbreak08MainCenterPos = new()
     {
         Name = "KOutbreak08MainCenterPos",
@@ -807,7 +799,8 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-    #region BCATOutbreak1
+
+    #region BCATOutbreak01
     public static BlockDefinition KOutbreakBC01MainCenterPos = new()
     {
         Name = "KOutbreakBC01MainCenterPos",
@@ -870,7 +863,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-    #region BCATOutbreak2
+    #region BCATOutbreak02
     public static BlockDefinition KOutbreakBC02MainCenterPos = new()
     {
         Name = "KOutbreakBC02MainCenterPos",
@@ -932,7 +925,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-    #region BCATOutbreak3
+    #region BCATOutbreak03
     public static BlockDefinition KOutbreakBC03MainCenterPos = new()
     {
         Name = "KOutbreakBC03MainCenterPos",
@@ -994,7 +987,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-    #region BCATOutbreak4
+    #region BCATOutbreak04
     public static BlockDefinition KOutbreakBC04MainCenterPos = new()
     {
         Name = "KOutbreakBC04MainCenterPos",
@@ -1057,7 +1050,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-    #region BCATOutbreak5
+    #region BCATOutbreak05
     public static BlockDefinition KOutbreakBC05MainCenterPos = new()
     {
         Name = "KOutbreakBC05MainCenterPos",
@@ -1119,7 +1112,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-    #region BCATOutbreak6
+    #region BCATOutbreak06
     public static BlockDefinition KOutbreakBC06MainCenterPos = new()
     {
         Name = "KOutbreakBC06MainCenterPos",
@@ -1182,7 +1175,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-    #region BCATOutbreak7
+    #region BCATOutbreak07
     public static BlockDefinition KOutbreakBC07MainCenterPos = new()
     {
         Name = "KOutbreakBC07MainCenterPos",
@@ -1245,7 +1238,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-    #region BCATOutbreak8
+    #region BCATOutbreak08
     public static BlockDefinition KOutbreakBC08MainCenterPos = new()
     {
         Name = "KOutbreakBC08MainCenterPos",
@@ -1308,7 +1301,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-    #region BCATOutbreak9
+    #region BCATOutbreak09
     public static BlockDefinition KOutbreakBC09MainCenterPos = new()
     {
         Name = "KOutbreakBC09MainCenterPos",
@@ -1434,6 +1427,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
+
     #region Outbreak01DLC1
     public static readonly BlockDefinition KOutbreak01DLC1CenterPos = new()
     {
@@ -1505,7 +1499,6 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
     #region Outbreak02DLC1
     public static readonly BlockDefinition KOutbreak02DLC1CenterPos = new()
     {
@@ -1577,7 +1570,6 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
     #region Outbreak03DLC1
     public static readonly BlockDefinition KOutbreak03DLC1CenterPos = new()
     {
@@ -1649,7 +1641,6 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
     #region Outbreak04DLC1
     public static readonly BlockDefinition KOutbreak04DLC1CenterPos = new()
     {
@@ -1721,6 +1712,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
+
     #region BCATOutbreak01DLC1
     public static BlockDefinition KOutbreakBC01DLC1CenterPos = new()
     {
@@ -2342,6 +2334,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
+
     #region Outbreak01DLC2
     public static readonly BlockDefinition KOutbreak01DLC2CenterPos = new()
     {
@@ -2413,7 +2406,6 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
     #region Outbreak02DLC2
     public static readonly BlockDefinition KOutbreak02DLC2CenterPos = new()
     {
@@ -2485,7 +2477,6 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
     #region Outbreak03DLC2
     public static readonly BlockDefinition KOutbreak03DLC2CenterPos = new()
     {
@@ -2557,7 +2548,6 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
     #region Outbreak04DLC2
     public static readonly BlockDefinition KOutbreak04DLC2CenterPos = new()
     {
@@ -2629,7 +2619,6 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
-
     #region Outbreak05DLC2
     public static readonly BlockDefinition KOutbreak05DLC2CenterPos = new()
     {
@@ -2701,6 +2690,7 @@ public static class BlockDefinitions
         Size = 4,
     };
     #endregion
+
     #region BCATOutbreak01DLC2
     public static BlockDefinition KOutbreakBC01DLC2CenterPos = new()
     {
