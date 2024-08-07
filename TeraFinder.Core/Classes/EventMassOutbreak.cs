@@ -1,8 +1,6 @@
 ﻿using PKHeX.Core;
 using System.Text.Json.Nodes;
 using System.Text.Json;
-using TeraFinder.Core;
-using static System.Buffers.Binary.BinaryPrimitives;
 
 namespace TeraFinder.Core
 {
