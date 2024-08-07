@@ -485,7 +485,7 @@ public partial class OutbreakForm : Form
         {
             var massOutbreaks = CurrMap switch { TeraRaidMapParent.Paldea => MassOutbreaksMain, TeraRaidMapParent.Kitakami => MassOutbreaksDLC1, _ => MassOutbreaksDLC2 };
             var outbreak = massOutbreaks[cmbOutbreaks.SelectedIndex];
-            var toExpect = (byte)outbreak.GetAmountAvailable();
+            var toExpect = (byte)outbreak.AmountAvailable;
 
             if (chkEnabled.Checked)
                 outbreak.Enabled = true;
@@ -508,7 +508,7 @@ public partial class OutbreakForm : Form
             if (Connection is not null && Connection.IsConnected())
             {
                 var success = false;
-                var value = (byte)outbreak.GetAmountAvailable();
+                var value = (byte)outbreak.AmountAvailable;
                 var blockInfo = (CurrMap,outbreak) switch
                 {
                     (TeraRaidMapParent.Kitakami,MassOutbreak) => BlockDefinitions.KOutbreakDLC1NumActive,
