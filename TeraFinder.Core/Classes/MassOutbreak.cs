@@ -1,27 +1,8 @@
 ﻿using PKHeX.Core;
 using System.Text.Json.Nodes;
 using System.Text.Json;
-using static System.Buffers.Binary.BinaryPrimitives;
 
 namespace TeraFinder.Core;
-
-public class GameCoordinates(SCBlock coordinates)
-{
-    protected readonly SCBlock Coordinates = coordinates;
-
-    public float X { get => ReadSingleLittleEndian(Coordinates.Data.AsSpan()); set => SetX(value); }
-    public float Y { get => ReadSingleLittleEndian(Coordinates.Data.AsSpan()[4..]); set => SetY(value); }
-    public float Z { get => ReadSingleLittleEndian(Coordinates.Data.AsSpan()[8..]); set => SetZ(value); }
-
-    private void SetX(float x) => SetCoordinates(0, x);
-    private void SetY(float y) => SetCoordinates(4, y);
-    private void SetZ(float z) => SetCoordinates(8, z);
-
-    private void SetCoordinates(int index, float value) => WriteSingleLittleEndian(Coordinates.Data.AsSpan()[index..], value);
-
-    public ReadOnlySpan<byte> GetCoordinates() => Coordinates.Data.AsSpan();
-    public void SetCoordinates(ReadOnlySpan<byte> coordinates) => Coordinates.ChangeData(coordinates);
-}
 
 public class MassOutbreak : IOutbreak
 {
@@ -233,38 +214,5 @@ public class MassOutbreak : IOutbreak
 
         if (block.Type is SCTypeCode.Int32)
             block.SetValue(value);
-    }
-}
-
-public class FakeOutbreak(IOutbreak outbreak)
-{
-    private byte[] LocationCenter { get; set; } = [..outbreak.LocationCenter!.GetCoordinates()];
-    private byte[] LocationDummy { get; set; } = [..outbreak.LocationDummy!.GetCoordinates()];
-    public uint Species { get; private set; } = outbreak.Species;
-    public byte Form { get; private set; } = outbreak.Form;
-    public int MaxSpawns { get; private set; } = outbreak.MaxSpawns;
-
-    public float CenterX { get => ReadSingleLittleEndian(LocationCenter.AsSpan()); }
-    public float CenterY { get => ReadSingleLittleEndian(LocationCenter.AsSpan()[4..]); }
-    public float CenterZ { get => ReadSingleLittleEndian(LocationCenter.AsSpan()[8..]); }
-
-    public float DummyX { get => ReadSingleLittleEndian(LocationDummy.AsSpan()); }
-    public float DummyY { get => ReadSingleLittleEndian(LocationDummy.AsSpan()[4..]); }
-    public float DummyZ { get => ReadSingleLittleEndian(LocationDummy.AsSpan()[8..]); }
-
-    public void RestoreFromJson(string json)
-    {
-        var simpleOutbreak = JsonSerializer.Deserialize<JsonNode>(json)!;
-        var locationCenter = Convert.FromHexString(simpleOutbreak[nameof(LocationCenter)]!.GetValue<string>());
-        var locationDummy = Convert.FromHexString(simpleOutbreak[nameof(LocationDummy)]!.GetValue<string>());
-        var species = SpeciesConverter.GetInternal9(simpleOutbreak[nameof(Species)]!.GetValue<ushort>());
-        var form = simpleOutbreak[nameof(Form)]!.GetValue<byte>();
-        var maxSpawns = simpleOutbreak[nameof(MaxSpawns)]!.GetValue<int>();
-
-        LocationCenter = locationCenter;
-        LocationDummy = locationDummy;
-        Species = species;
-        Form = form;
-        MaxSpawns = maxSpawns;
     }
 }
