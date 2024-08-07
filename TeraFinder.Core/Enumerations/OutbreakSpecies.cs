@@ -485,6 +485,7 @@ public enum KitakamiSpeciesOb : ushort
     Toedscool = 948,
     Toedscruel = 949,
     Kingambit = 983,
+    Tatsugiri = 978,
     Annihilape = 979,
     Poltchageist = 1012,
 }
@@ -655,5 +656,6 @@ public enum BlueberrySpeciesOb : ushort
     Kleavor = 900,
     Rellor = 953,
     Rabsca = 954,
+    Tatsugiri = 978,
     Farigiraf = 981,
 }
