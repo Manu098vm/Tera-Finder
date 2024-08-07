@@ -82,7 +82,7 @@ namespace TeraFinder.Core
 
         public sbyte GetAmountAvailable()
         {
-            var info = LocationMap switch { "DLC1" => BlockDefinitions.KOutbreakBCDLC1NumActive, "DLC2" => BlockDefinitions.KOutbreakBCDLC2NumActive, "Main" => BlockDefinitions.KOutbreakBCMainNumActive };
+            var info = LocationMap switch { "DLC1" => BlockDefinitions.KOutbreakBCDLC1NumActive, "DLC2" => BlockDefinitions.KOutbreakBCDLC2NumActive, _ => BlockDefinitions.KOutbreakBCMainNumActive };
             var block = SAV.Accessor.GetBlockSafe(info.Key);
 
             if (block.Type is SCTypeCode.SByte)
@@ -93,7 +93,7 @@ namespace TeraFinder.Core
 
         public void SetAmountAvailable(sbyte value)
         {
-            var info = LocationMap switch { "DLC1" => BlockDefinitions.KOutbreakBCDLC1NumActive, "DLC2" => BlockDefinitions.KOutbreakBCDLC2NumActive, "Main" => BlockDefinitions.KOutbreakBCMainNumActive };
+            var info = LocationMap switch { "DLC1" => BlockDefinitions.KOutbreakBCDLC1NumActive, "DLC2" => BlockDefinitions.KOutbreakBCDLC2NumActive, _ => BlockDefinitions.KOutbreakBCMainNumActive };
             var block = SAV.Accessor.GetBlockSafe(info.Key);
 
             if (block.Type is SCTypeCode.SByte)
