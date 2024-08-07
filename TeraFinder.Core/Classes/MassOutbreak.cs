@@ -6,13 +6,13 @@ namespace TeraFinder.Core;
 
 public class MassOutbreak : IOutbreak
 {
-    public int ID { get; }
-    public SAV9SV SAV { get; init; }
-    protected sbyte AmountAvailable { get => GetAmountAvailable(); set => SetAmountAvailable(value); }
-    public string LocationMap { get; set; }
+    protected int ID { get; init; }
+    protected SAV9SV SAV { get; init; }
+    protected string LocationMap { get; init; }
 
     public GameCoordinates? LocationCenter { get; set; }
     public GameCoordinates? LocationDummy { get; set; }
+    public sbyte AmountAvailable { get => GetAmountAvailable(); set => SetAmountAvailable(value); }
     public bool Found { get => GetFound(); set => SetFound(value); }
     public bool Enabled { get => GetEnabled(); set => SetEnabled(value); }
     public uint Species { get => GetSpecies(); set => SetSpecies(value); }
@@ -78,7 +78,7 @@ public class MassOutbreak : IOutbreak
         MaxSpawns = maxSpawns;
     }
 
-    public sbyte GetAmountAvailable()
+    private sbyte GetAmountAvailable()
     {
         var info = LocationMap switch { "DLC1" => BlockDefinitions.KOutbreakDLC1NumActive, "DLC2" => BlockDefinitions.KOutbreakDLC2NumActive, _ => BlockDefinitions.KOutbreakMainNumActive };
         var block = SAV.Accessor.GetBlockSafe(info.Key);
@@ -89,7 +89,7 @@ public class MassOutbreak : IOutbreak
         return 0;
     }
 
-    public void SetAmountAvailable(sbyte value)
+    private void SetAmountAvailable(sbyte value)
     {
         var info = LocationMap switch { "DLC1" => BlockDefinitions.KOutbreakDLC1NumActive, "DLC2" => BlockDefinitions.KOutbreakDLC2NumActive, _ => BlockDefinitions.KOutbreakMainNumActive };
         var block = SAV.Accessor.GetBlockSafe(info.Key);
@@ -98,12 +98,12 @@ public class MassOutbreak : IOutbreak
             block.ChangeData((new byte[] { (byte)value }).AsSpan());
     }
 
-    public bool GetEnabled()
+    private bool GetEnabled()
     {
         return ID <= AmountAvailable;
     }
 
-    public void SetEnabled(bool value)
+    private void SetEnabled(bool value)
     {
         if (value && AmountAvailable < ID)
                 AmountAvailable = (sbyte)ID;
@@ -111,7 +111,7 @@ public class MassOutbreak : IOutbreak
                 AmountAvailable = (sbyte)(ID - 1);
     }
 
-    public bool GetFound()
+    private bool GetFound()
     {
         var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{ID}{LocationMap}Found")!.GetValue(new BlockDefinition())!;
         var block = SAV.Accessor.FindOrDefault(blockInfo.Key);
@@ -122,7 +122,7 @@ public class MassOutbreak : IOutbreak
         return false;
     }
 
-    public void SetFound(bool value)
+    private void SetFound(bool value)
     {
         var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{ID}{LocationMap}Found")!.GetValue(new BlockDefinition())!; ;
         var block = SAV.Accessor.FindOrDefault(blockInfo.Key);
@@ -136,7 +136,7 @@ public class MassOutbreak : IOutbreak
         }
     }
 
-    public uint GetSpecies()
+    private uint GetSpecies()
     {
         var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{ID}{LocationMap}Species")!.GetValue(new BlockDefinition())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
@@ -147,7 +147,7 @@ public class MassOutbreak : IOutbreak
         return 0;
     }
 
-    public void SetSpecies(uint value)
+    private void SetSpecies(uint value)
     {
         var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{ID}{LocationMap}Species")!.GetValue(new BlockDefinition())!; ;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
@@ -156,7 +156,7 @@ public class MassOutbreak : IOutbreak
             block.SetValue(value);
     }
 
-    public byte GetForm()
+    private byte GetForm()
     {
         var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{ID}{LocationMap}Form")!.GetValue(new BlockDefinition())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
@@ -167,7 +167,7 @@ public class MassOutbreak : IOutbreak
         return 0;
     }
 
-    public void SetForm(byte value)
+    private void SetForm(byte value)
     {
         var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{ID}{LocationMap}Form")!.GetValue(new BlockDefinition())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
@@ -176,7 +176,7 @@ public class MassOutbreak : IOutbreak
             block.SetValue(value);
     }
 
-    public int GetNumKO()
+    private int GetNumKO()
     {
         var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{ID}{LocationMap}NumKOed")!.GetValue(new BlockDefinition())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
@@ -187,7 +187,7 @@ public class MassOutbreak : IOutbreak
         return 0;
     }
 
-    public void SetNumKO(int value)
+    private void SetNumKO(int value)
     {
         var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{ID}{LocationMap}NumKOed")!.GetValue(new BlockDefinition())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
@@ -196,7 +196,7 @@ public class MassOutbreak : IOutbreak
             block.SetValue(value);
     }
 
-    public int GetMaxSpawns()
+    private int GetMaxSpawns()
     {
         var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{ID}{LocationMap}TotalSpawns")!.GetValue(new BlockDefinition())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
@@ -207,7 +207,7 @@ public class MassOutbreak : IOutbreak
         return 0;
     }
 
-    public void SetMaxSpawns(int value)
+    private void SetMaxSpawns(int value)
     {
         var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak0{ID}{LocationMap}TotalSpawns")!.GetValue(new BlockDefinition())!;
         var block = SAV.Accessor.GetBlockSafe(blockInfo.Key);
