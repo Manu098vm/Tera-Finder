@@ -11,6 +11,7 @@ public interface IOutbreak
     byte Form { get; set; }
     int NumKO { get; set; }
     int MaxSpawns { get; set; }
+    bool IsEvent { get; }
 
     FakeOutbreak Clone();
     void DumpTojson(string path);

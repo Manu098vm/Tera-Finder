@@ -19,6 +19,7 @@ public class MassOutbreak : IOutbreak
     public byte Form { get => GetForm(); set => SetForm(value); }
     public int NumKO { get => GetNumKO(); set => SetNumKO(value); }
     public int MaxSpawns { get => GetMaxSpawns(); set => SetMaxSpawns(value); }
+    public bool IsEvent => false;
 
     public MassOutbreak(SAV9SV sav, int id, TeraRaidMapParent map)
     {
