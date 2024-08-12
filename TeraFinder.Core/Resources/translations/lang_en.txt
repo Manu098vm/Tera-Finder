@@ -59,6 +59,7 @@ OutbreakForm.lblDummyX=X:
 OutbreakForm.lblDummyY=Y:
 OutbreakForm.lblDummyZ=Z:
 OutBreakForm.MassOutbreakName=Mass Outbreak
+OutBreakForm.EventOutbreakName=Event Outbreak
 OutbreakForm.DeviceDisconnected=Device disconnected.
 OutbreakForm.ErrorParsing=Error while parsing:
 OutbreakForm.LoadDefault=Do you want to load default legal data for {species}?

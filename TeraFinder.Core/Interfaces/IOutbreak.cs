@@ -2,6 +2,7 @@
 
 public interface IOutbreak
 {
+    int ID { get; }
     GameCoordinates? LocationCenter { get; set; }
     GameCoordinates? LocationDummy { get; set; }
     sbyte AmountAvailable { get; set; }

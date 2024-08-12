@@ -94,6 +94,7 @@ public partial class OutbreakForm : Form
         Strings = new Dictionary<string, string>
         {
             { "OutBreakForm.MassOutbreakName", "Mass Outbreak" },
+            { "OutBreakForm.EventOutbreakName", "Event Outbreak" },
             { "OutbreakForm.DeviceDisconnected", "Device disconnected." },
             { "OutbreakForm.ErrorParsing", "Error while parsing:" },
             { "OutbreakForm.LoadDefault", "Do you want to load default legal data for {species}?" },
@@ -147,9 +148,10 @@ public partial class OutbreakForm : Form
 
         var massOutbreaks = CurrMap switch { TeraRaidMapParent.Paldea => MassOutbreaksMain, TeraRaidMapParent.Kitakami => MassOutbreaksDLC1, _ => MassOutbreaksDLC2 };
         cmbOutbreaks.Items.Clear();
-        foreach (var (i, outbreak) in massOutbreaks.Select((el, i) => (i, el)))
-            cmbOutbreaks.Items.Add($"{Strings["OutBreakForm.MassOutbreakName"]} {i + 1} - " +
-                $"{SpeciesList[SpeciesConverter.GetNational9((ushort)outbreak.Species)]}");
+
+        foreach(var outbreak in massOutbreaks)
+            cmbOutbreaks.Items.Add($"{Strings[(outbreak.IsEvent ? "OutBreakForm.EventOutbreakName" : 
+                "OutBreakForm.MassOutbreakName")]} {outbreak.ID} - {SpeciesList[SpeciesConverter.GetNational9((ushort)outbreak.Species)]}");
 
         var species = CurrMap switch { TeraRaidMapParent.Paldea => PaldeaSpeciesList, TeraRaidMapParent.Kitakami => KitakamiSpeciesList, _ => BlueberrySpeciesList };
         cmbSpecies.Items.Clear();
@@ -274,7 +276,8 @@ public partial class OutbreakForm : Form
             }
 
             var index = cmbOutbreaks.SelectedIndex;
-            cmbOutbreaks.Items[index] = $"{Strings["OutBreakForm.MassOutbreakName"]} {index + 1} - {SpeciesList[species]}";
+            cmbOutbreaks.Items[index] = $"{Strings[(outbreak.IsEvent ? "OutBreakForm.EventOutbreakName" :
+                "OutBreakForm.MassOutbreakName")]} {outbreak.ID} - {SpeciesList[species]}";
 
             if (Connection is not null && Connection.IsConnected())
             {

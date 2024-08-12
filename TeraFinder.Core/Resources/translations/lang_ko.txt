@@ -59,6 +59,7 @@ OutbreakForm.lblDummyX=X:
 OutbreakForm.lblDummyY=Y:
 OutbreakForm.lblDummyZ=Z:
 OutBreakForm.MassOutbreakName=대량발생
+OutBreakForm.EventOutbreakName=Event Outbreak
 OutbreakForm.DeviceDisconnected=연결이 끊겼습니다.
 OutbreakForm.ErrorParsing=분석 중 오류가 발생했습니다:
 OutbreakForm.LoadDefault=적법성이 맞는 기본 포켓몬 데이터를 불러오시겠습니까?

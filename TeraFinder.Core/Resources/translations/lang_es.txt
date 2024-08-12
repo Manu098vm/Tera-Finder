@@ -59,6 +59,7 @@ OutbreakForm.lblDummyX=X:
 OutbreakForm.lblDummyY=Y:
 OutbreakForm.lblDummyZ=Z:
 OutBreakForm.MassOutbreakName=Aparición Masiva
+OutBreakForm.EventOutbreakName=Event Outbreak
 OutbreakForm.DeviceDisconnected=Dispositivo desconectado.
 OutbreakForm.ErrorParsing=Error al analizar:
 OutbreakForm.LoadDefault=¿Cargar datos legales por defecto para {species}?

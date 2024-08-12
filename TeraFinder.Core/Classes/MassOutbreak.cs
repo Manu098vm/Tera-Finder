@@ -6,7 +6,7 @@ namespace TeraFinder.Core;
 
 public class MassOutbreak : IOutbreak
 {
-    protected int ID { get; init; }
+    public int ID { get; protected init; }
     protected SAV9SV SAV { get; init; }
     protected string LocationMap { get; init; }
 

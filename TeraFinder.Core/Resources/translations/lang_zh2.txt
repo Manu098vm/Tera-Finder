@@ -59,6 +59,7 @@ OutbreakForm.lblDummyX=X:
 OutbreakForm.lblDummyY=Y:
 OutbreakForm.lblDummyZ=Z:
 OutBreakForm.MassOutbreakName=大量出現
+OutBreakForm.EventOutbreakName=Event Outbreak
 OutbreakForm.DeviceDisconnected=終端已斷開連接。
 OutbreakForm.ErrorParsing=解析錯誤:
 OutbreakForm.LoadDefault=是否加載 {species} 的默認合法數據？
