@@ -239,7 +239,7 @@ public partial class OutbreakForm : Form
                 {
                     var resourceName = $"{CurrMap switch { TeraRaidMapParent.Kitakami => "dlc1", TeraRaidMapParent.Blueberry => "dlc2", _ => "" }}_{species}";
                     json = ResourcesUtil.GetTextResource(resourceName);
-                    if (json is not null && json.Length > 0)
+                    if (!outbreak.IsEvent && json is not null && json.Length > 0)
                     {
                         var message = Strings["OutbreakForm.LoadDefault"].Replace("{species}", SpeciesList[species]);
                         var dialog = MessageBox.Show(message, "", MessageBoxButtons.YesNo);
@@ -329,7 +329,7 @@ public partial class OutbreakForm : Form
 
             var resourceName = $"{CurrMap switch { TeraRaidMapParent.Kitakami => "dlc1", TeraRaidMapParent.Blueberry => "dlc2", _ => "" }}_{species}_{cmbForm.SelectedIndex}";
             var json = ResourcesUtil.GetTextResource(resourceName);
-            if (!Importing && json is not null)
+            if (!outbreak.IsEvent && !Importing && json is not null)
             {
                 if (json is not null && json.Length > 0)
                 {
