@@ -21,6 +21,7 @@ public partial class OutbreakForm : Form
     private Size DefSize = new(0, 0);
     private bool Loaded = false;
     private bool Importing = false;
+    private bool PrevWasEvent = false;
 
     private readonly string[] SpeciesList = null!;
     private readonly string[] FormsList = null!;
@@ -179,9 +180,22 @@ public partial class OutbreakForm : Form
         var massOutbreaks = CurrMap switch { TeraRaidMapParent.Paldea => MassOutbreaksMain, TeraRaidMapParent.Kitakami => MassOutbreaksDLC1, _ => MassOutbreaksDLC2 };
         var outbreak = massOutbreaks[cmbOutbreaks.SelectedIndex];
 
+        if (outbreak.IsEvent && !PrevWasEvent)
+        {
+            cmbSpecies.Items.Clear();
+            cmbSpecies.Items.AddRange(SpeciesList);
+        }
+        else if (!outbreak.IsEvent && PrevWasEvent)
+        {
+            var specieslist = CurrMap switch { TeraRaidMapParent.Paldea => PaldeaSpeciesList, TeraRaidMapParent.Kitakami => KitakamiSpeciesList, _ => BlueberrySpeciesList };
+            cmbSpecies.Items.Clear();
+            cmbSpecies.Items.AddRange(specieslist);
+        }
+        PrevWasEvent = outbreak.IsEvent;
+
         var species = SpeciesConverter.GetNational9((ushort)outbreak.Species);
         if (!SpeciesList[species].Equals(cmbSpecies.Text))
-            cmbSpecies.SelectedIndex = Array.IndexOf(CurrMap switch
+            cmbSpecies.SelectedIndex = Array.IndexOf(outbreak.IsEvent ? SpeciesList : CurrMap switch
             {
                 TeraRaidMapParent.Paldea => PaldeaSpeciesList,
                 TeraRaidMapParent.Kitakami => KitakamiSpeciesList,
