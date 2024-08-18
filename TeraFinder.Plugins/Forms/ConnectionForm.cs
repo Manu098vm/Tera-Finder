@@ -32,6 +32,7 @@ public partial class ConnectionForm : Form
         toolTipOutbreakMain.SetToolTip(chkOutbreaksMain, Strings["ToolTipSyncOutbreaksMain"]);
         toolTipOutbreakDLC1.SetToolTip(chkOutbreaksDLC, Strings["ToolTipSyncOutbreaksDLC1"]);
         toolTipOutbreakDLC2.SetToolTip(chkOutbreaksDLC2, Strings["ToolTipSyncOutbreaksDLC2"]);
+        toolTipOutbreakEvent.SetToolTip(chkOutbreakEvent, Strings["ToolTipSyncOutbreaksEvent"]);
     }
 
     private void GenerateDictionary()
@@ -50,6 +51,7 @@ public partial class ConnectionForm : Form
             { "ToolTipSyncOutbreaksMain", "Syncronize Paldea Outbreaks data from the remote device. Might require a sgnificant amount of time." },
             { "ToolTipSyncOutbreaksDLC1", "Syncronize Kitakami Outbreaks data from the remote device. Might require a sgnificant amount of time." },
             { "ToolTipSyncOutbreaksDLC2", "Syncronize Blueberry Outbreaks data from the remote device. Might require a sgnificant amount of time." },
+            { "ToolTipSyncOutbreaksEvent", "Syncronize Event Outbreaks data from the remote device. Might require a sgnificant amount of time." },
         };
     }
 
@@ -71,9 +73,10 @@ public partial class ConnectionForm : Form
     private async void btnConnect_Click(object sender, EventArgs e)
     {
         const int ConnectionStepsRaids = 10;
-        const int ConnectionStepsOutbreaksMain = 128;
-        const int ConnectionStepsOutbreakDLC = 100;
-        const int ConnectionStepsOutbreakDLC2 = 107;
+        const int ConnectionStepsOutbreaksMain = 57;
+        const int ConnectionStepsOutbreakDLC = 29;
+        const int ConnectionStepsOutbreakDLC2 = 36;
+        const int ConnectionStepsOutbreakEvent = 71;
 
         Connected = false;
         DisableConnectButton();
@@ -115,12 +118,15 @@ public partial class ConnectionForm : Form
         };
         Settings.Default.Save();
 
-       // try
-       // {
+        try
+        {
             MaxProgress = ConnectionStepsRaids;
             if (chkOutbreaksMain.Checked) MaxProgress += ConnectionStepsOutbreaksMain;
             if (chkOutbreaksDLC.Checked) MaxProgress += ConnectionStepsOutbreakDLC;
             if (chkOutbreaksDLC2.Checked) MaxProgress += ConnectionStepsOutbreakDLC2;
+            if (chkOutbreakEvent.Checked && chkOutbreaksMain.Checked) MaxProgress += ConnectionStepsOutbreakEvent;
+            if (chkOutbreakEvent.Checked && chkOutbreaksDLC.Checked) MaxProgress += ConnectionStepsOutbreakEvent;
+            if (chkOutbreakEvent.Checked && chkOutbreaksDLC2.Checked) MaxProgress += ConnectionStepsOutbreakEvent;
             CurrentProgress = 0;
 
             await Executor.Connect(token).ConfigureAwait(false);
@@ -143,9 +149,27 @@ public partial class ConnectionForm : Form
             var raidSevenStar = SAV.Accessor.FindOrDefault(BlockDefinitions.KSevenStarRaidsCapture.Key);
             raidSevenStar.ChangeData((byte[]?)await Executor.ReadBlock(BlockDefinitions.KSevenStarRaidsCapture, token).ConfigureAwait(false));
             UpdateProgress(CurrentProgress++, MaxProgress);
-            if (chkOutbreaksMain.Checked){ await DownloadOutbreaksMainData(token).ConfigureAwait(false); await DownloadOutbreaksBCMainData(token).ConfigureAwait(false); }
-            if (chkOutbreaksDLC.Checked) { await DownloadOutbreaksDLCData(token).ConfigureAwait(false); await DownloadEventOutbreaksDLCData(token).ConfigureAwait(false); }
-            if (chkOutbreaksDLC2.Checked){ await DownloadOutbreaksDLC2Data(token).ConfigureAwait(false); await DownloadEventOutbreaksDLC2Data(token).ConfigureAwait(false);  }
+
+            if (chkOutbreaksMain.Checked) 
+            { 
+                await DownloadOutbreaksMainData(token).ConfigureAwait(false); 
+                if (chkOutbreakEvent.Checked)
+                    await DownloadEventOutbreaksMainData(token).ConfigureAwait(false); 
+            }
+
+            if (chkOutbreaksDLC.Checked) 
+            { 
+                await DownloadOutbreaksDLCData(token).ConfigureAwait(false);
+                if (chkOutbreakEvent.Checked)
+                    await DownloadEventOutbreaksDLCData(token).ConfigureAwait(false); 
+            }
+
+            if (chkOutbreaksDLC2.Checked) 
+            { 
+                await DownloadOutbreaksDLC2Data(token).ConfigureAwait(false);
+                if (chkOutbreakEvent.Checked)
+                    await DownloadEventOutbreaksDLC2Data(token).ConfigureAwait(false); 
+            }
 
             UpdateProgress(MaxProgress, MaxProgress);
             MessageBox.Show(Strings["ConnectionSuccess"]);
@@ -155,13 +179,13 @@ public partial class ConnectionForm : Form
             EnableCheckBox();
             EnableGrpDevice();
             SafeClose();
-        //}
-       /* catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             Disconnect();
             MessageBox.Show($"{Strings["ConnectionFailed"]}\n{Strings["ConnectionFailedAux"]}\n{ex.Message}");
             return;
-        }*/
+        }
     }
 
     private async Task DownloadEventData(CancellationToken token)
@@ -327,7 +351,7 @@ public partial class ConnectionForm : Form
             UpdateProgress(CurrentProgress++, MaxProgress);
         }
     }
-    private async Task DownloadOutbreaksBCMainData(CancellationToken token)
+    private async Task DownloadEventOutbreaksMainData(CancellationToken token)
     {
         var KMassOutbreakAmount = SAV.Accessor.FindOrDefault(BlockDefinitions.KOutbreakBCMainNumActive.Key);
         var KMassOutbreakAmountData = (byte?)await Executor.ReadBlock(BlockDefinitions.KOutbreakBCMainNumActive, token).ConfigureAwait(false);
@@ -923,6 +947,9 @@ public partial class ConnectionForm : Form
         if (chkOutbreaksDLC2.InvokeRequired)
             chkOutbreaksDLC2.Invoke(() => { chkOutbreaksDLC2.Enabled = false; });
         else chkOutbreaksDLC2.Enabled = false;
+        if (chkOutbreakEvent.InvokeRequired)
+            chkOutbreakEvent.Invoke(() => { chkOutbreakEvent.Enabled = false; });
+        else chkOutbreakEvent.Enabled = false;
     }
 
     private void EnableCheckBox()
@@ -936,6 +963,9 @@ public partial class ConnectionForm : Form
         if (chkOutbreaksDLC2.InvokeRequired)
             chkOutbreaksDLC2.Invoke(() => { chkOutbreaksDLC2.Enabled = true; });
         else chkOutbreaksDLC2.Enabled = true;
+        if (chkOutbreakEvent.InvokeRequired)
+            chkOutbreakEvent.Invoke(() => { chkOutbreakEvent.Enabled = true; });
+        else chkOutbreakEvent.Enabled = true;
     }
 
     private void EnableDisconnectButton()

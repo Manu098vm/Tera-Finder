@@ -59,6 +59,7 @@ OutbreakForm.lblDummyX=X:
 OutbreakForm.lblDummyY=Y:
 OutbreakForm.lblDummyZ=Z:
 OutBreakForm.MassOutbreakName=大量出現
+OutBreakForm.EventOutbreakName=Event Outbreak
 OutbreakForm.DeviceDisconnected=終端已斷開連接。
 OutbreakForm.ErrorParsing=解析錯誤:
 OutbreakForm.LoadDefault=是否加載 {species} 的默認合法數據？
@@ -170,6 +171,7 @@ ConnectionForm.lblPort=端口:
 ConnectionForm.chkOutbreaksMain=從遠程終端下載寶可夢大量出現數據 (Paldea) (?)
 ConnectionForm.chkOutbreaksDLC=從遠程終端下載寶可夢大量出現數據 (Kitakami) (?)
 ConnectionForm.chkOutbreaksDLC2=從遠程終端下載寶可夢大量出現數據 (Blueberry) (?)
+ConnectionForm.chkOutbreakEvent=Download Mass Outbreaks Event Data (?)
 ConnectionForm.btnConnect=連接
 ConnectionForm.btnDisconnect=斷開
 
@@ -271,6 +273,7 @@ DisconnectionSuccess=終端已斷開
 ToolTipSyncOutbreaksMain=同步遠程終端的寶可夢大量出現數據。可能需要相當長的時間 (Paldea)。
 ToolTipSyncOutbreaksDLC1=同步遠程終端的寶可夢大量出現數據。可能需要相當長的時間 (Kitakami)。
 ToolTipSyncOutbreaksDLC2=同步遠程終端的寶可夢大量出現數據。可能需要相當長的時間 (Blueberry)。
+ToolTipSyncOutbreaksEvent=Syncronize Event Outbreaks data from the remote device. Might require a sgnificant amount of time.
 ShinifiedAll=所有太晶洞窟异色已经生成。
 
 TeraShiny.Any=任意

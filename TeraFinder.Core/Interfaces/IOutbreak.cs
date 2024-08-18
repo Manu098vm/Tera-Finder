@@ -2,6 +2,7 @@
 
 public interface IOutbreak
 {
+    int ID { get; }
     GameCoordinates? LocationCenter { get; set; }
     GameCoordinates? LocationDummy { get; set; }
     sbyte AmountAvailable { get; set; }
@@ -11,6 +12,7 @@ public interface IOutbreak
     byte Form { get; set; }
     int NumKO { get; set; }
     int MaxSpawns { get; set; }
+    bool IsEvent { get; }
 
     FakeOutbreak Clone();
     void DumpTojson(string path);

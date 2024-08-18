@@ -59,6 +59,7 @@ OutbreakForm.lblDummyX=X:
 OutbreakForm.lblDummyY=Y:
 OutbreakForm.lblDummyZ=Z:
 OutBreakForm.MassOutbreakName=Aparición Masiva
+OutBreakForm.EventOutbreakName=Event Outbreak
 OutbreakForm.DeviceDisconnected=Dispositivo desconectado.
 OutbreakForm.ErrorParsing=Error al analizar:
 OutbreakForm.LoadDefault=¿Cargar datos legales por defecto para {species}?
@@ -170,6 +171,7 @@ ConnectionForm.lblPort=Puerto:
 ConnectionForm.chkOutbreaksMain=Descargar Apariciones Masivas (Paldea) (?)
 ConnectionForm.chkOutbreaksDLC=Descargar Apariciones Masivas (Noroteo) (?)
 ConnectionForm.chkOutbreaksDLC2=Descargar Apariciones Masivas (Arándano) (?)
+ConnectionForm.chkOutbreakEvent=Download Mass Outbreaks Event Data (?)
 ConnectionForm.btnConnect=Conectar
 ConnectionForm.btnDisconnect=Desconectar
 
@@ -271,6 +273,7 @@ DisconnectionSuccess=Dispositivo desconectado.
 ToolTipSyncOutbreaksMain=Sincronizar datos de Aparición Masiva (Paldea) desde dispositivo remoto. Puede requerir una considerable cantidad de tiempo.
 ToolTipSyncOutbreaksDLC1=Sincronizar datos de Aparición Masiva (Noroteo) desde dispositivo remoto. Puede requerir una considerable cantidad de tiempo.
 ToolTipSyncOutbreaksDLC2=Sincronizar datos de Aparición Masiva (Arándano) desde dispositivo remoto. Puede requerir una considerable cantidad de tiempo.
+ToolTipSyncOutbreaksEvent=Syncronize Event Outbreaks data from the remote device. Might require a sgnificant amount of time.
 ShinifiedAll=Ahora todas las raids son Variocolor.
 
 TeraShiny.Any=Cualquiera

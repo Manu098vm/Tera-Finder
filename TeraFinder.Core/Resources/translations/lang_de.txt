@@ -59,6 +59,7 @@ OutbreakForm.lblDummyX=X:
 OutbreakForm.lblDummyY=Y:
 OutbreakForm.lblDummyZ=Z:
 OutBreakForm.MassOutbreakName=Mass Outbreak
+OutBreakForm.EventOutbreakName=Event Outbreak
 OutbreakForm.DeviceDisconnected=Device disconnected.
 OutbreakForm.ErrorParsing=Error while parsing:
 OutbreakForm.LoadDefault=Do you want to load default legal data for {species}?
@@ -170,6 +171,7 @@ ConnectionForm.lblPort=Port:
 ConnectionForm.chkOutbreaksMain=Download Mass Outbreaks Paldea Data (?)
 ConnectionForm.chkOutbreaksDLC=Download Mass Outbreaks Kitakami Data (?)
 ConnectionForm.chkOutbreaksDLC2=Download Mass Outbreaks Blueberry Data (?)
+ConnectionForm.chkOutbreakEvent=Download Mass Outbreaks Event Data (?)
 ConnectionForm.btnConnect=Connect
 ConnectionForm.btnDisconnect=Disconnect
 
@@ -271,6 +273,7 @@ DisconnectionSuccess=Device disconnected.
 ToolTipSyncOutbreaksMain=Syncronize Paldea Outbreaks data from the remote device. Might require a sgnificant amount of time.
 ToolTipSyncOutbreaksDLC1=Syncronize Kitakami Outbreaks data from the remote device. Might require a sgnificant amount of time.
 ToolTipSyncOutbreaksDLC2=Syncronize Blueberry Outbreaks data from the remote device. Might require a sgnificant amount of time.
+ToolTipSyncOutbreaksEvent=Syncronize Event Outbreaks data from the remote device. Might require a sgnificant amount of time.
 ShinifiedAll=All raids have been Shinified.
 
 TeraShiny.Any=Any

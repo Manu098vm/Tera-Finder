@@ -60,6 +60,7 @@ OutbreakForm.lblDummyX=X:
 OutbreakForm.lblDummyY=Y:
 OutbreakForm.lblDummyZ=Z:
 OutBreakForm.MassOutbreakName=Comparsa Massiccia
+OutBreakForm.EventOutbreakName=Comparsa Evento
 OutbreakForm.DeviceDisconnected=Dispositivo disconnesso.
 OutbreakForm.ErrorParsing=Errore durante il parsing:
 OutbreakForm.LoadDefault=Vuoi caricare i dati legali di default per {species}?
@@ -170,6 +171,7 @@ ConnectionForm.lblPort=Porta:
 ConnectionForm.chkOutbreaksMain=Scarica i dati delle Comparse Massicce di Paldea (?)
 ConnectionForm.chkOutbreaksDLC=Scarica i dati delle Comparse Massicce di Nordivia (?)
 ConnectionForm.chkOutbreaksDLC2=Scarica i dati delle Comparse Massice dell'Is. Mirtillo (?)
+ConnectionForm.chkOutbreakEvent=Scarica i dati delle Comparse Massicce Evento (?)
 ConnectionForm.btnConnect=Connetti
 ConnectionForm.btnDisconnect=Disconnetti
 
@@ -271,6 +273,7 @@ DisconnectionSuccess=Dispositivo disconnesso.
 ToolTipSyncOutbreaksMain=Sincronizza i dati delle Comparse Massicce (Paldea) dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
 ToolTipSyncOutbreaksDLC1=Sincronizza i dati delle Comparse Massicce (Nordivia) dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
 ToolTipSyncOutbreaksDLC2=Sincronizza i dati delle Comparse Massicce (Is. Mirtillo) dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
+ToolTipSyncOutbreaksEvent=Sincronizza i dati delle Comparse Massicce (Eventi) dal dispositivo remoto. Può richiedere un significativo quantitativo di tempo.
 ShinifiedAll=Tutti i Raid sono stati resi Shiny.
 
 TeraShiny.Any=Qualsiasi

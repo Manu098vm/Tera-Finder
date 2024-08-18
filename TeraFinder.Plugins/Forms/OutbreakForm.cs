@@ -21,6 +21,7 @@ public partial class OutbreakForm : Form
     private Size DefSize = new(0, 0);
     private bool Loaded = false;
     private bool Importing = false;
+    private bool PrevWasEvent = false;
 
     private readonly string[] SpeciesList = null!;
     private readonly string[] FormsList = null!;
@@ -94,6 +95,7 @@ public partial class OutbreakForm : Form
         Strings = new Dictionary<string, string>
         {
             { "OutBreakForm.MassOutbreakName", "Mass Outbreak" },
+            { "OutBreakForm.EventOutbreakName", "Event Outbreak" },
             { "OutbreakForm.DeviceDisconnected", "Device disconnected." },
             { "OutbreakForm.ErrorParsing", "Error while parsing:" },
             { "OutbreakForm.LoadDefault", "Do you want to load default legal data for {species}?" },
@@ -147,9 +149,10 @@ public partial class OutbreakForm : Form
 
         var massOutbreaks = CurrMap switch { TeraRaidMapParent.Paldea => MassOutbreaksMain, TeraRaidMapParent.Kitakami => MassOutbreaksDLC1, _ => MassOutbreaksDLC2 };
         cmbOutbreaks.Items.Clear();
-        foreach (var (i, outbreak) in massOutbreaks.Select((el, i) => (i, el)))
-            cmbOutbreaks.Items.Add($"{Strings["OutBreakForm.MassOutbreakName"]} {i + 1} - " +
-                $"{SpeciesList[SpeciesConverter.GetNational9((ushort)outbreak.Species)]}");
+
+        foreach(var outbreak in massOutbreaks)
+            cmbOutbreaks.Items.Add($"{Strings[(outbreak.IsEvent ? "OutBreakForm.EventOutbreakName" : 
+                "OutBreakForm.MassOutbreakName")]} {outbreak.ID} - {SpeciesList[SpeciesConverter.GetNational9((ushort)outbreak.Species)]}");
 
         var species = CurrMap switch { TeraRaidMapParent.Paldea => PaldeaSpeciesList, TeraRaidMapParent.Kitakami => KitakamiSpeciesList, _ => BlueberrySpeciesList };
         cmbSpecies.Items.Clear();
@@ -177,9 +180,22 @@ public partial class OutbreakForm : Form
         var massOutbreaks = CurrMap switch { TeraRaidMapParent.Paldea => MassOutbreaksMain, TeraRaidMapParent.Kitakami => MassOutbreaksDLC1, _ => MassOutbreaksDLC2 };
         var outbreak = massOutbreaks[cmbOutbreaks.SelectedIndex];
 
+        if (outbreak.IsEvent && !PrevWasEvent)
+        {
+            cmbSpecies.Items.Clear();
+            cmbSpecies.Items.AddRange(SpeciesList);
+        }
+        else if (!outbreak.IsEvent && PrevWasEvent)
+        {
+            var specieslist = CurrMap switch { TeraRaidMapParent.Paldea => PaldeaSpeciesList, TeraRaidMapParent.Kitakami => KitakamiSpeciesList, _ => BlueberrySpeciesList };
+            cmbSpecies.Items.Clear();
+            cmbSpecies.Items.AddRange(specieslist);
+        }
+        PrevWasEvent = outbreak.IsEvent;
+
         var species = SpeciesConverter.GetNational9((ushort)outbreak.Species);
         if (!SpeciesList[species].Equals(cmbSpecies.Text))
-            cmbSpecies.SelectedIndex = Array.IndexOf(CurrMap switch
+            cmbSpecies.SelectedIndex = Array.IndexOf(outbreak.IsEvent ? SpeciesList : CurrMap switch
             {
                 TeraRaidMapParent.Paldea => PaldeaSpeciesList,
                 TeraRaidMapParent.Kitakami => KitakamiSpeciesList,
@@ -237,7 +253,7 @@ public partial class OutbreakForm : Form
                 {
                     var resourceName = $"{CurrMap switch { TeraRaidMapParent.Kitakami => "dlc1", TeraRaidMapParent.Blueberry => "dlc2", _ => "" }}_{species}";
                     json = ResourcesUtil.GetTextResource(resourceName);
-                    if (json is not null && json.Length > 0)
+                    if (!outbreak.IsEvent && json is not null && json.Length > 0)
                     {
                         var message = Strings["OutbreakForm.LoadDefault"].Replace("{species}", SpeciesList[species]);
                         var dialog = MessageBox.Show(message, "", MessageBoxButtons.YesNo);
@@ -274,7 +290,8 @@ public partial class OutbreakForm : Form
             }
 
             var index = cmbOutbreaks.SelectedIndex;
-            cmbOutbreaks.Items[index] = $"{Strings["OutBreakForm.MassOutbreakName"]} {index + 1} - {SpeciesList[species]}";
+            cmbOutbreaks.Items[index] = $"{Strings[(outbreak.IsEvent ? "OutBreakForm.EventOutbreakName" :
+                "OutBreakForm.MassOutbreakName")]} {outbreak.ID} - {SpeciesList[species]}";
 
             if (Connection is not null && Connection.IsConnected())
             {
@@ -326,7 +343,7 @@ public partial class OutbreakForm : Form
 
             var resourceName = $"{CurrMap switch { TeraRaidMapParent.Kitakami => "dlc1", TeraRaidMapParent.Blueberry => "dlc2", _ => "" }}_{species}_{cmbForm.SelectedIndex}";
             var json = ResourcesUtil.GetTextResource(resourceName);
-            if (!Importing && json is not null)
+            if (!outbreak.IsEvent && !Importing && json is not null)
             {
                 if (json is not null && json.Length > 0)
                 {
