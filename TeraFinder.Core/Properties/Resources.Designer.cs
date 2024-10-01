@@ -7953,9 +7953,9 @@ namespace TeraFinder.Core.Properties {
         ///TeraFinderForm=太晶洞窟搜索
         ///Ter [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string lang_zh {
+        internal static string lang_zh_Hans {
             get {
-                return ResourceManager.GetString("lang_zh", resourceCulture);
+                return ResourceManager.GetString("lang_zh_Hans", resourceCulture);
             }
         }
         
@@ -7977,9 +7977,9 @@ namespace TeraFinder.Core.Properties {
         ///Plugin.MapBlueberry=Blueberry
         ///Plugi [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string lang_zh2 {
+        internal static string lang_zh_Hant {
             get {
-                return ResourceManager.GetString("lang_zh2", resourceCulture);
+                return ResourceManager.GetString("lang_zh_Hant", resourceCulture);
             }
         }
         

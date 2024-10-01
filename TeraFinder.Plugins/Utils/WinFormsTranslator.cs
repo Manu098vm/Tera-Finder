@@ -93,14 +93,14 @@ public static class WinFormsTranslator
     {
         var file = GetTranslationFileNameInternal(lang);
         // Check to see if a the translation file exists in the same folder as the executable
-        string externalLangPath = GetTranslationFileNameExternal(file);
+        string externalLangPath = GetTranslationFileNameExternal(lang);
         if (File.Exists(externalLangPath))
         {
             try { return File.ReadAllLines(externalLangPath); }
             catch { /* In use? Just return the internal resource. */ }
         }
 
-        var txt = Core.ResourcesUtil.GetTextResource(file);
+        var txt = Core.ResourcesUtil.GetTextResource(file.Replace('-', '_'));
         return txt is not null ? txt.Split("\r\n") : [];
     }
 

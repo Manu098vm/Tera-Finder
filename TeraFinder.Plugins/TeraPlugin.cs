@@ -118,30 +118,13 @@ public class TeraPlugin : IPlugin
         (Blueberry, BlueberryBlack) = ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Blueberry);
         (Dist, Mighty) = EventUtil.GetCurrentEventEncounters(SAV, RewardUtil.GetDistRewardsTables(SAV));
 
-        Language = GetStringLanguage((LanguageID)SAV.Language);
+        Language = PKHeX.Core.Language.GetLanguageCode((LanguageID)SAV.Language);
 
         if (!UpdatePrompted)
         {
             Task.Run(async () => { await GitHubUtil.TryUpdate(Language); }).Wait();
             UpdatePrompted = true;
         }
-    }
-
-    public static string GetStringLanguage(LanguageID lang)
-    {
-        return lang switch
-        {
-            LanguageID.Japanese => GameLanguage.Language2Char(0),
-            LanguageID.English => GameLanguage.Language2Char(1),
-            LanguageID.French => GameLanguage.Language2Char(2),
-            LanguageID.Italian => GameLanguage.Language2Char(3),
-            LanguageID.German => GameLanguage.Language2Char(4),
-            LanguageID.Spanish => GameLanguage.Language2Char(5),
-            LanguageID.Korean => GameLanguage.Language2Char(6),
-            LanguageID.ChineseS => GameLanguage.Language2Char(7),
-            LanguageID.ChineseT => GameLanguage.Language2Char(8),
-            _ => GameLanguage.Language2Char(1),
-        };
     }
 
     public static LanguageID GetLanguageID(string language) => GetLanguageID(GameLanguage.GetLanguageIndex(language));
@@ -163,7 +146,7 @@ public class TeraPlugin : IPlugin
         };
     }
 
-    public static string GetStringLanguage(int programLanguage) => GameLanguage.Language2Char(programLanguage);
+    public static string GetStringLanguage(int programLanguage) => PKHeX.Core.Language.GetLanguageCode(GetLanguageID(programLanguage));
 
     public static int GetDefaultLanguage() => GameLanguage.GetLanguageIndex(GetDefaultLanguageString());
 
@@ -356,7 +339,7 @@ public class TeraPlugin : IPlugin
             (Dist, Mighty) = EventUtil.GetCurrentEventEncounters(SAV, RewardUtil.GetDistRewardsTables(SAV));
             if (parent is not null)
             {
-                Language = GetStringLanguage((LanguageID)SAV.Language);
+                Language = PKHeX.Core.Language.GetLanguageCode((LanguageID)SAV.Language);
                 parent.Enabled = true;
             }
 
