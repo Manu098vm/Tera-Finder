@@ -387,7 +387,7 @@ public partial class OutbreakForm : Form
                 {
                     selectedOutbreak = CurrMap switch { TeraRaidMapParent.Kitakami => selectedOutbreak - 4, TeraRaidMapParent.Blueberry => selectedOutbreak - 5, _ => selectedOutbreak - 8 };
                 }
-                var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak{BC}{selectedOutbreak}{locationMap}Form")!.GetValue(new BlockDefinition())!;
+                var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak{BC}{selectedOutbreak:00}{locationMap}Form")!.GetValue(new BlockDefinition())!;
                 Task.Run(async () => { success = await Connection.Executor.WriteBlock(outbreak.Form, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                 if (!success)
@@ -418,7 +418,7 @@ public partial class OutbreakForm : Form
                 {
                     selectedOutbreak = CurrMap switch { TeraRaidMapParent.Kitakami => selectedOutbreak - 4, TeraRaidMapParent.Blueberry => selectedOutbreak - 5, _ => selectedOutbreak - 8 };
                 }
-                var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak{BC}{selectedOutbreak}{locationMap}TotalSpawns")!.GetValue(new BlockDefinition())!;
+                var blockInfo = (BlockDefinition)typeof(BlockDefinitions).GetField($"KOutbreak{BC}{selectedOutbreak:00}{locationMap}TotalSpawns")!.GetValue(new BlockDefinition())!;
                 Task.Run(async () => { success = await Connection.Executor.WriteBlock(outbreak.MaxSpawns, blockInfo, new CancellationToken(), toExpect).ConfigureAwait(false); }).Wait();
 
                 if (!success)
