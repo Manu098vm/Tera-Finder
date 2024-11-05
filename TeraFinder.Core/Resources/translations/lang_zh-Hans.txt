@@ -273,7 +273,7 @@ DisconnectionSuccess=设备已断开
 ToolTipSyncOutbreaksMain=同步远程设备的宝可梦大量出现数据。可能需要相当长的时间 (帕底亚)。
 ToolTipSyncOutbreaksDLC1=同步远程设备的宝可梦大量出现数据。可能需要相当长的时间 (北上乡)。
 ToolTipSyncOutbreaksDLC2=同步远程设备的宝可梦大量出现数据。可能需要相当长的时间 (蓝莓学院)。
-ToolTipSyncOutbreaksEvent=同步远程设备的宝可梦大量出现数据。可能需要大量时间 (活动)。
+ToolTipSyncOutbreaksEvent=同步远程设备的宝可梦大量出现数据。可能需要相当长的时间 (活动)。
 ShinifiedAll=所有太晶洞窟异色已经生成。
 
 TeraShiny.Any=任意
