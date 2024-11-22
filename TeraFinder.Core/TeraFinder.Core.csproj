@@ -40,7 +40,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="FlatSharp.Runtime" Version="7.6.0" />
-		<PackageReference Include="PKHeX.Core" Version="24.7.27" />
+		<PackageReference Include="PKHeX.Core" Version="24.11.11" />
 	</ItemGroup>
 
 	<ItemGroup>
