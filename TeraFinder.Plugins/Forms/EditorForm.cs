@@ -8,8 +8,8 @@ namespace TeraFinder.Plugins;
 
 public partial class EditorForm : Form
 {
-    public SAV9SV SAV { get; set; } = null!;
-    public IPKMView? PKMEditor { get; private set; } = null!;
+    public SAV9SV SAV = null!;
+    public IPKMView? PKMEditor = null!;
     private Dictionary<string, float[]> DenLocations = null!;
     private readonly Image DefBackground = null!;
     private Size DefSize = new(0, 0);
@@ -21,7 +21,7 @@ public partial class EditorForm : Form
 
     public string Language = null!;
     private ConnectionForm? Connection = null;
-    public GameProgress Progress { get; set; } = GameProgress.Beginning;
+    public GameProgress Progress = GameProgress.Beginning;
     public TeraRaidMapParent CurrMap = TeraRaidMapParent.Paldea;
 
     public EncounterTeraTF9[] Paldea = null!;

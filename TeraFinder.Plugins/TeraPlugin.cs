@@ -103,7 +103,7 @@ public class TeraPlugin : IPlugin
 
     public void StandaloneInitialize(string defaultOT, ReadOnlySpan<byte> data = default, string? language = null)
     {
-        if (data != default)
+        if (!data.IsEmpty)
             SAV = new SAV9SV(data.ToArray());
         else
             SAV = new SAV9SV

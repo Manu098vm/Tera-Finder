@@ -117,7 +117,7 @@ public static class GridUtil
 
                             for (var i = 0; i < count; i++)
                                 for (var j = 0; j < columnCount; j++)
-                                    if (count > 1 && Convert.ToUInt32((string)selectedRows.ElementAt(0).Cells[columnCount - 1].Value, 10) > Convert.ToUInt32((string)selectedRows.ElementAt(1).Cells[columnCount - 1].Value, 10))
+                                    if (count > 1 && Convert.ToUInt32((string)selectedRows.ElementAt(0).Cells[columnCount - 1].Value!, 10) > Convert.ToUInt32((string)selectedRows.ElementAt(1).Cells[columnCount - 1].Value!, 10))
                                         outputTxt[i + 1] += Convert.ToString(selectedRows.ElementAt(count - (i + 1)).Cells[j].Value) + "\t";
                                     else
                                         outputTxt[i + 1] += Convert.ToString(selectedRows.ElementAt(i).Cells[j].Value) + "\t";
