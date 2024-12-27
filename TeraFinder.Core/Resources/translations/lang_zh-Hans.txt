@@ -144,6 +144,7 @@ RewardCalcForm.lblTime=T:
 RewardCalcForm.lblShiny=闪光:
 
 CheckerForm=Seed检索器
+CheckerForm.lblSpecies=种类:
 CheckerForm.lblTID=表ID:
 CheckerForm.lblSID=里ID:
 CheckerForm.lblEC=加密常数:
