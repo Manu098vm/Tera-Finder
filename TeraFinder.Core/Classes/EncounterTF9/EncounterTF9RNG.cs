@@ -238,7 +238,10 @@ public static class EncounterTF9RNG
             if (xor > 16)
                 pid = ShinyUtil.GetShinyPID(tid, sid, pid, 0);
             if (!ShinyUtil.GetIsShiny(id32, pid))
-                pid = ShinyUtil.GetShinyPID(tid, sid, pid, xor == 0 ? 0u : 1u);
+            {
+                xor = ShinyUtil.GetShinyXor(pid, fakeTID);
+                pid = ShinyUtil.GetShinyPID(TidUtil.GetTID16(id32), TidUtil.GetSID16(id32), pid, xor == 0 ? 0u : 1u);
+            }
             shiny = xor == 0 ? TeraShiny.Square : TeraShiny.Star;
         }
         else
