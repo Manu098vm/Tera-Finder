@@ -144,6 +144,7 @@ RewardCalcForm.lblTime=T:
 RewardCalcForm.lblShiny=Shiny:
 
 CheckerForm=Controllo Seed
+CheckerForm.lblSpecies=Specie:
 CheckerForm.lblTID=TID:
 CheckerForm.lblSID=SID:
 CheckerForm.lblEC=EC:
