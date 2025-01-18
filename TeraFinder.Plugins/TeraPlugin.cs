@@ -395,7 +395,7 @@ public class TeraPlugin : IPlugin
         if (enableBlock.Type == SCTypeCode.None || enableBlock.Type == SCTypeCode.Bool1)
             return 0;
         var pokeDataBlock = SAV.Accessor.FindOrDefault(BlockDefinitions.KBCATOutbreakPokeData.Key);
-        var tablePokeData = FlatBufferConverter.DeserializeFrom<DeliveryOutbreakPokeDataArray>(pokeDataBlock.Data);
+        var tablePokeData = FlatBufferConverter.DeserializeFrom<DeliveryOutbreakPokeDataArray>(pokeDataBlock.Data.ToArray());
         return tablePokeData.Table[0].ID > 0 ? uint.Parse($"{tablePokeData.Table[0].ID}"[..8]) : 0;
     }
 

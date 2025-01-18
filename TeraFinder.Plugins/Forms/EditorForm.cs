@@ -381,7 +381,7 @@ public partial class EditorForm : Form
             {
                 var block = CurrMap is TeraRaidMapParent.Paldea ? BlockDefinitions.KTeraRaidPaldea : BlockDefinitions.KTeraRaidDLC;
                 var savBlock = SAV.Accessor.FindOrDefault(block.Key)!;
-                await Connection.Executor.WriteBlock(savBlock.Data, block, new CancellationToken()).ConfigureAwait(false);
+                await Connection.Executor.WriteBlock(savBlock.Data.ToArray(), block, new CancellationToken()).ConfigureAwait(false);
             }
         }
         catch (Exception)
