@@ -37,8 +37,8 @@ public static class EventUtil
         {
             var KBCATFixedRewardItemArray = sav.Accessor.FindOrDefault(BlockDefinitions.KBCATFixedRewardItemArray.Key).Data;
             var KBCATLotteryRewardItemArray = sav.Accessor.FindOrDefault(BlockDefinitions.KBCATLotteryRewardItemArray.Key).Data;
-            var tableDrops = pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidFixedRewardItemArray>(KBCATFixedRewardItemArray);
-            var tableBonus = pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidLotteryRewardItemArray>(KBCATLotteryRewardItemArray);
+            var tableDrops = pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidFixedRewardItemArray>(KBCATFixedRewardItemArray.ToArray());
+            var tableBonus = pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidLotteryRewardItemArray>(KBCATLotteryRewardItemArray.ToArray());
             var opt = new JsonSerializerOptions { WriteIndented = true };
             var drops = JsonSerializer.Serialize(tableDrops, opt);
             var lottery = JsonSerializer.Serialize(tableBonus, opt);
@@ -56,7 +56,7 @@ public static class EventUtil
         var type3list = new List<byte[]>();
 
         var KBCATRaidEnemyArray = sav.Accessor.FindOrDefault(BlockDefinitions.KBCATRaidEnemyArray.Key).Data;
-        var tableEncounters = pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidEnemyTableArray>(KBCATRaidEnemyArray);
+        var tableEncounters = pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidEnemyTableArray>(KBCATRaidEnemyArray.ToArray());
 
         var byGroupID = tableEncounters.Table
             .Where(z => z.Info.Rate != 0)
@@ -101,7 +101,7 @@ public static class EventUtil
         var KBCATRaidPriorityArray = sav.Accessor.FindOrDefault(BlockDefinitions.KBCATRaidPriorityArray.Key);
         if (KBCATRaidPriorityArray.Type is not SCTypeCode.None && KBCATRaidPriorityArray.Data.Length > 0)
         {
-            try { return pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidPriorityArray>(KBCATRaidPriorityArray.Data).Table.First(); }
+            try { return pkNX.Structures.FlatBuffers.FlatBufferConverter.DeserializeFrom<DeliveryRaidPriorityArray>(KBCATRaidPriorityArray.Data.ToArray()).Table.First(); }
             catch { }
         }
         return null;

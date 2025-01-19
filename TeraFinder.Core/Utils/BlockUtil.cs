@@ -5,18 +5,18 @@ namespace TeraFinder.Core;
 
 public static class BlockUtil
 {
-    private static SCBlock CreateBlock(uint key, SCTypeCode dummy, ReadOnlySpan<byte> data)
+    private static SCBlock CreateBlock(uint key, SCTypeCode dummy, Memory<byte> data)
     {
         Type type = typeof(SCBlock);
         var instance = type.Assembly.CreateInstance(
             type.FullName!, false,
             BindingFlags.Instance | BindingFlags.NonPublic,
-            null, [key, dummy, data.ToArray()], null, null
+            null, [key, dummy, data], null, null
         );
         return (SCBlock)instance!;
     }
 
-    public static SCBlock CreateObjectBlock(uint key, ReadOnlySpan<byte> data) => CreateBlock(key, SCTypeCode.Object, data);
+    public static SCBlock CreateObjectBlock(uint key, Memory<byte> data) => CreateBlock(key, SCTypeCode.Object, data);
 
     public static SCBlock CreateDummyBlock(uint key, SCTypeCode dummy) => CreateBlock(key, dummy, Array.Empty<byte>());
 
@@ -31,32 +31,32 @@ public static class BlockUtil
         typeInfo.SetValue(sav.Blocks, list);
     }
 
-    public static void EditBlock(SCBlock block, SCTypeCode type, ReadOnlySpan<byte> data)
+    public static void EditBlock(SCBlock block, SCTypeCode type, Memory<byte> data)
     {
         EditBlockType(block, type);
-        var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
-        dataInfo.SetValue(block, data.ToArray());
+        var dataInfo = typeof(SCBlock).GetField("Raw", BindingFlags.Instance | BindingFlags.Public)!;
+        dataInfo.SetValue(block, data);
     }
 
     public static void EditBlock(SCBlock block, SCTypeCode type, uint value)
     {
         EditBlockType(block, type);
-        var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
-        dataInfo.SetValue(block, BitConverter.GetBytes(value));
+        var dataInfo = typeof(SCBlock).GetField("Raw", BindingFlags.Instance | BindingFlags.Public)!;
+        dataInfo.SetValue(block, BitConverter.GetBytes(value).AsMemory());
     }
 
     public static void EditBlock(SCBlock block, SCTypeCode type, int value)
     {
         EditBlockType(block, type);
-        var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
-        dataInfo.SetValue(block, BitConverter.GetBytes(value));
+        var dataInfo = typeof(SCBlock).GetField("Raw", BindingFlags.Instance | BindingFlags.Public)!;
+        dataInfo.SetValue(block, BitConverter.GetBytes(value).AsMemory());
     }
 
     public static void EditBlock(SCBlock block, SCTypeCode type, byte value)
     {
         EditBlockType(block, type);
-        var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
-        dataInfo.SetValue(block, new byte[] { value });
+        var dataInfo = typeof(SCBlock).GetField("Raw", BindingFlags.Instance | BindingFlags.Public)!;
+        dataInfo.SetValue(block, new byte[] { value }.AsMemory());
     }
 
     public static void EditBlockType(SCBlock block, SCTypeCode type)
