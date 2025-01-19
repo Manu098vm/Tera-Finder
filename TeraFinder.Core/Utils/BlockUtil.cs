@@ -41,22 +41,22 @@ public static class BlockUtil
     public static void EditBlock(SCBlock block, SCTypeCode type, uint value)
     {
         EditBlockType(block, type);
-        var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
-        dataInfo.SetValue(block, BitConverter.GetBytes(value));
+        var dataInfo = typeof(SCBlock).GetField("Raw", BindingFlags.Instance | BindingFlags.Public)!;
+        dataInfo.SetValue(block, BitConverter.GetBytes(value).AsMemory());
     }
 
     public static void EditBlock(SCBlock block, SCTypeCode type, int value)
     {
         EditBlockType(block, type);
-        var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
-        dataInfo.SetValue(block, BitConverter.GetBytes(value));
+        var dataInfo = typeof(SCBlock).GetField("Raw", BindingFlags.Instance | BindingFlags.Public)!;
+        dataInfo.SetValue(block, BitConverter.GetBytes(value).AsMemory());
     }
 
     public static void EditBlock(SCBlock block, SCTypeCode type, byte value)
     {
         EditBlockType(block, type);
-        var dataInfo = typeof(SCBlock).GetField("Data", BindingFlags.Instance | BindingFlags.Public)!;
-        dataInfo.SetValue(block, new byte[] { value });
+        var dataInfo = typeof(SCBlock).GetField("Raw", BindingFlags.Instance | BindingFlags.Public)!;
+        dataInfo.SetValue(block, new byte[] { value }.AsMemory());
     }
 
     public static void EditBlockType(SCBlock block, SCTypeCode type)
