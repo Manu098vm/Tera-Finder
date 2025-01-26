@@ -1,5 +1,4 @@
 ﻿using PKHeX.Core;
-using System.Diagnostics;
 using System.Text;
 using TeraFinder.Core;
 
