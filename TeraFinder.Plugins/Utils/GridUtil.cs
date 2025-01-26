@@ -21,7 +21,7 @@ public static class GridUtil
         }.TranslateInnerStrings(language);
     }
 
-    public static void SaveAllTxt(this DataGridView dataGrid, string language)
+    public static void SaveAllTxt(this DataGridView dataGrid, string language, bool saveAsCsv = false)
     {
         var strings = GenerateDictionary(language);
 
@@ -33,8 +33,8 @@ public static class GridUtil
 
         using var sfd = new SaveFileDialog
         {
-            Filter = "TXT (*.txt)|*.txt",
-            FileName = "terafinder.txt"
+            Filter = saveAsCsv ? "CSV (*.csv)|*.csv" : "TXT (*.txt)|*.txt",
+            FileName = saveAsCsv ? "terafinder.csv" : "terafinder.txt"
         };
         if (sfd.ShowDialog() is not DialogResult.OK)
             return;
@@ -54,7 +54,7 @@ public static class GridUtil
 
         try
         {
-            WriteDataGridToFile(dataGrid, sfd.FileName);
+            WriteDataGridToFile(dataGrid, sfd.FileName, saveAsCsv ? "," : "\t");
             MessageBox.Show($"{strings["GridUtil.Exported"]} {sfd.FileName}");
         }
         catch (Exception ex)
@@ -63,20 +63,20 @@ public static class GridUtil
         }
     }
 
-    private static void WriteDataGridToFile(DataGridView dataGrid, string fileName)
+    private static void WriteDataGridToFile(DataGridView dataGrid, string fileName, string delimiter)
     {
         using var writer = new StreamWriter(fileName, false, Encoding.UTF8);
-        var columnNames = string.Join("\t", dataGrid.Columns.Cast<DataGridViewColumn>().Select(col => col.HeaderText));
+        var columnNames = string.Join(delimiter, dataGrid.Columns.Cast<DataGridViewColumn>().Select(col => col.HeaderText));
         writer.WriteLine(columnNames);
 
         foreach (DataGridViewRow row in dataGrid.Rows)
         {
             var rowValues = row.Cells.Cast<DataGridViewCell>().Select(cell => Convert.ToString(cell.Value));
-            writer.WriteLine(string.Join("\t", rowValues));
+            writer.WriteLine(string.Join(delimiter, rowValues));
         }
     }
 
-    public static void SaveSelectedTxt(this DataGridView dataGrid, string language)
+    public static void SaveSelectedTxt(this DataGridView dataGrid, string language, bool saveAsCsv = false)
     {
         var strings = GenerateDictionary(language);
 
@@ -95,8 +95,8 @@ public static class GridUtil
 
         using var sfd = new SaveFileDialog
         {
-            Filter = "TXT (*.txt)|*.txt",
-            FileName = "terafinder.txt"
+            Filter = saveAsCsv ? "CSV (*.csv)|*.csv" : "TXT (*.txt)|*.txt",
+            FileName = saveAsCsv ? "terafinder.csv" : "terafinder.txt"
         };
         if (sfd.ShowDialog() is not DialogResult.OK)
             return;
@@ -116,7 +116,7 @@ public static class GridUtil
 
         try
         {
-            WriteSelectedRowsToFile(selectedRows!, dataGrid, sfd.FileName);
+            WriteSelectedRowsToFile(selectedRows!, dataGrid, sfd.FileName, saveAsCsv ? "," : "\t");
             MessageBox.Show($"{strings["GridUtil.Exported"]} {sfd.FileName}");
         }
         catch (Exception ex)
@@ -125,16 +125,16 @@ public static class GridUtil
         }
     }
 
-    private static void WriteSelectedRowsToFile(DataGridViewRow[] selectedRows, DataGridView dataGrid, string fileName)
+    private static void WriteSelectedRowsToFile(DataGridViewRow[] selectedRows, DataGridView dataGrid, string fileName, string delimiter)
     {
         using var writer = new StreamWriter(fileName, false, Encoding.UTF8);
-        var columnNames = string.Join("\t", dataGrid.Columns.Cast<DataGridViewColumn>().Select(col => col.HeaderText));
+        var columnNames = string.Join(delimiter, dataGrid.Columns.Cast<DataGridViewColumn>().Select(col => col.HeaderText));
         writer.WriteLine(columnNames);
 
         foreach (var row in selectedRows)
         {
             var rowValues = row.Cells.Cast<DataGridViewCell>().Select(cell => Convert.ToString(cell.Value));
-            writer.WriteLine(string.Join("\t", rowValues));
+            writer.WriteLine(string.Join(delimiter, rowValues));
         }
     }
 
