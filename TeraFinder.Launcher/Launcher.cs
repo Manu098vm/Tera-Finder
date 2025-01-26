@@ -15,6 +15,7 @@ internal static class Launcher
         new Task(() => splash.ShowDialog()).Start();
         var TF = new TeraFinderForm();
         splash.Invoke(splash.Close);
+        TF.Load += (sender, e) => TF.Activate();
         Application.Run(TF);
     }
 }
