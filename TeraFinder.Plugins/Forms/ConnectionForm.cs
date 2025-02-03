@@ -187,7 +187,7 @@ public partial class ConnectionForm : Form
             return;
         }
     }
-
+     
     private async Task DownloadEventData(CancellationToken token)
     {
         var KBCATEventRaidIdentifier = SAV.Accessor.FindOrDefault(BlockDefinitions.KBCATEventRaidIdentifier.Key);
@@ -264,7 +264,7 @@ public partial class ConnectionForm : Form
         if (KMassOutbreakAmount.Type is not SCTypeCode.None)
             KMassOutbreakAmount.ChangeData((new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
         else
-            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakMainNumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
+            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakMainNumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsMemory());
 
         UpdateProgress(CurrentProgress++, MaxProgress);
 
@@ -359,7 +359,7 @@ public partial class ConnectionForm : Form
         if (KMassOutbreakAmount.Type is not SCTypeCode.None)
             KMassOutbreakAmount.ChangeData((new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
         else
-            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakBCMainNumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
+            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakBCMainNumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsMemory());
 
         UpdateProgress(CurrentProgress++, MaxProgress);
 
@@ -456,7 +456,7 @@ public partial class ConnectionForm : Form
         if (KMassOutbreakAmount.Type is not SCTypeCode.None)
             KMassOutbreakAmount.ChangeData((new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
         else
-            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakDLC1NumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
+            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakDLC1NumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsMemory());
 
         UpdateProgress(CurrentProgress++, MaxProgress);
 
@@ -567,7 +567,7 @@ public partial class ConnectionForm : Form
         if (KMassOutbreakAmount.Type is not SCTypeCode.None)
             KMassOutbreakAmount.ChangeData((new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
         else
-            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakBCDLC1NumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
+            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakBCDLC1NumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsMemory());
 
         UpdateProgress(CurrentProgress++, MaxProgress);
 
@@ -678,7 +678,7 @@ public partial class ConnectionForm : Form
         if (KMassOutbreakAmount.Type is not SCTypeCode.None)
             KMassOutbreakAmount.ChangeData((new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
         else
-            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakDLC2NumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
+            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakDLC2NumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsMemory());
 
         UpdateProgress(CurrentProgress++, MaxProgress);
 
@@ -789,7 +789,7 @@ public partial class ConnectionForm : Form
         if (KMassOutbreakAmount.Type is not SCTypeCode.None)
             KMassOutbreakAmount.ChangeData((new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
         else
-            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakBCDLC2NumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsSpan());
+            BlockUtil.EditBlock(KMassOutbreakAmount, BlockDefinitions.KOutbreakBCDLC2NumActive.Type, (new byte[] { (byte)KMassOutbreakAmountData! }).AsMemory());
 
         UpdateProgress(CurrentProgress++, MaxProgress);
 

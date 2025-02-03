@@ -95,6 +95,7 @@ partial class CalculatorForm
         nSpeMax = new NumericUpDown();
         dataGrid = new DataGridView();
         grpGameInfo = new GroupBox();
+        lblTime = new Label();
         txtSID = new TextBox();
         lblSID = new Label();
         txtTID = new TextBox();
@@ -110,7 +111,8 @@ partial class CalculatorForm
         btnToPkmEditor = new ToolStripMenuItem();
         btnSendToEditor = new ToolStripMenuItem();
         btnCopySeed = new ToolStripMenuItem();
-        lblTime = new Label();
+        btnSaveAllCsv = new ToolStripMenuItem();
+        btnSaveCsv = new ToolStripMenuItem();
         grpRaidDetails.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)numFrames).BeginInit();
         grpFilters.SuspendLayout();
@@ -827,6 +829,16 @@ partial class CalculatorForm
         grpGameInfo.TabStop = false;
         grpGameInfo.Text = "Game Info";
         // 
+        // lblTime
+        // 
+        lblTime.AutoSize = true;
+        lblTime.Location = new Point(207, 213);
+        lblTime.Name = "lblTime";
+        lblTime.Size = new Size(20, 20);
+        lblTime.TabIndex = 35;
+        lblTime.Text = "T:";
+        lblTime.Visible = false;
+        // 
         // txtSID
         // 
         txtSID.Location = new Point(116, 154);
@@ -894,9 +906,9 @@ partial class CalculatorForm
         // contextMenuStrip
         // 
         contextMenuStrip.ImageScalingSize = new Size(20, 20);
-        contextMenuStrip.Items.AddRange(new ToolStripItem[] { btnViewRewards, btnSaveAll, btnSave, btnSavePk9, btnToPkmEditor, btnSendToEditor, btnCopySeed });
+        contextMenuStrip.Items.AddRange(new ToolStripItem[] { btnViewRewards, btnSaveAll, btnSaveAllCsv, btnSave, btnSaveCsv, btnSavePk9, btnToPkmEditor, btnSendToEditor, btnCopySeed });
         contextMenuStrip.Name = "contextMenuStrip";
-        contextMenuStrip.Size = new Size(313, 172);
+        contextMenuStrip.Size = new Size(313, 248);
         // 
         // btnViewRewards
         // 
@@ -947,15 +959,19 @@ partial class CalculatorForm
         btnCopySeed.Text = "Copy Seed";
         btnCopySeed.Click += btnCopySeed_Click;
         // 
-        // lblTime
+        // btnSaveAllCsv
         // 
-        lblTime.AutoSize = true;
-        lblTime.Location = new Point(207, 213);
-        lblTime.Name = "lblTime";
-        lblTime.Size = new Size(20, 20);
-        lblTime.TabIndex = 35;
-        lblTime.Text = "T:";
-        lblTime.Visible = false;
+        btnSaveAllCsv.Name = "btnSaveAllCsv";
+        btnSaveAllCsv.Size = new Size(312, 24);
+        btnSaveAllCsv.Text = "Save All Results as CSV";
+        btnSaveAllCsv.Click += btnSaveAllCSV_Click;
+        // 
+        // btnSaveCsv
+        // 
+        btnSaveCsv.Name = "btnSaveCsv";
+        btnSaveCsv.Size = new Size(312, 24);
+        btnSaveCsv.Text = "Save Selected Results as CSV";
+        btnSaveCsv.Click += btnSaveCSV_Click;
         // 
         // CalculatorForm
         // 
@@ -1080,4 +1096,6 @@ partial class CalculatorForm
     private ComboBox cmbMap;
     private ToolStripMenuItem btnCopySeed;
     private Label lblTime;
+    private ToolStripMenuItem btnSaveAllCsv;
+    private ToolStripMenuItem btnSaveCsv;
 }

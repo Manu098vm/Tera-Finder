@@ -21,124 +21,121 @@ public static class GridUtil
         }.TranslateInnerStrings(language);
     }
 
-    public static void SaveAllTxt(this DataGridView dataGrid, string language)
+    public static void SaveAllTxt(this DataGridView dataGrid, string language, bool saveAsCsv = false)
     {
         var strings = GenerateDictionary(language);
-        if (dataGrid.Rows.Count > 0)
+
+        if (dataGrid.Rows.Count == 0)
         {
-            var sfd = new SaveFileDialog
-            {
-                Filter = "TXT (*.txt)|*.txt",
-                FileName = "terafinder.txt"
-            };
-            var error = false;
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                if (File.Exists(sfd.FileName))
-                {
-                    try
-                    {
-                        File.Delete(sfd.FileName);
-                    }
-                    catch (IOException ex)
-                    {
-                        error = true;
-                        MessageBox.Show(ex.Message);
-                    }
-                }
-                if (!error)
-                {
-                    try
-                    {
-                        var columnCount = dataGrid.Columns.Count;
-                        var columnNames = "";
-                        var outputTxt = new string[dataGrid.Rows.Count + 1];
-                        for (var i = 0; i < columnCount; i++)
-                            columnNames += dataGrid.Columns[i].HeaderText.ToString() + "\t";
-                        outputTxt[0] += columnNames;
+            MessageBox.Show(strings["GridUtil.NoData"]);
+            return;
+        }
 
-                        for (var i = 1; (i - 1) < dataGrid.Rows.Count; i++)
-                            for (var j = 0; j < columnCount; j++)
-                                outputTxt[i] += Convert.ToString(dataGrid.Rows[i - 1].Cells[j].Value) + "\t";
+        using var sfd = new SaveFileDialog
+        {
+            Filter = saveAsCsv ? "CSV (*.csv)|*.csv" : "TXT (*.txt)|*.txt",
+            FileName = saveAsCsv ? "terafinder.csv" : "terafinder.txt"
+        };
+        if (sfd.ShowDialog() is not DialogResult.OK)
+            return;
 
-                        File.WriteAllLines(sfd.FileName, outputTxt, Encoding.UTF8);
-                        MessageBox.Show($"{strings["GridUtil.Exported"]} {sfd.FileName}");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                }
+        if (File.Exists(sfd.FileName))
+        {
+            try
+            {
+                File.Delete(sfd.FileName);
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show($"{ex.Message}");
+                return;
             }
         }
-        else
-            MessageBox.Show(strings["GridUtil.NoData"]);
+
+        try
+        {
+            WriteDataGridToFile(dataGrid, sfd.FileName, saveAsCsv ? "," : "\t");
+            MessageBox.Show($"{strings["GridUtil.Exported"]} {sfd.FileName}");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"{ex.Message}");
+        }
     }
 
-    public static void SaveSelectedTxt(this DataGridView dataGrid, string language)
+    private static void WriteDataGridToFile(DataGridView dataGrid, string fileName, string delimiter)
+    {
+        using var writer = new StreamWriter(fileName, false, Encoding.UTF8);
+        var columnNames = string.Join(delimiter, dataGrid.Columns.Cast<DataGridViewColumn>().Select(col => col.HeaderText));
+        writer.WriteLine(columnNames);
+
+        foreach (DataGridViewRow row in dataGrid.Rows)
+        {
+            var rowValues = row.Cells.Cast<DataGridViewCell>().Select(cell => Convert.ToString(cell.Value));
+            writer.WriteLine(string.Join(delimiter, rowValues));
+        }
+    }
+
+    public static void SaveSelectedTxt(this DataGridView dataGrid, string language, bool saveAsCsv = false)
     {
         var strings = GenerateDictionary(language);
-        if (dataGrid.SelectedCells.Count > 0)
+
+        if (dataGrid.SelectedCells.Count == 0)
         {
-            var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct();
-            var count = selectedRows.Count();
-            if (count > 0)
+            MessageBox.Show(strings["GridUtil.NoData"]);
+            return;
+        }
+
+        var selectedRows = dataGrid.SelectedCells.Cast<DataGridViewCell>().Select(cell => cell.OwningRow).Distinct().ToArray();
+        if (selectedRows.Length == 0)
+        {
+            MessageBox.Show(strings["GridUtil.NoData"]);
+            return;
+        }
+
+        using var sfd = new SaveFileDialog
+        {
+            Filter = saveAsCsv ? "CSV (*.csv)|*.csv" : "TXT (*.txt)|*.txt",
+            FileName = saveAsCsv ? "terafinder.csv" : "terafinder.txt"
+        };
+        if (sfd.ShowDialog() is not DialogResult.OK)
+            return;
+
+        if (File.Exists(sfd.FileName))
+        {
+            try
             {
-                var sfd = new SaveFileDialog
-                {
-                    Filter = "TXT (*.txt)|*.txt",
-                    FileName = "terafinder.txt"
-                };
-                var error = false;
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    if (File.Exists(sfd.FileName))
-                    {
-                        try
-                        {
-                            File.Delete(sfd.FileName);
-                        }
-                        catch (IOException ex)
-                        {
-                            error = true;
-                            MessageBox.Show(ex.Message);
-                        }
-                    }
-                    if (!error)
-                    {
-                        try
-                        {
-                            var columnCount = dataGrid.Columns.Count;
-                            var columnNames = "";
-                            var outputTxt = new string[count + 1];
-                            for (var i = 0; i < columnCount; i++)
-                                columnNames += dataGrid.Columns[i].HeaderText.ToString() + "\t";
-                            outputTxt[0] += columnNames;
-
-                            for (var i = 0; i < count; i++)
-                                for (var j = 0; j < columnCount; j++)
-                                    if (count > 1 && Convert.ToUInt32((string)selectedRows.ElementAt(0).Cells[columnCount - 1].Value!, 10) > Convert.ToUInt32((string)selectedRows.ElementAt(1).Cells[columnCount - 1].Value!, 10))
-                                        outputTxt[i + 1] += Convert.ToString(selectedRows.ElementAt(count - (i + 1)).Cells[j].Value) + "\t";
-                                    else
-                                        outputTxt[i + 1] += Convert.ToString(selectedRows.ElementAt(i).Cells[j].Value) + "\t";
-
-                            File.WriteAllLines(sfd.FileName, outputTxt, Encoding.UTF8);
-                            MessageBox.Show($"{strings["GridUtil.Exported"]} {sfd.FileName}");
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-                    }
-                }
+                File.Delete(sfd.FileName);
             }
-            else
+            catch (IOException ex)
             {
-                MessageBox.Show(strings["GridUtil.NoData"]);
+                MessageBox.Show($"{ex.Message}");
+                return;
             }
         }
-        else
-            MessageBox.Show(strings["GridUtil.NoData"]);
+
+        try
+        {
+            WriteSelectedRowsToFile(selectedRows!, dataGrid, sfd.FileName, saveAsCsv ? "," : "\t");
+            MessageBox.Show($"{strings["GridUtil.Exported"]} {sfd.FileName}");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"{ex.Message}");
+        }
+    }
+
+    private static void WriteSelectedRowsToFile(DataGridViewRow[] selectedRows, DataGridView dataGrid, string fileName, string delimiter)
+    {
+        using var writer = new StreamWriter(fileName, false, Encoding.UTF8);
+        var columnNames = string.Join(delimiter, dataGrid.Columns.Cast<DataGridViewColumn>().Select(col => col.HeaderText));
+        writer.WriteLine(columnNames);
+
+        foreach (var row in selectedRows)
+        {
+            var rowValues = row.Cells.Cast<DataGridViewCell>().Select(cell => Convert.ToString(cell.Value));
+            writer.WriteLine(string.Join(delimiter, rowValues));
+        }
     }
 
     public static void SaveSelectedPk9(this DataGridView dataGrid, CalculatorForm f, string language, TeraRaidMapParent map)

@@ -122,6 +122,8 @@ partial class RewardCalcForm
         btnSaveSelectedTxt = new ToolStripMenuItem();
         btnSendSelectedRaid = new ToolStripMenuItem();
         btnCopySeed = new ToolStripMenuItem();
+        btnSaveAllCsv = new ToolStripMenuItem();
+        btnSaveSelectedCsv = new ToolStripMenuItem();
         grpFilters.SuspendLayout();
         grpEncounter.SuspendLayout();
         grpItems.SuspendLayout();
@@ -1058,9 +1060,9 @@ partial class RewardCalcForm
         // contextMenuStrip
         // 
         contextMenuStrip.ImageScalingSize = new Size(20, 20);
-        contextMenuStrip.Items.AddRange(new ToolStripItem[] { btnSaveAllTxt, btnSaveSelectedTxt, btnSendSelectedRaid, btnCopySeed });
+        contextMenuStrip.Items.AddRange(new ToolStripItem[] { btnSaveAllTxt, btnSaveAllCsv, btnSaveSelectedTxt, btnSaveSelectedCsv, btnSendSelectedRaid, btnCopySeed });
         contextMenuStrip.Name = "contextMenuStrip";
-        contextMenuStrip.Size = new Size(313, 100);
+        contextMenuStrip.Size = new Size(313, 176);
         // 
         // btnSaveAllTxt
         // 
@@ -1089,6 +1091,20 @@ partial class RewardCalcForm
         btnCopySeed.Size = new Size(312, 24);
         btnCopySeed.Text = "Copy Seed";
         btnCopySeed.Click += btnCopySeed_Click;
+        // 
+        // btnSaveAllCsv
+        // 
+        btnSaveAllCsv.Name = "btnSaveAllCsv";
+        btnSaveAllCsv.Size = new Size(312, 24);
+        btnSaveAllCsv.Text = "Save All Results as CSV";
+        btnSaveAllCsv.Click += btnSaveAllCsv_Click;
+        // 
+        // btnSaveSelectedCsv
+        // 
+        btnSaveSelectedCsv.Name = "btnSaveSelectedCsv";
+        btnSaveSelectedCsv.Size = new Size(312, 24);
+        btnSaveSelectedCsv.Text = "Save Selected Results as CSV";
+        btnSaveSelectedCsv.Click += btnSaveSelectedCsv_Click;
         // 
         // RewardCalcForm
         // 
@@ -1232,4 +1248,6 @@ partial class RewardCalcForm
     private Label lblTime;
     private ComboBox cmbShiny;
     private Label lblShiny;
+    private ToolStripMenuItem btnSaveAllCsv;
+    private ToolStripMenuItem btnSaveSelectedCsv;
 }
