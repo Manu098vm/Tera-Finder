@@ -1,7 +1,7 @@
 ## Xieon's Gaming Corner Public Archival Fork 
 [![Discord Widget](https://discord.com/api/guilds/829181609156411463/widget.png?style=banner2)](https://discord.gg/Xieon)
 
-* This fork is a public archival fork of PkHex - there's been no changes done by Xieon's Gaming Corner other than image compression, and data compression by Github action algorithms - this fork is kept as up to date as possible with the main branch 
+* This fork is a public archival fork of TeraFinder - there's been no changes done by Xieon's Gaming Corner other than image compression, and data compression by Github action algorithms - this fork is kept as up to date as possible with the main branch 
 
 # Tera Finder
 ![immagine](https://github.com/Manu098vm/Tera-Finder/assets/52102823/15f9d8c3-423c-4bfc-89c4-fb1495445c9e)
