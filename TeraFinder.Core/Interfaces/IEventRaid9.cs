@@ -1,10 +1,13 @@
-﻿namespace TeraFinder.Core;
+﻿using PKHeX.Core;
+
+namespace TeraFinder.Core;
 
 public interface IEventRaid9
 {
     ushort Species { get; }
     byte Index { get; }
     byte RandRate { get; }
+    bool IsMighty { get; }
 
     ushort RandRate0MinScarlet { get; }
     ushort RandRate0MinViolet { get; }
@@ -30,6 +33,9 @@ public interface IEventRaid9
     ushort GetRandRateTotalViolet(EventProgress stage);
     ushort GetRandRateMinScarlet(EventProgress stage);
     ushort GetRandRateMinViolet(EventProgress stage);
+
+    bool CanBeEncountered(GameVersion version);
+    bool CanBeEncounteredFromStage(EventProgress progress, GameVersion version);
 
     EventProgress GetProgressMaximum(uint seed);
 }

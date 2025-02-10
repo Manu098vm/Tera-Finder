@@ -223,21 +223,22 @@ public static class EventUtil
         [3, 4, 5, 6, 7],
     ];
 
-    public static byte GetDeliveryGroupID(IEventRaid9[] encounters, SAV9SV sav, EventProgress progress, RaidSpawnList9 raids, int currRaid)
+    public static byte GetDeliveryGroupID(IEventRaid9[] encounters, SAV9SV sav, GameProgress gprogress, EventProgress eprogress, RaidSpawnList9 raids, int currRaid)
     {
         var possibleGroups = new HashSet<int>();
 
-        foreach (var enc in encounters)
-            if ((sav.Version is PKHeX.Core.GameVersion.SL && enc.GetRandRateTotalScarlet(progress) > 0) ||
-                (sav.Version is PKHeX.Core.GameVersion.VL && enc.GetRandRateTotalViolet(progress) > 0))
-                    possibleGroups.Add(enc.Index);
+        foreach (var enc in encounters) 
+        {
+            if (enc.IsMighty && gprogress < GameProgress.Unlocked6Stars)
+                continue;
+
+            if (enc.CanBeEncounteredFromStage(eprogress, sav.Version)) 
+                possibleGroups.Add(enc.Index);
+        }
 
         var eventCount = GetEventCount(raids, ++currRaid);
-
         var priority = GetEventDeliveryPriority(sav);
-        var groupid = priority is not null ? GetDeliveryGroupID(eventCount, priority.GroupID.Groups, possibleGroups) : (byte)0;
-
-        return groupid;
+        return  priority is not null ? GetDeliveryGroupID(eventCount, priority.GroupID.Groups, possibleGroups) : (byte)0;
     }
 
     private static int GetEventCount(RaidSpawnList9 raids, int selected)

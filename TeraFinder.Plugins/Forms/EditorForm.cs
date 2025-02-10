@@ -403,7 +403,7 @@ public partial class EditorForm : Form
             var groupid = content switch
             {
                 RaidContent.Event or RaidContent.Event_Mighty => EventUtil.GetDeliveryGroupID([.. Dist, .. Mighty], 
-                    SAV, EventUtil.GetEventStageFromProgress(Progress), CurrMap switch
+                    SAV, Progress, EventUtil.GetEventStageFromProgress(Progress), CurrMap switch
                     {
                         TeraRaidMapParent.Paldea => SAV.RaidPaldea,
                         TeraRaidMapParent.Kitakami => SAV.RaidKitakami,
@@ -660,7 +660,7 @@ public partial class EditorForm : Form
             var encounters = GetCurrentEncounters(content, CurrMap);
             var eventProgress = EventUtil.GetEventStageFromProgress(Progress);
             var groupid = content >= RaidContent.Event ? EventUtil.GetDeliveryGroupID(content is RaidContent.Event ?
-                (EncounterEventTF9[])encounters : (EncounterEventTF9[])encounters, SAV, eventProgress, spawns, i) : (byte)0;
+                (EncounterEventTF9[])encounters : (EncounterEventTF9[])encounters, SAV, Progress, eventProgress, spawns, i) : (byte)0;
 
             if (!EncounterRaidTF9.TryGenerateTeraDetails(raid.Seed, encounters, SAV.Version, Progress, eventProgress, content, CurrMap, SAV.ID32, groupid, out var encounter, out var detail))
                 return;
