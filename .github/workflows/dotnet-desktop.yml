@@ -1,4 +1,4 @@
-name: .NET Core Desktop
+name: .NET Desktop
 
 on:
   push:
@@ -7,15 +7,11 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     strategy:
       matrix:
         configuration: [Release]
-
     runs-on: windows-latest
-
     env:
       Solution_Name: TeraFinder.sln
 
@@ -25,13 +21,10 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Install .NET Core
+    - name: Install .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
-
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v2
 
     - name: Checkout PKHeX.Core
       uses: actions/checkout@v4
@@ -44,30 +37,26 @@ jobs:
       run: |
         cd PKHeX/PKHeX.Core
         dotnet restore
-        msbuild PKHeX.Core.csproj /p:Configuration=Release
+        dotnet build --configuration Release
 
     - name: Restore NuGet packages
-      run: dotnet restore
+      run: dotnet restore $env:Solution_Name
 
-    - name: Replace latest PKHeX.Core NuGet
+    - name: Replace PKHeX.Core NuGet DLL
       shell: pwsh
       run: |
-        $NuGetPackageFolder = Join-Path -Path $env:USERPROFILE -ChildPath ".nuget\packages\pkhex.core"
-        $LatestVersion = (Get-ChildItem $NuGetPackageFolder | Sort-Object -Property LastWriteTime -Descending)[0].Name
+        $PackageBaseFolder = Join-Path -Path $env:USERPROFILE -ChildPath ".nuget\packages\pkhex.core"
+        $LatestVersionFolder = Get-ChildItem -Path $PackageBaseFolder -Directory | Sort-Object {[version]$_.Name} -Descending | Select-Object -First 1
+        $NuGetPackageFolder = Join-Path -Path $LatestVersionFolder.FullName -ChildPath "lib\net9.0"
         $PkhexCoreDllSource = Join-Path -Path $env:GITHUB_WORKSPACE -ChildPath "PKHeX/PKHeX.Core/bin/Release/net9.0/PKHeX.Core.dll"
-        $PkhexCoreDllDest = Join-Path -Path $NuGetPackageFolder -ChildPath "$LatestVersion/lib/net9.0/PKHeX.Core.dll"
-        Copy-Item -Path $PkhexCoreDllSource -Destination $PkhexCoreDllDest  
+        $PkhexCoreDllDest = Join-Path -Path $NuGetPackageFolder -ChildPath "PKHeX.Core.dll"
+        Copy-Item -Path $PkhexCoreDllSource -Destination $PkhexCoreDllDest -Force
+
+    - name: Build TeraFinder
+      run: dotnet build $env:Solution_Name --configuration Release --no-restore
 
     - name: Execute unit tests
-      run: dotnet test
-
-    - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
-        
-    - name: Create the app package
-      run: msbuild $env:Solution_Name /property:Configuration=Release
+      run: dotnet test $env:Solution_Name --configuration ${{ matrix.configuration }}
 
     - name: Upload Launcher artifacts
       uses: actions/upload-artifact@v4
