@@ -8,14 +8,18 @@ internal static class Launcher
     [STAThread]
     static void Main()
     {
-        // To customize application configuration such as set high DPI settings or default font,
-        // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
+
         var splash = new SplashScreen();
-        new Task(() => splash.ShowDialog()).Start();
-        var TF = new TeraFinderForm();
-        splash.Invoke(splash.Close);
-        TF.Load += (sender, e) => TF.Activate();
-        Application.Run(TF);
+        splash.ShowRefresh();
+        var mainForm = new TeraFinderForm();
+
+        mainForm.Shown += (sender, e) => {
+            splash.Invoke(splash.Close);
+            mainForm.Activate();
+            mainForm.BringToFront();
+        };
+
+        Application.Run(mainForm);
     }
 }
