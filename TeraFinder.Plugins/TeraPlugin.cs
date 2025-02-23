@@ -86,14 +86,11 @@ public class TeraPlugin : ITFPlugin
 
     public void StandaloneInitialize(string defaultOT, ReadOnlySpan<byte> data = default, string? language = null)
     {
-        uint prevDist;
         if (!data.IsEmpty)
         {
-            prevDist = GetRaidEventIdentifier();
             SAV = new SAV9SV(data.ToArray());
         }
         else
-            prevDist = 0;
             SAV = new SAV9SV
             {
                 Version = GameVersion.SL,
