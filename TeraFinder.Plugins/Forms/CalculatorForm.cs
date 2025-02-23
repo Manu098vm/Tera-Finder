@@ -219,18 +219,18 @@ public partial class CalculatorForm : Form
     {
         RaidContent.Standard => (TeraRaidMapParent)cmbMap.SelectedIndex switch
         {
-            TeraRaidMapParent.Kitakami => Editor.Kitakami,
-            TeraRaidMapParent.Blueberry => Editor.Blueberry,
-            _ => Editor.Paldea,
+            TeraRaidMapParent.Kitakami => Editor.RaidEncounters.Kitakami,
+            TeraRaidMapParent.Blueberry => Editor.RaidEncounters.Blueberry,
+            _ => Editor.RaidEncounters.Paldea,
         },
         RaidContent.Black => (TeraRaidMapParent)cmbMap.SelectedIndex switch
         {
-            TeraRaidMapParent.Kitakami => Editor.KitakamiBlack,
-            TeraRaidMapParent.Blueberry => Editor.BlueberryBlack,
-            _ => Editor.PaldeaBlack,
+            TeraRaidMapParent.Kitakami => Editor.RaidEncounters.KitakamiBlack,
+            TeraRaidMapParent.Blueberry => Editor.RaidEncounters.BlueberryBlack,
+            _ => Editor.RaidEncounters.PaldeaBlack,
         },
-        RaidContent.Event => Editor.Dist,
-        RaidContent.Event_Mighty => Editor.Mighty,
+        RaidContent.Event => Editor.RaidEncounters.Dist,
+        RaidContent.Event_Mighty => Editor.RaidEncounters.Mighty,
         _ => throw new NotImplementedException(nameof(cmbContent.SelectedIndex)),
     };
 

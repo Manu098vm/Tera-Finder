@@ -1,19 +1,20 @@
 ﻿using System.Diagnostics;
 using Octokit;
+using TeraFinder.Core;
 
 namespace TeraFinder.Plugins;
 
 public static class GitHubUtil
 {
-    public static async Task TryUpdate(string language)
+    public static async Task TryUpdate(ITFPlugin container)
     {
         var strings = new Dictionary<string, string>
         {
             { "Update.Popup", "" },
             { "Update.Message", "" }
-        }.TranslateInnerStrings(language);
+        }.TranslateInnerStrings(container.Language);
 
-        if (await IsUpdateAvailable())
+        if (await IsUpdateAvailable(container.Version))
         {
             var result = MessageBox.Show(strings["Update.Message"], strings["Update.Popup"], MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
@@ -21,9 +22,9 @@ public static class GitHubUtil
         }
     }
 
-    private static async Task<bool> IsUpdateAvailable()
+    private static async Task<bool> IsUpdateAvailable(string currVersion)
     {
-        var currentVersion = ParseVersion(GetPluginVersion());
+        var currentVersion = ParseVersion(currVersion);
         var latestVersion = ParseVersion(await GetLatestVersion());
 
         if (latestVersion[0] > currentVersion[0])
@@ -40,8 +41,6 @@ public static class GitHubUtil
         }
         return false;
     }
-
-    private static string GetPluginVersion() => TeraPlugin.Version;
 
     private static async Task<string> GetLatestVersion()
     {
