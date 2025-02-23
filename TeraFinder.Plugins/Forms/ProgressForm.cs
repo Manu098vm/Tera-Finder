@@ -29,6 +29,14 @@ public partial class ProgressForm : Form
             if (raid.Identifier > 0)
             {
                 var name = $"{raid.Identifier}";
+                var key = Convert.ToUInt32(name[..^2], 10);
+
+                if (container.AllMighty.Concat(container.AllDist).ToDictionary().TryGetValue(key, out var encounters))
+                {
+                    var enc = encounters.FirstOrDefault(e => e.Identifier == raid.Identifier);
+                    if (enc is not null) name = enc.Name;
+                }
+
                 cmbMightyIndex.Items.Add(name);
                 Raids.Add(raid);
             }
