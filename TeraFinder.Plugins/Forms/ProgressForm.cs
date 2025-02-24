@@ -113,6 +113,7 @@ public partial class ProgressForm : Form
 
     private async void btnApplyProgress_Click(object sender, EventArgs e)
     {
+        var failed = false;
         if (SAV.Accessor is not null)
         {
             var progress = (GameProgress)cmbProgress.SelectedIndex;
@@ -122,12 +123,12 @@ public partial class ProgressForm : Form
                 try
                 {
                     await WriteProgressLive(progress);
-                    MessageBox.Show(Strings["MsgSuccess"]);
                 }
                 catch
                 {
                     if (Connection is not null)
                     {
+                        failed = true;
                         Connection.Disconnect();
                         MessageBox.Show(Strings["DisconnectionSuccess"]);
                         Connection = null;
@@ -137,9 +138,14 @@ public partial class ProgressForm : Form
         }
         else
         {
+
+            failed = true;
             MessageBox.Show(Strings["SAVInvalid"]);
             Close();
         }
+
+        if (!failed)
+            MessageBox.Show(Strings["MsgSuccess"]);
     }
 
     private async Task WriteProgressLive(GameProgress progress)
@@ -312,6 +318,7 @@ public partial class ProgressForm : Form
 
     private async void btnApplyRaid7_Click(object sender, EventArgs e)
     {
+        var failed = false;
         var raid = Raids.ElementAt(cmbMightyIndex.SelectedIndex);
         if (chkCaptured.Checked)
             raid.Captured = true;
@@ -328,6 +335,7 @@ public partial class ProgressForm : Form
             {
                 if (Connection is not null)
                 {
+                    failed = true;
                     Connection.Disconnect();
                     MessageBox.Show(Strings["DisconnectionSuccess"]);
                     Connection = null;
@@ -335,7 +343,8 @@ public partial class ProgressForm : Form
             }
         }
 
-        MessageBox.Show(Strings["MsgSuccess"]);
+        if (!failed)
+            MessageBox.Show(Strings["MsgSuccess"]);
     }
 
     private void cmbMightyIndex_IndexChanged(object sender, EventArgs e)
