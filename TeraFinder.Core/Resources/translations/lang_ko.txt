@@ -229,6 +229,8 @@ ProgressForm.grpRaidMighty=7성 레이드
 ProgressForm.chkCaptured=잡음
 ProgressForm.chkDefeated=쓰러트림
 ProgressForm.btnApplyRaid7=적용
+ProgressForm.SpeciesMighty=Mighty {species}
+ProgressForm.SpeciesShiny=Shiny {species}
 
 RewardListForm=아이템 보상
 RewardListForm.grpNoBoost=샌드위치 파워 X
