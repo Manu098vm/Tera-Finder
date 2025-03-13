@@ -24,36 +24,19 @@ public partial class EditorForm : Form
     public GameProgress Progress = GameProgress.Beginning;
     public TeraRaidMapParent CurrMap = TeraRaidMapParent.Paldea;
 
-    public EncounterTeraTF9[] Paldea = null!;
-    public EncounterTeraTF9[] PaldeaBlack = null!;
-    public EncounterTeraTF9[] Kitakami = null!;
-    public EncounterTeraTF9[] KitakamiBlack = null!;
-    public EncounterTeraTF9[] Blueberry = null!;
-    public EncounterTeraTF9[] BlueberryBlack = null!;
-
-    public EncounterEventTF9[] Dist = null!;
-    public EncounterEventTF9[] Mighty = null!;
+    public IEncounterRaidCollection RaidEncounters;
 
     public EncounterRaidTF9? CurrEncount = null;
     public TeraDetails? CurrTera = null;
 
-    public EditorForm(SAV9SV sav,
-        IPKMView? editor,
-        string language,
-        EncounterTeraTF9[]? paldea,
-        EncounterTeraTF9[]? paldeablack,
-        EncounterTeraTF9[]? kitakami,
-        EncounterTeraTF9[]? kitakamiblack,
-        EncounterTeraTF9[]? blueberry,
-        EncounterTeraTF9[]? blueberryblack,
-        EncounterEventTF9[]? dist,
-        EncounterEventTF9[]? mighty,
-        ConnectionForm? connection)
+    public EditorForm(TeraPlugin container)
     {
         InitializeComponent();
-        SAV = sav;
-        PKMEditor = editor;
-        Language = language;
+        SAV = container.SAV;
+        Language = container.Language;
+        PKMEditor = container.PKMEditor;
+        Connection = container.Connection;
+        RaidEncounters = container;
 
         GenerateDictionary();
         TranslateDictionary(Language);
@@ -61,11 +44,6 @@ public partial class EditorForm : Form
         this.TranslateInterface(Language);
         InitLocationNames();
         GenerateDenLocations();
-
-        (Paldea, PaldeaBlack) = paldea is null || paldeablack is null ? ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Paldea) : (paldea, paldeablack);
-        (Kitakami, KitakamiBlack) = kitakami is null || kitakamiblack is null ? ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Kitakami) : (kitakami, kitakamiblack);
-        (Blueberry, BlueberryBlack) = blueberry is null || blueberryblack is null ? ResourcesUtil.GetAllTeraEncounters(TeraRaidMapParent.Blueberry) : (blueberry, blueberryblack);
-        (Dist, Mighty) = dist is null || mighty is null ? EventUtil.GetCurrentEventEncounters(SAV, RewardUtil.GetDistRewardsTables(SAV)) : (dist, mighty);
 
         DefBackground = pictureBox.BackgroundImage!;
         DefSize = pictureBox.Size;
@@ -81,7 +59,6 @@ public partial class EditorForm : Form
         cmbMap.Enabled = cmbMap.Items.Count > 1;
         cmbDens.SelectedIndex = 0;
         btnSx.Enabled = false;
-        Connection = connection;
     }
 
     private void GenerateDenLocations() =>
@@ -402,8 +379,8 @@ public partial class EditorForm : Form
             var content = (RaidContent)cmbContent.SelectedIndex;
             var groupid = content switch
             {
-                RaidContent.Event or RaidContent.Event_Mighty => EventUtil.GetDeliveryGroupID([.. Dist, .. Mighty], 
-                    SAV, EventUtil.GetEventStageFromProgress(Progress), CurrMap switch
+                RaidContent.Event or RaidContent.Event_Mighty => EventUtil.GetDeliveryGroupID([.. RaidEncounters.Dist, .. RaidEncounters.Mighty], 
+                    SAV, Progress, EventUtil.GetEventStageFromProgress(Progress), CurrMap switch
                     {
                         TeraRaidMapParent.Paldea => SAV.RaidPaldea,
                         TeraRaidMapParent.Kitakami => SAV.RaidKitakami,
@@ -415,10 +392,10 @@ public partial class EditorForm : Form
 
             var success = EncounterRaidTF9.TryGenerateTeraDetails(raid.Seed, content switch
             {
-                RaidContent.Standard => CurrMap switch { TeraRaidMapParent.Paldea => Paldea, TeraRaidMapParent.Kitakami => Kitakami, _ => Blueberry },
-                RaidContent.Black => CurrMap switch { TeraRaidMapParent.Paldea => PaldeaBlack, TeraRaidMapParent.Kitakami => KitakamiBlack, _ => BlueberryBlack },
-                RaidContent.Event => Dist,
-                RaidContent.Event_Mighty => Mighty,
+                RaidContent.Standard => CurrMap switch { TeraRaidMapParent.Paldea => RaidEncounters.Paldea, TeraRaidMapParent.Kitakami => RaidEncounters.Kitakami, _ => RaidEncounters.Blueberry },
+                RaidContent.Black => CurrMap switch { TeraRaidMapParent.Paldea => RaidEncounters.PaldeaBlack, TeraRaidMapParent.Kitakami => RaidEncounters.KitakamiBlack, _ => RaidEncounters.BlueberryBlack },
+                RaidContent.Event => RaidEncounters.Dist,
+                RaidContent.Event_Mighty => RaidEncounters.Mighty,
                 _ => throw new NotImplementedException(nameof(content)),
             }, SAV.Version, Progress, EventUtil.GetEventStageFromProgress(Progress), content, CurrMap, SAV.ID32, groupid, out var encounter, out var result);
                 
@@ -596,20 +573,20 @@ public partial class EditorForm : Form
     {
         RaidContent.Standard => map switch
         {
-            TeraRaidMapParent.Paldea => Paldea,
-            TeraRaidMapParent.Kitakami => Kitakami,
-            TeraRaidMapParent.Blueberry => Blueberry,
+            TeraRaidMapParent.Paldea => RaidEncounters.Paldea,
+            TeraRaidMapParent.Kitakami => RaidEncounters.Kitakami,
+            TeraRaidMapParent.Blueberry => RaidEncounters.Blueberry,
             _ => throw new NotImplementedException(nameof(cmbMap.SelectedIndex)),
         },
         RaidContent.Black => map switch
         {
-            TeraRaidMapParent.Paldea => PaldeaBlack,
-            TeraRaidMapParent.Kitakami => KitakamiBlack,
-            TeraRaidMapParent.Blueberry => BlueberryBlack,
+            TeraRaidMapParent.Paldea => RaidEncounters.PaldeaBlack,
+            TeraRaidMapParent.Kitakami => RaidEncounters.KitakamiBlack,
+            TeraRaidMapParent.Blueberry => RaidEncounters.BlueberryBlack,
             _ => throw new NotImplementedException(nameof(cmbMap.SelectedIndex)),
         },
-        RaidContent.Event => Dist,
-        RaidContent.Event_Mighty => Mighty,
+        RaidContent.Event => RaidEncounters.Dist,
+        RaidContent.Event_Mighty => RaidEncounters.Mighty,
         _ => throw new NotImplementedException(nameof(cmbContent.SelectedIndex)),
     };
 
@@ -660,7 +637,7 @@ public partial class EditorForm : Form
             var encounters = GetCurrentEncounters(content, CurrMap);
             var eventProgress = EventUtil.GetEventStageFromProgress(Progress);
             var groupid = content >= RaidContent.Event ? EventUtil.GetDeliveryGroupID(content is RaidContent.Event ?
-                (EncounterEventTF9[])encounters : (EncounterEventTF9[])encounters, SAV, eventProgress, spawns, i) : (byte)0;
+                (EncounterEventTF9[])encounters : (EncounterEventTF9[])encounters, SAV, Progress, eventProgress, spawns, i) : (byte)0;
 
             if (!EncounterRaidTF9.TryGenerateTeraDetails(raid.Seed, encounters, SAV.Version, Progress, eventProgress, content, CurrMap, SAV.ID32, groupid, out var encounter, out var detail))
                 return;

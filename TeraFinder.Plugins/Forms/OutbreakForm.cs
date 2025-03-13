@@ -32,11 +32,12 @@ public partial class OutbreakForm : Form
     private readonly string[] KitakamiSpeciesList = null!;
     private readonly string[] BlueberrySpeciesList = null!;
 
-    public OutbreakForm(SAV9SV sav, string language, ConnectionForm? connection)
+    public OutbreakForm(TeraPlugin container)
     {
         InitializeComponent();
-        SAV = sav;
-        Language = language;
+        SAV = container.SAV;
+        Language = container.Language;
+        Connection = container.Connection;
 
         this.TranslateInterface(Language);
         GenerateDictionary();
@@ -53,9 +54,9 @@ public partial class OutbreakForm : Form
 
         for (var i = 1; i <= 10; i++)
         {
-            MassOutbreaksMain.Add(new EventMassOutbreak(sav, i, TeraRaidMapParent.Paldea));
-            MassOutbreaksDLC1.Add(new EventMassOutbreak(sav, i, TeraRaidMapParent.Kitakami));
-            MassOutbreaksDLC2.Add(new EventMassOutbreak(sav, i, TeraRaidMapParent.Blueberry));
+            MassOutbreaksMain.Add(new EventMassOutbreak(SAV, i, TeraRaidMapParent.Paldea));
+            MassOutbreaksDLC1.Add(new EventMassOutbreak(SAV, i, TeraRaidMapParent.Kitakami));
+            MassOutbreaksDLC2.Add(new EventMassOutbreak(SAV, i, TeraRaidMapParent.Blueberry));
         }
 
         DefBackground = pictureBox.BackgroundImage!;
@@ -83,8 +84,6 @@ public partial class OutbreakForm : Form
 
         cmbMap.SelectedIndex = 0;
         cmbMap.Enabled = cmbMap.Items.Count > 1;
-
-        Connection = connection;
 
         cmbSpecies.KeyDown += (s, e) =>
             { e.SuppressKeyPress = (e.KeyCode is Keys.Up or Keys.Down or Keys.Left or Keys.Right); };

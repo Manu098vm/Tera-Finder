@@ -229,6 +229,8 @@ ProgressForm.grpRaidMighty=Re-Capturar Entidad Imbatible
 ProgressForm.chkCaptured=Capturado
 ProgressForm.chkDefeated=Derrotado
 ProgressForm.btnApplyRaid7=Aplicar
+ProgressForm.SpeciesMighty=Mighty {species}
+ProgressForm.SpeciesShiny=Shiny {species}
 
 RewardListForm=Recompensas
 RewardListForm.grpNoBoost=Sin Poder Sándwich

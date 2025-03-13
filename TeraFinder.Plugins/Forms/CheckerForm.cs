@@ -8,40 +8,26 @@ public partial class CheckerForm : Form
     private readonly PK9 PKM = null!;
     private Dictionary<string, string> Strings = null!;
 
-    private readonly EncounterTeraTF9[] Paldea = null!;
-    private readonly EncounterTeraTF9[] PaldeaBlack = null!;
-    private readonly EncounterTeraTF9[] Kitakami = null!;
-    private readonly EncounterTeraTF9[] KitakamiBlack = null!;
-    private readonly EncounterTeraTF9[] Blueberry = null!;
-    private readonly EncounterTeraTF9[] BlueberryBlack = null!;
+    private readonly IEncounterRaidCollection RaidCollection;
 
-    private readonly Dictionary<uint, HashSet<EncounterEventTF9>> Dist = null!;
-    private readonly Dictionary<uint, HashSet<EncounterEventTF9>> Mighty = null!;
-
-    public CheckerForm(PKM pk, string language,
-                       EncounterTeraTF9[] paldea,
-                       EncounterTeraTF9[] paldeablack,
-                       EncounterTeraTF9[] kitakami,
-                       EncounterTeraTF9[] kitakamiblack,
-                       EncounterTeraTF9[] blueberry,
-                       EncounterTeraTF9[] blueberryblack,
-                       Dictionary<uint, HashSet<EncounterEventTF9>> dist,
-                       Dictionary<uint, HashSet<EncounterEventTF9>> mighty)
+    public CheckerForm(ITFPlugin container, PKM pk)
     {
         InitializeComponent();
         GenerateDictionary();
-        TranslateDictionary(language);
-        this.TranslateInterface(language);
+        TranslateDictionary(container.Language);
+        this.TranslateInterface(container.Language);
 
-        var species = GameInfo.GetStrings(language).specieslist;
-        var natures = GameInfo.GetStrings(language).natures;
-        var types = GameInfo.GetStrings(language).types;
+        var species = GameInfo.GetStrings(container.Language).specieslist;
+        var natures = GameInfo.GetStrings(container.Language).natures;
+        var types = GameInfo.GetStrings(container.Language).types;
         cmbSpecies.Items.Clear();
         cmbSpecies.Items.AddRange(species);
         cmbNature.Items.Clear();
         cmbNature.Items.AddRange(natures);
         cmbTera.Items.Clear();
         cmbTera.Items.AddRange(types);
+
+        RaidCollection = container;
 
         PKM = (PK9)pk;
         txtTid.Text = $"{PKM.TrainerTID7}";
@@ -60,15 +46,6 @@ public partial class CheckerForm : Form
         numHeight.Value = PKM.HeightScalar;
         numWeight.Value = PKM.WeightScalar;
         numScale.Value = PKM.Scale;
-
-        Paldea = paldea;
-        PaldeaBlack = paldeablack;
-        Kitakami = kitakami;
-        KitakamiBlack = kitakamiblack;
-        Blueberry = blueberry;
-        BlueberryBlack = blueberryblack;
-        Dist = dist;
-        Mighty = mighty;
     }
 
     private void GenerateDictionary()
@@ -149,9 +126,9 @@ public partial class CheckerForm : Form
                 {
                     var encounters = map switch
                     {
-                        TeraRaidMapParent.Paldea => Paldea,
-                        TeraRaidMapParent.Kitakami => Kitakami,
-                        TeraRaidMapParent.Blueberry => Blueberry,
+                        TeraRaidMapParent.Paldea => RaidCollection.Paldea,
+                        TeraRaidMapParent.Kitakami => RaidCollection.Kitakami,
+                        TeraRaidMapParent.Blueberry => RaidCollection.Blueberry,
                         _ => throw new NotImplementedException(nameof(map)),
                     };
                     if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, EventProgress.Stage0, RaidContent.Standard, map, pk.ID32, 0, out var encounter, out var result))
@@ -173,9 +150,9 @@ public partial class CheckerForm : Form
             {
                 var encounters = map switch
                 {
-                    TeraRaidMapParent.Paldea => PaldeaBlack,
-                    TeraRaidMapParent.Kitakami => KitakamiBlack,
-                    TeraRaidMapParent.Blueberry => BlueberryBlack,
+                    TeraRaidMapParent.Paldea => RaidCollection.PaldeaBlack,
+                    TeraRaidMapParent.Kitakami => RaidCollection.KitakamiBlack,
+                    TeraRaidMapParent.Blueberry => RaidCollection.BlueberryBlack,
                     _ => throw new NotImplementedException(nameof(map))
                 };
                 if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, GameProgress.Unlocked6Stars, EventProgress.Stage0, RaidContent.Black, map, pk.ID32, 0, out var encounter, out var result))
@@ -192,7 +169,7 @@ public partial class CheckerForm : Form
         //Events Raids Check
         for (var content = RaidContent.Event; content <= RaidContent.Event_Mighty; content++)
         {
-            foreach (var group in content is RaidContent.Event ? Dist : Mighty)
+            foreach (var group in content is RaidContent.Event ? RaidCollection.AllDist : RaidCollection.AllMighty)
             {
                 foreach (var index in new HashSet<byte>(group.Value.Select(enc => enc.Index)))
                 {

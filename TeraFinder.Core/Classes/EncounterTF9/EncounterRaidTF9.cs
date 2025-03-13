@@ -38,6 +38,8 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
     public bool IsBlack => !IsDistribution && Stars >= 6;
     public bool IsRandomUnspecificForm => Form >= EncounterUtil.FormDynamic;
 
+    public string Name => $"{(IsMighty ? "Mighty " : "")}{(Species)Species}-{Form}";
+
     public abstract bool CanBeEncountered(uint seed);
 
     //Generate Tera Details with no Filters;

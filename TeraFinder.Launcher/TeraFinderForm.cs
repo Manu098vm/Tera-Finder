@@ -74,7 +74,7 @@ namespace TeraFinder.Launcher
                     this.TranslateInterface(Plugin.Language);
                     TranslateInnerStrings(Plugin.Language);
                     UpdateEventLabel();
-                    this.Text += TeraPlugin.Version;
+                    this.Text += Plugin.Version;
                     txtSAV.Text = GetGameString();
                 }
                 else if (Plugin.GetSavName().Equals(TrainerBlank))
@@ -86,7 +86,7 @@ namespace TeraFinder.Launcher
                     this.TranslateInterface(Plugin.Language);
                     TranslateInnerStrings(Plugin.Language);
                     UpdateEventLabel();
-                    this.Text += TeraPlugin.Version;
+                    this.Text += Plugin.Version;
                     txtSAV.Text = GetGameString();
                 }
                 else if (!Connection.IsConnected())
@@ -156,7 +156,7 @@ namespace TeraFinder.Launcher
                     this.TranslateInterface(Plugin.Language);
                     TranslateInnerStrings(Plugin.Language);
                     UpdateEventLabel();
-                    this.Text += TeraPlugin.Version;
+                    this.Text += Plugin.Version;
                     txtSAV.Text = GetGameString();
                 }
                 catch (Exception)
@@ -170,7 +170,7 @@ namespace TeraFinder.Launcher
                     this.TranslateInterface(Plugin.Language);
                     TranslateInnerStrings(Plugin.Language);
                     UpdateEventLabel();
-                    this.Text += TeraPlugin.Version;
+                    this.Text += Plugin.Version;
                     txtSAV.Text = GetGameString();
                 }
             }
@@ -250,7 +250,7 @@ namespace TeraFinder.Launcher
                 btnStartEditor.Enabled = false;
                 btnExport.Enabled = false;
                 cmbLanguage.PerformClick();
-                this.Text += TeraPlugin.Version;
+                this.Text += Plugin.Version;
                 this.ResumeLayout();
             }
         }

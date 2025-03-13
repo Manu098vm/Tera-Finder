@@ -229,6 +229,8 @@ ProgressForm.grpRaidMighty=Ri-Cattura Raid Fortissimi:
 ProgressForm.chkCaptured=Catturato
 ProgressForm.chkDefeated=Sconfitto
 ProgressForm.btnApplyRaid7=Applica
+ProgressForm.SpeciesMighty={species} Fortissimo
+ProgressForm.SpeciesShiny={species} Shiny
 
 RewardListForm=Strumenti Ricompensa
 RewardListForm.grpNoBoost=Nessun Sandwich Boost

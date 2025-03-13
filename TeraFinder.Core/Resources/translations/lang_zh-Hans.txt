@@ -229,6 +229,8 @@ ProgressForm.grpRaidMighty=最强活动
 ProgressForm.chkCaptured=已捕捉
 ProgressForm.chkDefeated=已战胜
 ProgressForm.btnApplyRaid7=应用
+ProgressForm.SpeciesMighty=Mighty {species}
+ProgressForm.SpeciesShiny=Shiny {species}
 
 RewardListForm=道具奖励
 RewardListForm.grpNoBoost=团战力无
