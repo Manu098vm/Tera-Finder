@@ -29,7 +29,7 @@ public class TeraPlugin : ITFPlugin
     public EncounterEventTF9[] Mighty { get; set; } = null!;
     public Dictionary<uint, HashSet<EncounterEventTF9>> AllDist { get; set; } = null!;
     public Dictionary<uint, HashSet<EncounterEventTF9>> AllMighty { get; set; } = null!;
-    private uint EventRaidIdentifier = 0;
+    private uint EventRaidIdentifier = uint.MaxValue;
 
 
     public SAV9SV SAV { get; set; } = null!;
