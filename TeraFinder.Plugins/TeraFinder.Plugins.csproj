@@ -35,6 +35,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; compile</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="FlatSharp.Runtime" Version="7.6.0" />
 		<PackageReference Include="LibUsbDotNet" Version="2.2.75" />
 		<PackageReference Include="NLog" Version="5.4.0" />
 		<PackageReference Include="Octokit" Version="14.0.0" />
