@@ -38,6 +38,18 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
     public bool IsBlack => !IsDistribution && Stars >= 6;
     public bool IsRandomUnspecificForm => Form >= EncounterUtil.FormDynamic;
 
+    public EntityContext Context => EntityContext.Gen9;
+    public Ball FixedBall => Ball.None;
+    public ushort EggLocation => 0;
+    ushort ILocation.Location => Location;
+    public const ushort Location = Locations.TeraCavern9;
+    public byte LevelMin => Level;
+    public byte LevelMax => Level;
+    public byte Generation => 9;
+    public bool IsEgg => false;
+    public bool IsShiny => Shiny is Shiny.Always or Shiny.AlwaysSquare or Shiny.AlwaysStar;
+    public GameVersion Version => GameVersion.SV;
+    public string LongName => Name;
     public string Name => $"{(IsMighty ? "Mighty " : "")}{(Species)Species}-{Form}";
 
     public abstract bool CanBeEncountered(uint seed);
@@ -222,4 +234,88 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
         }
         return list;
     }
+
+    #region LegacyMatching
+    public bool IsMatchExact(PKM pk, EvoCriteria evo)
+    {
+        if (!this.IsLevelWithinRange(pk.MetLevel))
+            return false;
+        if (Gender != FixedGenderUtil.GenderRandom && pk.Gender != Gender)
+            return false;
+        if (Form != evo.Form && !FormInfo.IsFormChangeable(Species, Form, pk.Form, Context, pk.Context))
+            return false;
+        return true;
+    }
+
+    public EncounterMatchRating GetMatchRating(PKM pk)
+    {
+        var legality = new LegalityAnalysis(pk);
+        if (!legality.Valid)
+            return EncounterMatchRating.PartialMatch;
+        return EncounterMatchRating.Match;
+    }
+    #endregion
+
+    #region LegacyGenerating
+    public PK9 ConvertToPKM(ITrainerInfo tr) => ConvertToPKM(tr, EncounterCriteria.Unrestricted);
+    public PK9 ConvertToPKM(ITrainerInfo tr, EncounterCriteria criteria)
+    {
+        int language = (int)Language.GetSafeLanguage(Generation, (LanguageID)tr.Language);
+        var version = this.GetCompatibleVersion(tr.Version);
+        var pi = GetPersonal();
+        var pk = new PK9
+        {
+            Language = language,
+            Species = Species,
+            Form = Form,
+            CurrentLevel = LevelMin,
+            OriginalTrainerFriendship = pi.BaseFriendship,
+            MetLocation = Location,
+            MetLevel = LevelMin,
+            MetDate = EncounterDate.GetDateSwitch(),
+            Version = version,
+            Ball = (byte)Ball.Poke,
+
+            Nickname = SpeciesName.GetSpeciesNameGeneration(Species, language, Generation),
+            ObedienceLevel = LevelMin,
+            OriginalTrainerName = tr.OT,
+            OriginalTrainerGender = tr.Gender,
+            ID32 = tr.ID32,
+        };
+        SetPINGA(pk, criteria, pi);
+
+        pk.SetMoves(Moves);
+
+        pk.ResetPartyStats();
+        return pk;
+    }
+
+    private PersonalInfo9SV GetPersonal() => PersonalTable.SV[Species, Form];
+
+    private void SetPINGA(PK9 pk, EncounterCriteria criteria, PersonalInfo9SV pi)
+    {
+        var param = GetParam(pi);
+        var init = Util.Rand.Rand64();
+        var success = this.TryApply32(pk, init, param, criteria);
+        if (!success && !this.TryApply32(pk, init, param, criteria.WithoutIVs()))
+            this.TryApply32(pk, init, param, EncounterCriteria.Unrestricted);
+    }
+
+    private GenerateParam9 GetParam(PersonalInfo9SV pi)
+    {
+        const byte rollCount = 1;
+        const byte undefinedSize = 0;
+        return new GenerateParam9(Species, pi.Gender, FlawlessIVCount, rollCount,
+            undefinedSize, undefinedSize, undefinedSize, undefinedSize,
+            Ability, Shiny);
+    }
+
+    public bool GenerateSeed32(PKM pk, uint seed)
+    {
+        var pk9 = (PK9)pk;
+        var param = GetParam(GetPersonal());
+        Encounter9RNG.GenerateData(pk9, param, EncounterCriteria.Unrestricted, seed);
+        return true;
+    }
+    #endregion
 }

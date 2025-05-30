@@ -1,7 +1,7 @@
 ﻿using PKHeX.Core;
 namespace TeraFinder.Core;
 
-public interface IExtendedTeraRaid9 : ITeraRaid9
+public interface IExtendedTeraRaid9: ITeraRaid9
 {
     uint Identifier { get; }
     List<Reward> FixedRewards { get; }
