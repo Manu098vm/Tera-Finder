@@ -75,7 +75,7 @@ public static class RewardUtil
     public static bool IsTeraShard(int item) => item switch
     {
         ushort.MaxValue - 1 => true,
-        >= 1862 and <= 1879 => true,
+        //>= 1862 and <= 1879 => true,
         _ => false,
     };
 
