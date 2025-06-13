@@ -25,7 +25,7 @@ public class DeviceExecutor(DeviceState cfg) : SwitchRoutineExecutor<DeviceState
     public const decimal BotbaseVersion = 2.3m;
 
     //Game Infos
-    private const string VersionNumber = "3.0.1";
+    private const string VersionNumber = "4.0.0";
     private const string ScarletID = "0100A3D008C5C000";
     private const string VioletID = "01008F6008C5E000";
 

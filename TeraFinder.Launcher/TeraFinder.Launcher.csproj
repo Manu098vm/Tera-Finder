@@ -37,6 +37,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="FlatSharp.Runtime" Version="7.6.0" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\TeraFinder.Plugins\TeraFinder.Plugins.csproj">
 			<Private>True</Private>
 			<CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
