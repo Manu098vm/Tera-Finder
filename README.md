@@ -3,6 +3,15 @@
 
 * This fork is a public archival fork of TeraFinder - there's been no changes done by Xieon's Gaming Corner other than image compression, and data compression by Github action algorithms - this fork is kept as up to date as possible with the main branch 
 
+### XGC's Latest Release Build of Tera Finder:
+The latest TeraFinder release on XGC's Github is 06172025 - Starting with this release, after fixing issues with the workflow file, compiling can be done using Github Actions instead of needing to download, and compile the code yourself. I have included the artifacts created from the most recent release PR. There are now two zips being ``TeraFinder.Plugins.Zip`` and ``TeraFinder.Launcher.Zip`` with the release version appended to the end. 
+
+You can simply download the zip file from the release and run TeraFinder right away without needing to compile it yourself. You can find these Zips in the [Latest Release 06172025v1](https://github.com/Xieons-Gaming-Corner/Tera-Finder/releases/tag/06_17_2025v1)
+Below is a screenshot of the contents of ``TeraFinderLauncher.Zip`` - Running ``TeraFinder.Launcher.exe`` is how to start the TeraFinder program. 
+Extract the entire contents of the zip to the same directory before launching the ``.exe`` file. 
+> * ![image](https://github.com/user-attachments/assets/42a5aae0-bce7-4e08-9816-b9513c0a9e25)
+
+
 # Tera Finder
 ![immagine](https://github.com/Manu098vm/Tera-Finder/assets/52102823/15f9d8c3-423c-4bfc-89c4-fb1495445c9e)
 
