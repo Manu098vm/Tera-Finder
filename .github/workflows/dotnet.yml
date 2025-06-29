@@ -8,19 +8,37 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4  # Update to latest version for security
+      uses: actions/checkout@v4
 
     - name: Set up .NET
-      uses: actions/setup-dotnet@v4  # Update to latest version
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.x'  # Use .NET 9.0 SDK
-        dotnet-quality: 'preview'  # Optional: for preview releases
+        dotnet-version: '9.0.x'
+        dotnet-quality: 'preview'
 
     - name: Restore dependencies
       run: dotnet restore
 
     - name: Build solution
-      run: dotnet build --configuration Debug --no-restore
+      run: dotnet build --configuration Release --no-restore
 
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --logger:"trx;LogFileName=test-results.trx"
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: '**/*test-results.trx'
+
+    - name: Analyze code coverage
+      run: dotnet tool restore && dotnet reportgenerator -reports:**/coverage.cobertura.xml -targetdir:coverage -reporttypes:HtmlInline
+      if: success()
+
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      if: success()
+      with:
+        name: code-coverage-report
+        path: coverage
