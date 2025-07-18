@@ -64,7 +64,7 @@
             grpSAV.Controls.Add(txtSAV);
             grpSAV.Controls.Add(btnLoad);
             grpSAV.Controls.Add(btnExport);
-            grpSAV.Location = new Point(11, 43);
+            grpSAV.Location = new Point(11, 50);
             grpSAV.Name = "grpSAV";
             grpSAV.Size = new Size(463, 123);
             grpSAV.TabIndex = 0;
@@ -104,7 +104,7 @@
             // 
             grpTools.Controls.Add(grpStaticTools);
             grpTools.Controls.Add(grpSavTools);
-            grpTools.Location = new Point(11, 171);
+            grpTools.Location = new Point(11, 178);
             grpTools.Name = "grpTools";
             grpTools.Size = new Size(463, 331);
             grpTools.TabIndex = 1;
@@ -265,7 +265,7 @@
             // 
             lblEvent.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblEvent.AutoSize = true;
-            lblEvent.Location = new Point(104, 20);
+            lblEvent.Location = new Point(104, 28);
             lblEvent.Name = "lblEvent";
             lblEvent.RightToLeft = RightToLeft.No;
             lblEvent.Size = new Size(243, 20);
@@ -278,7 +278,7 @@
             AllowDrop = true;
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(487, 507);
+            ClientSize = new Size(487, 516);
             Controls.Add(lblEvent);
             Controls.Add(grpTools);
             Controls.Add(grpSAV);

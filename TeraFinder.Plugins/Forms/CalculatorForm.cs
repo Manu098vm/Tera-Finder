@@ -383,14 +383,15 @@ public partial class CalculatorForm : Form
         str = str.Replace($" ({Strings["GameVersionSL"]})", string.Empty).Replace($" ({Strings["GameVersionVL"]})", string.Empty);
         if (!str.Equals(Strings["Any"]))
         {
-            var formLocation = str.IndexOf('-');
-            var isForm = Array.IndexOf(NameList, str) == -1 && formLocation > 0;
-
             if (byte.TryParse(str[^2].ToString(), out var index) && str[^1] == ')')
             {
                 result.index = index;
                 str = str[..^4];
             }
+
+            var formLocation = str.IndexOf('-');
+            var isForm = Array.IndexOf(NameList, str) == -1 && formLocation > 0;
+
             if (!isForm)
             {
                 var species = Editor.Language.ToLower().Equals("en") ? str :

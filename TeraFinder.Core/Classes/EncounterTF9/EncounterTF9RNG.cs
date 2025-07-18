@@ -237,7 +237,7 @@ public static class EncounterTF9RNG
             var xor = ShinyUtil.GetShinyXor(pid, fakeTID);
             if (xor > 16)
                 pid = ShinyUtil.GetShinyPID(tid, sid, pid, 0);
-            if (!ShinyUtil.GetIsShiny(id32, pid))
+            if (!ShinyUtil.GetIsShiny6(id32, pid))
             {
                 xor = ShinyUtil.GetShinyXor(pid, fakeTID);
                 pid = ShinyUtil.GetShinyPID(TidUtil.GetTID16(id32), TidUtil.GetSID16(id32), pid, xor == 0 ? 0u : 1u);
@@ -246,9 +246,9 @@ public static class EncounterTF9RNG
         }
         else
         {
-            if (ShinyUtil.GetIsShiny(fakeTID, pid))
+            if (ShinyUtil.GetIsShiny6(fakeTID, pid))
                 pid ^= 0x1000_0000;
-            if (ShinyUtil.GetIsShiny(id32, pid))
+            if (ShinyUtil.GetIsShiny6(id32, pid))
                 pid ^= 0x1000_0000;
             shiny = TeraShiny.No;
         }
