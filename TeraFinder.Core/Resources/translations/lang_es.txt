@@ -361,3 +361,4 @@ GridUtil.CheckWiki=Por favor, consulta wiki de Tera Finder para saber cómo actu
 GridUtil.Report=Por favor, reporta este error al autor de Tera Finder.
 GridUtil.RowsExceeded=Selección de filas superó el máximo permitido [1].
 GridUtil.MismatchGroupID=GroupID no coincide. La Teraincursión seleccionada sólo puede contener eventos con índice {editorIndex}. El resultado seleccionado tiene índice {resultIndex}.
+GridUtil.NoCatch=This Pokémon cannot be caught.

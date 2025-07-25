@@ -361,3 +361,4 @@ GridUtil.CheckWiki=Please check the Tera Finder wiki to find out how to update t
 GridUtil.Report=Please report this error to the Tera Finder author.
 GridUtil.RowsExceeded=Rows selection exceeded the maximum allowed [1].
 GridUtil.MismatchGroupID=GroupID Mismatch. The selected Raid Den on the Raid Editor can only contain Event Raids with index {editorIndex}. The selected Raid result has Index {resultIndex}.
+GridUtil.NoCatch=This Pokémon cannot be caught.

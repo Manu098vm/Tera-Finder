@@ -52,6 +52,8 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
     public string LongName => Name;
     public string Name => $"{(IsMighty ? "Mighty " : "")}{(Species)Species}-{Form}";
 
+    public bool CanBeCaught => Identifier != 2025072301u; //Shiny Wo-Chien
+
     public abstract bool CanBeEncountered(uint seed);
 
     //Generate Tera Details with no Filters;

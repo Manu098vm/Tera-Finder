@@ -361,3 +361,4 @@ GridUtil.CheckWiki=PKHeX.Core 종속성을 업데이트하는 방법에 대해�
 GridUtil.Report=오류를 테라파인더 제작자에게 보내주세요.
 GridUtil.RowsExceeded=선택한 항목이 허용된 최대 행 수[1]를 초과했습니다.
 GridUtil.MismatchGroupID=GroupID Mismatch. The selected Raid Den on the Raid Editor can only contain Event Raids with index {editorIndex}. The selected Raid result has Index {resultIndex}.
+GridUtil.NoCatch=This Pokémon cannot be caught.

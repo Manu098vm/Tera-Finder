@@ -361,3 +361,4 @@ GridUtil.CheckWiki=Per favore controlla la wiki nella repository GitHub di Tera 
 GridUtil.Report=Per favore riporta questo errore all'autore di Tera Finder.
 GridUtil.RowsExceeded=Le righe selezionate vanno oltre il massimo consentito [1].
 GridUtil.MismatchGroupID=GroupID Mismatch. La Tana Raid selezionata può contenere solamente Raid Evento di Indice {editorIndex}. Il risultato selezionato ha Indice {resultIndex}.
+GridUtil.NoCatch=Questo Pokémon non può essere catturato.

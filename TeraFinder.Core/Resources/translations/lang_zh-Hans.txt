@@ -361,3 +361,4 @@ GridUtil.CheckWiki=请检查Tera Finder wiki以了解如何更新PKHeX.Core依�
 GridUtil.Report=请将此错误报告给Tera Finder作者。
 GridUtil.RowsExceeded=选择超出了允许的最大值[1]。
 GridUtil.MismatchGroupID=用户组不匹配。太晶洞窟编辑器上选定的太晶洞窟坑位只能包含索引为{editorIndex}的活动洞窟。所选洞窟结果的索引为{resultIndex}。
+GridUtil.NoCatch=This Pokémon cannot be caught.
