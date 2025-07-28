@@ -95,7 +95,7 @@ public partial class CheckerForm : Form
         var weight = (byte)numWeight.Value;
         var scale = (byte)numScale.Value;
 
-        var pk = new PK9(PKM.Data)
+        var pk = new PK9(PKM.Data.ToArray())
         {
             Species = species,
             EncryptionConstant = ec,
