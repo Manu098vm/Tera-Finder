@@ -16,7 +16,7 @@ public record Reward
         if (RewardUtil.IsTM(ItemID))
             return $"{RewardUtil.GetNameTM(ItemID, itemnames, GameInfo.GetStrings(language).movelist)} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
 
-        if (RewardUtil.IsTeraShard(ItemID))
+        if (ItemID is RewardUtil.TeraShardIdentifier)
             return $"{itemnames[RewardUtil.GetTeraShard(tera)]} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
 
         return $"{itemnames[ItemID]} {(quantity ? $"x{Amount}" : "")} {GetClientOrHostString()}";
@@ -37,7 +37,7 @@ public record Reward
 
     public bool CompareEncounterItemID(Reward item)
     {
-        if (item.ItemID == ushort.MaxValue - 2 && RewardUtil.IsHerbaMystica(ItemID))
+        if (item.ItemID is RewardUtil.HerbaMysticaIdentifier && RewardUtil.IsHerbaMystica(ItemID))
             return true;
 
         if (RewardUtil.IsTeraShard(item.ItemID) && RewardUtil.IsTeraShard(ItemID))
@@ -183,8 +183,8 @@ public class RewardFilter(bool isEncounterFilter, bool isAnyHerbaFilter)
             var itemlist = new Dictionary<int, int>();
             foreach (var item in res.Rewards)
             {
-                var itemId = HerbaFilter && RewardUtil.IsHerbaMystica(item.ItemID) ? ushort.MaxValue - 2 :
-                    RewardUtil.IsTeraShard(item.ItemID) ? RewardUtil.GetTeraShard((MoveType)res.TeraType) : item.ItemID;
+                var itemId = HerbaFilter && RewardUtil.IsHerbaMystica(item.ItemID) ? RewardUtil.HerbaMysticaIdentifier :
+                    item.ItemID is RewardUtil.TeraShardIdentifier ? RewardUtil.GetTeraShard((MoveType)res.TeraType) : item.ItemID;
 
                 if (itemlist.ContainsKey(itemId))
                     itemlist[itemId] += item.Amount;

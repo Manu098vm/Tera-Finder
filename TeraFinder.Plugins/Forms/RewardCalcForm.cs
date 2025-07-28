@@ -424,7 +424,7 @@ public partial class RewardCalcForm : Form
                 var num = nums.Where(num => num.Name.Equals(numericName)).FirstOrDefault()!;
                 if (!anyherba)
                     anyherba = cb.SelectedIndex == 1;
-                items.Add(new Reward { ItemID = cb.SelectedIndex == 1 ? ushort.MaxValue - 2 : cb.SelectedIndex - 1, Amount = (int)num.Value });
+                items.Add(new Reward { ItemID = cb.SelectedIndex == 1 ? RewardUtil.HerbaMysticaIdentifier : cb.SelectedIndex - 1, Amount = (int)num.Value });
             }
         }
 
