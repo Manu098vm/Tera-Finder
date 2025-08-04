@@ -13,7 +13,7 @@ namespace TeraFinder.Tests
         [Fact]
         public void TestEncounterTeraTF9Standard()
         {
-            ParseSettings.Settings.Handler.CheckActiveHandler = false;
+            LegalityUtil.SetDefaultlegalitySettings();
             for (var map = TeraRaidMapParent.Paldea; map <= TeraRaidMapParent.Blueberry; map++)
             {
                 var encounters = ResourcesUtil.GetAllTeraEncounters(map).standard;
@@ -26,7 +26,7 @@ namespace TeraFinder.Tests
         [Fact]
         public void TestEncounterTeraTF9Black()
         {
-            ParseSettings.Settings.Handler.CheckActiveHandler = false;
+            LegalityUtil.SetDefaultlegalitySettings();
             for (var map = TeraRaidMapParent.Paldea; map <= TeraRaidMapParent.Blueberry; map++)
             {
                 var encounters = ResourcesUtil.GetAllTeraEncounters(map).black;
@@ -38,7 +38,7 @@ namespace TeraFinder.Tests
         [Fact]
         public void TestEncounterEventTF9()
         {
-            ParseSettings.Settings.Handler.CheckActiveHandler = false;
+            LegalityUtil.SetDefaultlegalitySettings();
             var (eventsData, mightyData) = ResourcesUtil.GetAllEventEncounters();
             var events = SeedCheckerUtil.GroupEventEncounters(eventsData);
             var mighty = SeedCheckerUtil.GroupEventEncounters(mightyData);
