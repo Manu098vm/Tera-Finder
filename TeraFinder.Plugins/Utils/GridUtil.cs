@@ -161,7 +161,7 @@ public static class GridUtil
                     var encounters = f.Editor.GetCurrentEncounters(content, map);
                     if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, out var enc, out var result))
                     {
-                        if (enc.CanBeCaught)
+                        if (enc.IsCatchable)
                         {
                             var settings = LegalityUtil.StoreLegalitySettings();
                             LegalityUtil.SetDefaultlegalitySettings();
@@ -391,7 +391,7 @@ public static class GridUtil
 
                     if (EncounterRaidTF9.TryGenerateTeraDetails(seed, encounters, version, progress, eventProgress, content, map, id32, groupid, out var enc, out var result))
                     {
-                        if (enc.CanBeCaught)
+                        if (enc.IsCatchable)
                         {
                             if (!enc.GeneratePK9(result.Value, id32, version, f.Editor.SAV.OT, f.Editor.SAV.Language, f.Editor.SAV.Gender, out var pk9, out var la))
                             {
