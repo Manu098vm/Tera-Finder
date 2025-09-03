@@ -2,9 +2,9 @@ name: .NET Desktop
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
@@ -20,6 +20,14 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
+
+    - name: Cache NuGet packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/TeraFinder.sln') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
 
     - name: Install .NET
       uses: actions/setup-dotnet@v4
@@ -57,6 +65,27 @@ jobs:
 
     - name: Execute unit tests
       run: dotnet test $env:Solution_Name --configuration ${{ matrix.configuration }}
+
+    # Optional: Enable code coverage (uncomment to use)
+    # - name: Execute unit tests with coverage
+    #   run: dotnet test $env:Solution_Name --configuration ${{ matrix.configuration }} --collect:"XPlat Code Coverage" --logger:"trx;LogFileName=test-results.trx"
+    #   if: success()
+    #
+    # - name: Install ReportGenerator
+    #   run: dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.3.8
+    #   if: success()
+    #
+    # - name: Analyze code coverage
+    #   run: $env:USERPROFILE\.dotnet\tools\dotnet-reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:coverage -reporttypes:HtmlInline
+    #   shell: pwsh
+    #   if: success()
+    #
+    # - name: Upload coverage report
+    #   uses: actions/upload-artifact@v4
+    #   if: success()
+    #   with:
+    #     name: code-coverage-report
+    #     path: coverage
 
     - name: Upload Launcher artifacts
       uses: actions/upload-artifact@v4
