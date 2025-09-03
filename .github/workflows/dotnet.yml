@@ -1,46 +1,104 @@
-name: Build and Test
-permissions:
-  contents: read
+name: .NET Desktop
 
-on: [push, pull_request]
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
   build:
+    strategy:
+      matrix:
+        configuration: [Release]
     runs-on: windows-latest
+    env:
+      Solution_Name: TeraFinder.sln
 
     steps:
-    - name: Checkout code
+    - name: Checkout
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-    - name: Set up .NET
+    - name: Cache NuGet packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/TeraFinder.sln') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    - name: Install .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.x'
-        dotnet-quality: 'preview'
+        dotnet-version: 9.0.x
 
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Build solution
-      run: dotnet build --configuration Debug --no-restore
-
-    - name: Run tests
-      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --logger:"trx;LogFileName=test-results.trx"
-
-    - name: Upload test results
-      uses: actions/upload-artifact@v4
-      if: always()
+    - name: Checkout PKHeX.Core
+      uses: actions/checkout@v4
       with:
-        name: test-results
-        path: '**/*test-results.trx'
+        repository: kwsch/PKHeX
+        ref: master
+        path: PKHeX
 
-    - name: Analyze code coverage
-      run: dotnet tool restore && dotnet reportgenerator -reports:**/coverage.cobertura.xml -targetdir:coverage -reporttypes:HtmlInline
-      if: success()
+    - name: Build PKHeX.Core
+      run: |
+        cd PKHeX/PKHeX.Core
+        dotnet restore
+        dotnet build --configuration Release
 
-    - name: Upload coverage report
+    - name: Restore NuGet packages
+      run: dotnet restore $env:Solution_Name
+
+    - name: Replace PKHeX.Core NuGet DLL
+      shell: pwsh
+      run: |
+        $PackageBaseFolder = Join-Path -Path $env:USERPROFILE -ChildPath ".nuget\packages\pkhex.core"
+        $LatestVersionFolder = Get-ChildItem -Path $PackageBaseFolder -Directory | Sort-Object {[version]$_.Name} -Descending | Select-Object -First 1
+        $NuGetPackageFolder = Join-Path -Path $LatestVersionFolder.FullName -ChildPath "lib\net9.0"
+        $PkhexCoreDllSource = Join-Path -Path $env:GITHUB_WORKSPACE -ChildPath "PKHeX/PKHeX.Core/bin/Release/net9.0/PKHeX.Core.dll"
+        $PkhexCoreDllDest = Join-Path -Path $NuGetPackageFolder -ChildPath "PKHeX.Core.dll"
+        Copy-Item -Path $PkhexCoreDllSource -Destination $PkhexCoreDllDest -Force
+
+    - name: Build TeraFinder
+      run: dotnet build $env:Solution_Name --configuration Release --no-restore
+
+    - name: Execute unit tests
+      run: dotnet test $env:Solution_Name --configuration ${{ matrix.configuration }}
+
+    # Optional: Enable code coverage (uncomment to use)
+    # - name: Execute unit tests with coverage
+    #   run: dotnet test $env:Solution_Name --configuration ${{ matrix.configuration }} --collect:"XPlat Code Coverage" --logger:"trx;LogFileName=test-results.trx"
+    #   if: success()
+    #
+    # - name: Install ReportGenerator
+    #   run: dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.3.8
+    #   if: success()
+    #
+    # - name: Analyze code coverage
+    #   run: $env:USERPROFILE\.dotnet\tools\dotnet-reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:coverage -reporttypes:HtmlInline
+    #   shell: pwsh
+    #   if: success()
+    #
+    # - name: Upload coverage report
+    #   uses: actions/upload-artifact@v4
+    #   if: success()
+    #   with:
+    #     name: code-coverage-report
+    #     path: coverage
+
+    - name: Upload Launcher artifacts
       uses: actions/upload-artifact@v4
-      if: success()
       with:
-        name: code-coverage-report
-        path: coverage
+        name: TeraFinder.Launcher
+        path: TeraFinder.Launcher/bin
+
+    - name: Upload Plugins artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: TeraFinder.Plugins
+        path: |
+          TeraFinder.Plugins/bin
+          !TeraFinder.Plugins/bin/Release/net9.0-windows7.0/PKHeX.Core.dll
+          !TeraFinder.Plugins/bin/Release/net9.0-windows7.0/PKHeX.Drawing.dll
+          !TeraFinder.Plugins/bin/Release/net9.0-windows7.0/PKHeX.Drawing.PokeSprite.dll
