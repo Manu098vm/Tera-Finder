@@ -269,7 +269,7 @@ public partial class CalculatorForm : Form
         {
             var encounters = (EncounterEventTF9[])GetCurrentEncounters();
             var eventProgress = EventUtil.GetEventStageFromProgress((GameProgress)cmbProgress.SelectedIndex);
-            var version = cmbGame.SelectedIndex == 1 ? GameVersion.SL : GameVersion.VL;
+            var version = cmbGame.SelectedIndex == 0 ? GameVersion.SL : GameVersion.VL;
 
             var possibleStars = EncounterEventTF9.GetPossibleEventStars(encounters, eventProgress, version);
             var starsList = new List<string>();
