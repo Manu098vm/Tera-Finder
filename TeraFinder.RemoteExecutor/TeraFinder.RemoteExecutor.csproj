@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="FlatSharp.Runtime" Version="7.6.0" />
-    <PackageReference Include="PKHeX.Core" Version="25.11.7" />
+    <PackageReference Include="PKHeX.Core" Version="26.1.7" />
   </ItemGroup>
 
   <ItemGroup>
