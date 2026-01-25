@@ -24,7 +24,7 @@ jobs:
     - name: Install .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: 10.0.x
 
     - name: Checkout PKHeX.Core
       uses: actions/checkout@v4
@@ -47,8 +47,8 @@ jobs:
       run: |
         $PackageBaseFolder = Join-Path -Path $env:USERPROFILE -ChildPath ".nuget\packages\pkhex.core"
         $LatestVersionFolder = Get-ChildItem -Path $PackageBaseFolder -Directory | Sort-Object {[version]$_.Name} -Descending | Select-Object -First 1
-        $NuGetPackageFolder = Join-Path -Path $LatestVersionFolder.FullName -ChildPath "lib\net9.0"
-        $PkhexCoreDllSource = Join-Path -Path $env:GITHUB_WORKSPACE -ChildPath "PKHeX/PKHeX.Core/bin/Release/net9.0/PKHeX.Core.dll"
+        $NuGetPackageFolder = Join-Path -Path $LatestVersionFolder.FullName -ChildPath "lib\net10.0"
+        $PkhexCoreDllSource = Join-Path -Path $env:GITHUB_WORKSPACE -ChildPath "PKHeX/PKHeX.Core/bin/Release/net10.0/PKHeX.Core.dll"
         $PkhexCoreDllDest = Join-Path -Path $NuGetPackageFolder -ChildPath "PKHeX.Core.dll"
         Copy-Item -Path $PkhexCoreDllSource -Destination $PkhexCoreDllDest -Force
 
@@ -70,6 +70,6 @@ jobs:
         name: TeraFinder.Plugins
         path: |
           TeraFinder.Plugins/bin
-          !TeraFinder.Plugins/bin/Release/net9.0-windows7.0/PKHeX.Core.dll
-          !TeraFinder.Plugins/bin/Release/net9.0-windows7.0/PKHeX.Drawing.dll
-          !TeraFinder.Plugins/bin/Release/net9.0-windows7.0/PKHeX.Drawing.PokeSprite.dll
+          !TeraFinder.Plugins/bin/Release/net10.0-windows7.0/PKHeX.Core.dll
+          !TeraFinder.Plugins/bin/Release/net10.0-windows7.0/PKHeX.Drawing.dll
+          !TeraFinder.Plugins/bin/Release/net10.0-windows7.0/PKHeX.Drawing.PokeSprite.dll
