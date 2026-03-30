@@ -14,12 +14,12 @@ public static class ImagesUtil
             'b' + SpriteName.GetResourceStringSprite(pkm.Species, pkm.Form, (byte)pkm.Gender, (uint)(pkm.Species == (ushort)Species.Gholdengo ? 999 : 0), EntityContext.Gen9, true) :
             'a' + SpriteName.GetResourceStringSprite(pkm.Species, pkm.Form, (byte)pkm.Gender, (uint)(pkm.Species == (ushort)Species.Gholdengo ? 999 : 0), EntityContext.Gen9, false);
 
-        var sprite = (Image?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file);
+        var sprite = (Bitmap?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file);
 
         if (sprite is null)
         {
             file = 'a' + SpriteName.GetResourceStringSprite(pkm.Species, pkm.Form, (byte)pkm.Gender, (uint)(pkm.Species == (ushort)Species.Gholdengo ? 999 : 0), EntityContext.Gen9, false);
-            sprite = (Image?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file);
+            sprite = (Bitmap?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file);
         }
 
         if (item > 0 && sprite is not null)
@@ -28,7 +28,7 @@ public static class ImagesUtil
         if (pkm.Shiny > TeraShiny.No && sprite is not null)
             sprite = LayerOverImageShiny(sprite, pkm.Shiny is TeraShiny.Square ? Shiny.AlwaysSquare : Shiny.AlwaysStar);
 
-        if (!active && sprite is not null) sprite = ImageUtil.ToGrayscale(sprite);
+        if (!active && sprite is not null) ImageUtil.ToGrayscale(sprite,0.7f);
 
         if(sprite is not null)
             ImageUtil.BlendTransparentTo(sprite, TypeColor.GetTypeSpriteColor(pkm.TeraType), 0xAF, 0x3740);
@@ -36,16 +36,16 @@ public static class ImagesUtil
         return sprite;
     }
 
-    public static Image? GetSimpleSprite(ushort species, byte form, bool active)
+    public static Bitmap? GetSimpleSprite(ushort species, byte form, bool active)
     {
         SpriteName.AllowShinySprite = false;
         var file = 'a' + SpriteName.GetResourceStringSprite(species, form, 0, 0, EntityContext.Gen9, false);
-        var sprite = (Image?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file);
-        if (!active && sprite is not null) sprite = ImageUtil.ToGrayscale(sprite);
+        var sprite = (Bitmap?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(file);
+        if (!active && sprite is not null) ImageUtil.ToGrayscale(sprite,0.7f);
         return sprite;
     }
 
-    private static Image LayerOverImageItem(Image image, int item)
+    private static Bitmap LayerOverImageItem(Bitmap image, int item)
     {
         var str = item > 0 ? $"bitem_{item}" : "";
         var icon = (Image?)PKHeX.Drawing.PokeSprite.Properties.Resources.ResourceManager.GetObject(str);
@@ -59,7 +59,7 @@ public static class ImagesUtil
         return image;
     }
 
-    private static Bitmap LayerOverImageShiny(Image image, Shiny shiny)
+    private static Bitmap LayerOverImageShiny(Bitmap image, Shiny shiny)
     {
         var icon = shiny is Shiny.AlwaysSquare ? PKHeX.Drawing.PokeSprite.Properties.Resources.rare_icon_2 : PKHeX.Drawing.PokeSprite.Properties.Resources.rare_icon;
         return ImageUtil.LayerImage(image, icon, 0, 0, 0.7);
