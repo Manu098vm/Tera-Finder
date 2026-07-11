@@ -188,7 +188,7 @@ public abstract record EncounterRaidTF9 : IExtendedTeraRaid9
             IV_SPE = rngResult.SPE,
             Gender = (byte)rngResult.Gender,
             Nature = rngResult.Nature,
-            StatNature = rngResult.Nature,
+            StatAlignment = rngResult.Nature,
             HeightScalar = rngResult.Height,
             WeightScalar = rngResult.Weight,
             Scale = rngResult.Scale,
