@@ -102,17 +102,20 @@ public static class ImagesUtil
         };
         var pointer = new Bitmap(crystal, new Size(crystal.Width / 4, crystal.Height / 4));
 
-        var def = 512;
         var width = pic.Width;
         var height = pic.Height;
 
-        // Formulas taken from RaidCrawler (GPL v3 License)
-        // Thx Lincoln, Lego and Archit!
-        // https://github.com/LegoFigure11/RaidCrawler/blob/d36475046c638fbc37fbeb0aaa001f3663273b9b/RaidCrawler.WinForms/MainWindow.cs#L1589
-        var coordinates = new Point
+        (double ScaleX, double ScaleZ, double OffsetZ) m = map switch
         {
-            X = (int)Normalize(width, ((((map switch { TeraRaidMapParent.Kitakami => 2.766970605475146, TeraRaidMapParent.Blueberry => 0.2566504136675, _ => 1 }) * x) + (map switch { TeraRaidMapParent.Kitakami => 2.072021484, TeraRaidMapParent.Blueberry => 0.893932258207, _ => -248.08352352566726 })) * (map is not TeraRaidMapParent.Blueberry ? 512 : 1) / (map is not TeraRaidMapParent.Blueberry ? 5000 : 1)) + pointer.Width * map switch { TeraRaidMapParent.Paldea => 0.5, TeraRaidMapParent.Blueberry => -0.2, _ => -1 }, def),
-            Y = (int)Normalize(height, ((((map switch { TeraRaidMapParent.Kitakami => 2.5700782642623805, TeraRaidMapParent.Blueberry => 0.2559781068906, _ => 1 }) * y) + (map switch { TeraRaidMapParent.Kitakami => 5070.808599816581, TeraRaidMapParent.Blueberry => 511.5361519625, _ => 5505.240018 })) * (map is not TeraRaidMapParent.Blueberry ? 512 : 1) / (map is not TeraRaidMapParent.Blueberry ? 5000 : 1)) - pointer.Height * map switch { TeraRaidMapParent.Blueberry => 0.7, _ => 1 }, def),
+            TeraRaidMapParent.Blueberry => Blueberry,
+            TeraRaidMapParent.Kitakami => Kitakami,
+            _ => Paldea,
+        };
+
+        var coordinates = new Point()
+        {
+            X = (int)Normalize(width, ConvertX(x, m.ScaleX) - (pointer.Width / 4), 512),
+            Y = (int)Normalize(height, ConvertZ(y, m.ScaleZ, m.OffsetZ) - pointer.Height, 512),
         };
 
         var mapImage = new Bitmap(pic.BackgroundImage!, new Size(pic.Width, pic.Height));
@@ -121,6 +124,13 @@ public static class ImagesUtil
     }
 
     private static double Normalize(double x, double y, double z) => x * y / z;
+
+    private static (double, double, double) Paldea = (5000, 5000, 5500);
+    private static (double, double, double) Kitakami = (2000, 2000, 2000);
+    private static (double, double, double) Blueberry = (2000, 2000, 2000);
+
+    private static double ConvertX(double x, double ScaleX) => (512 / ScaleX) * x;
+    private static double ConvertZ(double z, double ScaleZ, double OffsetZ) => (512 / ScaleZ) * (z + OffsetZ);
 
     public static void ResetMap(this PictureBox pic)
     {
